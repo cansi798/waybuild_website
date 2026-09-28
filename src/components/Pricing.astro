@@ -1,5 +1,5 @@
 ---
-import { plans, allPlansInclude, formatEuro, gross } from '../config/site';
+import { plans, matrix, KEY_ROWS, SETUP_FEE, allPlansInclude, formatEuro, gross } from '../config/site';
 import { href } from '../lib/paths';
 import TarifFinder from './TarifFinder.astro';
 
@@ -8,47 +8,55 @@ interface Props {
 }
 const { headingLevel = 'h3' } = Astro.props;
 const H = headingLevel;
-const VISIBLE = 4;
+const keyRows = matrix.slice(0, KEY_ROWS);
 const fmtGross = (n: number) =>
   new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(gross(n));
 ---
 
 <p class="swipe" aria-hidden="true">← Wischen für alle Tarife →</p>
 <div class="pricing" data-pricing>
-  {plans.map((plan) => (
-    <article class:list={['plan', { 'plan--hl': plan.highlight }]} aria-labelledby={`plan-${plan.id}`} data-plan={plan.id}>
-      <div class="plan__top">
-        <H id={`plan-${plan.id}`} class="plan__name">{plan.name}</H>
-        {plan.highlight && <span class="plan__badge">Beliebt</span>}
-      </div>
-      <p class="plan__tag">{plan.tagline}</p>
-      <p class="plan__price">
-        <span class="plan__amount">{plan.monthly} €</span>
-        <span class="plan__per">/ Monat</span>
-      </p>
-      <p class="plan__meta">netto · einmalig {formatEuro(plan.setup)} Einrichtung</p>
-      <ul class="plan__list">
-        {plan.features.slice(0, VISIBLE).map((f) => <li>{f}</li>)}
-      </ul>
-      <details class="plan__more">
-        <summary>Alle Leistungen</summary>
-        <ul class="plan__list">
-          {plan.features.slice(VISIBLE).map((f) => <li>{f}</li>)}
-        </ul>
-        <p class="plan__gross">Brutto: {fmtGross(plan.monthly)} / Monat · {fmtGross(plan.setup)} Einrichtung</p>
-      </details>
-      <a class:list={['btn', plan.highlight ? 'btn--primary' : 'btn--outline']} href={`${href('/kontakt/')}?tarif=${plan.id}`}>
-        {plan.name} anfragen
-      </a>
-    </article>
-  ))}
+  {plans.map((plan, i) => {
+    const extras = matrix.slice(KEY_ROWS).filter((r) => r.values[i] !== false);
+    return (
+      <article class:list={['plan', { 'plan--hl': plan.highlight }]} aria-labelledby={`plan-${plan.id}`} data-plan={plan.id}>
+        <div class="plan__top">
+          <H id={`plan-${plan.id}`} class="plan__name">{plan.name}</H>
+          {plan.highlight && <span class="plan__badge">Beliebt</span>}
+        </div>
+        <p class="plan__tag">{plan.tagline}</p>
+        <p class="plan__price">
+          <span class="plan__amount">{plan.monthly} €</span>
+          <span class="plan__per">/ Monat netto</span>
+        </p>
+        <dl class="plan__keys">
+          {keyRows.map((r) => (
+            <div><dt>{r.label}</dt><dd>{r.values[i]}</dd></div>
+          ))}
+        </dl>
+        <details class="plan__more">
+          <summary>Alle Leistungen</summary>
+          <ul class="plan__list">
+            {extras.map((r) => <li>{r.values[i] === true ? r.label : `${r.label}: ${r.values[i]}`}</li>)}
+          </ul>
+          <p class="plan__gross">Brutto: {fmtGross(plan.monthly)} / Monat</p>
+        </details>
+        <a class:list={['btn', plan.highlight ? 'btn--primary' : 'btn--outline']} href={`${href('/kontakt/')}?tarif=${plan.id}`}>
+          {plan.name} anfragen
+        </a>
+      </article>
+    );
+  })}
 </div>
 
+<div class="setup">
+  <p><strong>Einrichtung einmalig {formatEuro(SETUP_FEE)}</strong> – für alle Tarife gleich.</p>
+  <p class="setup__free">Bei jährlicher Zahlung: <strong>0 € Einrichtung</strong></p>
+</div>
 <p class="included">
   <strong>Immer inklusive:</strong>{' '}
   {allPlansInclude.join(' · ')}
 </p>
-<p class="terms">12 Monate Laufzeit, dann monatlich kündbar · Jahreszahlung: 2 Monate gratis · Preise zzgl. 19 % USt.</p>
+<p class="terms">12 Monate Laufzeit, danach monatlich kündbar · Alle Preise netto zzgl. 19 % USt.</p>
 
 <TarifFinder />
 
@@ -85,15 +93,19 @@ const fmtGross = (n: number) =>
   .plan__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .plan__name { font-size: 1.3rem; margin: 0; }
   .plan__badge { background: var(--accent); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; letter-spacing: 0.04em; text-transform: uppercase; }
-  .plan__tag { color: var(--ink-soft); font-size: 0.95rem; margin: 4px 0 20px; }
-  .plan--hl .plan__tag, .plan--hl .plan__meta, .plan--hl .plan__per, .plan--hl .plan__gross { color: #aab5c3; }
-  .plan__price { display: flex; align-items: baseline; gap: 6px; margin: 0; }
+  .plan__tag { color: var(--ink-soft); font-size: 0.93rem; margin: 4px 0 18px; min-height: 2.8em; }
+  .plan--hl .plan__tag, .plan--hl .plan__per, .plan--hl .plan__gross, .plan--hl .plan__keys dt { color: #aab5c3; }
+  .plan__price { display: flex; align-items: baseline; gap: 6px; margin: 0 0 20px; }
   .plan__amount { font-family: var(--font-head); font-size: 3.2rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-  .plan__per { color: var(--ink-soft); font-weight: 500; }
-  .plan__meta { font-size: 0.85rem; color: var(--ink-soft); margin: 8px 0 22px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
-  .plan--hl .plan__meta { border-color: #25344a; }
+  .plan__per { color: var(--ink-soft); font-weight: 500; font-size: 0.92rem; }
 
-  .plan__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 0.97rem; }
+  .plan__keys { margin: 0; border-top: 1px solid var(--line); }
+  .plan--hl .plan__keys, .plan--hl .plan__keys div { border-color: #25344a; }
+  .plan__keys div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .plan__keys dt { color: var(--ink-soft); }
+  .plan__keys dd { margin: 0; font-weight: 650; text-align: right; }
+
+  .plan__list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; font-size: 0.93rem; }
   .plan__list li { display: flex; gap: 10px; }
   .plan__list li::before {
     content: ''; flex: none; width: 16px; height: 16px; margin-top: 0.25em;
@@ -101,19 +113,25 @@ const fmtGross = (n: number) =>
   }
   .plan--hl .plan__list li::before { filter: brightness(1.9) saturate(1.2); }
 
-  .plan__more { margin: 14px 0 24px; }
+  .plan__more { margin: 14px 0 22px; }
   .plan__more summary { cursor: pointer; font-size: 0.88rem; font-weight: 650; color: var(--accent-ink); list-style: none; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; }
   .plan__more summary::-webkit-details-marker { display: none; }
   .plan__more summary::after { content: '+'; }
   .plan__more[open] summary::after { content: '–'; }
   .plan--hl .plan__more summary { color: var(--accent); }
-  .plan__more .plan__list { margin-top: 10px; }
-  .plan__gross { font-size: 0.8rem; color: var(--ink-soft); margin: 14px 0 0; }
+  .plan__gross { font-size: 0.8rem; color: var(--ink-soft); margin: 12px 0 0; }
   .plan .btn { width: 100%; margin-top: auto; }
   .btn--outline { border-color: var(--ink); color: var(--ink); background: transparent; }
   .btn--outline:hover { background: var(--ink); color: var(--paper); }
 
-  .included { margin: 28px 0 4px; font-size: 0.92rem; color: var(--ink-soft); text-align: center; }
+  .setup {
+    margin: 24px auto 0; max-width: 760px; padding: 16px 22px; border-radius: 14px;
+    background: var(--white); border: 1px dashed var(--line);
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 24px; text-align: center;
+  }
+  .setup p { margin: 0; }
+  .setup__free strong { color: var(--ok); }
+  .included { margin: 18px 0 4px; font-size: 0.92rem; color: var(--ink-soft); text-align: center; }
   .included strong { color: var(--ink); }
   .terms { margin: 0; font-size: 0.82rem; color: var(--ink-soft); text-align: center; }
 </style>

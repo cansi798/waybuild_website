@@ -4,23 +4,25 @@ import PageHeader from '../components/PageHeader.astro';
 import Pricing from '../components/Pricing.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { addons, plans, formatEuro } from '../config/site';
+import { addons, plans, matrix, SETUP_FEE, OFFER, formatEuro } from '../config/site';
 import { faqSchema, serviceSchema } from '../lib/schema';
+import { href } from '../lib/paths';
 
-// Rechenbeispiel Jahreszahlung: 12 Monate zahlen 10
-const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
+const cheapest = Math.min(...plans.map((p) => p.monthly));
+// Erstes Jahr im Vergleich: monatlich zahlen (inkl. Einrichtung) vs. jährlich (Einrichtung entfällt)
+const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP_FEE, yearlyTotal: p.monthly * 12 }));
 ---
 
 <BaseLayout
   title="Preise & Tarife für Ihre Website im Abo"
-  description="Website-Abo ab 49 €/Monat netto. Einrichtung ab 290 €, unbegrenzte E-Mail-Postfächer, nur 12 Monate Laufzeit. Alle Tarife im Überblick."
+  description="Website-Abo ab 59 €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails und Wartung inklusive. 12 Monate Laufzeit. Alle Tarife im Vergleich."
   schema={[serviceSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
   <PageHeader
     eyebrow="Preise & Tarife"
-    title="Faire Preise."
-    lead="Fester Monatspreis. Alles inklusive. Netto zzgl. USt."
+    title={`Ab ${cheapest} € im Monat.`}
+    lead={`${OFFER} Netto zzgl. USt.`}
   />
 
   <section class="section">
@@ -29,22 +31,63 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
     </div>
   </section>
 
-  <section class="section section--alt" aria-labelledby="jahr-h">
+  <section class="section section--alt" aria-labelledby="vgl-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Vergleich</span>
+        <h2 id="vgl-h">Alle Leistungen auf einen Blick</h2>
+      </div>
+      <div class="cmpw" tabindex="0" role="region" aria-labelledby="vgl-h">
+        <table class="cmpt">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Leistung</span></th>
+              {plans.map((p) => (
+                <th scope="col" class:list={{ hl: p.highlight }}>
+                  {p.name}<span>{p.monthly} € / Monat</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {matrix.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                {row.values.map((v, i) => (
+                  <td class:list={{ hl: plans[i].highlight }}>
+                    {v === true ? <span class="yes" aria-label="enthalten">✓</span> : v === false ? <span class="no" aria-label="nicht enthalten">–</span> : v}
+                  </td>
+                ))}
+              </tr>
+            ))}
+            <tr class="cmpt__cta">
+              <th scope="row"><span class="sr-only">Anfragen</span></th>
+              {plans.map((p) => (
+                <td class:list={{ hl: p.highlight }}><a class:list={['btn', p.highlight ? 'btn--primary' : 'btn--dark']} href={`${href('/kontakt/')}?tarif=${p.id}`}>{p.name}</a></td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="jahr-h">
     <div class="wrap grid grid--2 split">
       <div>
         <span class="eyebrow">Jahreszahlung</span>
-        <h2 id="jahr-h">12 Monate nutzen, 10 bezahlen</h2>
-        <p class="lead">Jährlich zahlen, 2 Monate sparen.</p>
+        <h2 id="jahr-h">Jährlich zahlen: 0 € Einrichtung</h2>
+        <p class="lead">Sie sparen {formatEuro(SETUP_FEE)} im ersten Jahr.</p>
       </div>
       <table class="tbl">
-        <caption class="sr-only">Jahrespreise netto</caption>
-        <thead><tr><th scope="col">Tarif</th><th scope="col">Monatlich × 12</th><th scope="col">Jährlich</th></tr></thead>
+        <caption class="sr-only">Kosten im ersten Jahr, netto</caption>
+        <thead><tr><th scope="col">1. Jahr</th><th scope="col">Monatlich</th><th scope="col">Jährlich</th></tr></thead>
         <tbody>
-          {yearly.map((p) => (
+          {firstYear.map((p) => (
             <tr>
               <th scope="row">{p.name}</th>
-              <td><s>{formatEuro(p.monthly * 12)}</s></td>
-              <td><strong>{formatEuro(p.year)}</strong></td>
+              <td><s>{formatEuro(p.monthlyTotal)}</s></td>
+              <td><strong>{formatEuro(p.yearlyTotal)}</strong></td>
             </tr>
           ))}
         </tbody>
@@ -77,6 +120,27 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
   .tbl tbody tr:last-child > * { border-bottom: 0; }
   .tbl s { color: var(--ink-soft); }
   .tbl strong { color: var(--ok); }
+  .cmpw { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--white); }
+  .cmpt { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 0.95rem; }
+  .cmpt th, .cmpt td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: center; }
+  .cmpt tbody th { text-align: left; font-weight: 500; color: var(--ink-soft); position: sticky; left: 0; background: var(--white); }
+  .cmpt thead th { font-family: var(--font-head); font-size: 1.15rem; padding-top: 22px; }
+  .cmpt thead th span { display: block; font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); }
+  .cmpt .hl { background: rgb(255 90 31 / 7%); }
+  .cmpt td { font-weight: 600; }
+  .cmpt .yes { color: var(--ok); font-weight: 800; }
+  .cmpt .no { color: var(--line); }
+  .cmpt__cta td, .cmpt__cta th { border-bottom: 0; padding-block: 20px; }
+  .cmpt__cta .btn { min-height: 42px; padding: 0.5em 1.1em; font-size: 0.92rem; }
+  /* Mobil: alle 3 Tarife nebeneinander, ohne seitliches Scrollen */
+  @media (max-width: 700px) {
+    .cmpt { min-width: 0; font-size: 0.8rem; table-layout: fixed; }
+    .cmpt th, .cmpt td { padding: 10px 4px; }
+    .cmpt tbody th { width: 34%; padding-left: 10px; position: static; hyphens: auto; }
+    .cmpt thead th { font-size: 0.9rem; }
+    .cmpt thead th span { font-size: 0.72rem; }
+    .cmpt__cta .btn { min-height: 38px; padding: 0.4em 0.5em; font-size: 0.75rem; width: 100%; }
+  }
   .addons { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
   .addons li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .addons strong { white-space: nowrap; }

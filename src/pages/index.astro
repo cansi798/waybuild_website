@@ -10,11 +10,14 @@ import References from '../components/References.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { faqSchema, serviceSchema } from '../lib/schema';
+import { plans, OFFER } from '../config/site';
+
+const cheapest = Math.min(...plans.map((p) => p.monthly));
 ---
 
 <BaseLayout
   title="Website mieten im Abo – individuell & betreut | Waybuild"
-  description="Individuelle Website im Abo ab 49 €/Monat netto: Hosting, Domain & unbegrenzte E-Mails inklusive. Kein WordPress, 12 Monate Laufzeit, live in 14 Tagen."
+  description="Individuelle Website im Abo ab 59 €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails & Wartung inklusive. Kein WordPress, live in 14 Tagen."
   schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />
@@ -24,8 +27,8 @@ import { faqSchema, serviceSchema } from '../lib/schema';
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Transparente Preise</span>
-        <h2 id="preise-h">Ein Preis. Alles drin.</h2>
-        <p class="lead">Fester Monatspreis. Keine versteckten Kosten.</p>
+        <h2 id="preise-h">Ihre Website ab {cheapest} € im Monat.</h2>
+        <p class="lead">{OFFER}</p>
       </div>
       <Pricing />
     </div>

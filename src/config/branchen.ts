@@ -1,6 +1,10 @@
 // Branchen-Landingpages: /website-fuer/<slug>/
 // Jede Seite rankt auf "Website für <Branche>" und führt direkt zum passenden Tarif.
-import type { IconName } from './site';
+import { plans, type IconName } from './site';
+
+// Preise immer aus der Tarif-Konfiguration – nie fest in Texte schreiben
+const ab = Math.min(...plans.map((p) => p.monthly));
+const business = plans.find((p) => p.id === 'business')!.monthly;
 
 export type Branche = {
   slug: string;
@@ -25,7 +29,7 @@ export const branchen: Branche[] = [
     slug: 'handwerker',
     name: 'Handwerker',
     label: 'Handwerk',
-    title: 'Website für Handwerker – im Abo ab 49 €',
+    title: `Website für Handwerker – im Abo ab ${ab} €`,
     description: 'Website für Handwerksbetriebe im Abo: individuell, mobil, lokal bei Google gefunden. Mit Anfrageformular, E-Mails & Hosting. Live in 14 Tagen.',
     claim: 'Mehr Aufträge aus der Region – ohne Technik-Stress.',
     pains: ['Keine Zeit für die Website', 'Kunden finden Sie nicht bei Google', 'Veraltete Seite schreckt ab'],
@@ -46,7 +50,7 @@ export const branchen: Branche[] = [
     slug: 'arztpraxen',
     name: 'Arztpraxen',
     label: 'Arztpraxen',
-    title: 'Website für Arztpraxen – im Abo ab 49 €',
+    title: `Website für Arztpraxen – im Abo ab ${ab} €`,
     description: 'Praxis-Website im Abo: Öffnungszeiten, Leistungen, Online-Terminbuchung, barrierearm und DSGVO-freundlich. Hosting & E-Mail inklusive.',
     claim: 'Weniger Anrufe am Empfang. Mehr Zeit für Patienten.',
     pains: ['Telefon steht nicht still', 'Öffnungszeiten sind veraltet', 'Datenschutz verunsichert'],
@@ -89,7 +93,7 @@ export const branchen: Branche[] = [
     name: 'Kanzleien & Steuerberater',
     label: 'Kanzleien',
     title: 'Website für Kanzleien & Steuerberater',
-    description: 'Seriöse Kanzlei-Website im Abo: Rechtsgebiete, Team, Mandantenanfrage. Individuell, schnell, ohne Cookie-Banner. Ab 89 € netto im Monat.',
+    description: `Seriöse Kanzlei-Website im Abo: Rechtsgebiete, Team, Mandantenanfrage. Individuell, schnell, ohne Cookie-Banner. Ab ${business} € netto im Monat.`,
     claim: 'Seriös. Klar. Vertrauen ab dem ersten Klick.',
     pains: ['Website wirkt austauschbar', 'Mandanten finden nicht das Rechtsgebiet', 'Pflichtangaben sind unübersichtlich'],
     features: [
@@ -131,7 +135,7 @@ export const branchen: Branche[] = [
     name: 'Friseure & Kosmetikstudios',
     label: 'Beauty & Friseur',
     title: 'Website für Friseure & Kosmetik – im Abo',
-    description: 'Salon-Website im Abo: Leistungen, Preise, Online-Termine – modern und mobil. Hosting, Domain & E-Mails inklusive. Ab 49 € netto im Monat.',
+    description: `Salon-Website im Abo: Leistungen, Preise, Online-Termine – modern und mobil. Hosting, Domain & E-Mails inklusive. Ab ${ab} € netto im Monat.`,
     claim: 'Ihr Salon, so schön online wie vor Ort.',
     pains: ['Termine nur per Telefon', 'Preise sind nirgends zu finden', 'Instagram allein reicht nicht'],
     features: [

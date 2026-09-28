@@ -34,71 +34,60 @@ export const references: { name: string; branche: string; url?: string; text: st
 export const VAT_RATE = 0.19;
 
 export type Plan = {
-  id: string;
+  id: 'start' | 'business' | 'premium';
   name: string;
+  /** Für wen – ein kurzer Satz */
   tagline: string;
   setup: number;
   monthly: number;
   highlight?: boolean;
+  /** Automatisch aus der Leistungsmatrix erzeugt (für Karten-Details, llms.txt usw.) */
   features: string[];
 };
 
-// Alle Preise netto (B2B) zzgl. gesetzl. USt.
-// Die ersten 4 features sind sofort sichtbar, der Rest steckt unter "Alle Leistungen".
-export const plans: Plan[] = [
-  {
-    id: 'start',
-    name: 'Start',
-    tagline: 'Für Selbstständige',
-    setup: 290,
-    monthly: 49,
-    features: [
-      'Bis 5 Seiten',
-      'Individuelles Design',
-      'Unbegrenzte Postfächer',
-      '30 Min. Änderungen / Monat',
-      'Hosting in Deutschland',
-      '.de-Domain & SSL',
-      'Technisches SEO',
-      'Antwort in 48 Std.',
-    ],
-  },
-  {
-    id: 'business',
-    name: 'Business',
-    tagline: 'Für lokale Unternehmen',
-    setup: 590,
-    monthly: 89,
-    highlight: true,
-    features: [
-      'Bis 12 Seiten',
-      'Lokales SEO & Google-Profil',
-      'Unbegrenzte Postfächer',
-      '90 Min. Änderungen / Monat',
-      'Alles aus Start',
-      'Blog / News',
-      'Anfrage- & Terminformulare',
-      'Antwort in 24 Std.',
-    ],
-  },
-  {
-    id: 'premium',
-    name: 'Premium',
-    tagline: 'Für Wachstum',
-    setup: 1190,
-    monthly: 169,
-    features: [
-      'Unbegrenzte Seiten',
-      'Monatliche SEO-Betreuung',
-      'Unbegrenzte Postfächer',
-      '4 Std. Änderungen / Monat',
-      'Alles aus Business',
-      'Optimierung für KI-Suchen',
-      'Zweite Sprache inklusive',
-      'Antwort in 4 Std. (werktags)',
-    ],
-  },
+/** Einheitliche Einrichtungsgebühr – entfällt bei jährlicher Zahlung. */
+export const SETUP_FEE = 490;
+
+/** Das Angebot in einem Satz. */
+export const OFFER = 'Design, Hosting, Domain, E-Mail, Wartung. Alles drin.';
+
+/**
+ * Leistungsmatrix: EINE Quelle für Tarifkarten, Vergleichstabelle und alle Texte.
+ * Werte je Tarif [Start, Business, Premium]: true = enthalten, false = nicht enthalten, Text = Umfang.
+ * Die ersten KEY_ROWS Zeilen sind die Unterschiede – sie stehen sichtbar auf jeder Karte.
+ */
+export const KEY_ROWS = 4;
+export const matrix: { label: string; values: [string | boolean, string | boolean, string | boolean] }[] = [
+  { label: 'Seiten', values: ['bis 5', 'bis 12', 'unbegrenzt'] },
+  { label: 'Änderungen / Monat', values: ['30 Min.', '90 Min.', '4 Std.'] },
+  { label: 'SEO', values: ['Technisch', 'Lokal + Google-Profil', 'Laufende Betreuung'] },
+  { label: 'Antwortzeit', values: ['48 Std.', '24 Std.', '4 Std.'] },
+  { label: 'Individuelles Design', values: [true, true, true] },
+  { label: 'Unbegrenzte E-Mail-Postfächer', values: [true, true, true] },
+  { label: 'Hosting in Deutschland, .de-Domain, SSL', values: [true, true, true] },
+  { label: 'Backups, Updates & Sicherheit', values: [true, true, true] },
+  { label: 'Kontaktformular', values: [true, true, true] },
+  { label: 'Blog / News', values: [false, true, true] },
+  { label: 'Anfrage- & Terminformulare', values: [false, true, true] },
+  { label: 'Optimierung für KI-Suchen', values: [false, false, true] },
+  { label: 'Zweite Sprache', values: [false, false, true] },
+  { label: 'Monatlicher SEO-Report', values: [false, false, true] },
 ];
+
+const planBase = [
+  { id: 'start', name: 'Start', tagline: 'Für Selbstständige und kleine Betriebe', monthly: 59 },
+  { id: 'business', name: 'Business', tagline: 'Für Unternehmen, die lokal gefunden werden wollen', monthly: 99, highlight: true },
+  { id: 'premium', name: 'Premium', tagline: 'Für Wachstum mit laufender Betreuung', monthly: 199 },
+] as const;
+
+// Alle Preise netto (B2B) zzgl. gesetzl. USt.
+export const plans: Plan[] = planBase.map((p, i) => ({
+  ...p,
+  setup: SETUP_FEE,
+  features: matrix
+    .filter((row) => row.values[i] !== false)
+    .map((row) => (row.values[i] === true ? row.label : `${row.label}: ${row.values[i]}`)),
+}));
 
 export const allPlansInclude = [
   'Unbegrenzte E-Mail-Postfächer',
@@ -191,7 +180,7 @@ export const faqs = [
   },
   {
     q: 'Wie lange ist die Vertragslaufzeit?',
-    a: 'Die Mindestlaufzeit beträgt 12 Monate. Danach ist das Abo monatlich kündbar. Bei jährlicher Zahlung schenken wir Ihnen 2 Monatsbeiträge.',
+    a: 'Die Mindestlaufzeit beträgt 12 Monate. Danach ist das Abo monatlich kündbar. Bei jährlicher Zahlung entfällt die Einrichtungsgebühr von 490 € komplett.',
   },
   {
     q: 'Wie viele E-Mail-Adressen sind enthalten?',

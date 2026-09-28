@@ -1,7 +1,7 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Preise & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, plans, usps, faqs, allPlansInclude, isMissing } from '../config/site';
+import { company, plans, usps, faqs, allPlansInclude, isMissing, SETUP_FEE, OFFER } from '../config/site';
 import { absolute } from '../lib/paths';
 import { branchen } from '../config/branchen';
 import { getCollection } from 'astro:content';
@@ -16,9 +16,10 @@ export const GET: APIRoute = async ({ site }) => {
     `> ${company.slogan} Websites im Abo für kleine und mittlere Unternehmen in Deutschland – ohne WordPress, mit Hosting, Domain, unbegrenzten E-Mail-Postfächern und Wartung zum festen Monatspreis.`,
     '',
     '## Tarife (Preise netto zzgl. 19 % USt.)',
-    ...plans.map((p) => `- ${p.name} (${p.tagline}): ${p.monthly} € / Monat, Einrichtung ${p.setup} € einmalig. ${list(p.features)}.`),
+    `Angebot: ${OFFER}`,
+    ...plans.map((p) => `- ${p.name} (${p.tagline}): ${p.monthly} € / Monat. ${list(p.features)}.`),
     `- In jedem Tarif: ${allPlansInclude.join(', ')}.`,
-    '- Mindestlaufzeit 12 Monate, danach monatlich kündbar. Jahreszahlung: 2 Monate gratis.',
+    `- Einrichtung einmalig ${SETUP_FEE} € für alle Tarife – entfällt bei jährlicher Zahlung. Mindestlaufzeit 12 Monate, danach monatlich kündbar.`,
     '',
     '## Besonderheiten',
     ...usps.map((u) => `- ${u.title}: ${u.text}`),

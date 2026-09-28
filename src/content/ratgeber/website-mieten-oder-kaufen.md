@@ -21,8 +21,8 @@ Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 
 
 | | Kaufen | Mieten (z. B. Waybuild Business) |
 |---|---|---|
-| Start | 1.500–3.000 € | 590 € Einrichtung |
-| Laufend | Hosting, Wartung, Änderungen extra | 89 € / Monat, alles inklusive |
+| Start | 1.500–3.000 € | 490 € Einrichtung (0 € bei Jahreszahlung) |
+| Laufend | Hosting, Wartung, Änderungen extra | 99 € / Monat, alles inklusive |
 | Technik-Aufwand | bei Ihnen | beim Anbieter |
 | Planbarkeit | schwankend | fester Betrag, voll absetzbar |
 
