@@ -3,8 +3,11 @@
 import type { APIRoute } from 'astro';
 import { company, plans, usps, faqs, allPlansInclude, isMissing } from '../config/site';
 import { absolute } from '../lib/paths';
+import { branchen } from '../config/branchen';
+import { getCollection } from 'astro:content';
 
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
+  const artikel = await getCollection('ratgeber');
   const url = (p: string) => absolute(p, site);
   const list = (items: string[]) => items.join(', ').replace(/\.$/, '');
   const lines = [
@@ -29,6 +32,12 @@ export const GET: APIRoute = ({ site }) => {
     `- [Preise](${url('/preise/')}): Tarife, Jahrespreise, Zusatzleistungen`,
     `- [Über uns](${url('/ueber-uns/')})`,
     `- [Kontakt](${url('/kontakt/')}): kostenloses Erstgespräch`,
+    '',
+    '## Branchen',
+    ...branchen.map((b) => `- [Website für ${b.name}](${url(`/website-fuer/${b.slug}/`)}): ${b.claim}`),
+    '',
+    '## Ratgeber',
+    ...artikel.map((a) => `- [${a.data.title}](${url(`/ratgeber/${a.id}/`)}): ${a.data.kurz.join(' ')}`),
     '',
     '## Kontakt',
     `- E-Mail: ${company.email}`,

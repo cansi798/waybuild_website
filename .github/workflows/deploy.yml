@@ -20,6 +20,8 @@ jobs:
     env:
       SITE: https://cansi798.github.io
       BASE: /waybuild_website
+      # Formular-Versand: Web3Forms-Access-Key als Repository-Variable WEB3FORMS_KEY hinterlegen
+      PUBLIC_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

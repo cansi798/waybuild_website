@@ -43,6 +43,14 @@ import Hint from '../components/Hint.astro';
         Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.
       </p>
 
+      {import.meta.env.PUBLIC_WEB3FORMS_KEY && (
+        <p>
+          Für den Versand des Kontaktformulars nutzen wir den Dienst Web3Forms. Ihre Formularangaben werden dabei an
+          Web3Forms übermittelt und von dort per E-Mail an uns weitergeleitet.
+          {/* TODO rechtlich prüfen: Anbieterangaben, Serverstandort, AV-Vertrag */}
+        </p>
+      )}
+
       <h2>5. Ihre Rechte</h2>
       <p>
         Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,

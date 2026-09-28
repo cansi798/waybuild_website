@@ -4,7 +4,7 @@ Website der **Waybuild UG (haftungsbeschränkt)** – Websites im Abo.
 Gebaut mit [Astro](https://astro.build) als rein statische Seite, deployed per GitHub Actions auf GitHub Pages.
 
 **Live:** https://cansi798.github.io/waybuild_website/
-**CI-Handbuch:** https://cansi798.github.io/waybuild_website/ci-handbuch/
+**CI-Handbuch:** nur lokal unter `intern/Waybuild-CI-Handbuch.pdf` (Ordner `intern/` wird nicht gepusht)
 
 ## Inhalte pflegen
 
@@ -80,7 +80,7 @@ Prüfung: `npm run seo` (läuft auch bei jedem Deploy – bei Fehlern wird nicht
 
 - Title, Description, Canonical, Open Graph & Twitter Card pro Seite (`src/layouts/BaseLayout.astro`)
 - JSON-LD: `Organization`, `WebSite`, `Service` mit `Offer`s (netto), `FAQPage`, `BreadcrumbList` (`src/lib/schema.ts`)
-- `sitemap-index.xml` (ohne Impressum/Datenschutz/CI-Handbuch), `robots.txt`
+- `sitemap-index.xml` (ohne Rechtstexte, Checkliste, Danke-Seite), `robots.txt`
 - Sichtbare Breadcrumbs, `lastmod` in der Sitemap, `max-image-preview:large`
 - `/llms.txt` für KI-Suchen (ChatGPT, Perplexity, Gemini), automatisch aus der Konfiguration erzeugt
 - Mit vollständiger Adresse wird zusätzlich `ProfessionalService` (lokales Unternehmen) ausgegeben

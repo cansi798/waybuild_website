@@ -6,8 +6,10 @@ import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
 
-// Optionaler Formular-Dienst (z. B. Web3Forms/Formspree). Ohne Endpoint öffnet sich das E-Mail-Programm.
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+// Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
+// Ohne Key öffnet sich als Rückfall das E-Mail-Programm. Key setzen: GitHub → Settings → Variables → WEB3FORMS_KEY
+const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 ---
 
 <BaseLayout
@@ -24,7 +26,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 
   <section class="section">
     <div class="wrap contact">
-      <form class="form card" id="contact-form" data-endpoint={endpoint} data-mailto={company.email} novalidate>
+      <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate>
         <fieldset class="tarife">
           <legend>Tarif</legend>
           <div class="tarife__opts">
@@ -56,7 +58,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
           <li><strong>20 Min.</strong> Erstgespräch</li>
         </ol>
         {!endpoint && (
-          <Hint label="Formular-Versanddienst" where=".github/workflows/deploy.yml → PUBLIC_FORM_ENDPOINT">
+          <Hint label="Formular-Versand (Web3Forms-Key)" where="GitHub → Settings → Secrets and variables → Actions → Variables → WEB3FORMS_KEY">
             {' '}– aktuell öffnet sich nur das E-Mail-Programm.
           </Hint>
         )}
@@ -107,16 +109,26 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
         return;
       }
       status.textContent = 'Wird gesendet …';
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...data, subject: 'Anfrage Website-Abo' }),
+          body: JSON.stringify({
+            ...data,
+            access_key: form.dataset.key,
+            subject: `Anfrage Website-Abo${data.tarif ? ` – ${data.tarif}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
+            from_name: 'Waybuild Website',
+            replyto: data.email,
+          }),
         });
-        if (!res.ok) throw new Error(String(res.status));
-        form.reset();
-        status.textContent = 'Vielen Dank! Wir melden uns innerhalb eines Werktags.';
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error(String(res.status));
+        // Abschluss der Journey: Danke-Seite mit nächsten Schritten
+        location.href = `${form.dataset.thanks}?name=${encodeURIComponent(data.name.split(' ')[0])}`;
       } catch {
+        button.disabled = false;
         status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${form.dataset.mailto}.`;
       }
     });

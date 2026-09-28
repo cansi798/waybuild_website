@@ -1,0 +1,63 @@
+---
+// Abschluss der Customer Journey: Bestätigung + nächste Schritte + sinnvolle Wartezeit-Inhalte.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { company } from '../config/site';
+import { href } from '../lib/paths';
+---
+
+<BaseLayout title="Vielen Dank für Ihre Anfrage" description="Ihre Anfrage ist bei uns angekommen." noindex hideMobileCta>
+  <section class="section thanks">
+    <div class="wrap">
+      <span class="thanks__icon" aria-hidden="true">✓</span>
+      <h1>Danke<span data-name></span>! Ihre Anfrage ist da.</h1>
+      <p class="lead">Wir melden uns bis <strong data-deadline>zum nächsten Werktag</strong> – persönlich.</p>
+
+      <ol class="next">
+        <li class="is-done"><Icon name="mail" /><strong>Anfrage gesendet</strong><span>Erledigt</span></li>
+        <li><Icon name="chat" /><strong>Wir melden uns</strong><span>per E-Mail oder Telefon</span></li>
+        <li><Icon name="calendar" /><strong>Erstgespräch</strong><span>20 Min., kostenlos</span></li>
+        <li><Icon name="rocket" /><strong>Live in 14 Tagen</strong><span>nach Erhalt der Inhalte</span></li>
+      </ol>
+
+      <div class="prep card">
+        <h2>Zur Vorbereitung (optional)</h2>
+        <ul>
+          <li>Logo und ggf. Farben Ihres Unternehmens</li>
+          <li>Bestehende Domain / Website, falls vorhanden</li>
+          <li>2–3 Websites, die Ihnen gefallen</li>
+        </ul>
+        <p class="muted">Einfach als Antwort auf unsere E-Mail senden: <a href={`mailto:${company.email}`}>{company.email}</a></p>
+      </div>
+
+      <p class="back"><a href={href('/')}>Zur Startseite</a> · <a href={href('/ratgeber/')}>Ratgeber lesen</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const name = new URLSearchParams(location.search).get('name');
+  if (name) document.querySelector('[data-name]')!.textContent = `, ${name.slice(0, 30)}`;
+  // Nächsten Werktag berechnen (Sa/So überspringen)
+  const d = new Date();
+  do d.setDate(d.getDate() + 1); while (d.getDay() === 0 || d.getDay() === 6);
+  document.querySelector('[data-deadline]')!.textContent = d.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+</script>
+
+<style>
+  .thanks { text-align: center; }
+  .thanks .lead { margin-inline: auto; }
+  .thanks__icon { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ok); color: #fff; font-size: 2rem; font-weight: 800; margin-bottom: 20px; }
+  .thanks h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+  .next { list-style: none; padding: 0; margin: 40px auto; max-width: 900px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 800px) { .next { grid-template-columns: repeat(4, 1fr); } }
+  .next li { display: grid; justify-items: center; gap: 6px; padding: 20px 12px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; color: var(--ink-soft); font-size: 0.9rem; }
+  .next li strong { color: var(--ink); font-size: 1rem; }
+  .next li.is-done { border-color: var(--ok); }
+  .next li.is-done :global(.icon) { color: var(--ok); }
+  .prep { max-width: 560px; margin: 0 auto; text-align: left; }
+  .prep h2 { font-size: 1.2rem; }
+  .prep ul { padding-left: 1.2em; margin: 0 0 12px; }
+  .muted { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
+  .back { margin-top: 32px; }
+</style>

@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getCollection } from 'astro:content';
+import { href } from '../../lib/paths';
+
+const artikel = (await getCollection('ratgeber')).sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime());
+---
+
+<BaseLayout
+  title="Ratgeber: Website, Kosten & Technik"
+  description="Kompakte Ratgeber für kleine Unternehmen: Website mieten oder kaufen, was eine Website kostet und ob WordPress die richtige Wahl ist."
+  breadcrumb={[{ name: 'Ratgeber', path: '/ratgeber/' }]}
+>
+  <PageHeader eyebrow="Ratgeber" title="Kurz erklärt." lead="Das Wichtigste zu Websites – in 3 Minuten gelesen." />
+  <section class="section">
+    <div class="wrap">
+      <ul class="al">
+        {artikel.map((a) => (
+          <li>
+            <a class="al__card" href={href(`/ratgeber/${a.id}/`)}>
+              <h2>{a.data.title}</h2>
+              <p>{a.data.kurz[0]}</p>
+              <span>Lesen →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .al { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  @media (min-width: 900px) { .al { grid-template-columns: repeat(3, 1fr); } }
+  .al__card { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease; }
+  .al__card:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .al__card h2 { font-size: 1.3rem; margin: 0; }
+  .al__card p { color: var(--ink-soft); margin: 0; }
+  .al__card span { margin-top: auto; font-weight: 650; color: var(--accent-ink); }
+</style>

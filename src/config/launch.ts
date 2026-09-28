@@ -35,7 +35,7 @@ const manual: Todo[] = [
   { title: 'Website entwickelt & online', detail: 'Alle Seiten mobil & Desktop, automatisches Deployment per GitHub Actions.', where: 'github.com/cansi798/waybuild_website', done: true, priority: 'pflicht' },
   { title: 'SEO-Grundlagen', detail: 'Meta-Daten, strukturierte Daten (JSON-LD), Sitemap, Lighthouse SEO 100.', where: 'src/layouts/BaseLayout.astro, src/lib/schema.ts', done: true, priority: 'pflicht' },
   { title: 'Favicon & Social-Media-Vorschau', detail: 'Icons für Browser, iPhone, Android sowie Vorschaubild für WhatsApp/LinkedIn.', where: 'public/', done: true, priority: 'wichtig' },
-  { title: 'CI-Handbuch', detail: 'Logo, Farben, Schriften, Tonalität, Visitenkarte, E-Mail-Signatur.', where: '/ci-handbuch/', done: true, priority: 'wichtig' },
+  { title: 'CI-Handbuch', detail: 'Logo, Farben, Schriften, Tonalität, Visitenkarte, E-Mail-Signatur – nur intern als PDF.', where: 'intern/Waybuild-CI-Handbuch.pdf (nicht in Git)', done: true, priority: 'wichtig' },
   {
     title: 'Domain registrieren (z. B. waybuild.de)',
     detail: 'Danach Umzug von GitHub Pages auf die eigene Domain – Anleitung in der README.',
@@ -65,10 +65,10 @@ const manual: Todo[] = [
     priority: 'pflicht',
   },
   {
-    title: 'Kontaktformular an einen Versanddienst anbinden',
-    detail: 'Aktuell öffnet das Formular nur das E-Mail-Programm. Mit Web3Forms/Formspree kommen Anfragen direkt an.',
-    where: '.github/workflows/deploy.yml → PUBLIC_FORM_ENDPOINT',
-    done: false,
+    title: 'Kontaktformular aktivieren (Web3Forms)',
+    detail: 'Auf web3forms.com mit kontakt@waybuild.de einen kostenlosen Access-Key holen und in GitHub als Variable WEB3FORMS_KEY speichern. Danach kommen Anfragen direkt per E-Mail an.',
+    where: 'GitHub → Settings → Secrets and variables → Actions → Variables',
+    done: Boolean(import.meta.env.PUBLIC_WEB3FORMS_KEY),
     priority: 'wichtig',
   },
   {

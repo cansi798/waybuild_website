@@ -1,0 +1,101 @@
+---
+// Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Tarif-Empfehlung → Anfrage.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { plans, formatEuro, company } from '../../config/site';
+import { href, absolute } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const all = await getCollection('ratgeber');
+  return all.map((entry) => ({ params: { id: entry.id }, props: { entry, all } }));
+}
+
+const { entry, all } = Astro.props as { entry: CollectionEntry<'ratgeber'>; all: CollectionEntry<'ratgeber'>[] };
+const { Content } = await render(entry);
+const plan = plans.find((p) => p.id === entry.data.tarif)!;
+const more = all.filter((a) => a.id !== entry.id);
+const datum = entry.data.datum.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    datePublished: entry.data.datum.toISOString(),
+    dateModified: entry.data.datum.toISOString(),
+    inLanguage: 'de-DE',
+    mainEntityOfPage: absolute(`/ratgeber/${entry.id}/`, Astro.site),
+    image: absolute('/og-image.png', Astro.site),
+    author: { '@type': 'Organization', name: company.legalName, url: absolute('/', Astro.site) },
+    publisher: { '@id': `${absolute('/', Astro.site)}#organization` },
+  },
+];
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  schema={schema}
+  breadcrumb={[{ name: 'Ratgeber', path: '/ratgeber/' }, { name: entry.data.title, path: `/ratgeber/${entry.id}/` }]}
+>
+  <article class="section art">
+    <div class="wrap art__wrap">
+      <header>
+        <span class="eyebrow">Ratgeber · <time datetime={entry.data.datum.toISOString()}>{datum}</time></span>
+        <h1>{entry.data.title}</h1>
+      </header>
+
+      <aside class="tldr" aria-label="Kurzfassung">
+        <p class="tldr__h">Das Wichtigste in Kürze</p>
+        <ul>{entry.data.kurz.map((k) => <li>{k}</li>)}</ul>
+      </aside>
+
+      <div class="prose art__body">
+        <Content />
+      </div>
+
+      <aside class="art__cta" aria-labelledby="art-cta-h">
+        <div>
+          <p class="art__cta-label">Passend zum Thema</p>
+          <h2 id="art-cta-h">Tarif {plan.name}: {plan.monthly} € / Monat</h2>
+          <p>netto · einmalig {formatEuro(plan.setup)} Einrichtung · {plan.features.slice(0, 3).join(' · ')}</p>
+        </div>
+        <div class="art__cta-btns">
+          <a class="btn btn--primary" href={`${href('/kontakt/')}?tarif=${plan.id}`}>Kostenloses Erstgespräch</a>
+          <a class="btn btn--ghost" href={href('/preise/')}>Alle Tarife</a>
+        </div>
+      </aside>
+
+      {more.length > 0 && (
+        <nav class="art__more" aria-label="Weitere Artikel">
+          <p>Weiterlesen</p>
+          <ul>{more.map((m) => <li><a href={href(`/ratgeber/${m.id}/`)}>{m.data.title}</a></li>)}</ul>
+        </nav>
+      )}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .art__wrap { max-width: 760px; }
+  .art h1 { font-size: clamp(2rem, 5vw, 3rem); }
+  .tldr { margin: 24px 0 36px; padding: 22px 24px; border-radius: 16px; background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--accent); }
+  .tldr__h { font-weight: 700; margin: 0 0 8px; }
+  .tldr ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+  .art__body :global(h2) { margin-top: 1.8em; }
+  .art__body :global(table) { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.95rem; background: var(--white); border-radius: 12px; overflow: hidden; }
+  .art__body :global(th), .art__body :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .art__body :global(thead th) { background: var(--paper-2); font-size: 0.85rem; }
+  .art__body :global(li) { margin-bottom: 0.4em; }
+  @media (max-width: 560px) { .art__body :global(table) { display: block; overflow-x: auto; } }
+  .art__cta { margin: 48px 0 32px; padding: clamp(22px, 4vw, 32px); border-radius: 22px; background: var(--ink); color: var(--paper); display: grid; gap: 20px; }
+  .art__cta h2 { font-size: 1.5rem; margin: 4px 0 6px; }
+  .art__cta p { margin: 0; color: #aab5c3; font-size: 0.92rem; }
+  .art__cta-label { color: var(--accent) !important; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.78rem !important; }
+  .art__cta-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .art__cta .btn--ghost { color: var(--paper); }
+  @media (max-width: 480px) { .art__cta-btns .btn { flex: 1 1 100%; } }
+  .art__more p { font-weight: 700; margin-bottom: 8px; }
+  .art__more ul { margin: 0; padding-left: 1.2em; }
+</style>
