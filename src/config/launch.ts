@@ -10,7 +10,9 @@ export type Todo = {
   priority: 'pflicht' | 'wichtig' | 'später';
 };
 
-const companyFields: [keyof typeof company, string, string][] = [
+type TextField = Exclude<keyof typeof company, 'sameAs'>;
+
+const companyFields: [TextField, string, string][] = [
   ['managingDirector', 'Name der Geschäftsführung', 'Pflichtangabe im Impressum und in jeder geschäftlichen E-Mail.'],
   ['street', 'Straße & Hausnummer', 'Ladungsfähige Anschrift – Pflicht im Impressum (§ 5 DDG).'],
   ['zip', 'Postleitzahl', 'Teil der Anschrift im Impressum.'],
@@ -96,6 +98,20 @@ const manual: Todo[] = [
     where: 'search.google.com/search-console',
     done: false,
     priority: 'später',
+  },
+  {
+    title: 'Social-Profile & Google-Unternehmensprofil verknüpfen',
+    detail: 'Links in company.sameAs eintragen – Google verbindet dann Website und Profile zu einer Marke.',
+    where: 'src/config/site.ts → company.sameAs',
+    done: company.sameAs.length > 0,
+    priority: 'später',
+  },
+  {
+    title: 'Firmensitz / Einzugsgebiet für lokales SEO',
+    detail: 'Sobald die Adresse eingetragen ist, meldet die Seite Waybuild automatisch als lokales Unternehmen (ProfessionalService) an Google. Optional: Stadt in Titel & Texte aufnehmen („Webdesign-Abo in …“).',
+    where: 'src/config/site.ts → company, src/pages/index.astro',
+    done: false,
+    priority: 'wichtig',
   },
   {
     title: 'Finales Logo (optional)',

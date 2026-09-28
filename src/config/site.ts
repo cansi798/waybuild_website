@@ -23,6 +23,8 @@ export const company = {
   registerCourt: 'TODO', // z. B. 'Amtsgericht Berlin-Charlottenburg'
   registerNumber: 'TODO', // z. B. 'HRB 123456 B'
   vatId: 'TODO', // z. B. 'DE123456789'
+  /** Links zu Google-Unternehmensprofil, LinkedIn, Instagram … – stärkt die Marke bei Google (JSON-LD sameAs). */
+  sameAs: [] as string[],
 };
 
 /** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
@@ -174,6 +176,10 @@ export const steps: { icon: IconName; title: string; short: string; text: string
 ];
 
 export const faqs = [
+  {
+    q: 'Was bedeutet „Website mieten“?',
+    a: 'Statt einmalig mehrere tausend Euro zu zahlen, zahlen Sie eine kleine Einrichtungsgebühr und danach einen festen Monatsbeitrag. Darin ist alles enthalten: individuelles Design, Hosting, Domain, E-Mail-Postfächer, Wartung und Änderungen. Die Kosten sind planbar und als Betriebsausgabe voll absetzbar.',
+  },
   {
     q: 'Warum setzt Waybuild nicht auf WordPress?',
     a: 'WordPress ist ein Baukasten für alles – und damit für nichts optimal. Wir entwickeln Ihre Website mit unserer eigenen Technologie: individuell nach Ihren Wünschen, ohne Plugins und Datenbank. Das Ergebnis ist ein Unikat, das schneller lädt, sicherer ist und besser bei Google rankt. Wenn Sie ausdrücklich WordPress wünschen, setzen wir das auf Anfrage aber gerne um.',

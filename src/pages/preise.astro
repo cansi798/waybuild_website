@@ -13,7 +13,7 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
 
 <BaseLayout
   title="Preise & Tarife für Ihre Website im Abo"
-  description="Website-Abo ab 49 €/Monat netto: Start, Business oder Premium. Einrichtung ab 290 €, unbegrenzte E-Mail-Postfächer, nur 12 Monate Laufzeit. Alle Preise transparent."
+  description="Website-Abo ab 49 €/Monat netto. Einrichtung ab 290 €, unbegrenzte E-Mail-Postfächer, nur 12 Monate Laufzeit. Alle Tarife im Überblick."
   schema={[serviceSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >

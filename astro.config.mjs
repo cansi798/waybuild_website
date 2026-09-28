@@ -12,6 +12,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
+      lastmod: new Date(),
       // Rechtstexte, 404 und internes CI-Handbuch nicht in die Sitemap
       filter: (page) => !/\/(impressum|datenschutz|agb|404|ci-handbuch|checkliste)\/?$/.test(page),
     }),

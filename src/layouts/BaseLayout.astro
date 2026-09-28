@@ -2,6 +2,9 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import headFont from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url';
+import bodyFont from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import { company, isMissing, SHOW_HINTS } from '../config/site';
 import { launchTodos } from '../config/launch';
 import { href, absolute } from '../lib/paths';
@@ -21,18 +24,25 @@ const siteRoot = absolute('/', Astro.site);
 const ogImage = absolute('/og-image.png', Astro.site);
 const fullTitle = title.includes(company.name) ? title : `${title} | ${company.name}`;
 
+const hasAddress = ![company.street, company.zip, company.city].some(isMissing);
+
 const organization = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  // Mit vollständiger Adresse zusätzlich lokales Unternehmen → Chance auf lokale Suchergebnisse
+  '@type': hasAddress ? ['Organization', 'ProfessionalService'] : 'Organization',
   '@id': `${siteRoot}#organization`,
   name: company.legalName,
   alternateName: company.name,
   url: siteRoot,
-  logo: absolute('/favicon.svg', Astro.site),
+  logo: absolute('/icon-512.png', Astro.site),
+  image: ogImage,
+  slogan: company.slogan,
+  ...(company.sameAs.length ? { sameAs: company.sameAs } : {}),
+  ...(hasAddress ? { priceRange: '€€', areaServed: { '@type': 'Country', name: 'Deutschland' } } : {}),
   email: company.email,
   ...(!isMissing(company.phone) ? { telephone: company.phone } : {}),
   // Adresse erst ausgeben, wenn sie vollständig ist – nie Platzhalter an Google melden
-  ...([company.street, company.zip, company.city].some(isMissing)
+  ...(!hasAddress
     ? {}
     : {
         address: {
@@ -79,7 +89,9 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <link rel="preload" href={headFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#0e1a2b" />
     <link rel="icon" href={href('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
@@ -96,6 +108,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Waybuild – Ihre Website. Ein Unikat. Komplett betreut." />
     <meta name="twitter:card" content="summary_large_image" />
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
@@ -104,6 +117,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
     <Header />
     <main id="main">
+      {breadcrumb && <Breadcrumbs items={breadcrumb} />}
       <slot />
     </main>
     <Footer />

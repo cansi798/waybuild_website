@@ -36,7 +36,7 @@ const fmtGross = (n: number) =>
         <p class="plan__gross">Brutto: {fmtGross(plan.monthly)} / Monat · {fmtGross(plan.setup)} Einrichtung</p>
       </details>
       <a class:list={['btn', plan.highlight ? 'btn--primary' : 'btn--outline']} href={`${href('/kontakt/')}?tarif=${plan.id}`}>
-        Anfragen
+        {plan.name} anfragen
       </a>
     </article>
   ))}
