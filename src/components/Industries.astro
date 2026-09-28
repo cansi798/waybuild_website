@@ -1,12 +1,19 @@
 ---
-const industries = ['Handwerk', 'Arztpraxen', 'Gastronomie', 'Kanzleien', 'Immobilien', 'Beauty & Friseur', 'Fitness', 'Handel', 'Dienstleister', 'Vereine'];
+import { branchen } from '../config/branchen';
+import { href } from '../lib/paths';
+
+const extra = ['Fitness', 'Handel', 'Dienstleister', 'Vereine'];
+const industries = [
+  ...branchen.map((b) => ({ label: b.label, url: href(`/website-fuer/${b.slug}/`) })),
+  ...extra.map((label) => ({ label, url: href('/website-fuer/') })),
+];
 ---
 
 <div class="ind" aria-label="Branchen, für die wir Websites entwickeln">
   <p class="ind__label">Websites für</p>
   <div class="ind__track">
-    <ul>{industries.map((i) => <li>{i}</li>)}</ul>
-    <ul aria-hidden="true">{industries.map((i) => <li>{i}</li>)}</ul>
+    <ul>{industries.map((i) => <li><a href={i.url}>{i.label}</a></li>)}</ul>
+    <ul aria-hidden="true">{industries.map((i) => <li><a href={i.url} tabindex="-1">{i.label}</a></li>)}</ul>
   </div>
 </div>
 
@@ -21,6 +28,9 @@ const industries = ['Handwerk', 'Arztpraxen', 'Gastronomie', 'Kanzleien', 'Immob
   .ind ul { flex: none; display: flex; gap: 40px; list-style: none; margin: 0; padding: 0 20px; animation: marquee 40s linear infinite; will-change: transform; }
   .ind li { font-family: var(--font-head); font-size: 1.15rem; font-weight: 600; white-space: nowrap; }
   .ind li::before { content: '◆'; color: var(--accent); font-size: 0.6em; margin-right: 40px; vertical-align: middle; }
+  .ind a { text-decoration: none; }
+  .ind a:hover { color: var(--accent-ink); }
+  .ind__track:hover ul { animation-play-state: paused; }
   @keyframes marquee { to { transform: translateX(-100%); } }
   @media (prefers-reduced-motion: reduce) { .ind ul { animation: none; } }
 </style>

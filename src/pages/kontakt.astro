@@ -43,6 +43,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
           <label>Unternehmen<input name="firma" autocomplete="organization" /></label>
         </div>
         <label><span>Nachricht <small>(optional)</small></span><textarea name="nachricht" rows="4" placeholder="z. B. Branche, bestehende Domain …"></textarea></label>
+        <input type="hidden" name="branche" value="" />
         <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label class="check">
           <input type="checkbox" name="datenschutz" required />
@@ -86,6 +87,9 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
     const tarif = new URLSearchParams(location.search).get('tarif');
     const radio = form.querySelector<HTMLInputElement>(`input[name="tarif"][value="${CSS.escape(tarif ?? '')}"]`);
     if (tarif && radio) radio.checked = true;
+    // Branche von der Branchen-Landingpage mitnehmen
+    const branche = new URLSearchParams(location.search).get('branche');
+    if (branche) (form.elements.namedItem('branche') as HTMLInputElement).value = branche.slice(0, 40);
 
     const status = form.querySelector<HTMLElement>('.form__status')!;
     form.addEventListener('submit', async (e) => {
@@ -97,7 +101,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nTarif: ${data.tarif || 'Beratung'}\n\n${data.nachricht}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nTarif: ${data.tarif || 'Beratung'}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('Anfrage Website-Abo')}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm wurde geöffnet – bitte senden Sie die Nachricht dort ab.';
         return;

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { branchen } from '../../config/branchen';
+import { plans } from '../../config/site';
+import { href } from '../../lib/paths';
+---
+
+<BaseLayout
+  title="Websites für Ihre Branche – im Abo"
+  description="Websites im Abo für Handwerker, Arztpraxen, Gastronomie, Kanzleien, Makler und Salons – individuell entwickelt, mit passender Tarif-Empfehlung."
+  breadcrumb={[{ name: 'Branchen', path: '/website-fuer/' }]}
+>
+  <PageHeader eyebrow="Branchen" title="Ihre Branche. Ihre Website." lead="Wählen Sie Ihre Branche – wir zeigen, was Ihre Website können muss." />
+  <section class="section">
+    <div class="wrap">
+      <ul class="bl">
+        {branchen.map((b) => {
+          const plan = plans.find((p) => p.id === b.plan)!;
+          return (
+            <li>
+              <a class="bl__card" href={href(`/website-fuer/${b.slug}/`)}>
+                <span class="bl__name">{b.name}</span>
+                <span class="bl__claim">{b.claim}</span>
+                <span class="bl__plan">Empfehlung: {plan.name} · {plan.monthly} € / Monat</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="bl__none">Ihre Branche ist nicht dabei? <a href={href('/kontakt/')}>Sprechen Sie uns an</a> – wir bauen für jede Branche.</p>
+    </div>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .bl { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .bl { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .bl { grid-template-columns: repeat(3, 1fr); } }
+  .bl__card { display: grid; gap: 8px; height: 100%; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease; }
+  .bl__card:hover { border-color: var(--ink); transform: translateY(-2px); }
+  .bl__name { font-family: var(--font-head); font-size: 1.35rem; font-weight: 700; }
+  .bl__claim { color: var(--ink-soft); }
+  .bl__plan { margin-top: auto; padding-top: 10px; font-size: 0.85rem; font-weight: 650; color: var(--accent-ink); }
+  .bl__plan::after { content: ' →'; }
+  .bl__none { margin: 28px 0 0; text-align: center; color: var(--ink-soft); }
+</style>

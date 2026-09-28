@@ -1,0 +1,158 @@
+---
+// Branchen-Landingpage. Journey: Problem erkennen → Lösung → passender Tarif → vorausgefüllte Anfrage.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import More from '../../components/More.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { branchen, type Branche } from '../../config/branchen';
+import { plans, usps, formatEuro } from '../../config/site';
+import { href, absolute } from '../../lib/paths';
+
+export function getStaticPaths() {
+  return branchen.map((b) => ({ params: { slug: b.slug }, props: { b } }));
+}
+
+const { b } = Astro.props as { b: Branche };
+const plan = plans.find((p) => p.id === b.plan)!;
+const contact = `${href('/kontakt/')}?tarif=${plan.id}&branche=${b.slug}`;
+const others = branchen.filter((o) => o.slug !== b.slug);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `Website für ${b.name}`,
+    serviceType: 'Webdesign & Website-Abo',
+    audience: { '@type': 'BusinessAudience', name: b.name },
+    provider: { '@id': `${absolute('/', Astro.site)}#organization` },
+    areaServed: { '@type': 'Country', name: 'Deutschland' },
+    offers: {
+      '@type': 'Offer',
+      name: `Tarif ${plan.name}`,
+      price: plan.monthly,
+      priceCurrency: 'EUR',
+      url: absolute(`/website-fuer/${b.slug}/`, Astro.site),
+      priceSpecification: { '@type': 'UnitPriceSpecification', price: plan.monthly, priceCurrency: 'EUR', unitCode: 'MON', valueAddedTaxIncluded: false },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: b.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<BaseLayout
+  title={b.title}
+  description={b.description}
+  schema={schema}
+  breadcrumb={[{ name: 'Branchen', path: '/website-fuer/' }, { name: b.name, path: `/website-fuer/${b.slug}/` }]}
+>
+  <section class="bh">
+    <div class="wrap bh__grid">
+      <div>
+        <span class="eyebrow">Website für {b.name}</span>
+        <h1>{b.claim}</h1>
+        <ul class="pains" aria-label="Kennen Sie das?">
+          {b.pains.map((p) => <li>{p}</li>)}
+        </ul>
+        <div class="bh__actions">
+          <a class="btn btn--primary" href={contact}>Kostenloses Erstgespräch</a>
+          <a class="btn btn--ghost" href="#empfehlung">Passender Tarif</a>
+        </div>
+      </div>
+      <aside class="reco" id="empfehlung" aria-labelledby="reco-h">
+        <span class="reco__label">Unsere Empfehlung für {b.name}</span>
+        <h2 id="reco-h" class="reco__name">{plan.name}</h2>
+        <p class="reco__price"><strong>{plan.monthly} €</strong> / Monat netto</p>
+        <p class="reco__setup">einmalig {formatEuro(plan.setup)} Einrichtung</p>
+        <p class="reco__why">{b.planReason}</p>
+        <ul class="reco__list">{plan.features.slice(0, 4).map((f) => <li>{f}</li>)}</ul>
+        <a class="btn btn--primary reco__btn" href={contact}>{plan.name} anfragen</a>
+        <a class="reco__all" href={href('/preise/')}>Alle Tarife vergleichen</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="feat-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Speziell für {b.name}</span>
+        <h2 id="feat-h">Was Ihre Website kann</h2>
+      </div>
+      <ul class="feats">
+        {b.features.map((f) => (
+          <li class="card feat">
+            <span class="feat__icon"><Icon name={f.icon} /></span>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="also">
+        <strong>Immer dabei:</strong> {usps.map((u) => u.title).join(' · ')}
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="bfaq-h">
+    <div class="wrap bfaq">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2 id="bfaq-h">Fragen von {b.name}</h2>
+      </div>
+      <div>
+        {b.faqs.map((f) => (
+          <More label={f.q}><p>{f.a}</p></More>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={`Website für ${b.name}: Jetzt starten.`} />
+
+  <nav class="wrap others" aria-label="Weitere Branchen">
+    <span>Weitere Branchen:</span>
+    {others.map((o) => <a href={href(`/website-fuer/${o.slug}/`)}>{o.label}</a>)}
+  </nav>
+</BaseLayout>
+
+<style>
+  .bh { padding-block: clamp(32px, 6vw, 80px) clamp(48px, 7vw, 96px); border-bottom: 1px solid var(--line); }
+  .bh__grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 960px) { .bh__grid { grid-template-columns: 1.3fr 1fr; gap: 64px; } }
+  .bh h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); }
+  .pains { list-style: none; padding: 0; margin: 20px 0 28px; display: grid; gap: 8px; }
+  .pains li { display: flex; gap: 10px; align-items: baseline; color: var(--ink-soft); }
+  .pains li::before { content: '✕'; color: #d4462a; font-weight: 800; font-size: 0.85em; }
+  .bh__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 480px) { .bh__actions .btn { flex: 1 1 100%; } }
+
+  .reco { background: var(--ink); color: var(--paper); border-radius: 22px; padding: clamp(24px, 4vw, 34px); box-shadow: 0 24px 48px -20px rgb(14 26 43 / 45%); scroll-margin-top: 90px; }
+  .reco__label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .reco__name { font-size: 1.8rem; margin: 6px 0 4px; }
+  .reco__price { margin: 0; color: #aab5c3; }
+  .reco__price strong { font-family: var(--font-head); font-size: 2.6rem; color: var(--paper); letter-spacing: -0.03em; }
+  .reco__setup { margin: 0 0 14px; font-size: 0.85rem; color: #aab5c3; }
+  .reco__why { font-size: 0.95rem; color: #c9d1dc; padding: 12px 0; border-block: 1px solid #25344a; }
+  .reco__list { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 8px; }
+  .reco__list li::before { content: '✓'; color: #3ddc97; font-weight: 800; margin-right: 10px; }
+  .reco__btn { width: 100%; }
+  .reco__all { display: block; text-align: center; margin-top: 12px; font-size: 0.9rem; color: #aab5c3; }
+
+  .feats { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  @media (min-width: 800px) { .feats { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .feat__icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 16px; background: var(--ink); color: var(--accent); }
+  .feat p { color: var(--ink-soft); margin: 0; }
+  .also { margin: 28px 0 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
+  .also strong { color: var(--ink); }
+
+  @media (min-width: 1000px) { .bfaq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; } }
+  .bfaq :global(.more) { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 12px 20px; margin: 0 0 12px; }
+  .bfaq :global(.more summary) { color: var(--ink); font-size: 1.02rem; width: 100%; justify-content: space-between; }
+
+  .others { display: flex; flex-wrap: wrap; gap: 8px 14px; padding-bottom: 48px; font-size: 0.92rem; }
+  .others span { color: var(--ink-soft); }
+  .others a { font-weight: 600; }
+</style>
