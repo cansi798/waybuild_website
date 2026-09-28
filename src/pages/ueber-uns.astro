@@ -6,6 +6,7 @@ import Hint from '../components/Hint.astro';
 import Val from '../components/Val.astro';
 import { company } from '../config/site';
 import More from '../components/More.astro';
+import Bild from '../components/Bild.astro';
 
 const values = [
   { title: 'Individuell', text: 'Jede Website ein Unikat.' },
@@ -49,12 +50,14 @@ const values = [
       </div>
 
       <aside class="founder">
-        <div class="founder__photo" role="img" aria-label="Foto der Geschäftsführung (folgt)">
-          <span>Foto folgt</span>
-        </div>
+        <Bild name="team/gruender" alt={`${company.managingDirector} – Gründung & Geschäftsführung von Waybuild`} widths={[400, 800]} sizes="(min-width: 900px) 400px, 100vw" class="founder__img">
+          <div class="founder__photo" role="img" aria-label="Foto der Geschäftsführung (folgt)">
+            <span>Foto folgt</span>
+          </div>
+          <Hint label="Foto: src/assets/bilder/team/gruender.jpg" where="src/assets/bilder/LIESMICH.md" />
+        </Bild>
         <p class="founder__name"><Val value={company.managingDirector} label="Name Geschäftsführung" where="src/config/site.ts → company.managingDirector" /></p>
         <p class="founder__role">Gründung & Geschäftsführung</p>
-        <Hint label="Foto (quadratisch, natürliches Licht)" where="public/team/ + src/pages/ueber-uns.astro" />
       </aside>
     </div>
   </section>
@@ -85,6 +88,7 @@ const values = [
   .story__lead { font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.35; color: var(--ink-soft); }
   .story__lead strong { color: var(--ink); }
   .founder { display: grid; gap: 4px; }
+  .founder :global(.founder__img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; margin-bottom: 14px; }
   .founder__photo {
     aspect-ratio: 1; border-radius: 24px; display: grid; place-items: center; margin-bottom: 14px;
     background: radial-gradient(circle at 50% 38%, #ffd2bd 0 18%, transparent 19%), linear-gradient(160deg, #ff8a5c, #ff5a1f 55%, #c9410f);

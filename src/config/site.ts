@@ -28,7 +28,8 @@ export const company = {
 };
 
 /** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
-export const references: { name: string; branche: string; url?: string; text: string }[] = [];
+// Beispiel: { name: 'Tischlerei Muster', branche: 'Handwerk', url: 'https://…', text: 'Neue Website, 3× mehr Anfragen', bild: 'referenzen/projekt-1' }
+export const references: { name: string; branche: string; url?: string; text: string; bild?: string }[] = [];
 
 export const VAT_RATE = 0.19;
 

@@ -1,0 +1,45 @@
+---
+// Bild aus dem Ablage-Ordner src/assets/bilder/ – wird beim Build automatisch optimiert
+// (AVIF/WebP, mehrere Größen für Handy/Desktop). Fehlt die Datei, wird der Slot (Platzhalter) gezeigt.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/bilder/**/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+});
+
+interface Props {
+  /** Pfad im Bilder-Ordner ohne Endung, z. B. "team/gruender" */
+  name: string;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  class?: string;
+  /** "eager" nur für Bilder ganz oben auf der Seite */
+  loading?: 'lazy' | 'eager';
+}
+const { name, alt, widths = [400, 800, 1200], sizes = '(min-width: 960px) 50vw, 100vw', class: cls, loading = 'lazy' } = Astro.props;
+
+const key = Object.keys(images).find(
+  (k) => k.replace(/^\/src\/assets\/bilder\//, '').replace(/\.[^.]+$/, '').toLowerCase() === name.toLowerCase(),
+);
+const img = key ? images[key].default : undefined;
+// Nie größer skalieren als das Original; kleine Originale in Originalgröße ausliefern
+const usable = img ? widths.filter((w) => w <= img.width) : [];
+const finalWidths = img ? (usable.length ? usable : [img.width]) : [];
+---
+
+{img ? (
+  <Picture
+    src={img}
+    alt={alt}
+    formats={['avif', 'webp']}
+    widths={finalWidths}
+    sizes={sizes}
+    class={cls}
+    loading={loading}
+    decoding="async"
+  />
+) : (
+  <slot />
+)}
