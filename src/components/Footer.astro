@@ -1,0 +1,56 @@
+---
+import { company } from '../config/site';
+import { href } from '../lib/paths';
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer section--dark">
+  <div class="wrap footer__grid">
+    <div>
+      <Logo />
+      <p class="footer__claim">{company.slogan}</p>
+    </div>
+    <nav aria-label="Footer">
+      <h2 class="footer__h">Angebot</h2>
+      <ul>
+        <li><a href={href('/leistungen/')}>Leistungen</a></li>
+        <li><a href={href('/preise/')}>Preise & Tarife</a></li>
+        <li><a href={href('/#warum')}>Warum kein WordPress</a></li>
+        <li><a href={href('/#faq')}>Häufige Fragen</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="footer__h">Kontakt</h2>
+      <ul>
+        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+        {company.phone && <li><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></li>}
+        <li><a href={href('/kontakt/')}>Kontaktformular</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__h">Rechtliches</h2>
+      <ul>
+        <li><a href={href('/impressum/')}>Impressum</a></li>
+        <li><a href={href('/datenschutz/')}>Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <small>© {year} {company.legalName}. Alle Preise netto zzgl. gesetzl. USt.</small>
+  </div>
+</footer>
+
+<style>
+  .footer { padding-block: 64px 28px; }
+  .footer :global(.logo svg rect) { fill: var(--paper); }
+  .footer__grid { display: grid; gap: 36px; }
+  @media (min-width: 720px) { .footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+  .footer__claim { color: #aab5c3; margin-top: 16px; max-width: 32ch; }
+  .footer__h { font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: #aab5c3; margin-bottom: 12px; }
+  .footer ul { list-style: none; margin: 0; padding: 0; }
+  .footer li a { display: inline-block; padding: 6px 0; text-decoration: none; }
+  .footer li a:hover { color: var(--accent); }
+  .footer__bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid #25344a; color: #aab5c3; }
+</style>

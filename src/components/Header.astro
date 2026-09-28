@@ -1,0 +1,111 @@
+---
+import { href } from '../lib/paths';
+import Logo from './Logo.astro';
+
+const nav = [
+  { label: 'Leistungen', path: '/leistungen/' },
+  { label: 'Preise', path: '/preise/' },
+  { label: 'Warum kein WordPress', path: '/#warum' },
+  { label: 'FAQ', path: '/#faq' },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a href={href('/')} class="header__logo" aria-label="Waybuild – Startseite"><Logo /></a>
+
+    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Menü öffnen</span>
+      <span class="burger" aria-hidden="true"></span>
+    </button>
+
+    <nav id="site-nav" class="header__nav" aria-label="Hauptnavigation">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={href(item.path)} aria-current={current === href(item.path) ? 'page' : undefined}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+      <a class="btn btn--primary header__cta" href={href('/kontakt/')}>Erstgespräch buchen</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.header__toggle');
+  const nav = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    nav?.classList.toggle('is-open', !open);
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  nav?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }),
+  );
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(247 245 240 / 88%);
+    backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 68px; }
+  .header__logo { display: inline-flex; text-decoration: none; }
+
+  .header__toggle {
+    display: grid; place-items: center;
+    width: 48px; height: 48px; margin-right: -10px;
+    background: none; border: 0; cursor: pointer; color: var(--ink);
+  }
+  .burger, .burger::before, .burger::after {
+    display: block; width: 24px; height: 2px; background: currentColor; border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .burger { position: relative; }
+  .burger::before, .burger::after { content: ''; position: absolute; left: 0; }
+  .burger::before { top: -7px; }
+  .burger::after { top: 7px; }
+  [aria-expanded='true'] .burger { background: transparent; }
+  [aria-expanded='true'] .burger::before { transform: translateY(7px) rotate(45deg); }
+  [aria-expanded='true'] .burger::after { transform: translateY(-7px) rotate(-45deg); }
+
+  .header__nav {
+    position: fixed; inset: 68px 0 0 0;
+    display: none; flex-direction: column; gap: 24px;
+    padding: 24px 16px 40px;
+    background: var(--paper);
+    overflow-y: auto;
+  }
+  .header__nav.is-open { display: flex; }
+  .header__nav ul { list-style: none; margin: 0; padding: 0; }
+  .header__nav li a {
+    display: block; padding: 14px 0; border-bottom: 1px solid var(--line);
+    font-family: var(--font-head); font-size: 1.5rem; font-weight: 600; text-decoration: none;
+  }
+  .header__nav a[aria-current='page'] { color: var(--accent-ink); }
+
+  @media (min-width: 960px) {
+    .header__toggle { display: none; }
+    .header__nav {
+      position: static; display: flex; flex-direction: row; align-items: center; gap: 28px;
+      padding: 0; background: none; overflow: visible;
+    }
+    .header__nav ul { display: flex; gap: 26px; }
+    .header__nav li a {
+      padding: 6px 0; border: 0; font-family: var(--font-body); font-size: 0.98rem; font-weight: 550;
+    }
+    .header__nav li a:hover { color: var(--accent-ink); }
+    .header__cta { min-height: 42px; padding: 0.55em 1.2em; }
+  }
+</style>
