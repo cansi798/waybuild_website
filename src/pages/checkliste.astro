@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { launchTodos, type Todo } from '../config/launch';
+
+const groups: { key: Todo['priority']; title: string; text: string }[] = [
+  { key: 'pflicht', title: 'Pflicht vor dem Start', text: 'Rechtlich oder technisch zwingend.' },
+  { key: 'wichtig', title: 'Wichtig', text: 'Stark empfohlen für Vertrauen und Anfragen.' },
+  { key: 'später', title: 'Nach dem Start', text: 'Wächst mit dem Geschäft.' },
+];
+const open = launchTodos.filter((t) => !t.done).length;
+const total = launchTodos.length;
+const pct = Math.round(((total - open) / total) * 100);
+---
+
+<BaseLayout title="Launch-Checkliste" description="Interne Checkliste: Was vor dem Start der Website noch fehlt." noindex>
+  <PageHeader
+    eyebrow="Intern · Launch-Checkliste"
+    title={`Noch ${open} von ${total} Punkten offen.`}
+    lead="Diese Seite sammelt automatisch alles, was vor dem offiziellen Start fehlt. Firmendaten werden direkt aus der Konfiguration geprüft – sobald sie eingetragen sind, werden sie hier grün."
+  >
+    <div class="progress" role="progressbar" aria-valuenow={pct} aria-valuemin="0" aria-valuemax="100" aria-label="Fortschritt">
+      <span style={`width:${pct}%`}></span>
+    </div>
+    <p class="progress__label">{pct} % erledigt</p>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap">
+      {groups.map((g) => {
+        const items = launchTodos.filter((t) => t.priority === g.key);
+        return (
+          <div class="group">
+            <header class="group__head">
+              <h2>{g.title}</h2>
+              <p>{g.text} · {items.filter((i) => !i.done).length} offen</p>
+            </header>
+            <ul class="todos">
+              {items.map((t) => (
+                <li class:list={['todo', { 'todo--done': t.done }]}>
+                  <span class="todo__box" aria-hidden="true">{t.done ? '✓' : ''}</span>
+                  <div>
+                    <p class="todo__title">{t.title}<span class="sr-only">{t.done ? ' (erledigt)' : ' (offen)'}</span></p>
+                    <p class="todo__detail">{t.detail}</p>
+                    <code>{t.where}</code>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .progress { height: 12px; border-radius: 99px; background: var(--paper-2); border: 1px solid var(--line); overflow: hidden; margin-top: 24px; max-width: 520px; }
+  .progress span { display: block; height: 100%; background: var(--ok); border-radius: 99px; }
+  .progress__label { margin-top: 8px; font-weight: 600; color: var(--ink-soft); }
+  .group + .group { margin-top: 56px; }
+  .group__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 20px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 8px; }
+  .group__head h2 { font-size: 1.6rem; margin: 0; }
+  .group__head p { margin: 0; color: var(--ink-soft); }
+  .todos { list-style: none; margin: 0; padding: 0; }
+  .todo { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .todo__box { flex: none; display: grid; place-items: center; width: 26px; height: 26px; margin-top: 2px; border-radius: 8px; border: 2px solid #d4a300; background: #fff4c2; font-weight: 800; color: #fff; }
+  .todo--done .todo__box { border-color: var(--ok); background: var(--ok); }
+  .todo__title { font-weight: 700; margin: 0 0 2px; }
+  .todo--done .todo__title { text-decoration: line-through; color: var(--ink-soft); }
+  .todo__detail { margin: 0 0 6px; color: var(--ink-soft); }
+  .todo code { font-size: 0.82rem; background: var(--paper-2); padding: 2px 8px; border-radius: 6px; }
+</style>

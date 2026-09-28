@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { company, plans } from '../config/site';
+import { company, plans, isMissing } from '../config/site';
+import Val from '../components/Val.astro';
+import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
 
 // Optionaler Formular-Dienst (z. B. Web3Forms/Formspree). Ohne Endpoint öffnet sich das E-Mail-Programm.
@@ -43,6 +45,11 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
           <span>Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span>
         </label>
         <button class="btn btn--primary" type="submit">Anfrage senden</button>
+        {!endpoint && (
+          <Hint label="Formular-Versanddienst" where=".github/workflows/deploy.yml → PUBLIC_FORM_ENDPOINT">
+            {' '}– aktuell öffnet sich nur das E-Mail-Programm.
+          </Hint>
+        )}
         <p class="form__status" role="status" aria-live="polite"></p>
       </form>
 
@@ -50,8 +57,8 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
         <div class="card side__card">
           <h2>Direkter Draht</h2>
           <p><a href={`mailto:${company.email}`}>{company.email}</a></p>
-          {company.phone && <p><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></p>}
-          <p class="muted">{company.legalName}<br />{company.street}<br />{company.zip} {company.city}</p>
+          {isMissing(company.phone) ? <p><Hint label="Telefonnummer" where="src/config/site.ts → company.phone" /></p> : <p><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></p>}
+          <p class="muted">{company.legalName}<br /><Val value={company.street} label="Straße" where="src/config/site.ts → company.street" /><br /><Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /></p>
         </div>
         <ul class="promise">
           <li><strong>Antwort in 1 Werktag</strong>Persönlich, nicht automatisiert.</li>

@@ -1,32 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { company } from '../config/site';
+import { company, isMissing } from '../config/site';
+import Val from '../components/Val.astro';
+import Hint from '../components/Hint.astro';
 ---
 
 <BaseLayout title="Impressum" description={`Impressum der ${company.legalName}.`} noindex>
   <section class="section">
     <div class="wrap prose">
       <h1>Impressum</h1>
+      {[company.street, company.managingDirector, company.registerNumber].some(isMissing) && (
+        <Hint block label="Pflichtangaben im Impressum" where="src/config/site.ts → company">
+          Ohne vollständiges Impressum drohen Abmahnungen. Bitte vor dem offiziellen Start ergänzen.
+        </Hint>
+      )}
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
         {company.legalName}<br />
-        {company.street}<br />
-        {company.zip} {company.city}
+        <Val value={company.street} label="Straße & Hausnummer" where="src/config/site.ts → company.street" /><br />
+        <Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" />
       </p>
       <p>
-        Vertreten durch die Geschäftsführung: {company.managingDirector}<br />
-        Registergericht: {company.registerCourt}<br />
-        Registernummer: {company.registerNumber}
+        Vertreten durch die Geschäftsführung: <Val value={company.managingDirector} label="Name Geschäftsführung" where="src/config/site.ts → company.managingDirector" /><br />
+        Registergericht: <Val value={company.registerCourt} label="Registergericht" where="src/config/site.ts → company.registerCourt" /><br />
+        Registernummer: <Val value={company.registerNumber} label="HRB-Nummer" where="src/config/site.ts → company.registerNumber" />
       </p>
       <h2>Kontakt</h2>
       <p>
         E-Mail: <a href={`mailto:${company.email}`}>{company.email}</a>
-        {company.phone && <><br />Telefon: {company.phone}</>}
+        <br />Telefon: <Val value={company.phone} label="Telefonnummer" where="src/config/site.ts → company.phone" />
       </p>
       <h2>Umsatzsteuer-ID</h2>
-      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: {company.vatId}</p>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: <Val value={company.vatId} label="USt-ID" where="src/config/site.ts → company.vatId" /></p>
       <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-      <p>{company.managingDirector}, Anschrift wie oben</p>
+      <p><Val value={company.managingDirector} label="Name Geschäftsführung" where="src/config/site.ts → company.managingDirector" />, Anschrift wie oben</p>
       <h2>EU-Streitschlichtung</h2>
       <p>
         Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer

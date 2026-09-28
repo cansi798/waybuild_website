@@ -1,0 +1,14 @@
+---
+// Gibt einen Konfigurationswert aus – oder einen "Fehlt"-Hinweis, solange er noch "TODO" ist.
+import { isMissing } from '../config/site';
+import Hint from './Hint.astro';
+
+interface Props {
+  value: string;
+  label: string;
+  where?: string;
+}
+const { value, label, where } = Astro.props;
+---
+
+{isMissing(value) ? <Hint label={label} where={where} /> : value}

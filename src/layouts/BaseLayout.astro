@@ -2,7 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { company } from '../config/site';
+import { company, isMissing, SHOW_HINTS } from '../config/site';
+import { launchTodos } from '../config/launch';
 import { href, absolute } from '../lib/paths';
 
 interface Props {
@@ -29,14 +30,19 @@ const organization = {
   url: siteRoot,
   logo: absolute('/favicon.svg', Astro.site),
   email: company.email,
-  ...(company.phone ? { telephone: company.phone } : {}),
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: company.street,
-    postalCode: company.zip,
-    addressLocality: company.city,
-    addressCountry: company.country,
-  },
+  ...(!isMissing(company.phone) ? { telephone: company.phone } : {}),
+  // Adresse erst ausgeben, wenn sie vollständig ist – nie Platzhalter an Google melden
+  ...([company.street, company.zip, company.city].some(isMissing)
+    ? {}
+    : {
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: company.street,
+          postalCode: company.zip,
+          addressLocality: company.city,
+          addressCountry: company.country,
+        },
+      }),
 };
 
 const website = {
@@ -59,6 +65,8 @@ const breadcrumbSchema = breadcrumb && {
     item: absolute(b.path, Astro.site),
   })),
 };
+
+const openTodos = launchTodos.filter((t) => !t.done).length;
 
 const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema] : []), ...schema];
 ---
@@ -99,5 +107,22 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
       <slot />
     </main>
     <Footer />
+    {SHOW_HINTS && openTodos > 0 && (
+      <a class="todo-badge" href={href('/checkliste/')}>
+        <span aria-hidden="true">!</span> {openTodos} Punkte offen bis zum Start
+      </a>
+    )}
   </body>
 </html>
+
+<style>
+  .todo-badge {
+    position: fixed; right: 16px; bottom: 16px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff4c2; color: #5c4400; border: 1.5px dashed #d4a300; border-radius: 99px;
+    padding: 8px 14px; font-size: 0.85rem; font-weight: 650; text-decoration: none;
+    box-shadow: 0 8px 24px rgb(14 26 43 / 18%);
+  }
+  .todo-badge span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.72rem; font-weight: 800; }
+  @media print { .todo-badge { display: none; } }
+</style>

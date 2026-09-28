@@ -1,20 +1,32 @@
 // Zentrale Inhalte der Website. Alles mit "TODO" sind Platzhalter, bis die echten Firmendaten vorliegen.
 
+/**
+ * Gelbe "Fehlt: …"-Hinweise auf der Website anzeigen.
+ * Vor dem offiziellen Start auf false setzen – dann verschwinden alle Hinweise und Platzhalter-Bereiche.
+ */
+export const SHOW_HINTS = true;
+
+/** Ein Wert gilt als fehlend, wenn er leer ist oder mit "TODO" beginnt. */
+export const isMissing = (v?: string | null) => !v || v.trim().startsWith('TODO');
+
 export const company = {
   name: 'Waybuild',
   legalName: 'Waybuild UG (haftungsbeschränkt)',
   slogan: 'Websites im Abo – individuell entwickelt, sorgenfrei betrieben.',
-  email: 'kontakt@waybuild.de', // TODO
-  phone: '', // TODO, z. B. '+49 30 1234567'
-  street: 'TODO Straße 1',
-  zip: '00000',
-  city: 'TODO Stadt',
+  email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
+  phone: 'TODO', // z. B. '+49 30 1234567'
+  street: 'TODO',
+  zip: 'TODO',
+  city: 'TODO',
   country: 'DE',
-  managingDirector: 'TODO Geschäftsführer/in',
-  registerCourt: 'Amtsgericht TODO',
-  registerNumber: 'HRB TODO',
-  vatId: 'DE TODO',
+  managingDirector: 'TODO',
+  registerCourt: 'TODO', // z. B. 'Amtsgericht Berlin-Charlottenburg'
+  registerNumber: 'TODO', // z. B. 'HRB 123456 B'
+  vatId: 'TODO', // z. B. 'DE123456789'
 };
+
+/** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
+export const references: { name: string; branche: string; url?: string; text: string }[] = [];
 
 export const VAT_RATE = 0.19;
 

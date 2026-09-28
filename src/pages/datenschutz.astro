@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { company } from '../config/site';
+import Val from '../components/Val.astro';
+import Hint from '../components/Hint.astro';
 // Hinweis: Vorlage – vor dem Livegang unter eigener Domain rechtlich prüfen lassen.
 ---
 
@@ -8,10 +10,13 @@ import { company } from '../config/site';
   <section class="section">
     <div class="wrap prose">
       <h1>Datenschutzerklärung</h1>
+      <Hint block label="Rechtliche Prüfung" where="src/pages/datenschutz.astro">
+        Vorlage – vor dem Start prüfen lassen. Bei eigener Domain/eigenem Hoster und Formular-Dienst muss Abschnitt 3 bzw. 4 angepasst werden.
+      </Hint>
 
       <h2>1. Verantwortlicher</h2>
       <p>
-        {company.legalName}, {company.street}, {company.zip} {company.city}<br />
+        {company.legalName}, <Val value={company.street} label="Straße" where="src/config/site.ts → company.street" />, <Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /><br />
         E-Mail: <a href={`mailto:${company.email}`}>{company.email}</a>
       </p>
 

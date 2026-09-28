@@ -1,5 +1,6 @@
 ---
-import { company } from '../config/site';
+import { company, isMissing } from '../config/site';
+import Hint from './Hint.astro';
 import { href } from '../lib/paths';
 import Logo from './Logo.astro';
 
@@ -19,13 +20,14 @@ const year = new Date().getFullYear();
         <li><a href={href('/preise/')}>Preise & Tarife</a></li>
         <li><a href={href('/#warum')}>Warum kein WordPress</a></li>
         <li><a href={href('/#faq')}>Häufige Fragen</a></li>
+        <li><a href={href('/ueber-uns/')}>Über uns</a></li>
       </ul>
     </nav>
     <div>
       <h2 class="footer__h">Kontakt</h2>
       <ul>
         <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
-        {company.phone && <li><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></li>}
+        {isMissing(company.phone) ? <li><Hint label="Telefonnummer" where="src/config/site.ts → company.phone" /></li> : <li><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></li>}
         <li><a href={href('/kontakt/')}>Kontaktformular</a></li>
       </ul>
     </div>
@@ -34,6 +36,7 @@ const year = new Date().getFullYear();
       <ul>
         <li><a href={href('/impressum/')}>Impressum</a></li>
         <li><a href={href('/datenschutz/')}>Datenschutz</a></li>
+        <li><a href={href('/agb/')}>AGB</a></li>
         <li><a href={href('/ci-handbuch/')}>CI-Handbuch</a></li>
       </ul>
     </div>

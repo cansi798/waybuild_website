@@ -1,0 +1,37 @@
+---
+// Sichtbarer Hinweis auf fehlende Inhalte. Verschwindet komplett, wenn SHOW_HINTS = false.
+import { SHOW_HINTS } from '../config/site';
+
+interface Props {
+  /** Was fehlt, z. B. "Handelsregisternummer" */
+  label: string;
+  /** Wo man es nachträgt, z. B. "src/config/site.ts → company.registerNumber" */
+  where?: string;
+  /** block = eigene Box, sonst inline im Text */
+  block?: boolean;
+}
+const { label, where, block = false } = Astro.props;
+const Tag = block ? 'div' : 'span';
+---
+
+{SHOW_HINTS && (
+  <Tag class:list={['hint', { 'hint--block': block }]} title={where ? `Nachtragen in: ${where}` : undefined}>
+    <span class="hint__icon" aria-hidden="true">!</span>
+    <span><strong>Fehlt:</strong> {label}{block && where && <small>Nachtragen in: <code>{where}</code></small>}<slot /></span>
+  </Tag>
+)}
+
+<style>
+  .hint {
+    display: inline-flex; align-items: flex-start; gap: 6px;
+    background: #fff4c2; color: #5c4400; border: 1.5px dashed #d4a300; border-radius: 8px;
+    padding: 1px 8px; font-size: 0.85em; font-weight: 500; line-height: 1.5; vertical-align: baseline;
+  }
+  .hint__icon {
+    flex: none; display: inline-grid; place-items: center; width: 1.2em; height: 1.2em; margin-top: 0.15em;
+    border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.8em; font-weight: 800;
+  }
+  .hint--block { display: flex; padding: 12px 16px; margin: 12px 0; font-size: 0.95rem; }
+  .hint--block small { display: block; margin-top: 2px; opacity: 0.85; }
+  .hint code { font-size: 0.9em; }
+</style>

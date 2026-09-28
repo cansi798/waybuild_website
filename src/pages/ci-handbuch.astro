@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Logo from '../components/Logo.astro';
 import { company } from '../config/site';
+import Val from '../components/Val.astro';
 import { href } from '../lib/paths';
 
 const rgb = (hex: string) => {
@@ -261,9 +262,9 @@ const sections = [
           <div class="bcard">
             <div class="bcard__front"><Logo /></div>
             <div class="bcard__back">
-              <strong>{company.managingDirector}</strong>
+              <strong><Val value={company.managingDirector} label="Name" where="src/config/site.ts → company.managingDirector" /></strong>
               <span>Geschäftsführung</span>
-              <span class="bcard__c">{company.email}<br />{company.phone || '+49 …'}<br />waybuild.de</span>
+              <span class="bcard__c">{company.email}<br /><Val value={company.phone} label="Telefon" where="src/config/site.ts → company.phone" /><br />waybuild.de</span>
             </div>
           </div>
           <figcaption class="muted small">Visitenkarte 85 × 55 mm – Vorderseite Nachtblau, Rückseite Papier.</figcaption>
@@ -271,14 +272,14 @@ const sections = [
         <figure>
           <div class="sig">
             <p>Mit freundlichen Grüßen</p>
-            <p><strong>{company.managingDirector}</strong><br /><span class="muted">Geschäftsführung</span></p>
+            <p><strong><Val value={company.managingDirector} label="Name" where="src/config/site.ts → company.managingDirector" /></strong><br /><span class="muted">Geschäftsführung</span></p>
             <p class="sig__logo"><Logo /></p>
             <p class="small">
               {company.legalName}<br />
-              {company.street} · {company.zip} {company.city}<br />
+              <Val value={company.street} label="Straße" where="src/config/site.ts → company.street" /> · <Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /><br />
               <a href={`mailto:${company.email}`}>{company.email}</a> · waybuild.de
             </p>
-            <p class="sig__legal">Registergericht: {company.registerCourt} · {company.registerNumber} · Geschäftsführung: {company.managingDirector}</p>
+            <p class="sig__legal">Registergericht: <Val value={company.registerCourt} label="Registergericht" where="src/config/site.ts → company.registerCourt" /> · <Val value={company.registerNumber} label="HRB" where="src/config/site.ts → company.registerNumber" /> · Geschäftsführung: <Val value={company.managingDirector} label="Name" where="src/config/site.ts → company.managingDirector" /></p>
           </div>
           <figcaption class="muted small">E-Mail-Signatur – inkl. Pflichtangaben für die UG (§ 35a GmbHG).</figcaption>
         </figure>

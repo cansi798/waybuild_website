@@ -18,6 +18,15 @@ Fast alles steht zentral in [`src/config/site.ts`](src/config/site.ts):
 | Vorteile, Vergleich WordPress, Ablauf | `usps`, `comparison`, `steps` |
 | FAQ (erscheint auch als Rich Result bei Google) | `faqs` |
 
+## Hinweise & Launch-Checkliste
+
+Solange Daten fehlen, zeigt die Website gelbe **„Fehlt: …“**-Hinweise genau an der Stelle, wo etwas nachgetragen werden muss
+(Impressum, Kontakt, Über uns, AGB, Referenzen …). Unten rechts zeigt ein Badge, wie viele Punkte noch offen sind.
+
+- Übersicht aller offenen Punkte: **`/checkliste/`** (wird automatisch aus `src/config/launch.ts` + Firmendaten erzeugt)
+- Firmendaten eintragen → Hinweise verschwinden automatisch
+- Vor dem offiziellen Start: `SHOW_HINTS = false` in `src/config/site.ts` → alle Hinweise und Platzhalter-Bereiche weg
+
 ## Entwicklung
 
 ```bash

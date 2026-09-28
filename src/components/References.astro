@@ -1,0 +1,57 @@
+---
+// Referenzen: echte Projekte aus der Konfiguration. Solange keine vorliegen, nur Platzhalter mit Hinweis
+// (und nur, wenn SHOW_HINTS aktiv ist) – niemals erfundene Kunden oder Bewertungen.
+import { references, SHOW_HINTS } from '../config/site';
+import Hint from './Hint.astro';
+
+const show = references.length > 0 || SHOW_HINTS;
+---
+
+{show && (
+  <section class="section" id="referenzen" aria-labelledby="ref-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Referenzen</span>
+        <h2 id="ref-h">Websites, die wir gebaut haben</h2>
+      </div>
+      {references.length > 0 ? (
+        <div class="refs">
+          {references.map((r) => (
+            <article class="card ref">
+              <span class="ref__branche">{r.branche}</span>
+              <h3>{r.url ? <a href={r.url} rel="noopener" target="_blank">{r.name}</a> : r.name}</h3>
+              <p>{r.text}</p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <>
+          <Hint block label="Referenzprojekte" where="src/config/site.ts → references">
+            Sobald die ersten Kundenseiten live sind (mit Freigabe), hier eintragen. Bis dahin ist dieser Bereich nur
+            mit Hinweisen sichtbar und verschwindet mit SHOW_HINTS = false automatisch.
+          </Hint>
+          <div class="refs" aria-hidden="true">
+            {[1, 2, 3].map((n) => (
+              <div class="ref ref--empty">
+                <span>Projekt {n}</span>
+                <small>Screenshot · Branche · Ergebnis</small>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .refs { display: grid; gap: 20px; }
+  @media (min-width: 800px) { .refs { grid-template-columns: repeat(3, 1fr); } }
+  .ref__branche { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+  .ref p { color: var(--ink-soft); margin: 0; }
+  .ref--empty {
+    display: grid; place-content: center; gap: 4px; text-align: center; aspect-ratio: 4 / 3;
+    border: 2px dashed var(--line); border-radius: var(--radius); color: var(--ink-soft);
+  }
+  .ref--empty span { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; }
+</style>
