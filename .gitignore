@@ -8,3 +8,4 @@ dist/
 .remember/
 Github.txt
 .claude/
+.playwright-mcp/

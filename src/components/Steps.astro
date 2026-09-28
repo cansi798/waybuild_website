@@ -1,0 +1,40 @@
+---
+import { steps } from '../config/site';
+---
+
+<section class="section" id="ablauf" aria-labelledby="ablauf-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">So einfach geht's</span>
+      <h2 id="ablauf-h">In 4 Schritten zur eigenen Website</h2>
+    </div>
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li class="step">
+          <span class="step__no" aria-hidden="true">{i + 1}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; counter-reset: s; }
+  @media (min-width: 720px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+  .step { position: relative; padding-top: 68px; }
+  .step__no {
+    position: absolute; top: 0; left: 0;
+    display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: var(--ink); color: var(--paper); font-family: var(--font-head); font-weight: 700; font-size: 1.2rem;
+  }
+  @media (min-width: 1000px) {
+    .step:not(:last-child)::after {
+      content: ''; position: absolute; top: 24px; left: 60px; right: -8px; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px);
+    }
+  }
+  .step p { color: var(--ink-soft); margin: 0; }
+</style>

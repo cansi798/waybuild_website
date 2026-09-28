@@ -1,0 +1,33 @@
+---
+import { href } from '../lib/paths';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'Bereit für eine Website, die für Sie arbeitet?',
+  text = 'Im kostenlosen Erstgespräch klären wir in 20 Minuten, was Sie brauchen – unverbindlich und ohne Verkaufsdruck.',
+} = Astro.props;
+---
+
+<section class="section cta" aria-labelledby="cta-h">
+  <div class="wrap cta__box">
+    <div>
+      <h2 id="cta-h">{title}</h2>
+      <p>{text}</p>
+    </div>
+    <a class="btn btn--dark" href={href('/kontakt/')}>Jetzt Erstgespräch sichern</a>
+  </div>
+</section>
+
+<style>
+  .cta { padding-block: clamp(48px, 7vw, 88px); }
+  .cta__box {
+    display: grid; gap: 24px; align-items: center;
+    background: var(--accent); color: var(--ink); border-radius: 28px; padding: clamp(28px, 5vw, 56px);
+  }
+  @media (min-width: 860px) { .cta__box { grid-template-columns: 1fr auto; } }
+  .cta h2 { margin-bottom: 0.3em; }
+  .cta p { margin: 0; font-size: 1.1rem; max-width: 56ch; }
+</style>

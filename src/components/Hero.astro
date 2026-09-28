@@ -1,0 +1,160 @@
+---
+import { href } from '../lib/paths';
+import { plans, formatEuro } from '../config/site';
+
+const cheapest = Math.min(...plans.map((p) => p.monthly));
+---
+
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <span class="eyebrow">Website-Abo für Unternehmen</span>
+      <h1>Ihre Website.<br /> Ein <em>Unikat.</em><br /> Komplett betreut.</h1>
+      <p class="lead">
+        Wir entwickeln Ihre Website individuell nach Ihren Wünschen – ohne WordPress, ohne Baukasten.
+        Hosting, Domain, unbegrenzte E-Mail-Postfächer und Wartung inklusive. Für einen festen Monatspreis.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+        <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>ab {formatEuro(cheapest)}</strong> / Monat netto</li>
+        <li><strong>12 Monate</strong> statt 24</li>
+        <li><strong>Live</strong> in 14 Tagen</li>
+      </ul>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="mock">
+        <div class="mock__bar"><i></i><i></i><i></i><span>🔒 ihre-firma.de</span></div>
+        <div class="mock__body">
+          <div class="mock__nav"><b></b><span></span><span></span><span></span><em></em></div>
+          <div class="mock__hero">
+            <div>
+              <div class="mock__line mock__line--lg"></div>
+              <div class="mock__line mock__line--lg mock__line--short"></div>
+              <div class="mock__line"></div>
+              <div class="mock__line mock__line--sm"></div>
+              <div class="mock__btn"></div>
+            </div>
+            <div class="mock__img"></div>
+          </div>
+          <div class="mock__blocks"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="score">
+        <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" /><circle class="score__ring" cx="18" cy="18" r="15.5" /></svg>
+        <div><b>100</b><small>PageSpeed mobil</small></div>
+      </div>
+      <div class="toast">
+        <span class="toast__icon">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 6h16v12H4z M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>
+        </span>
+        <span><b>Neue Anfrage</b><small>an info@ihre-firma.de</small></span>
+      </div>
+      <div class="chip">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        SSL · Backups · Updates
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(40px, 8vw, 96px) clamp(64px, 10vw, 120px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgb(14 26 43 / 5%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(14 26 43 / 5%) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
+  }
+  .hero__grid { position: relative; display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 960px) { .hero__grid { grid-template-columns: 1.15fr 0.85fr; } }
+
+  h1 { font-size: clamp(2.4rem, 6.2vw, 4.1rem); }
+  h1 em { font-style: normal; color: var(--accent-ink); position: relative; white-space: nowrap; }
+  h1 em::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0.04em; height: 0.14em;
+    background: var(--accent); opacity: 0.35; border-radius: 4px; z-index: -1;
+  }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  @media (max-width: 480px) { .hero__actions .btn { flex: 1 1 100%; } }
+
+  .hero__facts {
+    list-style: none; padding: 0; margin: 32px 0 0;
+    display: flex; flex-wrap: wrap; gap: 10px 28px; color: var(--ink-soft); font-size: 0.98rem;
+  }
+  .hero__facts strong { color: var(--ink); }
+
+  .hero__visual { position: relative; max-width: 520px; width: 100%; margin-inline: auto; padding: 28px 0 36px; }
+  .mock {
+    background: var(--white); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 2px 4px rgb(14 26 43 / 4%), 0 30px 60px -20px rgb(14 26 43 / 28%);
+    transform: perspective(1400px) rotateY(-6deg) rotateX(2deg);
+  }
+  @media (max-width: 959px) { .mock { transform: none; } }
+  .mock__bar { display: flex; align-items: center; gap: 6px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: #faf8f4; }
+  .mock__bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .mock__bar span { margin-left: 10px; font-size: 0.74rem; color: var(--ink-soft); background: var(--paper-2); padding: 3px 12px; border-radius: 99px; }
+  .mock__body { padding: 18px 20px 22px; display: grid; gap: 18px; }
+  .mock__nav { display: flex; align-items: center; gap: 10px; }
+  .mock__nav b { width: 54px; height: 12px; border-radius: 4px; background: var(--ink); margin-right: auto; }
+  .mock__nav span { width: 30px; height: 7px; border-radius: 4px; background: var(--paper-2); }
+  .mock__nav em { width: 46px; height: 18px; border-radius: 99px; background: var(--accent); }
+  .mock__hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; align-items: center; }
+  .mock__line { height: 8px; border-radius: 4px; background: var(--paper-2); margin-bottom: 8px; width: 90%; }
+  .mock__line--lg { height: 16px; background: var(--ink); width: 100%; }
+  .mock__line--short { width: 60%; margin-bottom: 14px; }
+  .mock__line--sm { width: 60%; }
+  .mock__btn { margin-top: 12px; width: 70px; height: 20px; border-radius: 99px; background: var(--accent); }
+  .mock__img {
+    aspect-ratio: 4 / 3.4; border-radius: 12px;
+    background:
+      radial-gradient(circle at 70% 30%, #ffd2bd 0 18%, transparent 19%),
+      linear-gradient(160deg, #ff8a5c, #ff5a1f 55%, #c9410f);
+  }
+  .mock__blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .mock__blocks span { height: 54px; border-radius: 10px; background: var(--paper-2); }
+
+  .score {
+    position: absolute; right: -14px; top: 0;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--paper); padding: 10px 16px 10px 10px; border-radius: 16px;
+    box-shadow: 0 18px 40px -12px rgb(14 26 43 / 45%);
+  }
+  .score svg { width: 46px; height: 46px; transform: rotate(-90deg); }
+  .score circle { fill: none; stroke: #25344a; stroke-width: 3.5; }
+  .score .score__ring { stroke: #3ddc97; stroke-dasharray: 97.4; stroke-dashoffset: 97.4; stroke-linecap: round; animation: ring 1.4s 0.3s cubic-bezier(.2,.7,.2,1) forwards; }
+  .score b { display: block; font-family: var(--font-head); font-size: 1.4rem; line-height: 1; }
+  .score small { font-size: 0.7rem; color: #aab5c3; }
+  @keyframes ring { to { stroke-dashoffset: 0; } }
+
+  .toast {
+    position: absolute; left: -22px; bottom: 70px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px 10px 10px;
+    box-shadow: 0 18px 40px -14px rgb(14 26 43 / 35%);
+    animation: pop 0.6s 1.2s cubic-bezier(.2,.9,.3,1.3) both;
+  }
+  .toast__icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgb(255 90 31 / 14%); color: var(--accent-ink); }
+  .toast b { display: block; font-size: 0.86rem; }
+  .toast small { font-size: 0.74rem; color: var(--ink-soft); }
+  @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+
+  .chip {
+    position: absolute; right: 10px; bottom: 6px;
+    display: inline-flex; align-items: center; gap: 6px; color: var(--ok);
+    font-size: 0.8rem; font-weight: 650; white-space: nowrap;
+    background: var(--white); border: 1px solid var(--line); border-radius: 99px; padding: 7px 13px;
+    box-shadow: 0 10px 30px -12px rgb(14 26 43 / 30%);
+  }
+  @media (max-width: 520px) { .toast { left: -4px; } .score { right: -4px; } }
+  @media (prefers-reduced-motion: reduce) { .toast, .score .score__ring { animation: none; stroke-dashoffset: 0; } }
+</style>

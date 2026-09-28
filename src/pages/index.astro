@@ -1,6 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Industries from '../components/Industries.astro';
+import Usps from '../components/Usps.astro';
+import Pricing from '../components/Pricing.astro';
+import WhyNotWordPress from '../components/WhyNotWordPress.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { faqSchema, serviceSchema } from '../lib/schema';
 ---
-<BaseLayout title="Website im Abo" description="Platzhalter">
-  <section class="section"><div class="wrap"><h1>Waybuild</h1></div></section>
+
+<BaseLayout
+  title="Website im Abo – individuell, schnell & sorgenfrei | Waybuild"
+  description="Individuelle Website im Abo ab 49 €/Monat netto: Hosting, Domain & unbegrenzte E-Mails inklusive. Kein WordPress, 12 Monate Laufzeit, live in 14 Tagen."
+  schema={[serviceSchema(Astro.site), faqSchema()]}
+>
+  <Hero />
+  <Industries />
+  <Usps />
+  <section class="section section--alt" id="preise" aria-labelledby="preise-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Transparente Preise</span>
+        <h2 id="preise-h">Ein Preis. Alles drin.</h2>
+        <p class="lead">Einmalige Einrichtung, danach ein fester Monatsbeitrag. Keine versteckten Kosten.</p>
+      </div>
+      <Pricing />
+    </div>
+  </section>
+  <WhyNotWordPress />
+  <Steps />
+  <Faq />
+  <CtaBand />
 </BaseLayout>

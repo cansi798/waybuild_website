@@ -99,6 +99,7 @@ export const addons = [
   { name: 'Texterstellung durch Profis', price: 'ab 90 € pro Seite' },
   { name: 'Online-Terminbuchung', price: '15 € / Monat' },
   { name: 'Foto-Shooting vor Ort', price: 'auf Anfrage' },
+  { name: 'WordPress-Website auf ausdrücklichen Wunsch', price: 'auf Anfrage' },
 ];
 
 export const usps = [
@@ -148,7 +149,7 @@ export const steps = [
 export const faqs = [
   {
     q: 'Warum setzt Waybuild nicht auf WordPress?',
-    a: 'WordPress ist ein Baukasten für alles – und damit für nichts optimal. Wir entwickeln Ihre Website mit unserer eigenen Technologie: individuell nach Ihren Wünschen, ohne Plugins und Datenbank. Das Ergebnis ist ein Unikat, das schneller lädt, sicherer ist und besser bei Google rankt.',
+    a: 'WordPress ist ein Baukasten für alles – und damit für nichts optimal. Wir entwickeln Ihre Website mit unserer eigenen Technologie: individuell nach Ihren Wünschen, ohne Plugins und Datenbank. Das Ergebnis ist ein Unikat, das schneller lädt, sicherer ist und besser bei Google rankt. Wenn Sie ausdrücklich WordPress wünschen, setzen wir das auf Anfrage aber gerne um.',
   },
   {
     q: 'Sind die Preise netto oder brutto?',

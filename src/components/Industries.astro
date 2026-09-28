@@ -1,0 +1,22 @@
+---
+const industries = ['Handwerk', 'Arztpraxen', 'Gastronomie', 'Kanzleien', 'Immobilien', 'Beauty & Friseur', 'Fitness', 'Handel', 'Dienstleister', 'Vereine'];
+---
+
+<div class="ind" aria-label="Branchen, für die wir Websites entwickeln">
+  <p class="ind__label">Websites für</p>
+  <div class="ind__track">
+    <ul>{industries.map((i) => <li>{i}</li>)}</ul>
+    <ul aria-hidden="true">{industries.map((i) => <li>{i}</li>)}</ul>
+  </div>
+</div>
+
+<style>
+  .ind { display: flex; align-items: center; gap: 24px; padding: 18px 0; border-block: 1px solid var(--line); background: var(--white); overflow: hidden; }
+  .ind__label { flex: none; margin: 0 0 0 max(16px, calc((100vw - var(--wrap)) / 2)); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+  .ind__track { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .ind ul { flex: none; display: flex; gap: 40px; list-style: none; margin: 0; padding: 0 20px; animation: marquee 40s linear infinite; }
+  .ind li { font-family: var(--font-head); font-size: 1.15rem; font-weight: 600; white-space: nowrap; }
+  .ind li::before { content: '◆'; color: var(--accent); font-size: 0.6em; margin-right: 40px; vertical-align: middle; }
+  @keyframes marquee { to { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .ind ul { animation: none; } }
+</style>

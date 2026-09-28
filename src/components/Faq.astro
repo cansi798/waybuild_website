@@ -1,0 +1,40 @@
+---
+import { faqs } from '../config/site';
+---
+
+<section class="section section--alt" id="faq" aria-labelledby="faq-h">
+  <div class="wrap faq">
+    <div class="section-head">
+      <span class="eyebrow">Häufige Fragen</span>
+      <h2 id="faq-h">Gut zu wissen</h2>
+      <p class="lead">Ihre Frage ist nicht dabei? Schreiben Sie uns – wir antworten innerhalb eines Werktags.</p>
+    </div>
+    <div class="faq__list">
+      {faqs.map((f, i) => (
+        <details class="faq__item" open={i === 0}>
+          <summary><h3>{f.q}</h3></summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1000px) { .faq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; align-items: start; } }
+  .faq__list { display: grid; gap: 12px; }
+  .faq__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; }
+  .faq__item[open] { border-color: var(--ink); }
+  summary {
+    list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 18px 22px; min-height: 48px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary h3 { margin: 0; font-size: 1.08rem; font-family: var(--font-body); font-weight: 650; letter-spacing: 0; }
+  summary::after {
+    content: '+'; flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--paper-2); font-size: 1.3rem; font-weight: 500; transition: transform 0.2s ease;
+  }
+  .faq__item[open] summary::after { transform: rotate(45deg); background: var(--accent); }
+  .faq__item p { padding: 0 22px 20px; margin: 0; color: var(--ink-soft); }
+</style>
