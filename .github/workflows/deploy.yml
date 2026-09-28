@@ -20,6 +20,8 @@ jobs:
     env:
       SITE: https://cansi798.github.io
       BASE: /waybuild_website
+      # GitHub Pages ist nur die VORSCHAU: noindex, robots.txt sperrt alles, Vorschau-Banner
+      PUBLIC_PREVIEW: 'true'
       # Formular-Versand: Web3Forms-Access-Key als Repository-Variable WEB3FORMS_KEY hinterlegen
       PUBLIC_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
     steps:
@@ -35,6 +37,29 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+  # Live-Version für den eigenen Server (waybuild.de) – zum Herunterladen unter Actions → Artifacts
+  server-build:
+    runs-on: ubuntu-latest
+    env:
+      SITE: https://waybuild.de
+      BASE: /
+      PUBLIC_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run seo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: waybuild-server-upload
+          path: dist
+          include-hidden-files: true
+          retention-days: 30
 
   deploy:
     needs: build

@@ -7,6 +7,7 @@ import MobileCta from '../components/MobileCta.astro';
 import { company, isMissing, SHOW_HINTS } from '../config/site';
 import { launchTodos } from '../config/launch';
 import { href, absolute } from '../lib/paths';
+import { IS_PREVIEW } from '../lib/env';
 
 interface Props {
   title: string;
@@ -90,7 +91,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <meta name="robots" content={IS_PREVIEW ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
     <meta name="theme-color" content="#0e1a2b" />
     <link rel="icon" href={href('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
@@ -114,6 +115,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    {IS_PREVIEW && <div class="preview-bar">Vorschau – noch nicht veröffentlicht</div>}
     <Header />
     <main id="main">
       {breadcrumb && <Breadcrumbs items={breadcrumb} />}
@@ -139,6 +141,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   }
   .todo-badge span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.72rem; font-weight: 800; }
   @media print { .todo-badge { display: none; } }
+  .preview-bar { background: #0e1a2b; color: #aab5c3; text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
   /* Mobil: über der Sticky-CTA-Leiste, kompakter */
   .todo-badge em { font-style: normal; }
   @media (max-width: 959px) { .todo-badge { bottom: 84px; right: 10px; padding: 6px 10px; font-size: 0.8rem; } .todo-badge em { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { company } from '../config/site';
+import { IS_PREVIEW } from '../lib/env';
 import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 // Hinweis: Vorlage – vor dem Livegang unter eigener Domain rechtlich prüfen lassen.
@@ -27,13 +28,21 @@ import Hint from '../components/Hint.astro';
       </p>
 
       <h2>3. Hosting</h2>
-      <p>
-        Diese Website wird bei GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA)
-        gehostet. Beim Aufruf der Seite verarbeitet der Hoster technisch notwendige Daten (u. a. IP-Adresse,
-        Zeitpunkt, aufgerufene Seite, Browser) in Server-Logfiles. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
-        (berechtigtes Interesse an einer sicheren und stabilen Bereitstellung). Die Übermittlung in die USA stützt sich
-        auf das EU-US Data Privacy Framework.
-      </p>
+      {IS_PREVIEW ? (
+        <p>
+          Diese Vorschau wird bei GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA)
+          gehostet. Beim Aufruf verarbeitet der Hoster technisch notwendige Daten (u. a. IP-Adresse, Zeitpunkt,
+          aufgerufene Seite, Browser) in Server-Logfiles. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        </p>
+      ) : (
+        <p>
+          Diese Website wird bei <Val value={company.hoster} label="Name & Anschrift des Hosters" where="src/config/site.ts → company.hoster" /> gehostet.
+          Beim Aufruf der Seite verarbeitet der Hoster technisch notwendige Daten (u. a. IP-Adresse, Zeitpunkt,
+          aufgerufene Seite, Browser) in Server-Logfiles. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
+          (berechtigtes Interesse an einer sicheren und stabilen Bereitstellung). Mit dem Hoster besteht ein Vertrag
+          zur Auftragsverarbeitung.
+        </p>
+      )}
 
       <h2>4. Kontaktformular und E-Mail</h2>
       <p>

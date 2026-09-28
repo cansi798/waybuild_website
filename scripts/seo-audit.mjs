@@ -4,7 +4,8 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const BASE = '/waybuild_website';
+const BASE = (process.env.BASE ?? '/').replace(/\/+$/, '');
+const PREVIEW = process.env.PUBLIC_PREVIEW === 'true';
 const files = [];
 (function walk(dir) {
   for (const f of readdirSync(dir)) {
@@ -22,7 +23,10 @@ const report = (file, msg) => { problems++; console.log(`  ✗ ${msg}`); };
 for (const file of files.sort()) {
   const html = readFileSync(file, 'utf8');
   const page = file.replace(DIST, '').replace(/index\.html$/, '');
-  const noindex = /<meta name="robots" content="noindex/.test(html);
+  // In der Vorschau ist alles noindex – dann trotzdem alle Regeln prüfen (außer bewusst interne Seiten)
+  const noindex = PREVIEW
+    ? /\/(impressum|datenschutz|agb|404|checkliste|danke)/.test(file)
+    : /<meta name="robots" content="noindex/.test(html);
   console.log(`\n${page}${noindex ? '  (noindex)' : ''}`);
 
   const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '');
@@ -54,7 +58,7 @@ for (const file of files.sort()) {
 
   for (const m of html.matchAll(/href="(\/[^"#?]*)/g)) {
     const href = m[1];
-    if (!href.startsWith(BASE)) { report(file, `Link ohne Base-Pfad: ${href}`); continue; }
+    if (BASE && !href.startsWith(BASE + '/')) { report(file, `Link ohne Base-Pfad: ${href}`); continue; }
     const rel = href.slice(BASE.length) || '/';
     const target = join(DIST, rel, rel.endsWith('/') ? 'index.html' : '');
     if (!existsSync(target)) report(file, `toter Link: ${href}`);

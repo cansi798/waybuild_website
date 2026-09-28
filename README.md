@@ -3,7 +3,8 @@
 Website der **Waybuild UG (haftungsbeschränkt)** – Websites im Abo.
 Gebaut mit [Astro](https://astro.build) als rein statische Seite, deployed per GitHub Actions auf GitHub Pages.
 
-**Live:** https://cansi798.github.io/waybuild_website/
+**Vorschau (nur Ansicht, nicht für Google):** https://cansi798.github.io/waybuild_website/
+**Live (später):** eigener Server unter https://waybuild.de
 **CI-Handbuch:** nur lokal unter `intern/Waybuild-CI-Handbuch.pdf` (Ordner `intern/` wird nicht gepusht)
 
 ## Inhalte pflegen
@@ -37,7 +38,8 @@ Solange Daten fehlen, zeigt die Website gelbe **„Fehlt: …“**-Hinweise gena
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/waybuild_website/
+npm run dev      # http://localhost:4321/
+npm run build:preview   # Build wie die GitHub-Pages-Vorschau
 npm run check    # Typprüfung
 npm run build    # statischer Build nach dist/
 ```
@@ -47,22 +49,36 @@ npm run build    # statischer Build nach dist/
 
 ## Deployment
 
-Jeder Push auf `main` baut und veröffentlicht automatisch ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)).
+### Vorschau – GitHub Pages
+Jeder Push auf `main` aktualisiert automatisch die **Vorschau**. Sie ist bewusst für Suchmaschinen gesperrt
+(`noindex`, `robots.txt: Disallow`) und zeigt oben ein „Vorschau“-Banner – so gibt es später keinen Duplicate Content.
 
-### Eigene Domain (z. B. waybuild.de) aktivieren
+### Live gehen (eigener Server)
+Die Live-Version wird bei **jedem Push automatisch mitgebaut**:
+GitHub → Actions → letzter Lauf → *Artifacts* → **`waybuild-server-upload`** herunterladen und entpacken.
 
-1. In `.github/workflows/deploy.yml`: `SITE: https://waybuild.de` und `BASE: /`
-2. `public/CNAME` mit Inhalt `waybuild.de` anlegen
-3. In `public/robots.txt` die Sitemap-URL anpassen, in `public/site.webmanifest` `start_url`/`scope` auf `/`
-4. Beim Domain-Anbieter DNS auf GitHub Pages zeigen lassen, dann im Repo unter *Settings → Pages* die Domain eintragen
+Oder lokal:
+```bash
+cp .env.example .env     # Web3Forms-Key eintragen
+npm run build            # erzeugt dist/ für https://waybuild.de (inkl. .htaccess)
+```
 
-Erst mit eigener Domain liest Google die `robots.txt` (sie muss im Domain-Root liegen).
+Dann den **Inhalt** von `dist/` (inkl. der versteckten Datei `.htaccess`) per SFTP/FTP in das Web-Verzeichnis
+des Servers laden (z. B. `htdocs/` oder `/var/www/waybuild`).
+
+| Server | Konfiguration |
+|---|---|
+| Apache (IONOS, Strato, all-inkl …) | `.htaccess` liegt automatisch im Build: HTTPS, 404, Caching, Sicherheits-Header |
+| nginx (VPS) | Vorlage: [`server/nginx.conf.example`](server/nginx.conf.example) |
+
+Vor dem Live-Gang: Hoster in `src/config/site.ts → company.hoster` eintragen (Datenschutz), `SHOW_HINTS = false`.
+Andere Domain als waybuild.de? → `SITE` beim Build setzen und die Domain in `server/.htaccess` anpassen.
 
 ### Kontaktformular
 
 Ohne Konfiguration öffnet das Formular das E-Mail-Programm (`mailto:`).
-Für echten Versand einen Dienst wie Web3Forms oder Formspree nutzen und die Endpoint-URL als
-`PUBLIC_FORM_ENDPOINT` im Workflow (`env:`) setzen – danach Datenschutzerklärung um den Dienst ergänzen.
+Für echten Versand einen Dienst wie Web3Forms oder Formspree nutzen und den Access-Key als
+Repository-Variable `WEB3FORMS_KEY` (GitHub) bzw. in `.env` (lokal) setzen – danach Datenschutzerklärung um den Dienst ergänzen.
 
 ## Qualität (Lighthouse, mobil)
 

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://cansi798.github.io/waybuild_website/sitemap-index.xml

@@ -21,6 +21,7 @@ const companyFields: [TextField, string, string][] = [
   ['registerNumber', 'Handelsregisternummer (HRB)', 'Steht im Handelsregisterauszug.'],
   ['vatId', 'Umsatzsteuer-ID', 'Kommt vom Bundeszentralamt für Steuern. Falls noch nicht vorhanden: Zeile im Impressum vorerst entfernen.'],
   ['phone', 'Telefonnummer', 'Empfohlen: schafft Vertrauen und stärkt lokales SEO.'],
+  ['hoster', 'Server-Hoster (Name & Anschrift)', 'Pflichtangabe in der Datenschutzerklärung, sobald die Website auf dem eigenen Server liegt.'],
 ];
 
 const auto: Todo[] = companyFields.map(([key, title, detail]) => ({
@@ -37,9 +38,9 @@ const manual: Todo[] = [
   { title: 'Favicon & Social-Media-Vorschau', detail: 'Icons für Browser, iPhone, Android sowie Vorschaubild für WhatsApp/LinkedIn.', where: 'public/', done: true, priority: 'wichtig' },
   { title: 'CI-Handbuch', detail: 'Logo, Farben, Schriften, Tonalität, Visitenkarte, E-Mail-Signatur – nur intern als PDF.', where: 'intern/Waybuild-CI-Handbuch.pdf (nicht in Git)', done: true, priority: 'wichtig' },
   {
-    title: 'Domain registrieren (z. B. waybuild.de)',
-    detail: 'Danach Umzug von GitHub Pages auf die eigene Domain – Anleitung in der README.',
-    where: 'README.md → „Eigene Domain aktivieren“',
+    title: 'Domain & Server bereitstellen, Website hochladen',
+    detail: 'GitHub Pages ist nur die Vorschau. Live-Build (Actions → Artifacts → waybuild-server-upload) auf den Server laden – Anleitung in der README.',
+    where: 'README.md → „Live gehen (eigener Server)“',
     done: false,
     priority: 'pflicht',
   },

@@ -23,6 +23,8 @@ export const company = {
   registerCourt: 'TODO', // z. B. 'Amtsgericht Berlin-Charlottenburg'
   registerNumber: 'TODO', // z. B. 'HRB 123456 B'
   vatId: 'TODO', // z. B. 'DE123456789'
+  /** Server-Hoster für die Datenschutzerklärung, z. B. 'IONOS SE, Elgendorfer Str. 57, 56410 Montabaur' */
+  hoster: 'TODO',
   /** Links zu Google-Unternehmensprofil, LinkedIn, Instagram … – stärkt die Marke bei Google (JSON-LD sameAs). */
   sameAs: [] as string[],
 };

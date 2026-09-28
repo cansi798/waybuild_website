@@ -5,10 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "node node_modules/astro/bin/astro.mjs dev",
-    "build": "node node_modules/astro/bin/astro.mjs build",
+    "build": "node node_modules/astro/bin/astro.mjs build && node scripts/postbuild.mjs",
     "preview": "node node_modules/astro/bin/astro.mjs preview",
     "check": "node node_modules/astro/bin/astro.mjs check",
-    "seo": "node scripts/seo-audit.mjs"
+    "seo": "node scripts/seo-audit.mjs",
+    "build:preview": "SITE=https://cansi798.github.io BASE=/waybuild_website PUBLIC_PREVIEW=true npm run build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
