@@ -44,4 +44,14 @@ import { href } from '../lib/paths';
   .step__no { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
   .step h3 { margin: 2px 0 2px; }
   .step > p { color: var(--ink-soft); margin: 0; }
+  @media (max-width: 599px) {
+    .steps { grid-template-columns: 1fr; gap: 0; }
+    .step { display: grid; grid-template-columns: 44px 1fr; gap: 0 14px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .step__icon { width: 44px; height: 44px; margin: 0; grid-row: span 3; }
+    .step__no { font-size: 0.7rem; }
+    .step h3 { font-size: 1.02rem; margin: 0; }
+    .step > p { font-size: 0.9rem; }
+    .step :global(.more) { display: none; }
+    .next { margin-top: 20px; }
+  }
 </style>

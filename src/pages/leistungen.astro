@@ -115,4 +115,13 @@ const services = [
   .svc li { padding-left: 24px; position: relative; }
   .svc li::before { content: '✓'; position: absolute; left: 0; color: var(--ok); font-weight: 800; }
   .more { text-align: center; padding-bottom: 8px; }
+  @media (max-width: 599px) {
+    .svc { padding-block: 24px; gap: 8px; grid-template-columns: 1fr; }
+    .svc__no { font-size: 0.95rem; }
+    .svc h2 { font-size: 1.3rem; margin-bottom: 4px; }
+    .svc__lead { font-size: 1rem; }
+    .svc ul { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; background: none; border: 0; }
+    .svc li { padding: 4px 10px 4px 24px; font-size: 0.82rem; background: var(--white); border: 1px solid var(--line); border-radius: 99px; }
+    .svc li::before { left: 9px; }
+  }
 </style>

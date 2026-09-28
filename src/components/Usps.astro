@@ -40,5 +40,13 @@ import { href } from '../lib/paths';
   .usp h3 { font-size: clamp(1.02rem, 2.2vw, 1.25rem); margin-bottom: 4px; }
   .usp > p { color: var(--ink-soft); margin: 0; font-size: 0.95rem; }
   .next { margin: 28px 0 0; text-align: center; }
-  @media (max-width: 480px) { .usp :global(.more) { display: none; } }
+  @media (max-width: 599px) {
+    .usps { grid-template-columns: 1fr; border: 0; gap: 0; }
+    .usp { display: grid; grid-template-columns: 40px 1fr; gap: 0 14px; align-items: center; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line); background: none; }
+    .usp__icon { width: 40px; height: 40px; margin: 0; grid-row: span 2; }
+    .usp h3 { margin: 0; font-size: 1.02rem; }
+    .usp > p { font-size: 0.9rem; }
+    .usp :global(.more) { display: none; }
+    .next { margin-top: 20px; }
+  }
 </style>

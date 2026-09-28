@@ -1,5 +1,10 @@
 ---
 import { faqs } from '../config/site';
+
+// Sichtbar nur die wichtigsten Fragen – der Rest bleibt im HTML (Google/FAQ-Schema) unter "Weitere Fragen"
+const VISIBLE = 5;
+const top = faqs.slice(0, VISIBLE);
+const rest = faqs.slice(VISIBLE);
 ---
 
 <section class="section section--alt" id="faq" aria-labelledby="faq-h">
@@ -10,12 +15,25 @@ import { faqs } from '../config/site';
       <p class="lead">Noch Fragen? Wir antworten in einem Werktag.</p>
     </div>
     <div class="faq__list">
-      {faqs.map((f) => (
+      {top.map((f) => (
         <details class="faq__item">
           <summary><h3>{f.q}</h3></summary>
           <p>{f.a}</p>
         </details>
       ))}
+      {rest.length > 0 && (
+        <details class="faq__rest">
+          <summary>Weitere {rest.length} Fragen</summary>
+          <div class="faq__list">
+            {rest.map((f) => (
+              <details class="faq__item">
+                <summary><h3>{f.q}</h3></summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </details>
+      )}
     </div>
   </div>
 </section>
@@ -37,4 +55,10 @@ import { faqs } from '../config/site';
   }
   .faq__item[open] summary::after { transform: rotate(45deg); background: var(--accent); }
   .faq__item p { padding: 0 22px 20px; margin: 0; color: var(--ink-soft); }
+  .faq__rest > summary { list-style: none; cursor: pointer; font-weight: 650; color: var(--accent-ink); padding: 8px 4px; min-height: 44px; display: flex; align-items: center; gap: 6px; }
+  .faq__rest > summary::-webkit-details-marker { display: none; }
+  .faq__rest > summary::after { content: '+'; }
+  .faq__rest[open] > summary::after { content: '–'; }
+  .faq__rest .faq__list { margin-top: 8px; }
+  @media (max-width: 599px) { summary { padding: 14px 16px; } summary h3 { font-size: 0.98rem; } .faq__item p { padding: 0 16px 16px; } }
 </style>

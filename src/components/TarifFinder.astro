@@ -10,8 +10,9 @@ const questions = [
 const data = plans.map((p) => ({ id: p.id, name: p.name, monthly: p.monthly }));
 ---
 
-<div class="finder" data-finder data-plans={JSON.stringify(data)} data-contact={href('/kontakt/')}>
-  <p class="finder__title">Unsicher? <strong>2 Fragen</strong> – wir empfehlen.</p>
+<details class="finder" data-finder data-plans={JSON.stringify(data)} data-contact={href('/kontakt/')}>
+  <summary class="finder__title"><span>Unsicher? <strong>2 Fragen</strong> – wir empfehlen.</span></summary>
+  <div class="finder__body">
   {questions.map((q) => (
     <fieldset class="finder__q">
       <legend>{q.q}</legend>
@@ -25,13 +26,17 @@ const data = plans.map((p) => ({ id: p.id, name: p.name, monthly: p.monthly }));
       </div>
     </fieldset>
   ))}
+  </div>
   <p class="finder__result" aria-live="polite" hidden>
     <span>Unsere Empfehlung: <strong data-name></strong> · <span data-price></span> € / Monat</span>
     <a class="btn btn--primary" data-link href="#">Jetzt anfragen</a>
   </p>
-</div>
+</details>
 
 <script>
+  // Desktop: Finder direkt offen, mobil eingeklappt (weniger Scrollen)
+  if (matchMedia('(min-width: 900px)').matches) document.querySelectorAll<HTMLDetailsElement>('[data-finder]').forEach((d) => (d.open = true));
+
   document.querySelectorAll<HTMLElement>('[data-finder]').forEach((root) => {
     const plans = JSON.parse(root.dataset.plans!) as { id: string; name: string; monthly: number }[];
     const result = root.querySelector<HTMLElement>('.finder__result')!;
@@ -59,10 +64,14 @@ const data = plans.map((p) => ({ id: p.id, name: p.name, monthly: p.monthly }));
   .finder {
     margin-top: 28px; padding: clamp(20px, 3vw, 28px); border-radius: 18px;
     background: var(--white); border: 1px solid var(--line);
-    display: grid; gap: 16px;
   }
-  @media (min-width: 900px) { .finder { grid-template-columns: auto 1fr 1.4fr; align-items: center; gap: 24px; } }
-  .finder__title { margin: 0; font-family: var(--font-head); font-size: 1.15rem; }
+  .finder__body { display: grid; gap: 16px; margin-top: 16px; }
+  @media (min-width: 900px) { .finder__body { grid-template-columns: 1fr 1.4fr; gap: 32px; } }
+  .finder__title { margin: 0; font-family: var(--font-head); font-size: 1.15rem; list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .finder__title::-webkit-details-marker { display: none; }
+  .finder__title::after { content: '+'; font-family: var(--font-body); font-weight: 600; color: var(--accent-ink); }
+  .finder[open] .finder__title::after { content: '–'; }
+  @media (min-width: 900px) { .finder__title::after { display: none; } .finder__title { pointer-events: none; } }
   .finder__q { border: 0; padding: 0; margin: 0; min-width: 0; }
   .finder__q legend { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; padding: 0; }
   .finder__opts { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -75,7 +84,7 @@ const data = plans.map((p) => ({ id: p.id, name: p.name, monthly: p.monthly }));
   .pill input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .pill input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
   .finder__result {
-    grid-column: 1 / -1; margin: 0; padding-top: 16px; border-top: 1px solid var(--line);
+    margin: 16px 0 0; padding-top: 16px; border-top: 1px solid var(--line);
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
   }
   .finder__result[hidden] { display: none; }
