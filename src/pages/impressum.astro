@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../config/site';
+---
+
+<BaseLayout title="Impressum" description={`Impressum der ${company.legalName}.`} noindex>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>Impressum</h1>
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {company.legalName}<br />
+        {company.street}<br />
+        {company.zip} {company.city}
+      </p>
+      <p>
+        Vertreten durch die Geschäftsführung: {company.managingDirector}<br />
+        Registergericht: {company.registerCourt}<br />
+        Registernummer: {company.registerNumber}
+      </p>
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href={`mailto:${company.email}`}>{company.email}</a>
+        {company.phone && <><br />Telefon: {company.phone}</>}
+      </p>
+      <h2>Umsatzsteuer-ID</h2>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: {company.vatId}</p>
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>{company.managingDirector}, Anschrift wie oben</p>
+      <h2>EU-Streitschlichtung</h2>
+      <p>
+        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

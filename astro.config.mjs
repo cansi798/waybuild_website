@@ -10,6 +10,11 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Rechtstexte, 404 und internes CI-Handbuch nicht in die Sitemap
+      filter: (page) => !/\/(impressum|datenschutz|404|ci-handbuch)\/?$/.test(page),
+    }),
+  ],
   build: { inlineStylesheets: 'always' },
 });

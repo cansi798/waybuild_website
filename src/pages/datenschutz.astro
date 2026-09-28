@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../config/site';
+// Hinweis: Vorlage – vor dem Livegang unter eigener Domain rechtlich prüfen lassen.
+---
+
+<BaseLayout title="Datenschutzerklärung" description={`Datenschutzerklärung der ${company.legalName}.`} noindex>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>Datenschutzerklärung</h1>
+
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        {company.legalName}, {company.street}, {company.zip} {company.city}<br />
+        E-Mail: <a href={`mailto:${company.email}`}>{company.email}</a>
+      </p>
+
+      <h2>2. Grundsatz: So wenig Daten wie möglich</h2>
+      <p>
+        Diese Website verwendet keine Cookies, kein Tracking, keine Analyse-Tools und lädt keine Inhalte von
+        Drittanbietern (auch Schriftarten werden lokal ausgeliefert).
+      </p>
+
+      <h2>3. Hosting</h2>
+      <p>
+        Diese Website wird bei GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, USA)
+        gehostet. Beim Aufruf der Seite verarbeitet der Hoster technisch notwendige Daten (u. a. IP-Adresse,
+        Zeitpunkt, aufgerufene Seite, Browser) in Server-Logfiles. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO
+        (berechtigtes Interesse an einer sicheren und stabilen Bereitstellung). Die Übermittlung in die USA stützt sich
+        auf das EU-US Data Privacy Framework.
+      </p>
+
+      <h2>4. Kontaktformular und E-Mail</h2>
+      <p>
+        Wenn Sie uns über das Formular oder per E-Mail kontaktieren, verarbeiten wir Ihre Angaben (Name, E-Mail,
+        ggf. Unternehmen, Telefon, Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist
+        Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Die Daten werden gelöscht, sobald sie für die
+        Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.
+      </p>
+
+      <h2>5. Ihre Rechte</h2>
+      <p>
+        Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+        Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO) sowie das Recht auf Beschwerde bei einer
+        Datenschutz-Aufsichtsbehörde.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

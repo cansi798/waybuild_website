@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { addons, plans, formatEuro } from '../config/site';
+import { faqSchema, serviceSchema } from '../lib/schema';
+
+// Rechenbeispiel Jahreszahlung: 12 Monate zahlen 10
+const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
+---
+
+<BaseLayout
+  title="Preise & Tarife für Ihre Website im Abo"
+  description="Website-Abo ab 49 €/Monat netto: Start, Business oder Premium. Einrichtung ab 290 €, unbegrenzte E-Mail-Postfächer, nur 12 Monate Laufzeit. Alle Preise transparent."
+  schema={[serviceSchema(Astro.site), faqSchema()]}
+  breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
+>
+  <PageHeader
+    eyebrow="Preise & Tarife"
+    title="Faire Preise. Keine Überraschungen."
+    lead="Einmalige Einrichtung, danach ein fester Monatsbeitrag – Hosting, Domain, E-Mails, Wartung und Änderungen inklusive. Alle Preise netto zzgl. 19 % USt."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <Pricing headingLevel="h2" />
+    </div>
+  </section>
+
+  <section class="section section--alt" aria-labelledby="jahr-h">
+    <div class="wrap grid grid--2 split">
+      <div>
+        <span class="eyebrow">Jahreszahlung</span>
+        <h2 id="jahr-h">12 Monate nutzen, 10 bezahlen</h2>
+        <p class="lead">Wer jährlich zahlt, spart zwei volle Monatsbeiträge – bei gleicher Leistung.</p>
+      </div>
+      <table class="tbl">
+        <caption class="sr-only">Jahrespreise netto</caption>
+        <thead><tr><th scope="col">Tarif</th><th scope="col">Monatlich × 12</th><th scope="col">Jährlich</th></tr></thead>
+        <tbody>
+          {yearly.map((p) => (
+            <tr>
+              <th scope="row">{p.name}</th>
+              <td><s>{formatEuro(p.monthly * 12)}</s></td>
+              <td><strong>{formatEuro(p.year)}</strong></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="addons-h">
+    <div class="wrap grid grid--2 split">
+      <div>
+        <span class="eyebrow">Zusatzleistungen</span>
+        <h2 id="addons-h">Flexibel erweiterbar</h2>
+        <p class="lead">Ihr Unternehmen wächst? Ihre Website wächst mit. Alle Preise netto.</p>
+      </div>
+      <ul class="addons">
+        {addons.map((a) => <li><span>{a.name}</span><strong>{a.price}</strong></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Faq />
+  <CtaBand title="Unsicher, welcher Tarif passt?" text="Wir beraten Sie ehrlich – auch wenn das bedeutet, dass der kleinere Tarif reicht." />
+</BaseLayout>
+
+<style>
+  .split { gap: 32px 60px; align-items: start; }
+  .tbl { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
+  .tbl th, .tbl td { text-align: left; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+  .tbl thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); background: var(--paper); }
+  .tbl tbody tr:last-child > * { border-bottom: 0; }
+  .tbl s { color: var(--ink-soft); }
+  .tbl strong { color: var(--ok); }
+  .addons { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .addons li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .addons strong { white-space: nowrap; }
+</style>

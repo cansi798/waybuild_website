@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { href } from '../lib/paths';
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite existiert nicht." noindex>
+  <section class="section nf">
+    <div class="wrap">
+      <span class="eyebrow">Fehler 404</span>
+      <h1>Hier wird noch gebaut.</h1>
+      <p class="lead">Die Seite, die Sie suchen, gibt es nicht (mehr). Aber wir bringen Sie auf den richtigen Weg.</p>
+      <div class="nf__actions">
+        <a class="btn btn--primary" href={href('/')}>Zur Startseite</a>
+        <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf { min-height: 60vh; display: grid; align-items: center; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+</style>

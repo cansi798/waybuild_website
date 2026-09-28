@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { company, plans } from '../config/site';
+import { href } from '../lib/paths';
+
+// Optionaler Formular-Dienst (z. B. Web3Forms/Formspree). Ohne Endpoint öffnet sich das E-Mail-Programm.
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+
+<BaseLayout
+  title="Kontakt & kostenloses Erstgespräch"
+  description="Jetzt kostenloses Erstgespräch zu Ihrer Website im Abo anfragen. Antwort innerhalb eines Werktags – unverbindlich und ohne Verkaufsdruck."
+  breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
+>
+  <PageHeader
+    eyebrow="Kontakt"
+    title="Lassen Sie uns sprechen."
+    lead="Erzählen Sie uns kurz von Ihrem Unternehmen. Wir melden uns innerhalb eines Werktags für ein kostenloses 20-minütiges Erstgespräch."
+  />
+
+  <section class="section">
+    <div class="wrap contact">
+      <form class="form card" id="contact-form" data-endpoint={endpoint} data-mailto={company.email} novalidate>
+        <div class="row">
+          <label>Name*<input name="name" autocomplete="name" required /></label>
+          <label>Unternehmen<input name="firma" autocomplete="organization" /></label>
+        </div>
+        <div class="row">
+          <label>E-Mail*<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Telefon<input name="telefon" type="tel" autocomplete="tel" /></label>
+        </div>
+        <label>Interessanter Tarif
+          <select name="tarif">
+            <option value="">Noch unsicher – bitte beraten</option>
+            {plans.map((p) => <option value={p.id}>{p.name}</option>)}
+          </select>
+        </label>
+        <label>Ihre Nachricht*<textarea name="nachricht" rows="5" required placeholder="z. B. Branche, gewünschte Seiten, bestehende Domain …"></textarea></label>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="check">
+          <input type="checkbox" name="datenschutz" required />
+          <span>Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span>
+        </label>
+        <button class="btn btn--primary" type="submit">Anfrage senden</button>
+        <p class="form__status" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="side">
+        <div class="card side__card">
+          <h2>Direkter Draht</h2>
+          <p><a href={`mailto:${company.email}`}>{company.email}</a></p>
+          {company.phone && <p><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></p>}
+          <p class="muted">{company.legalName}<br />{company.street}<br />{company.zip} {company.city}</p>
+        </div>
+        <ul class="promise">
+          <li><strong>Antwort in 1 Werktag</strong>Persönlich, nicht automatisiert.</li>
+          <li><strong>Kostenlos & unverbindlich</strong>Das Erstgespräch kostet nichts.</li>
+          <li><strong>Ehrliche Beratung</strong>Wir empfehlen, was Sie wirklich brauchen.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    // Tarif aus ?tarif=... vorauswählen (Buttons auf der Preisseite)
+    const tarif = new URLSearchParams(location.search).get('tarif');
+    const select = form.elements.namedItem('tarif') as HTMLSelectElement;
+    if (tarif && [...select.options].some((o) => o.value === tarif)) select.value = tarif;
+
+    const status = form.querySelector<HTMLElement>('.form__status')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      if (data.website) return; // Honeypot: Bots füllen das versteckte Feld aus
+      delete data.website;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nTarif: ${data.tarif || 'Beratung'}\n\n${data.nachricht}`;
+        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('Anfrage Website-Abo')}&body=${encodeURIComponent(body)}`;
+        status.textContent = 'Ihr E-Mail-Programm wurde geöffnet – bitte senden Sie die Nachricht dort ab.';
+        return;
+      }
+      status.textContent = 'Wird gesendet …';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ ...data, subject: 'Anfrage Website-Abo' }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = 'Vielen Dank! Wir melden uns innerhalb eines Werktags.';
+      } catch {
+        status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${form.dataset.mailto}.`;
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact { display: grid; gap: 32px; }
+  @media (min-width: 960px) { .contact { grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start; } }
+  .form { display: grid; gap: 18px; }
+  .row { display: grid; gap: 18px; }
+  @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
+  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+  input, select, textarea {
+    font: inherit; font-weight: 400; color: var(--ink); width: 100%;
+    padding: 12px 14px; min-height: 48px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper);
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ink); background: var(--white); }
+  .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
+  .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+  .hp { position: absolute; left: -9999px; }
+  .form .btn { justify-self: start; }
+  .form__status { margin: 0; font-weight: 600; }
+  .side { display: grid; gap: 20px; }
+  .side__card h2 { font-size: 1.3rem; }
+  .side__card a { font-weight: 650; }
+  .muted { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
+  .promise { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .promise li { padding-left: 18px; border-left: 3px solid var(--accent); }
+  .promise strong { display: block; }
+</style>

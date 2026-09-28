@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import WhyNotWordPress from '../components/WhyNotWordPress.astro';
+import Steps from '../components/Steps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { href } from '../lib/paths';
+import { serviceSchema } from '../lib/schema';
+
+const services = [
+  {
+    id: 'webdesign',
+    short: 'Webdesign',
+    title: 'Individuelles Webdesign & Entwicklung',
+    text: 'Kein Template, kein Baukasten: Wir gestalten und programmieren Ihre Website von Grund auf – passend zu Ihrer Marke, Ihren Kunden und Ihren Zielen. Mobil zuerst gedacht, auf jedem Bildschirm perfekt.',
+    points: ['Design nach Ihrem Corporate Design', 'Optimiert für Smartphone, Tablet & Desktop', 'Barrierearm nach WCAG-Richtlinien', 'Kontakt- und Anfrageformulare'],
+  },
+  {
+    id: 'hosting',
+    short: 'Hosting',
+    title: 'Hosting & Server',
+    text: 'Ihre Website läuft auf schnellen Servern in Deutschland. Um Technik, Updates und Ausfallsicherheit kümmern wir uns – Sie müssen nie wieder einen Hosting-Vertrag verwalten.',
+    points: ['Serverstandort Deutschland, DSGVO-konform', 'SSL-Zertifikat (https) inklusive', 'Tägliche Backups', 'Überwachung rund um die Uhr'],
+  },
+  {
+    id: 'email',
+    short: 'E-Mail',
+    title: 'E-Mail-Einrichtung – unbegrenzt',
+    text: 'Professionelle Adressen wie info@ihre-firma.de oder vorname@ihre-firma.de – so viele Sie brauchen. Wir richten alle Postfächer ein und verbinden sie mit Outlook, Apple Mail und Ihrem Smartphone.',
+    points: ['Unbegrenzte Postfächer & Weiterleitungen', 'Einrichtung auf allen Geräten', 'Spam- und Virenschutz', 'Umzug bestehender Postfächer'],
+  },
+  {
+    id: 'domain',
+    short: 'Domain',
+    title: 'Domain & Umzug',
+    text: 'Eine .de-Domain ist in jedem Tarif enthalten. Sie haben schon eine Domain? Wir ziehen sie kostenlos und ohne Ausfall um – die Domain bleibt immer Ihr Eigentum.',
+    points: ['.de-Domain inklusive', 'Kostenloser Domain-Umzug', 'DNS-Verwaltung', 'Weitere Domains zubuchbar'],
+  },
+  {
+    id: 'seo',
+    short: 'SEO & KI',
+    title: 'SEO & Sichtbarkeit in KI-Suchen',
+    text: 'Was nützt die schönste Website, wenn sie keiner findet? Wir optimieren Technik, Inhalte und Struktur für Google – und für KI-Assistenten wie ChatGPT und Gemini, die immer öfter Empfehlungen aussprechen.',
+    points: ['Technisches SEO & strukturierte Daten', 'Lokales SEO & Google-Unternehmensprofil', 'Top-Werte bei Core Web Vitals', 'Optimierung für KI-Suchen (GEO)'],
+  },
+  {
+    id: 'wartung',
+    short: 'Wartung',
+    title: 'Wartung, Sicherheit & Änderungen',
+    text: 'Neue Öffnungszeiten, ein neues Teammitglied, ein aktuelles Angebot? Kurze E-Mail genügt – wir setzen es um. Sicherheit und Aktualität laufen im Hintergrund.',
+    points: ['Änderungsservice je nach Tarif', 'Sicherheitsupdates inklusive', 'Persönlicher Ansprechpartner', 'Keine Plugins, die veralten'],
+  },
+];
+---
+
+<BaseLayout
+  title="Leistungen: Webdesign, Hosting, E-Mail & SEO im Abo"
+  description="Alles aus einer Hand: individuelles Webdesign, Hosting in Deutschland, unbegrenzte E-Mail-Postfächer, Domain, SEO und Wartung – im monatlichen Website-Abo von Waybuild."
+  schema={[serviceSchema(Astro.site)]}
+  breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
+>
+  <PageHeader
+    eyebrow="Leistungen"
+    title="Alles, was Ihre Website braucht. Aus einer Hand."
+    lead="Design, Technik, Server, E-Mail und Sichtbarkeit – wir übernehmen alles, damit Sie sich um Ihr Geschäft kümmern können."
+  >
+    <nav class="toc" aria-label="Leistungen auf dieser Seite">
+      {services.map((s) => <a href={`#${s.id}`}>{s.short}</a>)}
+    </nav>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap svc-list">
+      {services.map((s, i) => (
+        <article class="svc" id={s.id}>
+          <span class="svc__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h2>{s.title}</h2>
+            <p>{s.text}</p>
+          </div>
+          <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <WhyNotWordPress />
+  <Steps />
+  <section class="wrap more">
+    <a class="btn btn--ghost" href={href('/preise/')}>Zu den Preisen →</a>
+  </section>
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .toc a { text-decoration: none; font-size: 0.9rem; font-weight: 600; padding: 8px 14px; border-radius: 99px; background: var(--white); border: 1px solid var(--line); }
+  .toc a:hover { border-color: var(--ink); }
+  .svc-list { display: grid; }
+  .svc { display: grid; gap: 12px 40px; padding-block: 40px; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+  .svc:first-child { border-top: 0; padding-top: 0; }
+  @media (min-width: 900px) { .svc { grid-template-columns: 80px 1.3fr 1fr; } }
+  .svc__no { font-family: var(--font-head); font-size: 2.2rem; font-weight: 750; color: var(--accent); line-height: 1; }
+  .svc h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .svc p { color: var(--ink-soft); }
+  .svc ul { list-style: none; margin: 0; padding: 20px 22px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; display: grid; gap: 8px; align-self: start; }
+  .svc li { padding-left: 24px; position: relative; }
+  .svc li::before { content: '✓'; position: absolute; left: 0; color: var(--ok); font-weight: 800; }
+  .more { text-align: center; padding-bottom: 8px; }
+</style>

@@ -56,9 +56,13 @@ const current = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: 50;
+    border-bottom: 1px solid var(--line);
+  }
+  /* Blur auf Pseudo-Element: backdrop-filter am Header selbst würde das fixierte Mobilmenü einsperren */
+  .header::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
     background: rgb(247 245 240 / 88%);
     backdrop-filter: saturate(160%) blur(12px);
-    border-bottom: 1px solid var(--line);
   }
   .header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 68px; }
   .header__logo { display: inline-flex; text-decoration: none; }

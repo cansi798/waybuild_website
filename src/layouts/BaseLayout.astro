@@ -73,7 +73,10 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#0e1a2b" />
+    <link rel="icon" href={href('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
+    <link rel="manifest" href={href('/site.webmanifest')} />
     <link rel="sitemap" href={href('/sitemap-index.xml')} />
 
     <meta property="og:type" content="website" />
