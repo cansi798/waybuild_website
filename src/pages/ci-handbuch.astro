@@ -309,7 +309,8 @@ const sections = [
 
   .ch { scroll-margin-top: 70px; }
   .ch__head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px; border-bottom: 2px solid currentColor; padding-bottom: 14px; }
-  .ch__head span { font-family: var(--font-head); font-weight: 750; font-size: 1.1rem; color: var(--accent); }
+  .ch__head span { font-family: var(--font-head); font-weight: 750; font-size: 1.1rem; color: var(--accent-ink); }
+  .section--dark .ch__head span { color: var(--accent); }
   .ch__head h2 { margin: 0; }
   .gap { gap: 24px 48px; }
   .muted { color: var(--ink-soft); }
@@ -373,7 +374,7 @@ const sections = [
   .demo--btns .btn { min-height: 40px; padding: 0.5em 1em; font-size: 0.9rem; }
   .demo--radii span { width: 52px; height: 52px; display: grid; place-items: center; background: var(--white); border: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-soft); }
   .demo--icons svg { width: 34px; height: 34px; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .demo--nums span { font-family: var(--font-head); font-weight: 750; font-size: 2rem; color: var(--accent); }
+  .demo--nums span { font-family: var(--font-head); font-weight: 750; font-size: 2rem; color: var(--accent-ink); }
   .demo--photo { background: radial-gradient(circle at 70% 35%, #ffd2bd 0 14%, transparent 15%), linear-gradient(160deg, #ff8a5c, #ff5a1f 50%, #0e1a2b 130%); }
 
   .tone-rules { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }

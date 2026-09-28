@@ -13,8 +13,12 @@ const industries = ['Handwerk', 'Arztpraxen', 'Gastronomie', 'Kanzleien', 'Immob
 <style>
   .ind { display: flex; align-items: center; gap: 24px; padding: 18px 0; border-block: 1px solid var(--line); background: var(--white); overflow: hidden; }
   .ind__label { flex: none; margin: 0 0 0 max(16px, calc((100vw - var(--wrap)) / 2)); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
-  .ind__track { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-  .ind ul { flex: none; display: flex; gap: 40px; list-style: none; margin: 0; padding: 0 20px; animation: marquee 40s linear infinite; }
+  .ind__track { position: relative; display: flex; overflow: hidden; }
+  /* Randverlauf als Overlay statt mask-image: Maske auf animiertem Inhalt erzwingt Repaints pro Frame */
+  .ind__track::before, .ind__track::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 1; pointer-events: none; }
+  .ind__track::before { left: 0; background: linear-gradient(90deg, var(--white), transparent); }
+  .ind__track::after { right: 0; background: linear-gradient(-90deg, var(--white), transparent); }
+  .ind ul { flex: none; display: flex; gap: 40px; list-style: none; margin: 0; padding: 0 20px; animation: marquee 40s linear infinite; will-change: transform; }
   .ind li { font-family: var(--font-head); font-size: 1.15rem; font-weight: 600; white-space: nowrap; }
   .ind li::before { content: '◆'; color: var(--accent); font-size: 0.6em; margin-right: 40px; vertical-align: middle; }
   @keyframes marquee { to { transform: translateX(-100%); } }
