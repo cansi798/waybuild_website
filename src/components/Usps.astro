@@ -2,6 +2,7 @@
 import { usps } from '../config/site';
 import Icon from './Icon.astro';
 import More from './More.astro';
+import { href } from '../lib/paths';
 ---
 
 <section class="section" id="vorteile" aria-labelledby="usps-h">
@@ -20,6 +21,7 @@ import More from './More.astro';
         </li>
       ))}
     </ul>
+    <p class="next"><a class="btn btn--dark" href={href('/#preise')}>Preise ansehen</a></p>
   </div>
 </section>
 
@@ -37,5 +39,6 @@ import More from './More.astro';
   }
   .usp h3 { font-size: clamp(1.02rem, 2.2vw, 1.25rem); margin-bottom: 4px; }
   .usp > p { color: var(--ink-soft); margin: 0; font-size: 0.95rem; }
+  .next { margin: 28px 0 0; text-align: center; }
   @media (max-width: 480px) { .usp :global(.more) { display: none; } }
 </style>

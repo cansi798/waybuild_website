@@ -18,6 +18,12 @@ Fast alles steht zentral in [`src/config/site.ts`](src/config/site.ts):
 | Vorteile, Vergleich WordPress, Ablauf | `usps`, `comparison`, `steps` |
 | FAQ (auch als FAQPage-JSON-LD und in `/llms.txt` für KI-Suchen) | `faqs` |
 
+## Bilder
+
+Bilder einfach in **`src/assets/bilder/`** ablegen – sie werden beim Build automatisch zu AVIF/WebP in passenden
+Größen optimiert. Welche Datei wohin gehört: [`src/assets/bilder/LIESMICH.md`](src/assets/bilder/LIESMICH.md).
+KI-Prompts im Waybuild-Stil: [`src/assets/bilder/KI-PROMPTS.md`](src/assets/bilder/KI-PROMPTS.md).
+
 ## Hinweise & Launch-Checkliste
 
 Solange Daten fehlen, zeigt die Website gelbe **„Fehlt: …“**-Hinweise genau an der Stelle, wo etwas nachgetragen werden muss

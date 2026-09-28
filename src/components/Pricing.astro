@@ -1,6 +1,7 @@
 ---
 import { plans, allPlansInclude, formatEuro, gross } from '../config/site';
 import { href } from '../lib/paths';
+import TarifFinder from './TarifFinder.astro';
 
 interface Props {
   headingLevel?: 'h2' | 'h3';
@@ -12,9 +13,10 @@ const fmtGross = (n: number) =>
   new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(gross(n));
 ---
 
-<div class="pricing">
+<p class="swipe" aria-hidden="true">← Wischen für alle Tarife →</p>
+<div class="pricing" data-pricing>
   {plans.map((plan) => (
-    <article class:list={['plan', { 'plan--hl': plan.highlight }]} aria-labelledby={`plan-${plan.id}`}>
+    <article class:list={['plan', { 'plan--hl': plan.highlight }]} aria-labelledby={`plan-${plan.id}`} data-plan={plan.id}>
       <div class="plan__top">
         <H id={`plan-${plan.id}`} class="plan__name">{plan.name}</H>
         {plan.highlight && <span class="plan__badge">Beliebt</span>}
@@ -48,9 +50,32 @@ const fmtGross = (n: number) =>
 </p>
 <p class="terms">12 Monate Laufzeit, dann monatlich kündbar · Jahreszahlung: 2 Monate gratis · Preise zzgl. 19 % USt.</p>
 
+<TarifFinder />
+
+<script>
+  // Mobil: Karussell startet beim empfohlenen Tarif (mittlere Karte)
+  const track = document.querySelector<HTMLElement>('[data-pricing]');
+  const hl = track?.querySelector<HTMLElement>('.plan--hl');
+  if (track && hl && matchMedia('(max-width: 899px)').matches) {
+    track.scrollLeft = hl.offsetLeft - (track.clientWidth - hl.clientWidth) / 2;
+  }
+</script>
+
 <style>
   .pricing { display: grid; gap: 16px; align-items: stretch; }
   @media (min-width: 900px) { .pricing { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .swipe { display: none; }
+  /* Mobil: horizontales Wisch-Karussell mit angeschnittener Nachbarkarte */
+  @media (max-width: 899px) {
+    .pricing {
+      display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+      margin-inline: -16px; padding: 8px 16px 12px; scroll-padding-inline: 16px;
+    }
+    .pricing::-webkit-scrollbar { display: none; }
+    .plan { flex: 0 0 min(84%, 360px); scroll-snap-align: center; }
+    .swipe { display: block; text-align: center; font-size: 0.8rem; color: var(--ink-soft); margin: 0 0 4px; }
+  }
+  .plan.is-match { outline: 3px solid var(--accent); outline-offset: 3px; }
 
   .plan {
     display: flex; flex-direction: column;

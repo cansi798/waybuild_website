@@ -2,6 +2,7 @@
 import { steps } from '../config/site';
 import Icon from './Icon.astro';
 import More from './More.astro';
+import { href } from '../lib/paths';
 ---
 
 <section class="section" id="ablauf" aria-labelledby="ablauf-h">
@@ -21,6 +22,7 @@ import More from './More.astro';
         </li>
       ))}
     </ol>
+    <p class="next"><a class="btn btn--primary" href={href('/kontakt/')}>Mit Schritt 1 starten</a></p>
   </div>
 </section>
 
@@ -28,6 +30,7 @@ import More from './More.astro';
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
   @media (min-width: 1000px) { .steps { grid-template-columns: repeat(4, 1fr); } }
   .step { position: relative; }
+  .next { margin: 36px 0 0; text-align: center; }
   .step__icon {
     display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; margin-bottom: 16px;
     background: var(--white); border: 1.5px solid var(--ink); color: var(--ink); position: relative; z-index: 1;

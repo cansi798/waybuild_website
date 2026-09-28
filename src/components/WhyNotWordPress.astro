@@ -1,6 +1,7 @@
 ---
 import { comparison } from '../config/site';
 import More from './More.astro';
+import { href } from '../lib/paths';
 ---
 
 <section class="section section--dark" id="warum" aria-labelledby="warum-h">
@@ -41,6 +42,7 @@ import More from './More.astro';
         ))}
       </tbody>
     </table>
+    <p class="next"><a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a></p>
   </div>
 </section>
 
@@ -53,6 +55,7 @@ import More from './More.astro';
   .stats dd { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; color: var(--accent); }
   .stats dt { font-size: 0.8rem; color: #aab5c3; margin-top: 6px; }
 
+  .next { margin: 36px 0 0; text-align: center; }
   .cmp { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
   .cmp th, .cmp td { text-align: left; padding: 16px 12px; border-bottom: 1px solid #25344a; }
   .cmp thead th { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aab5c3; font-weight: 600; }

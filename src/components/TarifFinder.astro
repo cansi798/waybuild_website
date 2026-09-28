@@ -1,0 +1,83 @@
+---
+// Tarif-Finder: 2 Fragen → Empfehlung → vorausgefüllte Anfrage. Nimmt Unentschlossenen die Entscheidung ab.
+import { plans } from '../config/site';
+import { href } from '../lib/paths';
+
+const questions = [
+  { name: 'seiten', q: 'Wie viele Seiten?', options: ['Bis 5', 'Bis 12', 'Mehr'] },
+  { name: 'ziel', q: 'Ihr Ziel?', options: ['Präsent sein', 'Lokal gefunden werden', 'Wachsen'] },
+];
+const data = plans.map((p) => ({ id: p.id, name: p.name, monthly: p.monthly }));
+---
+
+<div class="finder" data-finder data-plans={JSON.stringify(data)} data-contact={href('/kontakt/')}>
+  <p class="finder__title">Unsicher? <strong>2 Fragen</strong> – wir empfehlen.</p>
+  {questions.map((q) => (
+    <fieldset class="finder__q">
+      <legend>{q.q}</legend>
+      <div class="finder__opts">
+        {q.options.map((o, i) => (
+          <label class="pill">
+            <input type="radio" name={`finder-${q.name}`} value={i} />
+            <span>{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  ))}
+  <p class="finder__result" aria-live="polite" hidden>
+    <span>Unsere Empfehlung: <strong data-name></strong> · <span data-price></span> € / Monat</span>
+    <a class="btn btn--primary" data-link href="#">Jetzt anfragen</a>
+  </p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-finder]').forEach((root) => {
+    const plans = JSON.parse(root.dataset.plans!) as { id: string; name: string; monthly: number }[];
+    const result = root.querySelector<HTMLElement>('.finder__result')!;
+    root.addEventListener('change', () => {
+      const picked = [...root.querySelectorAll<HTMLInputElement>('input:checked')];
+      if (picked.length < 2) return;
+      // Der höhere Bedarf aus beiden Antworten bestimmt den Tarif
+      const plan = plans[Math.max(...picked.map((i) => +i.value))];
+      result.querySelector('[data-name]')!.textContent = plan.name;
+      result.querySelector('[data-price]')!.textContent = String(plan.monthly);
+      result.querySelector<HTMLAnchorElement>('[data-link]')!.href = `${root.dataset.contact}?tarif=${plan.id}`;
+      result.hidden = false;
+      // Passende Tarifkarte markieren (im Karussell auch hinscrollen)
+      document.querySelectorAll('.plan').forEach((c) => c.classList.toggle('is-match', (c as HTMLElement).dataset.plan === plan.id));
+      const card = document.querySelector<HTMLElement>(`.plan[data-plan="${plan.id}"]`);
+      const track = card?.parentElement;
+      if (card && track && track.scrollWidth > track.clientWidth) {
+        track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+<style>
+  .finder {
+    margin-top: 28px; padding: clamp(20px, 3vw, 28px); border-radius: 18px;
+    background: var(--white); border: 1px solid var(--line);
+    display: grid; gap: 16px;
+  }
+  @media (min-width: 900px) { .finder { grid-template-columns: auto 1fr 1.4fr; align-items: center; gap: 24px; } }
+  .finder__title { margin: 0; font-family: var(--font-head); font-size: 1.15rem; }
+  .finder__q { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .finder__q legend { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; padding: 0; }
+  .finder__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { position: relative; }
+  .pill input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .pill span {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 99px;
+    border: 1.5px solid var(--line); background: var(--paper); font-size: 0.92rem; font-weight: 550; cursor: pointer;
+  }
+  .pill input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .pill input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .finder__result {
+    grid-column: 1 / -1; margin: 0; padding-top: 16px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .finder__result[hidden] { display: none; }
+  @media (max-width: 599px) { .finder__result .btn { flex: 1 1 100%; } }
+</style>

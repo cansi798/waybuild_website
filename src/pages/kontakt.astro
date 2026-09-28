@@ -14,6 +14,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   title="Kontakt & kostenloses Erstgespräch"
   description="Jetzt kostenloses Erstgespräch zu Ihrer Website im Abo anfragen. Antwort innerhalb eines Werktags – unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
+  hideMobileCta
 >
   <PageHeader
     eyebrow="Kontakt"
@@ -24,27 +25,35 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   <section class="section">
     <div class="wrap contact">
       <form class="form card" id="contact-form" data-endpoint={endpoint} data-mailto={company.email} novalidate>
+        <fieldset class="tarife">
+          <legend>Tarif</legend>
+          <div class="tarife__opts">
+            <label class="pill"><input type="radio" name="tarif" value="" checked /><span>Beraten Sie mich</span></label>
+            {plans.map((p) => (
+              <label class="pill"><input type="radio" name="tarif" value={p.id} /><span>{p.name} · {p.monthly} €</span></label>
+            ))}
+          </div>
+        </fieldset>
         <div class="row">
           <label>Name*<input name="name" autocomplete="name" required /></label>
-          <label>Unternehmen<input name="firma" autocomplete="organization" /></label>
+          <label>E-Mail*<input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
         </div>
         <div class="row">
-          <label>E-Mail*<input name="email" type="email" autocomplete="email" required /></label>
-          <label>Telefon<input name="telefon" type="tel" autocomplete="tel" /></label>
+          <label><span>Telefon <small>(für Rückruf)</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" /></label>
+          <label>Unternehmen<input name="firma" autocomplete="organization" /></label>
         </div>
-        <label>Interessanter Tarif
-          <select name="tarif">
-            <option value="">Noch unsicher – bitte beraten</option>
-            {plans.map((p) => <option value={p.id}>{p.name}</option>)}
-          </select>
-        </label>
-        <label>Ihre Nachricht*<textarea name="nachricht" rows="5" required placeholder="z. B. Branche, gewünschte Seiten, bestehende Domain …"></textarea></label>
+        <label><span>Nachricht <small>(optional)</small></span><textarea name="nachricht" rows="4" placeholder="z. B. Branche, bestehende Domain …"></textarea></label>
         <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label class="check">
           <input type="checkbox" name="datenschutz" required />
           <span>Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span>
         </label>
-        <button class="btn btn--primary" type="submit">Anfrage senden</button>
+        <button class="btn btn--primary" type="submit">Kostenloses Erstgespräch anfragen</button>
+        <ol class="after" aria-label="So geht es weiter">
+          <li><strong>Heute</strong> Anfrage senden</li>
+          <li><strong>1 Werktag</strong> Wir melden uns</li>
+          <li><strong>20 Min.</strong> Erstgespräch</li>
+        </ol>
         {!endpoint && (
           <Hint label="Formular-Versanddienst" where=".github/workflows/deploy.yml → PUBLIC_FORM_ENDPOINT">
             {' '}– aktuell öffnet sich nur das E-Mail-Programm.
@@ -75,8 +84,8 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   if (form) {
     // Tarif aus ?tarif=... vorauswählen (Buttons auf der Preisseite)
     const tarif = new URLSearchParams(location.search).get('tarif');
-    const select = form.elements.namedItem('tarif') as HTMLSelectElement;
-    if (tarif && [...select.options].some((o) => o.value === tarif)) select.value = tarif;
+    const radio = form.querySelector<HTMLInputElement>(`input[name="tarif"][value="${CSS.escape(tarif ?? '')}"]`);
+    if (tarif && radio) radio.checked = true;
 
     const status = form.querySelector<HTMLElement>('.form__status')!;
     form.addEventListener('submit', async (e) => {
@@ -125,7 +134,24 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
   .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
   .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
   .hp { position: absolute; left: -9999px; }
-  .form .btn { justify-self: start; }
+  .form .btn { justify-self: stretch; }
+  @media (min-width: 640px) { .form .btn { justify-self: start; } }
+  label small { font-weight: 400; color: var(--ink-soft); }
+  .tarife { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .tarife legend { font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; padding: 0; }
+  .tarife__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { position: relative; display: block; }
+  .pill input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .pill span {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 99px;
+    border: 1.5px solid var(--line); background: var(--paper); font-size: 0.92rem; font-weight: 550; cursor: pointer;
+  }
+  .pill input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .pill input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .after { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.82rem; color: var(--ink-soft); }
+  .after li { border-top: 2px solid var(--line); padding-top: 8px; }
+  .after li:first-child { border-color: var(--accent); }
+  .after strong { display: block; color: var(--ink); font-size: 0.9rem; }
   .form__status { margin: 0; font-weight: 600; }
   .side { display: grid; gap: 20px; }
   .side__card h2 { font-size: 1.3rem; }

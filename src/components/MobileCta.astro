@@ -1,0 +1,50 @@
+---
+// Mobile Sticky-CTA: erscheint nach dem ersten Bildschirm, damit der nächste Schritt immer einen Daumen entfernt ist.
+import { plans, formatEuro } from '../config/site';
+import { href } from '../lib/paths';
+
+const cheapest = Math.min(...plans.map((p) => p.monthly));
+---
+
+<div class="mcta" data-mcta hidden>
+  <a class="mcta__price" href={href('/preise/')}>
+    <small>ab</small> <strong>{formatEuro(cheapest)}</strong> <small>/ Monat netto</small>
+  </a>
+  <a class="btn btn--primary mcta__btn" href={href('/kontakt/')}>Erstgespräch</a>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mcta]');
+  if (bar) {
+    bar.hidden = false;
+    let ticking = false;
+    const update = () => {
+      // Erst nach ~70 % des ersten Bildschirms einblenden, am Seitenende (Footer) wieder ausblenden
+      const nearEnd = innerHeight + scrollY > document.documentElement.scrollHeight - 200;
+      bar.classList.toggle('is-visible', scrollY > innerHeight * 0.7 && !nearEnd);
+      ticking = false;
+    };
+    addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  }
+</script>
+
+<style>
+  .mcta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 55;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: rgb(255 255 255 / 96%); border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px rgb(14 26 43 / 8%);
+    transform: translateY(110%); transition: transform 0.25s ease;
+  }
+  .mcta.is-visible { transform: none; }
+  .mcta__price { text-decoration: none; line-height: 1.2; }
+  .mcta__price strong { font-family: var(--font-head); font-size: 1.25rem; }
+  .mcta__price small { color: var(--ink-soft); font-size: 0.78rem; }
+  .mcta__btn { min-height: 46px; padding: 0.6em 1.3em; }
+  @media (min-width: 960px) { .mcta { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .mcta { transition: none; } }
+</style>
