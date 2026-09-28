@@ -7,83 +7,88 @@ interface Props {
 }
 const { headingLevel = 'h3' } = Astro.props;
 const H = headingLevel;
+const VISIBLE = 4;
 const fmtGross = (n: number) =>
   new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(gross(n));
 ---
 
 <div class="pricing">
   {plans.map((plan) => (
-    <article class={`plan ${plan.highlight ? 'plan--hl' : ''}`} aria-labelledby={`plan-${plan.id}`}>
-      {plan.highlight && <span class="plan__badge">Am beliebtesten</span>}
-      <H id={`plan-${plan.id}`} class="plan__name">{plan.name}</H>
+    <article class:list={['plan', { 'plan--hl': plan.highlight }]} aria-labelledby={`plan-${plan.id}`}>
+      <div class="plan__top">
+        <H id={`plan-${plan.id}`} class="plan__name">{plan.name}</H>
+        {plan.highlight && <span class="plan__badge">Beliebt</span>}
+      </div>
       <p class="plan__tag">{plan.tagline}</p>
       <p class="plan__price">
-        <span class="plan__amount">{formatEuro(plan.monthly)}</span>
-        <span class="plan__per">/ Monat netto</span>
+        <span class="plan__amount">{plan.monthly} €</span>
+        <span class="plan__per">/ Monat</span>
       </p>
-      <p class="plan__meta">
-        zzgl. {formatEuro(plan.setup)} Einrichtung (einmalig)<br />
-        <span>brutto {fmtGross(plan.monthly)} / Monat</span>
-      </p>
-      <a class={`btn ${plan.highlight ? 'btn--primary' : 'btn--dark'}`} href={`${href('/kontakt/')}?tarif=${plan.id}`}>
-        {plan.name} anfragen
-      </a>
+      <p class="plan__meta">netto · einmalig {formatEuro(plan.setup)} Einrichtung</p>
       <ul class="plan__list">
-        {plan.features.map((f, i) => <li class={i === 0 && f.endsWith(':') ? 'plan__lead' : ''}>{f}</li>)}
+        {plan.features.slice(0, VISIBLE).map((f) => <li>{f}</li>)}
       </ul>
+      <details class="plan__more">
+        <summary>Alle Leistungen</summary>
+        <ul class="plan__list">
+          {plan.features.slice(VISIBLE).map((f) => <li>{f}</li>)}
+        </ul>
+        <p class="plan__gross">Brutto: {fmtGross(plan.monthly)} / Monat · {fmtGross(plan.setup)} Einrichtung</p>
+      </details>
+      <a class:list={['btn', plan.highlight ? 'btn--primary' : 'btn--outline']} href={`${href('/kontakt/')}?tarif=${plan.id}`}>
+        Anfragen
+      </a>
     </article>
   ))}
 </div>
 
-<div class="included">
-  <p class="included__title">In jedem Tarif enthalten</p>
-  <ul>{allPlansInclude.map((i) => <li>{i}</li>)}</ul>
-  <p class="included__note">
-    Mindestlaufzeit 12 Monate, danach monatlich kündbar · Bei jährlicher Zahlung 2 Monate geschenkt ·
-    Alle Preise netto zzgl. 19 % USt.
-  </p>
-</div>
+<p class="included">
+  <strong>Immer inklusive:</strong>{' '}
+  {allPlansInclude.join(' · ')}
+</p>
+<p class="terms">12 Monate Laufzeit, dann monatlich kündbar · Jahreszahlung: 2 Monate gratis · Preise zzgl. 19 % USt.</p>
 
 <style>
-  .pricing { display: grid; gap: 20px; align-items: start; }
-  @media (min-width: 900px) { .pricing { grid-template-columns: repeat(3, 1fr); } }
+  .pricing { display: grid; gap: 16px; align-items: stretch; }
+  @media (min-width: 900px) { .pricing { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
 
   .plan {
-    position: relative; display: flex; flex-direction: column;
-    background: var(--white); border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px;
+    display: flex; flex-direction: column;
+    background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px;
   }
-  .plan--hl { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 0 20px 50px rgb(14 26 43 / 25%); }
-  @media (min-width: 900px) { .plan--hl { transform: translateY(-12px); } }
-  .plan__badge {
-    position: absolute; top: -13px; left: 26px;
-    background: var(--accent); color: var(--ink); font-size: 0.78rem; font-weight: 700;
-    padding: 5px 12px; border-radius: 99px; letter-spacing: 0.02em;
-  }
-  .plan__name { font-size: 1.5rem; margin-bottom: 0.3em; }
-  .plan__tag { color: var(--ink-soft); font-size: 0.98rem; min-height: 3.2em; }
-  .plan--hl .plan__tag, .plan--hl .plan__meta { color: #c9d1dc; }
-  .plan__price { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .plan__amount { font-family: var(--font-head); font-size: 3rem; font-weight: 750; letter-spacing: -0.03em; line-height: 1; }
+  .plan--hl { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 0 24px 48px -20px rgb(14 26 43 / 45%); }
+  .plan__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .plan__name { font-size: 1.3rem; margin: 0; }
+  .plan__badge { background: var(--accent); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .plan__tag { color: var(--ink-soft); font-size: 0.95rem; margin: 4px 0 20px; }
+  .plan--hl .plan__tag, .plan--hl .plan__meta, .plan--hl .plan__per, .plan--hl .plan__gross { color: #aab5c3; }
+  .plan__price { display: flex; align-items: baseline; gap: 6px; margin: 0; }
+  .plan__amount { font-family: var(--font-head); font-size: 3.2rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .plan__per { color: var(--ink-soft); font-weight: 500; }
-  .plan--hl .plan__per { color: #c9d1dc; }
-  .plan__meta { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 22px; }
-  .plan__meta span { font-size: 0.82rem; opacity: 0.8; }
-  .plan .btn { width: 100%; }
-  .plan--hl .btn--primary { color: var(--ink); }
+  .plan__meta { font-size: 0.85rem; color: var(--ink-soft); margin: 8px 0 22px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .plan--hl .plan__meta { border-color: #25344a; }
 
-  .plan__list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 10px; font-size: 0.98rem; }
-  .plan__list li { position: relative; padding-left: 28px; }
+  .plan__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 0.97rem; }
+  .plan__list li { display: flex; gap: 10px; }
   .plan__list li::before {
-    content: ''; position: absolute; left: 0; top: 0.3em; width: 18px; height: 18px; border-radius: 50%;
-    background: rgb(31 138 91 / 14%) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%231f8a5b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
+    content: ''; flex: none; width: 16px; height: 16px; margin-top: 0.25em;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%23177049' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
   }
-  .plan--hl .plan__list li::before { background-color: rgb(61 220 151 / 18%); }
-  .plan__list .plan__lead { padding-left: 0; font-weight: 700; }
-  .plan__list .plan__lead::before { display: none; }
+  .plan--hl .plan__list li::before { filter: brightness(1.9) saturate(1.2); }
 
-  .included { margin-top: 36px; padding: 26px; border: 1px dashed var(--line); border-radius: 20px; background: rgb(255 255 255 / 55%); }
-  .included__title { font-weight: 700; margin-bottom: 14px; }
-  .included ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .included li { background: var(--white); border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px; font-size: 0.9rem; }
-  .included__note { margin: 18px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+  .plan__more { margin: 14px 0 24px; }
+  .plan__more summary { cursor: pointer; font-size: 0.88rem; font-weight: 650; color: var(--accent-ink); list-style: none; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; }
+  .plan__more summary::-webkit-details-marker { display: none; }
+  .plan__more summary::after { content: '+'; }
+  .plan__more[open] summary::after { content: '–'; }
+  .plan--hl .plan__more summary { color: var(--accent); }
+  .plan__more .plan__list { margin-top: 10px; }
+  .plan__gross { font-size: 0.8rem; color: var(--ink-soft); margin: 14px 0 0; }
+  .plan .btn { width: 100%; margin-top: auto; }
+  .btn--outline { border-color: var(--ink); color: var(--ink); background: transparent; }
+  .btn--outline:hover { background: var(--ink); color: var(--paper); }
+
+  .included { margin: 28px 0 4px; font-size: 0.92rem; color: var(--ink-soft); text-align: center; }
+  .included strong { color: var(--ink); }
+  .terms { margin: 0; font-size: 0.82rem; color: var(--ink-soft); text-align: center; }
 </style>

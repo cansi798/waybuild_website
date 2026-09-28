@@ -49,9 +49,11 @@ const show = references.length > 0 || SHOW_HINTS;
   @media (min-width: 800px) { .refs { grid-template-columns: repeat(3, 1fr); } }
   .ref__branche { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
   .ref p { color: var(--ink-soft); margin: 0; }
+  .refs:has(.ref--empty) { grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .ref--empty {
-    display: grid; place-content: center; gap: 4px; text-align: center; aspect-ratio: 4 / 3;
+    display: grid; place-content: center; gap: 4px; text-align: center; aspect-ratio: 4 / 3; padding: 8px;
     border: 2px dashed var(--line); border-radius: var(--radius); color: var(--ink-soft);
   }
-  .ref--empty span { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; }
+  .ref--empty span { font-family: var(--font-head); font-weight: 650; font-size: clamp(0.9rem, 2vw, 1.2rem); }
+  @media (max-width: 600px) { .ref--empty small { display: none; } }
 </style>

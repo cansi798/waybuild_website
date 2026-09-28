@@ -5,12 +5,13 @@ import CtaBand from '../components/CtaBand.astro';
 import Hint from '../components/Hint.astro';
 import Val from '../components/Val.astro';
 import { company } from '../config/site';
+import More from '../components/More.astro';
 
 const values = [
-  { title: 'Individuell', text: 'Jede Website ist ein Unikat. Wir kopieren keine Templates – wir hören zu und entwickeln.' },
-  { title: 'Ehrlich', text: 'Nettopreise offen auf der Website, kurze Laufzeiten, keine versteckten Kosten.' },
-  { title: 'Schnell', text: 'Schnelle Websites, schnelle Antworten, schneller Livegang – weil Ihre Zeit Geld ist.' },
-  { title: 'Sorgenfrei', text: 'Wir kümmern uns um Technik, Server und E-Mails. Sie kümmern sich um Ihr Geschäft.' },
+  { title: 'Individuell', text: 'Jede Website ein Unikat.' },
+  { title: 'Ehrlich', text: 'Offene Preise, kurze Laufzeiten.' },
+  { title: 'Schnell', text: 'Schnelle Seiten, schnelle Antworten.' },
+  { title: 'Sorgenfrei', text: 'Technik? Machen wir.' },
 ];
 ---
 
@@ -22,23 +23,26 @@ const values = [
   <PageHeader
     eyebrow="Über uns"
     title="Wir bauen den Weg ins Netz."
-    lead="Waybuild ist ein junges Unternehmen mit einer klaren Idee: Kleine und mittlere Unternehmen verdienen Websites, die so gut sind wie die von Großen – ohne großes Budget, ohne Technik-Stress."
+    lead="Websites wie von Großen – für kleine und mittlere Unternehmen."
   />
 
   <section class="section">
     <div class="wrap story">
       <div class="story__text">
         <h2>Warum es uns gibt</h2>
-        <p>
-          Viele Betriebe stehen vor derselben Wahl: Entweder eine teure Agentur mit fünfstelligem Angebot – oder ein
-          Baukasten, bei dem am Ende doch alles selbst gemacht werden muss. Dazwischen: WordPress-Seiten, die nach zwei
-          Jahren langsam, unsicher und veraltet sind.
-        </p>
-        <p>
-          Wir haben Waybuild gegründet, um das zu ändern. Mit eigener, schlanker Technologie entwickeln wir Websites,
-          die schnell laden, sicher sind und individuell zu jedem Unternehmen passen. Und weil wir sie im Abo anbieten,
-          bleiben sie das auch: Wir kümmern uns dauerhaft um Hosting, E-Mails, Updates und Änderungen.
-        </p>
+        <p class="story__lead">Agentur zu teuer. Baukasten zu mühsam. WordPress zu langsam. <strong>Wir machen es anders.</strong></p>
+        <More label="Unsere Geschichte">
+          <p>
+            Viele Betriebe stehen vor derselben Wahl: Entweder eine teure Agentur mit fünfstelligem Angebot – oder ein
+            Baukasten, bei dem am Ende doch alles selbst gemacht werden muss. Dazwischen: WordPress-Seiten, die nach zwei
+            Jahren langsam, unsicher und veraltet sind.
+          </p>
+          <p>
+            Wir haben Waybuild gegründet, um das zu ändern. Mit eigener, schlanker Technologie entwickeln wir Websites,
+            die schnell laden, sicher sind und individuell zu jedem Unternehmen passen. Und weil wir sie im Abo anbieten,
+            bleiben sie das auch: Wir kümmern uns dauerhaft um Hosting, E-Mails, Updates und Änderungen.
+          </p>
+        </More>
         <Hint block label="Persönliche Gründungsgeschichte" where="src/pages/ueber-uns.astro">
           Ein, zwei Sätze in eigenen Worten: Wer seid ihr, woher kommt ihr, warum macht ihr das? Das wirkt stärker als jeder Werbetext.
         </Hint>
@@ -61,7 +65,7 @@ const values = [
         <span class="eyebrow">Unsere Werte</span>
         <h2 id="werte-h">Wofür wir stehen</h2>
       </div>
-      <div class="grid grid--2 values">
+      <div class="values">
         {values.map((v) => (
           <div class="card">
             <h3>{v.title}</h3>
@@ -78,7 +82,8 @@ const values = [
 <style>
   .story { display: grid; gap: 40px; }
   @media (min-width: 900px) { .story { grid-template-columns: 1.5fr 1fr; gap: 72px; align-items: start; } }
-  .story__text p { color: var(--ink-soft); font-size: 1.1rem; }
+  .story__lead { font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.35; color: var(--ink-soft); }
+  .story__lead strong { color: var(--ink); }
   .founder { display: grid; gap: 4px; }
   .founder__photo {
     aspect-ratio: 1; border-radius: 24px; display: grid; place-items: center; margin-bottom: 14px;
@@ -88,5 +93,7 @@ const values = [
   .founder__photo span { margin-top: 55%; }
   .founder__name { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; margin: 0; }
   .founder__role { color: var(--accent-ink); font-weight: 600; margin: 0 0 8px; }
+  .values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (min-width: 900px) { .values { grid-template-columns: repeat(4, 1fr); } }
   .values p { color: var(--ink-soft); margin: 0; }
 </style>

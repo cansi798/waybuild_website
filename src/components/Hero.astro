@@ -10,10 +10,7 @@ const cheapest = Math.min(...plans.map((p) => p.monthly));
     <div class="hero__copy">
       <span class="eyebrow">Website-Abo für Unternehmen</span>
       <h1>Ihre Website.<br /> Ein <em>Unikat.</em><br /> Komplett betreut.</h1>
-      <p class="lead">
-        Wir entwickeln Ihre Website individuell nach Ihren Wünschen – ohne WordPress, ohne Baukasten.
-        Hosting, Domain, unbegrenzte E-Mail-Postfächer und Wartung inklusive. Für einen festen Monatspreis.
-      </p>
+      <p class="lead">Individuell entwickelt. Hosting, Domain und unbegrenzte E-Mails inklusive.</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
         <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a>
@@ -80,10 +77,6 @@ const cheapest = Math.min(...plans.map((p) => p.monthly));
 
   h1 { font-size: clamp(2.4rem, 6.2vw, 4.1rem); }
   h1 em { font-style: normal; color: var(--accent-ink); position: relative; white-space: nowrap; }
-  h1 em::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: 0.04em; height: 0.14em;
-    background: var(--accent); opacity: 0.35; border-radius: 4px; z-index: -1;
-  }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   @media (max-width: 480px) { .hero__actions .btn { flex: 1 1 100%; } }
 

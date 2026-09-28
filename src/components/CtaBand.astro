@@ -6,8 +6,8 @@ interface Props {
   text?: string;
 }
 const {
-  title = 'Bereit für eine Website, die für Sie arbeitet?',
-  text = 'Im kostenlosen Erstgespräch klären wir in 20 Minuten, was Sie brauchen – unverbindlich und ohne Verkaufsdruck.',
+  title = 'Bereit für Ihre neue Website?',
+  text = '20 Minuten. Kostenlos. Unverbindlich.',
 } = Astro.props;
 ---
 
@@ -17,7 +17,7 @@ const {
       <h2 id="cta-h">{title}</h2>
       <p>{text}</p>
     </div>
-    <a class="btn btn--dark" href={href('/kontakt/')}>Jetzt Erstgespräch sichern</a>
+    <a class="btn btn--dark" href={href('/kontakt/')}>Erstgespräch vereinbaren</a>
   </div>
 </section>
 

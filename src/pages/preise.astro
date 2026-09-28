@@ -19,8 +19,8 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
 >
   <PageHeader
     eyebrow="Preise & Tarife"
-    title="Faire Preise. Keine Überraschungen."
-    lead="Einmalige Einrichtung, danach ein fester Monatsbeitrag – Hosting, Domain, E-Mails, Wartung und Änderungen inklusive. Alle Preise netto zzgl. 19 % USt."
+    title="Faire Preise."
+    lead="Fester Monatspreis. Alles inklusive. Netto zzgl. USt."
   />
 
   <section class="section">
@@ -34,7 +34,7 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
       <div>
         <span class="eyebrow">Jahreszahlung</span>
         <h2 id="jahr-h">12 Monate nutzen, 10 bezahlen</h2>
-        <p class="lead">Wer jährlich zahlt, spart zwei volle Monatsbeiträge – bei gleicher Leistung.</p>
+        <p class="lead">Jährlich zahlen, 2 Monate sparen.</p>
       </div>
       <table class="tbl">
         <caption class="sr-only">Jahrespreise netto</caption>
@@ -57,7 +57,7 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
       <div>
         <span class="eyebrow">Zusatzleistungen</span>
         <h2 id="addons-h">Flexibel erweiterbar</h2>
-        <p class="lead">Ihr Unternehmen wächst? Ihre Website wächst mit. Alle Preise netto.</p>
+        <p class="lead">Wächst mit Ihnen. Preise netto.</p>
       </div>
       <ul class="addons">
         {addons.map((a) => <li><span>{a.name}</span><strong>{a.price}</strong></li>)}
@@ -66,7 +66,7 @@ const yearly = plans.map((p) => ({ ...p, year: p.monthly * 10 }));
   </section>
 
   <Faq />
-  <CtaBand title="Unsicher, welcher Tarif passt?" text="Wir beraten Sie ehrlich – auch wenn das bedeutet, dass der kleinere Tarif reicht." />
+  <CtaBand title="Unsicher, welcher Tarif passt?" text="Wir beraten ehrlich – auch wenn der kleinere reicht." />
 </BaseLayout>
 
 <style>

@@ -1,72 +1,67 @@
 ---
 import { comparison } from '../config/site';
+import More from './More.astro';
 ---
 
 <section class="section section--dark" id="warum" aria-labelledby="warum-h">
   <div class="wrap">
     <div class="warum__top">
-    <div class="section-head">
-      <span class="eyebrow">Warum kein WordPress?</span>
-      <h2 id="warum-h">Kein Baukasten. Eigene Technologie. Ein Unikat.</h2>
-      <p class="lead">
-        WordPress betreibt Millionen Websites – und genau das ist das Problem: gleiche Themes, dutzende Plugins,
-        ständige Sicherheitsupdates. Wir entwickeln Ihre Website stattdessen mit unserer eigenen, schlanken
-        Technologie – exakt nach Ihren Wünschen angepasst. Das Ergebnis: eine Website, die es so nur einmal gibt.
-      </p>
-    </div>
-    <dl class="stats">
-      <div><dt>Plugins</dt><dd>0</dd></div>
-      <div><dt>Datenbank-Angriffsfläche</dt><dd>0</dd></div>
-      <div><dt>PageSpeed-Ziel mobil</dt><dd>90+</dd></div>
-    </dl>
+      <div class="section-head">
+        <span class="eyebrow">Warum kein WordPress?</span>
+        <h2 id="warum-h">Eigene Technologie. Ein Unikat.</h2>
+        <p class="lead">Kein Baukasten – nach Ihren Wünschen entwickelt.</p>
+        <More label="Warum das besser ist" dark>
+          <p>
+            WordPress betreibt Millionen Websites – und genau das ist das Problem: gleiche Themes, dutzende Plugins,
+            ständige Sicherheitsupdates. Wir entwickeln Ihre Website stattdessen mit unserer eigenen, schlanken
+            Technologie – exakt nach Ihren Wünschen angepasst. Das Ergebnis: eine Website, die es so nur einmal gibt.
+          </p>
+          <p>Sie möchten trotzdem WordPress? Auf ausdrücklichen Wunsch setzen wir das gerne um.</p>
+        </More>
+      </div>
+      <dl class="stats">
+        <div><dt>Plugins</dt><dd>0</dd></div>
+        <div><dt>Datenbank-Lücken</dt><dd>0</dd></div>
+        <div><dt>PageSpeed mobil</dt><dd>90+</dd></div>
+      </dl>
     </div>
 
-    <div class="cmp" role="table" aria-label="Vergleich Waybuild und WordPress">
-      <div class="cmp__row cmp__head" role="row">
-        <span role="columnheader"><span class="sr-only">Kriterium</span></span>
-        <span role="columnheader" class="cmp__wb">Waybuild</span>
-        <span role="columnheader">Typische WordPress-Seite</span>
-      </div>
-      {comparison.map((c) => (
-        <div class="cmp__row" role="row">
-          <span role="rowheader" class="cmp__topic">{c.topic}</span>
-          <span role="cell" class="cmp__wb"><i aria-hidden="true">✓</i>{c.waybuild}</span>
-          <span role="cell" class="cmp__wp"><i aria-hidden="true">✕</i>{c.wordpress}</span>
-        </div>
-      ))}
-    </div>
-    <p class="cmp__note">
-      Sie möchten trotzdem WordPress? Kein Problem – auf ausdrücklichen Wunsch entwickeln wir Ihre Website auch mit
-      WordPress. Sprechen Sie uns einfach an.
-    </p>
+    <table class="cmp">
+      <caption class="sr-only">Vergleich Waybuild und typische WordPress-Seite</caption>
+      <thead>
+        <tr><th scope="col"><span class="sr-only">Kriterium</span></th><th scope="col" class="cmp__wb">Waybuild</th><th scope="col">WordPress</th></tr>
+      </thead>
+      <tbody>
+        {comparison.map((c) => (
+          <tr>
+            <th scope="row">{c.topic}</th>
+            <td class="cmp__wb"><i aria-hidden="true">✓</i> {c.waybuild}</td>
+            <td class="cmp__wp"><i aria-hidden="true">✕</i> {c.wordpress}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 </section>
 
 <style>
-  .warum__top { display: grid; gap: 8px 60px; }
-  @media (min-width: 1000px) { .warum__top { grid-template-columns: 1.5fr 1fr; align-items: end; } }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0 0 clamp(32px, 5vw, 56px); }
-  @media (min-width: 1000px) { .stats { grid-template-columns: 1fr; } .stats div { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 16px; } }
-  .stats div { border-top: 1px solid #25344a; padding-top: 12px; }
-  .stats dd { margin: 0; font-family: var(--font-head); font-weight: 750; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1; color: var(--accent); }
-  .stats dt { font-size: 0.85rem; color: #aab5c3; }
-  .cmp { border: 1px solid #25344a; border-radius: 20px; overflow: hidden; }
-  .cmp__row { display: grid; gap: 6px 20px; padding: 18px 20px; border-top: 1px solid #25344a; }
-  .cmp__row:first-child { border-top: 0; }
-  .cmp__head { display: none; }
-  .cmp__topic { font-family: var(--font-head); font-weight: 650; font-size: 1.1rem; }
-  .cmp__wb, .cmp__wp { display: flex; gap: 10px; align-items: baseline; }
+  .warum__top { display: grid; gap: 8px 60px; margin-bottom: clamp(32px, 5vw, 56px); }
+  .warum__top .section-head { margin-bottom: 0; }
+  @media (min-width: 1000px) { .warum__top { grid-template-columns: 1.4fr 1fr; align-items: end; } }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0 0; }
+  .stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; border-top: 1px solid #25344a; padding-top: 12px; }
+  .stats dd { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; color: var(--accent); }
+  .stats dt { font-size: 0.8rem; color: #aab5c3; margin-top: 6px; }
+
+  .cmp { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+  .cmp th, .cmp td { text-align: left; padding: 16px 12px; border-bottom: 1px solid #25344a; }
+  .cmp thead th { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aab5c3; font-weight: 600; }
+  .cmp thead .cmp__wb { color: var(--accent); }
+  .cmp tbody th { font-family: var(--font-head); font-weight: 600; }
   .cmp__wb { color: var(--paper); }
   .cmp__wp { color: #8795a8; }
-  .cmp i { font-style: normal; font-weight: 800; flex: none; width: 1em; }
+  .cmp i { font-style: normal; font-weight: 800; margin-right: 6px; }
   .cmp__wb i { color: #3ddc97; }
   .cmp__wp i { color: #e0664a; }
-
-  .cmp__note { margin: 20px 0 0; color: #aab5c3; font-size: 0.95rem; }
-
-  @media (min-width: 800px) {
-    .cmp__row { grid-template-columns: 0.7fr 1.2fr 1.2fr; align-items: center; padding: 20px 28px; }
-    .cmp__head { display: grid; background: #15243a; font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aab5c3; }
-    .cmp__head .cmp__wb { color: var(--accent); font-weight: 700; }
-  }
+  @media (max-width: 560px) { .cmp th, .cmp td { padding: 14px 6px; font-size: 0.9rem; } .cmp i { display: none; } }
 </style>

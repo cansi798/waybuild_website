@@ -1,36 +1,41 @@
 ---
 import { usps } from '../config/site';
+import Icon from './Icon.astro';
+import More from './More.astro';
 ---
 
 <section class="section" id="vorteile" aria-labelledby="usps-h">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Was uns unterscheidet</span>
+      <span class="eyebrow">Vorteile</span>
       <h2 id="usps-h">Mehr Leistung. Weniger Bindung.</h2>
-      <p class="lead">
-        Viele Website-Abos locken mit niedrigen Preisen – und binden Sie dann 24 Monate an ein Standard-Template mit
-        zwei E-Mail-Adressen. Wir machen es anders.
-      </p>
     </div>
-    <ol class="usps">
-      {usps.map((u, i) => (
-        <li class="card usp">
-          <span class="usp__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+    <ul class="usps">
+      {usps.map((u) => (
+        <li class="usp">
+          <span class="usp__icon"><Icon name={u.icon} /></span>
           <h3>{u.title}</h3>
-          <p>{u.text}</p>
+          <p>{u.short}</p>
+          <More><p>{u.text}</p></More>
         </li>
       ))}
-    </ol>
+    </ul>
   </div>
 </section>
 
 <style>
-  .usps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 720px) { .usps { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .usps { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .usp { transition: border-color 0.2s ease, transform 0.2s ease; }
-  .usp:hover { border-color: var(--ink); transform: translateY(-2px); }
-  .usp__no { font-family: var(--font-head); font-weight: 700; color: var(--accent-ink); font-size: 0.95rem; }
-  .usp h3 { margin-top: 10px; }
-  .usp p { color: var(--ink-soft); margin: 0; }
+  .usps {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line); border-left: 1px solid var(--line);
+  }
+  @media (min-width: 1000px) { .usps { grid-template-columns: repeat(3, 1fr); } }
+  .usp { padding: clamp(20px, 3vw, 32px); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); }
+  .usp__icon {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--ink); color: var(--accent);
+  }
+  .usp h3 { font-size: clamp(1.02rem, 2.2vw, 1.25rem); margin-bottom: 4px; }
+  .usp > p { color: var(--ink-soft); margin: 0; font-size: 0.95rem; }
+  @media (max-width: 480px) { .usp :global(.more) { display: none; } }
 </style>

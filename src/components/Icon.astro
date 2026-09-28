@@ -1,0 +1,38 @@
+---
+// Linien-Icons laut CI: 24er Raster, 2 px Strich, runde Enden.
+import type { IconName } from '../config/site';
+
+interface Props {
+  name: IconName;
+  size?: number;
+}
+const { name, size = 24 } = Astro.props;
+
+const paths: Record<IconName, string> = {
+  mail: 'M3 6h18v12H3z M3 7l9 6 9-6',
+  calendar: 'M4 5h16v15H4z M4 10h16 M9 3v4 M15 3v4 M8 14h3',
+  rocket: 'M12 15l-3-3c1.5-4.5 4.5-7.5 10-8-.5 5.5-3.5 8.5-8 10z M9 12l-4 1 2-4h4 M12 15l-1 4 4-2v-4 M6 18c-1 1-1.5 2.5-1.5 2.5S6 20 7 19',
+  gauge: 'M4 16a8 8 0 1 1 16 0 M12 16l4-5 M4 16h2 M18 16h2',
+  key: 'M14 10a4 4 0 1 0-3.5 4 M10.5 14L4 20.5 M6.5 18l2 2 M8.5 16l2 2',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M21 21l-5-5',
+  chat: 'M4 5h16v11H9l-5 4z M8 10h8 M8 13h5',
+  pen: 'M4 20l4-1L19 8l-3-3L5 16z M14 7l3 3',
+  server: 'M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01',
+  shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4',
+};
+---
+
+<svg
+  class="icon"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d={paths[name]} />
+</svg>

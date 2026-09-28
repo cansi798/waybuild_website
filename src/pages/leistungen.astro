@@ -6,10 +6,12 @@ import Steps from '../components/Steps.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { href } from '../lib/paths';
 import { serviceSchema } from '../lib/schema';
+import More from '../components/More.astro';
 
 const services = [
   {
     id: 'webdesign',
+    lead: 'Ein Unikat – kein Template.',
     short: 'Webdesign',
     title: 'Individuelles Webdesign & Entwicklung',
     text: 'Kein Template, kein Baukasten: Wir gestalten und programmieren Ihre Website von Grund auf – passend zu Ihrer Marke, Ihren Kunden und Ihren Zielen. Mobil zuerst gedacht, auf jedem Bildschirm perfekt.',
@@ -17,6 +19,7 @@ const services = [
   },
   {
     id: 'hosting',
+    lead: 'Schnelle Server in Deutschland.',
     short: 'Hosting',
     title: 'Hosting & Server',
     text: 'Ihre Website läuft auf schnellen Servern in Deutschland. Um Technik, Updates und Ausfallsicherheit kümmern wir uns – Sie müssen nie wieder einen Hosting-Vertrag verwalten.',
@@ -24,6 +27,7 @@ const services = [
   },
   {
     id: 'email',
+    lead: 'So viele Adressen, wie Sie brauchen.',
     short: 'E-Mail',
     title: 'E-Mail-Einrichtung – unbegrenzt',
     text: 'Professionelle Adressen wie info@ihre-firma.de oder vorname@ihre-firma.de – so viele Sie brauchen. Wir richten alle Postfächer ein und verbinden sie mit Outlook, Apple Mail und Ihrem Smartphone.',
@@ -31,6 +35,7 @@ const services = [
   },
   {
     id: 'domain',
+    lead: '.de-Domain inklusive, Umzug kostenlos.',
     short: 'Domain',
     title: 'Domain & Umzug',
     text: 'Eine .de-Domain ist in jedem Tarif enthalten. Sie haben schon eine Domain? Wir ziehen sie kostenlos und ohne Ausfall um – die Domain bleibt immer Ihr Eigentum.',
@@ -38,6 +43,7 @@ const services = [
   },
   {
     id: 'seo',
+    lead: 'Gefunden werden – bei Google und KI.',
     short: 'SEO & KI',
     title: 'SEO & Sichtbarkeit in KI-Suchen',
     text: 'Was nützt die schönste Website, wenn sie keiner findet? Wir optimieren Technik, Inhalte und Struktur für Google – und für KI-Assistenten wie ChatGPT und Gemini, die immer öfter Empfehlungen aussprechen.',
@@ -45,6 +51,7 @@ const services = [
   },
   {
     id: 'wartung',
+    lead: 'Eine E-Mail genügt.',
     short: 'Wartung',
     title: 'Wartung, Sicherheit & Änderungen',
     text: 'Neue Öffnungszeiten, ein neues Teammitglied, ein aktuelles Angebot? Kurze E-Mail genügt – wir setzen es um. Sicherheit und Aktualität laufen im Hintergrund.',
@@ -61,8 +68,8 @@ const services = [
 >
   <PageHeader
     eyebrow="Leistungen"
-    title="Alles, was Ihre Website braucht. Aus einer Hand."
-    lead="Design, Technik, Server, E-Mail und Sichtbarkeit – wir übernehmen alles, damit Sie sich um Ihr Geschäft kümmern können."
+    title="Alles aus einer Hand."
+    lead="Design, Server, E-Mail, Sichtbarkeit. Wir kümmern uns."
   >
     <nav class="toc" aria-label="Leistungen auf dieser Seite">
       {services.map((s) => <a href={`#${s.id}`}>{s.short}</a>)}
@@ -76,7 +83,8 @@ const services = [
           <span class="svc__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <div>
             <h2>{s.title}</h2>
-            <p>{s.text}</p>
+            <p class="svc__lead">{s.lead}</p>
+            <More><p>{s.text}</p></More>
           </div>
           <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
         </article>
@@ -102,7 +110,7 @@ const services = [
   @media (min-width: 900px) { .svc { grid-template-columns: 80px 1.3fr 1fr; } }
   .svc__no { font-family: var(--font-head); font-size: 2.2rem; font-weight: 750; color: var(--accent-ink); line-height: 1; }
   .svc h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
-  .svc p { color: var(--ink-soft); }
+  .svc__lead { font-size: 1.15rem; color: var(--ink-soft); margin: 0; }
   .svc ul { list-style: none; margin: 0; padding: 20px 22px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; display: grid; gap: 8px; align-self: start; }
   .svc li { padding-left: 24px; position: relative; }
   .svc li::before { content: '✓'; position: absolute; left: 0; color: var(--ok); font-weight: 800; }

@@ -41,121 +41,136 @@ export type Plan = {
 };
 
 // Alle Preise netto (B2B) zzgl. gesetzl. USt.
+// Die ersten 4 features sind sofort sichtbar, der Rest steckt unter "Alle Leistungen".
 export const plans: Plan[] = [
   {
     id: 'start',
     name: 'Start',
-    tagline: 'Der professionelle Auftritt für Selbstständige und kleine Betriebe.',
+    tagline: 'Für Selbstständige',
     setup: 290,
     monthly: 49,
     features: [
-      'Individuelles Design – kein Baukasten',
-      'Bis zu 5 Seiten',
-      'Unbegrenzte E-Mail-Postfächer',
-      'Hosting in Deutschland, .de-Domain & SSL',
+      'Bis 5 Seiten',
+      'Individuelles Design',
+      'Unbegrenzte Postfächer',
+      '30 Min. Änderungen / Monat',
+      'Hosting in Deutschland',
+      '.de-Domain & SSL',
       'Technisches SEO',
-      '30 Min. Änderungen pro Monat',
-      'Support-Antwort in 48 Std.',
+      'Antwort in 48 Std.',
     ],
   },
   {
     id: 'business',
     name: 'Business',
-    tagline: 'Für Unternehmen, die lokal gefunden werden wollen.',
+    tagline: 'Für lokale Unternehmen',
     setup: 590,
     monthly: 89,
     highlight: true,
     features: [
-      'Alles aus Start, plus:',
-      'Bis zu 12 Seiten',
-      'Lokales SEO & Google-Unternehmensprofil',
-      'Blog / News-Bereich',
-      'Formulare für Anfragen & Termine',
-      '90 Min. Änderungen pro Monat',
-      'Support-Antwort in 24 Std.',
+      'Bis 12 Seiten',
+      'Lokales SEO & Google-Profil',
+      'Unbegrenzte Postfächer',
+      '90 Min. Änderungen / Monat',
+      'Alles aus Start',
+      'Blog / News',
+      'Anfrage- & Terminformulare',
+      'Antwort in 24 Std.',
     ],
   },
   {
     id: 'premium',
     name: 'Premium',
-    tagline: 'Wachstum mit laufender Betreuung und maximaler Sichtbarkeit.',
+    tagline: 'Für Wachstum',
     setup: 1190,
     monthly: 169,
     features: [
-      'Alles aus Business, plus:',
       'Unbegrenzte Seiten',
-      'Monatliche SEO-Betreuung mit Report',
-      'Optimierung für KI-Suchen (ChatGPT, Gemini & Co.)',
-      'Mehrsprachigkeit (1 Zusatzsprache)',
-      '4 Std. Änderungen pro Monat',
-      'Priorität: Antwort in 4 Std. (werktags)',
+      'Monatliche SEO-Betreuung',
+      'Unbegrenzte Postfächer',
+      '4 Std. Änderungen / Monat',
+      'Alles aus Business',
+      'Optimierung für KI-Suchen',
+      'Zweite Sprache inklusive',
+      'Antwort in 4 Std. (werktags)',
     ],
   },
 ];
 
 export const allPlansInclude = [
   'Unbegrenzte E-Mail-Postfächer',
-  'Hosting & Server in Deutschland',
-  '.de-Domain inklusive',
-  'SSL-Verschlüsselung',
+  'Hosting in Deutschland',
+  '.de-Domain',
+  'SSL',
   'Tägliche Backups',
-  'Updates & Sicherheitsüberwachung',
-  'Mobil optimiert',
-  'Impressum & Datenschutz-Struktur',
-  'Kein Tracking, kein Cookie-Banner nötig',
+  'Updates & Sicherheit',
+  'Kein Cookie-Banner nötig',
 ];
 
 export const addons = [
   { name: 'Zusätzliche Domain', price: '2 € / Monat' },
   { name: 'Weitere Sprache', price: 'ab 190 € einmalig' },
-  { name: 'Texterstellung durch Profis', price: 'ab 90 € pro Seite' },
+  { name: 'Texterstellung', price: 'ab 90 € / Seite' },
   { name: 'Online-Terminbuchung', price: '15 € / Monat' },
-  { name: 'Foto-Shooting vor Ort', price: 'auf Anfrage' },
-  { name: 'WordPress-Website auf ausdrücklichen Wunsch', price: 'auf Anfrage' },
+  { name: 'Foto-Shooting', price: 'auf Anfrage' },
+  { name: 'WordPress (auf Wunsch)', price: 'auf Anfrage' },
 ];
 
-export const usps = [
+export type IconName = 'mail' | 'calendar' | 'rocket' | 'gauge' | 'key' | 'search' | 'chat' | 'pen' | 'server' | 'shield';
+
+export const usps: { icon: IconName; title: string; short: string; text: string }[] = [
   {
-    title: 'Unbegrenzte E-Mail-Postfächer',
+    icon: 'mail',
+    title: 'Unbegrenzt E-Mail',
+    short: 'Postfächer ohne Limit.',
     text: 'Für jeden Mitarbeiter eine eigene Adresse – ohne Aufpreis. Bei anderen Anbietern ist oft nach 2 bis 5 Postfächern Schluss.',
   },
   {
-    title: 'Nur 12 Monate Laufzeit',
-    text: 'Branchenüblich sind 24 Monate. Bei uns sind es 12 – danach monatlich kündbar. Wir überzeugen mit Leistung, nicht mit Verträgen.',
+    icon: 'calendar',
+    title: '12 statt 24 Monate',
+    short: 'Danach monatlich kündbar.',
+    text: 'Branchenüblich sind 24 Monate Mindestlaufzeit. Bei uns sind es 12 – danach monatlich kündbar. Wir überzeugen mit Leistung, nicht mit Verträgen.',
   },
   {
+    icon: 'rocket',
     title: 'Live in 14 Tagen',
-    text: 'Sobald Ihre Inhalte da sind, ist Ihre Website in spätestens 14 Tagen online. Garantiert.',
+    short: 'Garantiert.',
+    text: 'Sobald Ihre Inhalte (Texte, Bilder, Logo) da sind, ist Ihre Website in spätestens 14 Tagen online.',
   },
   {
-    title: 'PageSpeed-Garantie 90+',
-    text: 'Ihre Seite lädt auf dem Smartphone blitzschnell – messbar mit Googles eigenem Test. Schnelle Seiten ranken besser.',
+    icon: 'gauge',
+    title: 'PageSpeed 90+',
+    short: 'Schnell auf jedem Handy.',
+    text: 'Ihre Seite lädt auf dem Smartphone blitzschnell – messbar mit Googles eigenem Test. Schnelle Seiten ranken besser und verlieren weniger Besucher.',
   },
   {
+    icon: 'key',
     title: 'Ihr Code gehört Ihnen',
-    text: 'Nach der Mindestlaufzeit können Sie Ihre Website auf Wunsch komplett übernehmen. Keine Geiselhaft.',
+    short: 'Übernahme jederzeit möglich.',
+    text: 'Nach der Mindestlaufzeit können Sie Ihre Website auf Wunsch komplett übernehmen – inklusive Quellcode. Ihre Domain gehört Ihnen ohnehin von Anfang an.',
   },
   {
-    title: 'Sichtbar bei Google & KI',
-    text: 'Sauberes SEO ab Tag 1 – und Optimierung für KI-Suchen wie ChatGPT und Gemini, wo Ihre Kunden immer öfter fragen.',
+    icon: 'search',
+    title: 'Google & KI',
+    short: 'Gefunden werden.',
+    text: 'Sauberes SEO ab Tag 1 – und Optimierung für KI-Suchen wie ChatGPT und Gemini, wo Ihre Kunden immer öfter nach Empfehlungen fragen.',
   },
 ];
 
-// "Warum kein WordPress?" – Vergleich
+// "Warum kein WordPress?" – Vergleich (kurz halten!)
 export const comparison = [
-  { topic: 'Ladezeit', waybuild: 'Unter 1 Sekunde', wordpress: 'Oft 3–6 Sekunden' },
-  { topic: 'Design', waybuild: 'Ein Unikat, nach Ihren Wünschen entwickelt', wordpress: 'Gekauftes Theme, das tausende andere auch nutzen' },
-  { topic: 'Sicherheit', waybuild: 'Keine Datenbank, keine Plugins, keine Angriffsfläche', wordpress: 'Häufigstes Angriffsziel im Web, ständige Plugin-Lücken' },
-  { topic: 'Wartung', waybuild: 'Praktisch wartungsfrei', wordpress: 'Wöchentliche Updates von Kern, Theme und Plugins' },
-  { topic: 'Google-Ranking', waybuild: 'Top-Werte bei Core Web Vitals', wordpress: 'Ballast durch Plugins bremst das Ranking' },
-  { topic: 'Datenschutz', waybuild: 'Keine externen Dienste, kein Cookie-Banner nötig', wordpress: 'Plugins laden oft ungefragt Drittanbieter' },
+  { topic: 'Ladezeit', waybuild: 'Unter 1 Sekunde', wordpress: '3–6 Sekunden' },
+  { topic: 'Design', waybuild: 'Unikat', wordpress: 'Gekauftes Theme' },
+  { topic: 'Sicherheit', waybuild: 'Keine Angriffsfläche', wordpress: 'Plugin-Lücken' },
+  { topic: 'Wartung', waybuild: 'Wartungsfrei', wordpress: 'Ständige Updates' },
+  { topic: 'Datenschutz', waybuild: 'Kein Cookie-Banner', wordpress: 'Drittanbieter-Plugins' },
 ];
 
-export const steps = [
-  { title: 'Kostenloses Erstgespräch', text: '20 Minuten per Telefon oder Video. Wir lernen Ihr Unternehmen kennen und empfehlen den passenden Tarif.' },
-  { title: 'Entwurf & Feinschliff', text: 'Wir entwickeln Ihr individuelles Design. Sie geben Feedback, bis alles passt.' },
-  { title: 'Livegang', text: 'Domain, E-Mails, Server – wir richten alles ein. In 14 Tagen sind Sie online.' },
-  { title: 'Sorgenfrei betreut', text: 'Änderungen, Updates, Backups und Sicherheit übernehmen wir. Sie konzentrieren sich auf Ihr Geschäft.' },
+export const steps: { icon: IconName; title: string; short: string; text: string }[] = [
+  { icon: 'chat', title: 'Gespräch', short: '20 Min., kostenlos', text: 'Per Telefon oder Video. Wir lernen Ihr Unternehmen kennen und empfehlen den passenden Tarif – ehrlich, auch wenn der kleinere reicht.' },
+  { icon: 'pen', title: 'Entwurf', short: 'Ihr individuelles Design', text: 'Wir entwickeln Ihr Design nach Ihren Wünschen. Sie geben Feedback, bis alles passt.' },
+  { icon: 'server', title: 'Livegang', short: 'Domain, E-Mail, Server', text: 'Wir richten alles ein: Domain, Postfächer, Server, SSL. In 14 Tagen sind Sie online.' },
+  { icon: 'shield', title: 'Betreuung', short: 'Wir kümmern uns', text: 'Änderungen, Updates, Backups und Sicherheit übernehmen wir. Sie konzentrieren sich auf Ihr Geschäft.' },
 ];
 
 export const faqs = [
