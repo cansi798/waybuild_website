@@ -16,7 +16,7 @@ Fast alles steht zentral in [`src/config/site.ts`](src/config/site.ts):
 | Tarife & Preise (netto) | `plans` |
 | Zusatzleistungen | `addons` |
 | Vorteile, Vergleich WordPress, Ablauf | `usps`, `comparison`, `steps` |
-| FAQ (erscheint auch als Rich Result bei Google) | `faqs` |
+| FAQ (auch als FAQPage-JSON-LD und in `/llms.txt` für KI-Suchen) | `faqs` |
 
 ## Hinweise & Launch-Checkliste
 
@@ -69,7 +69,14 @@ Für echten Versand einen Dienst wie Web3Forms oder Formspree nutzen und die End
 
 ## SEO-Bausteine
 
+Prüfung: `npm run seo` (läuft auch bei jedem Deploy – bei Fehlern wird nicht veröffentlicht).
+
+
 - Title, Description, Canonical, Open Graph & Twitter Card pro Seite (`src/layouts/BaseLayout.astro`)
 - JSON-LD: `Organization`, `WebSite`, `Service` mit `Offer`s (netto), `FAQPage`, `BreadcrumbList` (`src/lib/schema.ts`)
 - `sitemap-index.xml` (ohne Impressum/Datenschutz/CI-Handbuch), `robots.txt`
+- Sichtbare Breadcrumbs, `lastmod` in der Sitemap, `max-image-preview:large`
+- `/llms.txt` für KI-Suchen (ChatGPT, Perplexity, Gemini), automatisch aus der Konfiguration erzeugt
+- Mit vollständiger Adresse wird zusätzlich `ProfessionalService` (lokales Unternehmen) ausgegeben
 - Keine Cookies, kein Tracking, Schriften lokal – kein Cookie-Banner nötig
+- Bewusst **kein** Font-Preload: kostete 300 ms Blocking Time ohne LCP-Gewinn (gemessen)
