@@ -123,7 +123,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     </main>
     <Footer />
     {!hideMobileCta && <MobileCta />}
-    {SHOW_HINTS && openTodos > 0 && (
+    {SHOW_HINTS && IS_PREVIEW && openTodos > 0 && (
       <a class="todo-badge" href={href('/checkliste/')}>
         <span aria-hidden="true">!</span> {openTodos}<em> Punkte offen bis zum Start</em>
       </a>

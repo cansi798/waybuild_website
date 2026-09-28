@@ -30,7 +30,7 @@ KI-Prompts im Waybuild-Stil: [`src/assets/bilder/KI-PROMPTS.md`](src/assets/bild
 Solange Daten fehlen, zeigt die Website gelbe **„Fehlt: …“**-Hinweise genau an der Stelle, wo etwas nachgetragen werden muss
 (Impressum, Kontakt, Über uns, AGB, Referenzen …). Unten rechts zeigt ein Badge, wie viele Punkte noch offen sind.
 
-- Übersicht aller offenen Punkte: **`/checkliste/`** (wird automatisch aus `src/config/launch.ts` + Firmendaten erzeugt)
+- Übersicht aller offenen Punkte: **`/checkliste/`** in der Vorschau (automatisch aus `src/config/launch.ts` + Firmendaten; im Live-Build wird sie entfernt)
 - Firmendaten eintragen → Hinweise verschwinden automatisch
 - Vor dem offiziellen Start: `SHOW_HINTS = false` in `src/config/site.ts` → alle Hinweise und Platzhalter-Bereiche weg
 
