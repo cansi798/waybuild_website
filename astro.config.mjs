@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // SITE/BASE kommen aus der Umgebung (GitHub Actions). Bei eigener Domain: BASE="/".
 const site = process.env.SITE ?? 'https://cansi798.github.io';
-const base = process.env.BASE ?? '/waybuild-website';
+const base = process.env.BASE ?? '/waybuild_website';
 
 export default defineConfig({
   site,

@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SITE: https://cansi798.github.io
-      BASE: /waybuild-website
+      BASE: /waybuild_website
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

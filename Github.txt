@@ -1,5 +1,0 @@
-Pages
-https://cansi798.github.io/waybuild_website/
-
-git
-https://github.com/cansi798/waybuild_website.git

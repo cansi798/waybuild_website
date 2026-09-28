@@ -1,7 +1,0 @@
-{
-  "enabledPlugins": {
-    "security-guidance@claude-plugins-official": true,
-    "remember@claude-plugins-official": true,
-    "superdesign@claude-plugins-official": true
-  }
-}
