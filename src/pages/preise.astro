@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Pricing from '../components/Pricing.astro';
 import Faq from '../components/Faq.astro';
-import CtaBand from '../components/CtaBand.astro';
 import { addons, plans, matrix, SETUP_FEE, OFFER, formatEuro } from '../config/site';
 import { faqSchema, serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
@@ -15,7 +14,7 @@ const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP
 
 <BaseLayout
   title="Preise & Tarife für Ihre Website im Abo"
-  description="Website-Abo ab 59 €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails und Wartung inklusive. 12 Monate Laufzeit. Alle Tarife im Vergleich."
+  description={`Website-Abo ab ${cheapest} €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails und Wartung inklusive. 12 Monate Laufzeit. Alle Tarife im Vergleich.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
@@ -109,7 +108,6 @@ const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP
   </section>
 
   <Faq />
-  <CtaBand title="Unsicher, welcher Tarif passt?" text="Wir beraten ehrlich – auch wenn der kleinere reicht." />
 </BaseLayout>
 
 <style>

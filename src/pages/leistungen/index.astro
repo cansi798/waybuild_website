@@ -1,0 +1,64 @@
+---
+// Leistungen-Übersicht: Kachel-Grid der fünf Website-Typen (Bauwelt-Muster) + was in jedem Abo steckt.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import LeistungGrafik from '../../components/LeistungGrafik.astro';
+import Icon from '../../components/Icon.astro';
+import WhyNotWordPress from '../../components/WhyNotWordPress.astro';
+import Ablauf from '../../components/Ablauf.astro';
+import { leistungen } from '../../config/leistungen';
+import { plans, allPlansInclude } from '../../config/site';
+import { href } from '../../lib/paths';
+import { serviceSchema } from '../../lib/schema';
+---
+
+<BaseLayout
+  title="Leistungen – Business-Website, Online-Shop, Landingpage, Relaunch, Betreuung"
+  description="Websites im Abo für Unternehmen: Business-Website, Online-Shop, Landingpage, Website-Relaunch und laufende Betreuung – individuell entwickelt, Hosting, Domain und E-Mail inklusive."
+  schema={[serviceSchema(Astro.site)]}
+  breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
+>
+  <PageHeader eyebrow="Leistungen" title="Alles aus einer Hand." lead="Von der Business-Website bis zum Online-Shop – individuell entwickelt und dauerhaft betreut. Ein Ansprechpartner, ein fester Monatspreis." />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="lgrid">
+        {leistungen.map((l) => {
+          const plan = plans.find((p) => p.id === l.plan)!;
+          return (
+            <a class="card lcard reveal" href={href(`/leistungen/${l.slug}/`)}>
+              <div class="lcard__media"><LeistungGrafik art={l.grafik} /></div>
+              <div class="lcard__body">
+                <span class="lcard__icon"><Icon name={l.icon} size={22} /></span>
+                <h2>{l.title}</h2>
+                <p>{l.teaser}</p>
+                <span class="lcard__plan">Empfehlung: {plan.name} · ab {plan.monthly} € / Monat</span>
+                <span class="lcard__more">Mehr erfahren <Icon name="arrow" size={18} /></span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <p class="incl"><strong>In jedem Abo enthalten:</strong> {allPlansInclude.join(' · ')}</p>
+    </div>
+  </section>
+
+  <Ablauf />
+  <WhyNotWordPress />
+</BaseLayout>
+
+<style>
+  .lgrid { display: grid; gap: 20px; }
+  @media (min-width: 720px) { .lgrid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .lgrid { grid-template-columns: repeat(3, 1fr); } }
+  .lcard { padding: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+  .lcard__media { position: relative; aspect-ratio: 16 / 8; background: var(--paper-2); overflow: hidden; }
+  .lcard__body { padding: 22px; display: grid; gap: 8px; align-content: start; }
+  .lcard__icon { width: 44px; height: 44px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; margin-top: -44px; position: relative; box-shadow: var(--shadow); }
+  .lcard h2 { font-size: 1.3rem; margin: 6px 0 0; }
+  .lcard p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .lcard__plan { font-size: 0.82rem; font-weight: 650; color: var(--accent-ink); margin-top: 4px; }
+  .lcard__more { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; font-size: 0.9rem; margin-top: 6px; }
+  .incl { margin: 28px 0 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
+  .incl strong { color: var(--ink); }
+</style>

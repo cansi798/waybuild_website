@@ -3,7 +3,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import More from '../../components/More.astro';
-import CtaBand from '../../components/CtaBand.astro';
 import { branchen, type Branche } from '../../config/branchen';
 import { plans, usps, formatEuro } from '../../config/site';
 import { href, absolute } from '../../lib/paths';
@@ -109,8 +108,6 @@ const schema = [
       </div>
     </div>
   </section>
-
-  <CtaBand title={`Website für ${b.name}: Jetzt starten.`} />
 
   <nav class="wrap others" aria-label="Weitere Branchen">
     <span>Weitere Branchen:</span>

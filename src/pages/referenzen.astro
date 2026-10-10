@@ -1,0 +1,96 @@
+---
+// Referenzen: echte Projekte aus src/config/site.ts → references. Solange keine freigegeben sind,
+// MUSTER-Beispiele (Wunsch 11.10.2026) – klar gekennzeichnet, keine erfundenen Kundennamen oder Zitate.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Hint from '../components/Hint.astro';
+import Bild from '../components/Bild.astro';
+import Icon from '../components/Icon.astro';
+import Siegel from '../components/Siegel.astro';
+import { references } from '../config/site';
+import { MUSTER } from '../config/home';
+import { href } from '../lib/paths';
+
+const echte = references.length > 0;
+---
+
+<BaseLayout
+  title="Referenzen & Beispiele – Websites für Unternehmen"
+  description="Beispiele für Websites im Abo: Business-Websites, Online-Shops, Landingpages und Relaunches für Unternehmen verschiedener Branchen – individuell entwickelt von waybuild."
+  breadcrumb={[{ name: 'Referenzen', path: '/referenzen/' }]}
+>
+  <PageHeader eyebrow="Referenzen" title="Websites, die für Unternehmen arbeiten." lead="Jedes Projekt ein Unikat – schnell, klar und auf Anfragen ausgelegt." />
+
+  <section class="section">
+    <div class="wrap">
+      {!echte && (
+        <>
+          <p class="muster"><Icon name="eye" size={16} /> Muster-Beispiele: So sehen typische Projekte aus. Echte Kundenprojekte folgen, sobald sie freigegeben sind.</p>
+          <Hint block label="Echte Referenzprojekte" where="src/config/site.ts → references">
+            Sobald die ersten Kundenseiten live sind (mit Freigabe), hier eintragen – die Muster verschwinden dann automatisch.
+          </Hint>
+        </>
+      )}
+      <div class="refs">
+        {echte
+          ? references.map((r) => (
+              <article class="card ref">
+                {r.bild && <Bild name={r.bild} alt={`Website von ${r.name}`} widths={[400, 800]} sizes="(min-width: 800px) 33vw, 100vw" class="ref__img" />}
+                <span class="ref__tag">{r.branche}</span>
+                <h2>{r.url ? <a href={r.url} rel="noopener" target="_blank">{r.name}</a> : r.name}</h2>
+                <p>{r.text}</p>
+              </article>
+            ))
+          : MUSTER.map((m) => (
+              <article class="card ref">
+                <div class="ref__mock" style={`--c: ${m.farbe}`} aria-hidden="true">
+                  <div class="ref__bar"><i></i><i></i><i></i></div>
+                  <div class="ref__screen">
+                    <div class="ref__nav"><b></b><s></s><s></s><em></em></div>
+                    <div class="ref__hero"><div><u></u><u class="w60"></u><em></em></div><div class="ref__img2"></div></div>
+                    <div class="ref__cols"><s></s><s></s><s></s></div>
+                  </div>
+                  <span class="ref__badge">Muster</span>
+                </div>
+                <span class="ref__tag">{m.typ}</span>
+                <h2>{m.branche}</h2>
+                <p>{m.hinweis}</p>
+              </article>
+            ))}
+      </div>
+      <p class="next"><a class="btn btn--primary" href={href('/kontakt/')}>Ihr Projekt besprechen</a></p>
+    </div>
+  </section>
+
+  <Siegel fakten={['Live in 14 Tagen', 'PageSpeed 90+', 'Hosting in Deutschland']} />
+</BaseLayout>
+
+<style>
+  .muster { margin: 0 0 16px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--ink-soft); background: var(--white); border: 1px dashed var(--line); border-radius: 99px; padding: 8px 16px; }
+  .refs { display: grid; gap: 20px; margin-top: 20px; }
+  @media (min-width: 700px) { .refs { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .refs { grid-template-columns: repeat(3, 1fr); } }
+  .ref { display: grid; gap: 6px; align-content: start; padding: 12px 12px 20px; }
+  .ref h2 { font-size: 1.2rem; margin: 0; padding-inline: 8px; }
+  .ref p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; padding-inline: 8px; }
+  .ref__tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); padding: 10px 8px 0; }
+  .ref :global(.ref__img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+  .ref__mock { position: relative; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 18%, white), color-mix(in srgb, var(--c) 40%, white)); padding: 16px 18px 0; }
+  .ref__bar { display: flex; gap: 4px; padding: 7px 9px; background: #faf8f4; border-radius: 8px 8px 0 0; border: 1px solid var(--line); border-bottom: 0; }
+  .ref__bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .ref__screen { background: var(--white); height: 100%; padding: 10px 12px; display: grid; gap: 9px; align-content: start; border: 1px solid var(--line); border-top: 0; }
+  .ref__nav { display: flex; align-items: center; gap: 6px; }
+  .ref__nav b { width: 30px; height: 7px; border-radius: 3px; background: var(--c); margin-right: auto; }
+  .ref__nav s, .ref__cols s { display: block; width: 16px; height: 4px; border-radius: 2px; background: var(--paper-2); }
+  .ref__nav em, .ref__hero em { display: block; width: 26px; height: 9px; border-radius: 99px; background: var(--c); }
+  .ref__hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 8px; align-items: center; }
+  .ref__hero > div:first-child { display: grid; gap: 5px; }
+  .ref__hero u { display: block; height: 5px; border-radius: 3px; background: var(--paper-2); width: 100%; text-decoration: none; }
+  .ref__hero u:first-child { height: 8px; background: var(--ink); }
+  .ref__hero .w60 { width: 60%; }
+  .ref__img2 { aspect-ratio: 4 / 3; border-radius: 6px; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 60%, white), var(--c)); }
+  .ref__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .ref__cols s { width: 100%; height: 18px; border-radius: 5px; }
+  .ref__badge { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--white); color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 99px; padding: 3px 9px; }
+  .next { margin: 32px 0 0; text-align: center; }
+</style>

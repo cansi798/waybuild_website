@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { company, plans, isMissing } from '../config/site';
+import { company, plans, phoneTel, whatsappLink, HOURS } from '../config/site';
 import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
@@ -69,7 +69,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
         <div class="card side__card">
           <h2>Direkter Draht</h2>
           <p><a href={`mailto:${company.email}`}>{company.email}</a></p>
-          {isMissing(company.phone) ? <p><Hint label="Telefonnummer" where="src/config/site.ts → company.phone" /></p> : <p><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></p>}
+          <div class="direct">
+            <a class="btn btn--ghost btn--sm" href={`tel:${phoneTel()}`}>📞 {company.phone}</a>
+            <a class="btn btn--ghost btn--sm" href={whatsappLink()} target="_blank" rel="noopener">💬 WhatsApp</a>
+          </div>
+          <p class="muted">{HOURS}</p>
           <p class="muted">{company.legalName}<br /><Val value={company.street} label="Straße" where="src/config/site.ts → company.street" /><br /><Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /></p>
         </div>
         <ul class="promise">
@@ -172,6 +176,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .side { display: grid; gap: 20px; }
   .side__card h2 { font-size: 1.3rem; }
   .side__card a { font-weight: 650; }
+  .direct { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .direct .btn { border-color: var(--line); }
   .muted { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
   .promise { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
   .promise li { padding-left: 18px; border-left: 3px solid var(--accent); }

@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import CtaBand from '../components/CtaBand.astro';
 import Hint from '../components/Hint.astro';
 import Val from '../components/Val.astro';
 import { company } from '../config/site';
 import More from '../components/More.astro';
 import Bild from '../components/Bild.astro';
+import Siegel from '../components/Siegel.astro';
 
 const values = [
   { title: 'Individuell', text: 'Jede Website ein Unikat.' },
@@ -24,7 +24,7 @@ const values = [
   <PageHeader
     eyebrow="Über uns"
     title="Wir bauen den Weg ins Netz."
-    lead="Websites wie von Großen – für kleine und mittlere Unternehmen."
+    lead="Websites wie von Großen – für Unternehmen, Selbstständige und Institutionen."
   />
 
   <section class="section">
@@ -78,8 +78,7 @@ const values = [
       </div>
     </div>
   </section>
-
-  <CtaBand title="Lernen wir uns kennen." />
+  <Siegel fakten={['Eigene Technologie', 'Fester Monatspreis', 'Ein Ansprechpartner']} />
 </BaseLayout>
 
 <style>

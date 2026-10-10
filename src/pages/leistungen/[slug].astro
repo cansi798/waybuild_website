@@ -1,0 +1,172 @@
+---
+// Leistungs-Detailseite (Bauwelt-Muster „Produktseite“): Hero mit CTA → Leistungsumfang → Text
+// → passender Tarif → Versprechen → FAQ. Der Kontakt-Kopf kommt aus dem Footer.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import LeistungGrafik from '../../components/LeistungGrafik.astro';
+import Icon from '../../components/Icon.astro';
+import { leistungen, type Leistung } from '../../config/leistungen';
+import { plans, matrix, KEY_ROWS, SETUP_FEE, formatEuro } from '../../config/site';
+import { versprechenById, VERSPRECHEN } from '../../config/versprechen';
+import { href, absolute } from '../../lib/paths';
+
+export function getStaticPaths() {
+  return leistungen.map((l) => ({ params: { slug: l.slug }, props: { l } }));
+}
+
+const { l } = Astro.props as { l: Leistung };
+const plan = plans.find((p) => p.id === l.plan)!;
+const planIndex = plans.findIndex((p) => p.id === l.plan);
+const keyRows = matrix.slice(0, KEY_ROWS);
+const siegel = versprechenById(l.siegel) ?? VERSPRECHEN[0];
+const andere = leistungen.filter((o) => o.slug !== l.slug);
+const contact = `${href('/kontakt/')}?tarif=${plan.id}&leistung=${l.slug}`;
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${l.title} im Abo`,
+    serviceType: 'Webdesign & Website-Abo',
+    audience: { '@type': 'BusinessAudience', name: 'Unternehmen' },
+    provider: { '@id': `${absolute('/', Astro.site)}#organization` },
+    areaServed: { '@type': 'Country', name: 'Deutschland' },
+    offers: {
+      '@type': 'Offer',
+      name: `Tarif ${plan.name}`,
+      price: plan.monthly,
+      priceCurrency: 'EUR',
+      url: absolute(`/leistungen/${l.slug}/`, Astro.site),
+      priceSpecification: { '@type': 'UnitPriceSpecification', price: plan.monthly, priceCurrency: 'EUR', unitCode: 'MON', valueAddedTaxIncluded: false },
+    },
+  },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: l.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+
+<BaseLayout
+  title={`${l.title} im Abo – ab ${plan.monthly} € / Monat`}
+  description={`${l.teaser} Im Website-Abo für Unternehmen: individuell entwickelt, Hosting, Domain, E-Mail und Pflege inklusive – ab ${plan.monthly} € netto pro Monat.`}
+  schema={schema}
+  breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }, { name: l.title, path: `/leistungen/${l.slug}/` }]}
+>
+  <section class="phero">
+    <div class="wrap phero__grid">
+      <div class="phero__copy">
+        <span class="eyebrow">{l.title}</span>
+        <h1>{l.pre}<span class="accent">{l.accent}</span></h1>
+        <p class="lead">{l.lead}</p>
+        <ul class="check-row">
+          {['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+        </ul>
+        <div class="phero__actions">
+          <a class="btn btn--primary btn--lg" href={contact}>Kostenloses Erstgespräch</a>
+          <a class="btn btn--lg btn--ghost nur-desktop" href={href('/preise/')}>Tarife ansehen</a>
+        </div>
+      </div>
+      <div class="phero__media"><div class="phero__frame"><LeistungGrafik art={l.grafik} /></div></div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="wrap">
+      <SectionHead eyebrow="Leistungsumfang" pre="Was alles drin " accent="ist" />
+      <ul class="check-list umfang">{l.umfang.map((u) => <li><Icon name="check" size={20} /> {u}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">{l.text.map((t) => <p>{t}</p>)}</div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="wrap tarif">
+      <div>
+        <SectionHead eyebrow="Passender Tarif" pre={`${l.title} im Tarif `} accent={plan.name} text={l.planReason} />
+        <a class="btn btn--primary" href={contact}>{plan.name} anfragen</a>
+      </div>
+      <article class="card plan">
+        <div class="plan__top"><h3>{plan.name}</h3>{plan.highlight && <span class="plan__badge">Beliebt</span>}</div>
+        <p class="plan__price"><b>{plan.monthly} €</b> / Monat netto</p>
+        <dl class="plan__keys">{keyRows.map((r) => <div><dt>{r.label}</dt><dd>{r.values[planIndex]}</dd></div>)}</dl>
+        <p class="plan__setup">Einrichtung einmalig {formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung.</p>
+        <a class="plan__all" href={href('/preise/')}>Alle Tarife vergleichen →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap siegel">
+      <span class="siegel__ring"><Icon name={siegel.icon} size={30} /></span>
+      <div>
+        <span class="eyebrow">Unser Versprechen</span>
+        <h2>{siegel.title}</h2>
+        <p>{siegel.long}</p>
+      </div>
+    </div>
+  </section>
+
+  {l.faq.length > 0 && (
+    <section class="section section--sand">
+      <div class="wrap">
+        <SectionHead center eyebrow="Häufige Fragen" pre={`${l.title}: Gut zu `} accent="wissen" />
+        <div class="faq">
+          {l.faq.map((f) => (
+            <details class="faq__item"><summary><h3>{f.q}</h3></summary><p>{f.a}</p></details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <p class="others">Weitere Leistungen: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .phero { padding-block: clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--line); }
+  .phero__grid { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 960px) { .phero__grid { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
+  .phero__copy { display: grid; gap: 16px; justify-items: start; }
+  .phero__copy h1, .phero__copy p { margin: 0; }
+  .phero__copy h1 { font-size: clamp(2.1rem, 5vw, 3.6rem); }
+  .phero__actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 8px; }
+  @media (max-width: 767px) { .phero__actions { display: grid; width: 100%; } .phero__actions .btn { width: 100%; } .phero__media { order: -1; } }
+  .phero__frame { position: relative; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+  .umfang { max-width: 760px; }
+  .umfang li { font-size: 1.05rem; }
+  .prose p { font-size: 1.08rem; color: var(--ink-soft); }
+  .tarif { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 900px) { .tarif { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
+  .tarif :global(.section-head) { margin-bottom: 20px; }
+  .plan { display: grid; gap: 12px; }
+  .plan__top { display: flex; align-items: center; justify-content: space-between; }
+  .plan__top h3 { margin: 0; font-size: 1.3rem; }
+  .plan__badge { background: var(--accent); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .plan__price { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .plan__price b { font-family: var(--font-head); font-size: 2.6rem; color: var(--ink); line-height: 1; margin-right: 6px; }
+  .plan__keys { margin: 0; border-top: 1px solid var(--line); }
+  .plan__keys div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .plan__keys dt { color: var(--ink-soft); }
+  .plan__keys dd { margin: 0; font-weight: 650; text-align: right; }
+  .plan__setup { margin: 0; font-size: 0.82rem; color: var(--ink-soft); }
+  .plan__all { font-weight: 650; font-size: 0.9rem; color: var(--accent-ink); text-decoration: none; }
+  .siegel { display: grid; gap: 20px; align-items: start; max-width: 820px; }
+  @media (min-width: 768px) { .siegel { grid-template-columns: auto 1fr; gap: 28px; } }
+  .siegel__ring { width: 68px; height: 68px; border-radius: 50%; border: 3px solid var(--accent); background: var(--white); color: var(--accent-ink); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .siegel p { margin: 0; color: var(--ink-soft); }
+  .faq { display: grid; gap: 12px; max-width: 820px; margin-inline: auto; }
+  .faq__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; }
+  .faq__item[open] { border-color: var(--dark); }
+  .faq__item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; min-height: 48px; }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary h3 { margin: 0; font-size: 1.05rem; font-family: var(--font-body); font-weight: 650; letter-spacing: 0; }
+  .faq__item summary::after { content: '+'; flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--paper-2); font-size: 1.3rem; }
+  .faq__item[open] summary::after { content: '–'; background: var(--accent); }
+  .faq__item p { padding: 0 22px 20px; margin: 0; color: var(--ink-soft); }
+  .others { margin: 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
+  .others a { font-weight: 650; color: var(--accent-ink); }
+</style>
