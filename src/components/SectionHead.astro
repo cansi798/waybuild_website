@@ -1,0 +1,20 @@
+---
+// Sektions-Überschrift (Bauwelt-Muster): Eyebrow + Headline mit farbigem Akzentwort + kurzer Türkis-Linie.
+interface Props {
+  eyebrow?: string;
+  pre: string;
+  accent?: string;
+  text?: string;
+  center?: boolean;
+  centerMobile?: boolean;
+  as?: 'h1' | 'h2';
+  id?: string;
+}
+const { eyebrow, pre, accent = '', text, center = false, centerMobile = false, as: Tag = 'h2', id } = Astro.props;
+---
+
+<div class:list={['section-head', { center, 'center-mobile': centerMobile }]}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <Tag class="rule" id={id}>{pre}{accent && <span class="accent">{accent}</span>}</Tag>
+  {text && <p class="lead">{text}</p>}
+</div>

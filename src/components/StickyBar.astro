@@ -1,0 +1,28 @@
+---
+// Feste Leiste unten (mobil + Tablet), dauerhaft sichtbar (Bauwelt-Muster):
+// Erstgespräch (Haupt-CTA) + WhatsApp. Doppelte Buttons im Inhalt sind mobil ausgeblendet (.nur-desktop).
+import { href } from '../lib/paths';
+import { whatsappLink } from '../config/site';
+import Icon from './Icon.astro';
+---
+
+<div class="sticky-bar">
+  <a class="btn btn--primary btn--sm sticky-bar__btn" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+  <a class="btn btn--ghost btn--sm sticky-bar__btn sticky-bar__wa" href={whatsappLink()} target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben">
+    <Icon name="whatsapp" size={18} /> WhatsApp
+  </a>
+</div>
+
+<style>
+  .sticky-bar {
+    position: fixed; inset: auto 0 0 0; z-index: 48;
+    background: rgb(255 255 255 / 97%); border-top: 1px solid var(--line);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    display: flex; gap: 8px; align-items: center;
+    height: calc(var(--stickybar-h) + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px rgb(0 79 76 / 8%);
+  }
+  .sticky-bar__btn { flex: 1 1 0; min-width: 0; padding: 9px 10px; font-size: 0.88rem; line-height: 1.15; text-align: center; white-space: normal; }
+  .sticky-bar__wa { flex: 0 0 auto; border-color: var(--line); }
+  @media (min-width: 960px) { .sticky-bar { display: none; } }
+</style>

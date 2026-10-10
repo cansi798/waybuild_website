@@ -3,8 +3,8 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import MobileCta from '../components/MobileCta.astro';
-import { company, isMissing, SHOW_HINTS } from '../config/site';
+import StickyBar from '../components/StickyBar.astro';
+import { company, isMissing, SHOW_HINTS, PHONE_IS_PLACEHOLDER } from '../config/site';
 import { launchTodos } from '../config/launch';
 import { href, absolute } from '../lib/paths';
 import { IS_PREVIEW } from '../lib/env';
@@ -42,7 +42,8 @@ const organization = {
   ...(company.sameAs.length ? { sameAs: company.sameAs } : {}),
   ...(hasAddress ? { priceRange: '€€', areaServed: { '@type': 'Country', name: 'Deutschland' } } : {}),
   email: company.email,
-  ...(!isMissing(company.phone) ? { telephone: company.phone } : {}),
+  // Platzhalter-Nummer nie an Google melden
+  ...(!isMissing(company.phone) && !PHONE_IS_PLACEHOLDER ? { telephone: company.phone } : {}),
   // Adresse erst ausgeben, wenn sie vollständig ist – nie Platzhalter an Google melden
   ...(!hasAddress
     ? {}
@@ -87,6 +88,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
 <html lang="de">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -122,12 +124,20 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
       <slot />
     </main>
     <Footer />
-    {!hideMobileCta && <MobileCta />}
+    {!hideMobileCta && <StickyBar />}
     {SHOW_HINTS && IS_PREVIEW && openTodos > 0 && (
       <a class="todo-badge" href={href('/checkliste/')}>
         <span aria-hidden="true">!</span> {openTodos}<em> Punkte offen bis zum Start</em>
       </a>
     )}
+    <script data-reveal-script>
+      // Reveal beim Scrollen (nur mit JS; ohne JS ist alles sichtbar)
+      const reveals = document.querySelectorAll('.reveal');
+      if (reveals.length && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } }), { threshold: 0.15 });
+        reveals.forEach((r) => io.observe(r));
+      } else reveals.forEach((r) => r.classList.add('is-visible'));
+    </script>
   </body>
 </html>
 

@@ -1,6 +1,6 @@
 // Launch-Checkliste: alles, was vor dem offiziellen Start noch erledigt werden muss.
 // Firmendaten werden automatisch geprüft, der Rest wird hier von Hand abgehakt (done: true).
-import { company, isMissing, references, SHOW_HINTS } from './site';
+import { company, isMissing, references, SHOW_HINTS, PHONE_IS_PLACEHOLDER } from './site';
 
 export type Todo = {
   title: string;
@@ -20,7 +20,7 @@ const companyFields: [TextField, string, string][] = [
   ['registerCourt', 'Registergericht', 'Steht im Handelsregisterauszug, z. B. „Amtsgericht München“.'],
   ['registerNumber', 'Handelsregisternummer (HRB)', 'Steht im Handelsregisterauszug.'],
   ['vatId', 'Umsatzsteuer-ID', 'Kommt vom Bundeszentralamt für Steuern. Falls noch nicht vorhanden: Zeile im Impressum vorerst entfernen.'],
-  ['phone', 'Telefonnummer', 'Empfohlen: schafft Vertrauen und stärkt lokales SEO.'],
+  ['phone', 'Telefonnummer (aktuell erfundener Platzhalter 0151 00000000)', 'Echte Nummer eintragen und PHONE_IS_PLACEHOLDER auf false setzen – die Nummer steht in Header, Footer, WhatsApp-Links und Kontakt.'],
   ['hoster', 'Server-Hoster (Name & Anschrift)', 'Pflichtangabe in der Datenschutzerklärung, sobald die Website auf dem eigenen Server liegt.'],
 ];
 
@@ -28,7 +28,7 @@ const auto: Todo[] = companyFields.map(([key, title, detail]) => ({
   title,
   detail,
   where: `src/config/site.ts → company.${key}`,
-  done: !isMissing(company[key]),
+  done: !isMissing(company[key]) && !(key === 'phone' && PHONE_IS_PLACEHOLDER),
   priority: key === 'phone' ? 'wichtig' : 'pflicht',
 }));
 

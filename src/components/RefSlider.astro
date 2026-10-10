@@ -1,0 +1,108 @@
+---
+// Referenz-Slider (Bauwelt-Muster) – aktuell MUSTER-Beispiele (Wunsch 11.10.2026), klar gekennzeichnet.
+// Sobald echte Projekte freigegeben sind: `references` in src/config/site.ts füllen – dann erscheinen diese.
+import { href } from '../lib/paths';
+import { references } from '../config/site';
+import { MUSTER } from '../config/home';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import Bild from './Bild.astro';
+
+interface Props { eyebrow?: string; pre?: string; accent?: string; text?: string; }
+const {
+  eyebrow = 'Referenzen',
+  pre = 'Websites, die für Unternehmen ',
+  accent = 'arbeiten',
+  text = 'Jedes Projekt ist ein Unikat. Unser Anspruch bleibt derselbe: schnelle, klare Websites, die Anfragen bringen – individuell für Ihre Branche.',
+} = Astro.props;
+const echte = references.length > 0;
+---
+
+<section class="section" id="referenzen" aria-labelledby="ref-h">
+  <div class="wrap">
+    <div class="refs__head">
+      <SectionHead center eyebrow={eyebrow} pre={pre} accent={accent} text={text} id="ref-h" />
+      {!echte && <p class="refs__muster"><Icon name="eye" size={16} /> Muster-Beispiele – echte Kundenprojekte folgen nach Freigabe.</p>}
+      <div class="slider__nav">
+        <button class="slider__btn" type="button" data-dir="-1" aria-label="Zurück"><Icon name="arrow-left" size={20} /></button>
+        <button class="slider__btn" type="button" data-dir="1" aria-label="Weiter"><Icon name="arrow" size={20} /></button>
+      </div>
+    </div>
+
+    <div class="slider">
+      <div class="slider__track" data-slider>
+        {echte
+          ? references.map((r) => (
+              <a class="card refcard reveal" href={r.url ?? href('/referenzen/')} target={r.url ? '_blank' : undefined} rel={r.url ? 'noopener' : undefined}>
+                {r.bild && <Bild name={r.bild} alt={`Website von ${r.name}`} widths={[400, 800]} sizes="320px" class="refcard__img" />}
+                <div class="refcard__body"><span class="refcard__tag">{r.branche}</span><h3>{r.name}</h3><p>{r.text}</p></div>
+              </a>
+            ))
+          : MUSTER.map((m) => (
+              <a class="card refcard reveal" href={href('/referenzen/')}>
+                <div class="refcard__mock" style={`--c: ${m.farbe}`} aria-hidden="true">
+                  <div class="refcard__bar"><i></i><i></i><i></i></div>
+                  <div class="refcard__screen">
+                    <div class="refcard__nav"><b></b><s></s><s></s><em></em></div>
+                    <div class="refcard__hero"><div><u></u><u class="w60"></u><em></em></div><div class="refcard__img2"></div></div>
+                    <div class="refcard__cols"><s></s><s></s><s></s></div>
+                  </div>
+                  <span class="refcard__badge">Muster</span>
+                </div>
+                <div class="refcard__body"><span class="refcard__tag">{m.typ}</span><h3>{m.branche}</h3><p>{m.hinweis}</p></div>
+              </a>
+            ))}
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a class="btn btn--ghost" href={href('/referenzen/')}>Alle Beispiele ansehen</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .refs__head { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .refs__head :global(.section-head) { margin-bottom: 0; }
+  .refs__muster { margin: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--ink-soft); background: var(--white); border: 1px dashed var(--line); border-radius: 99px; padding: 6px 14px; }
+  .refcard { width: min(72vw, 320px); padding: 10px; display: grid; gap: 0; }
+  .refcard :global(.refcard__img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+  .refcard__body { padding: 14px 8px 6px; }
+  .refcard__body h3 { margin: 0 0 4px; font-size: 1.1rem; }
+  .refcard__body p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+  .refcard__tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+  /* CSS-Mockup einer Beispiel-Website in der Branchenfarbe */
+  .refcard__mock { position: relative; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 18%, white), color-mix(in srgb, var(--c) 40%, white)); padding: 16px 18px 0; }
+  .refcard__bar { display: flex; gap: 4px; padding: 7px 9px; background: #faf8f4; border-radius: 8px 8px 0 0; border: 1px solid var(--line); border-bottom: 0; }
+  .refcard__bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .refcard__screen { background: var(--white); height: 100%; padding: 10px 12px; display: grid; gap: 9px; align-content: start; border: 1px solid var(--line); border-top: 0; }
+  .refcard__nav { display: flex; align-items: center; gap: 6px; }
+  .refcard__nav b { width: 30px; height: 7px; border-radius: 3px; background: var(--c); margin-right: auto; }
+  .refcard__nav s, .refcard__cols s { display: block; width: 16px; height: 4px; border-radius: 2px; background: var(--paper-2); }
+  .refcard__nav em, .refcard__hero em { display: block; width: 26px; height: 9px; border-radius: 99px; background: var(--c); }
+  .refcard__hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 8px; align-items: center; }
+  .refcard__hero > div:first-child { display: grid; gap: 5px; }
+  .refcard__hero u { display: block; height: 5px; border-radius: 3px; background: var(--paper-2); width: 100%; text-decoration: none; }
+  .refcard__hero u:first-child { height: 8px; background: var(--ink); }
+  .refcard__hero .w60 { width: 60%; }
+  .refcard__img2 { aspect-ratio: 4 / 3; border-radius: 6px; background: linear-gradient(160deg, color-mix(in srgb, var(--c) 60%, white), var(--c)); }
+  .refcard__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .refcard__cols s { width: 100%; height: 18px; border-radius: 5px; }
+  .refcard__badge { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--white); color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 99px; padding: 3px 9px; }
+</style>
+
+<script>
+  for (const slider of document.querySelectorAll<HTMLElement>('.slider')) {
+    const track = slider.querySelector<HTMLElement>('[data-slider]');
+    const nav = slider.closest('section')?.querySelectorAll<HTMLButtonElement>('.slider__btn');
+    if (!track || !nav?.length) continue;
+    const step = () => (track.firstElementChild as HTMLElement)?.offsetWidth + 20 || 300;
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 4;
+      nav.forEach((b) => { const dir = Number(b.dataset.dir); b.disabled = dir < 0 ? track.scrollLeft <= 4 : track.scrollLeft >= max; });
+    };
+    nav.forEach((b) => b.addEventListener('click', () => track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' })));
+    track.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

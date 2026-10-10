@@ -14,7 +14,8 @@ export const company = {
   legalName: 'Waybuild UG (haftungsbeschränkt)',
   slogan: 'Websites im Abo – individuell entwickelt, sorgenfrei betrieben.',
   email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
-  phone: 'TODO', // z. B. '+49 30 1234567'
+  /** PLATZHALTER (Wunsch 11.10.2026: „erfundene Nummer“) – vor dem Livegang ersetzen, dann PHONE_IS_PLACEHOLDER auf false. */
+  phone: '0151 00000000',
   street: 'TODO',
   zip: 'TODO',
   city: 'TODO',
@@ -28,6 +29,15 @@ export const company = {
   /** Links zu Google-Unternehmensprofil, LinkedIn, Instagram … – stärkt die Marke bei Google (JSON-LD sameAs). */
   sameAs: [] as string[],
 };
+
+/** Solange true, gilt company.phone als erfundene Platzhalter-Nummer (Checkliste offen, nicht an Google melden). */
+export const PHONE_IS_PLACEHOLDER = true;
+/** Telefon-Helfer: tel:-Link und WhatsApp-Link (wa.me) aus company.phone. */
+export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/^0/, '');
+export const whatsappLink = (text = 'Hallo waybuild, ich interessiere mich für eine Website im Abo.') =>
+  `https://wa.me/${phoneTel().replace('+', '')}?text=${encodeURIComponent(text)}`;
+/** Erreichbarkeit (Footer-Kopf, Kontakt). */
+export const HOURS = 'Montag – Freitag, 9:00 – 18:00 Uhr';
 
 /** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
 // Beispiel: { name: 'Tischlerei Muster', branche: 'Handwerk', url: 'https://…', text: 'Neue Website, 3× mehr Anfragen', bild: 'referenzen/projekt-1' }
@@ -51,7 +61,7 @@ export type Plan = {
 export const SETUP_FEE = 490;
 
 /** Das Angebot in einem Satz. */
-export const OFFER = 'Design, Hosting, Domain, E-Mail, Wartung. Alles drin.';
+export const OFFER = 'Design, Hosting, Domain, E-Mail, Wartung. Alles drin – zum festen Monatspreis.';
 
 /**
  * Leistungsmatrix: EINE Quelle für Tarifkarten, Vergleichstabelle und alle Texte.
@@ -77,9 +87,10 @@ export const matrix: { label: string; values: [string | boolean, string | boolea
 ];
 
 const planBase = [
-  { id: 'start', name: 'Start', tagline: 'Für Selbstständige und kleine Betriebe', monthly: 59 },
-  { id: 'business', name: 'Business', tagline: 'Für Unternehmen, die lokal gefunden werden wollen', monthly: 99, highlight: true },
-  { id: 'premium', name: 'Premium', tagline: 'Für Wachstum mit laufender Betreuung', monthly: 199 },
+  // Preise laut Wunsch 11.10.2026: Start 149, Business 249, Premium 459 (netto / Monat)
+  { id: 'start', name: 'Start', tagline: 'Für kleine Unternehmen und Selbstständige', monthly: 149 },
+  { id: 'business', name: 'Business', tagline: 'Für Unternehmen, die Kunden gewinnen wollen', monthly: 249, highlight: true },
+  { id: 'premium', name: 'Premium', tagline: 'Für wachsende Unternehmen mit laufender Betreuung', monthly: 459 },
 ] as const;
 
 // Alle Preise netto (B2B) zzgl. gesetzl. USt.
@@ -110,14 +121,17 @@ export const addons = [
   { name: 'WordPress (auf Wunsch)', price: 'auf Anfrage' },
 ];
 
-export type IconName = 'mail' | 'calendar' | 'rocket' | 'gauge' | 'key' | 'search' | 'chat' | 'pen' | 'server' | 'shield';
+export type IconName =
+  | 'mail' | 'calendar' | 'rocket' | 'gauge' | 'key' | 'search' | 'chat' | 'pen' | 'server' | 'shield'
+  | 'phone' | 'whatsapp' | 'chevron' | 'menu' | 'close' | 'arrow' | 'arrow-left' | 'check' | 'doc' | 'eye'
+  | 'euro' | 'clock' | 'user' | 'layout' | 'cart' | 'target' | 'refresh' | 'tools' | 'pin' | 'globe' | 'chart';
 
 export const usps: { icon: IconName; title: string; short: string; text: string }[] = [
   {
     icon: 'mail',
     title: 'Unbegrenzt E-Mail',
     short: 'Postfächer ohne Limit.',
-    text: 'Für jeden Mitarbeiter eine eigene Adresse – ohne Aufpreis. Bei anderen Anbietern ist oft nach 2 bis 5 Postfächern Schluss.',
+    text: 'Für jede Mitarbeiterin und jeden Mitarbeiter eine eigene Adresse – ohne Aufpreis. Bei anderen Anbietern ist oft nach 2 bis 5 Postfächern Schluss.',
   },
   {
     icon: 'calendar',
@@ -161,10 +175,10 @@ export const comparison = [
 ];
 
 export const steps: { icon: IconName; title: string; short: string; text: string }[] = [
-  { icon: 'chat', title: 'Gespräch', short: '20 Min., kostenlos', text: 'Per Telefon oder Video. Wir lernen Ihr Unternehmen kennen und empfehlen den passenden Tarif – ehrlich, auch wenn der kleinere reicht.' },
-  { icon: 'pen', title: 'Entwurf', short: 'Ihr individuelles Design', text: 'Wir entwickeln Ihr Design nach Ihren Wünschen. Sie geben Feedback, bis alles passt.' },
-  { icon: 'server', title: 'Livegang', short: 'Domain, E-Mail, Server', text: 'Wir richten alles ein: Domain, Postfächer, Server, SSL. In 14 Tagen sind Sie online.' },
-  { icon: 'shield', title: 'Betreuung', short: 'Wir kümmern uns', text: 'Änderungen, Updates, Backups und Sicherheit übernehmen wir. Sie konzentrieren sich auf Ihr Geschäft.' },
+  { icon: 'chat', title: 'Erstgespräch', short: '20 Min., kostenlos', text: 'Per Telefon oder Video. Wir lernen Ihr Unternehmen kennen und empfehlen den passenden Tarif – ehrlich, auch wenn der kleinere reicht.' },
+  { icon: 'pen', title: 'Entwurf', short: 'Ihr individuelles Design', text: 'Wir entwickeln Ihr Design nach Ihren Wünschen und Ihrem Corporate Design. Sie geben Feedback, bis alles passt.' },
+  { icon: 'server', title: 'Livegang', short: 'In 14 Tagen online', text: 'Wir richten alles ein: Domain, Postfächer, Server, SSL. Spätestens 14 Tage nach Ihren Inhalten sind Sie online.' },
+  { icon: 'shield', title: 'Betreuung', short: 'Wir kümmern uns', text: 'Änderungen, Updates, Backups und Sicherheit übernehmen wir dauerhaft. Sie konzentrieren sich auf Ihr Geschäft.' },
 ];
 
 export const faqs = [

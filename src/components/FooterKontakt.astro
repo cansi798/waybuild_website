@@ -1,0 +1,41 @@
+---
+// Dunkler Footer-Kopf auf jeder Seite (Bauwelt-Muster): Leitsatz + Direktkontakt
+// (Erstgespräch, Telefon, WhatsApp, E-Mail). Ersetzt das frühere CTA-Band.
+import { href } from '../lib/paths';
+import { company, phoneTel, whatsappLink, HOURS } from '../config/site';
+import { FOOTER_KONTAKT as F } from '../config/home';
+import Icon from './Icon.astro';
+---
+
+<section class="fkontakt section--dark" aria-labelledby="fkontakt-titel">
+  <div class="wrap fkontakt__inner">
+    <h2 id="fkontakt-titel">{F.pre}<span class="accent">{F.accent}</span></h2>
+    <p class="fkontakt__sub">{F.sub}</p>
+    <p class="fkontakt__text">{F.text}</p>
+
+    <h3 class="fkontakt__head">{F.kontaktHead}</h3>
+    <p class="fkontakt__text">{F.kontaktText}</p>
+    <div class="fkontakt__actions">
+      <a class="btn btn--primary" href={href('/kontakt/')}><Icon name="calendar" size={18} /> Kostenloses Erstgespräch</a>
+      <a class="btn fkontakt__ghost" href={`tel:${phoneTel()}`}><Icon name="phone" size={18} /> {company.phone} anrufen</a>
+      <a class="btn fkontakt__ghost" href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Per WhatsApp schreiben</a>
+      <a class="btn fkontakt__ghost fkontakt__mail" href={`mailto:${company.email}`}><Icon name="mail" size={18} /> {company.email}</a>
+    </div>
+    <p class="fkontakt__zeiten">{HOURS}</p>
+  </div>
+</section>
+
+<style>
+  .fkontakt { padding-block: clamp(48px, 7vw, 72px) 48px; }
+  .fkontakt__inner { display: grid; justify-items: center; text-align: center; gap: 12px; }
+  .fkontakt__inner h2, .fkontakt__inner h3, .fkontakt__inner p { margin: 0; }
+  .fkontakt__sub { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; color: var(--accent); }
+  .fkontakt__text { color: var(--dark-lead); max-width: 46rem; }
+  .fkontakt__head { margin-top: 24px !important; font-size: 1.35rem; }
+  .fkontakt__actions { display: grid; gap: 10px; width: 100%; max-width: 22rem; margin-top: 6px; }
+  @media (min-width: 960px) { .fkontakt__actions { grid-template-columns: auto auto; justify-content: center; max-width: 48rem; } .fkontakt__actions .btn { white-space: nowrap; } }
+  .fkontakt__actions .btn { justify-content: center; padding: 0.7em 1.4em; font-size: 0.95rem; gap: 8px; }
+  .fkontakt__ghost { background: transparent; border-color: rgb(255 255 255 / 50%); color: var(--white); }
+  .fkontakt__ghost:hover { background: rgb(255 255 255 / 12%); border-color: var(--white); }
+  .fkontakt__zeiten { color: var(--dark-soft); font-size: 0.9rem; margin-top: 4px !important; }
+</style>

@@ -1,0 +1,54 @@
+---
+// Startseite „Unsere Leistungen – Wobei wir Sie unterstützen“ (Bauwelt-Muster): Kacheln mit Grafik,
+// Icon, Titel, Kurztext → Detailseite. Fünf Karten, letzte Reihe mittig.
+import { href } from '../lib/paths';
+import { leistungen } from '../config/leistungen';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import LeistungGrafik from './LeistungGrafik.astro';
+---
+
+<section class="section section--sand" id="leistungen" aria-labelledby="leistungen-h">
+  <div class="wrap">
+    <SectionHead center eyebrow="Unsere Leistungen" pre="Wobei wir Ihr Unternehmen " accent="unterstützen" id="leistungen-h" />
+    <div class="lk">
+      {leistungen.map((k) => (
+        <a class="card lk__card reveal" href={href(`/leistungen/${k.slug}/`)}>
+          <div class="lk__media">
+            <LeistungGrafik art={k.grafik} />
+            <span class="lk__icon"><Icon name={k.icon} size={22} /></span>
+          </div>
+          <div class="lk__body">
+            <h3>{k.title}</h3>
+            <p>{k.teaser}</p>
+            <span class="lk__more">Mehr erfahren <Icon name="arrow" size={16} /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .lk { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+  .lk__card { flex: 1 1 280px; max-width: 360px; padding: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+  .lk__media { position: relative; aspect-ratio: 16 / 9; background: var(--paper-2); overflow: hidden; }
+  .lk__icon {
+    position: absolute; left: 16px; bottom: -22px; width: 46px; height: 46px; border-radius: 12px;
+    background: var(--dark); color: var(--accent); display: grid; place-items: center; box-shadow: var(--shadow);
+  }
+  .lk__body { padding: 36px 22px 22px; display: grid; gap: 8px; align-content: start; }
+  .lk__body h3 { margin: 0; font-size: 1.2rem; }
+  .lk__body p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .lk__more { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-weight: 650; font-size: 0.9rem; color: var(--accent-ink); }
+  @media (max-width: 599px) {
+    .lk { gap: 12px; }
+    .lk__card { flex-basis: 100%; grid-template-columns: 96px 1fr; grid-template-rows: none; }
+    .lk__media { aspect-ratio: auto; height: 100%; min-height: 110px; }
+    .lk__icon { left: 8px; bottom: 8px; width: 34px; height: 34px; }
+    .lk__body { padding: 14px 14px 14px 12px; gap: 4px; }
+    .lk__body h3 { font-size: 1.02rem; }
+    .lk__body p { font-size: 0.86rem; }
+    .lk__more { display: none; }
+  }
+</style>

@@ -5,8 +5,9 @@ import type { IconName } from '../config/site';
 interface Props {
   name: IconName;
   size?: number;
+  class?: string;
 }
-const { name, size = 24 } = Astro.props;
+const { name, size = 24, class: cls } = Astro.props;
 
 const paths: Record<IconName, string> = {
   mail: 'M3 6h18v12H3z M3 7l9 6 9-6',
@@ -19,11 +20,32 @@ const paths: Record<IconName, string> = {
   pen: 'M4 20l4-1L19 8l-3-3L5 16z M14 7l3 3',
   server: 'M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01',
   shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4',
+  phone: 'M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z',
+  whatsapp: 'M3.6 20.4l1.25-4.4A8.6 8.6 0 1 1 8.1 19.2z M9.2 8.3h1.2l.9 2.1-1 .9a6 6 0 0 0 2.6 2.6l.9-1 2.1.9v1.2a1 1 0 0 1-1 1A7.6 7.6 0 0 1 8.2 9.3a1 1 0 0 1 1-1z',
+  chevron: 'M6 9l6 6 6-6',
+  menu: 'M4 7h16 M4 12h16 M4 17h16',
+  close: 'M6 6l12 12 M18 6L6 18',
+  arrow: 'M5 12h14 M13 6l6 6-6 6',
+  'arrow-left': 'M19 12H5 M11 6l-6 6 6 6',
+  check: 'M20 6L9 17l-5-5',
+  doc: 'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z M14 3v5h5 M9 13h6 M9 17h6',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+  euro: 'M17 6a7 7 0 1 0 0 12 M4 10h9 M4 14h9',
+  clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 7v5l3 2',
+  user: 'M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z M4 21a8 8 0 0 1 16 0',
+  layout: 'M3 4h18v16H3z M3 9h18 M9 9v11',
+  cart: 'M3 4h2l2.5 11h11L21 7H6 M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z M17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
+  target: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z M12 12h.01',
+  refresh: 'M20 12a8 8 0 1 1-2.3-5.6 M20 4v4h-4',
+  tools: 'M14 7a3 3 0 0 0 4 4l3 3-3 3-3-3a3 3 0 0 0-4-4z M11 11l-7 7a2 2 0 0 0 3 3l7-7',
+  pin: 'M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z M12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z',
+  globe: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M3 12h18 M12 3c3 3 3 15 0 18 M12 3c-3 3-3 15 0 18',
+  chart: 'M4 20h16 M7 16v-5 M12 16V8 M17 16v-3',
 };
 ---
 
 <svg
-  class="icon"
+  class:list={['icon', cls]}
   width={size}
   height={size}
   viewBox="0 0 24 24"

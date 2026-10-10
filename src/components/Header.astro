@@ -1,116 +1,166 @@
 ---
+// Site-Header nach Bauwelt-Muster: Desktop-Dropdown-Navigation + CTA „Erstgespräch buchen“,
+// mobil Telefon-/WhatsApp-Icons + Burger → Vollbild-Menü (MobileMenu).
 import { href } from '../lib/paths';
+import { company, phoneTel, whatsappLink } from '../config/site';
+import { NAV } from '../config/nav';
 import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import MobileMenu from './MobileMenu.astro';
 
-const nav = [
-  { label: 'Leistungen', path: '/leistungen/' },
-  { label: 'Branchen', path: '/website-fuer/' },
-  { label: 'Preise', path: '/preise/' },
-  { label: 'Warum kein WordPress', path: '/#warum' },
-  { label: 'Über uns', path: '/ueber-uns/' },
-];
 const current = Astro.url.pathname;
+const isCurrent = (path?: string) => path && current === href(path);
 ---
 
-<header class="header">
-  <div class="wrap header__inner">
-    <a href={href('/')} class="header__logo" aria-label="Waybuild – Startseite"><Logo /></a>
+<header class="hdr" id="siteHeader">
+  <div class="wrap hdr__inner">
+    <a href={href('/')} class="hdr__logo" aria-label="waybuild – Startseite"><Logo /></a>
 
-    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <span class="sr-only">Menü öffnen</span>
-      <span class="burger" aria-hidden="true"></span>
-    </button>
-
-    <nav id="site-nav" class="header__nav" aria-label="Hauptnavigation">
+    <nav class="hdr__nav" aria-label="Hauptnavigation">
       <ul>
-        {nav.map((item) => (
-          <li>
-            <a href={href(item.path)} aria-current={current === href(item.path) ? 'page' : undefined}>{item.label}</a>
-          </li>
-        ))}
+        {NAV.map((item) =>
+          item.children ? (
+            <li class="dd">
+              <button class="hdr__link dd__btn" type="button" aria-expanded="false">
+                {item.label}
+                <Icon name="chevron" size={16} class="dd__chev" />
+              </button>
+              <div class="dd__panel">
+                <ul class="dd__list">
+                  {item.children.map((c) => (
+                    <li>
+                      <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
+                        {c.icon && <Icon name={c.icon} size={22} class="dd__icon" />}
+                        <span class="dd__text">
+                          <strong>{c.label}</strong>
+                          {c.desc && <small>{c.desc}</small>}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : (
+            <li><a class="hdr__link" href={href(item.path!)} aria-current={isCurrent(item.path) ? 'page' : undefined}>{item.label}</a></li>
+          ),
+        )}
       </ul>
-      <a class="btn btn--primary header__cta" href={href('/kontakt/')}>Erstgespräch buchen</a>
     </nav>
+
+    <div class="hdr__actions">
+      <a class="hdr__iconbtn" href={`tel:${phoneTel()}`} aria-label={`Anrufen: ${company.phone}`}><Icon name="phone" size={22} /></a>
+      <a class="hdr__iconbtn" href={whatsappLink()} target="_blank" rel="noopener" aria-label="WhatsApp-Chat starten"><Icon name="whatsapp" size={22} /></a>
+      <a class="btn btn--primary btn--sm hdr__cta" href={href('/kontakt/')}>Erstgespräch buchen</a>
+      <button class="hdr__iconbtn hdr__burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menü öffnen">
+        <Icon name="menu" size={26} class="hdr__burger-open" />
+        <Icon name="close" size={26} class="hdr__burger-close" />
+      </button>
+    </div>
   </div>
+  <MobileMenu />
 </header>
 
-<script>
-  const toggle = document.querySelector<HTMLButtonElement>('.header__toggle');
-  const nav = document.getElementById('site-nav');
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!open));
-    nav?.classList.toggle('is-open', !open);
-    document.body.style.overflow = open ? '' : 'hidden';
-  });
-  nav?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => {
-      toggle?.setAttribute('aria-expanded', 'false');
-      nav.classList.remove('is-open');
-      document.body.style.overflow = '';
-    }),
-  );
-</script>
-
 <style>
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid var(--line);
-  }
-  /* Blur auf Pseudo-Element: backdrop-filter am Header selbst würde das fixierte Mobilmenü einsperren */
-  .header::before {
+  .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
+  .hdr::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: rgb(247 245 240 / 88%);
+    background: rgb(247 245 240 / 92%);
     backdrop-filter: saturate(160%) blur(12px);
   }
-  .header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 68px; }
-  .header__logo { display: inline-flex; text-decoration: none; }
+  .hdr.is-scrolled { box-shadow: var(--shadow); }
+  .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
+  .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
 
-  .header__toggle {
-    display: grid; place-items: center;
-    width: 48px; height: 48px; margin-right: -10px;
-    background: none; border: 0; cursor: pointer; color: var(--ink);
+  .hdr__nav { display: none; flex: 1; justify-content: center; }
+  .hdr__nav > ul { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .hdr__link {
+    display: inline-flex; align-items: center; gap: 6px; padding: 9px 13px;
+    border: 0; background: none; border-radius: 999px; cursor: pointer;
+    font: inherit; font-weight: 600; font-size: 0.95rem; color: var(--ink); text-decoration: none;
+    transition: background 0.2s ease;
   }
-  .burger, .burger::before, .burger::after {
-    display: block; width: 24px; height: 2px; background: currentColor; border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+  .hdr__link:hover, .hdr__link[aria-current='page'] { background: var(--paper-2); color: var(--accent-ink); }
+  .dd { position: relative; }
+  .dd :global(.dd__chev) { transition: transform 0.2s ease; }
+  .dd__panel {
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);
+    min-width: 340px; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: 0 24px 48px -16px rgb(0 79 76 / 30%); padding: 10px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
-  .burger { position: relative; }
-  .burger::before, .burger::after { content: ''; position: absolute; left: 0; }
-  .burger::before { top: -7px; }
-  .burger::after { top: 7px; }
-  [aria-expanded='true'] .burger { background: transparent; }
-  [aria-expanded='true'] .burger::before { transform: translateY(7px) rotate(45deg); }
-  [aria-expanded='true'] .burger::after { transform: translateY(-7px) rotate(-45deg); }
+  .dd:hover .dd__panel, .dd:focus-within .dd__panel, .dd.open .dd__panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  .dd:hover :global(.dd__chev), .dd.open :global(.dd__chev) { transform: rotate(180deg); }
+  .dd__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .dd__item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; text-decoration: none; transition: background 0.2s ease; }
+  .dd__item:hover, .dd__item[aria-current='page'] { background: var(--paper-2); }
+  .dd__item :global(.dd__icon) { color: var(--accent-ink); flex: none; }
+  .dd__text { display: grid; line-height: 1.35; }
+  .dd__text strong { font-weight: 650; font-size: 0.95rem; }
+  .dd__text small { color: var(--ink-soft); font-size: 0.8rem; }
+  .dd__list li:last-child .dd__item { border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 6px; padding-top: 12px; color: var(--accent-ink); }
 
-  .header__nav {
-    position: fixed; inset: 68px 0 0 0;
-    display: none; flex-direction: column; gap: 24px;
-    padding: 24px 16px 40px;
-    background: var(--paper);
-    overflow-y: auto;
+  .hdr__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .hdr__iconbtn {
+    display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+    border-radius: 50%; border: 0; background: none; color: var(--ink); cursor: pointer; transition: background 0.2s ease;
   }
-  .header__nav.is-open { display: flex; }
-  .header__nav ul { list-style: none; margin: 0; padding: 0; }
-  .header__nav li a {
-    display: block; padding: 14px 0; border-bottom: 1px solid var(--line);
-    font-family: var(--font-head); font-size: 1.5rem; font-weight: 600; text-decoration: none;
-  }
-  .header__nav a[aria-current='page'] { color: var(--accent-ink); }
+  .hdr__iconbtn:hover { background: var(--paper-2); }
+  .hdr__cta { display: none; white-space: nowrap; }
+  .hdr__burger :global(.hdr__burger-close) { display: none; }
+  .hdr__burger[aria-expanded='true'] :global(.hdr__burger-open) { display: none; }
+  .hdr__burger[aria-expanded='true'] :global(.hdr__burger-close) { display: block; }
 
   @media (min-width: 960px) {
-    .header__toggle { display: none; }
-    .header__nav {
-      position: static; display: flex; flex-direction: row; align-items: center; gap: 28px;
-      padding: 0; background: none; overflow: visible;
-    }
-    .header__nav ul { display: flex; gap: 26px; }
-    .header__nav li a {
-      padding: 6px 0; border: 0; font-family: var(--font-body); font-size: 0.98rem; font-weight: 550;
-    }
-    .header__nav li a:hover { color: var(--accent-ink); }
-    .header__cta { min-height: 42px; padding: 0.55em 1.2em; }
+    .hdr__nav { display: flex; }
+    .hdr__cta { display: inline-flex; margin-left: 8px; }
+    .hdr__iconbtn:not(.hdr__burger) { display: none; }
+    .hdr__burger { display: none; }
   }
+  @media (min-width: 1240px) { .hdr__iconbtn:not(.hdr__burger) { display: inline-flex; } }
 </style>
+
+<script>
+  const hdr = document.getElementById('siteHeader')!;
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { hdr.classList.toggle('is-scrolled', window.scrollY > 24); ticking = false; });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Dropdowns: Klick-Toggle + Escape + Pfeiltasten
+  const dds = Array.from(hdr.querySelectorAll<HTMLElement>('.dd'));
+  const closeAll = (except?: HTMLElement) => {
+    for (const d of dds) if (d !== except) { d.classList.remove('open'); d.querySelector('.dd__btn')?.setAttribute('aria-expanded', 'false'); }
+  };
+  for (const dd of dds) {
+    const btn = dd.querySelector<HTMLButtonElement>('.dd__btn')!;
+    btn.addEventListener('click', () => { const open = dd.classList.toggle('open'); btn.setAttribute('aria-expanded', String(open)); closeAll(open ? dd : undefined); });
+    dd.addEventListener('keydown', (e) => {
+      const items = Array.from(dd.querySelectorAll<HTMLAnchorElement>('.dd__item'));
+      const i = items.indexOf(document.activeElement as HTMLAnchorElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); (items[i + 1] ?? items[0])?.focus(); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); (items[i - 1] ?? items[items.length - 1])?.focus(); }
+      if (e.key === 'Escape') { closeAll(); btn.focus(); }
+    });
+  }
+  document.addEventListener('click', (e) => { if (!hdr.contains(e.target as Node)) closeAll(); });
+
+  // Burger ↔ Mobilmenü
+  const burger = hdr.querySelector<HTMLButtonElement>('.hdr__burger')!;
+  const menu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    const open = menu?.classList.toggle('open') ?? false;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
+  });
+</script>

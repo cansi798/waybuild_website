@@ -120,3 +120,60 @@ img { max-width: 100%; height: auto; display: block; }
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
+
+/* ---------- Umbau nach Bauwelt-Muster (11.10.2026): Sektions-Köpfe, Häkchen, Slider, Reveal ---------- */
+:root { --header-h: 72px; --stickybar-h: 64px; }
+.accent { color: var(--accent-ink); }
+.section--dark .accent, .section--dark .eyebrow { color: var(--accent); }
+.section--dark h2, .section--dark h3 { color: var(--white); }
+.section--sand { background: var(--paper-2); }
+.rule::after { content: ''; display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--accent); margin-top: 14px; }
+.section-head.center { margin-inline: auto; text-align: center; }
+.section-head.center .rule::after, .section-head.center .lead { margin-inline: auto; }
+@media (max-width: 767px) {
+  .section-head.center-mobile { margin-inline: auto; text-align: center; }
+  .section-head.center-mobile .rule::after, .section-head.center-mobile .lead { margin-inline: auto; }
+}
+.check-row { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 0; margin: 0; list-style: none; }
+.check-row li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
+.check-row .icon { color: var(--accent-ink); flex: none; }
+.section--dark .check-row .icon, .on-dark .check-row .icon { color: var(--accent); }
+.check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.check-list li { display: flex; align-items: flex-start; gap: 12px; }
+.check-list .icon { color: var(--ok); flex: none; margin-top: 3px; }
+.btn--lg { min-height: 54px; padding: 1em 1.8em; font-size: 1.05rem; }
+.btn--sm { min-height: 40px; padding: 0.5em 1.1em; font-size: 0.9rem; }
+.btn .icon { flex: none; }
+a.card { color: inherit; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+a.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--dark); }
+
+/* Slider (scroll-snap, Pfeile per JS) */
+.slider { position: relative; }
+.slider__track {
+  display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-block: 8px 20px; margin-inline: -16px; padding-inline: 16px;
+}
+.slider__track::-webkit-scrollbar { display: none; }
+.slider__track > * { scroll-snap-align: start; flex: none; }
+.slider__nav { display: none; gap: 12px; justify-content: center; margin-bottom: 20px; }
+html.js .slider__nav { display: flex; }
+.slider__btn {
+  width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--line); background: var(--white); color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.slider__btn:hover { border-color: var(--accent); background: var(--paper-2); }
+.slider__btn[disabled] { opacity: 0.35; cursor: default; }
+
+/* Reveal beim Scrollen – nur mit JS, ohne JS ist alles sichtbar */
+html.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 600ms ease, transform 600ms ease; }
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Mobil stehen Erstgespräch + WhatsApp dauerhaft in der festen Leiste unten */
+@media (max-width: 959px) { .nur-desktop { display: none !important; } body { padding-bottom: calc(var(--stickybar-h) + env(safe-area-inset-bottom)); } }
+.text-center { text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html.js .reveal { opacity: 1; transform: none; }
+}

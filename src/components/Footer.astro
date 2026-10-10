@@ -1,28 +1,26 @@
 ---
-import { company, isMissing } from '../config/site';
-import Hint from './Hint.astro';
+import { company } from '../config/site';
 import { href } from '../lib/paths';
 import Logo from './Logo.astro';
 import { branchen } from '../config/branchen';
+import { leistungen } from '../config/leistungen';
+import FooterKontakt from './FooterKontakt.astro';
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer section--dark">
+  <FooterKontakt />
   <div class="wrap footer__grid">
     <div>
       <Logo />
       <p class="footer__claim">{company.slogan}</p>
     </div>
     <nav aria-label="Footer">
-      <h2 class="footer__h">Angebot</h2>
+      <h2 class="footer__h">Leistungen</h2>
       <ul>
-        <li><a href={href('/leistungen/')}>Leistungen</a></li>
+        {leistungen.map((l) => <li><a href={href(`/leistungen/${l.slug}/`)}>{l.title}</a></li>)}
         <li><a href={href('/preise/')}>Preise & Tarife</a></li>
-        <li><a href={href('/#warum')}>Warum kein WordPress</a></li>
-        <li><a href={href('/#faq')}>Häufige Fragen</a></li>
-        <li><a href={href('/ueber-uns/')}>Über uns</a></li>
-        <li><a href={href('/ratgeber/')}>Ratgeber</a></li>
       </ul>
     </nav>
     <nav aria-label="Branchen" class="footer__branchen">
@@ -32,11 +30,13 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
     <div>
-      <h2 class="footer__h">Kontakt</h2>
+      <h2 class="footer__h">Unternehmen</h2>
       <ul>
-        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
-        {isMissing(company.phone) ? <li><Hint label="Telefonnummer" where="src/config/site.ts → company.phone" /></li> : <li><a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a></li>}
-        <li><a href={href('/kontakt/')}>Kontaktformular</a></li>
+        <li><a href={href('/ueber-uns/')}>Über uns</a></li>
+        <li><a href={href('/referenzen/')}>Referenzen</a></li>
+        <li><a href={href('/#warum')}>Warum kein WordPress</a></li>
+        <li><a href={href('/ratgeber/')}>Ratgeber</a></li>
+        <li><a href={href('/kontakt/')}>Kontakt</a></li>
       </ul>
     </div>
     <div>
@@ -54,7 +54,8 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .footer { padding-block: clamp(40px, 7vw, 64px) calc(28px + env(safe-area-inset-bottom)); }
+  .footer { padding-block: 0 calc(28px + env(safe-area-inset-bottom)); }
+  .footer__grid { padding-top: clamp(32px, 5vw, 48px); border-top: 1px solid var(--dark-line); }
   @media (max-width: 599px) {
     .footer__grid { gap: 20px 16px; }
     .footer ul { display: flex; flex-wrap: wrap; gap: 0 16px; }

@@ -1,0 +1,62 @@
+---
+// Tarif-Sektion (entspricht der Angebots-Sektion bei Bauwelt): links Text + Punkte + Button,
+// rechts der Tarif-Finder (3 Tarife, fester Monatspreis). Kein „berechnen“-Wording (Wunsch 11.10.2026).
+import { href } from '../lib/paths';
+import { plans, SETUP_FEE, formatEuro } from '../config/site';
+import { ANGEBOT } from '../config/home';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import TarifFinder from './TarifFinder.astro';
+
+const cheapest = Math.min(...plans.map((p) => p.monthly));
+---
+
+<section class="section" id="preise" aria-labelledby="preise-h">
+  <div class="wrap tarif__grid">
+    <div class="tarif__text">
+      <SectionHead centerMobile eyebrow="Transparente Preise" pre={`Ihre Website ab ${cheapest} € im `} accent="Monat." text={ANGEBOT.sub} id="preise-h" />
+      <ul class="check-list tarif__punkte">
+        {ANGEBOT.punkte.map((p) => <li><Icon name="check" size={18} /> {p}</li>)}
+      </ul>
+      <div class="tarif__actions">
+        <a class="btn btn--primary" href={href('/preise/')}>Alle Tarife vergleichen</a>
+        <a class="btn btn--ghost nur-desktop" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+      </div>
+    </div>
+    <div class="tarif__side">
+      <ul class="tarif__plans">
+        {plans.map((p) => (
+          <li class:list={['tarif__plan', { 'tarif__plan--hl': p.highlight }]}>
+            <span class="tarif__name">{p.name}{p.highlight && <small>Beliebt</small>}</span>
+            <span class="tarif__tag">{p.tagline}</span>
+            <span class="tarif__price"><b>{p.monthly} €</b> / Monat netto</span>
+          </li>
+        ))}
+      </ul>
+      <p class="tarif__setup">Einrichtung einmalig {formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung. 12 Monate Laufzeit, danach monatlich kündbar.</p>
+      <TarifFinder />
+    </div>
+  </div>
+</section>
+
+<style>
+  .tarif__grid { display: grid; gap: 32px; align-items: start; }
+  @media (min-width: 960px) { .tarif__grid { grid-template-columns: 1fr 1.1fr; gap: 56px; } }
+  .tarif__text :global(.section-head) { margin-bottom: 20px; }
+  .tarif__punkte { margin-bottom: 24px; text-align: left; }
+  .tarif__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 767px) { .tarif__text { text-align: center; } .tarif__punkte { justify-items: start; max-width: 32ch; margin-inline: auto; } .tarif__actions { justify-content: center; } }
+  .tarif__plans { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .tarif__plan { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; align-items: center; padding: 14px 18px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; }
+  .tarif__plan--hl { background: var(--dark); color: var(--white); border-color: var(--dark); }
+  .tarif__name { font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+  .tarif__name small { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--accent); color: var(--ink); padding: 2px 8px; border-radius: 99px; }
+  .tarif__tag { grid-column: 1; font-size: 0.85rem; color: var(--ink-soft); }
+  .tarif__plan--hl .tarif__tag { color: var(--dark-soft); }
+  .tarif__price { grid-column: 2; grid-row: 1 / span 2; text-align: right; font-size: 0.82rem; color: var(--ink-soft); }
+  .tarif__plan--hl .tarif__price { color: var(--dark-soft); }
+  .tarif__price b { display: block; font-family: var(--font-head); font-size: 1.5rem; color: var(--ink); line-height: 1.1; }
+  .tarif__plan--hl .tarif__price b { color: var(--white); }
+  .tarif__setup { margin: 12px 0 0; font-size: 0.82rem; color: var(--ink-soft); }
+  .tarif__side :global(.finder) { margin-top: 16px; }
+</style>

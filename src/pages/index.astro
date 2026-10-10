@@ -1,41 +1,40 @@
 ---
+// Startseite nach dem Bauwelt-Muster (Wunsch 11.10.2026), übertragen auf „Websites im Abo“ (B2B):
+// 1 Vollbild-Hero → 2 Zahlen-Band → 3 Leistungs-Kacheln → 4 Ablauf-Zeichnung → 5 Referenz-Slider (Muster)
+// → 6 Betreuung („Alles im Blick“) → 7 Tarife + Tarif-Finder → 8 Versprechen-Siegel → 9 Branchen-Band
+// → 10 Warum kein WordPress → 11 FAQ → Footer-Kopf mit Direktkontakt (im Footer).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import LeistungKarten from '../components/LeistungKarten.astro';
+import Ablauf from '../components/Ablauf.astro';
+import RefSlider from '../components/RefSlider.astro';
+import Betreuung from '../components/Betreuung.astro';
+import TarifSektion from '../components/TarifSektion.astro';
+import Siegel from '../components/Siegel.astro';
 import Industries from '../components/Industries.astro';
-import Usps from '../components/Usps.astro';
-import Pricing from '../components/Pricing.astro';
 import WhyNotWordPress from '../components/WhyNotWordPress.astro';
-import Steps from '../components/Steps.astro';
-import References from '../components/References.astro';
 import Faq from '../components/Faq.astro';
-import CtaBand from '../components/CtaBand.astro';
 import { faqSchema, serviceSchema } from '../lib/schema';
-import { plans, OFFER } from '../config/site';
+import { plans } from '../config/site';
 
 const cheapest = Math.min(...plans.map((p) => p.monthly));
 ---
 
 <BaseLayout
-  title="Website mieten im Abo – individuell & betreut | Waybuild"
-  description="Individuelle Website im Abo ab 59 €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails & Wartung inklusive. Kein WordPress, live in 14 Tagen."
+  title="Website im Abo für Unternehmen – individuell & betreut | waybuild"
+  description={`Individuelle Website im Abo ab ${cheapest} €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails & Pflege inklusive. Für Unternehmen (B2B). Live in 14 Tagen.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />
+  <Stats />
+  <LeistungKarten />
+  <Ablauf />
+  <RefSlider />
+  <Betreuung />
+  <TarifSektion />
+  <Siegel />
   <Industries />
-  <Usps />
-  <section class="section section--alt" id="preise" aria-labelledby="preise-h">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Transparente Preise</span>
-        <h2 id="preise-h">Ihre Website ab {cheapest} € im Monat.</h2>
-        <p class="lead">{OFFER}</p>
-      </div>
-      <Pricing />
-    </div>
-  </section>
   <WhyNotWordPress />
-  <Steps />
-  <References />
   <Faq />
-  <CtaBand />
 </BaseLayout>

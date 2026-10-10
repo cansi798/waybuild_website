@@ -1,0 +1,39 @@
+---
+// „Unsere Versprechen“ – sechs eigene Zusagen als gezeichnete Siegel (Bauwelt-Muster).
+// Rechtlich: eigene Zusagen, klar als solche gekennzeichnet – keine fremden Prüfzeichen.
+import SectionHead from './SectionHead.astro';
+import RoughSzene from './RoughSzene.astro';
+import Icon from './Icon.astro';
+import { VERSPRECHEN } from '../config/versprechen';
+
+interface Props { fakten?: string[]; }
+const { fakten = [] } = Astro.props;
+---
+
+<section class="section section--sand" id="versprechen" aria-labelledby="versprechen-h">
+  <div class="wrap">
+    <SectionHead center eyebrow="Unsere Versprechen" pre="Worauf Sie sich verlassen " accent="können" text={fakten.length ? undefined : 'Sechs Zusagen, die für jedes Projekt gelten.'} id="versprechen-h" />
+    {fakten.length > 0 && (
+      <ul class="check-row siegel__fakten">{fakten.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
+    )}
+    <RoughSzene szene="siegel" label={`Sechs gezeichnete Siegel werden nacheinander aufgestempelt: ${VERSPRECHEN.map((v) => v.title).join(', ')}.`} />
+    <ul class="siegel__liste">
+      {VERSPRECHEN.map((v) => (
+        <li><details><summary><Icon name={v.icon} size={18} /> {v.title}</summary><p>{v.long}</p></details></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .siegel__fakten { justify-content: center; margin: -16px 0 24px; }
+  .siegel__liste { list-style: none; margin: 0 auto; padding: 0; max-width: 820px; display: grid; gap: 6px; }
+  @media (min-width: 720px) { .siegel__liste { grid-template-columns: 1fr 1fr; gap: 8px 20px; } }
+  .siegel__liste details { background: var(--white); border: 1px solid var(--line); border-radius: 12px; }
+  .siegel__liste summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 12px 16px; font-weight: 650; font-size: 0.95rem; min-height: 46px; }
+  .siegel__liste summary::-webkit-details-marker { display: none; }
+  .siegel__liste summary :global(.icon) { color: var(--accent-ink); flex: none; }
+  .siegel__liste summary::after { content: '+'; margin-left: auto; color: var(--accent-ink); font-weight: 600; }
+  .siegel__liste details[open] summary::after { content: '–'; }
+  .siegel__liste p { margin: 0; padding: 0 16px 14px; font-size: 0.92rem; color: var(--ink-soft); }
+</style>
