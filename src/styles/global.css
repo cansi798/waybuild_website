@@ -7,8 +7,8 @@
   --paper: #f7f5f0;
   --paper-2: #efebe3;
   --white: #ffffff;
-  --accent: #ff5a1f;
-  --accent-ink: #b83a0b;
+  --accent: #00a6a1;  /* waybuild-IT-Türkis (Wunsch 10.10.2026, vorher Orange) */
+  --accent-ink: #00706c;
   --line: #ddd6c9;
   --ok: #177049;
   --radius: 14px;
@@ -85,7 +85,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .btn:hover { transform: translateY(-1px); }
 .btn--primary { background: var(--accent); color: var(--ink); }
-.btn--primary:hover { background: #ff7440; }
+.btn--primary:hover { background: #1fbab5; }
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--ink); color: var(--paper); }
 
