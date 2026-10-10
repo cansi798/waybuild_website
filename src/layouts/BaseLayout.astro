@@ -92,9 +92,9 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={IS_PREVIEW ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-    <meta name="theme-color" content="#0e1a2b" />
-    <link rel="icon" href={href('/favicon.ico')} sizes="32x32" />
-    <link rel="icon" href={href('/favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#004f4c" />
+    <link rel="icon" href={href('/favicon.ico')} sizes="any" />
+    <link rel="icon" href={href('/icon-192.png')} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
     <link rel="manifest" href={href('/site.webmanifest')} />
     <link rel="sitemap" href={href('/sitemap-index.xml')} />
@@ -137,11 +137,11 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     display: inline-flex; align-items: center; gap: 8px;
     background: #fff4c2; color: #5c4400; border: 1.5px dashed #d4a300; border-radius: 99px;
     padding: 8px 14px; font-size: 0.85rem; font-weight: 650; text-decoration: none;
-    box-shadow: 0 8px 24px rgb(14 26 43 / 18%);
+    box-shadow: 0 8px 24px rgb(0 79 76 / 18%);
   }
   .todo-badge span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.72rem; font-weight: 800; }
   @media print { .todo-badge { display: none; } }
-  .preview-bar { background: #0e1a2b; color: #aab5c3; text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
+  .preview-bar { background: var(--dark); color: var(--dark-soft); text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
   /* Mobil: über der Sticky-CTA-Leiste, kompakter */
   .todo-badge em { font-style: normal; }
   @media (max-width: 959px) { .todo-badge { bottom: 84px; right: 10px; padding: 6px 10px; font-size: 0.8rem; } .todo-badge em { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }

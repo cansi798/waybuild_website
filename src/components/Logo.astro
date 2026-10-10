@@ -1,17 +1,15 @@
 ---
-// Wortmarke: vorläufig, bis ein finales Logo vorliegt.
+// waybuild-IT-Logo (WB-Marke + Schriftzug), Quelle: public/logo-waybuild-it.png (Wunsch 10.10.2026).
+// Auf dunklem Grund (Footer) liegt es auf einer weißen Kachel – nicht umfärben.
+import { href } from '../lib/paths';
 ---
 
 <span class="logo">
-  <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
-    <rect width="32" height="32" rx="8" fill="#0e1a2b" />
-    <path d="M7 10l4 12 5-9 5 9 4-12" fill="none" stroke="#00a6a1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-  </svg>
-  <span class="logo__text">way<b>build</b></span>
+  <img src={href('/logo-waybuild-it.png')} alt="waybuild IT" width="233" height="120" decoding="async" />
 </span>
 
 <style>
-  .logo { display: inline-flex; align-items: center; gap: 10px; }
-  .logo__text { font-family: var(--font-head); font-size: 1.4rem; font-weight: 500; letter-spacing: -0.03em; }
-  .logo__text b { font-weight: 800; }
+  .logo { display: inline-flex; align-items: center; }
+  .logo img { display: block; height: 32px; width: auto; }
+  @media (min-width: 720px) { .logo img { height: 40px; } }
 </style>

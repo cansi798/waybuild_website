@@ -51,18 +51,18 @@ import { href } from '../lib/paths';
   .warum__top .section-head { margin-bottom: 0; }
   @media (min-width: 1000px) { .warum__top { grid-template-columns: 1.4fr 1fr; align-items: end; } }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0 0; }
-  .stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; border-top: 1px solid #25344a; padding-top: 12px; }
+  .stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; border-top: 1px solid var(--dark-line); padding-top: 12px; }
   .stats dd { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: clamp(2rem, 5vw, 3rem); line-height: 1; color: var(--accent); }
-  .stats dt { font-size: 0.8rem; color: #aab5c3; margin-top: 6px; }
+  .stats dt { font-size: 0.8rem; color: var(--dark-soft); margin-top: 6px; }
 
   .next { margin: 36px 0 0; text-align: center; }
   .cmp { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
-  .cmp th, .cmp td { text-align: left; padding: 16px 12px; border-bottom: 1px solid #25344a; }
-  .cmp thead th { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: #aab5c3; font-weight: 600; }
+  .cmp th, .cmp td { text-align: left; padding: 16px 12px; border-bottom: 1px solid var(--dark-line); }
+  .cmp thead th { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark-soft); font-weight: 600; }
   .cmp thead .cmp__wb { color: var(--accent); }
   .cmp tbody th { font-family: var(--font-head); font-weight: 600; }
   .cmp__wb { color: var(--paper); }
-  .cmp__wp { color: #8795a8; }
+  .cmp__wp { color: var(--dark-soft); }
   .cmp i { font-style: normal; font-weight: 800; margin-right: 6px; }
   .cmp__wb i { color: #3ddc97; }
   .cmp__wp i { color: #e0664a; }

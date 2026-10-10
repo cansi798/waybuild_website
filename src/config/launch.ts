@@ -116,9 +116,9 @@ const manual: Todo[] = [
   },
   {
     title: 'Finales Logo (optional)',
-    detail: 'Das aktuelle Logo ist ein sauberer Entwurf. Bei Bedarf durch Designer finalisieren – Farben/Regeln im CI-Handbuch.',
-    where: 'src/components/Logo.astro, public/favicon.svg',
-    done: false,
+    detail: 'Das waybuild-IT-Logo ist eingebaut (Header, Footer, Icons, Vorschaubild). Für noch schärfere Darstellung später eine SVG-Fassung vom Designer einsetzen.',
+    where: 'public/logo-waybuild-it.png, src/components/Logo.astro',
+    done: true,
     priority: 'später',
   },
   {

@@ -1,7 +1,7 @@
 # KI-Prompts für Waybuild-Bilder
 
 Fertige Prompts für Bildgeneratoren (Midjourney, ChatGPT/DALL·E, Adobe Firefly, Ideogram …) –
-abgestimmt auf das CI: **Papier `#F7F5F0`, Nachtblau `#0E1A2B`, Signal-Orange `#FF5A1F`**, warm, ruhig, hochwertig.
+abgestimmt auf das CI: **Papier `#F7F5F0`, Türkis `#00A6A1`, dunkles Türkis `#006B68`, Grau `#545454`**, warm, ruhig, hochwertig.
 
 > **Wichtig:** Keine KI-Bilder von „Kunden“, „Team-Mitgliedern“ oder „Referenzprojekten“, die es nicht gibt –
 > das wäre Täuschung. KI-Bilder eignen sich für **Stimmung, Illustration und Hintergründe**. Für Team und
@@ -11,7 +11,7 @@ abgestimmt auf das CI: **Papier `#F7F5F0`, Nachtblau `#0E1A2B`, Signal-Orange `#
 
 ```
 editorial photography style, soft natural window light, warm off-white paper tones (#F7F5F0),
-deep navy accents (#0E1A2B), a single signal-orange accent (#FF5A1F), calm composition,
+teal accents (#00A6A1, dark teal #006B68), neutral grey (#545454), calm composition,
 generous negative space, shallow depth of field, no text, no logos, no watermark
 ```
 

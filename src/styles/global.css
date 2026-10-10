@@ -2,17 +2,21 @@
 @import '@fontsource-variable/figtree/wght.css';
 
 :root {
-  --ink: #0e1a2b;
-  --ink-soft: #3b4a5e;
+  --ink: #3a3a3a;       /* Logo-Palette (Wunsch 10.10.2026): dunkles Grau statt Navy */
+  --dark: #004f4c;      /* dunkle Flächen: dunkles Türkis */
+  --dark-line: #1f6b68;
+  --dark-soft: #a9d6d4; /* Nebentext auf dunklem Grund */
+  --dark-lead: #d2e9e8;
+  --ink-soft: #545454;  /* Logo-Grau (Wunsch 10.10.2026) */
   --paper: #f7f5f0;
   --paper-2: #efebe3;
   --white: #ffffff;
   --accent: #00a6a1;  /* waybuild-IT-Türkis (Wunsch 10.10.2026, vorher Orange) */
-  --accent-ink: #00706c;
+  --accent-ink: #006b68;
   --line: #ddd6c9;
   --ok: #177049;
   --radius: 14px;
-  --shadow: 0 1px 2px rgb(14 26 43 / 6%), 0 8px 24px rgb(14 26 43 / 8%);
+  --shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 8px 24px rgb(0 79 76 / 8%);
   --font-head: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1160px;
@@ -51,7 +55,7 @@ img { max-width: 100%; height: auto; display: block; }
 .wrap { width: min(100% - 32px, var(--wrap)); margin-inline: auto; }
 .section { padding-block: clamp(44px, 9vw, 120px); }
 .section--alt { background: var(--paper-2); }
-.section--dark { background: var(--ink); color: var(--paper); }
+.section--dark { background: var(--dark); color: var(--paper); }
 
 .eyebrow {
   display: inline-block;
@@ -64,7 +68,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .section--dark .eyebrow { color: var(--accent); }
 .lead { font-size: clamp(1.1rem, 2.2vw, 1.3rem); color: var(--ink-soft); max-width: 60ch; }
-.section--dark .lead { color: #c9d1dc; }
+.section--dark .lead { color: var(--dark-lead); }
 .section-head { max-width: 720px; margin-bottom: clamp(22px, 5vw, 56px); }
 @media (max-width: 599px) { .section-head .lead { font-size: 1.02rem; } h2 { font-size: 1.75rem; } }
 
@@ -87,13 +91,13 @@ img { max-width: 100%; height: auto; display: block; }
 .btn--primary { background: var(--accent); color: var(--ink); }
 .btn--primary:hover { background: #1fbab5; }
 .btn--ghost { border-color: currentColor; background: transparent; }
-.btn--dark { background: var(--ink); color: var(--paper); }
+.btn--dark { background: var(--dark); color: var(--paper); }
 
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 .skip-link {
   position: absolute; left: 16px; top: -100px; z-index: 100;
-  background: var(--ink); color: var(--paper); padding: 0.6em 1em; border-radius: 8px;
+  background: var(--dark); color: var(--paper); padding: 0.6em 1em; border-radius: 8px;
 }
 .skip-link:focus { top: 12px; }
 
