@@ -1,0 +1,245 @@
+---
+// Positionierung „Warum waybuild“. STRENG: nur überprüfbare Fakten – keine erfundenen Zahlen, Kundenstimmen,
+// Logos, Zertifikate oder Auszeichnungen; Vergleich nur mit Anbieter-TYPEN, nie mit echten Wettbewerbern.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import type { IconName } from '../config/site';
+import { ANBIETER_TYPEN, ANBIETER_VERGLEICH, SAEULEN } from '../config/angebot';
+import { href } from '../lib/paths';
+
+const WB = ANBIETER_TYPEN.length - 1; // Spalte „waybuild“ (letzte)
+const andere = ANBIETER_TYPEN.slice(0, WB);
+
+const unterschiede: { icon: IconName; title: string; text: string; link?: { label: string; path: string } }[] = [
+  { icon: 'layers', title: 'Alles aus einer Hand', text: 'Website, Software, Cloud und IT von einem Team. Keine Abstimmung zwischen Agentur, Programmierer und IT-Dienstleister.' },
+  { icon: 'euro', title: 'Feste Preise, offen veröffentlicht', text: 'Feste Monatspreise für Abos, Festpreise für Projekte – alle Preise stehen öffentlich auf unserer Website.', link: { label: 'Zu den Preisen', path: '/preise/' } },
+  { icon: 'calendar', title: '12 statt 24 Monate', text: 'Unsere Abos laufen 12 Monate statt der oft üblichen 24. Danach sind sie monatlich kündbar.' },
+  { icon: 'key', title: 'Ihr Code, Ihre Daten', text: 'Quellcode, Inhalte und Daten gehören Ihnen. Sie sind nicht an eine Plattform gebunden.' },
+  { icon: 'server', title: 'Server in Deutschland', text: 'Websites, Anwendungen und Nextcloud betreiben wir auf Servern in Deutschland.' },
+  { icon: 'user', title: 'Ein fester Ansprechpartner', text: 'Sie haben einen festen Ansprechpartner, der Ihr Projekt kennt. Die Antwortzeiten sind in Ihrem Tarif festgelegt.' },
+];
+
+const eigenbetrieb = [
+  'Zwei-Faktor-Anmeldung',
+  'Videokonferenzen über das Talk-High-Performance-Backend',
+  'Online-Dokumentenbearbeitung direkt im Browser',
+  'Digitales Dokumentenarchiv mit Paperless',
+  'Automatische Backups',
+];
+
+const passt = [
+  'Sie führen ein kleines oder mittleres Unternehmen, sind selbstständig oder leiten eine Institution.',
+  'Sie möchten planbare Kosten statt offener Stundenabrechnungen.',
+  'Sie wünschen sich einen Ansprechpartner für Website, Software, Cloud und IT.',
+  'Sie möchten sich um Ihr Geschäft kümmern – nicht um Technik.',
+];
+const passtNicht = [
+  'Sie sind Privatperson: Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen (B2B).',
+  'Sie möchten alles selbst bauen und verwalten: Dann ist ein Baukasten die günstigere Wahl.',
+];
+---
+
+<BaseLayout
+  title="Warum waybuild – alles aus einer Hand"
+  description="Website, Software, Cloud & IT aus einer Hand: feste, offene Preise, 12 statt 24 Monate Laufzeit, Server in Deutschland und ein fester Ansprechpartner."
+  breadcrumb={[{ name: 'Warum waybuild', path: '/warum-waybuild/' }]}
+>
+  <PageHeader
+    eyebrow="Warum waybuild"
+    title="Alles aus einer Hand – statt drei Dienstleister."
+    lead="Website, Software, Cloud und IT von einem Team: mit festen Preisen, kurzen Laufzeiten und einem Ansprechpartner, der Ihr Unternehmen kennt."
+  >
+    <p class="ph-cta"><a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a> <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a></p>
+  </PageHeader>
+
+  <section class="section" aria-labelledby="unterschied-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Was uns unterscheidet" pre="Sechs Gründe, die Sie " accent="nachprüfen können" id="unterschied-h" />
+      <div class="grid grid--3">
+        {unterschiede.map((u) => (
+          <article class="card ucard reveal">
+            <span class="ucard__icon"><Icon name={u.icon} size={22} /></span>
+            <h3>{u.title}</h3>
+            <p>{u.text}</p>
+            {u.link && <a class="ucard__link" href={href(u.link.path)}>{u.link.label} <Icon name="arrow" size={18} /></a>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark" aria-labelledby="eigen-h">
+    <div class="wrap eigen">
+      <div>
+        <span class="eyebrow">Wir nutzen, was wir verkaufen</span>
+        <h2 id="eigen-h">Unsere eigene IT läuft auf derselben Technik.</h2>
+        <p class="lead">
+          waybuild betreibt selbst eine gehärtete Nextcloud – für Dateien, Termine, Videokonferenzen und Dokumente.
+          Und unsere Website entwickeln wir mit derselben Technik wie die Websites unserer Kunden.
+        </p>
+      </div>
+      <ul class="check-list eigen__list">
+        {eigenbetrieb.map((e) => <li><Icon name="check" size={20} /> <span>{e}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sand" aria-labelledby="vergleich-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Im Vergleich" pre="Baukasten, Freelancer, Agentur – " accent="oder waybuild?" text="So unterscheiden sich die typischen Anbieter-Typen." id="vergleich-h" />
+
+      {/* Desktop: Tabelle */}
+      <div class="vgl">
+        <table class="vgl__t">
+          <caption class="sr-only">Vergleich typischer Anbieter-Typen mit waybuild</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Kriterium</span></th>
+              {ANBIETER_TYPEN.map((t, i) => <th scope="col" class:list={{ wb: i === WB }}>{t}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {ANBIETER_VERGLEICH.map((z) => (
+              <tr>
+                <th scope="row">{z.kriterium}</th>
+                {z.werte.map((w, i) => <td class:list={{ wb: i === WB }}>{w}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobil: eine Karte je Kriterium, waybuild hervorgehoben */}
+      <ul class="vglm">
+        {ANBIETER_VERGLEICH.map((z) => (
+          <li class="vglm__card">
+            <p class="vglm__krit">{z.kriterium}</p>
+            <p class="vglm__wb"><span>{ANBIETER_TYPEN[WB]}</span>{z.werte[WB]}</p>
+            <dl class="vglm__rest">
+              {andere.map((t, i) => (
+                <div><dt>{t}</dt><dd>{z.werte[i]}</dd></div>
+              ))}
+            </dl>
+          </li>
+        ))}
+      </ul>
+
+      <p class="vgl__note">Der Vergleich beschreibt typische Anbieter-Typen, nicht bestimmte Unternehmen. Im Einzelfall kann es abweichen.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fuerwen-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Ehrlich gesagt" pre="Für wen wir (nicht) " accent="passen" id="fuerwen-h" />
+      <div class="grid grid--2">
+        <div class="card fit fit--ja">
+          <h3>Wir passen zu Ihnen, wenn …</h3>
+          <ul class="check-list">
+            {passt.map((p) => <li><Icon name="check" size={20} /> <span>{p}</span></li>)}
+          </ul>
+        </div>
+        <div class="card fit fit--nein">
+          <h3>Wir passen nicht, wenn …</h3>
+          <ul class="check-list">
+            {passtNicht.map((p) => <li><Icon name="close" size={20} /> <span>{p}</span></li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand" aria-labelledby="saeulen-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Unsere Leistungen" pre="Vier Bereiche, " accent="ein Team" id="saeulen-h" />
+      <div class="saeulen">
+        {SAEULEN.map((s) => (
+          <a class="card scard reveal" href={href(`/leistungen/#${s.id}`)}>
+            <span class="ucard__icon"><Icon name={s.icon} size={22} /></span>
+            <h3>{s.title}</h3>
+            <p>{s.claim}</p>
+            <span class="scard__ab">{s.ab}</span>
+            <span class="ucard__link">Mehr erfahren <Icon name="arrow" size={18} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cta-h">
+    <div class="wrap">
+      <div class="cta">
+        <h2 id="cta-h">Lernen wir uns kennen.</h2>
+        <p>In einem kostenlosen Erstgespräch klären wir, was Sie brauchen – und was nicht. Unverbindlich.</p>
+        <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ph-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
+
+  /* Unterschiede */
+  .ucard { display: flex; flex-direction: column; gap: 6px; border-radius: 18px; }
+  .ucard h3 { margin: 10px 0 0; }
+  .ucard p { margin: 0; color: var(--ink-soft); font-size: 0.97rem; }
+  .ucard__icon { width: 44px; height: 44px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; flex: none; }
+  .ucard__link { display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 10px; font-weight: 650; font-size: 0.92rem; color: var(--accent-ink); text-decoration: none; }
+
+  /* Eigenbetrieb */
+  .eigen { display: grid; gap: 28px 60px; }
+  @media (min-width: 900px) { .eigen { grid-template-columns: 1.2fr 1fr; align-items: center; } }
+  .eigen h2 { max-width: 20ch; }
+  .eigen__list { background: rgb(255 255 255 / 6%); border: 1px solid var(--dark-line); border-radius: 18px; padding: clamp(20px, 3vw, 28px); }
+  .eigen__list :global(.icon) { color: var(--accent); }
+
+  /* Vergleich – Desktop-Tabelle */
+  .vgl { background: var(--white); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .vgl__t { width: 100%; border-collapse: collapse; font-size: 0.95rem; table-layout: fixed; }
+  .vgl__t th, .vgl__t td { text-align: left; padding: 15px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .vgl__t tbody tr:last-child > * { border-bottom: 0; }
+  .vgl__t thead th { font-family: var(--font-head); font-size: 1.05rem; padding-top: 20px; }
+  .vgl__t tbody th { font-weight: 650; width: 18%; }
+  .vgl__t td { color: var(--ink-soft); }
+  .vgl__t .wb { background: var(--dark); color: var(--paper); border-bottom-color: var(--dark-line); }
+  .vgl__t thead .wb { color: var(--accent); }
+  .vgl__t td.wb { font-weight: 600; }
+  .vgl__note { margin: 18px 0 0; font-size: 0.85rem; color: var(--ink-soft); }
+
+  /* Vergleich – mobil als Karten */
+  .vglm { display: none; list-style: none; margin: 0; padding: 0; gap: 14px; }
+  @media (max-width: 859px) {
+    .vgl { display: none; }
+    .vglm { display: grid; }
+  }
+  .vglm__card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .vglm__krit { margin: 0; padding: 14px 16px 10px; font-family: var(--font-head); font-weight: 650; font-size: 1.08rem; }
+  .vglm__wb { margin: 0; padding: 12px 16px; background: var(--dark); color: var(--paper); font-weight: 600; }
+  .vglm__wb span { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .vglm__rest { margin: 0; padding: 4px 16px 10px; }
+  .vglm__rest div { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  .vglm__rest div:last-child { border-bottom: 0; }
+  .vglm__rest dt { font-weight: 600; }
+  .vglm__rest dd { margin: 0; color: var(--ink-soft); }
+
+  /* Für wen */
+  .fit { border-radius: 18px; }
+  .fit h3 { margin-bottom: 16px; }
+  .fit--nein .check-list :global(.icon) { color: var(--ink-soft); }
+
+  /* Säulen */
+  .saeulen { display: grid; gap: 20px; }
+  @media (min-width: 720px) { .saeulen { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .saeulen { grid-template-columns: repeat(4, 1fr); } }
+  .scard { display: flex; flex-direction: column; gap: 6px; border-radius: 18px; }
+  .scard h3 { margin: 10px 0 0; }
+  .scard p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .scard__ab { font-size: 0.85rem; font-weight: 650; color: var(--accent-ink); margin-top: 4px; }
+
+  /* Abschluss */
+  .cta { background: var(--dark); color: var(--paper); border-radius: 18px; padding: clamp(28px, 5vw, 56px); text-align: center; }
+  .cta h2 { color: var(--white); }
+  .cta p { color: var(--dark-lead); max-width: 52ch; margin: 0 auto 24px; }
+</style>

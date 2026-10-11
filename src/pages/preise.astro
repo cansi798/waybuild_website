@@ -1,109 +1,292 @@
 ---
+// Preisübersicht über alle vier Säulen. Alle Zahlen kommen aus config/site.ts (Website-Abo) und config/angebot.ts.
+// Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze werden von anderen Seiten verlinkt – nicht umbenennen.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import SectionHead from '../components/SectionHead.astro';
 import Pricing from '../components/Pricing.astro';
+import PaketKarten from '../components/PaketKarten.astro';
+import Icon from '../components/Icon.astro';
 import Faq from '../components/Faq.astro';
-import { addons, plans, matrix, SETUP_FEE, OFFER, formatEuro } from '../config/site';
-import { faqSchema, serviceSchema } from '../lib/schema';
+import { addons, plans, matrix, SETUP_FEE, OFFER, formatEuro, type IconName } from '../config/site';
+import {
+  type Paket, type Saeule,
+  SAEULEN, saeuleById, SOFTWARE_PROJEKTE, WEBDEV_PAKETE, PFLEGE_PAKETE, NEXTCLOUD_PAKETE, NEXTCLOUD_ZUSATZ,
+  IT_PAKETE, IT_ZUSATZ, ANALYSE_PAKETE, ANALYSE_ZUSATZ, ABO_UEBERSICHT,
+  STUNDENSATZ, TAGESSATZ, STUNDENSATZ_VERTRAG, ABO_LAUFZEIT, NETTO_HINWEIS, REAKTION_HINWEIS,
+} from '../config/angebot';
+import { leistungenNach } from '../config/leistungen';
+import { angebotSchema, faqSchema, serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 
 const cheapest = Math.min(...plans.map((p) => p.monthly));
+const ncAb = Math.min(...NEXTCLOUD_PAKETE.map((p) => p.wert));
 // Erstes Jahr im Vergleich: monatlich zahlen (inkl. Einrichtung) vs. jährlich (Einrichtung entfällt)
 const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP_FEE, yearlyTotal: p.monthly * 12 }));
+
+const eur = (n: number) =>
+  `${new Intl.NumberFormat('de-DE', { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n)} €`;
+
+const nav: { id: string; title: string; icon: IconName }[] = [
+  ...SAEULEN.map((s) => ({ id: s.id, title: s.title, icon: s.icon })),
+  { id: 'stundensaetze', title: 'Stundensätze', icon: 'clock' },
+];
+
+const details = (s: Saeule) => leistungenNach(s).map((l) => ({ title: l.title, path: `/leistungen/${l.slug}/` }));
+
+const projektGruppen: { title: string; slug: string; pakete: Paket[] }[] = [
+  { title: 'Individuelle Software', slug: 'individuelle-software', pakete: SOFTWARE_PROJEKTE },
+  { title: 'Web-Entwicklung & Schnittstellen', slug: 'software-webentwicklung', pakete: WEBDEV_PAKETE },
+];
+
+const saetze = [
+  { name: 'Stundensatz', wert: `${eur(STUNDENSATZ)} / Std.`, text: 'Für Leistungen außerhalb eines Pakets oder Vertrags' },
+  { name: 'Tagessatz', wert: `${eur(TAGESSATZ)} / Tag`, text: 'Für Workshops und größere Arbeitspakete' },
+  { name: 'Stundensatz mit Vertrag', wert: `${eur(STUNDENSATZ_VERTRAG)} / Std.`, text: 'Zusatzstunden für Kunden mit Pflege- oder Betreuungsvertrag' },
+];
 ---
 
 <BaseLayout
-  title="Preise & Tarife für Ihre Website im Abo"
-  description={`Website-Abo ab ${cheapest} €/Monat netto: Design, Hosting, Domain, unbegrenzte E-Mails und Wartung inklusive. 12 Monate Laufzeit. Alle Tarife im Vergleich.`}
-  schema={[serviceSchema(Astro.site), faqSchema()]}
+  title="Preise: Websites, Software, Cloud & IT"
+  description={`Alle Preise netto für Unternehmen: Website-Abo ab ${cheapest} € im Monat, Software zum Festpreis, Nextcloud ab ${eur(ncAb)} pro Nutzer, IT-Betreuung und Beratung.`}
+  schema={[serviceSchema(Astro.site), ...angebotSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
   <PageHeader
-    eyebrow="Preise & Tarife"
-    title={`Ab ${cheapest} € im Monat.`}
-    lead={`${OFFER} Netto zzgl. USt.`}
-  />
-
-  <section class="section">
-    <div class="wrap">
-      <Pricing headingLevel="h2" />
+    eyebrow="Preise & Pakete"
+    title="Transparente Preise für Websites, Software & Cloud."
+    lead="Feste Monatspreise und Festpreise – offen veröffentlicht. Alle Preise netto, nur für Unternehmen (B2B)."
+  >
+    <nav class="jump" aria-label="Preise nach Bereich">
+      <ul>
+        {nav.map((n) => (
+          <li><a href={`#${n.id}`}><Icon name={n.icon} size={18} /> {n.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="netto" role="note">
+      <Icon name="euro" size={22} />
+      <p><strong>Nur für Unternehmen (B2B).</strong> {NETTO_HINWEIS} Abos: {ABO_LAUFZEIT}.</p>
     </div>
-  </section>
+  </PageHeader>
 
-  <section class="section section--alt" aria-labelledby="vgl-h">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Vergleich</span>
-        <h2 id="vgl-h">Alle Leistungen auf einen Blick</h2>
+  {/* ───────────── Websites ───────────── */}
+  <div id="websites" class="pillar">
+    <section class="section" aria-labelledby="websites-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Websites im Abo" pre="Website-Abo ab " accent={`${cheapest} € im Monat`} text={`${OFFER} Einrichtung einmalig ${formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung.`} id="websites-h" />
+        <Pricing headingLevel="h3" />
+        <p class="more"><span>Mehr zu:</span> {details('websites').map((d) => <a href={href(d.path)}>{d.title}</a>)}</p>
       </div>
-      <div class="cmpw" tabindex="0" role="region" aria-labelledby="vgl-h">
-        <table class="cmpt">
-          <thead>
-            <tr>
-              <th scope="col"><span class="sr-only">Leistung</span></th>
-              {plans.map((p) => (
-                <th scope="col" class:list={{ hl: p.highlight }}>
-                  {p.name}<span>{p.monthly} € / Monat</span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {matrix.map((row) => (
+    </section>
+
+    <section class="section section--alt" aria-labelledby="vgl-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Vergleich" pre="Alle Website-Leistungen auf einen Blick" id="vgl-h" />
+        <div class="cmpw" tabindex="0" role="region" aria-labelledby="vgl-h">
+          <table class="cmpt">
+            <thead>
               <tr>
-                <th scope="row">{row.label}</th>
-                {row.values.map((v, i) => (
-                  <td class:list={{ hl: plans[i].highlight }}>
-                    {v === true ? <span class="yes" aria-label="enthalten">✓</span> : v === false ? <span class="no" aria-label="nicht enthalten">–</span> : v}
-                  </td>
+                <th scope="col"><span class="sr-only">Leistung</span></th>
+                {plans.map((p) => (
+                  <th scope="col" class:list={{ hl: p.highlight }}>
+                    {p.name}<span>{p.monthly} € / Monat</span>
+                  </th>
                 ))}
               </tr>
-            ))}
-            <tr class="cmpt__cta">
-              <th scope="row"><span class="sr-only">Anfragen</span></th>
-              {plans.map((p) => (
-                <td class:list={{ hl: p.highlight }}><a class:list={['btn', p.highlight ? 'btn--primary' : 'btn--dark']} href={`${href('/kontakt/')}?tarif=${p.id}`}>{p.name}</a></td>
+            </thead>
+            <tbody>
+              {matrix.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  {row.values.map((v, i) => (
+                    <td class:list={{ hl: plans[i].highlight }}>
+                      {v === true ? <span class="yes" aria-label="enthalten">✓</span> : v === false ? <span class="no" aria-label="nicht enthalten">–</span> : v}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          </tbody>
-        </table>
+              <tr class="cmpt__cta">
+                <th scope="row"><span class="sr-only">Anfragen</span></th>
+                {plans.map((p) => (
+                  <td class:list={{ hl: p.highlight }}><a class:list={['btn', p.highlight ? 'btn--primary' : 'btn--dark']} href={`${href('/kontakt/')}?tarif=${p.id}`}>{p.name}</a></td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" aria-labelledby="jahr-h">
-    <div class="wrap grid grid--2 split">
-      <div>
-        <span class="eyebrow">Jahreszahlung</span>
-        <h2 id="jahr-h">Jährlich zahlen: 0 € Einrichtung</h2>
-        <p class="lead">Sie sparen {formatEuro(SETUP_FEE)} im ersten Jahr.</p>
+    <section class="section" aria-label="Jahreszahlung und Zusatzleistungen">
+      <div class="wrap grid grid--2 split">
+        <div>
+          <span class="eyebrow">Jahreszahlung</span>
+          <h2 id="jahr-h" class="h2-sm">Jährlich zahlen, Einrichtung sparen</h2>
+          <p class="lead">Bei jährlicher Zahlung entfällt die Einrichtung – Sie sparen {formatEuro(SETUP_FEE)} im ersten Jahr.</p>
+          <table class="tbl">
+            <caption class="sr-only">Kosten im ersten Jahr, netto</caption>
+            <thead><tr><th scope="col">1. Jahr</th><th scope="col">Monatlich</th><th scope="col">Jährlich</th></tr></thead>
+            <tbody>
+              {firstYear.map((p) => (
+                <tr>
+                  <th scope="row">{p.name}</th>
+                  <td><s>{formatEuro(p.monthlyTotal)}</s></td>
+                  <td><strong>{formatEuro(p.yearlyTotal)}</strong></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <span class="eyebrow">Zusatzleistungen</span>
+          <h2 id="addons-h" class="h2-sm">Flexibel erweiterbar</h2>
+          <p class="lead">Wächst mit Ihnen. Preise netto.</p>
+          <ul class="addons" aria-labelledby="addons-h">
+            {addons.map((a) => <li><span>{a.name}</span><strong>{a.price}</strong></li>)}
+          </ul>
+        </div>
       </div>
-      <table class="tbl">
-        <caption class="sr-only">Kosten im ersten Jahr, netto</caption>
-        <thead><tr><th scope="col">1. Jahr</th><th scope="col">Monatlich</th><th scope="col">Jährlich</th></tr></thead>
-        <tbody>
-          {firstYear.map((p) => (
-            <tr>
-              <th scope="row">{p.name}</th>
-              <td><s>{formatEuro(p.monthlyTotal)}</s></td>
-              <td><strong>{formatEuro(p.yearlyTotal)}</strong></td>
-            </tr>
+    </section>
+  </div>
+
+  {/* ───────────── Software ───────────── */}
+  <div id="software" class="pillar">
+    <section class="section section--alt" aria-labelledby="software-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Software" pre="Software-Projekte zum " accent="Festpreis" text={saeuleById('software').claim} id="software-h" />
+        <div class="grid grid--2">
+          {projektGruppen.map((g) => (
+            <div class="card plist-card">
+              <h3>{g.title}</h3>
+              <ul class="plist">
+                {g.pakete.map((p) => (
+                  <li>
+                    <div class="plist__row">
+                      <div>
+                        <strong class="plist__name">{p.name}</strong>
+                        <span class="plist__fuer">{p.fuer}</span>
+                      </div>
+                      <div class="plist__price"><strong>{p.preis}</strong><span>{p.einheit}</span></div>
+                    </div>
+                    {p.hinweis && <p class="plist__hint">{p.hinweis}</p>}
+                    <details class="plist__more">
+                      <summary>Leistungsumfang</summary>
+                      <ul>{p.features.map((f) => <li>{f}</li>)}</ul>
+                    </details>
+                  </li>
+                ))}
+              </ul>
+              <a class="plist__link" href={href(`/leistungen/${g.slug}/`)}>Details: {g.title} <Icon name="arrow" size={18} /></a>
+            </div>
           ))}
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="addons-h">
-    <div class="wrap grid grid--2 split">
-      <div>
-        <span class="eyebrow">Zusatzleistungen</span>
-        <h2 id="addons-h">Flexibel erweiterbar</h2>
-        <p class="lead">Wächst mit Ihnen. Preise netto.</p>
+        </div>
+        <p class="cta-row"><a class="btn btn--dark" href={`${href('/kontakt/')}?leistung=individuelle-software`}>Projekt besprechen</a></p>
       </div>
-      <ul class="addons">
-        {addons.map((a) => <li><span>{a.name}</span><strong>{a.price}</strong></li>)}
-      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="pflege-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Software-Pflege im Abo" pre="Betrieb & Weiterentwicklung zum " accent="Monatspreis" text="Ihre Software bleibt sicher, aktuell und wächst mit – mit festen Stunden für Weiterentwicklung." id="pflege-h" />
+        <PaketKarten pakete={PFLEGE_PAKETE} leistung="abo-wartung" headingLevel="h3" />
+        <ul class="facts">
+          <li><Icon name="refresh" size={20} /> <span>Nicht genutzte Stunden verfallen nicht sofort: Sie werden bis zu <strong>3 Monate</strong> übertragen.</span></li>
+          <li><Icon name="euro" size={20} /> <span>Zusätzliche Stunden mit Pflegevertrag: <strong>{eur(STUNDENSATZ_VERTRAG)} / Std.</strong> statt {eur(STUNDENSATZ)}.</span></li>
+          <li><Icon name="calendar" size={20} /> <span>{ABO_LAUFZEIT}.</span></li>
+        </ul>
+        <p class="more"><span>Mehr zu:</span> {details('software').map((d) => <a href={href(d.path)}>{d.title}</a>)}</p>
+      </div>
+    </section>
+  </div>
+
+  {/* ───────────── Cloud & IT ───────────── */}
+  <div id="cloud" class="pillar">
+    <section class="section section--alt" aria-labelledby="nextcloud-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Cloud & IT" pre="Ihre eigene " accent="Nextcloud" text={saeuleById('cloud').claim} id="nextcloud-h" />
+        <PaketKarten pakete={NEXTCLOUD_PAKETE} leistung="nextcloud" headingLevel="h3" />
+        <div class="zusatz">
+          <h3 id="nc-zusatz-h">Einrichtung & Zusatzleistungen</h3>
+          <ul class="addons" aria-labelledby="nc-zusatz-h">
+            {NEXTCLOUD_ZUSATZ.map((z) => <li><span>{z.name}</span><strong>{z.preis}</strong></li>)}
+          </ul>
+        </div>
+        <p class="more"><span>Mehr zu:</span> {details('cloud').filter((d) => d.path.includes('nextcloud')).map((d) => <a href={href(d.path)}>{d.title}</a>)}</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="it-h">
+      <div class="wrap">
+        <SectionHead eyebrow="IT-Betreuung" pre="IT, die einfach " accent="läuft" text="Überwachung, Updates und Hilfe im Alltag – zum festen Preis pro Arbeitsplatz oder Server." id="it-h" />
+        <PaketKarten pakete={IT_PAKETE} leistung="cloud-it" headingLevel="h3" />
+        <div class="zusatz">
+          <h3 id="it-zusatz-h">Einmalige Leistungen & Einsätze</h3>
+          <ul class="addons" aria-labelledby="it-zusatz-h">
+            {IT_ZUSATZ.map((z) => <li><span>{z.name}</span><strong>{z.preis}</strong></li>)}
+          </ul>
+        </div>
+        <ul class="facts">
+          <li><Icon name="clock" size={20} /> <span>{REAKTION_HINWEIS}</span></li>
+          <li><Icon name="calendar" size={20} /> <span>{ABO_LAUFZEIT}.</span></li>
+        </ul>
+        <p class="more"><span>Mehr zu:</span> {details('cloud').map((d) => <a href={href(d.path)}>{d.title}</a>)}</p>
+      </div>
+    </section>
+  </div>
+
+  {/* ───────────── Beratung ───────────── */}
+  <div id="beratung" class="pillar">
+    <section class="section section--alt" aria-labelledby="beratung-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Beratung" pre="Wettbewerbsanalyse zum " accent="Festpreis" text={saeuleById('beratung').claim} id="beratung-h" />
+        <PaketKarten pakete={ANALYSE_PAKETE} leistung="wettbewerbsanalyse" headingLevel="h3" />
+        <div class="zusatz">
+          <h3 id="an-zusatz-h">Anrechnung & Erweiterung</h3>
+          <ul class="addons" aria-labelledby="an-zusatz-h">
+            {ANALYSE_ZUSATZ.map((z) => <li><span>{z.name}</span><strong>{z.preis}</strong></li>)}
+          </ul>
+        </div>
+        <p class="more"><span>Mehr zu:</span> {details('beratung').map((d) => <a href={href(d.path)}>{d.title}</a>)}</p>
+      </div>
+    </section>
+  </div>
+
+  {/* ───────────── Stundensätze & Abo-Übersicht ───────────── */}
+  <section class="section" id="stundensaetze" aria-labelledby="stunden-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Stundensätze" pre="Alles, was nicht im Paket " accent="steckt" text="Klar geregelt: Sie wissen vorher, was eine Stunde kostet." id="stunden-h" />
+      <div class="grid grid--2 split">
+        <div>
+          <h3 id="saetze-h">Stunden- und Tagessätze</h3>
+          <dl class="saetze" aria-labelledby="saetze-h">
+            {saetze.map((s) => (
+              <div>
+                <dt>{s.name}<span>{s.text}</span></dt>
+                <dd>{s.wert}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="small">{NETTO_HINWEIS}</p>
+        </div>
+        <div>
+          <h3 id="abos-h">Alle Abos auf einen Blick</h3>
+          <table class="abos">
+            <caption class="sr-only">Alle Abos mit Preis und Inhalt, netto</caption>
+            <thead><tr><th scope="col">Abo</th><th scope="col">Preis</th><th scope="col">Enthalten</th></tr></thead>
+            <tbody>
+              {ABO_UEBERSICHT.map((a) => (
+                <tr>
+                  <th scope="row"><a href={href(a.path)}>{a.name}</a></th>
+                  <td class="abos__preis">{a.preis}</td>
+                  <td class="abos__inhalt">{a.inhalt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="small">{ABO_LAUFZEIT}.</p>
+        </div>
+      </div>
+      <p class="cta-row"><a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a></p>
     </div>
   </section>
 
@@ -111,13 +294,41 @@ const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP
 </BaseLayout>
 
 <style>
-  .split { gap: 32px 60px; align-items: start; }
+  /* Sprungnavigation & Netto-Hinweis im Seitenkopf */
+  .jump { margin-top: 24px; }
+  .jump ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .jump a {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0.45em 1.05em;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--white);
+    font-weight: 650; font-size: 0.95rem; text-decoration: none; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .jump a:hover { border-color: var(--dark); background: var(--paper-2); }
+  .jump :global(.icon) { color: var(--accent-ink); flex: none; }
+  .netto {
+    display: flex; gap: 14px; align-items: flex-start; margin-top: 22px; max-width: 760px;
+    background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 14px; padding: 14px 18px; font-size: 0.93rem; color: var(--ink-soft);
+  }
+  .netto p { margin: 0; }
+  .netto strong { color: var(--ink); }
+  .netto :global(.icon) { color: var(--accent-ink); flex: none; margin-top: 1px; }
+
+  .more { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; margin: 28px 0 0; font-size: 0.92rem; }
+  .more span { color: var(--ink-soft); }
+  .more a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
+  .cta-row { margin: 32px 0 0; text-align: center; }
+  .small { font-size: 0.85rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .h2-sm { font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+
+  /* Website-Tabellen */
+  .split { gap: 40px 60px; align-items: start; }
   .tbl { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
   .tbl th, .tbl td { text-align: left; padding: 16px 18px; border-bottom: 1px solid var(--line); }
   .tbl thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); background: var(--paper); }
   .tbl tbody tr:last-child > * { border-bottom: 0; }
   .tbl s { color: var(--ink-soft); }
   .tbl strong { color: var(--ok); }
+  @media (max-width: 420px) { .tbl th, .tbl td { padding: 12px 10px; font-size: 0.92rem; } }
   .cmpw { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--white); }
   .cmpt { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 0.95rem; }
   .cmpt th, .cmpt td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: center; }
@@ -139,7 +350,66 @@ const firstYear = plans.map((p) => ({ ...p, monthlyTotal: p.monthly * 12 + SETUP
     .cmpt thead th span { font-size: 0.72rem; }
     .cmpt__cta .btn { min-height: 38px; padding: 0.4em 0.5em; font-size: 0.75rem; width: 100%; }
   }
+
+  /* Preislisten (Zusatzleistungen) */
   .addons { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-  .addons li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .addons strong { white-space: nowrap; }
+  .addons li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .addons strong { text-align: right; flex: none; max-width: 50%; }
+  @media (min-width: 600px) { .addons strong { white-space: nowrap; max-width: none; } }
+  .zusatz { margin-top: clamp(28px, 4vw, 44px); max-width: 760px; }
+  .zusatz h3 { font-size: 1.15rem; margin-bottom: 12px; }
+
+  /* Software-Projekte als kompakte Preisliste */
+  .plist-card { display: flex; flex-direction: column; border-radius: 18px; }
+  .plist-card h3 { margin-bottom: 8px; }
+  .plist { list-style: none; margin: 0 0 18px; padding: 0; }
+  .plist > li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .plist__row { display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; }
+  .plist__name { display: block; font-family: var(--font-head); font-size: 1.08rem; }
+  .plist__fuer { display: block; font-size: 0.9rem; color: var(--ink-soft); }
+  .plist__price { text-align: right; }
+  .plist__price strong { display: block; font-family: var(--font-head); font-size: 1.35rem; white-space: nowrap; color: var(--accent-ink); }
+  .plist__price span { display: block; font-size: 0.8rem; color: var(--ink-soft); }
+  @media (max-width: 480px) {
+    .plist__row { flex-direction: column; }
+    .plist__price { text-align: left; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  }
+  .plist__hint { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-soft); }
+  .plist__more { margin-top: 8px; font-size: 0.9rem; }
+  .plist__more summary { cursor: pointer; font-weight: 600; color: var(--accent-ink); min-height: 32px; display: inline-flex; align-items: center; }
+  .plist__more ul { margin: 6px 0 0; padding-left: 1.2em; color: var(--ink-soft); display: grid; gap: 4px; }
+  .plist__link { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-weight: 650; color: var(--accent-ink); text-decoration: none; }
+  .plist__link:hover { text-decoration: underline; }
+
+  /* Fakten-Zeilen unter den Paketen */
+  .facts { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 10px; max-width: 760px; font-size: 0.93rem; color: var(--ink-soft); }
+  .facts li { display: flex; gap: 10px; align-items: flex-start; }
+  .facts :global(.icon) { color: var(--accent-ink); flex: none; margin-top: 2px; }
+  .facts strong { color: var(--ink); }
+
+  /* Stundensätze */
+  .saetze { margin: 0; border-top: 1px solid var(--line); }
+  .saetze div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .saetze dt { font-weight: 650; }
+  .saetze dt span { display: block; font-weight: 400; font-size: 0.85rem; color: var(--ink-soft); }
+  .saetze dd { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; white-space: nowrap; color: var(--accent-ink); }
+
+  /* Alle Abos */
+  .abos { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 0.92rem; }
+  .abos th, .abos td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .abos thead th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); background: var(--paper); }
+  .abos tbody tr:last-child > * { border-bottom: 0; }
+  .abos tbody th a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
+  .abos__preis { font-weight: 650; }
+  .abos__inhalt { color: var(--ink-soft); }
+  /* Mobil: jede Zeile als kleine Karte, kein seitliches Scrollen */
+  @media (max-width: 700px) {
+    .abos, .abos tbody, .abos tr, .abos th, .abos td { display: block; }
+    .abos thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .abos tr { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .abos tbody tr:last-child { border-bottom: 0; }
+    .abos th, .abos td { padding: 0; border: 0; }
+    .abos__preis { margin-top: 2px; }
+    .abos__inhalt { margin-top: 4px; font-size: 0.88rem; }
+  }
 </style>
