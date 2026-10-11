@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...SAEULEN.flatMap((s) => [
       `### ${s.title} (${s.ab})`,
       s.claim,
-      ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser} ${leistungAb(l)}.`),
+      ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser} ${leistungAb(l).replace(/\.$/, '')}.`),
       '',
     ]),
     '## Pakete & Preise außerhalb des Website-Abos (netto)',

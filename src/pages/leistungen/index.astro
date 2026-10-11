@@ -7,7 +7,7 @@ import SectionHead from '../../components/SectionHead.astro';
 import LeistungGrafik from '../../components/LeistungGrafik.astro';
 import Icon from '../../components/Icon.astro';
 import { leistungenNach, leistungAb } from '../../config/leistungen';
-import { plans, allPlansInclude } from '../../config/site';
+import { allPlansInclude } from '../../config/site';
 import { SAEULEN, NETTO_HINWEIS } from '../../config/angebot';
 import { href, absolute } from '../../lib/paths';
 import { serviceSchema } from '../../lib/schema';
@@ -56,7 +56,7 @@ const itemList = {
                 <span class="lcard__icon"><Icon name={l.icon} size={22} /></span>
                 <h3>{l.title}</h3>
                 <p>{l.teaser}</p>
-                <span class="lcard__plan">{l.plan ? `Empfehlung: ${plans.find((p) => p.id === l.plan)!.name} · ` : ''}{leistungAb(l)}</span>
+                <span class="lcard__plan">{leistungAb(l)}</span>
                 <span class="lcard__more">Mehr erfahren <Icon name="arrow" size={18} /></span>
               </div>
             </a>

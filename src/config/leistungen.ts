@@ -226,7 +226,7 @@ export const leistungen: Leistung[] = [
       'Nach dem Start lassen wir Sie nicht allein: Im Pflege-Abo kümmern wir uns um Betrieb, Sicherheitsupdates und Weiterentwicklung – zu einem festen Monatspreis.',
     ],
     ablauf: [
-      { title: 'Erstgespräch', text: 'Kostenlos, 30 Minuten: Wir verstehen Ihr Anliegen und sagen ehrlich, ob sich Individualsoftware lohnt.' },
+      { title: 'Erstgespräch', text: 'Kostenlos, 20 Minuten: Wir verstehen Ihr Anliegen und sagen ehrlich, ob sich Individualsoftware lohnt.' },
       { title: 'Konzept-Workshop', text: 'Abläufe aufnehmen, Lösung skizzieren, Klick-Prototyp – danach erhalten Sie einen Festpreis.' },
       { title: 'Entwicklung', text: 'In Etappen mit Zwischenständen. Sie testen früh und entscheiden mit.' },
       { title: 'Betrieb & Pflege', text: 'Hosting, Updates und Weiterentwicklung im Abo – oder Übergabe an Ihre IT.' },
@@ -308,7 +308,7 @@ export const leistungen: Leistung[] = [
       'Firmendaten liegen verstreut in privaten Dropbox-, Google- oder WeTransfer-Konten',
       'Unklar, wer worauf Zugriff hat – und was passiert, wenn jemand das Unternehmen verlässt',
       'Videokonferenzen und Dokumente laufen über Dienste außerhalb der EU',
-      'Lizenzkosten für Office-Pakete steigen jedes Jahr',
+      'Lizenzkosten für Office-Pakete steigen regelmäßig',
     ],
     umfang: [
       'Eigene Nextcloud-Instanz unter Ihrer Domain',
@@ -491,4 +491,4 @@ export const leistungen: Leistung[] = [
 export const leistungBySlug = (slug: string) => leistungen.find((l) => l.slug === slug);
 export const leistungenNach = (saeule: Saeule) => leistungen.filter((l) => l.saeule === saeule);
 /** Preis-Teaser für Kacheln/Navigation – Website-Leistungen aus dem empfohlenen Tarif. */
-export const leistungAb = (l: Leistung) => l.ab ?? (l.plan ? `ab ${preis(l.plan)} € / Monat` : l.pakete ? `ab ${l.pakete[0].preis.replace(/^ab /, '')}` : '');
+export const leistungAb = (l: Leistung) => l.ab ?? (l.plan ? `Empfohlen: ${plans.find((p) => p.id === l.plan)!.name} · ${preis(l.plan)} € / Monat` : l.pakete ? `ab ${l.pakete[0].preis.replace(/^ab /, '')}` : '');

@@ -36,7 +36,7 @@ export const VERSPRECHEN: Versprechen[] = [
     title: 'Ein Ansprechpartner',
     zeilen: ['Ein An-', 'sprechpartner'],
     short: 'Eine Adresse für alles – vom Erstgespräch bis zur Pflege.',
-    long: 'Sie haben einen persönlichen Ansprechpartner, der Ihr Projekt vom ersten Gespräch bis in die laufende Betreuung begleitet. Antwort erhalten Sie innerhalb eines Werktags – je nach Tarif in 48, 24 oder 4 Stunden.',
+    long: 'Sie haben einen persönlichen Ansprechpartner, der Ihr Projekt vom ersten Gespräch bis in die laufende Betreuung begleitet. Auf neue Anfragen antworten wir innerhalb eines Werktags; im laufenden Abo gelten feste Antwortzeiten je Tarif – 48, 24 oder 4 Stunden.',
   },
   {
     id: 'speed',

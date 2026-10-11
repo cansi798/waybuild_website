@@ -46,7 +46,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
           <div class="tarife__opts">
             <label class="pill"><input type="radio" name="tarif" value="" checked /><span>Beraten Sie mich</span></label>
             {plans.map((p) => (
-              <label class="pill"><input type="radio" name="tarif" value={p.id} /><span>{p.name} · {p.monthly} €</span></label>
+              <label class="pill"><input type="radio" name="tarif" value={p.id} /><span>{p.name} · {p.monthly} € / Monat</span></label>
             ))}
           </div>
         </fieldset>

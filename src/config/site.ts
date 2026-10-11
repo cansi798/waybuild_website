@@ -138,7 +138,7 @@ export const usps: { icon: IconName; title: string; short: string; text: string 
     icon: 'calendar',
     title: '12 statt 24 Monate',
     short: 'Danach monatlich kündbar.',
-    text: 'Branchenüblich sind 24 Monate Mindestlaufzeit. Bei uns sind es 12 – danach monatlich kündbar. Wir überzeugen mit Leistung, nicht mit Verträgen.',
+    text: 'Bei vielen Anbietern sind 24 Monate Mindestlaufzeit üblich. Bei uns sind es 12 – danach monatlich kündbar. Wir überzeugen mit Leistung, nicht mit Verträgen.',
   },
   {
     icon: 'rocket',

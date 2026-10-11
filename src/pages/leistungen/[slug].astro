@@ -28,10 +28,11 @@ const andere = leistungenNach(l.saeule).filter((o) => o.slug !== l.slug);
 const contact = `${href('/kontakt/')}?leistung=${l.slug}${plan ? `&tarif=${plan.id}` : ''}`;
 const url = absolute(`/leistungen/${l.slug}/`, Astro.site);
 
+const checksAbo = ['Fester Monatspreis', 'Antwortzeiten im Vertrag', 'Stunden übertragbar'];
 const checks: Record<Saeule, string[]> = {
   websites: ['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'],
   software: ['Festpreis nach Konzept', 'Quellcode gehört Ihnen', 'Pflege im Abo'],
-  cloud: ['Server in Deutschland', 'Einrichtung inklusive', 'Persönlicher Support'],
+  cloud: ['Server in Deutschland', 'Einrichtung zum Festpreis', 'Persönlicher Support'],
   beratung: ['Festpreis', 'Mit Quellenangaben', 'Persönliche Besprechung'],
 };
 
@@ -85,7 +86,7 @@ const schema = [
         <h1>{l.pre}<span class="accent">{l.accent}</span></h1>
         <p class="lead">{l.lead}</p>
         <ul class="check-row">
-          {checks[l.saeule].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+          {(l.slug === 'abo-wartung' ? checksAbo : checks[l.saeule]).map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
         </ul>
         <div class="phero__actions">
           <a class="btn btn--primary btn--lg" href={contact}>Kostenloses Erstgespräch</a>
@@ -153,7 +154,7 @@ const schema = [
         <SectionHead center eyebrow="Pakete & Preise" pre={l.paketeTitel?.[0] ?? 'Unsere '} accent={l.paketeTitel?.[1] ?? 'Pakete'} text={l.paketeText} />
         <PaketKarten pakete={l.pakete} leistung={l.slug} />
         <p class="terms">
-          {l.pakete.some((p) => p.monatlich) && <>{ABO_LAUFZEIT}. </>}
+          {l.pakete.some((p) => p.monatlich && !p.hinweis?.includes('monatlich kündbar')) && <>{ABO_LAUFZEIT}. </>}
           {NETTO_HINWEIS}
           {l.pakete.some((p) => p.features.some((f) => f.startsWith('Antwortzeit'))) && <> {REAKTION_HINWEIS}</>}
         </p>

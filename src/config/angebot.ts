@@ -33,6 +33,8 @@ export const STUNDENSATZ_VERTRAG = 85;
 
 /** Laufzeit-Regel für alle Abos (wie beim Website-Abo). */
 export const ABO_LAUFZEIT = '12 Monate Mindestlaufzeit, danach monatlich kündbar';
+/** Für Übersichten mit allen Abos (Markt-Monitoring ist die Ausnahme) */
+export const ABO_LAUFZEIT_ALLE = `${ABO_LAUFZEIT} (Ausnahme: Markt-Monitoring ist monatlich kündbar)`;
 export const NETTO_HINWEIS = 'Alle Preise netto zzgl. 19 % USt. Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.';
 export const REAKTION_HINWEIS = 'Antwortzeiten gelten werktags (Mo–Fr, 9–18 Uhr) und beschreiben, wann wir mit der Bearbeitung beginnen – nicht die Lösungszeit.';
 
@@ -240,5 +242,5 @@ export const ANBIETER_VERGLEICH: { kriterium: string; werte: [string, string, st
   { kriterium: 'Antwortzeiten', werte: ['Support-Forum', 'Selten vereinbart', 'Im Wartungsvertrag', 'Im Tarif festgelegt'] },
   { kriterium: 'Leistungen aus einer Hand', werte: ['Nur Website', 'Meist ein Fachgebiet', 'Breit, oft mit Subunternehmern', 'Website, Software, Cloud & IT'] },
   { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', '12 Monate, danach monatlich'] },
-  { kriterium: 'Ihre Daten & Ihr Code', werte: ['Beim Plattformanbieter', 'Unterschiedlich', 'Unterschiedlich', 'Gehören Ihnen, Server in Deutschland'] },
+  { kriterium: 'Ihre Daten & Ihr Code', werte: ['Beim Plattformanbieter', 'Unterschiedlich', 'Unterschiedlich', 'Software-Code gehört Ihnen, Website-Übernahme möglich, Server in Deutschland'] },
 ];

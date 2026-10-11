@@ -19,7 +19,7 @@ export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 14, suffix: ' Tage', label: 'bis Ihre Website live ist' },
   { value: 90, suffix: '+', label: 'PageSpeed auf dem Smartphone' },
   { value: 12, suffix: ' Monate', label: 'Laufzeit statt 24' },
-  { value: 1, suffix: ' Werktag', label: 'bis Sie Antwort haben' },
+  { value: 1, suffix: ' Werktag', label: 'bis zur Antwort auf Ihre Anfrage' },
 ];
 
 /** „Ein Ansprechpartner. Alles im Blick.“ – Betreuung statt Kundenportal-Demo. */
@@ -63,7 +63,7 @@ export const MUSTER: { branche: string; typ: string; farbe: string; hinweis: str
   { branche: 'Arztpraxis', typ: 'Business-Website', farbe: '#4fd1cb', hinweis: 'Sprechzeiten, Online-Termine, barrierearm' },
   { branche: 'B2B-Dienstleister', typ: 'Landingpage', farbe: '#545454', hinweis: 'Ein Angebot, ein Ziel: Anfragen' },
   { branche: 'Fachhandel', typ: 'Online-Shop', farbe: '#00a6a1', hinweis: 'Katalog, Warenkorb, Bezahlung' },
-  { branche: 'Immobilienbüro', typ: 'Website-Relaunch', farbe: '#006b68', hinweis: 'Alte WordPress-Seite abgelöst, 3× schneller' },
+  { branche: 'Immobilienbüro', typ: 'Website-Relaunch', farbe: '#006b68', hinweis: 'Alte WordPress-Seite abgelöst, schneller und sicherer' },
 ];
 
 /** Vorteile, die auf Unternehmen zielen (B2B-Ausrichtung). */
