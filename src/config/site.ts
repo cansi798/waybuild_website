@@ -12,15 +12,15 @@ export const isMissing = (v?: string | null) => !v || v.trim().startsWith('TODO'
 export const company = {
   name: 'Waybuild',
   legalName: 'Waybuild UG (haftungsbeschränkt)',
-  slogan: 'Websites im Abo – individuell entwickelt, sorgenfrei betrieben.',
+  slogan: 'Websites, Software und Cloud für Unternehmen – individuell entwickelt, sorgenfrei betrieben.',
   email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
   /** PLATZHALTER (Wunsch 11.10.2026: „erfundene Nummer“) – vor dem Livegang ersetzen, dann PHONE_IS_PLACEHOLDER auf false. */
   phone: '0151 00000000',
-  street: 'TODO',
-  zip: 'TODO',
-  city: 'TODO',
+  street: 'Kuno-Liesenberg-Kehre 32a',
+  zip: '22844',
+  city: 'Norderstedt',
   country: 'DE',
-  managingDirector: 'TODO',
+  managingDirector: 'Can Siebert',
   registerCourt: 'TODO', // z. B. 'Amtsgericht Berlin-Charlottenburg'
   registerNumber: 'TODO', // z. B. 'HRB 123456 B'
   vatId: 'TODO', // z. B. 'DE123456789'
@@ -124,7 +124,8 @@ export const addons = [
 export type IconName =
   | 'mail' | 'calendar' | 'rocket' | 'gauge' | 'key' | 'search' | 'chat' | 'pen' | 'server' | 'shield'
   | 'phone' | 'whatsapp' | 'chevron' | 'menu' | 'close' | 'arrow' | 'arrow-left' | 'check' | 'doc' | 'eye'
-  | 'euro' | 'clock' | 'user' | 'layout' | 'cart' | 'target' | 'refresh' | 'tools' | 'pin' | 'globe' | 'chart';
+  | 'euro' | 'clock' | 'user' | 'layout' | 'cart' | 'target' | 'refresh' | 'tools' | 'pin' | 'globe' | 'chart'
+  | 'code' | 'cloud' | 'cpu' | 'compass' | 'layers' | 'lock';
 
 export const usps: { icon: IconName; title: string; short: string; text: string }[] = [
   {
@@ -185,6 +186,10 @@ export const faqs = [
   {
     q: 'Was bedeutet „Website mieten“?',
     a: 'Statt einmalig mehrere tausend Euro zu zahlen, zahlen Sie eine kleine Einrichtungsgebühr und danach einen festen Monatsbeitrag. Darin ist alles enthalten: individuelles Design, Hosting, Domain, E-Mail-Postfächer, Wartung und Änderungen. Die Kosten sind planbar und als Betriebsausgabe voll absetzbar.',
+  },
+  {
+    q: 'Bietet waybuild neben Websites auch Software und IT an?',
+    a: 'Ja. Neben Websites im Abo entwickeln wir individuelle Software und Web-Anwendungen, richten Nextcloud ein und betreiben sie, betreuen Cloud- und IT-Infrastruktur und erstellen Wettbewerbsanalysen. Alles aus einer Hand, mit einem Ansprechpartner und transparenten Preisen auf unserer Preisseite.',
   },
   {
     q: 'Warum setzt Waybuild nicht auf WordPress?',

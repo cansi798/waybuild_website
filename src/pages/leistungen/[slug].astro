@@ -1,12 +1,15 @@
 ---
-// Leistungs-Detailseite (Bauwelt-Muster „Produktseite“): Hero mit CTA → Leistungsumfang → Text
-// → passender Tarif → Versprechen → FAQ. Der Kontakt-Kopf kommt aus dem Footer.
+// Leistungs-Detailseite (Bauwelt-Muster „Produktseite“) für alle vier Säulen:
+// Hero mit CTA → (Kennen Sie das?) → Leistungsumfang → Text → (Ablauf) → Website-Tarif ODER Pakete
+// → (Zusatzleistungen) → (Alle Abos) → Zusage → FAQ → weitere Leistungen der Säule.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import LeistungGrafik from '../../components/LeistungGrafik.astro';
+import PaketKarten from '../../components/PaketKarten.astro';
 import Icon from '../../components/Icon.astro';
-import { leistungen, type Leistung } from '../../config/leistungen';
+import { leistungen, leistungenNach, type Leistung } from '../../config/leistungen';
 import { plans, matrix, KEY_ROWS, SETUP_FEE, formatEuro } from '../../config/site';
+import { saeuleById, ABO_UEBERSICHT, ABO_LAUFZEIT, NETTO_HINWEIS, REAKTION_HINWEIS, type Saeule } from '../../config/angebot';
 import { versprechenById, VERSPRECHEN } from '../../config/versprechen';
 import { href, absolute } from '../../lib/paths';
 
@@ -15,63 +18,99 @@ export function getStaticPaths() {
 }
 
 const { l } = Astro.props as { l: Leistung };
-const plan = plans.find((p) => p.id === l.plan)!;
-const planIndex = plans.findIndex((p) => p.id === l.plan);
+const saeule = saeuleById(l.saeule);
+const plan = l.plan ? plans.find((p) => p.id === l.plan) : undefined;
+const planIndex = plan ? plans.indexOf(plan) : -1;
 const keyRows = matrix.slice(0, KEY_ROWS);
 const siegel = versprechenById(l.siegel) ?? VERSPRECHEN[0];
-const andere = leistungen.filter((o) => o.slug !== l.slug);
-const contact = `${href('/kontakt/')}?tarif=${plan.id}&leistung=${l.slug}`;
+const zusage = l.zusage ?? { icon: siegel.icon, title: siegel.title, text: siegel.long };
+const andere = leistungenNach(l.saeule).filter((o) => o.slug !== l.slug);
+const contact = `${href('/kontakt/')}?leistung=${l.slug}${plan ? `&tarif=${plan.id}` : ''}`;
+const url = absolute(`/leistungen/${l.slug}/`, Astro.site);
+
+const checks: Record<Saeule, string[]> = {
+  websites: ['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'],
+  software: ['Festpreis nach Konzept', 'Quellcode gehört Ihnen', 'Pflege im Abo'],
+  cloud: ['Server in Deutschland', 'Einrichtung inklusive', 'Persönlicher Support'],
+  beratung: ['Festpreis', 'Mit Quellenangaben', 'Persönliche Besprechung'],
+};
+
+const title = l.seo?.title ?? `${l.title} im Abo – ab ${plan?.monthly} € / Monat`;
+const description = l.seo?.description ?? `${l.title} im Website-Abo ab ${plan?.monthly} € netto/Monat: individuell entwickelt, Hosting, Domain, E-Mail und Pflege inklusive. Für Unternehmen.`;
+
+const offers = plan
+  ? [{ name: `Tarif ${plan.name}`, price: plan.monthly, monthly: true }]
+  : (l.pakete ?? []).map((p) => ({ name: p.name, price: p.wert, monthly: p.monatlich }));
 
 const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: `${l.title} im Abo`,
-    serviceType: 'Webdesign & Website-Abo',
+    name: plan ? `${l.title} im Abo` : l.title,
+    serviceType: l.title,
+    description: l.lead,
     audience: { '@type': 'BusinessAudience', name: 'Unternehmen' },
     provider: { '@id': `${absolute('/', Astro.site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
-    offers: {
+    url,
+    offers: offers.map((o) => ({
       '@type': 'Offer',
-      name: `Tarif ${plan.name}`,
-      price: plan.monthly,
+      name: o.name,
+      price: o.price,
       priceCurrency: 'EUR',
-      url: absolute(`/leistungen/${l.slug}/`, Astro.site),
-      priceSpecification: { '@type': 'UnitPriceSpecification', price: plan.monthly, priceCurrency: 'EUR', unitCode: 'MON', valueAddedTaxIncluded: false },
-    },
+      url,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: o.price,
+        priceCurrency: 'EUR',
+        valueAddedTaxIncluded: false,
+        ...(o.monthly ? { unitCode: 'MON' } : {}),
+      },
+    })),
   },
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: l.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
 ];
 ---
 
 <BaseLayout
-  title={`${l.title} im Abo – ab ${plan.monthly} € / Monat`}
-  description={`${l.title} im Website-Abo ab ${plan.monthly} € netto/Monat: individuell entwickelt, Hosting, Domain, E-Mail und Pflege inklusive. Für Unternehmen.`}
+  title={title}
+  description={description}
   schema={schema}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }, { name: l.title, path: `/leistungen/${l.slug}/` }]}
 >
   <section class="phero">
     <div class="wrap phero__grid">
       <div class="phero__copy">
-        <span class="eyebrow">{l.title}</span>
+        <span class="eyebrow">{saeule.title} · {l.title}</span>
         <h1>{l.pre}<span class="accent">{l.accent}</span></h1>
         <p class="lead">{l.lead}</p>
         <ul class="check-row">
-          {['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+          {checks[l.saeule].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
         </ul>
         <div class="phero__actions">
           <a class="btn btn--primary btn--lg" href={contact}>Kostenloses Erstgespräch</a>
-          <a class="btn btn--lg btn--ghost nur-desktop" href={href('/preise/')}>Tarife ansehen</a>
+          <a class="btn btn--lg btn--ghost nur-desktop" href={plan ? href('/preise/#websites') : '#pakete'}>{plan ? 'Tarife ansehen' : 'Preise ansehen'}</a>
         </div>
       </div>
       <div class="phero__media"><div class="phero__frame"><LeistungGrafik art={l.grafik} /></div></div>
     </div>
   </section>
 
+  {l.problem && (
+    <section class="section">
+      <div class="wrap problem">
+        <SectionHead eyebrow="Ausgangslage" pre="Kennen Sie " accent="das?" />
+        <ul class="problem__list">
+          {l.problem.map((p) => <li><span class="problem__x" aria-hidden="true">!</span>{p}</li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <section class="section section--sand">
     <div class="wrap">
-      <SectionHead eyebrow="Leistungsumfang" pre="Was alles drin " accent="ist" />
-      <ul class="check-list umfang">{l.umfang.map((u) => <li><Icon name="check" size={20} /> {u}</li>)}</ul>
+      <SectionHead eyebrow="Leistungsumfang" pre={l.problem ? 'So lösen wir ' : 'Was alles drin '} accent={l.problem ? 'das' : 'ist'} />
+      <ul class:list={['check-list umfang', { 'umfang--2': l.umfang.length > 5 }]}>{l.umfang.map((u) => <li><Icon name="check" size={20} /> {u}</li>)}</ul>
     </div>
   </section>
 
@@ -79,29 +118,83 @@ const schema = [
     <div class="wrap prose">{l.text.map((t) => <p>{t}</p>)}</div>
   </section>
 
-  <section class="section section--sand">
-    <div class="wrap tarif">
-      <div>
-        <SectionHead eyebrow="Passender Tarif" pre={`${l.title} im Tarif `} accent={plan.name} text={l.planReason} />
-        <a class="btn btn--primary" href={contact}>{plan.name} anfragen</a>
+  {l.ablauf && (
+    <section class="section section--sand">
+      <div class="wrap">
+        <SectionHead eyebrow="Ablauf" pre="In vier Schritten zum " accent="Ergebnis" />
+        <ol class="ablauf">
+          {l.ablauf.map((a, i) => (
+            <li class="card"><span class="ablauf__nr">{i + 1}</span><h3>{a.title}</h3><p>{a.text}</p></li>
+          ))}
+        </ol>
       </div>
-      <article class="card plan">
-        <div class="plan__top"><h3>{plan.name}</h3>{plan.highlight && <span class="plan__badge">Beliebt</span>}</div>
-        <p class="plan__price"><b>{plan.monthly} €</b> / Monat netto</p>
-        <dl class="plan__keys">{keyRows.map((r) => <div><dt>{r.label}</dt><dd>{r.values[planIndex]}</dd></div>)}</dl>
-        <p class="plan__setup">Einrichtung einmalig {formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung.</p>
-        <a class="plan__all" href={href('/preise/')}>Alle Tarife vergleichen →</a>
-      </article>
-    </div>
-  </section>
+    </section>
+  )}
+
+  {plan ? (
+    <section class="section section--sand" id="pakete">
+      <div class="wrap tarif">
+        <div>
+          <SectionHead eyebrow="Passender Tarif" pre={`${l.title} im Tarif `} accent={plan.name} text={l.planReason} />
+          <a class="btn btn--primary" href={contact}>{plan.name} anfragen</a>
+        </div>
+        <article class="card plan">
+          <div class="plan__top"><h3>{plan.name}</h3>{plan.highlight && <span class="plan__badge">Beliebt</span>}</div>
+          <p class="plan__price"><b>{plan.monthly} €</b> / Monat netto</p>
+          <dl class="plan__keys">{keyRows.map((r) => <div><dt>{r.label}</dt><dd>{r.values[planIndex]}</dd></div>)}</dl>
+          <p class="plan__setup">Einrichtung einmalig {formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung.</p>
+          <a class="plan__all" href={href('/preise/#websites')}>Alle Tarife vergleichen →</a>
+        </article>
+      </div>
+    </section>
+  ) : l.pakete && (
+    <section class:list={['section', { 'section--sand': !l.ablauf }]} id="pakete">
+      <div class="wrap">
+        <SectionHead center eyebrow="Pakete & Preise" pre={l.paketeTitel?.[0] ?? 'Unsere '} accent={l.paketeTitel?.[1] ?? 'Pakete'} text={l.paketeText} />
+        <PaketKarten pakete={l.pakete} leistung={l.slug} />
+        <p class="terms">
+          {l.pakete.some((p) => p.monatlich) && <>{ABO_LAUFZEIT}. </>}
+          {NETTO_HINWEIS}
+          {l.pakete.some((p) => p.features.some((f) => f.startsWith('Antwortzeit'))) && <> {REAKTION_HINWEIS}</>}
+        </p>
+        {l.zusatz && (
+          <div class="zusatz">
+            <h3>Einmalig & Extras</h3>
+            <ul>{l.zusatz.map((z) => <li><span>{z.name}</span><strong>{z.preis}</strong></li>)}</ul>
+          </div>
+        )}
+        <p class="terms"><a href={href(`/preise/#${l.saeule}`)}>Alle Preise im Überblick →</a></p>
+      </div>
+    </section>
+  )}
+
+  {l.slug === 'abo-wartung' && (
+    <section class="section section--sand" aria-labelledby="abos-h">
+      <div class="wrap">
+        <SectionHead eyebrow="Alle Abos" pre="Für jeden Bereich das passende " accent="Abo" id="abos-h" text="Website, Software, Cloud und IT – überall fester Monatspreis, ein Ansprechpartner." />
+        <ul class="abos">
+          {ABO_UEBERSICHT.map((a) => (
+            <li>
+              <a class="card abos__item" href={href(a.path)}>
+                <span class="abos__saeule">{saeuleById(a.saeule).title}</span>
+                <strong>{a.name}</strong>
+                <span class="abos__preis">{a.preis}</span>
+                <span class="abos__inhalt">{a.inhalt}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <section class="section">
     <div class="wrap siegel">
-      <span class="siegel__ring"><Icon name={siegel.icon} size={30} /></span>
+      <span class="siegel__ring"><Icon name={zusage.icon} size={30} /></span>
       <div>
         <span class="eyebrow">Unser Versprechen</span>
-        <h2>{siegel.title}</h2>
-        <p>{siegel.long}</p>
+        <h2>{zusage.title}</h2>
+        <p>{zusage.text}</p>
       </div>
     </div>
   </section>
@@ -115,13 +208,18 @@ const schema = [
             <details class="faq__item"><summary><h3>{f.q}</h3></summary><p>{f.a}</p></details>
           ))}
         </div>
+        <p class="next"><a class="btn btn--primary" href={contact}>Kostenloses Erstgespräch</a></p>
       </div>
     </section>
   )}
 
-  <section class="section">
+  <section class="section section--tight">
     <div class="wrap">
-      <p class="others">Weitere Leistungen: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</p>
+      <p class="others">
+        {andere.length > 0 && <>Weitere Leistungen im Bereich {saeule.title}: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</>}
+        <a href={href('/leistungen/')}>Alle Leistungen</a>
+        <a href={href('/warum-waybuild/')}>Warum waybuild</a>
+      </p>
     </div>
   </section>
 </BaseLayout>
@@ -136,9 +234,44 @@ const schema = [
   .phero__actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 8px; }
   @media (max-width: 767px) { .phero__actions { display: grid; width: 100%; } .phero__actions .btn { width: 100%; } .phero__media { order: -1; } }
   .phero__frame { position: relative; aspect-ratio: 16 / 10; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+  .problem__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  @media (min-width: 760px) { .problem__list { grid-template-columns: 1fr 1fr; gap: 14px 20px; } }
+  .problem__list li { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; font-weight: 550; }
+  .problem__x { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: rgb(0 166 161 / 14%); color: var(--accent-ink); font-weight: 800; font-size: 0.9rem; }
   .umfang { max-width: 760px; }
+  @media (min-width: 900px) { .umfang--2 { max-width: none; grid-template-columns: 1fr 1fr; gap: 14px 40px; } }
   .umfang li { font-size: 1.05rem; }
   .prose p { font-size: 1.08rem; color: var(--ink-soft); }
+  .ablauf { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: a; }
+  @media (min-width: 720px) { .ablauf { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .ablauf { grid-template-columns: repeat(4, 1fr); } }
+  .ablauf li { display: grid; gap: 6px; align-content: start; }
+  .ablauf h3 { margin: 4px 0 0; font-size: 1.12rem; }
+  .ablauf p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  @media (max-width: 719px) {
+    .ablauf { gap: 10px; }
+    .ablauf li { grid-template-columns: 32px 1fr; column-gap: 14px; row-gap: 2px; padding: 16px 18px; }
+    .ablauf__nr { grid-row: span 2; width: 32px !important; height: 32px !important; }
+    .ablauf h3 { margin: 0; }
+  }
+  .ablauf__nr { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--dark); color: var(--accent); font-family: var(--font-head); font-weight: 700; }
+  .terms { margin: 18px auto 0; max-width: 820px; text-align: center; font-size: 0.85rem; color: var(--ink-soft); }
+  .terms a { font-weight: 650; color: var(--accent-ink); }
+  .zusatz { margin: 32px auto 0; max-width: 820px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px 8px; }
+  .zusatz h3 { margin: 0 0 6px; font-size: 1.1rem; }
+  .zusatz ul { list-style: none; margin: 0; padding: 0; }
+  .zusatz li { display: flex; justify-content: space-between; gap: 8px 20px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 0.95rem; }
+  .zusatz li:first-child { border-top: 0; }
+  .zusatz strong { text-align: right; white-space: nowrap; }
+  @media (max-width: 599px) { .zusatz li { flex-direction: column; } .zusatz strong { text-align: left; white-space: normal; color: var(--accent-ink); } }
+  .abos { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .abos { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .abos { grid-template-columns: repeat(3, 1fr); } }
+  .abos__item { display: grid; gap: 4px; height: 100%; }
+  .abos__saeule { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+  .abos__item strong { font-family: var(--font-head); font-size: 1.2rem; }
+  .abos__preis { font-weight: 700; }
+  .abos__inhalt { color: var(--ink-soft); font-size: 0.92rem; }
   .tarif { display: grid; gap: 28px; align-items: center; }
   @media (min-width: 900px) { .tarif { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
   .tarif :global(.section-head) { margin-bottom: 20px; }
@@ -167,6 +300,8 @@ const schema = [
   .faq__item summary::after { content: '+'; flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--paper-2); font-size: 1.3rem; }
   .faq__item[open] summary::after { content: '–'; background: var(--accent); }
   .faq__item p { padding: 0 22px 20px; margin: 0; color: var(--ink-soft); }
+  .next { margin: 28px 0 0; text-align: center; }
+  .section--tight { padding-block: 36px; }
   .others { margin: 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
   .others a { font-weight: 650; color: var(--accent-ink); }
 </style>
