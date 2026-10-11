@@ -1,8 +1,9 @@
 ---
-// Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Tarif-Empfehlung → Anfrage.
+// Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Tarif- bzw. Leistungs-Empfehlung → Anfrage.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { plans, formatEuro, company } from '../../config/site';
+import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -13,6 +14,9 @@ export async function getStaticPaths() {
 const { entry, all } = Astro.props as { entry: CollectionEntry<'ratgeber'>; all: CollectionEntry<'ratgeber'>[] };
 const { Content } = await render(entry);
 const plan = plans.find((p) => p.id === entry.data.tarif)!;
+// Ist eine (gültige) Leistung gesetzt, wirbt die Box am Ende für diese statt für einen Website-Tarif.
+const leistung = entry.data.leistung ? leistungBySlug(entry.data.leistung) : undefined;
+const leistungPreis = leistung ? leistungAb(leistung) : '';
 const more = all.filter((a) => a.id !== entry.id);
 const datum = entry.data.datum.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -55,17 +59,31 @@ const schema = [
         <Content />
       </div>
 
-      <aside class="art__cta" aria-labelledby="art-cta-h">
-        <div>
-          <p class="art__cta-label">Passend zum Thema</p>
-          <h2 id="art-cta-h">Tarif {plan.name}: {plan.monthly} € / Monat</h2>
-          <p>netto · einmalig {formatEuro(plan.setup)} Einrichtung · {plan.features.slice(0, 3).join(' · ')}</p>
-        </div>
-        <div class="art__cta-btns">
-          <a class="btn btn--primary" href={`${href('/kontakt/')}?tarif=${plan.id}`}>Kostenloses Erstgespräch</a>
-          <a class="btn btn--ghost" href={href('/preise/')}>Alle Tarife</a>
-        </div>
-      </aside>
+      {leistung ? (
+        <aside class="art__cta" aria-labelledby="art-cta-h">
+          <div>
+            <p class="art__cta-label">Passend zum Thema</p>
+            <h2 id="art-cta-h">{leistung.title}</h2>
+            <p>{leistungPreis ? `${leistungPreis} · netto · ` : ''}{leistung.teaser}</p>
+          </div>
+          <div class="art__cta-btns">
+            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=${leistung.slug}`}>Kostenloses Erstgespräch</a>
+            <a class="btn btn--ghost" href={href(`/leistungen/${leistung.slug}/`)}>Mehr zur Leistung</a>
+          </div>
+        </aside>
+      ) : (
+        <aside class="art__cta" aria-labelledby="art-cta-h">
+          <div>
+            <p class="art__cta-label">Passend zum Thema</p>
+            <h2 id="art-cta-h">Tarif {plan.name}: {plan.monthly} € / Monat</h2>
+            <p>netto · einmalig {formatEuro(plan.setup)} Einrichtung · {plan.features.slice(0, 3).join(' · ')}</p>
+          </div>
+          <div class="art__cta-btns">
+            <a class="btn btn--primary" href={`${href('/kontakt/')}?tarif=${plan.id}`}>Kostenloses Erstgespräch</a>
+            <a class="btn btn--ghost" href={href('/preise/')}>Alle Tarife</a>
+          </div>
+        </aside>
+      )}
 
       {more.length > 0 && (
         <nav class="art__more" aria-label="Weitere Artikel">

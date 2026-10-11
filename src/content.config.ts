@@ -13,6 +13,8 @@ const ratgeber = defineCollection({
     datum: z.coerce.date(),
     /** Tarif, der am Ende empfohlen wird */
     tarif: z.enum(['start', 'business', 'premium']).default('business'),
+    /** Optional: Leistung (slug aus config/leistungen.ts), die statt des Tarifs am Ende empfohlen wird */
+    leistung: z.string().optional(),
   }),
 });
 
