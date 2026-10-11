@@ -12,7 +12,7 @@ import Hint from '../components/Hint.astro';
     <div class="wrap prose">
       <h1>Datenschutzerklärung</h1>
       <Hint block label="Rechtliche Prüfung" where="src/pages/datenschutz.astro">
-        Vorlage – vor dem Start prüfen lassen. Bei eigener Domain/eigenem Hoster und Formular-Dienst muss Abschnitt 3 bzw. 4 angepasst werden.
+        Vorlage – vor dem Start prüfen lassen. Bei eigener Domain/eigenem Hoster muss Abschnitt 3 angepasst werden.
       </Hint>
 
       <h2>1. Verantwortlicher</h2>
@@ -23,8 +23,9 @@ import Hint from '../components/Hint.astro';
 
       <h2>2. Grundsatz: So wenig Daten wie möglich</h2>
       <p>
-        Diese Website verwendet keine Cookies, kein Tracking, keine Analyse-Tools und lädt keine Inhalte von
-        Drittanbietern (auch Schriftarten werden lokal ausgeliefert).
+        Diese Website verwendet keine Cookies, kein Tracking, keine Analyse-Tools und lädt beim Aufruf keine Inhalte von
+        Drittanbietern (auch Schriftarten werden lokal ausgeliefert). Daten an Dritte fließen nur, wenn Sie selbst aktiv
+        werden – etwa beim Absenden des Kontaktformulars oder beim Klick auf den WhatsApp-Link (siehe Abschnitt 4).
       </p>
 
       <h2>3. Hosting</h2>
@@ -52,13 +53,27 @@ import Hint from '../components/Hint.astro';
         Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten bestehen.
       </p>
 
-      {import.meta.env.PUBLIC_WEB3FORMS_KEY && (
-        <p>
-          Für den Versand des Kontaktformulars nutzen wir den Dienst Web3Forms. Ihre Formularangaben werden dabei an
-          Web3Forms übermittelt und von dort per E-Mail an uns weitergeleitet.
-          {/* TODO rechtlich prüfen: Anbieterangaben, Serverstandort, AV-Vertrag */}
-        </p>
-      )}
+      <h3>Formular-Dienst Web3Forms</h3>
+      <p>
+        Für den Versand des Kontaktformulars nutzen wir den Dienst Web3Forms (web3forms.com). Wenn Sie das Formular
+        absenden, werden Ihre Angaben direkt von Ihrem Browser an Web3Forms übermittelt und von dort per E-Mail an uns
+        weitergeleitet. Dabei verarbeitet Web3Forms auch technisch notwendige Daten wie Ihre IP-Adresse. Web3Forms
+        handelt als Auftragsverarbeiter (Art. 28 DSGVO). Der Anbieter kann Daten auch außerhalb der EU, insbesondere in
+        den USA, verarbeiten; eine Übermittlung erfolgt nur auf Grundlage der Art. 44 ff. DSGVO. Rechtsgrundlage ist
+        Art. 6 Abs. 1 lit. b DSGVO (Anfrage zu einem Vertrag) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an
+        einem zuverlässigen Formularversand). Wenn Sie das nicht möchten, schreiben Sie uns einfach direkt per E-Mail.
+      </p>
+      <Hint block label="Web3Forms: Anbieterangaben, Serverstandort, AV-Vertrag" where="src/pages/datenschutz.astro → Abschnitt 4">
+        Vor dem Livegang Anbieter-Anschrift und Datenverarbeitungsbedingungen von Web3Forms prüfen und hier ergänzen (rechtliche Prüfung).
+      </Hint>
+
+      <h3>WhatsApp und Telefon</h3>
+      <p>
+        Auf unserer Website verlinken wir auf WhatsApp. Erst wenn Sie auf den Link klicken, öffnet sich WhatsApp
+        (WhatsApp Ireland Limited, Merrion Road, Dublin 4, Irland) und es werden Daten an diesen Anbieter übertragen.
+        Nutzen Sie WhatsApp für Ihre Anfrage, gelten zusätzlich die Datenschutzbestimmungen von WhatsApp. Alternativ
+        erreichen Sie uns jederzeit per E-Mail oder Telefon.
+      </p>
 
       <h2>5. Ihre Rechte</h2>
       <p>

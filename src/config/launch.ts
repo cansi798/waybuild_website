@@ -60,7 +60,7 @@ const manual: Todo[] = [
   },
   {
     title: 'Datenschutzerklärung prüfen lassen',
-    detail: 'Besonders nach Umzug auf eigenen Hoster und bei Einsatz eines Formular-Dienstes anpassen.',
+    detail: 'Web3Forms und WhatsApp sind jetzt beschrieben (Oktober 2026). Vor dem Start prüfen lassen: Anbieterangaben/AV-Vertrag Web3Forms und Abschnitt Hosting nach Umzug auf den eigenen Server.',
     where: 'src/pages/datenschutz.astro',
     done: false,
     priority: 'pflicht',
@@ -74,8 +74,29 @@ const manual: Todo[] = [
   },
   {
     title: 'Leistungsversprechen absichern',
-    detail: '„Hosting in Deutschland“, „Live in 14 Tagen – garantiert“ und „PageSpeed 90+“ stehen auf der Website. Hoster/Prozesse so wählen, dass das eingehalten wird.',
+    detail: '„Hosting in Deutschland“ (auch für Nextcloud- und Software-Kunden), „Live in 14 Tagen“, „PageSpeed 90+“ und die Antwortzeiten der Abos (nächster Werktag / 8 Std. / 4 Std.) stehen auf der Website. Hoster, Kapazität und Vertretung so planen, dass das eingehalten wird.',
     where: 'src/config/site.ts → usps, plans',
+    done: false,
+    priority: 'wichtig',
+  },
+  {
+    title: 'Preise der neuen Leistungen freigeben',
+    detail: 'Software, Nextcloud, IT-Betreuung, Pflege-Abos und Wettbewerbsanalyse sind mit Marktpreisen hinterlegt (Herleitung: docs/wettbewerbsanalyse-2026-10.md). Bitte prüfen und freigeben bzw. anpassen.',
+    where: 'src/config/angebot.ts',
+    done: false,
+    priority: 'pflicht',
+  },
+  {
+    title: 'Leistungsbeschreibungen für Abos (SLA, Fair Use, Speicher)',
+    detail: 'Für IT-Betreuung, Nextcloud-Hosting und Software-Pflege je eine kurze Leistungsbeschreibung als Anlage zum Angebot erstellen – inkl. AV-Vertrag (Art. 28 DSGVO) für Nextcloud und IT.',
+    where: 'Eigenes Dokument, Verweis in src/pages/agb.astro § 2a',
+    done: false,
+    priority: 'pflicht',
+  },
+  {
+    title: 'Rechnungsvorlage: Bankverbindung (IBAN) & Steuernummer',
+    detail: 'Für die ersten Abo-Rechnungen: IBAN, Steuernummer bzw. USt-ID auf Rechnung und im Angebot. Nicht auf der Website nötig.',
+    where: 'Buchhaltung / Rechnungsprogramm',
     done: false,
     priority: 'wichtig',
   },
@@ -109,9 +130,9 @@ const manual: Todo[] = [
   },
   {
     title: 'Firmensitz / Einzugsgebiet für lokales SEO',
-    detail: 'Sobald die Adresse eingetragen ist, meldet die Seite Waybuild automatisch als lokales Unternehmen (ProfessionalService) an Google. Optional: Stadt in Titel & Texte aufnehmen („Webdesign-Abo in …“).',
+    detail: 'Adresse Norderstedt ist eingetragen – die Seite meldet waybuild jetzt als lokales Unternehmen (ProfessionalService) an Google. Optional später: Stadt in Titel & Texte aufnehmen („IT-Service Norderstedt“).',
     where: 'src/config/site.ts → company, src/pages/index.astro',
-    done: false,
+    done: true,
     priority: 'wichtig',
   },
   {

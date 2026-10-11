@@ -5,7 +5,7 @@ import { company } from '../config/site';
 // Vorlage für das Abo-Modell (B2B). Muss vor Verwendung anwaltlich geprüft werden.
 ---
 
-<BaseLayout title="Allgemeine Geschäftsbedingungen (AGB)" description={`AGB der ${company.legalName} für Website-Abonnements.`} noindex>
+<BaseLayout title="Allgemeine Geschäftsbedingungen (AGB)" description={`AGB der ${company.legalName} für Website-Abos, Software, Cloud- und IT-Leistungen sowie Beratung.`} noindex>
   <section class="section">
     <div class="wrap prose">
       <h1>Allgemeine Geschäftsbedingungen</h1>
@@ -17,7 +17,8 @@ import { company } from '../config/site';
       <h2>§ 1 Geltungsbereich</h2>
       <p>
         Diese AGB gelten für alle Verträge zwischen der {company.legalName} („Waybuild“) und ihren Kunden über die
-        Erstellung und den Betrieb von Websites im Abonnement. Das Angebot richtet sich ausschließlich an Unternehmer
+        Erstellung und den Betrieb von Websites im Abonnement, die Entwicklung und Pflege von Software, Cloud- und
+        IT-Leistungen (insbesondere Nextcloud-Hosting und IT-Betreuung) sowie Beratungsleistungen. Das Angebot richtet sich ausschließlich an Unternehmer
         im Sinne des § 14 BGB. Abweichende Bedingungen des Kunden gelten nur bei ausdrücklicher schriftlicher Zustimmung.
       </p>
 
@@ -29,9 +30,24 @@ import { company } from '../config/site';
         Wartung sowie ein monatliches Kontingent für Änderungen.
       </p>
       <p>
-        Nicht genutzte Änderungszeit verfällt am Monatsende und wird nicht übertragen. Darüber hinausgehende Arbeiten
-        werden nach Absprache gesondert berechnet.
+        Nicht genutzte Änderungs- bzw. Entwicklungszeit wird bis zu drei Monate übertragen und verfällt danach.
+        Darüber hinausgehende Arbeiten werden nach vorheriger Absprache gesondert berechnet.
       </p>
+
+      <h2>§ 2a Software, Cloud, IT und Beratung</h2>
+      <p>
+        Für Software-Projekte, Cloud- und IT-Leistungen sowie Beratung gilt der im jeweiligen Angebot beschriebene
+        Leistungsumfang. Festpreis-Projekte werden nach Fertigstellung vom Kunden abgenommen; die Abnahme darf nur
+        wegen wesentlicher Mängel verweigert werden. Betreuungs- und Pflegeverträge (z. B. Software-Pflege,
+        Nextcloud-Hosting, IT-Betreuung) sind Dienstleistungen mit monatlicher Vergütung. Angegebene Antwortzeiten
+        gelten werktags (Montag bis Freitag, 9 bis 18 Uhr, ausgenommen gesetzliche Feiertage) und bezeichnen den Beginn
+        der Bearbeitung, nicht die Lösungszeit. An individuell entwickelter Software erhält der Kunde nach vollständiger
+        Bezahlung die im Angebot vereinbarten Nutzungsrechte einschließlich Quellcode.
+      </p>
+      <Hint block label="Leistungsbeschreibungen & Fair-Use-Regel" where="src/pages/agb.astro → § 2a">
+        Für IT-Betreuung („Helpdesk Fair Use“), Nextcloud-Hosting (Speicher, Verfügbarkeit) und Software-Pflege je eine
+        kurze Leistungsbeschreibung als Anlage zum Angebot erstellen und anwaltlich prüfen lassen.
+      </Hint>
 
       <h2>§ 3 Mitwirkung des Kunden</h2>
       <p>
@@ -46,14 +62,15 @@ import { company } from '../config/site';
 
       <h2>§ 4 Vergütung und Zahlung</h2>
       <p>
-        Es gelten die Preise des gewählten Tarifs. Alle Preise verstehen sich netto zuzüglich der gesetzlichen
+        Es gelten die Preise des gewählten Tarifs bzw. Angebots. Alle Preise verstehen sich netto zuzüglich der gesetzlichen
         Umsatzsteuer. Die Einrichtungsgebühr ist nach Vertragsschluss fällig, die Monatsbeiträge jeweils im Voraus
         zum Monatsersten. Bei jährlicher Vorauszahlung entfällt die Einrichtungsgebühr.
       </p>
 
       <h2>§ 5 Laufzeit und Kündigung</h2>
       <p>
-        Die Mindestlaufzeit beträgt 12 Monate ab Livegang der Website. Danach verlängert sich der Vertrag auf
+        Die Mindestlaufzeit von Abonnements beträgt 12 Monate ab Livegang der Website bzw. ab Bereitstellung der
+        Leistung, soweit im Angebot nichts anderes vereinbart ist (z. B. monatlich kündbares Markt-Monitoring). Danach verlängert sich der Vertrag auf
         unbestimmte Zeit und kann mit einer Frist von einem Monat zum Monatsende gekündigt werden. Die Kündigung bedarf
         der Textform (z. B. E-Mail). Das Recht zur außerordentlichen Kündigung bleibt unberührt.
       </p>
@@ -92,7 +109,7 @@ import { company } from '../config/site';
         Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist, soweit zulässig, der Sitz von Waybuild.
         Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
       </p>
-      <p class="stand">Stand: September 2026</p>
+      <p class="stand">Stand: Oktober 2026</p>
     </div>
   </section>
 </BaseLayout>
