@@ -38,9 +38,9 @@ individuelles Design in allen Tarifen, unbegrenzte E-Mail-Postfächer, 30 Min. /
 | Freelance-Softwareentwickler, Median | 90 €/h netto (Mittelfeld 80–100 €) | freelancermap, Stand 09/2026, 2.337 DACH-Profile |
 | Freelancer-Kompass 2025 (laut ComputerWoche) | ~89 €/h Entwickler | computerwoche.de |
 | IT-Service Stundensätze (Anbieterseite) | 90–140 €/h, Spezialisten 160–220 €/h | hagel-it.de |
-| KMU-Softwareprojekte DACH | 30.000–80.000 €, kleine Lösungen ab ~5.000 € | wavect.io (AT) |
+| KMU-Softwareprojekte DACH | 30.000–80.000 €, kleine Lösungen ab ~5.000 € | alloq.digital (2026) |
 | Discovery-Sprint (Konzept vor Umsetzung) | ab 3.500 € | wavect.io |
-| Wartung Individualsoftware | 15–25 % der Entwicklungskosten pro Jahr | wavect.io |
+| Wartung Individualsoftware | 15–25 % der Entwicklungskosten pro Jahr | alloq.digital, erp-software.org |
 
 **waybuild-Preise (neu):**
 - Stundensatz **95 €**, Tagessatz **760 €** (knapp über Freelancer-Median, klar unter Agentur-/Spezialistensätzen).
@@ -116,7 +116,7 @@ Quellcode-Übernahme, unbegrenzte Postfächer, Hosting in Deutschland. **Keine**
 - https://diestelkamp-consulting.info/ · https://selinqo.de/ · https://website-im-abo.com/ · https://www.nk-it.de/webdesign-neckarsulm/ · https://soarly-digital.de/leistungen
 - https://de.wix.com/blog/beitrag/was-kostet-eine-website
 - https://www.freelancermap.de/blog/stundensatz-softwareentwickler/ · https://www.computerwoche.de/article/2804188/so-steht-es-um-selbststaendige-entwickler.html
-- https://wavect.io/de/software-development-guide/software-development-cost-austria/
+- https://wavect.io/de/software-development-guide/software-development-cost-austria/ (nur Discovery-Sprint ab 3.500 €) · https://alloq.digital/de/blog/software-entwickeln-lassen/ · https://erp-software.org/glossar/individualsoftware/
 - https://www.hagel-it.de/it-service/it-service-preise
 - https://www.hetzner.com/de/storage/storage-share/ · https://www.whtop.com/de/compare/hetzner,webtropia
 - https://www.ionos.de/office-loesungen/managed-nextcloud-hosting

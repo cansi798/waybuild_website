@@ -1,6 +1,6 @@
 # waybuild_website
 
-Website der **Waybuild UG (haftungsbeschränkt)** – Websites im Abo.
+Website der **Waybuild UG (haftungsbeschränkt)** – Websites im Abo, Software, Cloud & IT, Beratung (B2B).
 Gebaut mit [Astro](https://astro.build) als rein statische Seite, deployed per GitHub Actions auf GitHub Pages.
 
 **Vorschau (nur Ansicht, nicht für Google):** https://cansi798.github.io/waybuild_website/
@@ -18,6 +18,15 @@ Fast alles steht zentral in [`src/config/site.ts`](src/config/site.ts):
 | Zusatzleistungen | `addons` |
 | Vorteile, Vergleich WordPress, Ablauf | `usps`, `comparison`, `steps` |
 | FAQ (auch als FAQPage-JSON-LD und in `/llms.txt` für KI-Suchen) | `faqs` |
+
+Weitere zentrale Dateien:
+
+| Was | Wo |
+|---|---|
+| Säulen, Pakete & Preise für Software, Nextcloud, IT, Pflege-Abos, Wettbewerbsanalyse, Stundensätze | [`src/config/angebot.ts`](src/config/angebot.ts) – **einzige Quelle**, alle Seiten lesen von hier |
+| Leistungs-Detailseiten (Texte, Ablauf, FAQ) | [`src/config/leistungen.ts`](src/config/leistungen.ts) |
+| Navigation | [`src/config/nav.ts`](src/config/nav.ts) (Leistungen automatisch nach Säulen gruppiert) |
+| Herleitung der Preise (intern) | [`docs/wettbewerbsanalyse-2026-10.md`](docs/wettbewerbsanalyse-2026-10.md) |
 
 ## Bilder
 
