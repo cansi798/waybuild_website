@@ -5,6 +5,14 @@ import { company, plans, phoneTel, whatsappLink, HOURS } from '../config/site';
 import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
+import { leistungen } from '../config/leistungen';
+import { SAEULEN } from '../config/angebot';
+
+const interessen = [
+  { value: 'website', label: 'Website im Abo' },
+  ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => leistungen.filter((l) => l.saeule === s.id).map((l) => ({ value: l.slug, label: `${s.title}: ${l.title}` }))),
+];
+const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) => l.slug);
 
 // Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
 // Ohne Key öffnet sich als Rückfall das E-Mail-Programm. Key setzen: GitHub → Settings → Variables → WEB3FORMS_KEY
@@ -14,7 +22,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
 <BaseLayout
   title="Kontakt & kostenloses Erstgespräch"
-  description="Jetzt kostenloses Erstgespräch zu Ihrer Website im Abo anfragen. Antwort innerhalb eines Werktags – unverbindlich und ohne Verkaufsdruck."
+  description="Kostenloses Erstgespräch zu Website, Software, Nextcloud oder IT-Betreuung anfragen. Antwort innerhalb eines Werktags – unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
 >
@@ -26,9 +34,15 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
   <section class="section">
     <div class="wrap contact">
-      <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate>
+      <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+        <label>Worum geht es?
+          <select name="interesse">
+            <option value="">Beraten Sie mich – ich bin noch unsicher</option>
+            {interessen.map((i) => <option value={i.value}>{i.label}</option>)}
+          </select>
+        </label>
         <fieldset class="tarife">
-          <legend>Tarif</legend>
+          <legend>Website-Tarif <small>(optional)</small></legend>
           <div class="tarife__opts">
             <label class="pill"><input type="radio" name="tarif" value="" checked /><span>Beraten Sie mich</span></label>
             {plans.map((p) => (
@@ -44,8 +58,9 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
           <label><span>Telefon <small>(für Rückruf)</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" /></label>
           <label>Unternehmen<input name="firma" autocomplete="organization" /></label>
         </div>
-        <label><span>Nachricht <small>(optional)</small></span><textarea name="nachricht" rows="4" placeholder="z. B. Branche, bestehende Domain …"></textarea></label>
+        <label><span>Nachricht <small>(optional)</small></span><textarea name="nachricht" rows="4" placeholder="z. B. Branche, Anzahl Mitarbeitende, bestehende Domain oder Software …"></textarea></label>
         <input type="hidden" name="branche" value="" />
+        <input type="hidden" name="paket" value="" />
         <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label class="check">
           <input type="checkbox" name="datenschutz" required />
@@ -96,7 +111,21 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     // Branche von der Branchen-Landingpage mitnehmen
     const branche = new URLSearchParams(location.search).get('branche');
     if (branche) (form.elements.namedItem('branche') as HTMLInputElement).value = branche.slice(0, 40);
+    // Interesse aus ?leistung=… (Detailseiten) vorbelegen, Paket aus ?paket=… mitnehmen
+    const params = new URLSearchParams(location.search);
+    const interesse = form.elements.namedItem('interesse') as HTMLSelectElement;
+    const tarife = form.querySelector<HTMLElement>('.tarife')!;
+    const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
+    const leistung = params.get('leistung') ?? '';
+    if (websiteSlugs.includes(leistung) || tarif) interesse.value = 'website';
+    else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
+    const paket = params.get('paket');
+    if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
+    const sync = () => { tarife.hidden = interesse.value !== '' && interesse.value !== 'website'; };
+    interesse.addEventListener('change', sync);
+    sync();
 
+    const interessText = (d: Record<string, string>) => interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
     const status = form.querySelector<HTMLElement>('.form__status')!;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -107,8 +136,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nTarif: ${data.tarif || 'Beratung'}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
-        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent('Anfrage Website-Abo')}&body=${encodeURIComponent(body)}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}\nTarif: ${data.tarif || '–'}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
+        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`Anfrage: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm wurde geöffnet – bitte senden Sie die Nachricht dort ab.';
         return;
       }
@@ -122,7 +151,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
           body: JSON.stringify({
             ...data,
             access_key: form.dataset.key,
-            subject: `Anfrage Website-Abo${data.tarif ? ` – ${data.tarif}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
+            subject: `Anfrage: ${interessText(data)}${data.paket ? ` – ${data.paket}` : ''}${data.tarif ? ` – Tarif ${data.tarif}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
             from_name: 'Waybuild Website',
             replyto: data.email,
           }),
@@ -146,6 +175,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .row { display: grid; gap: 18px; }
   @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
   label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+  .tarife[hidden] { display: none; }
+  legend small { font-weight: 400; color: var(--ink-soft); }
   input, select, textarea {
     font: inherit; font-weight: 400; color: var(--ink); width: 100%;
     padding: 12px 14px; min-height: 48px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper);

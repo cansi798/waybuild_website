@@ -1,17 +1,23 @@
 // Navigation mit Dropdown-Gruppen (Bauwelt-Muster): Desktop Dropdown, mobil aufklappbare Gruppen.
-import { leistungen } from './leistungen';
+// „Leistungen“ ist nach Säulen gruppiert (group) und wird auf dem Desktop als mehrspaltiges Panel gezeigt.
+import { leistungen, leistungAb } from './leistungen';
 import { branchen } from './branchen';
+import { SAEULEN } from './angebot';
 import type { IconName } from './site';
 
-export type NavChild = { label: string; path: string; icon?: IconName; desc?: string };
+export type NavChild = { label: string; path: string; icon?: IconName; desc?: string; group?: string };
 export type NavItem = { label: string; path?: string; children?: NavChild[] };
 
 export const NAV: NavItem[] = [
   {
     label: 'Leistungen',
     children: [
-      ...leistungen.map((l) => ({ label: l.title, path: `/leistungen/${l.slug}/`, icon: l.icon, desc: l.teaser.split(' – ')[0].split('. ')[0] })),
-      { label: 'Alle Leistungen', path: '/leistungen/' },
+      ...SAEULEN.flatMap((s) =>
+        leistungen
+          .filter((l) => l.saeule === s.id)
+          .map((l) => ({ label: l.title, path: `/leistungen/${l.slug}/`, icon: l.icon, desc: leistungAb(l), group: s.title })),
+      ),
+      { label: 'Alle Leistungen im Überblick', path: '/leistungen/' },
     ],
   },
   {
@@ -25,10 +31,10 @@ export const NAV: NavItem[] = [
   {
     label: 'Unternehmen',
     children: [
+      { label: 'Warum waybuild', path: '/warum-waybuild/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' },
       { label: 'Über uns', path: '/ueber-uns/', icon: 'user', desc: 'Wer hinter waybuild steht' },
-      { label: 'Referenzen', path: '/referenzen/', icon: 'eye', desc: 'Beispiele unserer Arbeit' },
-      { label: 'Warum kein WordPress', path: '/#warum', icon: 'gauge', desc: 'Eigene Technologie statt Baukasten' },
-      { label: 'Ratgeber', path: '/ratgeber/', icon: 'doc', desc: 'Wissen rund um Ihre Website' },
+      { label: 'Referenzen', path: '/referenzen/', icon: 'eye', desc: 'Muster-Beispiele unserer Arbeit' },
+      { label: 'Ratgeber', path: '/ratgeber/', icon: 'doc', desc: 'Wissen zu Website, Software & Cloud' },
       { label: 'Kontakt', path: '/kontakt/', icon: 'chat', desc: 'Erstgespräch, Telefon, WhatsApp' },
     ],
   },

@@ -20,25 +20,50 @@ const isCurrent = (path?: string) => path && current === href(path);
       <ul>
         {NAV.map((item) =>
           item.children ? (
-            <li class="dd">
+            <li class:list={['dd', { 'dd--mega': item.children.some((c) => c.group) }]}>
               <button class="hdr__link dd__btn" type="button" aria-expanded="false">
                 {item.label}
                 <Icon name="chevron" size={16} class="dd__chev" />
               </button>
               <div class="dd__panel">
-                <ul class="dd__list">
-                  {item.children.map((c) => (
-                    <li>
-                      <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
-                        {c.icon && <Icon name={c.icon} size={22} class="dd__icon" />}
-                        <span class="dd__text">
-                          <strong>{c.label}</strong>
-                          {c.desc && <small>{c.desc}</small>}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                {item.children.some((c) => c.group) ? (
+                  <>
+                    <div class="dd__groups">
+                      {[...new Set(item.children.filter((c) => c.group).map((c) => c.group))].map((g) => (
+                        <div class="dd__group">
+                          <p class="dd__gh">{g}</p>
+                          <ul class="dd__list">
+                            {item.children!.filter((c) => c.group === g).map((c) => (
+                              <li>
+                                <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
+                                  {c.icon && <Icon name={c.icon} size={20} class="dd__icon" />}
+                                  <span class="dd__text"><strong>{c.label}</strong>{c.desc && <small>{c.desc}</small>}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                    {item.children.filter((c) => !c.group).map((c) => (
+                      <a class="dd__item dd__all" href={href(c.path)}>{c.label} →</a>
+                    ))}
+                  </>
+                ) : (
+                  <ul class="dd__list">
+                    {item.children.map((c) => (
+                      <li>
+                        <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
+                          {c.icon && <Icon name={c.icon} size={22} class="dd__icon" />}
+                          <span class="dd__text">
+                            <strong>{c.label}</strong>
+                            {c.desc && <small>{c.desc}</small>}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </li>
           ) : (
@@ -99,7 +124,18 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__text { display: grid; line-height: 1.35; }
   .dd__text strong { font-weight: 650; font-size: 0.95rem; }
   .dd__text small { color: var(--ink-soft); font-size: 0.8rem; }
-  .dd__list li:last-child .dd__item { border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 6px; padding-top: 12px; color: var(--accent-ink); }
+  .dd:not(.dd--mega) .dd__list li:last-child .dd__item { border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 6px; padding-top: 12px; color: var(--accent-ink); }
+  /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */
+  .hdr__inner { position: relative; }
+  .dd--mega { position: static; }
+  .dd--mega .dd__panel { left: 50%; width: min(1000px, 100%); max-width: none; min-width: 0; padding: 18px; }
+  .dd--mega .dd__panel::before { content: ''; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
+  .dd__groups { columns: 3 230px; column-gap: 12px; }
+  .dd__group { break-inside: avoid; margin-bottom: 10px; }
+  .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+  .dd--mega .dd__item { padding: 7px 12px; }
+  .dd--mega .dd__text strong { font-size: 0.92rem; }
+  .dd__all { justify-content: center; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 4px; padding-top: 12px !important; font-weight: 650; color: var(--accent-ink); }
 
   .hdr__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
   .hdr__iconbtn {

@@ -15,8 +15,11 @@ import Icon from './Icon.astro';
             <details class="mm__group">
               <summary>{item.label}<Icon name="chevron" size={18} class="mm__chev" /></summary>
               <ul class="mm__sub">
-                {item.children.map((c) => (
-                  <li><a href={href(c.path)}>{c.icon && <Icon name={c.icon} size={20} class="mm__icon" />}{c.label}</a></li>
+                {item.children.map((c, i) => (
+                  <>
+                    {c.group && c.group !== item.children![i - 1]?.group && <li class="mm__gh" aria-hidden="true">{c.group}</li>}
+                    <li><a href={href(c.path)}>{c.icon && <Icon name={c.icon} size={20} class="mm__icon" />}{c.label}</a></li>
+                  </>
                 ))}
               </ul>
             </details>
@@ -60,6 +63,7 @@ import Icon from './Icon.astro';
   .mm__sub a { display: flex; align-items: center; gap: 12px; padding: 11px 8px; text-decoration: none; border-radius: 10px; color: var(--ink-soft); }
   .mm__sub a:active { background: var(--paper-2); }
   .mm__sub a :global(.mm__icon) { color: var(--accent-ink); flex: none; }
+  .mm__gh { padding: 12px 8px 2px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
   .mm__footer { display: grid; gap: 14px; margin-top: auto; }
   .mm__cta { width: 100%; }
   .mm__contact { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

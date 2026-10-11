@@ -19,8 +19,9 @@ const year = new Date().getFullYear();
     <nav aria-label="Footer">
       <h2 class="footer__h">Leistungen</h2>
       <ul>
-        {leistungen.map((l) => <li><a href={href(`/leistungen/${l.slug}/`)}>{l.title}</a></li>)}
-        <li><a href={href('/preise/')}>Preise & Tarife</a></li>
+        <li><a href={href('/leistungen/#websites')}>Websites im Abo</a></li>
+        {leistungen.filter((l) => l.saeule !== 'websites').map((l) => <li><a href={href(`/leistungen/${l.slug}/`)}>{l.title}</a></li>)}
+        <li><a href={href('/preise/')}>Preise & Pakete</a></li>
       </ul>
     </nav>
     <nav aria-label="Branchen" class="footer__branchen">
@@ -34,7 +35,7 @@ const year = new Date().getFullYear();
       <ul>
         <li><a href={href('/ueber-uns/')}>Über uns</a></li>
         <li><a href={href('/referenzen/')}>Referenzen</a></li>
-        <li><a href={href('/#warum')}>Warum kein WordPress</a></li>
+        <li><a href={href('/warum-waybuild/')}>Warum waybuild</a></li>
         <li><a href={href('/ratgeber/')}>Ratgeber</a></li>
         <li><a href={href('/kontakt/')}>Kontakt</a></li>
       </ul>

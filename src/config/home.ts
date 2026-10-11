@@ -3,14 +3,14 @@
 import type { IconName } from './site';
 
 export const HERO = {
-  eyebrow: 'Website-Abo für Unternehmen',
+  eyebrow: 'Websites, Software & Cloud für Unternehmen',
   /** Headline: „Bereit für Ihre neue [rotierender Begriff]“ */
   vor: 'Bereit für Ihre neue',
   /** Rotierende Begriffe (erster = Fallback ohne Animation). */
-  begriffe: ['Website?', 'Unternehmensseite?', 'Landingpage?', 'Online-Präsenz?'],
+  begriffe: ['Website?', 'Software?', 'Cloud?', 'Online-Präsenz?'],
   statement: 'Ihre Website. Ein Unikat. Komplett betreut.',
   unterzeile:
-    'Individuell entwickelt für Ihr Unternehmen. Hosting, Domain, E-Mail und Pflege inklusive – zum festen Monatspreis.',
+    'Individuell entwickelt für Ihr Unternehmen: Websites im Abo, Software nach Maß und Ihre eigene Cloud – betreut zum festen Preis.',
   checks: ['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'],
 };
 
@@ -45,12 +45,12 @@ export const ANGEBOT = {
 
 /** Dunkler Footer-Kopf auf jeder Seite (Bauwelt-Muster). */
 export const FOOTER_KONTAKT = {
-  pre: 'So sollte eine Website ',
+  pre: 'So sollte digitale Technik ',
   accent: 'laufen.',
   sub: 'Planbar. Schnell. Betreut.',
   text:
     'Wir verbinden individuelle Entwicklung mit klaren Prozessen, persönlicher Betreuung und ' +
-    'einem festen Monatspreis – damit Ihre Website arbeitet, während Sie Ihr Unternehmen führen.',
+    'festen Preisen – damit Website, Software und IT arbeiten, während Sie Ihr Unternehmen führen.',
   kontaktHead: 'Sprechen Sie mit uns',
   kontaktText: 'Kurze Frage, konkretes Projekt oder erst einmal unverbindlich beraten lassen?',
 };
