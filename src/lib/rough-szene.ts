@@ -1,5 +1,8 @@
-// Übernommen aus dem Bauwelt-Projekt (handgezeichnete Erklär-Szenen), Farben auf waybuild-Türkis.
-// Kleine Zeichen-Bibliothek für die rough.js-Szenen (ersetzt die Erklärvideos).
+// Übernommen aus dem Bauwelt-Projekt, Farben auf waybuild-Türkis.
+// Kleine Zeichen-Bibliothek für die Erklär-Szenen (ersetzt die Erklärvideos).
+// Kundenwunsch 13.10.2026 (Jamil): nicht mehr „gezeichnet", sondern digital/technisch –
+// rough.js läuft deshalb mit roughness 0 (exakte Linien, einfacher Strich), Schraffuren
+// werden zu glatten Flächen und Verbindungen zu Leiterbahnen (leitung()).
 // rough.js läuft NUR beim Build: `rough.generator()` braucht kein DOM und liefert
 // fertige SVG-Pfade. Im Browser landet also kein rough.js – nur statisches SVG,
 // das per CSS „von Hand" gezeichnet wird (siehe RoughSzene.astro).
@@ -10,7 +13,7 @@ const gen = rough.generator();
 
 /** Ein einzelner Strich/eine Fläche im fertigen SVG. */
 export type Element =
-  | { art: "strich"; d: string; farbe: string; breite: number; t: number; dauer: number }
+  | { art: "strich"; d: string; farbe: string; breite: number; t: number; dauer: number; fluss?: boolean }
   | { art: "flaeche"; d: string; farbe: string; breite: number; t: number }
   | {
       art: "text"; x: number; y: number; text: string; t: number;
@@ -54,7 +57,9 @@ export class Zeichner {
   get jetzt() { return this.uhr; }
 
   private opt(o: Options = {}): Options {
-    return { roughness: 1.1, bowing: 1.2, strokeWidth: 2.4, stroke: F.strich, seed: this.seed++, ...o };
+    // Digitaler Stil: exakte Linien (Einzelstrich), Schraffur → glatte Fläche
+    const raster = o.fillStyle === "hachure" ? { fillStyle: "solid" } : {};
+    return { strokeWidth: 2.2, stroke: F.strich, seed: this.seed++, ...o, ...raster, roughness: 0, bowing: 0, disableMultiStroke: true, disableMultiStrokeFill: true };
   }
 
   /** Wandelt ein rough-Drawable in einzelne, nacheinander gezeichnete Striche. */
@@ -97,6 +102,41 @@ export class Zeichner {
   }
   kurve(punkte: [number, number][], o?: Options, dauer = 1) {
     return this.aufnehmen(gen.curve(punkte, this.opt(o)), dauer);
+  }
+  /**
+   * Leiterbahn: rechtwinklige Verbindung mit kleinen Rundungen an den Ecken und
+   * Kontaktpunkten an beiden Enden. Nach dem Zeichnen „fließen" Datenpunkte darüber
+   * (CSS-Klasse rs-s--fluss).
+   */
+  leitung(punkte: [number, number][], o: Options = {}, dauer = 0.6) {
+    const r = 10;
+    let d = `M${punkte[0][0]} ${punkte[0][1]}`;
+    for (let i = 1; i < punkte.length; i++) {
+      const [x, y] = punkte[i];
+      const nach = punkte[i + 1];
+      if (!nach) { d += `L${x} ${y}`; break; }
+      const [px, py] = punkte[i - 1];
+      const v1 = [Math.sign(x - px), Math.sign(y - py)], v2 = [Math.sign(nach[0] - x), Math.sign(nach[1] - y)];
+      const r1 = Math.min(r, Math.hypot(x - px, y - py) / 2), r2 = Math.min(r, Math.hypot(nach[0] - x, nach[1] - y) / 2);
+      d += `L${x - v1[0] * r1} ${y - v1[1] * r1}Q${x} ${y} ${x + v2[0] * r2} ${y + v2[1] * r2}`;
+    }
+    const start = this.ziel.length;
+    this.pfad(d, o, dauer);
+    for (const e of this.ziel.slice(start)) if (e.art === "strich") e.fluss = true;
+    const farbe = (o.stroke as string) ?? F.gold;
+    const [a, b] = [punkte[0], punkte[punkte.length - 1]];
+    this.kreis(a[0], a[1], 7, { fill: farbe, fillStyle: "solid", stroke: farbe, strokeWidth: 1 }, 0.1);
+    const t0 = this.uhr; this.bei(t0 + dauer);
+    this.kreis(b[0], b[1], 7, { fill: farbe, fillStyle: "solid", stroke: farbe, strokeWidth: 1 }, 0.1);
+    return this.bei(t0);
+  }
+  /** Letzten Strich als „Datenring" markieren (läuft nach dem Zeichnen gestrichelt im Kreis). */
+  markiereFluss() {
+    for (let i = this.ziel.length - 1; i >= 0; i--) {
+      const e = this.ziel[i];
+      if (e.art === "strich") { e.fluss = true; break; }
+    }
+    return this;
   }
   /** Abgerundetes Rechteck (rough kennt keins) als Pfad. */
   rundRechteck(x: number, y: number, b: number, h: number, r: number, o?: Options, dauer = 0.8) {

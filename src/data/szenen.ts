@@ -163,12 +163,12 @@ function weg(a: Ansicht): Szene {
     if (i < 3) {
       z.bei(t + 0.85);
       const [nx, ny] = pos[i + 1];
+      // Leiterbahn (digitaler Stil): mobil im Zickzack nach unten, quer als gerade Bahn
+      const midY = (cy + 44 + ny - 52) / 2;
       const pkt: [number, number][] = mobil
-        ? i % 2 === 0
-          ? [[cx + 30, cy + 44], [cx + 90, cy + 70], [nx - 60, ny - 76], [nx - 4, ny - 52]]
-          : [[cx - 30, cy + 44], [cx - 90, cy + 70], [nx + 60, ny - 76], [nx + 4, ny - 52]]
-        : [[cx + 62, cy + 4], [cx + 110, cy - 16], [nx - 100, ny + 18], [nx - 62, ny]];
-      z.kurve(pkt, { stroke: F.gold, strokeWidth: 2.6, roughness: 1.4 }, 0.6);
+        ? [[cx, cy + 44], [cx, midY], [nx, midY], [nx, ny - 52]]
+        : [[cx + 62, cy], [nx - 62, ny]];
+      z.leitung(pkt, { stroke: F.gold, strokeWidth: 2.4 }, 0.6);
     }
   });
   return { breite: B, hoehe: H, elemente: z.elemente, ende: 0.2 + 3 * 1.15 + 1.2 };
@@ -198,7 +198,8 @@ function betreuung(a: Ansicht): Szene {
       const sx = links ? ph.x - 8 : ph.x + ph.b + 8;
       const sy = ph.y + 70 + (i % 2) * 110;
       const ex = links ? cx + 110 : cx - 110;
-      z.kurve([[sx, sy], [(sx + ex) / 2, sy + (i % 2 ? 14 : -14)], [ex, cy - 6]], { stroke: F.gold, strokeWidth: 2.2, roughness: 1.3 }, 0.5);
+      const mx = (sx + ex) / 2;
+      z.leitung([[sx, sy], [mx, sy], [mx, cy - 6], [ex, cy - 6]], { stroke: F.gold, strokeWidth: 2.2 }, 0.5);
     }
     z.bei(t);
     z.gruppe('stempel', () => BETREUUNG_TEILE[i].motiv(z, cx, mobil ? cy - 22 : cy - 14, 1));
@@ -233,7 +234,8 @@ function siegel(a: Ansicht): Szene {
     z.bei(t);
     z.gruppe('stempel', () => {
       z.kreis(cx, cy, d, { strokeWidth: 2.6 }, 0.5);
-      z.kreis(cx, cy, d - 14, { stroke: F.gold, strokeWidth: 2, roughness: 1.4 }, 0.5);
+      z.kreis(cx, cy, d - 14, { stroke: F.gold, strokeWidth: 2 }, 0.5);
+      z.markiereFluss();
       z.bei(t + 0.3);
       SIEGEL_MOTIV[v.id]?.(z, cx, cy, s);
     });

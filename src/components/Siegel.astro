@@ -1,5 +1,5 @@
 ---
-// „Unsere Versprechen“ – sechs eigene Zusagen als gezeichnete Siegel (Bauwelt-Muster).
+// „Unsere Versprechen“ – sechs eigene Zusagen als digitale Siegel (Bauwelt-Muster).
 // Rechtlich: eigene Zusagen, klar als solche gekennzeichnet – keine fremden Prüfzeichen.
 import SectionHead from './SectionHead.astro';
 import RoughSzene from './RoughSzene.astro';
@@ -16,7 +16,7 @@ const { fakten = [] } = Astro.props;
     {fakten.length > 0 && (
       <ul class="check-row siegel__fakten">{fakten.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
     )}
-    <RoughSzene szene="siegel" label={`Sechs gezeichnete Siegel werden nacheinander aufgestempelt: ${VERSPRECHEN.map((v) => v.title).join(', ')}.`} />
+    <RoughSzene szene="siegel" label={`Sechs digitale Siegel erscheinen nacheinander: ${VERSPRECHEN.map((v) => v.title).join(', ')}.`} />
     <ul class="siegel__liste">
       {VERSPRECHEN.map((v) => (
         <li><details><summary><Icon name={v.icon} size={18} /> {v.title}</summary><p>{v.long}</p></details></li>
