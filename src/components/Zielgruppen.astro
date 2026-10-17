@@ -1,0 +1,38 @@
+---
+// Zielgruppe laut Vision: kleine und mittlere Unternehmen – sechs Kacheln, verlinkt wo es eine Branchenseite gibt.
+import { href } from '../lib/paths';
+import { ZIELGRUPPEN } from '../config/home';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section section--sand" id="zielgruppen" aria-labelledby="zg-h">
+  <div class="wrap">
+    <SectionHead center eyebrow="Für wen" pre="Für kleine und mittlere " accent="Unternehmen." text="Sie konzentrieren sich auf Ihr Kerngeschäft – Ihre digitale Präsenz liegt bei uns in professionellen Händen." id="zg-h" />
+    <ul class="zg">
+      {ZIELGRUPPEN.map((z) => (
+        <li class="reveal">
+          {z.path ? (
+            <a class="zg__item" href={href(z.path)}><span class="zg__icon"><Icon name={z.icon} size={24} /></span><span>{z.title}</span></a>
+          ) : (
+            <span class="zg__item"><span class="zg__icon"><Icon name={z.icon} size={24} /></span><span>{z.title}</span></span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .zg { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 720px) { .zg { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
+  @media (min-width: 1100px) { .zg { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .zg__item {
+    height: 100%; display: grid; justify-items: center; align-content: start; gap: 10px; padding: 18px 10px;
+    text-align: center; font-weight: 650; font-size: 0.95rem; line-height: 1.25; hyphens: auto; overflow-wrap: break-word;
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px; text-decoration: none;
+  }
+  a.zg__item { transition: border-color 0.2s ease, transform 0.2s ease; }
+  a.zg__item:hover { border-color: var(--dark); transform: translateY(-2px); }
+  .zg__icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent-ink); }
+</style>

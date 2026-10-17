@@ -1,5 +1,5 @@
 // Handgezeichnete Erklär-Szenen (rough.js, beim Build gerendert) – Muster aus dem Bauwelt-Projekt,
-// Motive auf „Websites im Abo“ übertragen. Jede Szene hochkant (Handy) und quer (Desktop).
+// Motive auf „Website as a Service“ übertragen (Vision 17.10.2026). Jede Szene hochkant (Handy) und quer (Desktop).
 import { Zeichner, F, type Szene } from '../lib/rough-szene';
 import { steps } from '../config/site';
 import { VERSPRECHEN } from '../config/versprechen';
@@ -18,41 +18,20 @@ function sprechblasen(z: Zeichner, cx: number, cy: number, s = 1) {
   z.linie(cx + 26 * s, cy + 28 * s, cx + 32 * s, cy + 38 * s, {}, 0.2);
 }
 
-/** Browserfenster mit Stift = Entwurf */
-function entwurf(z: Zeichner, cx: number, cy: number, s = 1) {
-  const x = cx - 34 * s, y = cy - 28 * s, b = 68 * s, h = 54 * s;
-  z.rundRechteck(x, y, b, h, 6 * s);
-  z.linie(x, y + 11 * s, x + b, y + 11 * s, { strokeWidth: 1.8 }, 0.2);
-  for (let i = 0; i < 3; i++) z.kreis(x + (7 + i * 8) * s, y + 5.5 * s, 3.5 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1 }, 0.1);
-  z.rechteck(x + 8 * s, y + 19 * s, 26 * s, 8 * s, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 1.4 }, 0.3);
-  z.linie(x + 8 * s, y + 34 * s, x + 40 * s, y + 34 * s, { stroke: F.grau, strokeWidth: 1.8 }, 0.2);
-  z.linie(x + 8 * s, y + 42 * s, x + 30 * s, y + 42 * s, { stroke: F.grau, strokeWidth: 1.8 }, 0.2);
-  z.rechteck(x + 44 * s, y + 19 * s, 18 * s, 26 * s, { fill: F.gold, fillStyle: 'hachure', hachureGap: 4, fillWeight: 1.2, strokeWidth: 1.4 }, 0.3);
-  // Stift unten rechts
-  z.pfad(`M${cx + 18 * s} ${cy + 36 * s}L${cx + 40 * s} ${cy + 14 * s}l${6 * s} ${6 * s}L${cx + 24 * s} ${cy + 42 * s}Z`, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2 }, 0.4);
-}
-
-/** Rakete = Livegang */
-function rakete(z: Zeichner, cx: number, cy: number, s = 1) {
-  z.pfad(
-    `M${cx} ${cy - 36 * s}Q${cx + 22 * s} ${cy - 12 * s} ${cx + 12 * s} ${cy + 22 * s}H${cx - 12 * s}Q${cx - 22 * s} ${cy - 12 * s} ${cx} ${cy - 36 * s}Z`,
-    { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2.4 },
-  );
-  z.kreis(cx, cy - 8 * s, 12 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1.8 }, 0.3);
-  z.pfad(`M${cx - 12 * s} ${cy + 8 * s}L${cx - 26 * s} ${cy + 26 * s}L${cx - 12 * s} ${cy + 22 * s}`, { strokeWidth: 2 }, 0.3);
-  z.pfad(`M${cx + 12 * s} ${cy + 8 * s}L${cx + 26 * s} ${cy + 26 * s}L${cx + 12 * s} ${cy + 22 * s}`, { strokeWidth: 2 }, 0.3);
+/** Chip mit „KI“ = KI-gestützte Umsetzung */
+function kiChip(z: Zeichner, cx: number, cy: number, s = 1) {
+  const h = 26 * s;
+  for (let i = -1; i <= 1; i++) {
+    const o = i * 14 * s;
+    z.linie(cx + o, cy - h, cx + o, cy - h - 10 * s, { strokeWidth: 2 }, 0.15);
+    z.linie(cx + o, cy + h, cx + o, cy + h + 10 * s, { strokeWidth: 2 }, 0.15);
+    z.linie(cx - h, cy + o, cx - h - 10 * s, cy + o, { strokeWidth: 2 }, 0.15);
+    z.linie(cx + h, cy + o, cx + h + 10 * s, cy + o, { strokeWidth: 2 }, 0.15);
+  }
+  z.rundRechteck(cx - h, cy - h, 2 * h, 2 * h, 7 * s, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2.4 });
   z.gruppe('puls', () => {
-    z.pfad(`M${cx - 6 * s} ${cy + 24 * s}Q${cx} ${cy + 44 * s} ${cx + 6 * s} ${cy + 24 * s}`, { stroke: F.gold, strokeWidth: 2.6, roughness: 0.6 }, 0.2);
+    z.text(cx, cy + 7 * s, 'KI', { groesse: 20 * s, farbe: F.goldDunkel });
   });
-}
-
-/** Schild mit Haken = Betreuung */
-function schild(z: Zeichner, cx: number, cy: number, s = 1) {
-  z.pfad(
-    `M${cx} ${cy - 34 * s}L${cx + 30 * s} ${cy - 22 * s}V${cy + 2 * s}Q${cx + 30 * s} ${cy + 26 * s} ${cx} ${cy + 36 * s}Q${cx - 30 * s} ${cy + 26 * s} ${cx - 30 * s} ${cy + 2 * s}V${cy - 22 * s}Z`,
-    { fill: F.goldHell, fillStyle: 'hachure', hachureGap: 5, fillWeight: 1.2, strokeWidth: 2.4 },
-  );
-  z.pfad(`M${cx - 13 * s} ${cy + 2 * s}l${9 * s} ${9 * s}l${18 * s} -${20 * s}`, { stroke: F.goldDunkel, strokeWidth: 3, roughness: 0.5 }, 0.4);
 }
 
 function dokument(z: Zeichner, cx: number, cy: number, s = 1) {
@@ -128,18 +107,36 @@ const SIEGEL_MOTIV: Record<string, (z: Zeichner, cx: number, cy: number, s: numb
     z.kreis(cx - 11 * s, cy + 8 * s, 4 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1 }, 0.1);
   },
   code: (z, cx, cy, s) => z.text(cx, cy + 8 * s, '</>', { groesse: 20 * s, farbe: F.goldDunkel }),
+  // Geschäftsmodell (Vision 17.10.2026)
+  einrichtung: (z, cx, cy, s) => z.text(cx, cy + 8 * s, '0 €', { groesse: 21 * s, farbe: F.goldDunkel }),
+  laufzeit: (z, cx, cy, s) => {
+    z.text(cx, cy + 4 * s, '24', { groesse: 24 * s, farbe: F.goldDunkel });
+    z.text(cx, cy + 20 * s, 'Monate', { groesse: 9 * s, gewicht: 600, farbe: F.text2 });
+  },
+  eigentum: (z, cx, cy, s) => z.text(cx, cy + 8 * s, '</>', { groesse: 20 * s, farbe: F.goldDunkel }),
+  transparenz: (z, cx, cy, s) => {
+    z.pfad(`M${cx - 22 * s} ${cy}Q${cx} ${cy - 20 * s} ${cx + 22 * s} ${cy}Q${cx} ${cy + 20 * s} ${cx - 22 * s} ${cy}Z`, { strokeWidth: 2.2 }, 0.4);
+    z.kreis(cx, cy, 13 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1.4 }, 0.2);
+  },
+  lockin: (z, cx, cy, s) => {
+    z.rundRechteck(cx - 14 * s, cy - 2 * s, 28 * s, 22 * s, 4 * s, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2.2 }, 0.3);
+    z.pfad(`M${cx - 8 * s} ${cy - 2 * s}V${cy - 12 * s}A${8 * s} ${8 * s} 0 0 1 ${cx + 7 * s} ${cy - 16 * s}`, { stroke: F.goldDunkel, strokeWidth: 2.6 }, 0.3);
+  },
 };
 
 /* ─────────────── Szenen ─────────────── */
 
-const WEG_MOTIVE = [sprechblasen, entwurf, rakete, schild];
-const WEG_UNTER: string[][] = [['20 Minuten, kostenlos'], ['Ihr individuelles Design'], ['In 14 Tagen online'], ['Wir kümmern uns', 'dauerhaft um alles']];
+// Arbeitsweise (Vision 17.10.2026): Beratung → KI-Umsetzung → kontinuierliche Verbesserung
+const WEG_MOTIVE = [sprechblasen, kiChip, diagramm];
+const WEG_UNTER: string[][] = [['Persönlich, mit Ihnen'], ['In Rekordzeit online'], ['Kontinuierlich,', 'Schritt für Schritt']];
 
 function weg(a: Ansicht): Szene {
   const z = new Zeichner();
   const mobil = a === 'mobil';
-  const B = mobil ? 360 : 1000, H = mobil ? 540 : 300;
-  const pos: [number, number][] = mobil ? [[80, 76], [280, 206], [80, 336], [280, 466]] : [[125, 96], [375, 96], [625, 96], [875, 96]];
+  const n = WEG_MOTIVE.length;
+  const B = mobil ? 360 : 1000;
+  const pos: [number, number][] = WEG_MOTIVE.map((_, i) => (mobil ? [i % 2 ? 280 : 80, 76 + i * 130] : [(B / n) * (i + 0.5), 96]));
+  const H = mobil ? pos[n - 1][1] + 74 : 300;
 
   pos.forEach(([cx, cy], i) => {
     const t = 0.2 + i * 1.15;
@@ -160,7 +157,7 @@ function weg(a: Ansicht): Szene {
       z.text(cx, 206, steps[i].title, { groesse: 18 });
       WEG_UNTER[i].forEach((zeile, k) => z.text(cx, 232 + k * 20, zeile, { groesse: 14.5, gewicht: 400, farbe: F.text2 }));
     }
-    if (i < 3) {
+    if (i < n - 1) {
       z.bei(t + 0.85);
       const [nx, ny] = pos[i + 1];
       // Leiterbahn (digitaler Stil): mobil im Zickzack nach unten, quer als gerade Bahn
@@ -171,7 +168,7 @@ function weg(a: Ansicht): Szene {
       z.leitung(pkt, { stroke: F.gold, strokeWidth: 2.4 }, 0.6);
     }
   });
-  return { breite: B, hoehe: H, elemente: z.elemente, ende: 0.2 + 3 * 1.15 + 1.2 };
+  return { breite: B, hoehe: H, elemente: z.elemente, ende: 0.2 + (n - 1) * 1.15 + 1.2 };
 }
 
 const BETREUUNG_TEILE = [

@@ -1,24 +1,33 @@
 ---
-// Ablauf „In 14 Tagen live“ als animierte Szene (digitaler Stil) in vier Stationen (Bauwelt-Muster).
+// Arbeitsweise „Beratung → KI-Umsetzung → kontinuierliche Verbesserung“ als animierte Szene (digitaler Stil).
 import { href } from '../lib/paths';
+import { steps, BERATUNG_THEMEN } from '../config/site';
 import SectionHead from './SectionHead.astro';
 import RoughSzene from './RoughSzene.astro';
 ---
 
-<section class="section" id="ablauf" aria-labelledby="ablauf-h">
+<section class="section section--sand" id="ablauf" aria-labelledby="ablauf-h">
   <div class="wrap">
-    <SectionHead center eyebrow="So läuft Ihr Projekt" pre="Vom Erstgespräch bis zur Website in " accent="14 Tagen" id="ablauf-h" />
+    <SectionHead center eyebrow="So arbeiten wir" pre="Erst Strategie. Dann " accent="KI-Tempo." text="KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung." id="ablauf-h" />
     <RoughSzene
       szene="weg"
-      label="Animierter Ablauf in vier Stationen: 1. Erstgespräch – 20 Minuten, kostenlos. 2. Entwurf – Ihr individuelles Design. 3. Livegang – in 14 Tagen online. 4. Betreuung – wir kümmern uns dauerhaft um alles."
+      label={`Animierter Ablauf in drei Stationen: ${steps.map((s, i) => `${i + 1}. ${s.title} – ${s.short}`).join('. ')}.`}
     />
+    <div class="themen">
+      <p class="themen__h">Gemeinsam entwickeln wir:</p>
+      <ul>{BERATUNG_THEMEN.map((t) => <li>{t}</li>)}</ul>
+    </div>
     <div class="weg__actions nur-desktop">
       <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Mit Schritt 1 starten</a>
-      <a class="btn btn--lg btn--ghost" href={href('/leistungen/')}>Leistungen ansehen</a>
     </div>
   </div>
 </section>
 
 <style>
-  .weg__actions { display: flex; flex-wrap: wrap; gap: 12px 16px; justify-content: center; margin-top: 8px; }
+  .themen { display: grid; justify-items: center; gap: 10px; text-align: center; }
+  .themen__h { margin: 0; font-weight: 650; font-size: 0.95rem; color: var(--ink-soft); }
+  .themen ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 760px; }
+  .themen li { padding: 6px 14px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; font-size: 0.9rem; }
+  .themen li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; }
+  .weg__actions { display: flex; flex-wrap: wrap; gap: 12px 16px; justify-content: center; margin-top: 28px; }
 </style>

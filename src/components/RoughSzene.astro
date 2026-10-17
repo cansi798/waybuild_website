@@ -102,7 +102,7 @@ const desktop = SZENEN[szene]("desktop");
   .rszene__bild { max-width: 420px; margin-inline: auto; position: relative; isolation: isolate; }
   /* Technisches Punkteraster hinter der Szene, zum Rand hin ausgeblendet */
   .rszene__bild::before {
-    content: ""; position: absolute; inset: -18px; z-index: -1; pointer-events: none;
+    content: ""; position: absolute; inset: -18px -12px; z-index: -1; pointer-events: none;
     background-image: radial-gradient(circle, rgb(0 166 161 / 0.22) 1.1px, transparent 1.6px);
     background-size: 22px 22px;
     -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 78%);

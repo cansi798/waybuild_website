@@ -1,58 +1,68 @@
-// Startseiten-Inhalte nach dem Bauwelt-Muster (Wunsch 11.10.2026), übertragen auf
-// „Websites im Abo“ – Ausrichtung B2B: Unternehmen, Selbstständige, Institutionen.
+// Startseiten-Inhalte nach der Unternehmensvision (Jamil, 17.10.2026):
+// „Wir bauen keine Websites. Wir bauen digitale Unternehmensplattformen.“ – wenig Text, viel Struktur.
+// Ausrichtung B2B: kleine und mittlere Unternehmen.
 import type { IconName } from './site';
 
 export const HERO = {
-  eyebrow: 'Websites, Software & Cloud für Unternehmen',
-  /** Headline: „Bereit für Ihre neue [rotierender Begriff]“ */
-  vor: 'Bereit für Ihre neue',
-  /** Rotierende Begriffe (erster = Fallback ohne Animation). */
-  begriffe: ['Website?', 'Software?', 'Cloud?', 'Online-Präsenz?'],
-  statement: 'Ihre Website. Ein Unikat. Komplett betreut.',
-  unterzeile:
-    'Individuell entwickelt für Ihr Unternehmen: Websites im Abo, Software nach Maß und Ihre eigene Cloud – betreut zum festen Preis.',
-  checks: ['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'],
+  eyebrow: 'Keine klassische Webagentur',
+  /** Erste Zeile (durchgestrichen) + zweite Zeile mit Akzent */
+  nicht: 'Wir bauen keine Websites.',
+  vor: 'Wir bauen digitale',
+  /** Soft-Hyphen, damit das lange Wort auf dem Handy sauber umbricht */
+  akzent: 'Unternehmens\u00adplattformen.',
+  claim: ['Menschliche Beratung.', 'KI-gestützte Umsetzung.', 'Kontinuierliche Verbesserung.'],
+  unterzeile: 'Für kleine und mittlere Unternehmen – ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen.',
 };
 
-/** Zahlen-Band unter dem Hero – nur belegbare Zusagen, keine erfundenen Kundenzahlen. */
-export const STATS: { value: number; suffix: string; label: string }[] = [
-  { value: 14, suffix: ' Tage', label: 'bis Ihre Website live ist' },
-  { value: 90, suffix: '+', label: 'PageSpeed auf dem Smartphone' },
-  { value: 12, suffix: ' Monate', label: 'Laufzeit statt 24' },
-  { value: 1, suffix: ' Werktag', label: 'bis zur Antwort auf Ihre Anfrage' },
+/** Zielgruppe (Vision: KMU). Link nur, wo es eine passende Branchenseite gibt. */
+export const ZIELGRUPPEN: { icon: IconName; title: string; path?: string }[] = [
+  { icon: 'tools', title: 'Handwerksbetriebe', path: '/website-fuer/handwerker/' },
+  { icon: 'user', title: 'Dienstleister' },
+  { icon: 'compass', title: 'Beratungsunternehmen' },
+  { icon: 'cpu', title: 'IT-Unternehmen' },
+  { icon: 'home', title: 'Immobilienunternehmen', path: '/website-fuer/immobilienmakler/' },
+  { icon: 'pin', title: 'Lokale Betriebe', path: '/website-fuer/' },
 ];
 
-/** „Ein Ansprechpartner. Alles im Blick.“ – Betreuung statt Kundenportal-Demo. */
-export const BETREUUNG = {
-  sub:
-    'Schluss mit Ticketsystemen, Agentur-Warteschleifen und der Frage, wer sich eigentlich kümmert. ' +
-    'Bei uns haben Sie einen Ansprechpartner – und jederzeit den Überblick.',
-  kacheln: [
-    { icon: 'chat' as IconName, title: 'Änderungen per E-Mail', text: 'Kurze Nachricht genügt – wir setzen um, im Tarif inklusive.' },
-    { icon: 'doc' as IconName, title: 'Rechnungen & Verträge', text: 'Eine Monatsrechnung, voll absetzbar. Keine Überraschungen.' },
-    { icon: 'chart' as IconName, title: 'Zahlen im Blick', text: 'Besucher, Anfragen, Ladezeit – verständlich aufbereitet.' },
-    { icon: 'refresh' as IconName, title: 'Immer aktuell', text: 'Updates, Backups und Sicherheit laufen im Hintergrund.' },
+/** VISION „Die intelligente Website“ – ausdrücklich in Entwicklung, kein heutiges Feature. */
+export const VISION = {
+  datenquellen: [
+    'Besucherstatistiken', 'Kontaktanfragen', 'Suchbegriffe', 'CRM-Daten', 'Google Search Console',
+    'Bewertungen', 'Referenzen', 'Angebotsdaten', 'Conversion-Daten',
   ],
+  /** Beispiel-Szenario aus der Vision (Solarteur, 6 Monate) – als Beispiel gekennzeichnet */
+  erkennt: [
+    { wert: 70, text: 'der Anfragen kommen über Photovoltaik' },
+    { text: 'Gewerbekunden konvertieren besser als Privatkunden' },
+    { text: 'Bestimmte Referenzen schaffen mehr Vertrauen' },
+    { text: 'Ein Kalkulator erhöht die Anfragequote deutlich' },
+  ] as { wert?: number; text: string }[],
+  reagiert: ['Erfolgreiche Leistungen sichtbarer', 'Neue Landingpages', 'Referenzen automatisch hervorheben', 'Customer Journey optimieren'],
 };
 
-/** Tarif-Sektion („Transparente Preise statt Agentur-Angebote“). */
-export const ANGEBOT = {
-  sub:
-    'Wir glauben, dass Website-Kosten planbar sein sollten. Deshalb gibt es bei uns drei klare Tarife ' +
-    'mit festem Monatspreis – statt fünfstelliger Agentur-Angebote und versteckter Zusatzkosten.',
-  punkte: ['Fester Monatspreis, netto', 'Alles inklusive: Hosting, Domain, E-Mail, Pflege', '12 Monate Laufzeit, danach monatlich kündbar', 'Als Betriebsausgabe voll absetzbar'],
-};
+/** „Die Website ist nur der erste Schritt“ – Bausteine des digitalen Betriebssystems für KMU. */
+export const PLATTFORM: { icon: IconName; title: string; heute?: boolean }[] = [
+  { icon: 'layout', title: 'Website', heute: true },
+  { icon: 'server', title: 'Hosting', heute: true },
+  { icon: 'portal', title: 'Kundenportal' },
+  { icon: 'users', title: 'CRM' },
+  { icon: 'folder', title: 'Dokumenten\u00admanagement' },
+  { icon: 'cloud', title: 'Nextcloud White Label' },
+  { icon: 'ticket', title: 'Ticketing' },
+  { icon: 'zap', title: 'Automati\u00adsierungen' },
+  { icon: 'bot', title: 'KI-Agenten' },
+  { icon: 'code', title: 'Individual\u00adsoftware' },
+  { icon: 'book', title: 'Wissens\u00addatenbanken' },
+];
 
-/** Dunkler Footer-Kopf auf jeder Seite (Bauwelt-Muster). */
+/** Dunkler Footer-Kopf auf jeder Seite = Abschluss-CTA. */
 export const FOOTER_KONTAKT = {
-  pre: 'So sollte digitale Technik ',
-  accent: 'laufen.',
-  sub: 'Planbar. Schnell. Betreut.',
-  text:
-    'Wir verbinden individuelle Entwicklung mit klaren Prozessen, persönlicher Betreuung und ' +
-    'festen Preisen – damit Website, Software und IT arbeiten, während Sie Ihr Unternehmen führen.',
+  pre: 'Bereit für den ',
+  accent: 'ersten Schritt?',
+  sub: 'Menschliche Beratung. KI-gestützte Umsetzung. Kontinuierliche Verbesserung.',
+  text: 'Im kostenlosen Erstgespräch klären wir, wo Ihr Unternehmen digital steht – und was Ihre Website leisten soll.',
   kontaktHead: 'Sprechen Sie mit uns',
-  kontaktText: 'Kurze Frage, konkretes Projekt oder erst einmal unverbindlich beraten lassen?',
+  kontaktText: 'Kurze Frage, konkretes Vorhaben oder erst einmal unverbindlich beraten lassen?',
 };
 
 /** Muster-Referenzen (Wunsch 11.10.2026: „Muster“) – klar als Beispiele gekennzeichnet,
@@ -64,12 +74,4 @@ export const MUSTER: { branche: string; typ: string; farbe: string; hinweis: str
   { branche: 'B2B-Dienstleister', typ: 'Landingpage', farbe: '#545454', hinweis: 'Ein Angebot, ein Ziel: Anfragen' },
   { branche: 'Fachhandel', typ: 'Online-Shop', farbe: '#00a6a1', hinweis: 'Katalog, Warenkorb, Bezahlung' },
   { branche: 'Immobilienbüro', typ: 'Website-Relaunch', farbe: '#006b68', hinweis: 'Alte WordPress-Seite abgelöst, schneller und sicherer' },
-];
-
-/** Vorteile, die auf Unternehmen zielen (B2B-Ausrichtung). */
-export const B2B_NUTZEN = [
-  'Kundengewinnung: gefunden werden bei Google und KI-Suchen',
-  'Verlässlichkeit: Antwort in einem Werktag, fester Ansprechpartner',
-  'Planbarkeit: fester Monatspreis, als Betriebsausgabe absetzbar',
-  'Entlastung: Technik, Hosting, E-Mail und Pflege übernehmen wir',
 ];

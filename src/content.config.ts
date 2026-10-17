@@ -11,9 +11,7 @@ const ratgeber = defineCollection({
     /** Kurzfassung ganz oben – für Eilige (und KI-Suchen) */
     kurz: z.array(z.string()).min(2).max(4),
     datum: z.coerce.date(),
-    /** Tarif, der am Ende empfohlen wird */
-    tarif: z.enum(['start', 'business', 'premium']).default('business'),
-    /** Optional: Leistung (slug aus config/leistungen.ts), die statt des Tarifs am Ende empfohlen wird */
+    /** Optional: Leistung (slug aus config/leistungen.ts), die statt „Website as a Service“ am Ende empfohlen wird */
     leistung: z.string().optional(),
   }),
 });

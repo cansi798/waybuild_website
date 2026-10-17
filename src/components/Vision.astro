@@ -1,0 +1,110 @@
+---
+// VISION „Die intelligente Website“ (Unternehmensvision 17.10.2026) – ausdrücklich als Vision/in Entwicklung
+// gekennzeichnet, KEIN heutiges Feature. Links: Datenquellen, Mitte: Datenfluss, rechts: Solarteur-Beispiel.
+import { VISION } from '../config/home';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section section--dark vision" id="vision" aria-labelledby="vision-h">
+  <div class="wrap">
+    <SectionHead eyebrow="Unsere Vision · in Entwicklung" pre="Die intelligente " accent="Website." text="Eine Website sollte lernen, sich entwickeln und aktiv zum Unternehmenserfolg beitragen." id="vision-h" />
+
+    <div class="vis">
+      <div class="vis__daten">
+        <p class="vis__h">Verbunden mit Ihren Daten</p>
+        <ul class="vis__chips">
+          {VISION.datenquellen.map((d, i) => <li style={`--i: ${i}`}>{d}</li>)}
+        </ul>
+      </div>
+
+      <div class="vis__flow" aria-hidden="true">
+        <span class="vis__bahn"></span>
+        <span class="vis__kern"><Icon name="spark" size={26} /></span>
+        <span class="vis__bahn"></span>
+      </div>
+
+      <article class="vis__bsp reveal" aria-labelledby="bsp-h">
+        <p class="vis__label" id="bsp-h">Beispiel · Solarteur nach 6 Monaten</p>
+        <p class="vis__sub">Die Plattform erkennt</p>
+        <ul class="vis__erkennt">
+          {VISION.erkennt.map((e) => (
+            <li>
+              {e.wert ? (
+                <>
+                  <span class="vis__bar"><span style={`--w: ${e.wert}%`}></span></span>
+                  <span><b>{e.wert} %</b> {e.text}</span>
+                </>
+              ) : (
+                <><Icon name="chart" size={18} /><span>{e.text}</span></>
+              )}
+            </li>
+          ))}
+        </ul>
+        <p class="vis__sub">Die Website reagiert</p>
+        <ul class="vis__reagiert">
+          {VISION.reagiert.map((r) => <li><Icon name="check" size={16} /> {r}</li>)}
+        </ul>
+      </article>
+    </div>
+
+    <p class="vis__fazit">Vom digitalen Schaufenster zum <span class="accent">aktiven Vertriebsmitarbeiter.</span></p>
+    <p class="vis__note">Beispielszenario. Die selbstoptimierende Plattform ist unsere Vision – wir entwickeln sie gerade.</p>
+  </div>
+</section>
+
+<style>
+  .vision { position: relative; overflow: hidden; }
+  .vision::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
+    background-image: radial-gradient(circle, rgb(0 166 161 / 0.25) 1.1px, transparent 1.6px); background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
+  }
+  .vision .wrap { position: relative; }
+  .vis { display: grid; gap: 18px; align-items: center; }
+  @media (min-width: 960px) { .vis { grid-template-columns: 1fr 120px 1.05fr; gap: 12px; } }
+
+  .vis__h, .vis__sub { margin: 0 0 12px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+  .vis__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .vis__chips li {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 999px; font-size: 0.9rem; font-weight: 600;
+    background: rgb(255 255 255 / 7%); border: 1px solid var(--dark-line); color: var(--white);
+  }
+  .vis__chips li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: vis-blink 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * 0.27s); }
+  @keyframes vis-blink { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgb(0 166 161 / 60%); } 50% { opacity: 0.35; box-shadow: 0 0 0 5px rgb(0 166 161 / 0%); } }
+
+  /* Datenfluss: Leiterbahn mit laufenden Datenpunkten */
+  .vis__flow { display: flex; flex-direction: column; align-items: center; gap: 0; height: 110px; }
+  @media (min-width: 960px) { .vis__flow { flex-direction: row; height: auto; } }
+  .vis__bahn {
+    flex: 1; width: 3px; min-height: 30px; border-radius: 2px;
+    background: repeating-linear-gradient(180deg, var(--accent) 0 6px, transparent 6px 14px); background-size: 3px 14px;
+    animation: vis-fluss-v 0.9s linear infinite; filter: drop-shadow(0 0 3px rgb(0 166 161 / 50%));
+  }
+  @media (min-width: 960px) {
+    .vis__bahn { width: auto; height: 3px; min-height: 0; background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 14px); background-size: 14px 3px; animation-name: vis-fluss-h; }
+  }
+  @keyframes vis-fluss-v { to { background-position: 0 14px; } }
+  @keyframes vis-fluss-h { to { background-position: 14px 0; } }
+  .vis__kern { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--accent); color: var(--dark); box-shadow: 0 0 0 6px rgb(0 166 161 / 20%), 0 0 28px rgb(0 166 161 / 55%); animation: vis-puls 2.4s ease-in-out infinite; }
+  @keyframes vis-puls { 50% { box-shadow: 0 0 0 12px rgb(0 166 161 / 8%), 0 0 40px rgb(0 166 161 / 70%); } }
+
+  /* Beispiel-Karte */
+  .vis__bsp { background: var(--white); color: var(--ink); border-radius: 18px; padding: clamp(20px, 3vw, 28px); box-shadow: 0 30px 60px -28px rgb(0 0 0 / 55%); }
+  .vis__label { margin: 0 0 14px; font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; }
+  .vis__bsp .vis__sub { color: var(--accent-ink); margin-top: 4px; }
+  .vis__erkennt { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; font-size: 0.93rem; }
+  .vis__erkennt li { display: flex; align-items: center; gap: 10px; }
+  .vis__erkennt li:first-child { display: grid; gap: 6px; }
+  .vis__erkennt :global(.icon) { flex: none; color: var(--accent-ink); }
+  .vis__erkennt b { font-family: var(--font-head); font-size: 1.15rem; color: var(--accent-ink); }
+  .vis__bar { display: block; height: 10px; border-radius: 99px; background: var(--paper-2); overflow: hidden; }
+  .vis__bar span { display: block; height: 100%; width: var(--w); border-radius: inherit; background: linear-gradient(90deg, var(--accent-ink), var(--accent)); transition: width 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
+  :global(html.js) .vis__bsp:not(.is-visible) .vis__bar span { width: 0; }
+  .vis__reagiert { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .vis__reagiert li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgb(0 166 161 / 10%); font-size: 0.86rem; font-weight: 600; }
+  .vis__reagiert :global(.icon) { color: var(--ok); }
+
+  .vis__fazit { margin: clamp(28px, 4vw, 44px) 0 0; text-align: center; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.2; color: var(--white); text-wrap: balance; }
+  .vis__note { margin: 10px 0 0; text-align: center; font-size: 0.85rem; color: var(--dark-soft); }
+</style>

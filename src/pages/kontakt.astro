@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { company, plans, phoneTel, whatsappLink, HOURS } from '../config/site';
+import { company, phoneTel, whatsappLink, HOURS, WAAS } from '../config/site';
 import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
@@ -9,8 +9,8 @@ import { leistungen } from '../config/leistungen';
 import { SAEULEN } from '../config/angebot';
 
 const interessen = [
-  { value: 'website', label: 'Website im Abo' },
-  ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => leistungen.filter((l) => l.saeule === s.id).map((l) => ({ value: l.slug, label: `${s.title}: ${l.title}` }))),
+  { value: 'website', label: WAAS.name },
+  ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => leistungen.filter((l) => l.saeule === s.id && l.slug !== 'abo-wartung').map((l) => ({ value: l.slug, label: `Auf Anfrage: ${l.title}` }))),
 ];
 const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) => l.slug);
 
@@ -22,7 +22,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
 <BaseLayout
   title="Kontakt & kostenloses Erstgespräch"
-  description="Kostenloses Erstgespräch zu Website, Software, Nextcloud oder IT-Betreuung anfragen. Antwort innerhalb eines Werktags – unverbindlich und ohne Verkaufsdruck."
+  description="Kostenloses Erstgespräch zu Website as a Service anfragen – persönliche Beratung, Antwort innerhalb eines Werktags, unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
 >
@@ -41,15 +41,6 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
             {interessen.map((i) => <option value={i.value}>{i.label}</option>)}
           </select>
         </label>
-        <fieldset class="tarife">
-          <legend>Website-Tarif <small>(optional)</small></legend>
-          <div class="tarife__opts">
-            <label class="pill"><input type="radio" name="tarif" value="" checked /><span>Beraten Sie mich</span></label>
-            {plans.map((p) => (
-              <label class="pill"><input type="radio" name="tarif" value={p.id} /><span>{p.name} · {p.monthly} € / Monat</span></label>
-            ))}
-          </div>
-        </fieldset>
         <div class="row">
           <label>Name*<input name="name" autocomplete="name" required /></label>
           <label>E-Mail*<input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
@@ -104,26 +95,20 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
-    // Tarif aus ?tarif=... vorauswählen (Buttons auf der Preisseite)
+    // Früher verlinkte Tarif-Parameter (?tarif=…) gelten als Website-Anfrage
     const tarif = new URLSearchParams(location.search).get('tarif');
-    const radio = form.querySelector<HTMLInputElement>(`input[name="tarif"][value="${CSS.escape(tarif ?? '')}"]`);
-    if (tarif && radio) radio.checked = true;
     // Branche von der Branchen-Landingpage mitnehmen
     const branche = new URLSearchParams(location.search).get('branche');
     if (branche) (form.elements.namedItem('branche') as HTMLInputElement).value = branche.slice(0, 40);
     // Interesse aus ?leistung=… (Detailseiten) vorbelegen, Paket aus ?paket=… mitnehmen
     const params = new URLSearchParams(location.search);
     const interesse = form.elements.namedItem('interesse') as HTMLSelectElement;
-    const tarife = form.querySelector<HTMLElement>('.tarife')!;
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
     if (websiteSlugs.includes(leistung) || tarif) interesse.value = 'website';
     else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
     const paket = params.get('paket');
     if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
-    const sync = () => { tarife.hidden = interesse.value !== '' && interesse.value !== 'website'; };
-    interesse.addEventListener('change', sync);
-    sync();
 
     const interessText = (d: Record<string, string>) => interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
     const status = form.querySelector<HTMLElement>('.form__status')!;
@@ -136,7 +121,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}\nTarif: ${data.tarif || '–'}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`Anfrage: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm wurde geöffnet – bitte senden Sie die Nachricht dort ab.';
         return;
@@ -151,7 +136,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
           body: JSON.stringify({
             ...data,
             access_key: form.dataset.key,
-            subject: `Anfrage: ${interessText(data)}${data.paket ? ` – ${data.paket}` : ''}${data.tarif ? ` – Tarif ${data.tarif}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
+            subject: `Anfrage: ${interessText(data)}${data.paket ? ` – ${data.paket}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
             from_name: 'Waybuild Website',
             replyto: data.email,
           }),
@@ -175,7 +160,6 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .row { display: grid; gap: 18px; }
   @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
   label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
-  .tarife[hidden] { display: none; }
   legend small { font-weight: 400; color: var(--ink-soft); }
   input, select, textarea {
     font: inherit; font-weight: 400; color: var(--ink); width: 100%;
@@ -188,17 +172,6 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .form .btn { justify-self: stretch; }
   @media (min-width: 640px) { .form .btn { justify-self: start; } }
   label small { font-weight: 400; color: var(--ink-soft); }
-  .tarife { border: 0; padding: 0; margin: 0; min-width: 0; }
-  .tarife legend { font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; padding: 0; }
-  .tarife__opts { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pill { position: relative; display: block; }
-  .pill input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-  .pill span {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 99px;
-    border: 1.5px solid var(--line); background: var(--paper); font-size: 0.92rem; font-weight: 550; cursor: pointer;
-  }
-  .pill input:checked + span { background: var(--dark); border-color: var(--dark); color: var(--paper); }
-  .pill input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
   .after { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.82rem; color: var(--ink-soft); }
   .after li { border-top: 2px solid var(--line); padding-top: 8px; }
   .after li:first-child { border-color: var(--accent); }

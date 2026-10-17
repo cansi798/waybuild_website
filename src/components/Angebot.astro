@@ -1,0 +1,31 @@
+---
+// Startseite: das EINE Angebot „Website as a Service“ – Claim, neun Bestandteile, Preis-Zeile.
+import { href } from '../lib/paths';
+import { WAAS, preisLang } from '../config/site';
+import SectionHead from './SectionHead.astro';
+import Inklusive from './Inklusive.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section angebot" id="weiter" aria-labelledby="angebot-h">
+  <div class="wrap">
+    <SectionHead center eyebrow={WAAS.name} pre="Ein Preis. Ein Ansprechpartner. " accent="Ein System." text="Keine Pakete, keine Tarife. Eine Lösung – alles drin." id="angebot-h" />
+    <Inklusive />
+    <div class="angebot__preis">
+      <p><Icon name="euro" size={20} /> <strong>{preisLang()}</strong></p>
+      <p class="angebot__fakten">0 € Einrichtung · {WAAS.laufzeitMonate} Monate Laufzeit · netto, nur B2B</p>
+      <a class="angebot__link" href={href('/preise/')}>Preis & Details <Icon name="arrow" size={18} /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .angebot { scroll-margin-top: var(--header-h); }
+  .angebot__preis { margin: clamp(24px, 4vw, 36px) auto 0; max-width: 760px; display: grid; justify-items: center; gap: 4px; text-align: center; }
+  .angebot__preis p { margin: 0; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .angebot__preis strong { font-family: var(--font-head); font-size: 1.15rem; }
+  .angebot__preis :global(.icon) { color: var(--accent-ink); }
+  .angebot__fakten { font-size: 0.9rem; color: var(--ink-soft); }
+  .angebot__link { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-weight: 650; color: var(--accent-ink); text-decoration: none; }
+  .angebot__link:hover { text-decoration: underline; }
+</style>

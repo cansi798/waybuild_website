@@ -1,5 +1,5 @@
 ---
-// „Unsere Versprechen“ – sechs eigene Zusagen als digitale Siegel (Bauwelt-Muster).
+// „Unser Geschäftsmodell“ – sechs eigene Zusagen als digitale Siegel (Bauwelt-Muster, Vision 17.10.2026).
 // Rechtlich: eigene Zusagen, klar als solche gekennzeichnet – keine fremden Prüfzeichen.
 import SectionHead from './SectionHead.astro';
 import RoughSzene from './RoughSzene.astro';
@@ -10,9 +10,9 @@ interface Props { fakten?: string[]; }
 const { fakten = [] } = Astro.props;
 ---
 
-<section class="section section--sand" id="versprechen" aria-labelledby="versprechen-h">
+<section class="section" id="versprechen" aria-labelledby="versprechen-h">
   <div class="wrap">
-    <SectionHead center eyebrow="Unsere Versprechen" pre="Worauf Sie sich verlassen " accent="können" text={fakten.length ? undefined : 'Sechs Zusagen, die für jedes Projekt gelten.'} id="versprechen-h" />
+    <SectionHead center eyebrow="Unser Geschäftsmodell" pre="Vertrauen statt " accent="Abhängigkeit." text={fakten.length ? undefined : 'Sechs Zusagen, die für jeden Kunden gelten.'} id="versprechen-h" />
     {fakten.length > 0 && (
       <ul class="check-row siegel__fakten">{fakten.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
     )}

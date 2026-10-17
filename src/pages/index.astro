@@ -1,40 +1,30 @@
 ---
-// Startseite nach dem Bauwelt-Muster (Wunsch 11.10.2026), übertragen auf „Websites im Abo“ (B2B):
-// 1 Vollbild-Hero → 2 Zahlen-Band → 3 Leistungs-Kacheln → 4 Ablauf-Zeichnung → 5 Referenz-Slider (Muster)
-// → 6 Betreuung („Alles im Blick“) → 7 Tarife + Tarif-Finder → 8 Versprechen-Siegel → 9 Branchen-Band
-// → 10 Warum kein WordPress → 11 FAQ → Footer-Kopf mit Direktkontakt (im Footer).
+// Startseite nach der Unternehmensvision (Jamil, 17.10.2026) – wenig Text, klare Struktur:
+// 1 Hero (Positionierung + EIN CTA) → 2 Website as a Service („Ein Preis. Ein Ansprechpartner. Ein System.“, 9 Bestandteile)
+// → 3 Arbeitsweise (Beratung → KI-Umsetzung → Verbesserung, animiert) → 4 Geschäftsmodell (6 Siegel)
+// → 5 Zielgruppen → 6 Vision „Die intelligente Website“ (Solarteur-Beispiel) → 7 Plattform-Bausteine
+// → Footer-Kopf mit Direktkontakt (CTA).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import LeistungKarten from '../components/LeistungKarten.astro';
+import Angebot from '../components/Angebot.astro';
 import Ablauf from '../components/Ablauf.astro';
-import RefSlider from '../components/RefSlider.astro';
-import Betreuung from '../components/Betreuung.astro';
-import TarifSektion from '../components/TarifSektion.astro';
 import Siegel from '../components/Siegel.astro';
-import Industries from '../components/Industries.astro';
-import WhyNotWordPress from '../components/WhyNotWordPress.astro';
-import Faq from '../components/Faq.astro';
-import { faqSchema, serviceSchema } from '../lib/schema';
-import { plans } from '../config/site';
-
-const cheapest = Math.min(...plans.map((p) => p.monthly));
+import Zielgruppen from '../components/Zielgruppen.astro';
+import Vision from '../components/Vision.astro';
+import Plattform from '../components/Plattform.astro';
+import { serviceSchema } from '../lib/schema';
 ---
 
 <BaseLayout
-  title="Websites, Software & Cloud für Unternehmen"
-  description={`Website im Abo ab ${cheapest} €/Monat netto, individuelle Software, Nextcloud und IT-Betreuung für Unternehmen (B2B) – aus einer Hand, zu festen Preisen.`}
-  schema={[serviceSchema(Astro.site), faqSchema()]}
+  title="Digitale Unternehmensplattformen für KMU"
+  description="Keine klassische Webagentur: Website as a Service für KMU – persönliche Beratung, KI-gestützte Umsetzung, fester Monatspreis, keine Einrichtungskosten."
+  schema={[serviceSchema(Astro.site)]}
 >
   <Hero />
-  <Stats />
-  <LeistungKarten />
+  <Angebot />
   <Ablauf />
-  <RefSlider />
-  <Betreuung />
-  <TarifSektion />
   <Siegel />
-  <Industries />
-  <WhyNotWordPress />
-  <Faq />
+  <Zielgruppen />
+  <Vision />
+  <Plattform />
 </BaseLayout>

@@ -1,16 +1,18 @@
 ---
-// Leistungs-Detailseite (Bauwelt-Muster „Produktseite“) für alle vier Säulen:
-// Hero mit CTA → (Kennen Sie das?) → Leistungsumfang → Text → (Ablauf) → Website-Tarif ODER Pakete
-// → (Zusatzleistungen) → (Alle Abos) → Zusage → FAQ → weitere Leistungen der Säule.
+// Leistungs-Detailseite (Bauwelt-Muster „Produktseite“), Stand Unternehmensvision 17.10.2026:
+// Hero mit CTA → (Kennen Sie das?) → Leistungsumfang → Ablauf → Website as a Service (Website-Leistungen)
+// ODER „Ausbaustufe auf Anfrage“ (Software, Cloud & IT, Beratung) → Zusage → FAQ → weitere Leistungen.
+// Keine Pakete/Tarife mehr – Preis nur über config/site.ts → WAAS.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import LeistungGrafik from '../../components/LeistungGrafik.astro';
-import PaketKarten from '../../components/PaketKarten.astro';
+import Inklusive from '../../components/Inklusive.astro';
 import Icon from '../../components/Icon.astro';
 import { leistungen, leistungenNach, type Leistung } from '../../config/leistungen';
-import { plans, matrix, KEY_ROWS, SETUP_FEE, formatEuro } from '../../config/site';
-import { saeuleById, ABO_UEBERSICHT, ABO_LAUFZEIT, NETTO_HINWEIS, REAKTION_HINWEIS, type Saeule } from '../../config/angebot';
+import { WAAS, MODELL, steps, preisLang } from '../../config/site';
+import { saeuleById, NETTO_HINWEIS, type Saeule } from '../../config/angebot';
 import { versprechenById, VERSPRECHEN } from '../../config/versprechen';
+import { waasOffer } from '../../lib/schema';
 import { href, absolute } from '../../lib/paths';
 
 export function getStaticPaths() {
@@ -19,78 +21,55 @@ export function getStaticPaths() {
 
 const { l } = Astro.props as { l: Leistung };
 const saeule = saeuleById(l.saeule);
-const plan = l.plan ? plans.find((p) => p.id === l.plan) : undefined;
-const planIndex = plan ? plans.indexOf(plan) : -1;
-const keyRows = matrix.slice(0, KEY_ROWS);
+const istWebsite = l.saeule === 'websites';
 const siegel = versprechenById(l.siegel) ?? VERSPRECHEN[0];
 const zusage = l.zusage ?? { icon: siegel.icon, title: siegel.title, text: siegel.long };
 const andere = leistungenNach(l.saeule).filter((o) => o.slug !== l.slug);
-const contact = `${href('/kontakt/')}?leistung=${l.slug}${plan ? `&tarif=${plan.id}` : ''}`;
+const contact = `${href('/kontakt/')}?leistung=${l.slug}`;
 const url = absolute(`/leistungen/${l.slug}/`, Astro.site);
+const ablauf = l.ablauf ?? (istWebsite ? steps.map((s) => ({ title: s.title, text: s.text })) : undefined);
 
-const checksAbo = ['Fester Monatspreis', 'Antwortzeiten im Vertrag', 'Stunden übertragbar'];
 const checks: Record<Saeule, string[]> = {
-  websites: ['Live in 14 Tagen', 'Fester Monatspreis', 'Ein Ansprechpartner'],
-  software: ['Festpreis nach Konzept', 'Quellcode gehört Ihnen', 'Pflege im Abo'],
-  cloud: ['Server in Deutschland', 'Einrichtung zum Festpreis', 'Persönlicher Support'],
-  beratung: ['Festpreis', 'Mit Quellenangaben', 'Persönliche Besprechung'],
+  websites: ['Keine Einrichtungskosten', 'Fester Monatspreis', 'Ein Ansprechpartner'],
+  software: ['Festpreis nach Konzept', 'Quellcode gehört Ihnen', 'Ein Ansprechpartner'],
+  cloud: ['Server in Deutschland', 'Individuelles Angebot', 'Persönlicher Support'],
+  beratung: ['Mit Quellenangaben', 'Individuelles Angebot', 'Persönliche Besprechung'],
 };
-
-const title = l.seo?.title ?? `${l.title} im Abo – ab ${plan?.monthly} € / Monat`;
-const description = l.seo?.description ?? `${l.title} im Website-Abo ab ${plan?.monthly} € netto/Monat: individuell entwickelt, Hosting, Domain, E-Mail und Pflege inklusive. Für Unternehmen.`;
-
-const offers = plan
-  ? [{ name: `Tarif ${plan.name}`, price: plan.monthly, monthly: true }]
-  : (l.pakete ?? []).map((p) => ({ name: p.name, price: p.wert, monthly: p.monatlich }));
 
 const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: plan ? `${l.title} im Abo` : l.title,
+    name: istWebsite ? `${l.title} – ${WAAS.name}` : l.title,
     serviceType: l.title,
     description: l.lead,
     audience: { '@type': 'BusinessAudience', name: 'Unternehmen' },
     provider: { '@id': `${absolute('/', Astro.site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     url,
-    offers: offers.map((o) => ({
-      '@type': 'Offer',
-      name: o.name,
-      price: o.price,
-      priceCurrency: 'EUR',
-      url,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: o.price,
-        priceCurrency: 'EUR',
-        valueAddedTaxIncluded: false,
-        ...(o.monthly ? { unitCode: 'MON' } : {}),
-      },
-    })),
+    ...(istWebsite ? { offers: [waasOffer(Astro.site, `/leistungen/${l.slug}/`)] } : {}),
   },
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: l.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
 ];
 ---
 
 <BaseLayout
-  title={title}
-  description={description}
+  title={l.seo.title}
+  description={l.seo.description}
   schema={schema}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }, { name: l.title, path: `/leistungen/${l.slug}/` }]}
 >
   <section class="phero">
     <div class="wrap phero__grid">
       <div class="phero__copy">
-        <span class="eyebrow">{saeule.title} · {l.title}</span>
+        <span class="eyebrow">{istWebsite ? `${WAAS.name} · ${l.title}` : `Ausbaustufe · ${saeule.title}`}</span>
         <h1>{l.pre}<span class="accent">{l.accent}</span></h1>
         <p class="lead">{l.lead}</p>
         <ul class="check-row">
-          {(l.slug === 'abo-wartung' ? checksAbo : checks[l.saeule]).map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+          {checks[l.saeule].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
         </ul>
         <div class="phero__actions">
           <a class="btn btn--primary btn--lg" href={contact}>Kostenloses Erstgespräch</a>
-          <a class="btn btn--lg btn--ghost nur-desktop" href={plan ? href('/preise/#websites') : '#pakete'}>{plan ? 'Tarife ansehen' : 'Preise ansehen'}</a>
         </div>
       </div>
       <div class="phero__media"><div class="phero__frame"><LeistungGrafik art={l.grafik} /></div></div>
@@ -115,16 +94,12 @@ const schema = [
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap prose">{l.text.map((t) => <p>{t}</p>)}</div>
-  </section>
-
-  {l.ablauf && (
-    <section class="section section--sand">
+  {ablauf && (
+    <section class="section">
       <div class="wrap">
-        <SectionHead eyebrow="Ablauf" pre="In vier Schritten zum " accent="Ergebnis" />
-        <ol class="ablauf">
-          {l.ablauf.map((a, i) => (
+        <SectionHead eyebrow="Ablauf" pre={`In ${ablauf.length === 3 ? 'drei' : 'vier'} Schritten zum `} accent="Ergebnis" />
+        <ol class:list={['ablauf', { 'ablauf--3': ablauf.length === 3 }]}>
+          {ablauf.map((a, i) => (
             <li class="card"><span class="ablauf__nr">{i + 1}</span><h3>{a.title}</h3><p>{a.text}</p></li>
           ))}
         </ol>
@@ -132,59 +107,32 @@ const schema = [
     </section>
   )}
 
-  {plan ? (
-    <section class="section section--sand" id="pakete">
-      <div class="wrap tarif">
+  {istWebsite ? (
+    <section class="section section--sand" id="pakete" aria-labelledby="waas-h">
+      <div class="wrap waas">
         <div>
-          <SectionHead eyebrow="Passender Tarif" pre={`${l.title} im Tarif `} accent={plan.name} text={l.planReason} />
-          <a class="btn btn--primary" href={contact}>{plan.name} anfragen</a>
+          <SectionHead eyebrow="Ein Preis. Alles drin." pre={`Teil von `} accent={WAAS.name} text={`${preisLang()}. Keine Pakete, keine Tarife.`} id="waas-h" />
+          <ul class="check-list waas__modell">{MODELL.map((m) => <li><Icon name="check" size={20} /> {m}</li>)}</ul>
+          <a class="btn btn--primary" href={contact}>Erstgespräch vereinbaren</a>
+          <a class="waas__mehr" href={href('/preise/')}>Preis & Details →</a>
         </div>
-        <article class="card plan">
-          <div class="plan__top"><h3>{plan.name}</h3>{plan.highlight && <span class="plan__badge">Beliebt</span>}</div>
-          <p class="plan__price"><b>{plan.monthly} €</b> / Monat netto</p>
-          <dl class="plan__keys">{keyRows.map((r) => <div><dt>{r.label}</dt><dd>{r.values[planIndex]}</dd></div>)}</dl>
-          <p class="plan__setup">Einrichtung einmalig {formatEuro(SETUP_FEE)} – entfällt bei jährlicher Zahlung.</p>
-          <a class="plan__all" href={href('/preise/#websites')}>Alle Tarife vergleichen →</a>
-        </article>
+        <Inklusive narrow />
       </div>
     </section>
-  ) : l.pakete && (
-    <section class:list={['section', { 'section--sand': !l.ablauf }]} id="pakete">
-      <div class="wrap">
-        <SectionHead center eyebrow="Pakete & Preise" pre={l.paketeTitel?.[0] ?? 'Unsere '} accent={l.paketeTitel?.[1] ?? 'Pakete'} text={l.paketeText} />
-        <PaketKarten pakete={l.pakete} leistung={l.slug} />
-        <p class="terms">
-          {l.pakete.some((p) => p.monatlich && !p.hinweis?.includes('monatlich kündbar')) && <>{ABO_LAUFZEIT}. </>}
-          {NETTO_HINWEIS}
-          {l.pakete.some((p) => p.features.some((f) => f.startsWith('Antwortzeit'))) && <> {REAKTION_HINWEIS}</>}
-        </p>
-        {l.zusatz && (
-          <div class="zusatz">
-            <h3>Einmalig & Extras</h3>
-            <ul>{l.zusatz.map((z) => <li><span>{z.name}</span><strong>{z.preis}</strong></li>)}</ul>
-          </div>
-        )}
-        <p class="terms"><a href={href(`/preise/#${l.saeule}`)}>Alle Preise im Überblick →</a></p>
-      </div>
-    </section>
-  )}
-
-  {l.slug === 'abo-wartung' && (
-    <section class="section section--sand" aria-labelledby="abos-h">
-      <div class="wrap">
-        <SectionHead eyebrow="Alle Abos" pre="Für jeden Bereich das passende " accent="Abo" id="abos-h" text="Website, Software, Cloud und IT – überall fester Monatspreis, ein Ansprechpartner." />
-        <ul class="abos">
-          {ABO_UEBERSICHT.map((a) => (
-            <li>
-              <a class="card abos__item" href={href(a.path)}>
-                <span class="abos__saeule">{saeuleById(a.saeule).title}</span>
-                <strong>{a.name}</strong>
-                <span class="abos__preis">{a.preis}</span>
-                <span class="abos__inhalt">{a.inhalt}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+  ) : (
+    <section class="section section--sand" id="pakete" aria-labelledby="ausbau-h">
+      <div class="wrap ausbau">
+        <span class="ausbau__ring"><Icon name="layers" size={30} /></span>
+        <div>
+          <span class="eyebrow">Ausbaustufe · auf Anfrage</span>
+          <h2 id="ausbau-h">Individuelles Angebot statt Paket</h2>
+          <p>Die Website ist der erste Schritt zur digitalen Unternehmensplattform. {l.title} setzen wir als individuelles Projekt um – den Umfang und Preis klären wir im Erstgespräch.</p>
+          <p class="ausbau__links">
+            <a class="btn btn--primary" href={contact}>Angebot anfragen</a>
+            <a href={href('/#plattform')}>Unsere Plattform-Vision →</a>
+          </p>
+          <p class="terms">{NETTO_HINWEIS}</p>
+        </div>
       </div>
     </section>
   )}
@@ -217,9 +165,9 @@ const schema = [
   <section class="section section--tight">
     <div class="wrap">
       <p class="others">
-        {andere.length > 0 && <>Weitere Leistungen im Bereich {saeule.title}: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</>}
+        {andere.length > 0 && <>{istWebsite ? `Ebenfalls im ${WAAS.name}` : `Weitere Leistungen im Bereich ${saeule.title}`}: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</>}
         <a href={href('/leistungen/')}>Alle Leistungen</a>
-        <a href={href('/warum-waybuild/')}>Warum waybuild</a>
+        <a href={href('/preise/')}>Preis</a>
       </p>
     </div>
   </section>
@@ -258,36 +206,21 @@ const schema = [
   .ablauf__nr { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--dark); color: var(--accent); font-family: var(--font-head); font-weight: 700; }
   .terms { margin: 18px auto 0; max-width: 820px; text-align: center; font-size: 0.85rem; color: var(--ink-soft); }
   .terms a { font-weight: 650; color: var(--accent-ink); }
-  .zusatz { margin: 32px auto 0; max-width: 820px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px 8px; }
-  .zusatz h3 { margin: 0 0 6px; font-size: 1.1rem; }
-  .zusatz ul { list-style: none; margin: 0; padding: 0; }
-  .zusatz li { display: flex; justify-content: space-between; gap: 8px 20px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 0.95rem; }
-  .zusatz li:first-child { border-top: 0; }
-  .zusatz strong { text-align: right; white-space: nowrap; }
-  @media (max-width: 599px) { .zusatz li { flex-direction: column; } .zusatz strong { text-align: left; white-space: normal; color: var(--accent-ink); } }
-  .abos { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 720px) { .abos { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .abos { grid-template-columns: repeat(3, 1fr); } }
-  .abos__item { display: grid; gap: 4px; height: 100%; }
-  .abos__saeule { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
-  .abos__item strong { font-family: var(--font-head); font-size: 1.2rem; }
-  .abos__preis { font-weight: 700; }
-  .abos__inhalt { color: var(--ink-soft); font-size: 0.92rem; }
-  .tarif { display: grid; gap: 28px; align-items: center; }
-  @media (min-width: 900px) { .tarif { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
-  .tarif :global(.section-head) { margin-bottom: 20px; }
-  .plan { display: grid; gap: 12px; }
-  .plan__top { display: flex; align-items: center; justify-content: space-between; }
-  .plan__top h3 { margin: 0; font-size: 1.3rem; }
-  .plan__badge { background: var(--accent); color: var(--ink); font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 99px; letter-spacing: 0.04em; text-transform: uppercase; }
-  .plan__price { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
-  .plan__price b { font-family: var(--font-head); font-size: 2.6rem; color: var(--ink); line-height: 1; margin-right: 6px; }
-  .plan__keys { margin: 0; border-top: 1px solid var(--line); }
-  .plan__keys div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
-  .plan__keys dt { color: var(--ink-soft); }
-  .plan__keys dd { margin: 0; font-weight: 650; text-align: right; }
-  .plan__setup { margin: 0; font-size: 0.82rem; color: var(--ink-soft); }
-  .plan__all { font-weight: 650; font-size: 0.9rem; color: var(--accent-ink); text-decoration: none; }
+  .ablauf--3 { counter-reset: a; }
+  @media (min-width: 1100px) { .ablauf--3 { grid-template-columns: repeat(3, 1fr); } }
+  .waas { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 960px) { .waas { grid-template-columns: 0.9fr 1.1fr; gap: 56px; } }
+  .waas :global(.section-head) { margin-bottom: 18px; }
+  .waas__modell { margin-bottom: 22px; }
+  .waas__mehr { margin-left: 16px; font-weight: 650; font-size: 0.92rem; color: var(--accent-ink); text-decoration: none; }
+  @media (max-width: 599px) { .waas__mehr { display: block; margin: 14px 0 0; } }
+  .ausbau { display: grid; gap: 20px; align-items: start; max-width: 820px; }
+  @media (min-width: 768px) { .ausbau { grid-template-columns: auto 1fr; gap: 28px; } }
+  .ausbau__ring { width: 68px; height: 68px; border-radius: 18px; border: 2px dashed var(--accent); background: var(--white); color: var(--accent-ink); display: inline-flex; align-items: center; justify-content: center; }
+  .ausbau p { color: var(--ink-soft); }
+  .ausbau .terms { text-align: left; margin: 12px 0 0; }
+  .ausbau__links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .ausbau__links a:not(.btn) { font-weight: 650; color: var(--accent-ink); }
   .siegel { display: grid; gap: 20px; align-items: start; max-width: 820px; }
   @media (min-width: 768px) { .siegel { grid-template-columns: auto 1fr; gap: 28px; } }
   .siegel__ring { width: 68px; height: 68px; border-radius: 50%; border: 3px solid var(--accent); background: var(--white); color: var(--accent-ink); display: inline-flex; align-items: center; justify-content: center; flex: none; }

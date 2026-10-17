@@ -6,7 +6,6 @@ kurz:
   - 'Im Abo: meist 49–199 € pro Monat plus 0–500 € Einrichtung.'
   - 'Versteckte Kosten: Hosting, E-Mail, Updates, Änderungen und Rechtstexte.'
 datum: 2026-09-28
-tarif: business
 ---
 
 ## Die Preisspannen im Überblick

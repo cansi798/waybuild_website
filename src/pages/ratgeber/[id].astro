@@ -1,8 +1,8 @@
 ---
-// Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Tarif- bzw. Leistungs-Empfehlung → Anfrage.
+// Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Website as a Service bzw. Leistungs-Empfehlung → Anfrage.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { plans, formatEuro, company } from '../../config/site';
+import { company, WAAS, MODELL, preisKurz } from '../../config/site';
 import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
 
@@ -13,8 +13,7 @@ export async function getStaticPaths() {
 
 const { entry, all } = Astro.props as { entry: CollectionEntry<'ratgeber'>; all: CollectionEntry<'ratgeber'>[] };
 const { Content } = await render(entry);
-const plan = plans.find((p) => p.id === entry.data.tarif)!;
-// Ist eine (gültige) Leistung gesetzt, wirbt die Box am Ende für diese statt für einen Website-Tarif.
+// Ist eine (gültige) Leistung gesetzt, wirbt die Box am Ende für diese statt für Website as a Service.
 const leistung = entry.data.leistung ? leistungBySlug(entry.data.leistung) : undefined;
 const leistungPreis = leistung ? leistungAb(leistung) : '';
 const more = all.filter((a) => a.id !== entry.id);
@@ -75,12 +74,12 @@ const schema = [
         <aside class="art__cta" aria-labelledby="art-cta-h">
           <div>
             <p class="art__cta-label">Passend zum Thema</p>
-            <h2 id="art-cta-h">Tarif {plan.name}: {plan.monthly} € / Monat</h2>
-            <p>netto · einmalig {formatEuro(plan.setup)} Einrichtung · {plan.features.slice(0, 3).join(' · ')}</p>
+            <h2 id="art-cta-h">{WAAS.name}</h2>
+            <p>{preisKurz()} · {MODELL.slice(0, 3).join(' · ')}</p>
           </div>
           <div class="art__cta-btns">
-            <a class="btn btn--primary" href={`${href('/kontakt/')}?tarif=${plan.id}`}>Kostenloses Erstgespräch</a>
-            <a class="btn btn--ghost" href={href('/preise/')}>Alle Tarife</a>
+            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenloses Erstgespräch</a>
+            <a class="btn btn--ghost" href={href('/preise/')}>Preis & Details</a>
           </div>
         </aside>
       )}

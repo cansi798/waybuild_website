@@ -6,7 +6,6 @@ kurz:
   - 'Individuell entwickelte Websites sind schneller, sicherer und ein Unikat.'
   - 'WordPress passt, wenn Sie viele Inhalte selbst pflegen wollen.'
 datum: 2026-09-28
-tarif: business
 ---
 
 ## Warum so viele Websites auf WordPress laufen

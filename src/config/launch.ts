@@ -1,6 +1,6 @@
 // Launch-Checkliste: alles, was vor dem offiziellen Start noch erledigt werden muss.
 // Firmendaten werden automatisch geprüft, der Rest wird hier von Hand abgehakt (done: true).
-import { company, isMissing, references, SHOW_HINTS, PHONE_IS_PLACEHOLDER } from './site';
+import { company, isMissing, references, SHOW_HINTS, PHONE_IS_PLACEHOLDER, WAAS } from './site';
 
 export type Todo = {
   title: string;
@@ -73,18 +73,25 @@ const manual: Todo[] = [
     priority: 'wichtig',
   },
   {
-    title: 'Leistungsversprechen absichern',
-    detail: '„Hosting in Deutschland“ (auch für Nextcloud- und Software-Kunden), „Live in 14 Tagen“, „PageSpeed 90+“ und die Antwortzeiten der Abos (nächster Werktag / 8 Std. / 4 Std.) stehen auf der Website. Hoster, Kapazität und Vertretung so planen, dass das eingehalten wird.',
-    where: 'src/config/site.ts → usps, plans',
-    done: false,
-    priority: 'wichtig',
+    title: 'Monatspreis für Website as a Service festlegen',
+    detail: 'Seit der Unternehmensvision (17.10.2026) gibt es nur noch ein Angebot. Solange kein Preis eingetragen ist, steht auf der Website „Fester Monatspreis – nennen wir im Erstgespräch“.',
+    where: 'src/config/site.ts → WAAS.preisMonat',
+    done: WAAS.preisMonat !== null,
+    priority: 'pflicht',
   },
   {
-    title: 'Preise der neuen Leistungen freigeben',
-    detail: 'Software, Nextcloud, IT-Betreuung, Pflege-Abos und Wettbewerbsanalyse sind mit Marktpreisen hinterlegt (Herleitung: docs/wettbewerbsanalyse-2026-10.md). Bitte prüfen und freigeben bzw. anpassen.',
-    where: 'src/config/angebot.ts',
+    title: 'AGB an Website as a Service anpassen',
+    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website: keine Einrichtungskosten, 24 Monate, Website/Code/Domain gehören dem Kunden – anwaltlich angleichen lassen.',
+    where: 'src/pages/agb.astro',
     done: false,
     priority: 'pflicht',
+  },
+  {
+    title: 'Leistungsversprechen absichern',
+    detail: '„Live in 14 Tagen“, „Sprachgesteuerte Änderungen“ und „KI-gestützte Erstellung“ stehen als Bestandteile auf der Website. Prozesse und Werkzeuge so aufsetzen, dass das eingehalten wird.',
+    where: 'src/config/site.ts → INKLUSIVE, faqs',
+    done: false,
+    priority: 'wichtig',
   },
   {
     title: 'Leistungsbeschreibungen für Abos (SLA, Fair Use, Speicher)',

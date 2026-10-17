@@ -3,15 +3,14 @@ title: 'Website mieten oder kaufen? Der Vergleich'
 description: 'Website mieten oder kaufen: Kosten über 5 Jahre, Vor- und Nachteile, und für wen sich welches Modell lohnt – kompakt erklärt für kleine Unternehmen.'
 kurz:
   - 'Kaufen: hohe Einmalkosten, danach Wartung, Hosting und Updates selbst organisieren.'
-  - 'Mieten: kleine Einrichtungsgebühr, fester Monatspreis – Technik, E-Mail und Änderungen inklusive.'
+  - 'Mieten: fester Monatspreis, oft mit Einrichtungsgebühr – Technik, Wartung und Änderungen inklusive.'
   - 'Für die meisten kleinen Betriebe ist Mieten planbarer und über 3–5 Jahre oft nicht teurer.'
 datum: 2026-09-28
-tarif: business
 ---
 
 ## Was heißt „Website mieten“?
 
-Sie zahlen eine einmalige Einrichtungsgebühr und danach einen festen Monatsbeitrag. Darin steckt alles, was eine Website dauerhaft braucht: Design, Hosting, Domain, E-Mail-Postfächer, Sicherheitsupdates und kleine Änderungen.
+Sie zahlen einen festen Monatsbeitrag – je nach Anbieter plus einmaliger Einrichtungsgebühr. Darin steckt alles, was eine Website dauerhaft braucht: Design, Hosting, Domain, Sicherheitsupdates und Änderungen.
 
 Beim **Kauf** bezahlen Sie die Erstellung einmalig – und kümmern sich danach selbst um Hosting, Updates und Änderungen (oder bezahlen sie jeweils extra).
 
@@ -19,10 +18,10 @@ Beim **Kauf** bezahlen Sie die Erstellung einmalig – und kümmern sich danach 
 
 Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 1.500 bis 3.000 €**, mit SEO und mehr Inhalten **3.500 bis 6.000 €** ([eoglou, 2026](https://eoglou.de/blog/website-kosten-handwerker/)). Dazu kommen laufende Kosten für Hosting, Domain, E-Mail und Wartung.
 
-| | Kaufen | Mieten (z. B. Waybuild Business) |
+| | Kaufen | Mieten (z. B. Waybuild – Website as a Service) |
 |---|---|---|
-| Start | 1.500–3.000 € | 490 € Einrichtung (0 € bei Jahreszahlung) |
-| Laufend | Hosting, Wartung, Änderungen extra | 99 € / Monat, alles inklusive |
+| Start | 1.500–3.000 € | bei Waybuild: 0 € Einrichtung |
+| Laufend | Hosting, Wartung, Änderungen extra | fester Monatspreis, alles inklusive |
 | Technik-Aufwand | bei Ihnen | beim Anbieter |
 | Planbarkeit | schwankend | fester Betrag, voll absetzbar |
 
@@ -32,7 +31,7 @@ Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 
 
 - Sie haben eigenes Technik-Know-how oder eine IT-Abteilung.
 - Die Website ändert sich über Jahre kaum.
-- Sie möchten ab Tag 1 alle Rechte am Code.
+- Sie möchten die Website selbst hosten und weiterentwickeln.
 
 ## Wann lohnt sich Mieten?
 
@@ -42,7 +41,7 @@ Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 
 
 ## Worauf Sie bei Miet-Angeboten achten sollten
 
-1. **Laufzeit:** Viele Anbieter binden 24 Monate. Bei Waybuild sind es 12, danach monatlich kündbar.
+1. **Laufzeit & Bindung:** Wie lange läuft der Vertrag – und kommen Sie danach ohne Hürden heraus? Bei Waybuild: 24 Monate, Website, Code und Domain gehören Ihnen.
 2. **E-Mail:** Oft sind nur 2–5 Postfächer enthalten – prüfen Sie, ob das für Ihr Team reicht.
-3. **Eigentum:** Gehört Ihnen die Domain? Können Sie die Website später übernehmen?
+3. **Eigentum:** Gehören Ihnen Domain, Website und Code?
 4. **Technik:** Baukasten- oder WordPress-Template, oder wirklich individuell?

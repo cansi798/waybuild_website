@@ -9,39 +9,38 @@ import Bild from '../components/Bild.astro';
 import Siegel from '../components/Siegel.astro';
 
 const values = [
-  { title: 'Individuell', text: 'Jede Website ein Unikat.' },
-  { title: 'Ehrlich', text: 'Offene Preise, kurze Laufzeiten.' },
-  { title: 'Schnell', text: 'Schnelle Seiten, schnelle Antworten.' },
-  { title: 'Sorgenfrei', text: 'Technik? Machen wir.' },
+  { title: 'Menschlich', text: 'Strategie, Erfahrung und Verständnis für Ihr Geschäft.' },
+  { title: 'Schnell', text: 'KI beschleunigt die Umsetzung.' },
+  { title: 'Transparent', text: 'Ein Preis, keine versteckten Kosten.' },
+  { title: 'Langfristig', text: 'Vertrauen statt Abhängigkeit.' },
 ];
 ---
 
 <BaseLayout
   title="Über uns – das Team hinter Waybuild"
-  description="Waybuild entwickelt individuelle Websites im Abo für kleine und mittlere Unternehmen – ohne WordPress, mit eigener Technologie und persönlicher Betreuung."
+  description="Waybuild verbindet menschliche Beratung mit KI-gestützter Umsetzung: digitale Unternehmensplattformen für kleine und mittlere Unternehmen."
   breadcrumb={[{ name: 'Über uns', path: '/ueber-uns/' }]}
 >
   <PageHeader
     eyebrow="Über uns"
-    title="Wir bauen den Weg ins Netz."
-    lead="Websites wie von Großen – für Unternehmen, Selbstständige und Institutionen."
+    title={"Wir bauen digitale Unternehmens\u00adplattformen."}
+    lead="Für kleine und mittlere Unternehmen – ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen."
   />
 
   <section class="section">
     <div class="wrap story">
       <div class="story__text">
-        <h2>Warum es uns gibt</h2>
-        <p class="story__lead">Agentur zu teuer. Baukasten zu mühsam. WordPress zu langsam. <strong>Wir machen es anders.</strong></p>
-        <More label="Unsere Geschichte">
+        <h2>Unsere Mission</h2>
+        <p class="story__lead">Viele Unternehmen wissen, dass KI existiert – aber nicht, wie sie daraus eine erfolgreiche Website machen. <strong>Genau dort setzen wir an.</strong></p>
+        <More label="Wie wir arbeiten">
           <p>
-            Viele Betriebe stehen vor derselben Wahl: Entweder eine teure Agentur mit fünfstelligem Angebot – oder ein
-            Baukasten, bei dem am Ende doch alles selbst gemacht werden muss. Dazwischen: WordPress-Seiten, die nach zwei
-            Jahren langsam, unsicher und veraltet sind.
+            Wir kombinieren menschliche Beratung mit der Geschwindigkeit moderner KI-Systeme. Gemeinsam mit Ihnen
+            entwickeln wir Zielgruppen, Positionierung und Customer Journey – danach setzt unsere KI die Ergebnisse
+            in Rekordzeit um.
           </p>
           <p>
-            Wir haben Waybuild gegründet, um das zu ändern. Mit eigener, schlanker Technologie entwickeln wir Websites,
-            die schnell laden, sicher sind und individuell zu jedem Unternehmen passen. Und weil wir sie im Abo anbieten,
-            bleiben sie das auch: Wir kümmern uns dauerhaft um Hosting, E-Mails, Updates und Änderungen.
+            Unser Ziel: KMU helfen, professioneller aufzutreten, effizienter zu arbeiten und langfristig zu wachsen.
+            Die Website ist dabei nur der erste Schritt.
           </p>
         </More>
         <Hint block label="Persönliche Gründungsgeschichte" where="src/pages/ueber-uns.astro">
@@ -78,7 +77,7 @@ const values = [
       </div>
     </div>
   </section>
-  <Siegel fakten={['Eigene Technologie', 'Fester Monatspreis', 'Ein Ansprechpartner']} />
+  <Siegel fakten={['Menschliche Beratung', 'KI-gestützte Umsetzung', 'Kontinuierliche Verbesserung']} />
 </BaseLayout>
 
 <style>

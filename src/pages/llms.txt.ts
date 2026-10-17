@@ -1,59 +1,53 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
-// Wird beim Build aus der Konfiguration erzeugt, damit Preise & Leistungen immer aktuell sind.
+// Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, plans, usps, faqs, allPlansInclude, isMissing, SETUP_FEE, OFFER, PHONE_IS_PLACEHOLDER } from '../config/site';
+import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, preisLang } from '../config/site';
 import { absolute } from '../lib/paths';
 import { branchen } from '../config/branchen';
-import { leistungen, leistungenNach, leistungAb } from '../config/leistungen';
-import { SAEULEN, ABO_UEBERSICHT, STUNDENSATZ, TAGESSATZ, NETTO_HINWEIS, ABO_LAUFZEIT, type Paket } from '../config/angebot';
+import { leistungenNach } from '../config/leistungen';
+import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
+import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
   const url = (p: string) => absolute(p, site);
-  const list = (items: string[]) => items.join(', ').replace(/\.$/, '');
   const lines = [
     `# ${company.legalName}`,
     '',
-    `> ${company.slogan} B2B-Anbieter aus ${company.city} für kleine und mittlere Unternehmen in Deutschland: Websites im Abo (ohne WordPress, mit Hosting, Domain, unbegrenzten E-Mail-Postfächern und Wartung), individuelle Software und Web-Entwicklung, Nextcloud-Hosting, Cloud- und IT-Betreuung sowie Wettbewerbsanalysen – aus einer Hand zu festen Preisen.`,
+    `> Keine klassische Webagentur: ${company.name} baut digitale Unternehmensplattformen für kleine und mittlere Unternehmen (B2B) aus ${company.city}. ${company.slogan}`,
     '',
-    `${NETTO_HINWEIS}`,
+    NETTO_HINWEIS,
     '',
-    '## Leistungen nach Bereichen',
-    ...SAEULEN.flatMap((s) => [
-      `### ${s.title} (${s.ab})`,
+    `## Das Angebot: ${WAAS.name}`,
+    `${WAAS.claim} Bewusst keine Pakete oder Tarife – eine Lösung. ${OFFER}`,
+    `- Enthalten: ${INKLUSIVE.map((i) => i.title).join(', ')}.`,
+    `- Geschäftsmodell: ${MODELL.join(', ')}.`,
+    `- Preis: ${preisLang()}.`,
+    `- Arbeitsweise: persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach KI-gestützte Umsetzung in Rekordzeit, dann kontinuierliche Verbesserung. KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung.`,
+    `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
+    '',
+    '## Was wir im Rahmen von Website as a Service bauen',
+    ...leistungenNach('websites').map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser}`),
+    '',
+    '## Ausbaustufen auf Anfrage (individuelles Angebot)',
+    ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => [
+      `### ${s.title}`,
       s.claim,
-      ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser} ${leistungAb(l).replace(/\.$/, '')}.`),
+      ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser}`),
       '',
     ]),
-    '## Pakete & Preise außerhalb des Website-Abos (netto)',
-    ...leistungen.filter((l) => l.pakete).flatMap((l) => [
-      `### ${l.title}`,
-      ...l.pakete!.map((p: Paket) => `- ${p.name}: ${p.preis} ${p.einheit}${p.hinweis ? ` (${p.hinweis})` : ''}. ${p.features.join(', ')}.`),
-      ...(l.zusatz ?? []).map((z) => `- ${z.name}: ${z.preis}`),
-      '',
-    ]),
-    `- Stundensatz ${STUNDENSATZ} €, Tagessatz ${TAGESSATZ} € (netto). Abos: ${ABO_LAUFZEIT}.`,
-    '',
-    '## Alle Abos auf einen Blick',
-    ...ABO_UEBERSICHT.map((a) => `- ${a.name}: ${a.preis} – ${a.inhalt}`),
-    '',
-    '## Website-Tarife (Preise netto zzgl. 19 % USt.)',
-    `Angebot: ${OFFER}`,
-    ...plans.map((p) => `- ${p.name} (${p.tagline}): ${p.monthly} € / Monat. ${list(p.features)}.`),
-    `- In jedem Tarif: ${allPlansInclude.join(', ')}.`,
-    `- Einrichtung einmalig ${SETUP_FEE} € für alle Tarife – entfällt bei jährlicher Zahlung. Mindestlaufzeit 12 Monate, danach monatlich kündbar.`,
-    '',
-    '## Besonderheiten',
-    ...usps.map((u) => `- ${u.title}: ${u.text}`),
+    '## Vision (in Entwicklung, noch kein Produkt)',
+    '- Die intelligente Website: verbindet Besucherstatistiken, Anfragen, Suchbegriffe, CRM-Daten, Search Console, Bewertungen, Referenzen, Angebots- und Conversion-Daten und verbessert sich kontinuierlich – vom digitalen Schaufenster zum aktiven Vertriebsmitarbeiter.',
+    `- Langfristig: ein digitales Betriebssystem für KMU mit ${PLATTFORM.map((p) => p.title.replace(/­/g, '')).join(', ')}. Die Website ist der erste Schritt.`,
     '',
     '## Häufige Fragen',
     ...faqs.map((f) => `- ${f.q} ${f.a}`),
     '',
     '## Seiten',
     `- [Startseite](${url('/')})`,
-    `- [Leistungen](${url('/leistungen/')}): Websites, Software, Cloud & IT, Beratung`,
-    `- [Preise](${url('/preise/')}): Website-Tarife, Software-Projekte, Pflege-Abos, Nextcloud, IT-Betreuung, Wettbewerbsanalyse, Stundensätze`,
+    `- [Leistungen](${url('/leistungen/')}): Website as a Service und Ausbaustufen`,
+    `- [Preis](${url('/preise/')}): ein Angebot, ein fester Monatspreis`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen Baukasten, Freelancer, Agentur und waybuild`,
     `- [Über uns](${url('/ueber-uns/')})`,
     `- [Kontakt](${url('/kontakt/')}): kostenloses Erstgespräch`,

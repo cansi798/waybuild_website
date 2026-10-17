@@ -1,12 +1,12 @@
 ---
-// Vollbild-Hero nach Bauwelt-Muster: Eyebrow, Headline mit rotierendem Begriff (CSS-Wortwalze),
-// Statement + Unterzeile, Trust-Häkchen, zwei CTAs. Statt Foto: dunkler Türkis-Verlauf + Website-Mockup.
+// Vollbild-Hero (Bauwelt-Muster) mit der Positionierung aus der Unternehmensvision (17.10.2026):
+// „Wir bauen keine Websites. Wir bauen digitale Unternehmensplattformen.“ – Claim in drei Schritten, EIN CTA.
+// Statt Foto: dunkler Türkis-Verlauf + Website-Mockup.
 import { href } from '../lib/paths';
 import { HERO } from '../config/home';
 import Icon from './Icon.astro';
 
-const WORTE = HERO.begriffe;
-const WALZE = [...WORTE, WORTE[0]];
+const CLAIM_ICONS = ['chat', 'spark', 'chart'] as const;
 ---
 
 <section class="fhero">
@@ -15,26 +15,15 @@ const WALZE = [...WORTE, WORTE[0]];
     <div class="fhero__content">
       <span class="eyebrow fhero__in" style="--d: 0ms">{HERO.eyebrow}</span>
       <h1 class="fhero__in" style="--d: 120ms">
-        <span class="sr-only">{HERO.vor} {WORTE[0]}</span>
-        <span aria-hidden="true">
-          {HERO.vor}
-          <span class="fhero__walze">
-            <span class="fhero__band" style={`--n: ${WORTE.length}`}>
-              {WALZE.map((w) => <span class="fhero__wort">{w}</span>)}
-            </span>
-          </span>
-        </span>
+        <span class="fhero__nicht">{HERO.nicht}</span>
+        <span class="fhero__wir">{HERO.vor} <span class="fhero__akzent">{HERO.akzent}</span></span>
       </h1>
-      <div class="fhero__claim fhero__in" style="--d: 220ms">
-        <p class="fhero__statement">{HERO.statement}</p>
-        <p class="fhero__unterzeile">{HERO.unterzeile}</p>
-      </div>
-      <ul class="check-row fhero__checks fhero__in" style="--d: 300ms">
-        {HERO.checks.map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+      <ul class="fhero__claim fhero__in" style="--d: 240ms">
+        {HERO.claim.map((c, i) => <li><span class="fhero__ci"><Icon name={CLAIM_ICONS[i]} size={18} /></span>{c}</li>)}
       </ul>
-      <div class="fhero__actions fhero__in nur-desktop" style="--d: 380ms">
+      <p class="fhero__unterzeile fhero__in" style="--d: 320ms">{HERO.unterzeile}</p>
+      <div class="fhero__actions fhero__in nur-desktop" style="--d: 400ms">
         <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
-        <a class="btn btn--lg fhero__ghost" href={href('/preise/')}>Tarife ansehen</a>
       </div>
     </div>
 
@@ -97,28 +86,14 @@ const WALZE = [...WORTE, WORTE[0]];
   .fhero__content > * { max-width: 100%; min-width: 0; }
   .fhero__content h1 { margin: 0; color: var(--white); font-size: clamp(2.2rem, 5.6vw, 3.9rem); }
   .fhero__content .eyebrow { margin: 0; color: var(--accent); }
-  .fhero__claim { display: grid; gap: 8px; max-width: 620px; }
-  .fhero__statement { margin: 0; font-family: var(--font-head); font-weight: 650; font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.25; }
-  .fhero__unterzeile { margin: 0; font-size: 1.02rem; line-height: 1.55; color: var(--dark-lead); }
-  .fhero__checks { margin-top: 2px; }
-  .fhero__checks :global(.icon) { color: var(--accent); }
+  .fhero__nicht { display: block; font-size: 0.62em; font-weight: 600; color: var(--dark-soft); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 0.08em; margin-bottom: 0.25em; }
+  .fhero__wir { display: block; hyphens: manual; }
+  .fhero__akzent { color: var(--accent); }
+  .fhero__claim { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
+  .fhero__claim li { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 650; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.25; }
+  .fhero__ci { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgb(0 166 161 / 18%); border: 1px solid rgb(0 166 161 / 45%); color: var(--accent); }
+  .fhero__unterzeile { margin: 0; max-width: 560px; font-size: 1.02rem; line-height: 1.55; color: var(--dark-lead); }
   .fhero__actions { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 12px; }
-  .fhero__ghost { background: transparent; border-color: rgb(255 255 255 / 55%); color: var(--white); }
-  .fhero__ghost:hover { background: rgb(255 255 255 / 12%); border-color: var(--white); }
-
-  /* Wortwalze */
-  .fhero__walze { display: block; height: 1.15em; overflow: hidden; }
-  .fhero__band { display: flex; flex-direction: column; animation: walze calc(var(--n) * 3s) cubic-bezier(0.65, 0, 0.35, 1) 1.2s infinite; }
-  .fhero__wort { display: block; height: 1.15em; line-height: 1.15; white-space: nowrap; color: var(--accent); }
-  /* 4 Begriffe: Schritte bei 25/50/75 %, letzter Frame = erster */
-  @keyframes walze {
-    0%, 22% { transform: translateY(0); }
-    25%, 47% { transform: translateY(-1.15em); }
-    50%, 72% { transform: translateY(-2.3em); }
-    75%, 97% { transform: translateY(-3.45em); }
-    100% { transform: translateY(-4.6em); }
-  }
-  @media (prefers-reduced-motion: reduce) { .fhero__band { transform: none; } }
 
   .fhero__scroll {
     position: absolute; left: 50%; bottom: 18px; width: 48px; height: 48px;
@@ -178,7 +153,6 @@ const WALZE = [...WORTE, WORTE[0]];
   @media (max-width: 767px) {
     .fhero__grid { padding-block: 40px 80px; }
     .fhero__content { gap: 14px; }
-    .fhero__statement { max-width: 20ch; }
     .fhero__unterzeile { font-size: 0.95rem; }
   }
 </style>

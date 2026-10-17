@@ -13,12 +13,12 @@ const WB = ANBIETER_TYPEN.length - 1; // Spalte „waybuild“ (letzte)
 const andere = ANBIETER_TYPEN.slice(0, WB);
 
 const unterschiede: { icon: IconName; title: string; text: string; link?: { label: string; path: string } }[] = [
-  { icon: 'layers', title: 'Alles aus einer Hand', text: 'Website, Software, Cloud und IT von einem Team. Keine Abstimmung zwischen Agentur, Programmierer und IT-Dienstleister.' },
-  { icon: 'euro', title: 'Feste Preise, offen veröffentlicht', text: 'Feste Monatspreise für Abos, Festpreise für Projekte – alle Preise stehen öffentlich auf unserer Website.', link: { label: 'Zu den Preisen', path: '/preise/' } },
-  { icon: 'calendar', title: '12 statt 24 Monate', text: 'Unsere Abos laufen 12 Monate statt der oft üblichen 24. Danach sind sie monatlich kündbar.' },
-  { icon: 'key', title: 'Ihr Code, Ihre Daten', text: 'Individuell entwickelte Software gehört Ihnen samt Quellcode, Ihre Domain von Anfang an. Ihre Website können Sie nach der Mindestlaufzeit übernehmen – keine Bindung an eine Plattform.' },
-  { icon: 'server', title: 'Server in Deutschland', text: 'Websites, Anwendungen und Nextcloud betreiben wir auf Servern in Deutschland.' },
-  { icon: 'user', title: 'Ein fester Ansprechpartner', text: 'Sie haben einen festen Ansprechpartner, der Ihr Projekt kennt. Die Antwortzeiten sind in Ihrem Tarif festgelegt.' },
+  { icon: 'compass', title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
+  { icon: 'spark', title: 'KI-gestützte Umsetzung', text: 'KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung. Ergebnis: Ihre Website in Rekordzeit.' },
+  { icon: 'euro', title: 'Ein Preis, alles drin', text: 'Keine Pakete, keine Einrichtungskosten, keine versteckten Kosten.', link: { label: 'Zum Preis', path: '/preise/' } },
+  { icon: 'key', title: 'Ihr Code, Ihre Domain', text: 'Website, Code und Domain gehören Ihnen. Vertrauen statt künstlicher Abhängigkeit.' },
+  { icon: 'chart', title: 'Kontinuierliche Verbesserung', text: 'Ihre Website bleibt nicht stehen – wir entwickeln sie laufend weiter.' },
+  { icon: 'user', title: 'Ein Ansprechpartner', text: 'Ein persönlicher Ansprechpartner, der Ihr Unternehmen kennt – vom Erstgespräch bis zur Betreuung.' },
 ];
 
 const eigenbetrieb = [
@@ -30,33 +30,33 @@ const eigenbetrieb = [
 ];
 
 const passt = [
-  'Sie führen ein kleines oder mittleres Unternehmen, sind selbstständig oder leiten eine Institution.',
-  'Sie möchten planbare Kosten statt offener Stundenabrechnungen.',
-  'Sie wünschen sich einen Ansprechpartner für Website, Software, Cloud und IT.',
-  'Sie möchten sich um Ihr Geschäft kümmern – nicht um Technik.',
+  'Sie führen ein kleines oder mittleres Unternehmen – z. B. Handwerk, Dienstleistung, Beratung, IT oder Immobilien.',
+  'Sie möchten planbare Kosten statt hoher Einmalinvestitionen.',
+  'Sie wünschen sich einen echten Digitalisierungspartner – nicht nur ein KI-Tool.',
+  'Sie möchten sich auf Ihr Kerngeschäft konzentrieren.',
 ];
 const passtNicht = [
-  'Sie sind Privatperson: Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen (B2B).',
+  'Sie sind Privatperson: Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).',
   'Sie möchten alles selbst bauen und verwalten: Dann ist ein Baukasten die günstigere Wahl.',
 ];
 ---
 
 <BaseLayout
-  title="Warum waybuild – alles aus einer Hand"
-  description="Website, Software, Cloud & IT aus einer Hand: feste, offene Preise, 12 statt 24 Monate Laufzeit, Server in Deutschland und ein fester Ansprechpartner."
+  title="Warum waybuild – keine klassische Webagentur"
+  description="Keine klassische Webagentur: persönliche Beratung, KI-gestützte Umsetzung und kontinuierliche Verbesserung – ein Preis, ein Ansprechpartner, ein System."
   breadcrumb={[{ name: 'Warum waybuild', path: '/warum-waybuild/' }]}
 >
   <PageHeader
     eyebrow="Warum waybuild"
-    title="Alles aus einer Hand – statt drei Dienstleister."
-    lead="Website, Software, Cloud und IT von einem Team: mit festen Preisen, kurzen Laufzeiten und einem Ansprechpartner, der Ihr Unternehmen kennt."
+    title="Keine klassische Webagentur."
+    lead="Wir verkaufen keine Websites. Wir verkaufen digitale Kundenerlebnisse."
   >
-    <p class="ph-cta"><a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a> <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a></p>
+    <p class="ph-cta"><a class="btn btn--primary" href={href('/kontakt/')}>Kostenloses Erstgespräch</a> <a class="btn btn--ghost" href={href('/preise/')}>Preis ansehen</a></p>
   </PageHeader>
 
   <section class="section" aria-labelledby="unterschied-h">
     <div class="wrap">
-      <SectionHead eyebrow="Was uns unterscheidet" pre="Sechs Gründe, die Sie " accent="nachprüfen können" id="unterschied-h" />
+      <SectionHead eyebrow="Was uns unterscheidet" pre="Ein echter " accent="Digitalisierungspartner" id="unterschied-h" />
       <div class="grid grid--3">
         {unterschiede.map((u) => (
           <article class="card ucard reveal">
@@ -76,8 +76,7 @@ const passtNicht = [
         <span class="eyebrow">Wir nutzen, was wir verkaufen</span>
         <h2 id="eigen-h">Unsere eigene IT läuft auf derselben Technik.</h2>
         <p class="lead">
-          waybuild betreibt selbst eine gehärtete Nextcloud – für Dateien, Termine, Videokonferenzen und Dokumente.
-          Und unsere Website entwickeln wir mit derselben Technik wie die Websites unserer Kunden.
+          waybuild betreibt selbst eine gehärtete Nextcloud – die Basis für unsere Plattform-Vision.
         </p>
       </div>
       <ul class="check-list eigen__list">
@@ -152,10 +151,10 @@ const passtNicht = [
 
   <section class="section section--sand" aria-labelledby="saeulen-h">
     <div class="wrap">
-      <SectionHead eyebrow="Unsere Leistungen" pre="Vier Bereiche, " accent="ein Team" id="saeulen-h" />
+      <SectionHead eyebrow="Unser Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entwickeln wir ein digitales Betriebssystem für KMU – Baustein für Baustein." id="saeulen-h" />
       <div class="saeulen">
         {SAEULEN.map((s) => (
-          <a class="card scard reveal" href={href(`/leistungen/#${s.id}`)}>
+          <a class="card scard reveal" href={href(s.id === 'websites' ? '/leistungen/#websites' : `/leistungen/#${s.id}`)}>
             <span class="ucard__icon"><Icon name={s.icon} size={22} /></span>
             <h3>{s.title}</h3>
             <p>{s.claim}</p>
@@ -171,7 +170,7 @@ const passtNicht = [
     <div class="wrap">
       <div class="cta">
         <h2 id="cta-h">Lernen wir uns kennen.</h2>
-        <p>In einem kostenlosen Erstgespräch klären wir, was Sie brauchen – und was nicht. Unverbindlich.</p>
+        <p>Im kostenlosen Erstgespräch klären wir, was Ihre Website leisten soll – unverbindlich.</p>
         <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
       </div>
     </div>

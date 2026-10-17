@@ -1,13 +1,13 @@
-// Eigene Versprechen (Bauwelt-Muster „Siegel“, Wunsch 11.10.2026).
+// Unser Geschäftsmodell als digitale „Siegel“ (Bauwelt-Muster, Inhalte laut Unternehmensvision 17.10.2026).
 // WICHTIG (UWG): Das sind EIGENE Zusagen, keine fremden Prüfzeichen –
 // kein „Testsieger“, „zertifiziert von“ o. ä.
-import type { IconName } from './site';
+import { WAAS, type IconName } from './site';
 
 export type Versprechen = {
   id: string;
   icon: IconName;
   title: string;
-  /** Zweizeilig für die gezeichnete Szene */
+  /** Zweizeilig für die animierte Szene */
   zeilen: [string, string];
   short: string;
   long: string;
@@ -15,52 +15,52 @@ export type Versprechen = {
 
 export const VERSPRECHEN: Versprechen[] = [
   {
-    id: 'live14',
-    icon: 'rocket',
-    title: 'Live in 14 Tagen',
-    zeilen: ['Live in', '14 Tagen'],
-    short: 'Spätestens 14 Tage nach Ihren Inhalten ist Ihre Website online.',
-    long: 'Sobald Ihre Texte, Bilder und Ihr Logo bei uns sind, ist Ihre Website in spätestens 14 Tagen online. Verzögert sich etwas aus Gründen, die wir zu vertreten haben, erfahren Sie es sofort – nicht erst, wenn der Termin verstrichen ist.',
+    id: 'einrichtung',
+    icon: 'euro',
+    title: 'Keine Einrichtungskosten',
+    zeilen: ['Keine Einrich-', 'tungskosten'],
+    short: 'Keine Einmalinvestition, kein Projektbudget.',
+    long: 'Sie zahlen keine Einrichtung und keine hohe Einmalinvestition – nur den festen Monatspreis.',
   },
   {
     id: 'festpreis',
     icon: 'euro',
     title: 'Fester Monatspreis',
     zeilen: ['Fester', 'Monatspreis'],
-    short: 'Der Preis im Tarif ist der Preis auf der Rechnung.',
-    long: 'Design, Hosting, Domain, E-Mail, Updates und Änderungen sind im Monatspreis enthalten. Es gibt keine versteckten Zusatzkosten – nur wenn Sie ausdrücklich Extras beauftragen, ändert sich der Preis, vorher schriftlich.',
+    short: 'Ein Preis für alles.',
+    long: 'Website, Hosting, Domain, SSL, Wartung, Backups und Betreuung stecken in einem Preis. Der Preis im Vertrag ist der Preis auf der Rechnung.',
   },
   {
-    id: 'ansprechpartner',
-    icon: 'user',
-    title: 'Ein Ansprechpartner',
-    zeilen: ['Ein An-', 'sprechpartner'],
-    short: 'Eine Adresse für alles – vom Erstgespräch bis zur Pflege.',
-    long: 'Sie haben einen persönlichen Ansprechpartner, der Ihr Projekt vom ersten Gespräch bis in die laufende Betreuung begleitet. Auf neue Anfragen antworten wir innerhalb eines Werktags; im laufenden Abo gelten feste Antwortzeiten je Tarif – 48, 24 oder 4 Stunden.',
+    id: 'laufzeit',
+    icon: 'calendar',
+    title: `${WAAS.laufzeitMonate} Monate Laufzeit`,
+    zeilen: [`${WAAS.laufzeitMonate} Monate`, 'Laufzeit'],
+    short: 'Klar und planbar.',
+    long: `Eine klare Laufzeit von ${WAAS.laufzeitMonate} Monaten – planbar für Sie und genug Zeit, Ihre Website kontinuierlich zu verbessern.`,
   },
   {
-    id: 'speed',
-    icon: 'gauge',
-    title: 'PageSpeed 90+',
-    zeilen: ['PageSpeed', '90+'],
-    short: 'Schnell auf jedem Smartphone – messbar mit Googles Test.',
-    long: 'Jede Website, die wir ausliefern, erreicht bei Google PageSpeed Insights mindestens 90 Punkte auf dem Smartphone. Schnelle Seiten ranken besser und verlieren weniger Besucher.',
-  },
-  {
-    id: 'hosting',
-    icon: 'server',
-    title: 'Hosting in Deutschland',
-    zeilen: ['Hosting in', 'Deutschland'],
-    short: 'Server in Deutschland, SSL, tägliche Backups.',
-    long: 'Ihre Website und Ihre E-Mails liegen auf Servern in Deutschland – DSGVO-konform, mit SSL-Verschlüsselung, täglichen Backups und Überwachung rund um die Uhr.',
-  },
-  {
-    id: 'code',
+    id: 'eigentum',
     icon: 'key',
-    title: 'Ihr Code gehört Ihnen',
-    zeilen: ['Ihr Code', 'gehört Ihnen'],
-    short: 'Keine Abhängigkeit: Übernahme nach der Laufzeit möglich.',
-    long: 'Ihre Domain gehört Ihnen von Anfang an. Nach der Mindestlaufzeit können Sie Ihre Website auf Wunsch komplett übernehmen – inklusive Quellcode. Wir überzeugen mit Leistung, nicht mit Verträgen.',
+    title: 'Website, Code & Domain gehören Ihnen',
+    zeilen: ['Code & Domain', 'gehören Ihnen'],
+    short: 'Ihr Eigentum, von Anfang an.',
+    long: 'Die Domain läuft auf Ihren Namen. Website und Code gehören Ihrem Unternehmen.',
+  },
+  {
+    id: 'transparenz',
+    icon: 'eye',
+    title: 'Keine versteckten Kosten',
+    zeilen: ['Keine versteckten', 'Kosten'],
+    short: 'Maximale Transparenz.',
+    long: 'Was der Monatspreis abdeckt, steht im Vertrag. Extras gibt es nur, wenn Sie sie ausdrücklich beauftragen – vorher schriftlich.',
+  },
+  {
+    id: 'lockin',
+    icon: 'unlock',
+    title: 'Kein künstlicher Lock-in',
+    zeilen: ['Kein', 'Lock-in'],
+    short: 'Vertrauen statt Abhängigkeit.',
+    long: 'Wir möchten langfristiges Vertrauen aufbauen – keine künstliche Abhängigkeit. Sie behalten die Kontrolle über Ihre Website und Ihre Daten.',
   },
 ];
 

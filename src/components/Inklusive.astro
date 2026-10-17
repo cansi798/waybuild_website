@@ -1,0 +1,41 @@
+---
+// „Was drin ist“ – die neun Bestandteile von Website as a Service als kompaktes Icon-Raster.
+// Wird auf Startseite, Preise und Leistungsseiten genutzt (eine Quelle: config/site.ts → INKLUSIVE).
+import { INKLUSIVE } from '../config/site';
+import Icon from './Icon.astro';
+
+/** narrow = in schmaler Spalte (Desktop immer 2 Spalten) */
+interface Props { dark?: boolean; narrow?: boolean; }
+const { dark = false, narrow = false } = Astro.props;
+---
+
+<ul class:list={['inkl', { 'inkl--dark': dark, 'inkl--narrow': narrow }]}>
+  {INKLUSIVE.map((i, n) => (
+    <li class="inkl__item reveal" style={`--n: ${n}`}>
+      <span class="inkl__icon"><Icon name={i.icon} size={22} /></span>
+      <span class="inkl__t">{i.title}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .inkl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 720px) { .inkl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } .inkl--narrow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .inkl__item {
+    position: relative; display: flex; align-items: center; gap: 12px; min-height: 64px;
+    padding: 12px 14px; background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    font-weight: 650; line-height: 1.25; transition-delay: calc(var(--n) * 60ms);
+  }
+  /* Letzte Kachel mobil über die volle Breite (9 = 4 × 2 + 1) */
+  /* Mobil: Icon über dem Text – mehr Platz für lange Wörter wie „Sprachgesteuerte“ */
+  @media (max-width: 719px) {
+    .inkl__item { flex-direction: column; align-items: flex-start; gap: 8px; font-size: 0.9rem; }
+    .inkl__item:last-child { grid-column: 1 / -1; flex-direction: row; align-items: center; }
+  }
+  .inkl__icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: var(--dark); color: var(--accent); }
+  .inkl__t { min-width: 0; hyphens: manual; overflow-wrap: break-word; }
+  /* Kleiner „Datenpunkt“ oben rechts – digitaler Akzent */
+  .inkl__item::after { content: ''; position: absolute; top: 10px; right: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.55; }
+  .inkl--dark .inkl__item { background: rgb(255 255 255 / 6%); border-color: var(--dark-line); color: var(--white); }
+  .inkl--dark .inkl__icon { background: rgb(0 166 161 / 18%); }
+</style>

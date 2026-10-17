@@ -1,7 +1,10 @@
-// Angebot jenseits des Website-Abos (Wunsch 11.10.2026): Säulen, Pakete, Stundensätze, Abo-Übersicht.
-// EINZIGE Quelle für diese Preise – Detailseiten, /preise/, Startseite, llms.txt und JSON-LD lesen von hier.
-// Herleitung der Preise: docs/wettbewerbsanalyse-2026-10.md. Alle Preise netto zzgl. 19 % USt., nur B2B.
-import { plans, type IconName } from './site';
+// Bereiche (Säulen) und Positionierung. Seit der Unternehmensvision (17.10.2026) gibt es öffentlich nur
+// EIN Angebot: „Website as a Service“ (config/site.ts → WAAS). Software, Cloud & IT und Beratung sind
+// „Ausbaustufen auf Anfrage“ – ohne öffentliche Pakete/Preise.
+// Die Paket- und Stundensatz-Daten unten werden auf der Website NICHT mehr angezeigt; sie bleiben als
+// interne Kalkulationsbasis für individuelle Angebote (Herleitung: docs/wettbewerbsanalyse-2026-10.md).
+// Alle Preise netto zzgl. 19 % USt., nur B2B.
+import { WAAS, type IconName } from './site';
 
 export type Saeule = 'websites' | 'software' | 'cloud' | 'beratung';
 
@@ -31,10 +34,6 @@ export const TAGESSATZ = 760;
 /** Zusatzstunden für Kunden mit Pflege-/Betreuungsvertrag */
 export const STUNDENSATZ_VERTRAG = 85;
 
-/** Laufzeit-Regel für alle Abos (wie beim Website-Abo). */
-export const ABO_LAUFZEIT = '12 Monate Mindestlaufzeit, danach monatlich kündbar';
-/** Für Übersichten mit allen Abos (Markt-Monitoring ist die Ausnahme) */
-export const ABO_LAUFZEIT_ALLE = `${ABO_LAUFZEIT} (Ausnahme: Markt-Monitoring ist monatlich kündbar)`;
 export const NETTO_HINWEIS = 'Alle Preise netto zzgl. 19 % USt. Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.';
 export const REAKTION_HINWEIS = 'Antwortzeiten gelten werktags (Mo–Fr, 9–18 Uhr) und beschreiben, wann wir mit der Bearbeitung beginnen – nicht die Lösungszeit.';
 
@@ -210,37 +209,23 @@ export const ANALYSE_ZUSATZ: Zusatz[] = [
 
 /* ───────────── Säulen ───────────── */
 
-const ab = (p: Paket[]) => Math.min(...p.map((x) => x.wert));
-
 export const SAEULEN: { id: Saeule; title: string; claim: string; icon: IconName; ab: string; head: [string, string] }[] = [
-  { id: 'websites', title: 'Websites', icon: 'layout', head: ['Websites, die ', 'Anfragen bringen'], claim: 'Individuelle Websites im Abo – Design, Hosting, Domain, E-Mail und Pflege inklusive.', ab: `ab ${Math.min(...plans.map((p) => p.monthly))} € / Monat` },
-  { id: 'software', title: 'Software', icon: 'code', head: ['Software, die Ihre Abläufe ', 'vereinfacht'], claim: 'Individuelle Software, Web-Anwendungen und Schnittstellen – geplant, entwickelt und dauerhaft gepflegt.', ab: `Projekte ab ${eur(ab([...SOFTWARE_PROJEKTE.slice(1), ...WEBDEV_PAKETE.slice(1)]))} · Pflege ab ${eur(ab(PFLEGE_PAKETE))} / Monat` },
-  { id: 'cloud', title: 'Cloud & IT', icon: 'cloud', head: ['IT und Cloud, die einfach ', 'laufen'], claim: 'Eigene Nextcloud, sichere IT-Infrastruktur und Betreuung – mit Servern in Deutschland.', ab: `ab ${eur(ab(NEXTCLOUD_PAKETE))} pro Nutzer / Monat` },
-  { id: 'beratung', title: 'Beratung', icon: 'compass', head: ['Entscheidungen auf ', 'fundierter Basis'], claim: 'Wettbewerbsanalyse: Wo stehen Sie im Markt – und wo liegt Ihr Vorsprung?', ab: `ab ${eur(ab(ANALYSE_PAKETE.filter((p) => !p.monatlich)))} Festpreis` },
+  { id: 'websites', title: WAAS.name, icon: 'layout', head: ['Was wir damit ', 'bauen'], claim: 'Business-Website, Shop, Landingpage oder Relaunch – alles im selben Modell: ein Preis, alles drin.', ab: 'Fester Monatspreis · 0 € Einrichtung' },
+  { id: 'software', title: 'Software', icon: 'code', head: ['Software, die Ihre Abläufe ', 'vereinfacht'], claim: 'Individuelle Software, Web-Anwendungen und Schnittstellen – als individuelles Projekt.', ab: 'Ausbaustufe · auf Anfrage' },
+  { id: 'cloud', title: 'Cloud & IT', icon: 'cloud', head: ['IT und Cloud, die einfach ', 'laufen'], claim: 'Eigene Nextcloud und IT-Betreuung – mit Servern in Deutschland.', ab: 'Ausbaustufe · auf Anfrage' },
+  { id: 'beratung', title: 'Beratung', icon: 'compass', head: ['Entscheidungen auf ', 'fundierter Basis'], claim: 'Wettbewerbsanalyse: Wo stehen Sie im Markt – und wo liegt Ihr Vorsprung?', ab: 'Ausbaustufe · auf Anfrage' },
 ];
 
 export const saeuleById = (id: Saeule) => SAEULEN.find((s) => s.id === id)!;
-
-/* ───────────── Alle Abos auf einen Blick ───────────── */
-
-export const ABO_UEBERSICHT: { saeule: Saeule; name: string; preis: string; inhalt: string; path: string }[] = [
-  { saeule: 'websites', name: 'Website-Abo', preis: `ab ${Math.min(...plans.map((p) => p.monthly))} € / Monat`, inhalt: 'Design, Hosting, Domain, unbegrenzte E-Mail-Postfächer, Pflege und Änderungen', path: '/preise/#websites' },
-  { saeule: 'software', name: 'Software-Pflege', preis: `ab ${eur(ab(PFLEGE_PAKETE))} / Monat`, inhalt: 'Betrieb, Sicherheitsupdates, Überwachung und Stunden für Weiterentwicklung', path: '/leistungen/abo-wartung/' },
-  { saeule: 'cloud', name: 'Nextcloud-Hosting', preis: `ab ${eur(ab(NEXTCLOUD_PAKETE))} pro Nutzer / Monat`, inhalt: 'Eigene Cloud mit Dateien, Kalender, Talk, Online-Office und Backups', path: '/leistungen/nextcloud/' },
-  { saeule: 'cloud', name: 'IT-Betreuung', preis: `ab ${eur(ab(IT_PAKETE.slice(0, 2)))} pro Arbeitsplatz / Monat`, inhalt: 'Überwachung, Updates, Helpdesk und Sicherheits-Grundschutz', path: '/leistungen/cloud-it/' },
-  { saeule: 'cloud', name: 'Server-Betreuung', preis: `ab ${eur(IT_PAKETE[2].wert)} pro Server / Monat`, inhalt: 'Überwachung, Updates, Härtung, getestete Backups', path: '/leistungen/cloud-it/' },
-  { saeule: 'beratung', name: 'Markt-Monitoring', preis: `${eur(ANALYSE_PAKETE[2].wert)} / Monat`, inhalt: 'Vierteljährliches Update zu Preisen und Angeboten Ihrer Wettbewerber', path: '/leistungen/wettbewerbsanalyse/' },
-];
 
 /* ───────────── Positionierung (nur Anbieter-TYPEN, keine echten Wettbewerber) ───────────── */
 
 export const ANBIETER_TYPEN = ['Baukasten', 'Freelancer', 'Klassische Agentur', 'waybuild'] as const;
 export const ANBIETER_VERGLEICH: { kriterium: string; werte: [string, string, string, string] }[] = [
-  { kriterium: 'Kosten', werte: ['Niedrig – aber viel Eigenarbeit', 'Projektpreis, Pflege extra', 'Meist fünfstellige Projekte', 'Fester Monatspreis oder Festpreis'] },
-  { kriterium: 'Individuelle Lösung', werte: ['Vorlagen', 'Ja', 'Ja', 'Ja – Website, Software, Cloud'] },
+  { kriterium: 'Kosten', werte: ['Niedrig – aber viel Eigenarbeit', 'Projektpreis, Pflege extra', 'Meist fünfstellige Projekte', 'Fester Monatspreis, keine Einrichtungskosten'] },
+  { kriterium: 'Strategie & Beratung', werte: ['Keine', 'Selten', 'Gegen Aufpreis', 'Fester Bestandteil, vor der Umsetzung'] },
+  { kriterium: 'Tempo', werte: ['Abhängig von Ihnen', 'Je nach Verfügbarkeit', 'Wochen bis Monate', 'KI-gestützt, in Rekordzeit'] },
   { kriterium: 'Wer kümmert sich danach?', werte: ['Sie selbst', 'Je nach Verfügbarkeit', 'Ticket oder Account-Manager', 'Fester Ansprechpartner'] },
-  { kriterium: 'Antwortzeiten', werte: ['Support-Forum', 'Selten vereinbart', 'Im Wartungsvertrag', 'Im Tarif festgelegt'] },
-  { kriterium: 'Leistungen aus einer Hand', werte: ['Nur Website', 'Meist ein Fachgebiet', 'Breit, oft mit Subunternehmern', 'Website, Software, Cloud & IT'] },
-  { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', '12 Monate, danach monatlich'] },
-  { kriterium: 'Ihre Daten & Ihr Code', werte: ['Beim Plattformanbieter', 'Unterschiedlich', 'Unterschiedlich', 'Software-Code gehört Ihnen, Website-Übernahme möglich, Server in Deutschland'] },
+  { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', `${WAAS.laufzeitMonate} Monate, kein künstlicher Lock-in`] },
+  { kriterium: 'Ihre Website & Ihr Code', werte: ['Beim Plattformanbieter', 'Unterschiedlich', 'Unterschiedlich', 'Website, Code und Domain gehören Ihnen'] },
 ];

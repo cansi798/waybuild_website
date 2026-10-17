@@ -1,0 +1,66 @@
+---
+// „Die Website ist nur der erste Schritt“ – Bausteine des digitalen Betriebssystems für KMU (Vision 17.10.2026).
+// Heute: Website + Hosting (Website as a Service). Alles andere ist als „Vision / nächste Schritte“ markiert.
+import { href } from '../lib/paths';
+import { PLATTFORM } from '../config/home';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="plattform" aria-labelledby="plattform-h">
+  <div class="wrap">
+    <SectionHead center eyebrow="Langfristiges Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entsteht Schritt für Schritt ein digitales Betriebssystem für KMU." id="plattform-h" />
+
+    <div class="pf__legende" aria-hidden="true">
+      <span class="pf__tag pf__tag--heute">Heute</span>
+      <span class="pf__strecke"></span>
+      <span class="pf__tag">Unsere Vision</span>
+    </div>
+
+    <ul class="pf">
+      {PLATTFORM.map((p, i) => (
+        <li class:list={['pf__item reveal', { 'pf__item--heute': p.heute }]} style={`--i: ${i}`}>
+          <span class="pf__icon"><Icon name={p.icon} size={22} /></span>
+          <span class="pf__t">{p.title}</span>
+          <span class="sr-only">{p.heute ? '(heute verfügbar)' : '(Vision, nächster Schritt)'}</span>
+        </li>
+      ))}
+    </ul>
+
+    <p class="pf__note">
+      Einzelne Bausteine wie Nextcloud oder Individualsoftware setzen wir schon heute als Projekt um:{' '}
+      <a href={href('/leistungen/#ausbau')}>auf Anfrage</a>.
+    </p>
+    <p class="pf__cta"><a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a></p>
+  </div>
+</section>
+
+<style>
+  .pf__legende { display: flex; align-items: center; gap: 12px; max-width: 760px; margin: 0 auto 22px; }
+  .pf__tag { flex: none; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  .pf__tag--heute { color: var(--white); background: var(--dark); padding: 4px 10px; border-radius: 99px; }
+  .pf__strecke {
+    flex: 1; height: 3px; border-radius: 2px;
+    background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 14px); background-size: 14px 3px;
+    animation: pf-fluss 0.9s linear infinite;
+  }
+  @keyframes pf-fluss { to { background-position: 14px 0; } }
+
+  .pf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 720px) { .pf { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } }
+  @media (min-width: 1100px) { .pf { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .pf__item {
+    display: grid; justify-items: center; align-content: start; gap: 8px; padding: 14px 6px; text-align: center;
+    border: 1.5px dashed var(--line); border-radius: 14px; background: var(--paper); color: var(--ink-soft);
+    font-weight: 600; font-size: 0.85rem; line-height: 1.2; transition-delay: calc(var(--i) * 50ms);
+  }
+  .pf__t { hyphens: manual; overflow-wrap: break-word; max-width: 100%; }
+  @media (max-width: 419px) { .pf__item { font-size: 0.8rem; } }
+  .pf__icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; border: 1.5px solid var(--accent); color: var(--accent-ink); background: var(--white); }
+  .pf__item--heute { border: 1px solid var(--dark); border-style: solid; background: var(--dark); color: var(--white); }
+  .pf__item--heute .pf__icon { background: var(--accent); border-color: var(--accent); color: var(--dark); }
+  .pf__note { margin: 22px auto 0; max-width: 640px; text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
+  .pf__note a { font-weight: 650; color: var(--accent-ink); }
+  .pf__cta { margin: 24px 0 0; text-align: center; }
+  @media (max-width: 959px) { .pf__cta { display: none; } }
+</style>

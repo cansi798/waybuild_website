@@ -1,22 +1,27 @@
 ---
-// Leistungen-Übersicht in vier Säulen (Wunsch 11.10.2026): Websites · Software · Cloud & IT · Beratung.
-// Oben Sprung-Kacheln je Säule, darunter je Säule die Leistungs-Kacheln (Grafik, Teaser, Preis-Teaser).
+// Leistungen nach der Unternehmensvision (17.10.2026): EINE Lösung „Website as a Service“.
+// 1 Was drin ist (9 Bestandteile) → 2 Was wir damit bauen (#websites) → 3 Ausbaustufen auf Anfrage (#ausbau,
+// mit den alten Sprungmarken #software, #cloud, #beratung) → CTA.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import LeistungGrafik from '../../components/LeistungGrafik.astro';
+import Inklusive from '../../components/Inklusive.astro';
 import Icon from '../../components/Icon.astro';
-import { leistungenNach, leistungAb } from '../../config/leistungen';
-import { allPlansInclude } from '../../config/site';
+import { leistungen, leistungenNach, leistungAb } from '../../config/leistungen';
+import { WAAS, preisLang } from '../../config/site';
 import { SAEULEN, NETTO_HINWEIS } from '../../config/angebot';
 import { href, absolute } from '../../lib/paths';
 import { serviceSchema } from '../../lib/schema';
+
+const websites = leistungenNach('websites');
+const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Leistungen von waybuild',
-  itemListElement: SAEULEN.flatMap((s) => leistungenNach(s.id)).map((l, i) => ({
+  itemListElement: leistungen.map((l, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: l.title,
@@ -26,70 +31,75 @@ const itemList = {
 ---
 
 <BaseLayout
-  title="Leistungen: Websites, Software, Cloud & IT"
-  description="Websites im Abo, individuelle Software, Web-Entwicklung, Nextcloud, IT-Betreuung und Wettbewerbsanalyse für Unternehmen – aus einer Hand, zu festen Preisen."
+  title="Leistungen: Website as a Service"
+  description={`Eine Lösung statt vieler Pakete: ${WAAS.name} – Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis.`}
   schema={[serviceSchema(Astro.site), itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >
-  <PageHeader eyebrow="Leistungen" title="Alles aus einer Hand." lead="Website, Software, Cloud und IT – entwickelt, betrieben und betreut von einem Team. Ein Ansprechpartner, feste Preise.">
-    <ul class="jump">
-      {SAEULEN.map((s) => (
-        <li>
-          <a class="jump__item" href={`#${s.id}`}>
-            <span class="jump__icon"><Icon name={s.icon} size={22} /></span>
-            <span><strong>{s.title}</strong><small>{s.ab}</small></span>
-          </a>
-        </li>
-      ))}
-    </ul>
+  <PageHeader eyebrow="Leistungen" title={`Eine Lösung: ${WAAS.name}.`} lead={WAAS.claim}>
+    <p class="ph-preis"><Icon name="euro" size={20} /> {preisLang()} · 0 € Einrichtung · {WAAS.laufzeitMonate} Monate</p>
   </PageHeader>
 
-  {SAEULEN.map((s, si) => (
-    <section class:list={['section', 'saeule', { 'section--sand': si % 2 === 1 }]} id={s.id} aria-labelledby={`${s.id}-h`}>
-      <div class="wrap">
-        <SectionHead eyebrow={s.title} pre={s.head[0]} accent={s.head[1]} id={`${s.id}-h`} text={s.claim} />
-        <div class="lgrid">
-          {leistungenNach(s.id).map((l) => (
-            <a class="card lcard reveal" href={href(`/leistungen/${l.slug}/`)}>
-              <div class="lcard__media"><LeistungGrafik art={l.grafik} /></div>
-              <div class="lcard__body">
-                <span class="lcard__icon"><Icon name={l.icon} size={22} /></span>
-                <h3>{l.title}</h3>
-                <p>{l.teaser}</p>
-                <span class="lcard__plan">{leistungAb(l)}</span>
-                <span class="lcard__more">Mehr erfahren <Icon name="arrow" size={18} /></span>
-              </div>
-            </a>
-          ))}
-          {(() => {
-            const n = leistungenNach(s.id).length;
-            const rest3 = (3 - (n % 3)) % 3;
-            const rest2 = n % 2 ? 1 : 2;
-            return rest3 > 0 && (
-              <div class="card lfill" style={`--r3: ${rest3}; --r2: ${rest2}`}>
-                <span class="eyebrow">{s.title}</span>
-                <p class="lfill__ab">{s.ab}</p>
-                <p>Nicht sicher, was Sie brauchen? Im kostenlosen Erstgespräch klären wir in 20 Minuten, welche Lösung zu Ihrem Unternehmen passt – ehrlich, auch wenn es die kleinere ist.</p>
-                <div class="lfill__actions">
-                  <a class="btn btn--primary btn--sm" href={`${href('/kontakt/')}?leistung=${leistungenNach(s.id)[0].slug}`}>Erstgespräch</a>
-                  <a class="btn btn--sm lfill__ghost" href={href(`/preise/#${s.id}`)}>Preise ansehen</a>
-                </div>
-              </div>
-            );
-          })()}
+  <section class="section" aria-labelledby="inkl-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Enthalten" pre="Was " accent="drin ist" id="inkl-h" />
+      <Inklusive />
+    </div>
+  </section>
+
+  <section class="section section--sand saeule" id="websites" aria-labelledby="websites-h">
+    <div class="wrap">
+      <SectionHead eyebrow={WAAS.name} pre="Was wir damit " accent="bauen" text="Gleiches Modell, gleicher Service – je nachdem, was Ihr Unternehmen braucht." id="websites-h" />
+      <div class="lgrid">
+        {websites.map((l) => (
+          <a class="card lcard reveal" href={href(`/leistungen/${l.slug}/`)}>
+            <div class="lcard__media"><LeistungGrafik art={l.grafik} /></div>
+            <div class="lcard__body">
+              <span class="lcard__icon"><Icon name={l.icon} size={22} /></span>
+              <h3>{l.title}</h3>
+              <p>{l.teaser}</p>
+              <span class="lcard__plan">{leistungAb(l)}</span>
+            </div>
+          </a>
+        ))}
+        <div class="card lfill">
+          <span class="eyebrow">Erstgespräch</span>
+          <p class="lfill__ab">Nicht sicher, was Sie brauchen?</p>
+          <p>In der Beratung klären wir Zielgruppen, Positionierung und Ziele – danach wissen Sie, was Ihre Website leisten muss.</p>
+          <div class="lfill__actions">
+            <a class="btn btn--primary btn--sm" href={href('/kontakt/')}>Erstgespräch</a>
+            <a class="btn btn--sm lfill__ghost" href={href('/preise/')}>Preis ansehen</a>
+          </div>
         </div>
-        {s.id === 'websites' && <p class="incl"><strong>In jedem Website-Abo enthalten:</strong> {allPlansInclude.join(' · ')}</p>}
-        {leistungenNach(s.id).length % 3 === 0 && <p class="incl"><a href={href(`/preise/#${s.id}`)}>Preise {s.title} ansehen →</a></p>}
       </div>
-    </section>
-  ))}
+    </div>
+  </section>
+
+  <section class="section saeule" id="ausbau" aria-labelledby="ausbau-h">
+    <div class="wrap">
+      <SectionHead eyebrow="Ausbaustufen · auf Anfrage" pre="Die Website ist der " accent="erste Schritt." text="Darauf aufbauend setzen wir individuelle Projekte um – auf dem Weg zur digitalen Unternehmensplattform." id="ausbau-h" />
+      <div class="ausbau">
+        {ausbau.map((s) => (
+          <div class="ausbau__gruppe" id={s.id}>
+            <h3><Icon name={s.icon} size={20} /> {s.title}</h3>
+            <ul>
+              {leistungenNach(s.id).map((l) => (
+                <li><a href={href(`/leistungen/${l.slug}/`)}><strong>{l.title}</strong><span>{l.teaser}</span></a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="incl"><a href={href('/#plattform')}>Unsere Plattform-Vision ansehen →</a></p>
+    </div>
+  </section>
 
   <section class="section section--dark">
     <div class="wrap cta">
       <div>
-        <span class="eyebrow">Warum waybuild</span>
-        <h2>Ein Team statt drei Dienstleister.</h2>
-        <p class="lead">Website, Software und Cloud greifen ineinander – bei uns aus einer Hand, mit einem Ansprechpartner und transparenten Preisen.</p>
+        <span class="eyebrow">Keine klassische Webagentur</span>
+        <h2>Menschliche Beratung. KI-gestützte Umsetzung.</h2>
+        <p class="lead">Und danach: kontinuierliche Verbesserung.</p>
       </div>
       <div class="cta__actions">
         <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
@@ -101,14 +111,8 @@ const itemList = {
 </BaseLayout>
 
 <style>
-  .jump { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
-  @media (min-width: 900px) { .jump { grid-template-columns: repeat(4, 1fr); gap: 14px; } }
-  .jump__item { display: flex; align-items: center; gap: 12px; height: 100%; padding: 14px 16px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease; }
-  .jump__item:hover { border-color: var(--dark); transform: translateY(-2px); }
-  .jump__icon { flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--dark); color: var(--accent); display: grid; place-items: center; }
-  .jump__item strong { display: block; font-family: var(--font-head); font-size: 1.05rem; }
-  .jump__item small { display: block; font-size: 0.78rem; color: var(--ink-soft); line-height: 1.35; }
-  @media (max-width: 599px) { .jump__icon { width: 34px; height: 34px; } .jump__item { padding: 10px 12px; gap: 10px; } }
+  .ph-preis { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0 0; font-weight: 650; }
+  .ph-preis :global(.icon) { color: var(--accent-ink); }
   .saeule { scroll-margin-top: 72px; }
   .lgrid { display: grid; gap: 20px; }
   @media (min-width: 720px) { .lgrid { grid-template-columns: 1fr 1fr; } }
@@ -120,18 +124,27 @@ const itemList = {
   .lcard h3 { font-size: 1.3rem; margin: 6px 0 0; }
   .lcard p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
   .lcard__plan { font-size: 0.82rem; font-weight: 650; color: var(--accent-ink); margin-top: 4px; }
-  .lcard__more { display: inline-flex; align-items: center; gap: 6px; font-weight: 650; font-size: 0.9rem; margin-top: 6px; }
   .lfill { background: var(--dark); color: var(--paper); border-color: var(--dark); display: grid; align-content: center; gap: 10px; }
   .lfill .eyebrow { margin: 0; color: var(--accent); }
   .lfill p { margin: 0; color: var(--dark-lead); font-size: 0.95rem; max-width: 52ch; }
   .lfill .lfill__ab { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; color: var(--white); }
   .lfill__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
   .lfill__ghost { border-color: rgb(255 255 255 / 55%); color: var(--white); background: transparent; }
-  @media (min-width: 720px) and (max-width: 1099px) { .lfill { grid-column: span var(--r2); } }
-  @media (min-width: 1100px) { .lfill { grid-column: span var(--r3); } }
-  .incl { margin: 24px 0 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
-  .incl strong { color: var(--ink); }
+
+  .ausbau { display: grid; gap: 16px; }
+  @media (min-width: 900px) { .ausbau { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .ausbau__gruppe { scroll-margin-top: 90px; background: var(--white); border: 1.5px dashed var(--line); border-radius: 18px; padding: 20px; }
+  .ausbau__gruppe h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 1.15rem; }
+  .ausbau__gruppe h3 :global(.icon) { color: var(--accent-ink); }
+  .ausbau__gruppe ul { list-style: none; margin: 0; padding: 0; display: grid; }
+  .ausbau__gruppe li + li { border-top: 1px solid var(--line); }
+  .ausbau__gruppe a { display: grid; gap: 2px; padding: 10px 0; text-decoration: none; }
+  .ausbau__gruppe a strong { color: var(--accent-ink); }
+  .ausbau__gruppe a span { font-size: 0.88rem; color: var(--ink-soft); }
+  .ausbau__gruppe a:hover strong { text-decoration: underline; }
+  .incl { margin: 24px 0 0; text-align: center; font-size: 0.92rem; }
   .incl a { font-weight: 650; color: var(--accent-ink); }
+
   .cta { display: grid; gap: 24px; align-items: center; }
   @media (min-width: 960px) { .cta { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
   .cta h2 { margin-bottom: 0.4em; }
