@@ -4,8 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import More from '../../components/More.astro';
 import { branchen, type Branche } from '../../config/branchen';
-import { WAAS, INKLUSIVE, MODELL, preisLang } from '../../config/site';
-import { waasOffer } from '../../lib/schema';
+import { WAAS, INKLUSIVE, MODELL, PAKETE, formatEuro, preisLang } from '../../config/site';
+import { waasOffers } from '../../lib/schema';
 import { href, absolute } from '../../lib/paths';
 
 export function getStaticPaths() {
@@ -25,7 +25,7 @@ const schema = [
     audience: { '@type': 'BusinessAudience', name: b.name },
     provider: { '@id': `${absolute('/', Astro.site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
-    offers: waasOffer(Astro.site, `/website-fuer/${b.slug}/`),
+    offers: waasOffers(Astro.site, `/website-fuer/${b.slug}/`),
   },
   {
     '@context': 'https://schema.org',
@@ -59,9 +59,9 @@ const schema = [
         <h2 id="reco-h" class="reco__name">{WAAS.name}</h2>
         <p class="reco__price"><strong>{preisLang()}</strong></p>
         <p class="reco__why">{b.fokus}</p>
-        <ul class="reco__list">{MODELL.slice(0, 4).map((f) => <li>{f}</li>)}</ul>
+        <ul class="reco__list">{PAKETE.map((p) => <li>{p.name}: {formatEuro(p.preis)} / Monat</li>)}{MODELL.slice(0, 2).map((f) => <li>{f}</li>)}</ul>
         <a class="btn btn--primary reco__btn" href={contact}>Erstgespräch anfragen</a>
-        <a class="reco__all" href={href('/preise/')}>Preis & Details</a>
+        <a class="reco__all" href={href('/preise/')}>Preise im Vergleich</a>
       </aside>
     </div>
   </section>

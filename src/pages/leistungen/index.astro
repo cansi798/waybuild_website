@@ -32,7 +32,7 @@ const itemList = {
 
 <BaseLayout
   title="Leistungen: Website as a Service"
-  description={`Eine Lösung statt vieler Pakete: ${WAAS.name} – Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis.`}
+  description={`${WAAS.name}: Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis – ${preisLang()}.`}
   schema={[serviceSchema(Astro.site), itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >

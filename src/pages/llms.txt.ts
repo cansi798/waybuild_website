@@ -1,7 +1,7 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, preisLang } from '../config/site';
+import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, formatEuro } from '../config/site';
 import { absolute } from '../lib/paths';
 import { branchen } from '../config/branchen';
 import { leistungenNach } from '../config/leistungen';
@@ -20,10 +20,11 @@ export const GET: APIRoute = async ({ site }) => {
     NETTO_HINWEIS,
     '',
     `## Das Angebot: ${WAAS.name}`,
-    `${WAAS.claim} Bewusst keine Pakete oder Tarife – eine Lösung. ${OFFER}`,
+    `${WAAS.claim} Zwei Varianten. ${OFFER}`,
     `- Enthalten: ${INKLUSIVE.map((i) => i.title).join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
-    `- Preis: ${preisLang()}.`,
+    ...PAKETE.map((p) => `- ${p.name}: ${formatEuro(p.preis)} pro Monat, netto zzgl. MwSt. – ${p.kurz}. ${p.features.join(', ')}.`),
+    '- Service-Versprechen: immer ein Mensch als fester Ansprechpartner, Änderungen per Sprachnachricht, kleine Änderungen oft in Minuten online, Antwort spätestens am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
     `- Arbeitsweise: persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach KI-gestützte Umsetzung in Rekordzeit, dann kontinuierliche Verbesserung. KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
     '',
@@ -37,8 +38,7 @@ export const GET: APIRoute = async ({ site }) => {
       ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser}`),
       '',
     ]),
-    '## Vision (in Entwicklung, noch kein Produkt)',
-    '- Die intelligente Website: verbindet Besucherstatistiken, Anfragen, Suchbegriffe, CRM-Daten, Search Console, Bewertungen, Referenzen, Angebots- und Conversion-Daten und verbessert sich kontinuierlich – vom digitalen Schaufenster zum aktiven Vertriebsmitarbeiter.',
+    '## Vision',
     `- Langfristig: ein digitales Betriebssystem für KMU mit ${PLATTFORM.map((p) => p.title.replace(/­/g, '')).join(', ')}. Die Website ist der erste Schritt.`,
     '',
     '## Häufige Fragen',
@@ -47,7 +47,7 @@ export const GET: APIRoute = async ({ site }) => {
     '## Seiten',
     `- [Startseite](${url('/')})`,
     `- [Leistungen](${url('/leistungen/')}): Website as a Service und Ausbaustufen`,
-    `- [Preis](${url('/preise/')}): ein Angebot, ein fester Monatspreis`,
+    `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen Baukasten, Freelancer, Agentur und waybuild`,
     `- [Über uns](${url('/ueber-uns/')})`,
     `- [Kontakt](${url('/kontakt/')}): kostenloses Erstgespräch`,

@@ -1,5 +1,5 @@
 // Branchen-Landingpages: /website-fuer/<slug>/
-// Jede Seite rankt auf "Website für <Branche>" und führt zu Website as a Service (ein Angebot, keine Tarife).
+// Jede Seite rankt auf "Website für <Branche>" und führt zu Website as a Service (zwei Varianten, fester Monatspreis).
 import type { IconName } from './site';
 
 export type Branche = {

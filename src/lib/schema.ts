@@ -1,5 +1,5 @@
 // JSON-LD-Bausteine für strukturierte Daten (Rich Results bei Google)
-import { faqs, company, WAAS, INKLUSIVE } from '../config/site';
+import { faqs, company, WAAS, PAKETE } from '../config/site';
 import { absolute } from './paths';
 
 export function faqSchema() {
@@ -14,29 +14,26 @@ export function faqSchema() {
   };
 }
 
-/** Das EINE Angebot als schema.org-Offer – mit Preis nur, wenn WAAS.preisMonat festgelegt ist. */
-export function waasOffer(site: URL | undefined, path = '/preise/') {
+/** Die zwei Varianten als schema.org-Offers (netto, pro Monat) – Preise aus PAKETE. */
+export function waasOffers(site: URL | undefined, path = '/preise/') {
   const url = absolute(path, site);
-  return {
+  return PAKETE.map((p) => ({
     '@type': 'Offer',
-    name: WAAS.name,
+    name: `${WAAS.name} – ${p.name}`,
     url,
     priceCurrency: 'EUR',
-    description: `Fester Monatspreis, keine Einrichtungskosten, ${WAAS.laufzeitMonate} Monate Laufzeit. Enthalten: ${INKLUSIVE.map((i) => i.title).join(', ')}.`,
-    ...(WAAS.preisMonat
-      ? {
-          price: WAAS.preisMonat,
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: WAAS.preisMonat,
-            priceCurrency: 'EUR',
-            valueAddedTaxIncluded: false,
-            unitCode: 'MON',
-            referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
-          },
-        }
-      : {}),
-  };
+    price: p.preis,
+    description: `${p.kurz}. ${p.features.join(', ')}. Keine Einrichtungskosten, ${WAAS.laufzeitMonate} Monate Laufzeit, Preis netto zzgl. MwSt.`,
+    eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: p.preis,
+      priceCurrency: 'EUR',
+      valueAddedTaxIncluded: false,
+      unitCode: 'MON',
+      referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
+    },
+  }));
 }
 
 export function serviceSchema(site: URL | undefined) {
@@ -49,6 +46,6 @@ export function serviceSchema(site: URL | undefined) {
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     audience: { '@type': 'BusinessAudience', name: 'Kleine und mittlere Unternehmen' },
     description: `${company.name} verbindet persönliche Beratung mit KI-gestützter Umsetzung: ${WAAS.name} – ${WAAS.claim}`,
-    offers: [waasOffer(site)],
+    offers: waasOffers(site),
   };
 }

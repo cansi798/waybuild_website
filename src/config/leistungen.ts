@@ -359,10 +359,10 @@ export const leistungen: Leistung[] = [
   {
     saeule: 'software',
     slug: 'abo-wartung',
-    seo: { title: 'Betreuung im Abo: ein Modell statt vieler', description: `Statt vieler Abos und Pakete: ${WAAS.name} – ein Preis, ein Ansprechpartner, ein System. Betreuung für Software, Nextcloud und IT auf Anfrage.` },
+    seo: { title: 'Betreuung im Abo: ein Modell statt vieler', description: `Statt vieler Abos: ${WAAS.name} – ein Ansprechpartner, ein System, ein fester Monatspreis. Betreuung für Software, Nextcloud und IT auf Anfrage.` },
     icon: 'refresh',
     title: 'Betreuung im Abo',
-    pre: 'Ein Preis. ',
+    pre: 'Ein Modell. ',
     accent: 'Alles betreut.',
     teaser: `Statt vieler Abos: ${WAAS.name}. Betreuung für Software, Cloud und IT auf Anfrage.`,
     lead: `Wir haben unsere Abos vereinfacht: Für Websites gibt es nur noch ${WAAS.name}. Betreuung für Software, Nextcloud und IT stimmen wir individuell ab.`,

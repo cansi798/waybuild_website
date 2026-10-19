@@ -105,7 +105,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const interesse = form.elements.namedItem('interesse') as HTMLSelectElement;
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
-    if (websiteSlugs.includes(leistung) || tarif) interesse.value = 'website';
+    if (websiteSlugs.includes(leistung) || tarif || params.get('paket')) interesse.value = 'website';
     else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
     const paket = params.get('paket');
     if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);

@@ -1,6 +1,6 @@
 // Launch-Checkliste: alles, was vor dem offiziellen Start noch erledigt werden muss.
 // Firmendaten werden automatisch geprüft, der Rest wird hier von Hand abgehakt (done: true).
-import { company, isMissing, references, SHOW_HINTS, PHONE_IS_PLACEHOLDER, WAAS } from './site';
+import { company, isMissing, references, SHOW_HINTS, PHONE_IS_PLACEHOLDER } from './site';
 
 export type Todo = {
   title: string;
@@ -73,22 +73,22 @@ const manual: Todo[] = [
     priority: 'wichtig',
   },
   {
-    title: 'Monatspreis für Website as a Service festlegen',
-    detail: 'Seit der Unternehmensvision (17.10.2026) gibt es nur noch ein Angebot. Solange kein Preis eingetragen ist, steht auf der Website „Fester Monatspreis – nennen wir im Erstgespräch“.',
-    where: 'src/config/site.ts → WAAS.preisMonat',
-    done: WAAS.preisMonat !== null,
+    title: 'Monatspreise für Website as a Service festlegen',
+    detail: 'Festgelegt von Jamil am 19.10.2026: 79 € / Monat und 139 € / Monat (intelligente Website), netto.',
+    where: 'src/config/site.ts → PAKETE',
+    done: true,
     priority: 'pflicht',
   },
   {
     title: 'AGB an Website as a Service anpassen',
-    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website: keine Einrichtungskosten, 24 Monate, Website/Code/Domain gehören dem Kunden – anwaltlich angleichen lassen.',
+    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website: zwei Varianten (79 € / 139 € netto im Monat), keine Einrichtungskosten, 24 Monate, Website/Code/Domain gehören dem Kunden – anwaltlich angleichen lassen.',
     where: 'src/pages/agb.astro',
     done: false,
     priority: 'pflicht',
   },
   {
     title: 'Leistungsversprechen absichern',
-    detail: '„Live in 14 Tagen“, „Sprachgesteuerte Änderungen“ und „KI-gestützte Erstellung“ stehen als Bestandteile auf der Website. Prozesse und Werkzeuge so aufsetzen, dass das eingehalten wird.',
+    detail: '„Live in 14 Tagen“, „Sprachgesteuerte Änderungen“, „KI-gestützte Erstellung“, die Service-Versprechen (u. a. „kleine Änderungen oft in Minuten online“, „Antwort spätestens am nächsten Werktag“) und die selbstoptimierende „Intelligente Website“ stehen auf der Website. Für die Auswertung von Besucherdaten Datenschutzerklärung/Einwilligung prüfen. Prozesse und Werkzeuge so aufsetzen, dass das eingehalten wird.',
     where: 'src/config/site.ts → INKLUSIVE, faqs',
     done: false,
     priority: 'wichtig',
