@@ -1,5 +1,6 @@
-@import '@fontsource-variable/bricolage-grotesque/wght.css';
-@import '@fontsource-variable/figtree/wght.css';
+/* CI waybuild: Montserrat (Überschriften) + Jost (Fließtext), lokal eingebunden */
+@import '@fontsource-variable/montserrat/wght.css';
+@import '@fontsource-variable/jost/wght.css';
 
 :root {
   --ink: #3a3a3a;       /* Logo-Palette (Wunsch 10.10.2026): dunkles Grau statt Navy */
@@ -17,8 +18,8 @@
   --ok: #177049;
   --radius: 14px;
   --shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 8px 24px rgb(0 79 76 / 8%);
-  --font-head: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Jost Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1160px;
   color-scheme: light;
 }
@@ -40,13 +41,13 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-head);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   margin: 0 0 0.5em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.3rem, 6.5vw, 4.4rem); font-weight: 750; }
-h2 { font-size: clamp(1.8rem, 4.2vw, 2.9rem); font-weight: 700; }
+h1 { font-size: clamp(2.1rem, 5.8vw, 3.9rem); font-weight: 700; }
+h2 { font-size: clamp(1.65rem, 3.8vw, 2.6rem); font-weight: 700; }
 h3 { font-size: 1.25rem; font-weight: 650; }
 p { margin: 0 0 1em; }
 a { color: inherit; }
