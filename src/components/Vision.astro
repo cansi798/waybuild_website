@@ -1,18 +1,21 @@
 ---
-// VISION „Die intelligente Website“ (Unternehmensvision 17.10.2026) – ausdrücklich als Vision/in Entwicklung
-// gekennzeichnet, KEIN heutiges Feature. Links: Datenquellen, Mitte: Datenfluss, rechts: Solarteur-Beispiel.
+// „Die intelligente Website“ – seit 19.10.2026 eigene Variante (Preis aus PAKETE, Jamil).
+// Links: Datenquellen, Mitte: Datenfluss, rechts: Solarteur-Beispiel (als Beispiel gekennzeichnet).
 import { VISION } from '../config/home';
+import { PAKETE, formatEuro } from '../config/site';
+import { href } from '../lib/paths';
+const intelligent = PAKETE.find((p) => p.id === 'intelligent')!;
 import SectionHead from './SectionHead.astro';
 import Icon from './Icon.astro';
 ---
 
 <section class="section section--dark vision" id="vision" aria-labelledby="vision-h">
   <div class="wrap">
-    <SectionHead eyebrow="Unsere Vision · in Entwicklung" pre="Die intelligente " accent="Website." text="Eine Website sollte lernen, sich entwickeln und aktiv zum Unternehmenserfolg beitragen." id="vision-h" />
+    <SectionHead eyebrow={`${intelligent.name} · ${formatEuro(intelligent.preis)} / Monat`} pre="Eine Website, die " accent="mitdenkt." text="Sie lernt aus Ihren Besuchern und Anfragen – und passt sich laufend an." id="vision-h" />
 
     <div class="vis">
       <div class="vis__daten">
-        <p class="vis__h">Verbunden mit Ihren Daten</p>
+        <p class="vis__h">Lernt zum Beispiel aus</p>
         <ul class="vis__chips">
           {VISION.datenquellen.map((d, i) => <li style={`--i: ${i}`}>{d}</li>)}
         </ul>
@@ -49,7 +52,7 @@ import Icon from './Icon.astro';
     </div>
 
     <p class="vis__fazit">Vom digitalen Schaufenster zum <span class="accent">aktiven Vertriebsmitarbeiter.</span></p>
-    <p class="vis__note">Beispielszenario. Die selbstoptimierende Plattform ist unsere Vision – wir entwickeln sie gerade.</p>
+    <p class="vis__note">Beispielszenario zur Veranschaulichung. <a href={href('/preise/')}>{intelligent.name}: {formatEuro(intelligent.preis)} im Monat, zzgl. MwSt.</a></p>
   </div>
 </section>
 
@@ -107,4 +110,5 @@ import Icon from './Icon.astro';
 
   .vis__fazit { margin: clamp(28px, 4vw, 44px) 0 0; text-align: center; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.35rem, 3vw, 2rem); line-height: 1.2; color: var(--white); text-wrap: balance; }
   .vis__note { margin: 10px 0 0; text-align: center; font-size: 0.85rem; color: var(--dark-soft); }
+  .vis__note a { color: var(--accent); font-weight: 650; }
 </style>

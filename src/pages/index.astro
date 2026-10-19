@@ -1,30 +1,35 @@
 ---
-// Startseite nach der Unternehmensvision (Jamil, 17.10.2026) – wenig Text, klare Struktur:
-// 1 Hero (Positionierung + EIN CTA) → 2 Website as a Service („Ein Preis. Ein Ansprechpartner. Ein System.“, 9 Bestandteile)
-// → 3 Arbeitsweise (Beratung → KI-Umsetzung → Verbesserung, animiert) → 4 Geschäftsmodell (6 Siegel)
-// → 5 Zielgruppen → 6 Vision „Die intelligente Website“ (Solarteur-Beispiel) → 7 Plattform-Bausteine
-// → Footer-Kopf mit Direktkontakt (CTA).
+// Startseite – B2B entlang der Customer Journey (Feedback Jamil, 19.10.2026):
+// 1 Hero (Nutzen + Preisanker + Erstgespräch) → 2 Problem → Lösung (Schmerzpunkte, „eine Sprachnachricht genügt“)
+// → 3 Preise: zwei Varianten (Website / Intelligente Website) → 4 Was die intelligente Website macht (Beispiel)
+// → 5 Ablauf in vier Schritten → 6 Service-Versprechen (SLAs in Alltagssprache) → 7 Zielgruppen
+// → 8 Plattform-Ausblick → 9 FAQ → Footer-Kopf mit Direktkontakt (CTA).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Angebot from '../components/Angebot.astro';
+import Schmerzpunkte from '../components/Schmerzpunkte.astro';
+import Pakete from '../components/Pakete.astro';
+import Vision from '../components/Vision.astro';
 import Ablauf from '../components/Ablauf.astro';
 import Siegel from '../components/Siegel.astro';
 import Zielgruppen from '../components/Zielgruppen.astro';
-import Vision from '../components/Vision.astro';
 import Plattform from '../components/Plattform.astro';
-import { serviceSchema } from '../lib/schema';
+import Faq from '../components/Faq.astro';
+import { serviceSchema, faqSchema } from '../lib/schema';
+import { PAKETE, formatEuro } from '../config/site';
 ---
 
 <BaseLayout
-  title="Digitale Unternehmensplattformen für KMU"
-  description="Keine klassische Webagentur: Website as a Service für KMU – persönliche Beratung, KI-gestützte Umsetzung, fester Monatspreis, keine Einrichtungskosten."
-  schema={[serviceSchema(Astro.site)]}
+  title="Website as a Service für Unternehmen"
+  description={`Website as a Service für KMU: persönliche Beratung, KI-gestützte Umsetzung, Änderungen per Sprachnachricht. Ab ${formatEuro(PAKETE[0].preis)} im Monat, 0 € Einrichtung, zzgl. MwSt.`}
+  schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />
-  <Angebot />
+  <Schmerzpunkte />
+  <Pakete />
+  <Vision />
   <Ablauf />
   <Siegel />
   <Zielgruppen />
-  <Vision />
   <Plattform />
+  <Faq />
 </BaseLayout>

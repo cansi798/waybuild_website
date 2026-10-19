@@ -107,6 +107,27 @@ const SIEGEL_MOTIV: Record<string, (z: Zeichner, cx: number, cy: number, s: numb
     z.kreis(cx - 11 * s, cy + 8 * s, 4 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1 }, 0.1);
   },
   code: (z, cx, cy, s) => z.text(cx, cy + 8 * s, '</>', { groesse: 20 * s, farbe: F.goldDunkel }),
+  // Service-Versprechen (19.10.2026)
+  sprache: (z, cx, cy, s) => {
+    z.rundRechteck(cx - 8 * s, cy - 22 * s, 16 * s, 28 * s, 8 * s, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2.2 }, 0.3);
+    z.pfad(`M${cx - 15 * s} ${cy - 4 * s}Q${cx - 15 * s} ${cy + 14 * s} ${cx} ${cy + 14 * s}Q${cx + 15 * s} ${cy + 14 * s} ${cx + 15 * s} ${cy - 4 * s}`, { stroke: F.goldDunkel, strokeWidth: 2.4 }, 0.3);
+    z.linie(cx, cy + 14 * s, cx, cy + 22 * s, { strokeWidth: 2.2 }, 0.2);
+  },
+  minuten: (z, cx, cy, s) => {
+    z.kreis(cx, cy, 34 * s, { strokeWidth: 2.2 }, 0.3);
+    z.linie(cx, cy, cx, cy - 12 * s, { stroke: F.goldDunkel, strokeWidth: 2.6 }, 0.2);
+    z.linie(cx, cy, cx + 9 * s, cy + 4 * s, { stroke: F.goldDunkel, strokeWidth: 2.6 }, 0.2);
+    z.kreis(cx, cy, 4 * s, { fill: F.gold, fillStyle: 'solid', strokeWidth: 1 }, 0.1);
+  },
+  antwort: (z, cx, cy, s) => {
+    z.rundRechteck(cx - 20 * s, cy - 15 * s, 40 * s, 26 * s, 8 * s, { strokeWidth: 2.2 }, 0.3);
+    z.linie(cx - 10 * s, cy + 11 * s, cx - 15 * s, cy + 20 * s, { strokeWidth: 2.2 }, 0.2);
+    z.pfad(`M${cx - 9 * s} ${cy - 2 * s}L${cx - 2 * s} ${cy + 4 * s}L${cx + 10 * s} ${cy - 8 * s}`, { stroke: F.goldDunkel, strokeWidth: 2.6 }, 0.3);
+  },
+  technik: (z, cx, cy, s) => {
+    z.pfad(`M${cx} ${cy - 22 * s}L${cx + 18 * s} ${cy - 15 * s}V${cy}Q${cx + 18 * s} ${cy + 16 * s} ${cx} ${cy + 23 * s}Q${cx - 18 * s} ${cy + 16 * s} ${cx - 18 * s} ${cy}V${cy - 15 * s}Z`, { fill: F.goldHell, fillStyle: 'solid', strokeWidth: 2.2 }, 0.4);
+    z.pfad(`M${cx - 8 * s} ${cy}L${cx - 2 * s} ${cy + 6 * s}L${cx + 9 * s} ${cy - 6 * s}`, { stroke: F.goldDunkel, strokeWidth: 2.6 }, 0.3);
+  },
   // Geschäftsmodell (Vision 17.10.2026)
   einrichtung: (z, cx, cy, s) => z.text(cx, cy + 8 * s, '0 €', { groesse: 21 * s, farbe: F.goldDunkel }),
   laufzeit: (z, cx, cy, s) => {
@@ -126,9 +147,9 @@ const SIEGEL_MOTIV: Record<string, (z: Zeichner, cx: number, cy: number, s: numb
 
 /* ─────────────── Szenen ─────────────── */
 
-// Arbeitsweise (Vision 17.10.2026): Beratung → KI-Umsetzung → kontinuierliche Verbesserung
-const WEG_MOTIVE = [sprechblasen, kiChip, diagramm];
-const WEG_UNTER: string[][] = [['Persönlich, mit Ihnen'], ['In Rekordzeit online'], ['Kontinuierlich,', 'Schritt für Schritt']];
+// Ablauf aus Kundensicht (19.10.2026): Erstgespräch → Beratung → KI-Umsetzung → Live & betreut
+const WEG_MOTIVE = [chat, sprechblasen, kiChip, diagramm];
+const WEG_UNTER: string[][] = [['Kostenlos,', 'unverbindlich'], ['Persönlich, mit Ihnen'], ['Sie prüfen und', 'geben frei'], ['Laufend', 'verbessert']];
 
 function weg(a: Ansicht): Szene {
   const z = new Zeichner();
@@ -237,7 +258,7 @@ function siegel(a: Ansicht): Szene {
       SIEGEL_MOTIV[v.id]?.(z, cx, cy, s);
     });
     z.bei(t + 0.45);
-    const [z1, z2] = !mobil && v.id === 'ansprechpartner' ? ['Ein', 'Ansprechpartner'] : v.zeilen;
+    const [z1, z2] = v.zeilen;
     const ty = cy + d / 2 + (mobil ? 22 : 28);
     z.text(cx, ty, z1, { groesse: mobil ? 13 : 15, gewicht: 600 });
     z.text(cx, ty + (mobil ? 17 : 20), z2, { groesse: mobil ? 13 : 15, gewicht: 600 });

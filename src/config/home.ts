@@ -1,17 +1,29 @@
 // Startseiten-Inhalte nach der Unternehmensvision (Jamil, 17.10.2026):
-// „Wir bauen keine Websites. Wir bauen digitale Unternehmensplattformen.“ – wenig Text, viel Struktur.
+// Update 19.10.2026 (Jamil): kein durchgestrichener Hero, B2B-Struktur entlang der Customer Journey.
 // Ausrichtung B2B: kleine und mittlere Unternehmen.
 import type { IconName } from './site';
 
 export const HERO = {
-  eyebrow: 'Keine klassische Webagentur',
-  /** Erste Zeile (durchgestrichen) + zweite Zeile mit Akzent */
-  nicht: 'Wir bauen keine Websites.',
-  vor: 'Wir bauen digitale',
-  /** Soft-Hyphen, damit das lange Wort auf dem Handy sauber umbricht */
-  akzent: 'Unternehmens\u00adplattformen.',
+  eyebrow: 'Website as a Service für Unternehmen',
+  /** Überschrift: positiv, Nutzen zuerst (Wunsch Jamil 19.10.2026: kein durchgestrichener Text) */
+  vor: 'Ihre Website – professionell und ',
+  akzent: 'komplett betreut.',
   claim: ['Menschliche Beratung.', 'KI-gestützte Umsetzung.', 'Kontinuierliche Verbesserung.'],
-  unterzeile: 'Für kleine und mittlere Unternehmen – ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen.',
+  unterzeile: 'Für kleine und mittlere Unternehmen: Änderungen per Sprachnachricht, Technik inklusive, ein fester Ansprechpartner.',
+};
+
+/** Schmerzpunkte bei der Website-Erstellung (Jamil, 19.10.2026) → unsere Antwort. */
+export const SCHMERZPUNKTE: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'layout', title: 'Wie soll das aussehen?', text: 'Design, Aufbau, Farben – ohne Erfahrung weiß man nicht, wo man anfangen soll.' },
+  { icon: 'spark', title: 'Keine Inspiration', text: 'Die Ideen fehlen, und die Seiten der anderen sehen alle gleich aus.' },
+  { icon: 'pen', title: 'Texte ständig anpassen', text: 'Jede Änderung kostet Zeit, und am Ende bleibt die Website doch veraltet.' },
+  { icon: 'eye', title: 'Screenshots und lange Erklärungen', text: 'Wer Änderungen beauftragt, macht Screenshots, schreibt E-Mails und wartet.' },
+];
+
+export const LOESUNG = {
+  title: 'Bei uns: eine Sprachnachricht genügt.',
+  text: 'Sagen Sie uns einfach, was sich ändern soll. Wir kümmern uns um Design, Inhalte und Technik – kleine Anpassungen sind oft in wenigen Minuten online.',
+  punkte: ['Design und Ideen kommen von uns', 'Änderungen per Sprachnachricht', 'Kein Screenshot, kein Fachchinesisch'],
 };
 
 /** Zielgruppe (Vision: KMU). Link nur, wo es eine passende Branchenseite gibt. */
@@ -24,11 +36,11 @@ export const ZIELGRUPPEN: { icon: IconName; title: string; path?: string }[] = [
   { icon: 'pin', title: 'Lokale Betriebe', path: '/website-fuer/' },
 ];
 
-/** VISION „Die intelligente Website“ – ausdrücklich in Entwicklung, kein heutiges Feature. */
+/** „Die intelligente Website“ (Variante 2, Preis in PAKETE) – Datenquellen + Solarteur-Beispiel. */
 export const VISION = {
   datenquellen: [
-    'Besucherstatistiken', 'Kontaktanfragen', 'Suchbegriffe', 'CRM-Daten', 'Google Search Console',
-    'Bewertungen', 'Referenzen', 'Angebotsdaten', 'Conversion-Daten',
+    'Besucherstatistiken', 'Kontaktanfragen', 'Suchbegriffe', 'Google Search Console',
+    'Bewertungen', 'Referenzen', 'Conversion-Daten',
   ],
   /** Beispiel-Szenario aus der Vision (Solarteur, 6 Monate) – als Beispiel gekennzeichnet */
   erkennt: [

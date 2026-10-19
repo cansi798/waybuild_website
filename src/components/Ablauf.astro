@@ -1,5 +1,5 @@
 ---
-// Arbeitsweise „Beratung → KI-Umsetzung → kontinuierliche Verbesserung“ als animierte Szene (digitaler Stil).
+// Ablauf aus Kundensicht „Erstgespräch → Beratung → KI-Umsetzung → Live & betreut“ als animierte Szene.
 import { href } from '../lib/paths';
 import { steps, BERATUNG_THEMEN } from '../config/site';
 import SectionHead from './SectionHead.astro';
@@ -8,17 +8,17 @@ import RoughSzene from './RoughSzene.astro';
 
 <section class="section section--sand" id="ablauf" aria-labelledby="ablauf-h">
   <div class="wrap">
-    <SectionHead center eyebrow="So arbeiten wir" pre="Erst Strategie. Dann " accent="KI-Tempo." text="KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung." id="ablauf-h" />
+    <SectionHead center eyebrow="So einfach geht's" pre="In vier Schritten zur " accent="neuen Website." text="Erst Strategie, dann KI-Tempo: KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung." id="ablauf-h" />
     <RoughSzene
       szene="weg"
-      label={`Animierter Ablauf in drei Stationen: ${steps.map((s, i) => `${i + 1}. ${s.title} – ${s.short}`).join('. ')}.`}
+      label={`Animierter Ablauf in vier Stationen: ${steps.map((s, i) => `${i + 1}. ${s.title} – ${s.short}`).join('. ')}.`}
     />
     <div class="themen">
       <p class="themen__h">Gemeinsam entwickeln wir:</p>
       <ul>{BERATUNG_THEMEN.map((t) => <li>{t}</li>)}</ul>
     </div>
     <div class="weg__actions nur-desktop">
-      <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Mit Schritt 1 starten</a>
+      <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Mit Schritt 1 starten: Erstgespräch</a>
     </div>
   </div>
 </section>

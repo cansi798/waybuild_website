@@ -1,9 +1,10 @@
 ---
-// Vollbild-Hero (Bauwelt-Muster) mit der Positionierung aus der Unternehmensvision (17.10.2026):
-// „Wir bauen keine Websites. Wir bauen digitale Unternehmensplattformen.“ – Claim in drei Schritten, EIN CTA.
+// Vollbild-Hero (Bauwelt-Muster). Seit 19.10.2026 (Jamil): positive Nutzen-Aussage statt durchgestrichenem Text,
+// Preisanker „ab … / Monat“ und klarer Haupt-CTA (Erstgespräch) + Zweit-CTA (Preise).
 // Statt Foto: dunkler Türkis-Verlauf + Website-Mockup.
 import { href } from '../lib/paths';
 import { HERO } from '../config/home';
+import { formatEuro, preisAb } from '../config/site';
 import Icon from './Icon.astro';
 
 const CLAIM_ICONS = ['chat', 'spark', 'chart'] as const;
@@ -15,15 +16,18 @@ const CLAIM_ICONS = ['chat', 'spark', 'chart'] as const;
     <div class="fhero__content">
       <span class="eyebrow fhero__in" style="--d: 0ms">{HERO.eyebrow}</span>
       <h1 class="fhero__in" style="--d: 120ms">
-        <span class="fhero__nicht">{HERO.nicht}</span>
-        <span class="fhero__wir">{HERO.vor} <span class="fhero__akzent">{HERO.akzent}</span></span>
+        <span class="fhero__wir">{HERO.vor}<span class="fhero__akzent">{HERO.akzent}</span></span>
       </h1>
       <ul class="fhero__claim fhero__in" style="--d: 240ms">
         {HERO.claim.map((c, i) => <li><span class="fhero__ci"><Icon name={CLAIM_ICONS[i]} size={18} /></span>{c}</li>)}
       </ul>
       <p class="fhero__unterzeile fhero__in" style="--d: 320ms">{HERO.unterzeile}</p>
-      <div class="fhero__actions fhero__in nur-desktop" style="--d: 400ms">
+      <p class="fhero__preis fhero__in" style="--d: 360ms">
+        <b>ab {formatEuro(preisAb())}</b> im Monat · 0 € Einrichtung · zzgl. MwSt.
+      </p>
+      <div class="fhero__actions fhero__in" style="--d: 400ms">
         <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+        <a class="btn btn--ghost-light btn--lg" href="#preise">Preise ansehen</a>
       </div>
     </div>
 
@@ -86,7 +90,10 @@ const CLAIM_ICONS = ['chat', 'spark', 'chart'] as const;
   .fhero__content > * { max-width: 100%; min-width: 0; }
   .fhero__content h1 { margin: 0; color: var(--white); font-size: clamp(2.2rem, 5.6vw, 3.9rem); }
   .fhero__content .eyebrow { margin: 0; color: var(--accent); }
-  .fhero__nicht { display: block; font-size: 0.62em; font-weight: 600; color: var(--dark-soft); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 0.08em; margin-bottom: 0.25em; }
+  .fhero__preis { margin: 0; font-size: 0.98rem; color: var(--dark-lead); }
+  .fhero__preis b { font-family: var(--font-head); font-size: 1.25rem; color: var(--white); }
+  .btn--ghost-light { color: var(--white); border: 2px solid rgb(255 255 255 / 45%); background: transparent; }
+  .btn--ghost-light:hover { border-color: var(--accent); color: var(--accent); }
   .fhero__wir { display: block; hyphens: manual; }
   .fhero__akzent { color: var(--accent); }
   .fhero__claim { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
@@ -151,6 +158,7 @@ const CLAIM_ICONS = ['chat', 'spark', 'chart'] as const;
   @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
 
   @media (max-width: 767px) {
+    .fhero__actions .btn { flex: 1 1 100%; }
     .fhero__grid { padding-block: 40px 80px; }
     .fhero__content { gap: 14px; }
     .fhero__unterzeile { font-size: 0.95rem; }
