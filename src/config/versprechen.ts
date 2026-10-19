@@ -1,8 +1,8 @@
-// Unser Geschäftsmodell als digitale „Siegel“ (Bauwelt-Muster, Inhalte laut Unternehmensvision 17.10.2026).
-// WICHTIG (UWG): Das sind EIGENE Zusagen, keine fremden Prüfzeichen –
-// kein „Testsieger“, „zertifiziert von“ o. ä.
+// Unsere Service-Versprechen (SLAs) – bewusst in Alltagssprache statt Stunden-Kennzahlen
+// (Wunsch Jamil 19.10.2026: „so formuliert, dass jeder User das versteht, egal aus welcher Branche“).
+// ERSTER VORSCHLAG – Jamil passt die Formulierungen ggf. an.
+// WICHTIG (UWG): Das sind EIGENE Zusagen, keine fremden Prüfzeichen – kein „Testsieger“, „zertifiziert von“ o. ä.
 import { WAAS, type IconName } from './site';
-
 export type Versprechen = {
   id: string;
   icon: IconName;
@@ -14,6 +14,58 @@ export type Versprechen = {
 };
 
 export const VERSPRECHEN: Versprechen[] = [
+  {
+    id: 'ansprechpartner',
+    icon: 'user',
+    title: 'Sie erreichen immer einen Menschen',
+    zeilen: ['Immer ein', 'Mensch'],
+    short: 'Ein fester Ansprechpartner.',
+    long: 'Kein Callcenter, kein Ticket-Labyrinth: Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt.',
+  },
+  {
+    id: 'sprache',
+    icon: 'mic',
+    title: 'Eine Sprachnachricht genügt',
+    zeilen: ['Sprachnachricht', 'genügt'],
+    short: 'Kein Formular, keine Screenshots.',
+    long: 'Sagen Sie uns einfach, was sich ändern soll – per Sprachnachricht, E-Mail oder Telefon. Screenshots und Fachbegriffe brauchen Sie nicht.',
+  },
+  {
+    id: 'minuten',
+    icon: 'zap',
+    title: 'Kleine Änderungen sind oft in Minuten online',
+    zeilen: ['Änderungen', 'in Minuten'],
+    short: 'Neuer Text, neues Bild, neue Öffnungszeiten.',
+    long: 'Kleine Anpassungen wie ein neuer Text, ein Bild oder geänderte Öffnungszeiten sind oft schon nach wenigen Minuten online. Bei größeren Wünschen sagen wir Ihnen vorher, wann sie fertig sind.',
+  },
+  {
+    id: 'antwort',
+    icon: 'clock',
+    title: 'Antwort spätestens am nächsten Werktag',
+    zeilen: ['Schnelle', 'Antwort'],
+    short: 'Spätestens am nächsten Werktag.',
+    long: 'Auf jede Nachricht bekommen Sie spätestens am nächsten Werktag eine persönliche Antwort – meist deutlich schneller.',
+  },
+  {
+    id: 'technik',
+    icon: 'shield',
+    title: 'Ihre Website läuft – wir kümmern uns',
+    zeilen: ['Technik', 'läuft'],
+    short: 'Wartung, Updates, Backups.',
+    long: 'Hosting, Sicherheitsupdates, SSL und Backups erledigen wir im Hintergrund. Sie müssen sich um nichts Technisches kümmern.',
+  },
+  {
+    id: 'transparenz',
+    icon: 'eye',
+    title: 'Keine Überraschungen auf der Rechnung',
+    zeilen: ['Keine', 'Überraschungen'],
+    short: 'Fester Monatspreis.',
+    long: 'Sie zahlen Ihren festen Monatspreis. Extras gibt es nur, wenn Sie sie ausdrücklich beauftragen – vorher schriftlich.',
+  },
+];
+
+/** Geschäftsmodell-Zusagen (Vision 17.10.2026) – für Leistungsseiten und Preisseite. */
+export const GESCHAEFTSMODELL: Versprechen[] = [
   {
     id: 'einrichtung',
     icon: 'euro',
@@ -64,4 +116,4 @@ export const VERSPRECHEN: Versprechen[] = [
   },
 ];
 
-export const versprechenById = (id: string) => VERSPRECHEN.find((v) => v.id === id);
+export const versprechenById = (id: string) => [...VERSPRECHEN, ...GESCHAEFTSMODELL].find((v) => v.id === id);
