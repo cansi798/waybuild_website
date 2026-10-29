@@ -14,6 +14,7 @@ import { saeuleById, NETTO_HINWEIS, type Saeule } from '../../config/angebot';
 import { versprechenById, VERSPRECHEN } from '../../config/versprechen';
 import { waasOffers } from '../../lib/schema';
 import { href, absolute } from '../../lib/paths';
+import { getCollection } from 'astro:content';
 
 export function getStaticPaths() {
   return leistungen.map((l) => ({ params: { slug: l.slug }, props: { l } }));
@@ -26,6 +27,9 @@ const siegel = versprechenById(l.siegel) ?? VERSPRECHEN[0];
 const zusage = l.zusage ?? { icon: siegel.icon, title: siegel.title, text: siegel.long };
 const andere = leistungenNach(l.saeule).filter((o) => o.slug !== l.slug);
 const contact = `${href('/kontakt/')}?leistung=${l.slug}`;
+// Passende Ratgeber-Artikel (interne Verlinkung)
+const alleArtikel = await getCollection('ratgeber');
+const artikel = (l.ratgeber ?? []).map((id) => alleArtikel.find((a) => a.id === id)).filter((a) => a !== undefined);
 const url = absolute(`/leistungen/${l.slug}/`, Astro.site);
 const ablauf = l.ablauf ?? (istWebsite ? steps.map((s) => ({ title: s.title, text: s.text })) : undefined);
 
@@ -126,7 +130,7 @@ const schema = [
         <div>
           <span class="eyebrow">Ausbaustufe · auf Anfrage</span>
           <h2 id="ausbau-h">Individuelles Angebot statt Paket</h2>
-          <p>Die Website ist der erste Schritt zur digitalen Unternehmensplattform. {l.title} setzen wir als individuelles Projekt um – den Umfang und Preis klären wir im Erstgespräch.</p>
+          <p>Die Website ist der erste Schritt zur digitalen Unternehmensplattform. {l.title} setzen wir als individuelles Projekt um. Umfang und Preis klären wir im Erstgespräch.</p>
           <p class="ausbau__links">
             <a class="btn btn--primary" href={contact}>Angebot anfragen</a>
             <a href={href('/#plattform')}>Unsere Plattform-Vision →</a>
@@ -164,6 +168,12 @@ const schema = [
 
   <section class="section section--tight">
     <div class="wrap">
+      {artikel.length > 0 && (
+        <p class="others others--ratgeber">
+          <span>Passend dazu im Ratgeber:</span>
+          {artikel.map((a) => <a href={href(`/ratgeber/${a.id}/`)}>{a.data.title}</a>)}
+        </p>
+      )}
       <p class="others">
         {andere.length > 0 && <>{istWebsite ? `Ebenfalls im ${WAAS.name}` : `Weitere Leistungen im Bereich ${saeule.title}`}: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</>}
         <a href={href('/leistungen/')}>Alle Leistungen</a>
@@ -238,4 +248,5 @@ const schema = [
   .section--tight { padding-block: 36px; }
   .others { margin: 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
   .others a { font-weight: 650; color: var(--accent-ink); }
+  .others--ratgeber { margin-bottom: 14px; }
 </style>

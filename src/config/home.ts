@@ -6,15 +6,15 @@ import type { IconName } from './site';
 export const HERO = {
   eyebrow: 'Website as a Service für Unternehmen',
   /** Überschrift: positiv, Nutzen zuerst (Wunsch Jamil 19.10.2026: kein durchgestrichener Text) */
-  vor: 'Ihre Website – professionell und ',
+  vor: 'Ihre Website, professionell und ',
   akzent: 'komplett betreut.',
   claim: ['Menschliche Beratung.', 'KI-gestützte Umsetzung.', 'Kontinuierliche Verbesserung.'],
-  unterzeile: 'Für kleine und mittlere Unternehmen: Änderungen per Sprachnachricht, Technik inklusive, ein fester Ansprechpartner.',
+  unterzeile: 'Für kleine und mittlere Unternehmen. Änderungen schicken Sie per Sprachnachricht, die Technik ist inklusive, und Sie haben einen festen Ansprechpartner.',
 };
 
 /** Schmerzpunkte bei der Website-Erstellung (Jamil, 19.10.2026) → unsere Antwort. */
 export const SCHMERZPUNKTE: { icon: IconName; title: string; text: string }[] = [
-  { icon: 'layout', title: 'Wie soll das aussehen?', text: 'Design, Aufbau, Farben – ohne Erfahrung weiß man nicht, wo man anfangen soll.' },
+  { icon: 'layout', title: 'Wie soll das aussehen?', text: 'Ohne Erfahrung weiß man bei Design, Aufbau und Farben nicht, wo man anfangen soll.' },
   { icon: 'spark', title: 'Keine Inspiration', text: 'Die Ideen fehlen, und die Seiten der anderen sehen alle gleich aus.' },
   { icon: 'pen', title: 'Texte ständig anpassen', text: 'Jede Änderung kostet Zeit, und am Ende bleibt die Website doch veraltet.' },
   { icon: 'eye', title: 'Screenshots und lange Erklärungen', text: 'Wer Änderungen beauftragt, macht Screenshots, schreibt E-Mails und wartet.' },
@@ -22,8 +22,8 @@ export const SCHMERZPUNKTE: { icon: IconName; title: string; text: string }[] = 
 
 export const LOESUNG = {
   title: 'Bei uns: eine Sprachnachricht genügt.',
-  text: 'Sagen Sie uns einfach, was sich ändern soll. Wir kümmern uns um Design, Inhalte und Technik – kleine Anpassungen sind oft in wenigen Minuten online.',
-  punkte: ['Design und Ideen kommen von uns', 'Änderungen per Sprachnachricht', 'Kein Screenshot, kein Fachchinesisch'],
+  text: 'Sagen Sie uns einfach, was sich ändern soll. Wir kümmern uns um Design, Inhalte und Technik. Kleine Anpassungen sind oft in wenigen Minuten online.',
+  punkte: ['Design und Ideen kommen von uns', 'Änderungen per Sprachnachricht', 'Ohne Screenshots und Fachchinesisch'],
 };
 
 /** Zielgruppe (Vision: KMU). Link nur, wo es eine passende Branchenseite gibt. */
@@ -72,7 +72,7 @@ export const FOOTER_KONTAKT = {
   pre: 'Bereit für den ',
   accent: 'ersten Schritt?',
   sub: 'Menschliche Beratung. KI-gestützte Umsetzung. Kontinuierliche Verbesserung.',
-  text: 'Im kostenlosen Erstgespräch klären wir, wo Ihr Unternehmen digital steht – und was Ihre Website leisten soll.',
+  text: 'Im kostenlosen Erstgespräch klären wir, wo Ihr Unternehmen digital steht und was Ihre Website leisten soll.',
   kontaktHead: 'Sprechen Sie mit uns',
   kontaktText: 'Kurze Frage, konkretes Vorhaben oder erst einmal unverbindlich beraten lassen?',
 };

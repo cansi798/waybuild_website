@@ -22,7 +22,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
 <BaseLayout
   title="Kontakt & kostenloses Erstgespräch"
-  description="Kostenloses Erstgespräch zu Website as a Service anfragen – persönliche Beratung, Antwort innerhalb eines Werktags, unverbindlich und ohne Verkaufsdruck."
+  description="Kostenloses Erstgespräch zu Website as a Service anfragen: persönliche Beratung, Antwort innerhalb eines Werktags, unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
 >
@@ -37,7 +37,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
-            <option value="">Beraten Sie mich – ich bin noch unsicher</option>
+            <option value="">Ich bin noch unsicher, bitte beraten Sie mich</option>
             {interessen.map((i) => <option value={i.value}>{i.label}</option>)}
           </select>
         </label>
@@ -123,7 +123,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       if (!endpoint) {
         const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`Anfrage: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
-        status.textContent = 'Ihr E-Mail-Programm wurde geöffnet – bitte senden Sie die Nachricht dort ab.';
+        status.textContent = 'Ihr E-Mail-Programm hat sich geöffnet. Bitte senden Sie die Nachricht dort ab.';
         return;
       }
       status.textContent = 'Wird gesendet …';

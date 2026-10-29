@@ -109,6 +109,8 @@ Prüfung: `npm run seo` (läuft auch bei jedem Deploy – bei Fehlern wird nicht
 - `sitemap-index.xml` (ohne Rechtstexte, Checkliste, Danke-Seite), `robots.txt`
 - Sichtbare Breadcrumbs, `lastmod` in der Sitemap, `max-image-preview:large`
 - `/llms.txt` für KI-Suchen (ChatGPT, Perplexity, Gemini), automatisch aus der Konfiguration erzeugt
-- Mit vollständiger Adresse wird zusätzlich `ProfessionalService` (lokales Unternehmen) ausgegeben
+- Mit vollständiger Adresse wird zusätzlich `ProfessionalService` (lokales Unternehmen) ausgegeben, inkl. Öffnungszeiten, `ContactPoint` und `knowsAbout`
+- Interne Verlinkung: Leistungsseiten zeigen passende Ratgeber (`ratgeber` in `src/config/leistungen.ts`), Branchenseiten verlinken Business-Website und Kosten-Ratgeber
+- Texte nach dem humanizer-Skill überarbeitet (29.10.2026): keine Gedankenstrich-Ketten, keine „nicht X, sondern Y“-Floskeln, konkrete Sätze
 - Keine Cookies, kein Tracking, Schriften lokal – kein Cookie-Banner nötig
 - Bewusst **kein** Font-Preload: kostete 300 ms Blocking Time ohne LCP-Gewinn (gemessen)

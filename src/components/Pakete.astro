@@ -24,12 +24,12 @@ const { head = true } = Astro.props;
           <p class="paket__preis"><b>{formatEuro(p.preis)}</b> <span>/ Monat<br />netto, zzgl. MwSt.</span></p>
           <p class="paket__fuer">{p.fuer}</p>
           <ul class="paket__liste">{p.features.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
-          <a class:list={['btn btn--lg paket__btn', p.empfohlen ? 'btn--primary' : 'btn--dark']} href={`${href('/kontakt/')}?paket=${encodeURIComponent(`${p.name} (${formatEuro(p.preis)} / Monat)`)}`}>Erstgespräch vereinbaren<span class="sr-only"> – {p.name}</span></a>
+          <a class:list={['btn btn--lg paket__btn', p.empfohlen ? 'btn--primary' : 'btn--dark']} href={`${href('/kontakt/')}?paket=${encodeURIComponent(`${p.name} (${formatEuro(p.preis)} / Monat)`)}`}>Erstgespräch vereinbaren<span class="sr-only">: {p.name}</span></a>
         </article>
       ))}
     </div>
     <div class="pakete__unterschied">
-      <p><Icon name="compass" size={20} /> <strong>Der Unterschied in einem Satz:</strong> Die Website für {formatEuro(PAKETE[0].preis)} pflegen wir für Sie – die intelligente Website für {formatEuro(PAKETE[1].preis)} lernt zusätzlich aus Ihren Besuchern und verbessert sich laufend selbst.</p>
+      <p><Icon name="compass" size={20} /> Die Website für {formatEuro(PAKETE[0].preis)} pflegen wir für Sie. Die intelligente Website für {formatEuro(PAKETE[1].preis)} lernt zusätzlich aus Ihren Besuchern und verbessert sich laufend selbst.</p>
     </div>
     <ul class="check-row pakete__modell">{MODELL.map((m) => <li><Icon name="check" size={18} /> {m}</li>)}</ul>
   </div>

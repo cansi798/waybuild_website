@@ -19,8 +19,8 @@ import { PAKETE, formatEuro } from '../config/site';
 ---
 
 <BaseLayout
-  title="Website as a Service für Unternehmen"
-  description={`Website as a Service für KMU: persönliche Beratung, KI-gestützte Umsetzung, Änderungen per Sprachnachricht. Ab ${formatEuro(PAKETE[0].preis)} im Monat, 0 € Einrichtung, zzgl. MwSt.`}
+  title={`Website erstellen lassen ab ${formatEuro(PAKETE[0].preis)} im Monat`}
+  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Änderungen per Sprachnachricht, ab ${formatEuro(PAKETE[0].preis)} im Monat, 0 € Einrichtung, zzgl. MwSt.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />

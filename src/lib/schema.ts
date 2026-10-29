@@ -19,7 +19,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
   const url = absolute(path, site);
   return PAKETE.map((p) => ({
     '@type': 'Offer',
-    name: `${WAAS.name} – ${p.name}`,
+    name: `${WAAS.name}: ${p.name}`,
     url,
     priceCurrency: 'EUR',
     price: p.preis,
@@ -45,7 +45,7 @@ export function serviceSchema(site: URL | undefined) {
     provider: { '@id': `${absolute('/', site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     audience: { '@type': 'BusinessAudience', name: 'Kleine und mittlere Unternehmen' },
-    description: `${company.name} verbindet persönliche Beratung mit KI-gestützter Umsetzung: ${WAAS.name} – ${WAAS.claim}`,
+    description: `${company.name} verbindet persönliche Beratung mit KI-gestützter Umsetzung. ${WAAS.name}: ${WAAS.claim}`,
     offers: waasOffers(site),
   };
 }

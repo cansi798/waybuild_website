@@ -1,6 +1,6 @@
 ---
 title: 'Was kostet individuelle Software?'
-description: 'Was kostet individuelle Software für KMU? Preistreiber, typische Spannen, jährliche Wartungskosten und wie ein MVP das Risiko senkt – kompakt erklärt.'
+description: 'Was kostet individuelle Software für KMU? Preistreiber, typische Spannen, jährliche Wartungskosten und wie ein MVP das Risiko senkt, kompakt erklärt.'
 kurz:
   - 'Typische KMU-Projekte liegen laut Marktübersicht bei 30.000–80.000 €, kleine Lösungen starten bei rund 5.000 €.'
   - 'Für Wartung und Weiterentwicklung sollten Sie jährlich etwa 15–25 % der Entwicklungskosten einplanen.'

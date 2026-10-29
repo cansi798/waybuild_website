@@ -32,7 +32,7 @@ const itemList = {
 
 <BaseLayout
   title="Leistungen: Website as a Service"
-  description={`${WAAS.name}: Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis – ${preisLang()}.`}
+  description={`${WAAS.name}: Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis, ${preisLang()}`}
   schema={[serviceSchema(Astro.site), itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >
@@ -49,7 +49,7 @@ const itemList = {
 
   <section class="section section--sand saeule" id="websites" aria-labelledby="websites-h">
     <div class="wrap">
-      <SectionHead eyebrow={WAAS.name} pre="Was wir damit " accent="bauen" text="Gleiches Modell, gleicher Service – je nachdem, was Ihr Unternehmen braucht." id="websites-h" />
+      <SectionHead eyebrow={WAAS.name} pre="Was wir damit " accent="bauen" text="Gleiches Modell, gleicher Service, je nachdem, was Ihr Unternehmen braucht." id="websites-h" />
       <div class="lgrid">
         {websites.map((l) => (
           <a class="card lcard reveal" href={href(`/leistungen/${l.slug}/`)}>
@@ -65,7 +65,7 @@ const itemList = {
         <div class="card lfill">
           <span class="eyebrow">Erstgespräch</span>
           <p class="lfill__ab">Nicht sicher, was Sie brauchen?</p>
-          <p>In der Beratung klären wir Zielgruppen, Positionierung und Ziele – danach wissen Sie, was Ihre Website leisten muss.</p>
+          <p>In der Beratung klären wir Zielgruppen, Positionierung und Ziele. Danach wissen Sie, was Ihre Website leisten muss.</p>
           <div class="lfill__actions">
             <a class="btn btn--primary btn--sm" href={href('/kontakt/')}>Erstgespräch</a>
             <a class="btn btn--sm lfill__ghost" href={href('/preise/')}>Preis ansehen</a>
@@ -77,7 +77,7 @@ const itemList = {
 
   <section class="section saeule" id="ausbau" aria-labelledby="ausbau-h">
     <div class="wrap">
-      <SectionHead eyebrow="Ausbaustufen · auf Anfrage" pre="Die Website ist der " accent="erste Schritt." text="Darauf aufbauend setzen wir individuelle Projekte um – auf dem Weg zur digitalen Unternehmensplattform." id="ausbau-h" />
+      <SectionHead eyebrow="Ausbaustufen · auf Anfrage" pre="Die Website ist der " accent="erste Schritt." text="Darauf aufbauend setzen wir individuelle Projekte um, Schritt für Schritt bis zur digitalen Unternehmensplattform." id="ausbau-h" />
       <div class="ausbau">
         {ausbau.map((s) => (
           <div class="ausbau__gruppe" id={s.id}>

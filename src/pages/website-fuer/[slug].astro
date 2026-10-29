@@ -84,6 +84,12 @@ const schema = [
       <p class="also">
         <strong>Immer dabei:</strong> {INKLUSIVE.map((u) => u.title).join(' · ')}
       </p>
+      <p class="also">
+        <strong>Mehr dazu:</strong>{' '}
+        <a href={href('/leistungen/business-website/')}>Business-Website als Service</a> ·{' '}
+        <a href={href('/ratgeber/was-kostet-eine-website/')}>Was kostet eine Website?</a> ·{' '}
+        <a href={href('/ratgeber/website-mieten-oder-kaufen/')}>Website mieten oder kaufen?</a>
+      </p>
     </div>
   </section>
 
@@ -135,6 +141,7 @@ const schema = [
   .feat p { color: var(--ink-soft); margin: 0; }
   .also { margin: 28px 0 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
   .also strong { color: var(--ink); }
+  .also a { font-weight: 600; }
 
   @media (min-width: 1000px) { .bfaq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 60px; } }
   .bfaq :global(.more) { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 12px 20px; margin: 0 0 12px; }

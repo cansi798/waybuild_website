@@ -6,7 +6,7 @@ export const GET: APIRoute = () =>
   new Response(
     JSON.stringify(
       {
-        name: 'Waybuild – Websites im Abo',
+        name: 'Waybuild: Websites im Abo',
         short_name: 'Waybuild',
         start_url: href('/'),
         scope: href('/'),

@@ -14,11 +14,11 @@ const andere = ANBIETER_TYPEN.slice(0, WB);
 
 const unterschiede: { icon: IconName; title: string; text: string; link?: { label: string; path: string } }[] = [
   { icon: 'compass', title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
-  { icon: 'spark', title: 'KI-gestützte Umsetzung', text: 'KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung. Ergebnis: Ihre Website in Rekordzeit.' },
+  { icon: 'spark', title: 'KI-gestützte Umsetzung', text: 'Die Ideen entwickeln wir mit Ihnen. Danach beschleunigt die KI die Umsetzung, und Ihre Website ist deutlich schneller fertig.' },
   { icon: 'euro', title: 'Fester Monatspreis, alles drin', text: 'Zwei klare Varianten, keine Einrichtungskosten, keine versteckten Kosten.', link: { label: 'Zum Preis', path: '/preise/' } },
-  { icon: 'key', title: 'Ihr Code, Ihre Domain', text: 'Website, Code und Domain gehören Ihnen. Vertrauen statt künstlicher Abhängigkeit.' },
-  { icon: 'chart', title: 'Kontinuierliche Verbesserung', text: 'Ihre Website bleibt nicht stehen – wir entwickeln sie laufend weiter.' },
-  { icon: 'user', title: 'Ein Ansprechpartner', text: 'Ein persönlicher Ansprechpartner, der Ihr Unternehmen kennt – vom Erstgespräch bis zur Betreuung.' },
+  { icon: 'key', title: 'Ihr Code, Ihre Domain', text: 'Website, Code und Domain gehören Ihnen. Sie bleiben unabhängig.' },
+  { icon: 'chart', title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
+  { icon: 'user', title: 'Ein Ansprechpartner', text: 'Vom Erstgespräch bis zur Betreuung spricht dieselbe Person mit Ihnen, die Ihr Unternehmen kennt.' },
 ];
 
 const eigenbetrieb = [
@@ -30,9 +30,9 @@ const eigenbetrieb = [
 ];
 
 const passt = [
-  'Sie führen ein kleines oder mittleres Unternehmen – z. B. Handwerk, Dienstleistung, Beratung, IT oder Immobilien.',
+  'Sie führen ein kleines oder mittleres Unternehmen, zum Beispiel aus Handwerk, Dienstleistung, Beratung, IT oder Immobilien.',
   'Sie möchten planbare Kosten statt hoher Einmalinvestitionen.',
-  'Sie wünschen sich einen echten Digitalisierungspartner – nicht nur ein KI-Tool.',
+  'Sie suchen einen Partner für die Digitalisierung, der mehr liefert als ein KI-Tool.',
   'Sie möchten sich auf Ihr Kerngeschäft konzentrieren.',
 ];
 const passtNicht = [
@@ -42,8 +42,8 @@ const passtNicht = [
 ---
 
 <BaseLayout
-  title="Warum waybuild – keine klassische Webagentur"
-  description="Keine klassische Webagentur: persönliche Beratung, KI-gestützte Umsetzung, laufende Verbesserung – ein Ansprechpartner, ein fester Monatspreis."
+  title="Warum waybuild? Keine klassische Webagentur"
+  description="Was waybuild von Baukasten, Freelancer und Agentur unterscheidet: persönliche Beratung, KI-gestützte Umsetzung, ein Ansprechpartner und ein fester Monatspreis."
   breadcrumb={[{ name: 'Warum waybuild', path: '/warum-waybuild/' }]}
 >
   <PageHeader
@@ -76,7 +76,7 @@ const passtNicht = [
         <span class="eyebrow">Wir nutzen, was wir verkaufen</span>
         <h2 id="eigen-h">Unsere eigene IT läuft auf derselben Technik.</h2>
         <p class="lead">
-          waybuild betreibt selbst eine gehärtete Nextcloud – die Basis für unsere Plattform-Vision.
+          waybuild betreibt selbst eine gehärtete Nextcloud. Sie ist die Basis für unsere Plattform-Vision.
         </p>
       </div>
       <ul class="check-list eigen__list">
@@ -87,7 +87,7 @@ const passtNicht = [
 
   <section class="section section--sand" aria-labelledby="vergleich-h">
     <div class="wrap">
-      <SectionHead eyebrow="Im Vergleich" pre="Baukasten, Freelancer, Agentur – " accent="oder waybuild?" text="So unterscheiden sich die typischen Anbieter-Typen." id="vergleich-h" />
+      <SectionHead eyebrow="Im Vergleich" pre="Baukasten, Freelancer, Agentur " accent="oder waybuild?" text="So unterscheiden sich die typischen Anbieter-Typen." id="vergleich-h" />
 
       {/* Desktop: Tabelle */}
       <div class="vgl">
@@ -151,7 +151,7 @@ const passtNicht = [
 
   <section class="section section--sand" aria-labelledby="saeulen-h">
     <div class="wrap">
-      <SectionHead eyebrow="Unser Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entwickeln wir ein digitales Betriebssystem für KMU – Baustein für Baustein." id="saeulen-h" />
+      <SectionHead eyebrow="Unser Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entwickeln wir Baustein für Baustein ein digitales Betriebssystem für KMU." id="saeulen-h" />
       <div class="saeulen">
         {SAEULEN.map((s) => (
           <a class="card scard reveal" href={href(s.id === 'websites' ? '/leistungen/#websites' : `/leistungen/#${s.id}`)}>
@@ -170,7 +170,7 @@ const passtNicht = [
     <div class="wrap">
       <div class="cta">
         <h2 id="cta-h">Lernen wir uns kennen.</h2>
-        <p>Im kostenlosen Erstgespräch klären wir, was Ihre Website leisten soll – unverbindlich.</p>
+        <p>Im kostenlosen und unverbindlichen Erstgespräch klären wir, was Ihre Website leisten soll.</p>
         <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
       </div>
     </div>

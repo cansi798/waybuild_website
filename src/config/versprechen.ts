@@ -20,15 +20,15 @@ export const VERSPRECHEN: Versprechen[] = [
     title: 'Sie erreichen immer einen Menschen',
     zeilen: ['Immer ein', 'Mensch'],
     short: 'Ein fester Ansprechpartner.',
-    long: 'Kein Callcenter, kein Ticket-Labyrinth: Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt.',
+    long: 'Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt. Sie landen weder in einem Callcenter noch in einem Ticketsystem.',
   },
   {
     id: 'sprache',
     icon: 'mic',
     title: 'Eine Sprachnachricht genügt',
     zeilen: ['Sprachnachricht', 'genügt'],
-    short: 'Kein Formular, keine Screenshots.',
-    long: 'Sagen Sie uns einfach, was sich ändern soll – per Sprachnachricht, E-Mail oder Telefon. Screenshots und Fachbegriffe brauchen Sie nicht.',
+    short: 'Ohne Formular und Screenshots.',
+    long: 'Sagen Sie uns per Sprachnachricht, E-Mail oder Telefon, was sich ändern soll. Screenshots und Fachbegriffe brauchen Sie dafür nicht.',
   },
   {
     id: 'minuten',
@@ -44,12 +44,12 @@ export const VERSPRECHEN: Versprechen[] = [
     title: 'Antwort spätestens am nächsten Werktag',
     zeilen: ['Schnelle', 'Antwort'],
     short: 'Spätestens am nächsten Werktag.',
-    long: 'Auf jede Nachricht bekommen Sie spätestens am nächsten Werktag eine persönliche Antwort – meist deutlich schneller.',
+    long: 'Auf jede Nachricht bekommen Sie spätestens am nächsten Werktag eine persönliche Antwort, meistens deutlich früher.',
   },
   {
     id: 'technik',
     icon: 'shield',
-    title: 'Ihre Website läuft – wir kümmern uns',
+    title: 'Wir sorgen dafür, dass Ihre Website läuft',
     zeilen: ['Technik', 'läuft'],
     short: 'Wartung, Updates, Backups.',
     long: 'Hosting, Sicherheitsupdates, SSL und Backups erledigen wir im Hintergrund. Sie müssen sich um nichts Technisches kümmern.',
@@ -60,7 +60,7 @@ export const VERSPRECHEN: Versprechen[] = [
     title: 'Keine Überraschungen auf der Rechnung',
     zeilen: ['Keine', 'Überraschungen'],
     short: 'Fester Monatspreis.',
-    long: 'Sie zahlen Ihren festen Monatspreis. Extras gibt es nur, wenn Sie sie ausdrücklich beauftragen – vorher schriftlich.',
+    long: 'Sie zahlen Ihren festen Monatspreis. Extras berechnen wir nur, wenn Sie sie ausdrücklich und vorher schriftlich beauftragt haben.',
   },
 ];
 
@@ -72,7 +72,7 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
     title: 'Keine Einrichtungskosten',
     zeilen: ['Keine Einrich-', 'tungskosten'],
     short: 'Keine Einmalinvestition, kein Projektbudget.',
-    long: 'Sie zahlen keine Einrichtung und keine hohe Einmalinvestition – nur den festen Monatspreis.',
+    long: 'Für die Einrichtung zahlen Sie nichts, und eine hohe Einmalinvestition gibt es auch nicht. Sie zahlen nur den festen Monatspreis.',
   },
   {
     id: 'festpreis',
@@ -88,7 +88,7 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
     title: `${WAAS.laufzeitMonate} Monate Laufzeit`,
     zeilen: [`${WAAS.laufzeitMonate} Monate`, 'Laufzeit'],
     short: 'Klar und planbar.',
-    long: `Eine klare Laufzeit von ${WAAS.laufzeitMonate} Monaten – planbar für Sie und genug Zeit, Ihre Website kontinuierlich zu verbessern.`,
+    long: `Der Vertrag läuft ${WAAS.laufzeitMonate} Monate. Das ist für Sie planbar, und wir haben genug Zeit, Ihre Website Schritt für Schritt zu verbessern.`,
   },
   {
     id: 'eigentum',
@@ -104,15 +104,15 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
     title: 'Keine versteckten Kosten',
     zeilen: ['Keine versteckten', 'Kosten'],
     short: 'Maximale Transparenz.',
-    long: 'Was der Monatspreis abdeckt, steht im Vertrag. Extras gibt es nur, wenn Sie sie ausdrücklich beauftragen – vorher schriftlich.',
+    long: 'Was der Monatspreis abdeckt, steht im Vertrag. Extras berechnen wir nur, wenn Sie sie ausdrücklich und vorher schriftlich beauftragt haben.',
   },
   {
     id: 'lockin',
     icon: 'unlock',
     title: 'Kein künstlicher Lock-in',
     zeilen: ['Kein', 'Lock-in'],
-    short: 'Vertrauen statt Abhängigkeit.',
-    long: 'Wir möchten langfristiges Vertrauen aufbauen – keine künstliche Abhängigkeit. Sie behalten die Kontrolle über Ihre Website und Ihre Daten.',
+    short: 'Sie behalten die Kontrolle.',
+    long: 'Sie behalten die Kontrolle über Ihre Website und Ihre Daten. Wir wollen, dass Sie aus Zufriedenheit bleiben und nicht, weil Sie nicht wechseln können.',
   },
 ];
 

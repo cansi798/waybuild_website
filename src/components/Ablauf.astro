@@ -8,10 +8,10 @@ import RoughSzene from './RoughSzene.astro';
 
 <section class="section section--sand" id="ablauf" aria-labelledby="ablauf-h">
   <div class="wrap">
-    <SectionHead center eyebrow="So einfach geht's" pre="In vier Schritten zur " accent="neuen Website." text="Erst Strategie, dann KI-Tempo: KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung." id="ablauf-h" />
+    <SectionHead center eyebrow="So einfach geht's" pre="In vier Schritten zur " accent="neuen Website." text="Erst die Strategie, dann das Tempo: Die Ideen erarbeiten wir mit Ihnen, die KI beschleunigt die Umsetzung." id="ablauf-h" />
     <RoughSzene
       szene="weg"
-      label={`Animierter Ablauf in vier Stationen: ${steps.map((s, i) => `${i + 1}. ${s.title} – ${s.short}`).join('. ')}.`}
+      label={`Animierter Ablauf in vier Stationen: ${steps.map((s, i) => `${i + 1}. ${s.title}: ${s.short}`).join('. ')}.`}
     />
     <div class="themen">
       <p class="themen__h">Gemeinsam entwickeln wir:</p>

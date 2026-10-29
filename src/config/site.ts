@@ -37,7 +37,7 @@ export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/
 export const whatsappLink = (text = 'Hallo waybuild, ich interessiere mich für Website as a Service.') =>
   `https://wa.me/${phoneTel().replace('+', '')}?text=${encodeURIComponent(text)}`;
 /** Erreichbarkeit (Footer-Kopf, Kontakt). */
-export const HOURS = 'Montag – Freitag, 9:00 – 18:00 Uhr';
+export const HOURS = 'Montag bis Freitag, 9 bis 18 Uhr';
 
 /** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
 // Beispiel: { name: 'Tischlerei Muster', branche: 'Handwerk', url: 'https://…', text: 'Neue Website, 3× mehr Anfragen', bild: 'referenzen/projekt-1' }
@@ -53,7 +53,7 @@ export const VAT_RATE = 0.19;
  * ───────────────────────────────────────────────────────────────────────────── */
 export const WAAS = {
   name: 'Website as a Service',
-  claim: 'Ein Ansprechpartner. Ein System. Ein fester Monatspreis.',
+  claim: 'Ein Ansprechpartner, ein System, ein fester Monatspreis.',
   einrichtung: 0,
   laufzeitMonate: 24,
 };
@@ -77,7 +77,7 @@ export const PAKETE: Paket[] = [
     name: 'Website',
     kurz: 'Professionell und komplett betreut',
     preis: 79,
-    fuer: 'Für Unternehmen, die einen professionellen Auftritt wollen – ohne sich um Technik zu kümmern.',
+    fuer: 'Für Unternehmen, die professionell auftreten wollen und sich nicht um Technik kümmern möchten.',
     features: [
       'Professionelle Website nach persönlicher Beratung',
       'Hosting, Domainverwaltung und SSL',
@@ -113,7 +113,7 @@ export const preisLang = () => `ab ${formatEuro(preisAb())} im Monat, zzgl. MwSt
 export const preiseBeide = () => PAKETE.map((p) => `${p.name}: ${formatEuro(p.preis)} / Monat`).join(' · ') + ' (netto, zzgl. MwSt.)';
 
 /** Das Angebot in einem Satz. */
-export const OFFER = 'Website, Hosting, Domain, SSL, Wartung, Backups und Betreuung – alles in einem festen Monatspreis.';
+export const OFFER = 'Website, Hosting, Domain, SSL, Wartung, Backups und Betreuung sind im festen Monatspreis enthalten.';
 
 export type IconName =
   | 'mail' | 'calendar' | 'rocket' | 'gauge' | 'key' | 'search' | 'chat' | 'pen' | 'server' | 'shield'
@@ -148,9 +148,9 @@ export const MODELL = [
 /** Ablauf aus Kundensicht in vier Schritten (auch Grundlage der animierten Ablauf-Szene). */
 export const steps: { icon: IconName; title: string; short: string; text: string }[] = [
   { icon: 'calendar', title: 'Erstgespräch', short: 'Kostenlos, unverbindlich', text: 'Wir lernen Ihr Unternehmen kennen und klären, was Ihre Website leisten soll.' },
-  { icon: 'chat', title: 'Beratung', short: 'Persönlich, mit Ihnen', text: 'Zielgruppen, Positionierung, Customer Journey, Vertrauensaufbau und Lead-Generierung – gemeinsam entwickelt.' },
-  { icon: 'spark', title: 'KI-Umsetzung', short: 'Sie prüfen und geben frei', text: 'Unsere KI setzt die Ergebnisse in Rekordzeit um. Sie prüfen, wir feilen – bis alles passt.' },
-  { icon: 'chart', title: 'Live & betreut', short: 'Laufend verbessert', text: 'Ihre Website geht online. Wir betreuen, pflegen und entwickeln sie laufend weiter.' },
+  { icon: 'chat', title: 'Beratung', short: 'Persönlich, mit Ihnen', text: 'Gemeinsam klären wir Zielgruppen, Positionierung und Customer Journey und planen, wie die Website Vertrauen aufbaut und Anfragen bringt.' },
+  { icon: 'spark', title: 'KI-Umsetzung', short: 'Sie prüfen und geben frei', text: 'Unsere KI setzt die Ergebnisse schnell um. Sie prüfen den Entwurf, wir arbeiten nach, bis alles passt.' },
+  { icon: 'chart', title: 'Live & betreut', short: 'Laufend verbessert', text: 'Ihre Website geht online. Danach pflegen wir sie und entwickeln sie laufend weiter.' },
 ];
 
 /** Gemeinsam in der Beratung erarbeitet. */
@@ -163,16 +163,16 @@ export const faqs = [
   },
   {
     q: `Was ist der Unterschied zwischen ${formatEuro(PAKETE[0].preis)} und ${formatEuro(PAKETE[1].preis)}?`,
-    a: 'Die Website für 79 € ist Ihr professioneller Auftritt – wir pflegen und betreuen ihn. Die intelligente Website für 139 € macht zusätzlich mit: Sie wertet aus, woher Anfragen kommen und was Besucher interessiert, und passt Inhalte und Aufbau laufend daran an.'
+    a: 'Bei der Website für 79 € pflegen und betreuen wir Ihren Auftritt. Die intelligente Website für 139 € wertet zusätzlich aus, woher Anfragen kommen und was Besucher interessiert, und passt Inhalte und Aufbau laufend daran an.'
       .replace('79 €', formatEuro(PAKETE[0].preis)).replace('139 €', formatEuro(PAKETE[1].preis)),
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
-    a: 'Persönliche Beratung, KI-gestützte Erstellung, Hosting, Domainverwaltung, SSL, Wartung, Backups und laufende Betreuung – zu einem festen Monatspreis und ohne Einrichtungskosten.',
+    a: 'Persönliche Beratung, KI-gestützte Erstellung, Hosting, Domainverwaltung, SSL, Wartung, Backups und laufende Betreuung. Sie zahlen dafür einen festen Monatspreis und keine Einrichtungskosten.',
   },
   {
     q: 'Wie lange läuft der Vertrag?',
-    a: `Die Laufzeit beträgt ${WAAS.laufzeitMonate} Monate. Wir möchten langfristiges Vertrauen aufbauen – keine künstliche Abhängigkeit.`,
+    a: `Die Laufzeit beträgt ${WAAS.laufzeitMonate} Monate. Wir setzen auf eine lange Zusammenarbeit, aber nicht auf künstliche Abhängigkeit: Website, Code und Domain gehören Ihnen.`,
   },
   {
     q: 'Wie schnell ist meine Website online?',
@@ -184,15 +184,15 @@ export const faqs = [
   },
   {
     q: 'Welche Rolle spielt KI?',
-    a: 'KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung. Strategie, Positionierung und Inhalte erarbeiten wir persönlich mit Ihnen. Danach setzt unsere KI die Ergebnisse in Rekordzeit um.',
+    a: 'Strategie, Positionierung und Inhalte erarbeiten wir persönlich mit Ihnen. Danach setzt unsere KI die Ergebnisse um, und das geht deutlich schneller als von Hand. Die Ideen kommen weiter von Menschen.',
   },
   {
     q: 'Kann ich meine bestehende Domain mitnehmen?',
-    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall – sie bleibt auf Ihren Namen registriert.',
+    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall. Sie bleibt auf Ihren Namen registriert.',
   },
   {
     q: 'Bietet waybuild auch Software, Cloud und IT an?',
-    a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute als individuelles Projekt um – auf Anfrage.',
+    a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
   },
   {
     q: 'Sind die Preise netto?',

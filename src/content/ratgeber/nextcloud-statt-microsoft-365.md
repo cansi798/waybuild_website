@@ -1,6 +1,6 @@
 ---
 title: 'Nextcloud statt Microsoft 365? Der Vergleich'
-description: 'Nextcloud oder Microsoft 365 im Unternehmen: Datenhoheit, DSGVO, Funktionen und Kosten im sachlichen Vergleich – und wann welche Lösung besser passt.'
+description: 'Nextcloud oder Microsoft 365 im Unternehmen: Datenhoheit, DSGVO, Funktionen und Kosten im sachlichen Vergleich, und wann welche Lösung besser passt.'
 kurz:
   - 'Microsoft 365 ist ein Cloud-Dienst von Microsoft. Nextcloud ist Open-Source-Software, die auf einem Server Ihrer Wahl läuft.'
   - 'Bei Nextcloud bestimmen Sie den Speicherort selbst. Dafür muss jemand Updates, Backups und Sicherheit übernehmen.'

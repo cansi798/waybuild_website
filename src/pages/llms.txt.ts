@@ -1,7 +1,7 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, formatEuro } from '../config/site';
+import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, formatEuro, steps, HOURS } from '../config/site';
 import { absolute } from '../lib/paths';
 import { branchen } from '../config/branchen';
 import { leistungenNach } from '../config/leistungen';
@@ -15,7 +15,7 @@ export const GET: APIRoute = async ({ site }) => {
   const lines = [
     `# ${company.legalName}`,
     '',
-    `> Keine klassische Webagentur: ${company.name} baut digitale Unternehmensplattformen für kleine und mittlere Unternehmen (B2B) aus ${company.city}. ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: ab ${formatEuro(Math.min(...PAKETE.map((p) => p.preis)))} im Monat netto, ohne Einrichtungskosten. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     NETTO_HINWEIS,
     '',
@@ -23,9 +23,10 @@ export const GET: APIRoute = async ({ site }) => {
     `${WAAS.claim} Zwei Varianten. ${OFFER}`,
     `- Enthalten: ${INKLUSIVE.map((i) => i.title).join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
-    ...PAKETE.map((p) => `- ${p.name}: ${formatEuro(p.preis)} pro Monat, netto zzgl. MwSt. – ${p.kurz}. ${p.features.join(', ')}.`),
+    ...PAKETE.map((p) => `- ${p.name}: ${formatEuro(p.preis)} pro Monat, netto zzgl. MwSt. ${p.kurz}. ${p.features.join(', ')}.`),
+    `- Ablauf: ${steps.map((s, i) => `${i + 1}. ${s.title}`).join(', ')}. Online spätestens 14 Tage, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: immer ein Mensch als fester Ansprechpartner, Änderungen per Sprachnachricht, kleine Änderungen oft in Minuten online, Antwort spätestens am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
-    `- Arbeitsweise: persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach KI-gestützte Umsetzung in Rekordzeit, dann kontinuierliche Verbesserung. KI ersetzt keine guten Ideen – sie beschleunigt die Umsetzung.`,
+    `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
     '',
     '## Was wir im Rahmen von Website as a Service bauen',
@@ -62,6 +63,11 @@ export const GET: APIRoute = async ({ site }) => {
     `- E-Mail: ${company.email}`,
     ...(isMissing(company.phone) || PHONE_IS_PLACEHOLDER ? [] : [`- Telefon: ${company.phone}`]),
     `- Anschrift: ${company.legalName}, ${company.street}, ${company.zip} ${company.city}`,
+    `- Erreichbar: ${HOURS}`,
+    `- Erstgespräch: kostenlos und unverbindlich, Anfrage über ${url('/kontakt/')}`,
+    '',
+    '## Für wen nicht',
+    '- Privatpersonen: Das Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.',
   ];
   return new Response(lines.join('\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

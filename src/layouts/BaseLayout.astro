@@ -42,6 +42,18 @@ const organization = {
   ...(company.sameAs.length ? { sameAs: company.sameAs } : {}),
   ...(hasAddress ? { priceRange: '€€', areaServed: { '@type': 'Country', name: 'Deutschland' } } : {}),
   email: company.email,
+  // Themen, für die waybuild steht – hilft Suchmaschinen und KI-Suchen bei der Einordnung
+  knowsAbout: ['Website as a Service', 'Website-Erstellung', 'Webhosting', 'Website-Betreuung', 'Individuelle Software', 'Nextcloud', 'IT-Betreuung', 'Wettbewerbsanalyse'],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: company.email,
+    availableLanguage: 'German',
+    hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
+  },
+  ...(hasAddress
+    ? { openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' } }
+    : {}),
   // Platzhalter-Nummer nie an Google melden
   ...(!isMissing(company.phone) && !PHONE_IS_PLACEHOLDER ? { telephone: company.phone } : {}),
   // Adresse erst ausgeben, wenn sie vollständig ist – nie Platzhalter an Google melden
@@ -110,14 +122,14 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Waybuild – Ihre Website. Ein Unikat. Komplett betreut." />
+    <meta property="og:image:alt" content="Waybuild: Ihre Website. Ein Unikat. Komplett betreut." />
     <meta name="twitter:card" content="summary_large_image" />
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
-    {IS_PREVIEW && <div class="preview-bar">Vorschau – noch nicht veröffentlicht</div>}
+    {IS_PREVIEW && <div class="preview-bar">Vorschau, noch nicht veröffentlicht</div>}
     <Header />
     <main id="main">
       {breadcrumb && <Breadcrumbs items={breadcrumb} />}
