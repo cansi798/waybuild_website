@@ -114,3 +114,8 @@ Prüfung: `npm run seo` (läuft auch bei jedem Deploy – bei Fehlern wird nicht
 - Texte nach dem humanizer-Skill überarbeitet (29.10.2026): keine Gedankenstrich-Ketten, keine „nicht X, sondern Y“-Floskeln, konkrete Sätze
 - Keine Cookies, kein Tracking, Schriften lokal – kein Cookie-Banner nötig
 - Bewusst **kein** Font-Preload: kostete 300 ms Blocking Time ohne LCP-Gewinn (gemessen)
+
+## Lizenz
+
+Alle Rechte vorbehalten – © 2026 Waybuild UG (haftungsbeschränkt). Siehe [`LICENSE`](LICENSE).
+Die Einsicht über GitHub ist nur zur Ansicht gestattet; Kopieren, Weiterverwenden oder Bearbeiten ist ohne schriftliche Zustimmung nicht erlaubt.
