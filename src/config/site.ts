@@ -120,7 +120,9 @@ export type IconName =
   | 'phone' | 'whatsapp' | 'chevron' | 'menu' | 'close' | 'arrow' | 'arrow-left' | 'check' | 'doc' | 'eye'
   | 'euro' | 'clock' | 'user' | 'layout' | 'cart' | 'target' | 'refresh' | 'tools' | 'pin' | 'globe' | 'chart'
   | 'code' | 'cloud' | 'cpu' | 'compass' | 'layers' | 'lock' | 'mic' | 'spark' | 'database' | 'home' | 'unlock'
-  | 'users' | 'ticket' | 'book' | 'bot' | 'zap' | 'portal' | 'folder';
+  | 'users' | 'ticket' | 'book' | 'bot' | 'zap' | 'portal' | 'folder'
+  // Prozess-Story „So arbeiten wir“ (aus der Hauptseite übernommen, 03.11.2026)
+  | 'idee' | 'frage' | 'stern' | 'warnung' | 'ablauf' | 'impuls';
 
 /** Was in „Website as a Service“ enthalten ist (Reihenfolge wie in der Vision). */
 export const INKLUSIVE: { icon: IconName; title: string }[] = [

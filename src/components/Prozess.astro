@@ -1,0 +1,156 @@
+---
+// „So arbeiten wir“ (Jamil, Talk 4487/4488, 03.11.2026): die Linien-Story der waybuild Hauptseite mit allen sechs
+// Schritten, verdichtet auf ZWEI Abschnitte:
+//   1 · Verstehen & Hinterfragen:              Impuls → Verstehen → Hinterfragen
+//   2 · Entscheiden, Umsetzen & Verbessern:    Entscheiden → Umsetzen → Verbessern
+// EINE durchgehende Scroll-Linie verbindet beide Abschnitte (Engine src/scripts/prozess.ts = denkweise.ts der
+// Hauptseite): Start am Impuls, am Desktop läuft sie mittig durch die Überschrift von Abschnitt 2 (die Linie entsteht
+// aus der Überschrift, Jamil HS 3935), Ende am Verbessern-Kreis. Szenen in src/components/prozess/, Texte in
+// src/config/prozess.ts, Stil in src/styles/prozess.css. Ohne JS bzw. mit reduzierter Bewegung: alles fertig gezeichnet.
+// Ersetzt den Abschnitt „In vier Schritten zur neuen Website“ (Ablauf.astro), damit der Ablauf nicht doppelt steht.
+import Icon from './Icon.astro';
+import DwIdee from './prozess/DwIdee.astro';
+import DwVerstehen from './prozess/DwVerstehen.astro';
+import DwHinterfragen from './prozess/DwHinterfragen.astro';
+import DwEntscheiden from './prozess/DwEntscheiden.astro';
+import DwUmsetzen from './prozess/DwUmsetzen.astro';
+import DwVerbessern from './prozess/DwVerbessern.astro';
+import { href } from '../lib/paths';
+import {
+  PROZESS_TEILE, DW_IDEE, DW_VERSTEHEN, DW_HINTERFRAGEN, DW_ENTSCHEIDEN, DW_UMSETZEN, DW_VERBESSERN, PROZESS_CTA,
+} from '../config/prozess';
+import '../styles/prozess.css';
+
+const [T1, T2] = PROZESS_TEILE;
+---
+
+<div class="dw dw-farben" data-denkweise>
+  <svg class="dw-linie" aria-hidden="true" focusable="false"><path class="dw-strich" d="" /></svg>
+
+  <!-- ═══ Abschnitt 1 · Verstehen & Hinterfragen ═══ -->
+  <section class="dw-teil dw-teil--1" id={T1.id} aria-labelledby="prozess-1-h">
+    <div class="wrap">
+      <div class="dw-teilkopf">
+        <p class="eyebrow">{T1.eyebrow}</p>
+        <h2 id="prozess-1-h">{T1.titelVor}<span class="accent">{T1.titelAkzent}</span></h2>
+        <p class="dw-teilkopf__lead">{T1.lead}</p>
+      </div>
+    </div>
+
+    <!-- Impuls: hier beginnt die Linie (Desktop oben an der Szene, Handy links an der Kennzeile) -->
+    <div class="dw-schritt" id="impuls">
+      <div class="wrap dw-raster dw-raster--spiegel">
+        <div class="dw-text reveal">
+          <span class="dw-linienstart dw-nur-m" aria-hidden="true"></span>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="impuls" size={18} /> Impuls</span>
+          <h3 class="dw-idee-titel" aria-label={DW_IDEE.zeilen.join(' ')}>{DW_IDEE.zeilen.map((z) => <span>{z}</span>)}</h3>
+          <p class="dw-idee-gefuehl">{DW_IDEE.gefuehl}</p>
+          <blockquote class="dw-zitat dw-zitat--gross">„{DW_IDEE.zitat}“</blockquote>
+          <p>{DW_IDEE.schluss}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwIdee />
+      </div>
+    </div>
+
+    <!-- Verstehen -->
+    <div class="dw-schritt" id="verstehen">
+      <div class="wrap dw-raster">
+        <div class="dw-text reveal">
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="search" size={18} /> Verstehen</span>
+          <h3>{DW_VERSTEHEN.titel}</h3>
+          <p class="dw-unterzeile">{DW_VERSTEHEN.unterzeile}</p>
+          <p>{DW_VERSTEHEN.text}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwVerstehen />
+      </div>
+    </div>
+
+    <!-- Hinterfragen -->
+    <div class="dw-schritt" id="hinterfragen">
+      <div class="wrap dw-raster dw-raster--spiegel">
+        <div class="dw-text reveal">
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="frage" size={18} /> Hinterfragen</span>
+          <h3>{DW_HINTERFRAGEN.titel}</h3>
+          <p class="dw-zeilen">{DW_HINTERFRAGEN.zeilen.map((z) => <span>{z}</span>)}</p>
+          <p class="dw-zeilen dw-botschaft">{DW_HINTERFRAGEN.botschaft.map((z) => <span>{z}</span>)}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwHinterfragen />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Abschnitt 2 · Entscheiden, Umsetzen & Verbessern ═══ -->
+  <section class="dw-teil dw-teil--2" id={T2.id} aria-labelledby="prozess-2-h">
+    <div class="wrap">
+      <!-- Die Linie läuft am Desktop mittig hinter der Überschrift durch (Fläche in der Abschnittsfarbe deckt sie ab),
+           am Handy links daneben -->
+      <span class="dw-wp" data-weg data-weg-nur="d"></span>
+      <div class="dw-teilkopf dw-teilkopf--linie">
+        <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        <p class="eyebrow">{T2.eyebrow}</p>
+        <h2 id="prozess-2-h">{T2.titelVor}<span class="accent">{T2.titelAkzent}</span></h2>
+        <p class="dw-teilkopf__lead">{T2.lead}</p>
+        <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+      </div>
+      <span class="dw-wp" data-weg data-weg-nur="d"></span>
+    </div>
+
+    <!-- Entscheiden -->
+    <div class="dw-schritt" id="entscheiden">
+      <div class="wrap dw-raster">
+        <div class="dw-text reveal">
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="target" size={18} /> Entscheiden</span>
+          <h3>{DW_ENTSCHEIDEN.titel}</h3>
+          <p>{DW_ENTSCHEIDEN.text}</p>
+          <p class="dw-zeilen--betont">{DW_ENTSCHEIDEN.ziel}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwEntscheiden />
+      </div>
+    </div>
+
+    <!-- Umsetzen -->
+    <div class="dw-schritt" id="umsetzen">
+      <div class="wrap dw-raster dw-raster--spiegel">
+        <div class="dw-text reveal">
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="rocket" size={18} /> Umsetzen</span>
+          <h3>{DW_UMSETZEN.titel}</h3>
+          <p>{DW_UMSETZEN.text}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwUmsetzen />
+      </div>
+    </div>
+
+    <!-- Verbessern: die Linie endet am Kreis -->
+    <div class="dw-schritt" id="verbessern">
+      <div class="wrap dw-raster">
+        <div class="dw-text reveal">
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+          <span class="dw-kenn"><Icon name="chart" size={18} /> Verbessern</span>
+          <h3>{DW_VERBESSERN.titel}</h3>
+          <p class="dw-unterzeile">{DW_VERBESSERN.unterzeile}</p>
+          <p>{DW_VERBESSERN.text}</p>
+          <span class="dw-wp" data-weg data-weg-nur="m" data-weg-x="links"></span>
+        </div>
+        <DwVerbessern />
+      </div>
+    </div>
+
+    <div class="wrap dw-teil__aktion">
+      <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>{PROZESS_CTA}</a>
+    </div>
+  </section>
+</div>
+
+<script>
+  import '../scripts/prozess';
+</script>
