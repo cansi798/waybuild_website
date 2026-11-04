@@ -1,5 +1,5 @@
 ---
-// Preis-Seite: Website as a Service in zwei Varianten (Jamil, 19.10.2026) – Preise aus config/site.ts → PAKETE.
+// Preis-Seite: Website as a Service in drei Paketen (Can, 04.11.2026) – Preise aus config/site.ts → PAKETE.
 // Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
@@ -8,30 +8,88 @@ import Inklusive from '../components/Inklusive.astro';
 import Icon from '../components/Icon.astro';
 import Pakete from '../components/Pakete.astro';
 import Faq from '../components/Faq.astro';
-import { WAAS, PAKETE, formatEuro, preiseBeide } from '../config/site';
-import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
+import { WAAS, PAKETE, formatEuro, netto, gesamtLaufzeit, preiseAlle } from '../config/site';
+import { SAEULEN } from '../config/angebot';
 import { leistungenNach } from '../config/leistungen';
 import { faqSchema, serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 
 const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
+
+/** Paketvergleich (true = enthalten, false = nicht enthalten, Text = Umfang). */
+const VERGLEICH: { t: string; w: (boolean | string)[] }[] = [
+  { t: 'Einrichtung', w: ['0 €', '0 €', '0 €'] },
+  { t: 'Seitenbegrenzung', w: ['keine', 'keine', 'keine'] },
+  { t: 'Texte, KI-gestützt und von uns geprüft', w: [true, true, true] },
+  { t: 'SEO und für KI-Suche optimiert, leicht erklärt', w: [true, true, true] },
+  { t: 'E-Mail-Postfächer', w: ['20', '20', '20'] },
+  { t: 'E-Mail-Signatur nach DIN 5008', w: [true, true, true] },
+  { t: 'Impressum und Datenschutzerklärung nach aktuellem Stand', w: [true, true, true] },
+  { t: 'Hosting in Deutschland, SSL, Updates, Backups', w: [true, true, true] },
+  { t: 'Änderungen per Nachricht, im fairen Rahmen', w: [true, true, true] },
+  { t: 'Google-Unternehmensprofil erstellt (einmalig)', w: [false, true, true] },
+  { t: 'Postfächer mit Ordnern und Regeln eingerichtet', w: [false, true, true] },
+  { t: 'Lokale Seiten für Orte und Leistungen', w: [false, true, true] },
+  { t: 'Monatsbericht und laufend bessere Anfragewege', w: [false, true, true] },
+  { t: 'Briefvorlage nach DIN 5008', w: [false, true, true] },
+  { t: 'Ständige Optimierung in Absprache mit Ihnen', w: [false, false, true] },
+  { t: 'Logo-Design', w: [false, false, true] },
+  { t: 'CI-Geschäftsbriefe nach DIN 5008', w: [false, false, true] },
+  { t: 'Mindestlaufzeit', w: ['24 Monate', '24 Monate', '24 Monate'] },
+];
+
+const START = [
+  { t: 'Erstgespräch', x: 'Kostenlos und unverbindlich. Wir lernen Ihr Unternehmen kennen und empfehlen das passende Paket.' },
+  { t: 'Entwurf und Freigabe', x: 'Wir schreiben die Texte mit Ihnen und setzen die Website KI-gestützt um. Sie prüfen und geben frei.' },
+  { t: 'Live und betreut', x: 'Ihre Website geht online. Danach pflegen wir sie, und Änderungen schicken Sie einfach per Nachricht.' },
+];
 ---
 
 <BaseLayout
-  title={`Preise: ${PAKETE.map((p) => formatEuro(p.preis)).join(' oder ')} im Monat`}
-  description={`${WAAS.name}: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} pro Monat netto. 0 € Einrichtung, Hosting, Wartung und Betreuung inklusive.`}
+  title={`Preise: Website-Abo ab ${formatEuro(PAKETE[0].preis)} im Monat`}
+  description={`${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat inkl. MwSt. 0 € Einrichtung, keine Seitenbegrenzung, 20 E-Mail-Postfächer.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
-  <PageHeader eyebrow="Preise" title="Zwei Varianten. Fester Monatspreis." lead={`${preiseBeide()}. Keine Einrichtungskosten, keine versteckten Kosten.`} />
+  <PageHeader eyebrow="Preise" title="Drei Pakete. Fester Monatspreis." lead={`${preiseAlle()}. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten.`} />
 
   <Pakete head={false} />
 
   <section class="section" id="websites" aria-labelledby="inkl-h">
     <div class="wrap">
-      <SectionHead center eyebrow="In beiden Varianten enthalten" pre="Alles in " accent="einem Preis." text={WAAS.claim} id="inkl-h" />
+      <SectionHead center eyebrow="In allen Paketen enthalten" pre="Alles in " accent="einem Preis." text={WAAS.claim} id="inkl-h" />
       <Inklusive />
-      <p class="netto">{NETTO_HINWEIS}</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
+    <div class="wrap">
+      <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Alle Leistungen auf einen Blick. Ein Haken heißt: im Paket enthalten." id="vgl-h" />
+      <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
+        <table class="vgl">
+          <thead>
+            <tr><th scope="col">Leistung</th>{PAKETE.map((p) => <th scope="col">{p.name}<span>{formatEuro(p.preis)} / Monat</span></th>)}</tr>
+          </thead>
+          <tbody>
+            {VERGLEICH.map((z) => (
+              <tr><th scope="row">{z.t}</th>{z.w.map((w) => <td>{w === true ? <Icon name="check" size={18} /> : w === false ? <span class="vgl__nein" aria-label="nicht enthalten">–</span> : w}</td>)}</tr>
+            ))}
+            <tr class="vgl__summe"><th scope="row">Kosten über {WAAS.laufzeitMonate} Monate</th>{PAKETE.map((p) => <td>{formatEuro(gesamtLaufzeit(p))}<span>{formatEuro(netto(gesamtLaufzeit(p)))} netto</span></td>)}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="netto">Einrichtung 0 €. Danach ist das Abo monatlich kündbar, mit einem Monat Frist zum Monatsende.</p>
+    </div>
+  </section>
+
+  <section class="section" id="start" aria-labelledby="start-h">
+    <div class="wrap">
+      <SectionHead center eyebrow="So starten Sie" pre="In drei Schritten " accent="online." id="start-h" />
+      <ol class="start">
+        {START.map((st, i) => (
+          <li class="card start__k"><span class="start__n">{i + 1}</span><h3>{st.t}</h3><p>{st.x}</p></li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -58,7 +116,24 @@ const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
 </BaseLayout>
 
 <style>
-  .netto { margin: 20px 0 0; text-align: center; font-size: 0.85rem; color: var(--ink-soft); }
+  .netto { margin: 20px auto 0; max-width: 820px; text-align: center; font-size: 0.85rem; line-height: 1.6; color: var(--ink-soft); }
+  .vgl__scroll { overflow-x: auto; max-width: 980px; margin-inline: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
+  .vgl { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.92rem; }
+  .vgl th, .vgl td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: center; vertical-align: middle; }
+  .vgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); font-size: 1rem; }
+  .vgl thead th span, .vgl__summe td span { display: block; font-family: var(--font-body, inherit); font-size: 0.78rem; font-weight: 500; opacity: 0.85; }
+  .vgl thead th:first-child, .vgl tbody th { text-align: left; }
+  .vgl tbody th { font-weight: 600; }
+  .vgl td :global(.icon) { color: var(--accent-ink); }
+  .vgl__nein { color: var(--ink-soft); }
+  .vgl tbody tr:nth-child(even) { background: #f7fbfb; }
+  .vgl__summe th, .vgl__summe td { font-weight: 700; background: #e9f6f5; border-bottom: 0; }
+  .start { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 860px) { .start { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+  .start__k { display: flex; flex-direction: column; gap: 6px; border-radius: 18px; }
+  .start__k h3, .start__k p { margin: 0; }
+  .start__k p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
+  .start__n { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--dark); font-weight: 800; }
   .ausbau { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 900px) { .ausbau { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
   .ausbau__card { display: flex; flex-direction: column; gap: 8px; border-radius: 18px; scroll-margin-top: 90px; }

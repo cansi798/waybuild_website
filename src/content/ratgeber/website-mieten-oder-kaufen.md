@@ -41,7 +41,7 @@ Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 
 
 ## Worauf Sie bei Miet-Angeboten achten sollten
 
-1. **Laufzeit und Bindung:** Wie lange läuft der Vertrag, und kommen Sie danach ohne Hürden heraus? Bei Waybuild sind es 24 Monate, und Website, Code und Domain gehören Ihnen.
+1. **Laufzeit und Bindung:** Wie lange läuft der Vertrag, und kommen Sie danach ohne Hürden heraus? Bei Waybuild sind es 24 Monate Mindestlaufzeit, danach ist das Abo monatlich kündbar.
 2. **E-Mail:** Oft sind nur 2–5 Postfächer enthalten. Prüfen Sie, ob das für Ihr Team reicht.
 3. **Eigentum:** Gehören Ihnen Domain, Website und Code?
 4. **Technik:** Steckt ein Baukasten- oder WordPress-Template dahinter, oder wird die Seite wirklich individuell gebaut?

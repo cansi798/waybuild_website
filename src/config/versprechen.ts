@@ -85,18 +85,18 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
   {
     id: 'laufzeit',
     icon: 'calendar',
-    title: `${WAAS.laufzeitMonate} Monate Laufzeit`,
+    title: `${WAAS.laufzeitMonate} Monate Mindestlaufzeit`,
     zeilen: [`${WAAS.laufzeitMonate} Monate`, 'Laufzeit'],
     short: 'Klar und planbar.',
-    long: `Der Vertrag läuft ${WAAS.laufzeitMonate} Monate. Das ist für Sie planbar, und wir haben genug Zeit, Ihre Website Schritt für Schritt zu verbessern.`,
+    long: `Die Mindestlaufzeit beträgt ${WAAS.laufzeitMonate} Monate, danach ist das Abo monatlich kündbar. Das ist für Sie planbar, und wir haben genug Zeit, Ihre Website Schritt für Schritt zu verbessern.`,
   },
   {
-    id: 'eigentum',
-    icon: 'key',
-    title: 'Website, Code & Domain gehören Ihnen',
-    zeilen: ['Code & Domain', 'gehören Ihnen'],
-    short: 'Ihr Eigentum, von Anfang an.',
-    long: 'Die Domain läuft auf Ihren Namen. Website und Code gehören Ihrem Unternehmen.',
+    id: 'seiten',
+    icon: 'layers',
+    title: 'Keine Seitenbegrenzung',
+    zeilen: ['Keine Seiten-', 'begrenzung'],
+    short: 'So viele Seiten, wie Sie brauchen.',
+    long: 'Ihre Website wächst mit Ihrem Unternehmen. In keinem Paket zählen wir Seiten, und eine neue Seite kostet keinen Aufpreis.',
   },
   {
     id: 'transparenz',
@@ -105,14 +105,6 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
     zeilen: ['Keine versteckten', 'Kosten'],
     short: 'Maximale Transparenz.',
     long: 'Was der Monatspreis abdeckt, steht im Vertrag. Extras berechnen wir nur, wenn Sie sie ausdrücklich und vorher schriftlich beauftragt haben.',
-  },
-  {
-    id: 'lockin',
-    icon: 'unlock',
-    title: 'Kein künstlicher Lock-in',
-    zeilen: ['Kein', 'Lock-in'],
-    short: 'Sie behalten die Kontrolle.',
-    long: 'Sie behalten die Kontrolle über Ihre Website und Ihre Daten. Wir wollen, dass Sie aus Zufriedenheit bleiben und nicht, weil Sie nicht wechseln können.',
   },
 ];
 

@@ -46,71 +46,124 @@ export const references: { name: string; branche: string; url?: string; text: st
 export const VAT_RATE = 0.19;
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * DAS ANGEBOT „Website as a Service“ in zwei Varianten (Jamil, 19.10.2026):
- * 79 € / Monat und 139 € / Monat für die selbstoptimierende, sich anpassende Website.
- * Alle Preise netto zzgl. MwSt. (B2B). Preise NIE fest in Texte schreiben – immer aus PAKETE.
- * (Frühere Tarife Start/Business/Premium + 490 € Einrichtung: siehe Git-Historie.)
+ * DAS ANGEBOT „Website as a Service“ in drei Paketen (Can, Talk qh87y3sj 4499–4510, 04.11.2026):
+ * Fundament 79,99 € · Wegweiser 149,99 € · Wahrzeichen 299,99 € im Monat.
+ * Preise sind BRUTTO inkl. 19 % USt (Endpreis), der Nettopreis wird klein darunter gezeigt.
+ * Preise NIE fest in Texte schreiben – immer aus PAKETE.
+ * Laufzeit: 24 Monate Mindestlaufzeit, danach monatlich kündbar (Can, Talk 4511, 04.11.2026; AGB § 5).
+ * Keine Eigentumsaussagen zu Website/Code/Domain (Can, Talk 4513 – Mietmodell offen).
+ * (Frühere Varianten 79 € / 139 € netto und Start/Business/Premium: siehe Git-Historie.)
  * ───────────────────────────────────────────────────────────────────────────── */
 export const WAAS = {
   name: 'Website as a Service',
   claim: 'Ein Ansprechpartner, ein System, ein fester Monatspreis.',
   einrichtung: 0,
   laufzeitMonate: 24,
+  /** Laufzeit in einem Satz (AGB § 5). */
+  laufzeit: '24 Monate Mindestlaufzeit, danach monatlich kündbar',
 };
 
 export type Paket = {
-  id: 'website' | 'intelligent';
+  id: 'fundament' | 'wegweiser' | 'wahrzeichen';
   name: string;
   /** Kurz-Nutzen unter dem Namen */
   kurz: string;
-  /** Monatspreis netto */
+  /** Monatspreis BRUTTO inkl. 19 % USt */
   preis: number;
   /** Für wen – ein Satz aus Kundensicht */
   fuer: string;
+  /** Herausgehobene Extras als Chips (Signatur, Briefe, Logo) */
+  extras: string[];
   features: string[];
   empfohlen?: boolean;
 };
 
 export const PAKETE: Paket[] = [
   {
-    id: 'website',
-    name: 'Website',
-    kurz: 'Professionell und komplett betreut',
-    preis: 79,
-    fuer: 'Für Unternehmen, die professionell auftreten wollen und sich nicht um Technik kümmern möchten.',
+    id: 'fundament',
+    name: 'Fundament',
+    kurz: 'Professionell online, ohne Startkosten',
+    preis: 79.99,
+    fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
+    extras: ['E-Mail-Signatur nach DIN 5008'],
     features: [
-      'Professionelle Website nach persönlicher Beratung',
-      'Hosting, Domainverwaltung und SSL',
-      'Wartung, Updates und Backups',
-      'Laufende Betreuung und Änderungen per Sprache oder Text',
+      'Website ohne Seitenbegrenzung nach persönlichem Erstgespräch',
+      'Texte schreiben wir mit Ihnen, KI-gestützt und von uns geprüft',
+      'SEO und für KI-Suche optimiert, in leichter Sprache erklärt',
+      '20 E-Mail-Postfächer',
+      'Impressum und Datenschutzerklärung nach aktuellem Stand',
+      'Hosting in Deutschland, DSGVO-orientiert eingerichtet',
+      'Änderungen per Sprachnachricht oder Text, im fairen Rahmen',
     ],
   },
   {
-    id: 'intelligent',
-    name: 'Intelligente Website',
-    kurz: 'Optimiert sich selbst und passt sich an',
-    preis: 139,
-    fuer: 'Für Unternehmen, die ihre Website aktiv für Vertrieb und Anfragen nutzen wollen.',
+    id: 'wegweiser',
+    name: 'Wegweiser',
+    kurz: 'Zeigt neuen Kunden den Weg zu Ihnen',
+    preis: 149.99,
+    fuer: 'Für Unternehmen, die über ihre Website regelmäßig neue Kunden gewinnen wollen.',
+    extras: ['E-Mail-Signatur nach DIN 5008', 'Briefvorlage nach DIN 5008'],
     features: [
-      'Alles aus „Website“',
-      'Wertet Besucher, Suchbegriffe und Anfragen laufend aus',
-      'Passt Inhalte und Aufbau selbstständig an',
-      'Hebt erfolgreiche Leistungen und Referenzen hervor',
-      'Optimiert den Weg vom Besucher zur Anfrage',
+      'Alles aus „Fundament“',
+      'Google-Unternehmensprofil erstellt und eingerichtet (einmalig)',
+      'E-Mail-Postfächer strukturiert eingerichtet, mit Unterordnern und Regeln für den Alltag',
+      'Lokale Seiten für Ihre Orte und Leistungen',
+      'Monatsbericht: Besucher, Anfragen, Suchbegriffe',
+      'Wir verbessern laufend den Weg vom Besucher zur Anfrage',
     ],
     empfohlen: true,
   },
+  {
+    id: 'wahrzeichen',
+    name: 'Wahrzeichen',
+    kurz: 'Website, Logo und Geschäftspapiere aus einer Hand',
+    preis: 299.99,
+    fuer: 'Für Gründer und Betriebe, die einen einheitlichen Auftritt wollen, von der Website bis zum Brief.',
+    extras: ['Logo-Design', 'CI-Geschäftsbriefe nach DIN 5008', 'E-Mail-Signatur nach DIN 5008'],
+    features: [
+      'Alles aus „Wegweiser“',
+      'Ständige Optimierung in Absprache mit Ihnen',
+      'Logo-Design: 3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck',
+      'CI-Geschäftsbriefe nach DIN 5008: Briefbogen, Angebot, Rechnung',
+      'Kurzer CI-Leitfaden: Farben, Schriften, Logo-Einsatz',
+      'Quartalsgespräch zur Weiterentwicklung',
+    ],
+  },
 ];
+
+/** In allen drei Paketen enthalten. */
+export const IN_ALLEN = [
+  'Keine Seitenbegrenzung',
+  '0 € Einrichtung',
+  '20 E-Mail-Postfächer',
+  'E-Mail-Signatur nach DIN 5008',
+  'SEO und KI-Suche optimiert, leicht erklärt',
+  'Impressum und Datenschutzerklärung nach aktuellem Stand',
+  'Hosting in Deutschland, DSGVO-orientiert',
+  'SSL, Domain, Updates und Backups',
+  'Änderungen per Nachricht, im fairen Rahmen',
+  '24 Monate Mindestlaufzeit',
+];
+
+export const VAT_FAKTOR = 1 + VAT_RATE;
+/** Nettopreis zu einem Bruttopreis (auf Cent gerundet). */
+export const netto = (brutto: number) => Math.round((brutto / VAT_FAKTOR) * 100) / 100;
+
+/** Gesamtkosten über die Mindestlaufzeit (0 € Einrichtung). */
+export const gesamtLaufzeit = (p: Paket) => Math.round(p.preis * WAAS.laufzeitMonate * 100) / 100;
 
 export const preisAb = () => Math.min(...PAKETE.map((p) => p.preis));
 
+/** Euro-Format: ganze Beträge ohne Cent (490 €), sonst mit Cent (79,99 €). */
 export const formatEuro = (n: number) =>
-  new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+  new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
 
 /** Preis-Zeilen für alle Seiten (aus PAKETE). */
 export const preisKurz = () => `ab ${formatEuro(preisAb())} / Monat`;
-export const preisLang = () => `ab ${formatEuro(preisAb())} im Monat, zzgl. MwSt.`;
-export const preiseBeide = () => PAKETE.map((p) => `${p.name}: ${formatEuro(p.preis)} / Monat`).join(' · ') + ' (netto, zzgl. MwSt.)';
+export const preisLang = () => `ab ${formatEuro(preisAb())} im Monat, inkl. MwSt.`;
+export const preiseAlle = () => PAKETE.map((p) => `${p.name}: ${formatEuro(p.preis)} / Monat`).join(' · ') + ' (inkl. MwSt.)';
+/** Hinweis unter den Paketpreisen. */
+export const BRUTTO_HINWEIS = 'Preise der Website-Pakete inkl. 19 % USt., der Nettopreis steht jeweils darunter. Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.';
 
 /** Das Angebot in einem Satz. */
 export const OFFER = 'Website, Hosting, Domain, SSL, Wartung, Backups und Betreuung sind im festen Monatspreis enthalten.';
@@ -135,16 +188,18 @@ export const INKLUSIVE: { icon: IconName; title: string }[] = [
   { icon: 'user', title: 'Laufende Betreuung' },
   { icon: 'spark', title: 'KI-gestützte Erstellung' },
   { icon: 'mic', title: 'Sprachgesteuerte Änderungen' },
+  { icon: 'mail', title: '20 E-Mail-Postfächer' },
+  { icon: 'search', title: 'SEO und KI-Suche' },
+  { icon: 'layers', title: 'Keine Seitenbegrenzung' },
 ];
 
 /** Geschäftsmodell in Stichpunkten (Langfassung als Siegel: config/versprechen.ts). */
 export const MODELL = [
   'Keine Einrichtungskosten',
-  'Fester Monatspreis, netto zzgl. MwSt.',
-  `${WAAS.laufzeitMonate} Monate Laufzeit`,
-  'Website, Code und Domain gehören Ihnen',
+  'Keine Seitenbegrenzung',
+  'Fester Monatspreis inkl. MwSt.',
+  `${WAAS.laufzeitMonate} Monate Mindestlaufzeit`,
   'Keine versteckten Kosten',
-  'Kein künstlicher Lock-in',
 ];
 
 /** Ablauf aus Kundensicht in vier Schritten (auch Grundlage der animierten Ablauf-Szene). */
@@ -161,28 +216,39 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei waybuild?',
-    a: `${PAKETE.map((p) => `${p.name}: ${formatEuro(p.preis)} im Monat`).join('. ')}. Alle Preise netto zzgl. MwSt., ohne Einrichtungskosten und ohne versteckte Kosten.`,
+    a: `Es gibt drei Pakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} im Monat (${formatEuro(netto(p.preis))} netto)`).join(', ')}. Alle Preise inkl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung.`,
   },
   {
-    q: `Was ist der Unterschied zwischen ${formatEuro(PAKETE[0].preis)} und ${formatEuro(PAKETE[1].preis)}?`,
-    a: 'Bei der Website für 79 € pflegen und betreuen wir Ihren Auftritt. Die intelligente Website für 139 € wertet zusätzlich aus, woher Anfragen kommen und was Besucher interessiert, und passt Inhalte und Aufbau laufend daran an.'
-      .replace('79 €', formatEuro(PAKETE[0].preis)).replace('139 €', formatEuro(PAKETE[1].preis)),
+    q: 'Was ist der Unterschied zwischen den drei Paketen?',
+    a: `${PAKETE[0].name} bringt Sie professionell online, mit 20 E-Mail-Postfächern und einer E-Mail-Signatur nach DIN 5008. ${PAKETE[1].name} erstellt zusätzlich Ihr Google-Unternehmensprofil, richtet Ihre Postfächer mit Ordnern und Regeln ein und verbessert laufend den Weg zur Anfrage. ${PAKETE[2].name} enthält außerdem Logo-Design, Geschäftsbriefe nach DIN 5008 und eine ständige Optimierung in Absprache mit Ihnen.`,
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
-    a: 'Persönliche Beratung, KI-gestützte Erstellung, Hosting, Domainverwaltung, SSL, Wartung, Backups und laufende Betreuung. Sie zahlen dafür einen festen Monatspreis und keine Einrichtungskosten.',
+    a: 'Persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, 20 E-Mail-Postfächer, eine E-Mail-Signatur nach DIN 5008 und laufende Betreuung. Ihre Website ist für Google und KI-Suchen optimiert, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
   },
   {
     q: 'Wie lange läuft der Vertrag?',
-    a: `Die Laufzeit beträgt ${WAAS.laufzeitMonate} Monate. Wir setzen auf eine lange Zusammenarbeit, aber nicht auf künstliche Abhängigkeit: Website, Code und Domain gehören Ihnen.`,
+    a: `Die Mindestlaufzeit beträgt ${WAAS.laufzeitMonate} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar. Die Kündigung genügt in Textform, zum Beispiel per E-Mail.`,
+  },
+  {
+    q: 'Was passiert nach 24 Monaten?',
+    a: 'Nichts Überraschendes: Ihre Website läuft weiter wie bisher, zum gleichen Monatspreis und mit derselben Betreuung. Ab dann können Sie jeden Monat kündigen, mit einem Monat Frist zum Monatsende.',
+  },
+  {
+    q: 'Gibt es Einrichtungskosten?',
+    a: 'Nein. In allen drei Paketen zahlen Sie keine Einrichtungsgebühr, nur den festen Monatspreis. Viele Anbieter verlangen vorab mehrere hundert Euro, bei uns fällt das weg.',
+  },
+  {
+    q: 'Wie viele Seiten bekommt meine Website?',
+    a: 'So viele, wie Ihr Unternehmen braucht. Es gibt in keinem Paket eine Seitenbegrenzung.',
+  },
+  {
+    q: 'Kann ich später in ein größeres Paket wechseln?',
+    a: 'Ja, ein Wechsel in ein größeres Paket ist möglich. Sagen Sie uns einfach Bescheid, die Einzelheiten besprechen wir mit Ihnen.',
   },
   {
     q: 'Wie schnell ist meine Website online?',
     a: 'Spätestens 14 Tage, nachdem Ihre Inhalte (Texte, Bilder, Logo) vorliegen. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen.',
-  },
-  {
-    q: 'Wem gehören Website, Code und Domain?',
-    a: 'Ihnen. Die Domain läuft auf Ihren Namen, Website und Code gehören Ihrem Unternehmen.',
   },
   {
     q: 'Welche Rolle spielt KI?',
@@ -190,14 +256,14 @@ export const faqs = [
   },
   {
     q: 'Kann ich meine bestehende Domain mitnehmen?',
-    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall. Sie bleibt auf Ihren Namen registriert.',
+    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall.',
   },
   {
     q: 'Bietet waybuild auch Software, Cloud und IT an?',
     a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
   },
   {
-    q: 'Sind die Preise netto?',
-    a: 'Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).',
+    q: 'Sind die Preise netto oder brutto?',
+    a: 'Die Preise der Website-Pakete enthalten die Umsatzsteuer von 19 %. Den Nettopreis nennen wir jeweils mit, zum Beispiel 79,99 € im Monat, das sind 67,22 € netto. Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).',
   },
 ];

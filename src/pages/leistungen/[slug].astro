@@ -2,14 +2,14 @@
 // Leistungs-Detailseite (Bauwelt-Muster „Produktseite“), Stand Unternehmensvision 17.10.2026:
 // Hero mit CTA → (Kennen Sie das?) → Leistungsumfang → Ablauf → Website as a Service (Website-Leistungen)
 // ODER „Ausbaustufe auf Anfrage“ (Software, Cloud & IT, Beratung) → Zusage → FAQ → weitere Leistungen.
-// Preise nur über config/site.ts → PAKETE (zwei Varianten seit 19.10.2026).
+// Preise nur über config/site.ts → PAKETE (drei Pakete seit 04.11.2026).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import LeistungGrafik from '../../components/LeistungGrafik.astro';
 import Inklusive from '../../components/Inklusive.astro';
 import Icon from '../../components/Icon.astro';
 import { leistungen, leistungenNach, type Leistung } from '../../config/leistungen';
-import { WAAS, MODELL, steps, preiseBeide } from '../../config/site';
+import { WAAS, MODELL, steps, preiseAlle } from '../../config/site';
 import { saeuleById, NETTO_HINWEIS, type Saeule } from '../../config/angebot';
 import { versprechenById, VERSPRECHEN } from '../../config/versprechen';
 import { waasOffers } from '../../lib/schema';
@@ -115,7 +115,7 @@ const schema = [
     <section class="section section--sand" id="pakete" aria-labelledby="waas-h">
       <div class="wrap waas">
         <div>
-          <SectionHead eyebrow="Fester Monatspreis. Alles drin." pre={`Teil von `} accent={WAAS.name} text={`${preiseBeide()}.`} id="waas-h" />
+          <SectionHead eyebrow="Fester Monatspreis. Alles drin." pre={`Teil von `} accent={WAAS.name} text={`${preiseAlle()}.`} id="waas-h" />
           <ul class="check-list waas__modell">{MODELL.map((m) => <li><Icon name="check" size={20} /> {m}</li>)}</ul>
           <a class="btn btn--primary" href={contact}>Erstgespräch vereinbaren</a>
           <a class="waas__mehr" href={href('/preise/')}>Preise im Vergleich →</a>

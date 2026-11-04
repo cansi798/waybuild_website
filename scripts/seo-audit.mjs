@@ -25,7 +25,7 @@ for (const file of files.sort()) {
   const page = file.replace(DIST, '').replace(/index\.html$/, '');
   // In der Vorschau ist alles noindex – dann trotzdem alle Regeln prüfen (außer bewusst interne Seiten)
   const noindex = PREVIEW
-    ? /\/(impressum|datenschutz|agb|404|checkliste|danke|pakete-2027)/.test(file)
+    ? /\/(impressum|datenschutz|agb|404|checkliste|danke)/.test(file)
     : /<meta name="robots" content="noindex/.test(html);
   console.log(`\n${page}${noindex ? '  (noindex)' : ''}`);
 

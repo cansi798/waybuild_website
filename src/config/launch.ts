@@ -74,14 +74,14 @@ const manual: Todo[] = [
   },
   {
     title: 'Monatspreise für Website as a Service festlegen',
-    detail: 'Festgelegt von Jamil am 19.10.2026: 79 € / Monat und 139 € / Monat (intelligente Website), netto.',
+    detail: 'Festgelegt von Can am 04.11.2026: Fundament 79,99 €, Wegweiser 149,99 €, Wahrzeichen 299,99 € im Monat, brutto inkl. MwSt., 24 Monate Mindestlaufzeit.',
     where: 'src/config/site.ts → PAKETE',
     done: true,
     priority: 'pflicht',
   },
   {
     title: 'AGB an Website as a Service anpassen',
-    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website: zwei Varianten (79 € / 139 € netto im Monat), keine Einrichtungskosten, 24 Monate, Website/Code/Domain gehören dem Kunden – anwaltlich angleichen lassen.',
+    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website (04.11.2026): drei Pakete Fundament / Wegweiser / Wahrzeichen (79,99 / 149,99 / 299,99 € brutto), keine Einrichtungskosten, 24 Monate Mindestlaufzeit (§ 5 schon angepasst), keine Eigentumsaussage zu Website/Code/Domain (Mietmodell offen), 20 E-Mail-Postfächer, Logo und Geschäftsbriefe – § 2, § 4, § 6 und Fair-Use-Regel anwaltlich angleichen lassen.',
     where: 'src/pages/agb.astro',
     done: false,
     priority: 'pflicht',

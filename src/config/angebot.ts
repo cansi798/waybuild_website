@@ -226,6 +226,5 @@ export const ANBIETER_VERGLEICH: { kriterium: string; werte: [string, string, st
   { kriterium: 'Strategie & Beratung', werte: ['Keine', 'Selten', 'Gegen Aufpreis', 'Fester Bestandteil, vor der Umsetzung'] },
   { kriterium: 'Tempo', werte: ['Abhängig von Ihnen', 'Je nach Verfügbarkeit', 'Wochen bis Monate', 'Schnell, weil KI die Umsetzung übernimmt'] },
   { kriterium: 'Wer kümmert sich danach?', werte: ['Sie selbst', 'Je nach Verfügbarkeit', 'Ticket oder Account-Manager', 'Fester Ansprechpartner'] },
-  { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', `${WAAS.laufzeitMonate} Monate, kein künstlicher Lock-in`] },
-  { kriterium: 'Ihre Website & Ihr Code', werte: ['Beim Plattformanbieter', 'Unterschiedlich', 'Unterschiedlich', 'Website, Code und Domain gehören Ihnen'] },
+  { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', `${WAAS.laufzeitMonate} Monate, danach monatlich kündbar`] },
 ];

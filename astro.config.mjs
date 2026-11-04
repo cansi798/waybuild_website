@@ -15,7 +15,7 @@ export default defineConfig({
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
-      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|pakete-2027)\/?$/.test(page),
+      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke)\/?$/.test(page),
     }),
   ],
   build: { inlineStylesheets: 'always' },

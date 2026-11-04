@@ -1,7 +1,7 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, formatEuro, steps, HOURS } from '../config/site';
+import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, BRUTTO_HINWEIS, formatEuro, netto, steps, HOURS } from '../config/site';
 import { absolute } from '../lib/paths';
 import { branchen } from '../config/branchen';
 import { leistungenNach } from '../config/leistungen';
@@ -15,15 +15,18 @@ export const GET: APIRoute = async ({ site }) => {
   const lines = [
     `# ${company.legalName}`,
     '',
-    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: ab ${formatEuro(Math.min(...PAKETE.map((p) => p.preis)))} im Monat netto, ohne Einrichtungskosten. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in drei Paketen ab ${formatEuro(Math.min(...PAKETE.map((p) => p.preis)))} im Monat inkl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
-    NETTO_HINWEIS,
+    BRUTTO_HINWEIS,
+    `Andere Leistungen (Ausbaustufen): ${NETTO_HINWEIS}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
-    `${WAAS.claim} Zwei Varianten. ${OFFER}`,
+    `${WAAS.claim} Drei Pakete. ${OFFER}`,
+    `- In allen Paketen: ${IN_ALLEN.join(', ')}.`,
     `- Enthalten: ${INKLUSIVE.map((i) => i.title).join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
-    ...PAKETE.map((p) => `- ${p.name}: ${formatEuro(p.preis)} pro Monat, netto zzgl. MwSt. ${p.kurz}. ${p.features.join(', ')}.`),
+    ...PAKETE.map((p) => `- Paket ${p.name}: ${formatEuro(p.preis)} pro Monat inkl. MwSt. (${formatEuro(netto(p.preis))} netto). ${p.kurz}. ${[...p.extras, ...p.features].join(', ')}.`),
+    `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
     `- Ablauf: ${steps.map((s, i) => `${i + 1}. ${s.title}`).join(', ')}. Online spätestens 14 Tage, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: immer ein Mensch als fester Ansprechpartner, Änderungen per Sprachnachricht, kleine Änderungen oft in Minuten online, Antwort spätestens am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
     `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
@@ -48,7 +51,7 @@ export const GET: APIRoute = async ({ site }) => {
     '## Seiten',
     `- [Startseite](${url('/')})`,
     `- [Leistungen](${url('/leistungen/')}): Website as a Service und Ausbaustufen`,
-    `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto`,
+    `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat inkl. MwSt.`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen Baukasten, Freelancer, Agentur und waybuild`,
     `- [Über uns](${url('/ueber-uns/')})`,
     `- [Kontakt](${url('/kontakt/')}): kostenloses Erstgespräch`,

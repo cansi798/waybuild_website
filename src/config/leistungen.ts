@@ -56,7 +56,7 @@ export const leistungen: Leistung[] = [
       'Anfrage- und Kontaktformulare für mehr Leads',
       'Technisches und lokales SEO',
     ],
-    siegel: 'eigentum',
+    siegel: 'seiten',
     faq: [
       { q: 'Wie viele Seiten sind sinnvoll?', a: 'Das klären wir in der Beratung anhand Ihrer Zielgruppen und Leistungen. Für die meisten Unternehmen reichen 5 bis 12 Seiten.' },
       { q: 'Können wir Inhalte später ändern?', a: 'Ja. Änderungen gehören zur laufenden Betreuung. Sagen Sie uns einfach, was sich ändern soll.' },
@@ -128,7 +128,7 @@ export const leistungen: Leistung[] = [
       'Weiterleitungen aller alten Adressen',
       'Umzug ohne Ausfallzeit',
     ],
-    siegel: 'lockin',
+    siegel: 'laufzeit',
     faq: [
       { q: 'Verliere ich meine Google-Platzierungen?', a: 'Nein. Wir leiten jede alte Adresse auf die neue Seite weiter und übernehmen Titel, Texte und Struktur. Meist verbessern sich die Rankings durch die schnellere Seite.' },
       { q: 'Was passiert mit meiner WordPress-Seite?', a: 'Wir übernehmen die Inhalte und schalten die alte Seite erst ab, wenn die neue läuft. Auf Wunsch sichern wir Ihnen ein Backup.' },
@@ -193,7 +193,7 @@ export const leistungen: Leistung[] = [
       { title: 'Entwicklung', text: 'In Etappen mit Zwischenständen. Sie testen früh und entscheiden mit.' },
       { title: 'Betrieb', text: 'Auf Wunsch betreuen wir die Software dauerhaft oder übergeben sie an Ihre IT.' },
     ],
-    siegel: 'eigentum',
+    siegel: 'festpreis',
     zusage: { icon: 'key', title: 'Ihr Code gehört Ihnen', text: 'Sie erhalten Quellcode und Dokumentation. Ihre Software kann jederzeit von Ihrer IT oder einem anderen Dienstleister weiterentwickelt werden.' },
     faq: [
       { q: 'Lohnt sich individuelle Software auch für kleine Unternehmen?', a: 'Oft ja. Gerade kleine Teams sparen mit einem passenden Tool viele Stunden. Im Erstgespräch schätzen wir ehrlich ein, ob sich der Aufwand lohnt.' },
@@ -233,7 +233,7 @@ export const leistungen: Leistung[] = [
       { title: 'Umsetzung', text: 'Kurze Etappen, Testzugang ab der ersten Etappe.' },
       { title: 'Livegang', text: 'Wir bringen die Anwendung online und entwickeln sie mit Ihnen weiter.' },
     ],
-    siegel: 'eigentum',
+    siegel: 'festpreis',
     zusage: { icon: 'gauge', title: 'Schnell und schlank gebaut', text: 'Wir setzen auf wenige, bewährte Bausteine und verzichten auf überladene Frameworks. Das lädt schnell, bietet weniger Angriffsfläche und bleibt langfristig pflegbar.' },
     faq: [
       { q: 'Brauche ich eine App aus dem App-Store?', a: 'Meist nicht. Web-Anwendungen laufen im Browser auf Smartphone, Tablet und PC und lassen sich wie eine App auf den Startbildschirm legen.' },
@@ -276,7 +276,7 @@ export const leistungen: Leistung[] = [
       { title: 'Umzug & Einweisung', text: 'Wir übernehmen Ihre Daten und zeigen Ihrem Team die wichtigsten Funktionen.' },
       { title: 'Betrieb', text: 'Updates, Backups, Überwachung und Support übernehmen wir, Ihr Team arbeitet einfach weiter.' },
     ],
-    siegel: 'lockin',
+    siegel: 'technik',
     zusage: { icon: 'lock', title: 'Wir nutzen, was wir anbieten', text: 'Unsere eigene Zusammenarbeit läuft über eine selbst betriebene, gehärtete Nextcloud. Sie bekommen eine Einrichtung, die sich im Alltag bewährt hat.' },
     faq: [
       { q: 'Was ist Nextcloud?', a: 'Eine Open-Source-Plattform für Dateien, Kalender, Kontakte, Chat, Videokonferenzen und Online-Office. Sie läuft auf eigenen Servern und bleibt unter Ihrer Kontrolle.' },

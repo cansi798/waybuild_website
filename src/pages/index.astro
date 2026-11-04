@@ -1,7 +1,7 @@
 ---
 // Startseite – B2B entlang der Customer Journey (Feedback Jamil, 19.10.2026):
 // 1 Hero (Nutzen + Preisanker + Erstgespräch) → 2 Problem → Lösung (Schmerzpunkte, „eine Sprachnachricht genügt“)
-// → 3 Preise: zwei Varianten (Website / Intelligente Website) → 4 Was die intelligente Website macht (Beispiel)
+// → 3 Preise: drei Pakete (Fundament / Wegweiser / Wahrzeichen) → 4 Was der Wegweiser laufend verbessert (Beispiel)
 // → 5 So arbeiten wir: Linien-Story in zwei Abschnitten (Jamil, Talk 4487/4488, 03.11.2026; ersetzt „Ablauf in vier Schritten“) → 6 Service-Versprechen (SLAs in Alltagssprache) → 7 Zielgruppen
 // → 8 Plattform-Ausblick → 9 FAQ → Footer-Kopf mit Direktkontakt (CTA).
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -20,7 +20,7 @@ import { PAKETE, formatEuro } from '../config/site';
 
 <BaseLayout
   title={`Website erstellen lassen ab ${formatEuro(PAKETE[0].preis)} im Monat`}
-  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Änderungen per Sprachnachricht, ab ${formatEuro(PAKETE[0].preis)} im Monat, 0 € Einrichtung, zzgl. MwSt.`}
+  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Drei Pakete ab ${formatEuro(PAKETE[0].preis)} im Monat inkl. MwSt., 0 € Einrichtung.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />
