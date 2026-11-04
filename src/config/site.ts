@@ -88,6 +88,7 @@ export const PAKETE: Paket[] = [
     extras: ['E-Mail-Signatur nach DIN 5008'],
     features: [
       'Website ohne Seitenbegrenzung nach persönlichem Erstgespräch',
+      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
       'Texte schreiben wir mit Ihnen, KI-gestützt und von uns geprüft',
       'SEO und für KI-Suche optimiert, in leichter Sprache erklärt',
       '20 E-Mail-Postfächer',
@@ -105,6 +106,7 @@ export const PAKETE: Paket[] = [
     extras: ['E-Mail-Signatur nach DIN 5008', 'Briefvorlage nach DIN 5008'],
     features: [
       'Alles aus „Fundament“',
+      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
       'Google-Unternehmensprofil erstellt und eingerichtet (einmalig)',
       'E-Mail-Postfächer strukturiert eingerichtet, mit Unterordnern und Regeln für den Alltag',
       'Lokale Seiten für Ihre Orte und Leistungen',
@@ -122,6 +124,7 @@ export const PAKETE: Paket[] = [
     extras: ['Logo-Design', 'CI-Geschäftsbriefe nach DIN 5008', 'E-Mail-Signatur nach DIN 5008'],
     features: [
       'Alles aus „Wegweiser“',
+      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
       'Ständige Optimierung in Absprache mit Ihnen',
       'Logo-Design: 3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck',
       'CI-Geschäftsbriefe nach DIN 5008: Briefbogen, Angebot, Rechnung',
@@ -134,6 +137,7 @@ export const PAKETE: Paket[] = [
 /** In allen drei Paketen enthalten. */
 export const IN_ALLEN = [
   'Keine Seitenbegrenzung',
+  'Mobilfreundlich für Handy, Tablet und PC',
   '0 € Einrichtung',
   '20 E-Mail-Postfächer',
   'E-Mail-Signatur nach DIN 5008',
