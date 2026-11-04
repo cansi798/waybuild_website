@@ -8,7 +8,7 @@ import Inklusive from '../components/Inklusive.astro';
 import Icon from '../components/Icon.astro';
 import Pakete from '../components/Pakete.astro';
 import Faq from '../components/Faq.astro';
-import { WAAS, PAKETE, formatEuro, netto, gesamtLaufzeit, preiseAlle } from '../config/site';
+import { WAAS, PAKETE, formatEuro, gesamtLaufzeit, preiseAlle } from '../config/site';
 import { SAEULEN } from '../config/angebot';
 import { leistungenNach } from '../config/leistungen';
 import { faqSchema, serviceSchema } from '../lib/schema';
@@ -47,7 +47,7 @@ const START = [
 
 <BaseLayout
   title={`Preise: Website-Abo ab ${formatEuro(PAKETE[0].preis)} im Monat`}
-  description={`${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat inkl. MwSt. 0 € Einrichtung, keine Seitenbegrenzung, 20 E-Mail-Postfächer.`}
+  description={`${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto. 0 € Einrichtung, keine Seitenbegrenzung, 20 E-Mail-Postfächer.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
@@ -68,13 +68,13 @@ const START = [
       <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
         <table class="vgl">
           <thead>
-            <tr><th scope="col">Leistung</th>{PAKETE.map((p) => <th scope="col">{p.name}<span>{formatEuro(p.preis)} / Monat</span></th>)}</tr>
+            <tr><th scope="col">Leistung</th>{PAKETE.map((p) => <th scope="col">{p.name}<span>{formatEuro(p.preis)} netto / Monat</span></th>)}</tr>
           </thead>
           <tbody>
             {VERGLEICH.map((z) => (
               <tr><th scope="row">{z.t}</th>{z.w.map((w) => <td>{w === true ? <Icon name="check" size={18} /> : w === false ? <span class="vgl__nein" aria-label="nicht enthalten">–</span> : w}</td>)}</tr>
             ))}
-            <tr class="vgl__summe"><th scope="row">Kosten über {WAAS.laufzeitMonate} Monate</th>{PAKETE.map((p) => <td>{formatEuro(gesamtLaufzeit(p))}<span>{formatEuro(netto(gesamtLaufzeit(p)))} netto</span></td>)}</tr>
+            <tr class="vgl__summe"><th scope="row">Kosten über {WAAS.laufzeitMonate} Monate (netto)</th>{PAKETE.map((p) => <td>{formatEuro(gesamtLaufzeit(p))}<span>netto, zzgl. MwSt.</span></td>)}</tr>
           </tbody>
         </table>
       </div>

@@ -1,5 +1,5 @@
 // JSON-LD-Bausteine für strukturierte Daten (Rich Results bei Google)
-import { faqs, company, WAAS, PAKETE, netto } from '../config/site';
+import { faqs, company, WAAS, PAKETE, brutto } from '../config/site';
 import { absolute } from './paths';
 
 export function faqSchema() {
@@ -14,7 +14,7 @@ export function faqSchema() {
   };
 }
 
-/** Die drei Pakete als schema.org-Offers (brutto inkl. MwSt., pro Monat) – Preise aus PAKETE. */
+/** Die drei Pakete als schema.org-Offers (netto zzgl. MwSt., pro Monat) – Preise aus PAKETE. */
 export function waasOffers(site: URL | undefined, path = '/preise/') {
   const url = absolute(path, site);
   return PAKETE.map((p) => ({
@@ -23,13 +23,13 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
     url,
     priceCurrency: 'EUR',
     price: p.preis,
-    description: `${p.kurz}. ${[...p.extras, ...p.features].join(', ')}. Keine Einrichtungskosten, keine Seitenbegrenzung, ${WAAS.laufzeit}. Preis inkl. 19 % MwSt. (${netto(p.preis).toFixed(2).replace('.', ',')} € netto).`,
+    description: `${p.kurz}. ${[...p.extras, ...p.features].join(', ')}. Keine Einrichtungskosten, keine Seitenbegrenzung, ${WAAS.laufzeit}. Preis netto zzgl. 19 % MwSt. (${brutto(p.preis).toFixed(2).replace('.', ',')} € inkl. MwSt.).`,
     eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
     priceSpecification: {
       '@type': 'UnitPriceSpecification',
       price: p.preis,
       priceCurrency: 'EUR',
-      valueAddedTaxIncluded: true,
+      valueAddedTaxIncluded: false,
       unitCode: 'MON',
       referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
     },

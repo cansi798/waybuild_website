@@ -1,9 +1,9 @@
 ---
 // Drei Pakete von „Website as a Service“ (Can, 04.11.2026): Fundament, Wegweiser, Wahrzeichen.
-// Preise brutto inkl. MwSt., netto klein darunter. Daten ausschließlich aus config/site.ts → PAKETE.
+// Preise netto zzgl. MwSt. (B2B), brutto klein darunter. Daten ausschließlich aus config/site.ts → PAKETE.
 // Wird auf Startseite und Preisseite genutzt.
 import { href } from '../lib/paths';
-import { PAKETE, IN_ALLEN, WAAS, BRUTTO_HINWEIS, formatEuro, netto } from '../config/site';
+import { PAKETE, IN_ALLEN, WAAS, PREIS_HINWEIS, formatEuro, brutto } from '../config/site';
 import SectionHead from './SectionHead.astro';
 import Icon from './Icon.astro';
 
@@ -22,7 +22,7 @@ const { head = true } = Astro.props;
           {p.empfohlen && <span class="paket__badge">Empfehlung</span>}
           <h3 id={`paket-${p.id}`}>{p.name}</h3>
           <p class="paket__kurz">{p.kurz}</p>
-          <p class="paket__preis"><b>{formatEuro(p.preis)}</b> <span>/ Monat inkl. MwSt.<br />{formatEuro(netto(p.preis))} netto</span></p>
+          <p class="paket__preis"><b>{formatEuro(p.preis)}</b> <span>netto / Monat zzgl. 19 % MwSt.<br />{formatEuro(brutto(p.preis))} inkl. MwSt.</span></p>
           <p class="paket__fuer">{p.fuer}</p>
           <ul class="paket__extras">{p.extras.map((e) => <li><Icon name="doc" size={16} /> {e}</li>)}</ul>
           <ul class="paket__liste">{p.features.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
@@ -34,7 +34,7 @@ const { head = true } = Astro.props;
       <p class="pakete__alle-t"><Icon name="check" size={18} /> In allen Paketen</p>
       <ul class="check-row pakete__modell">{IN_ALLEN.map((m) => <li><Icon name="check" size={18} /> {m}</li>)}</ul>
     </div>
-    <p class="pakete__hinweis">{WAAS.laufzeit} · {BRUTTO_HINWEIS} Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein; das ersetzt keine Rechtsberatung.</p>
+    <p class="pakete__hinweis">{WAAS.laufzeit} · {PREIS_HINWEIS} Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein; das ersetzt keine Rechtsberatung.</p>
   </div>
 </section>
 

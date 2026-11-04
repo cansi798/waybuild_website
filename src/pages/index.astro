@@ -20,7 +20,7 @@ import { PAKETE, formatEuro } from '../config/site';
 
 <BaseLayout
   title={`Website erstellen lassen ab ${formatEuro(PAKETE[0].preis)} im Monat`}
-  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Drei Pakete ab ${formatEuro(PAKETE[0].preis)} im Monat inkl. MwSt., 0 € Einrichtung.`}
+  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Drei Pakete ab ${formatEuro(PAKETE[0].preis)} im Monat zzgl. MwSt., 0 € Einrichtung.`}
   schema={[serviceSchema(Astro.site), faqSchema()]}
 >
   <Hero />
