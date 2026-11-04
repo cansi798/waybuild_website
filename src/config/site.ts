@@ -16,8 +16,8 @@ export const company = {
   email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
   /** PLATZHALTER (Wunsch 11.10.2026: „erfundene Nummer“) – vor dem Livegang ersetzen, dann PHONE_IS_PLACEHOLDER auf false. */
   phone: '0151 00000000',
-  street: 'Kuno-Liesenberg-Kehre 32a',
-  zip: '22844',
+  street: 'Rathausallee 76',
+  zip: '22846',
   city: 'Norderstedt',
   country: 'DE',
   managingDirector: 'Can Siebert',
