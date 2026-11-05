@@ -31,6 +31,11 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 .btn--umriss:hover { background: rgb(31 49 64 / 6%); }
 .bs--dunkel .btn--marke { background: var(--gold); color: #222; }
 
+/* Leistung am Handy: Abschnitte unterhalb des ersten Bildschirms erst berechnen, wenn sie in die Nähe kommen;
+ * Kopfzeile ohne Weichzeichner (Hintergrund ist ohnehin fast deckend). */
+html[data-thema='besucherreise'] .hdr::before { backdrop-filter: none; background: rgb(248 247 244 / 97%); }
+.bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
 /* ── Abschnitte ── */
 .bs { padding-block: clamp(52px, 8vw, 112px); background: var(--paper); }
 .bs--alt { background: var(--paper-2); }
