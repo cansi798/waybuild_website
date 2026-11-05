@@ -101,12 +101,13 @@ html[data-thema='besucherreise'] .hdr::before { backdrop-filter: none; backgroun
 .vgl__seite--wir .vgl__weg li:first-child::before { border-color: var(--salbei); }
 .vgl__seite--wir .vgl__weg li:last-child::before { border-color: var(--gold); background: var(--gold); }
 html.js .vgl:not(.ist-los) .vgl__weg::before { transform: scaleY(0); }
-html.js .vgl:not(.ist-los) .vgl__seite--wir .vgl__weg li { opacity: 0; }
+/* Text bleibt immer lesbar; nur Linie und Knoten zeichnen sich */
+html.js .vgl:not(.ist-los) .vgl__seite--wir .vgl__weg li::before { opacity: 0; transform: scale(0.3); }
 .vgl.ist-los .vgl__weg::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.25, 1) 0.15s; }
-.vgl.ist-los .vgl__seite--wir .vgl__weg li { transition: opacity 0.4s ease; }
-.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(1) { transition-delay: 0.2s; }
-.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(2) { transition-delay: 0.7s; }
-.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(3) { transition-delay: 1.2s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li::before { transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1); }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(1)::before { transition-delay: 0.15s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(2)::before { transition-delay: 0.7s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(3)::before { transition-delay: 1.25s; }
 @media (max-width: 599px) { .vgl__weg { --hoehe: 168px; } .vgl__weg li { padding-left: 24px; } .vgl__weg li::before { width: 14px; height: 14px; margin-top: -7px; } .vgl__weg::before { left: 6px; } .vgl__seite--wir .vgl__weg::before { left: 5.5px; } }
 
 .bs-glaube { max-width: 760px; margin: clamp(32px, 5vw, 56px) auto 0; text-align: center; }
@@ -129,13 +130,14 @@ html.js .vgl:not(.ist-los) .vgl__seite--wir .vgl__weg li { opacity: 0; }
 .weg li:last-child { font-weight: 650; color: var(--dark); }
 .weg li:last-child::before { border-color: var(--gold); background: var(--gold); }
 html.js .weg:not(.ist-los)::before { transform: scaleY(0); }
-html.js .weg:not(.ist-los) li { opacity: 0.25; }
+html.js .weg:not(.ist-los) li::before { opacity: 0; transform: scale(0.3); }
 .weg.ist-los::before { transition: transform 1.4s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
-.weg.ist-los li { transition: opacity 0.45s ease; }
-.weg.ist-los li:nth-child(2) { transition-delay: 0.3s; }
-.weg.ist-los li:nth-child(3) { transition-delay: 0.6s; }
-.weg.ist-los li:nth-child(4) { transition-delay: 0.9s; }
-.weg.ist-los li:nth-child(5) { transition-delay: 1.2s; }
+.weg.ist-los li::before { transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1); }
+.weg.ist-los li:nth-child(1)::before { transition-delay: 0.1s; }
+.weg.ist-los li:nth-child(2)::before { transition-delay: 0.4s; }
+.weg.ist-los li:nth-child(3)::before { transition-delay: 0.7s; }
+.weg.ist-los li:nth-child(4)::before { transition-delay: 1s; }
+.weg.ist-los li:nth-child(5)::before { transition-delay: 1.3s; }
 .bs-beleg { margin: 26px 0 0; padding: 14px 16px; border-radius: 12px; border: 1px dashed #c9c2b5; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
 .bs-beleg strong { color: var(--dark); }
 .bs-beleg a { color: var(--dark); font-weight: 600; text-underline-offset: 3px; }
@@ -195,6 +197,6 @@ html.js .naechste__weg:not(.ist-los)::before { transform: scaleX(0); }
 
 @media (prefers-reduced-motion: reduce) {
   html.js .vgl .vgl__weg::before, html.js .weg::before, html.js .naechste__weg::before { transform: none !important; }
-  html.js .vgl .vgl__seite--wir .vgl__weg li, html.js .weg li { opacity: 1 !important; }
+  html.js .vgl .vgl__seite--wir .vgl__weg li::before, html.js .weg li::before { opacity: 1 !important; transform: none !important; }
   .loes__karte:hover { transform: none; }
 }
