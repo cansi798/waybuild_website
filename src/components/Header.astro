@@ -7,6 +7,15 @@ import { NAV } from '../config/nav';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import MobileMenu from './MobileMenu.astro';
+import { MARKE, ANLIEGEN } from '../config/startseite';
+
+// thema 'besucherreise' (neue Startseite, Jamil Talk 4753): waybuild-Logo vorerst entfernt, Name als Text,
+// Knopf mit Jamils Wortlaut „Kostenfreie Erstberatung“. Alle anderen Seiten bleiben unverändert.
+interface Props { thema?: 'besucherreise' }
+const { thema } = Astro.props;
+const reise = thema === 'besucherreise';
+const ctaHref = reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/');
+const ctaText = reise ? ANLIEGEN.erstberatung.label : 'Erstgespräch buchen';
 
 const current = Astro.url.pathname;
 const isCurrent = (path?: string) => path && current === href(path);
@@ -14,7 +23,9 @@ const isCurrent = (path?: string) => path && current === href(path);
 
 <header class="hdr" id="siteHeader">
   <div class="wrap hdr__inner">
-    <a href={href('/')} class="hdr__logo" aria-label="waybuild, zur Startseite"><Logo /></a>
+    {reise
+      ? <a href={href('/')} class="hdr__logo hdr__marke" aria-label={`${MARKE}, zur Startseite`}>{MARKE}</a>
+      : <a href={href('/')} class="hdr__logo" aria-label="waybuild, zur Startseite"><Logo /></a>}
 
     <nav class="hdr__nav" aria-label="Hauptnavigation">
       <ul>
@@ -76,7 +87,7 @@ const isCurrent = (path?: string) => path && current === href(path);
     <div class="hdr__actions">
       <a class="hdr__iconbtn" href={`tel:${phoneTel()}`} aria-label={`Anrufen: ${company.phone}`}><Icon name="phone" size={22} /></a>
       <a class="hdr__iconbtn" href={whatsappLink()} target="_blank" rel="noopener" aria-label="WhatsApp-Chat starten"><Icon name="whatsapp" size={22} /></a>
-      <a class="btn btn--primary btn--sm hdr__cta" href={href('/kontakt/')}>Erstgespräch buchen</a>
+      <a class="btn btn--primary btn--sm hdr__cta" href={ctaHref}>{ctaText}</a>
       <button class="hdr__iconbtn hdr__burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menü öffnen">
         <Icon name="menu" size={26} class="hdr__burger-open" />
         <Icon name="close" size={26} class="hdr__burger-close" />
@@ -96,6 +107,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .hdr.is-scrolled { box-shadow: var(--shadow); }
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
+  .hdr__marke { font-family: var(--font-head); font-weight: 700; font-size: 1.12rem; letter-spacing: -0.01em; color: var(--dark); }
 
   .hdr__nav { display: none; flex: 1; justify-content: center; }
   .hdr__nav > ul { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }

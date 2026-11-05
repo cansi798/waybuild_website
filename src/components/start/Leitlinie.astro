@@ -1,0 +1,107 @@
+---
+// Signatur der neuen Startseite (Jamil, Talk 4753): „Komplexität → Verständnis → Klarheit → Fortschritt“.
+// Links ein Geflecht aus Wegen und Sackgassen (Komplexität). Die Linie läuft hindurch, Wege bündeln sich in ihr
+// (Verständnis), danach verläuft sie gerade (Klarheit) und steigt am Ende an (Fortschritt).
+// Das Geflecht steht beim Laden sofort da; die Linie zeichnet sich einmal beim ersten Sichtkontakt (≈ 3 s,
+// nur stroke-dashoffset / opacity / transform). Ohne JS bzw. bei reduzierter Bewegung: sofort der Endzustand.
+// Raster 640 × 250, Begriffe als HTML (lesbar auch am Handy, wo die Grafik verkleinert ist).
+import { STUFEN } from '../../config/startseite';
+
+const W = 640, H = 250;
+const pc = (a: number, c: number) => `${((a / c) * 100).toFixed(2)}%`;
+const knoten = [[40, 62], [112, 30], [178, 78], [58, 146], [136, 124], [92, 204], [204, 176]];
+const kanten = [
+  'M40 62 Q80 30 112 30', 'M112 30 Q160 40 178 78', 'M40 62 Q30 110 58 146', 'M58 146 Q100 120 136 124',
+  'M136 124 Q170 110 178 78', 'M112 30 Q140 80 136 124', 'M58 146 Q60 190 92 204', 'M92 204 Q150 220 204 176',
+  'M136 124 Q180 150 204 176', 'M40 62 Q100 90 136 124', 'M178 78 Q220 120 204 176', 'M92 204 Q110 160 136 124',
+  'M112 30 Q60 100 58 146',
+];
+const sackgassen = [
+  { d: 'M112 30 Q140 12 162 8', e: [162, 8] }, { d: 'M58 146 Q24 160 14 196', e: [14, 196] },
+  { d: 'M204 176 Q226 200 232 228', e: [232, 228] }, { d: 'M40 62 Q20 40 10 22', e: [10, 22] },
+];
+const buendel = ['M178 78 C222 92 258 124 290 128', 'M204 176 C236 158 262 132 290 128'];
+const LINIE = 'M16 104 C44 104 52 140 84 138 S124 104 150 112 S196 140 226 132 S266 128 290 128 L440 128 C500 128 520 128 548 100 S586 56 604 56';
+const stationen = [
+  { x: 290, y: 128, d: 1.25 },
+  { x: 440, y: 128, d: 1.95 },
+  { x: 604, y: 56, d: 2.75 },
+];
+const labels = [
+  { text: STUFEN[0], x: 110, y: 232, d: 0 },
+  { text: STUFEN[1], x: 290, y: 152, d: 1.25 },
+  { text: STUFEN[2], x: 440, y: 152, d: 1.95 },
+  { text: STUFEN[3], x: 604, y: 28, d: 2.75 },
+];
+---
+<figure class="lt" data-zeichne>
+  <div class="lt__buehne" role="img" aria-label={`Ein unübersichtliches Geflecht aus Wegen wird von einer Linie entwirrt: ${STUFEN.join(', dann ')}.`}>
+    <svg class="lt__svg lt-geflecht" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+      {kanten.map((d) => <path class="lt-kante" d={d} />)}
+      {knoten.map(([x, y]) => <circle class="lt-knoten" cx={x} cy={y} r="4.5" />)}
+    </svg>
+    <svg class="lt__svg lt-sack" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+      {sackgassen.map((s) => <g><path d={s.d} /><circle cx={s.e[0]} cy={s.e[1]} r="3.2" /></g>)}
+    </svg>
+    <svg class="lt__svg lt-weg" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="lt-verlauf" gradientUnits="userSpaceOnUse" x1="16" y1="0" x2="604" y2="0">
+          <stop offset="0" stop-color="#a3aea7" />
+          <stop offset="0.34" stop-color="#7e9b8a" />
+          <stop offset="0.6" stop-color="#1f3140" />
+          <stop offset="0.74" stop-color="#1f3140" />
+          <stop offset="1" stop-color="#d6a85a" />
+        </linearGradient>
+      </defs>
+      {buendel.map((d, i) => <path class="lt-buendel" pathLength="1" d={d} style={`--d:${(0.5 + i * 0.15).toFixed(2)}s`} />)}
+      <path class="lt-linie" pathLength="1" d={LINIE} stroke="url(#lt-verlauf)" />
+      <circle class="lt-start" cx="16" cy="104" r="5" />
+      {stationen.map((s, i) => (
+        <circle class:list={['lt-station', `lt-station--${i + 1}`]} cx={s.x} cy={s.y} r={i === 2 ? 8 : 7} style={`--d:${s.d}s`} />
+      ))}
+    </svg>
+    {labels.map((l, i) => (
+      <span class:list={['lt-wort', `lt-wort--${i}`]} style={`left:${pc(l.x, W)};top:${pc(l.y, H)};--d:${l.d}s`} aria-hidden="true">{l.text}</span>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .lt { margin: 0; width: 100%; }
+  .lt__buehne { position: relative; width: 100%; aspect-ratio: 640 / 250; }
+  .lt__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .lt-kante { fill: none; stroke: #c4cac5; stroke-width: 1.6; stroke-linecap: round; }
+  .lt-knoten { fill: var(--paper); stroke: #a9b2ac; stroke-width: 1.6; }
+  .lt-sack path { fill: none; stroke: #c4cac5; stroke-width: 1.6; stroke-linecap: round; }
+  .lt-sack circle { fill: none; stroke: #b7beb9; stroke-width: 1.4; }
+  .lt-linie { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+  .lt-buendel { fill: none; stroke: #7e9b8a; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1 2; stroke-dashoffset: 0; opacity: 0.75; }
+  .lt-start { fill: var(--paper); stroke: #a3aea7; stroke-width: 2.4; }
+  .lt-station { fill: var(--paper); stroke-width: 2.6; transform-box: fill-box; transform-origin: center; }
+  .lt-station--1 { stroke: #5f7d6c; }
+  .lt-station--2 { stroke: #1f3140; }
+  .lt-station--3 { fill: #d6a85a; stroke: #d6a85a; }
+  .lt-wort {
+    position: absolute; transform: translate(-50%, -50%); white-space: nowrap;
+    font-family: var(--font-head); font-size: clamp(0.72rem, 1.6vw, 0.9rem); font-weight: 650; letter-spacing: 0.01em; color: var(--dark);
+  }
+  .lt-wort--0 { color: #6b736e; font-weight: 600; }
+  .lt-wort--3 { transform: translate(-72%, -50%); }
+
+  /* Endzustand ohne JS = Grundzustand oben. Mit JS: erst beim Sichtkontakt zeichnen (.ist-los). */
+  :global(html.js) .lt:not(.ist-los) .lt-linie, :global(html.js) .lt:not(.ist-los) .lt-buendel { stroke-dashoffset: 1.02; }
+  :global(html.js) .lt:not(.ist-los) .lt-station, :global(html.js) .lt:not(.ist-los) .lt-wort:not(.lt-wort--0) { opacity: 0; }
+  :global(html.js) .lt:not(.ist-los) .lt-station { transform: scale(0.3); }
+  .lt.ist-los .lt-linie { transition: stroke-dashoffset 2.7s cubic-bezier(0.45, 0, 0.25, 1) 0.2s; }
+  .lt.ist-los .lt-buendel { transition: stroke-dashoffset 0.8s ease var(--d); }
+  .lt.ist-los .lt-station { transition: opacity 0.35s ease var(--d), transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) var(--d); }
+  .lt.ist-los .lt-wort { transition: opacity 0.5s ease var(--d); }
+  .lt.ist-los .lt-sack { opacity: 0; transition: opacity 0.6s ease 0.4s; }
+  .lt.ist-los .lt-geflecht { opacity: 0.42; transition: opacity 1.2s ease 1s; }
+  .lt.ist-los .lt-wort--0 { opacity: 0.75; transition: opacity 1.2s ease 1s; }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .lt .lt-linie, :global(html.js) .lt .lt-buendel { stroke-dashoffset: 0 !important; }
+    :global(html.js) .lt .lt-station, :global(html.js) .lt .lt-wort { opacity: 1 !important; }
+    :global(html.js) .lt .lt-station { transform: none !important; }
+  }
+</style>

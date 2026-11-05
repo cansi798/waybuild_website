@@ -1,0 +1,195 @@
+/* Neue Startseite „Besucherreise“ (Jamil, Talk qh87y3sj 4753, 05.11.2026).
+ * Farben NUR auf dieser Seite (html[data-thema='besucherreise']): Primär #1F3140, Sekundär #7E9B8A, Akzent #D6A85A,
+ * Hintergrund #F8F7F4, alternativer Hintergrund #ECE8E1, Text #222222. Für Schrift auf hellem Grund wird das Salbeigrün
+ * abgedunkelt (#4E6B5B, Kontrast ≥ 4,5 : 1), Gold nur als Fläche, Linie oder auf Dunkel.
+ * Bewegung nur über transform, opacity und stroke-dashoffset; ohne JS bzw. bei reduzierter Bewegung steht alles fertig. */
+
+html[data-thema='besucherreise'] {
+  --ink: #222222;
+  --ink-soft: #474c50;
+  --dark: #1f3140;
+  --dark-line: #34495a;
+  --dark-soft: #b9c4cc;
+  --dark-lead: #dfe5ea;
+  --paper: #f8f7f4;
+  --paper-2: #ece8e1;
+  --accent: #d6a85a;
+  --accent-ink: #4e6b5b;
+  --line: #ddd7cc;
+  --salbei: #7e9b8a;
+  --gold: #d6a85a;
+  --shadow: 0 1px 2px rgb(31 49 64 / 6%), 0 8px 24px rgb(31 49 64 / 8%);
+}
+html[data-thema='besucherreise'] h1, html[data-thema='besucherreise'] h2, html[data-thema='besucherreise'] h3 { color: var(--dark); font-weight: 650; }
+html[data-thema='besucherreise'] :focus-visible { outline-color: var(--dark); }
+html[data-thema='besucherreise'] .bs--dunkel :focus-visible, html[data-thema='besucherreise'] .footer :focus-visible { outline-color: var(--gold); }
+
+/* Knöpfe: Primärfarbe auf Hell, Gold auf Dunkel */
+html[data-thema='besucherreise'] .btn--primary, .btn--marke { background: var(--dark); color: var(--white); }
+html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { background: #2c4458; }
+.btn--umriss { border-color: var(--dark); color: var(--dark); background: transparent; }
+.btn--umriss:hover { background: rgb(31 49 64 / 6%); }
+.bs--dunkel .btn--marke { background: var(--gold); color: #222; }
+
+/* ── Abschnitte ── */
+.bs { padding-block: clamp(52px, 8vw, 112px); background: var(--paper); }
+.bs--alt { background: var(--paper-2); }
+.bs--dunkel { background: var(--dark); color: var(--dark-lead); }
+.bs--dunkel h2, .bs--dunkel h3 { color: var(--white) !important; }
+.bs--dunkel .eyebrow { color: var(--gold); }
+.bs .eyebrow { letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+.bs h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.18; margin-bottom: 0.45em; }
+.bs-lead { font-size: clamp(1.05rem, 1.7vw, 1.15rem); line-height: 1.7; color: var(--ink-soft); margin: 0 0 0.7em; max-width: 58ch; }
+.bs--dunkel .bs-lead { color: var(--dark-lead); }
+.bs-unter { font-family: var(--font-head); font-size: clamp(1.15rem, 2vw, 1.4rem); font-weight: 600; line-height: 1.4; color: var(--accent-ink); margin: 0 0 0.6em; max-width: 34ch; }
+.bs-kopf { max-width: 720px; }
+.bs-kopf--mitte { margin-inline: auto; text-align: center; }
+.bs-zwei { display: grid; gap: clamp(24px, 5vw, 80px); }
+@media (min-width: 960px) { .bs-zwei { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+/* Listen: graue Striche = offene Probleme (Komplexität) */
+.bs-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.bs-liste li { position: relative; padding: 12px 0 12px 30px; border-bottom: 1px solid var(--line); line-height: 1.55; color: var(--ink); }
+.bs-liste li:last-child { border-bottom: 0; }
+.bs-liste li::before { content: ''; position: absolute; left: 2px; top: 1.42em; width: 16px; height: 2px; border-radius: 2px; background: #a3aea7; }
+@media (min-width: 960px) { .bs-zwei > .bs-liste { margin-top: 6px; } }
+
+.bs-folge { margin-top: clamp(28px, 4vw, 48px); padding: clamp(22px, 3vw, 32px) clamp(22px, 3vw, 36px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); display: grid; gap: 6px; }
+.bs--alt .bs-folge { background: var(--paper); }
+.bs-folge__kopf { margin: 0; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+.bs-folge__text { margin: 0; font-family: var(--font-head); font-size: clamp(1.15rem, 2.2vw, 1.5rem); font-weight: 600; line-height: 1.4; color: var(--dark); max-width: 46ch; }
+.bs-folge--ziel .bs-folge__text span { color: var(--accent-ink); }
+
+.bs-schluss { margin-top: 22px; }
+.bs-schluss p { margin: 0 0 0.3em; line-height: 1.65; color: var(--ink-soft); }
+.bs-betont { font-family: var(--font-head); font-weight: 600; font-size: 1.12rem; color: var(--dark) !important; }
+
+/* Mittig gesetzte Aussage-Abschnitte (dunkel bzw. Abschluss) */
+.bs-mitte { display: grid; justify-items: center; text-align: center; }
+.bs-mitte .bs-lead { margin-inline: auto; }
+.bs-mitte__stn { margin-inline: auto; width: 100%; }
+.bs-gross { font-size: clamp(1.9rem, 4.6vw, 3.2rem) !important; line-height: 1.12 !important; letter-spacing: -0.025em; max-width: 22ch; margin-bottom: 0.3em !important; }
+.bs-gross-unter { font-family: var(--font-head); font-size: clamp(1.2rem, 2.6vw, 1.75rem); font-weight: 500; line-height: 1.35; color: var(--accent-ink); margin: 0 0 1.4em; max-width: 30ch; }
+.bs--dunkel .bs-gross-unter { color: var(--gold); }
+.bs-chips { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.bs-chips li { padding: 8px 16px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 26%); color: var(--white); font-weight: 600; font-size: 0.98rem; }
+.bs-chips--hell { justify-content: flex-start; margin-bottom: 4px; }
+.bs-chips--hell li { border-color: var(--line); background: var(--paper); color: var(--dark); }
+.bs-chips--hell a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--salbei); }
+.bs-schluss-dunkel { margin: clamp(28px, 4vw, 40px) 0 0; font-size: clamp(1.05rem, 1.8vw, 1.2rem); line-height: 1.7; color: var(--dark-lead); }
+.bs-schluss-dunkel strong { color: var(--white); font-weight: 650; }
+
+/* ── Wie wir arbeiten: Vergleich, auch am Handy nebeneinander ── */
+.vgl { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 4vw, 64px); max-width: 820px; margin: clamp(28px, 4vw, 48px) auto 0; }
+.vgl__seite { padding: clamp(18px, 3vw, 32px) clamp(14px, 3vw, 32px); border-radius: var(--radius); }
+.vgl__seite--viele { background: transparent; border: 1px dashed transparent; }
+.vgl__seite--wir { background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.vgl__kopf { margin: 0 0 18px; font-size: clamp(0.88rem, 1.6vw, 1rem); line-height: 1.45; color: var(--ink-soft); min-height: 2.9em; }
+.vgl__seite--wir .vgl__kopf { color: var(--dark); font-weight: 650; }
+.vgl__weg { --hoehe: 200px; position: relative; list-style: none; margin: 0; padding: 0; height: var(--hoehe); display: flex; flex-direction: column; justify-content: space-between; }
+.vgl__weg::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; border-radius: 2px; background: #c4cac5; transform-origin: top; }
+.vgl__seite--wir .vgl__weg::before { background: linear-gradient(var(--salbei), var(--dark) 55%, var(--gold)); width: 3px; left: 6.5px; }
+.vgl__weg li { position: relative; padding-left: 30px; font-family: var(--font-head); font-weight: 600; font-size: clamp(0.95rem, 2.2vw, 1.2rem); line-height: 1.2; color: #6b736e; }
+.vgl__weg li::before { content: ''; position: absolute; left: 0; top: 50%; width: 16px; height: 16px; margin-top: -8px; box-sizing: border-box; border-radius: 50%; border: 2px solid #b7beb9; background: var(--paper); }
+.vgl__seite--wir .vgl__weg li { color: var(--dark); }
+.vgl__seite--wir .vgl__weg li::before { border: 2.5px solid var(--dark); background: var(--white); }
+.vgl__seite--wir .vgl__weg li:first-child::before { border-color: var(--salbei); }
+.vgl__seite--wir .vgl__weg li:last-child::before { border-color: var(--gold); background: var(--gold); }
+html.js .vgl:not(.ist-los) .vgl__weg::before { transform: scaleY(0); }
+html.js .vgl:not(.ist-los) .vgl__seite--wir .vgl__weg li { opacity: 0; }
+.vgl.ist-los .vgl__weg::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.25, 1) 0.15s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li { transition: opacity 0.4s ease; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(1) { transition-delay: 0.2s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(2) { transition-delay: 0.7s; }
+.vgl.ist-los .vgl__seite--wir .vgl__weg li:nth-child(3) { transition-delay: 1.2s; }
+@media (max-width: 599px) { .vgl__weg { --hoehe: 168px; } .vgl__weg li { padding-left: 24px; } .vgl__weg li::before { width: 14px; height: 14px; margin-top: -7px; } .vgl__weg::before { left: 6px; } .vgl__seite--wir .vgl__weg::before { left: 5.5px; } }
+
+.bs-glaube { max-width: 760px; margin: clamp(32px, 5vw, 56px) auto 0; text-align: center; }
+.bs-glaube .bs-lead { margin-inline: auto; }
+.bs-glaube__kopf { margin: 0 0 6px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+.bs-glaube__text { margin: 0 0 14px; font-family: var(--font-head); font-size: clamp(1.25rem, 2.6vw, 1.75rem); font-weight: 600; line-height: 1.35; color: var(--dark); }
+
+/* ── Zusammenarbeit: Haken ── */
+.bs-haken { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+@media (min-width: 600px) { .bs-haken { grid-template-columns: 1fr 1fr; } }
+.bs-haken li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--white); border: 1px solid var(--line); font-weight: 600; line-height: 1.35; color: var(--dark); }
+.bs-haken__i { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: rgb(126 155 138 / 18%); color: var(--accent-ink); }
+
+/* ── Vertrauen: der Weg des Besuchers als gerade Linie (Klarheit) ── */
+.weg { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.weg::before { content: ''; position: absolute; left: 7px; top: 14px; bottom: 14px; width: 3px; border-radius: 2px; background: linear-gradient(var(--salbei), var(--dark) 70%, var(--gold)); transform-origin: top; }
+.weg li { position: relative; padding: 11px 0 11px 34px; font-size: 1.08rem; line-height: 1.45; color: var(--ink); }
+.weg li::before { content: ''; position: absolute; left: 0; top: 50%; width: 17px; height: 17px; margin-top: -8.5px; box-sizing: border-box; border-radius: 50%; border: 2.5px solid var(--dark); background: var(--paper-2); }
+.weg li:first-child::before { border-color: var(--salbei); }
+.weg li:last-child { font-weight: 650; color: var(--dark); }
+.weg li:last-child::before { border-color: var(--gold); background: var(--gold); }
+html.js .weg:not(.ist-los)::before { transform: scaleY(0); }
+html.js .weg:not(.ist-los) li { opacity: 0.25; }
+.weg.ist-los::before { transition: transform 1.4s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
+.weg.ist-los li { transition: opacity 0.45s ease; }
+.weg.ist-los li:nth-child(2) { transition-delay: 0.3s; }
+.weg.ist-los li:nth-child(3) { transition-delay: 0.6s; }
+.weg.ist-los li:nth-child(4) { transition-delay: 0.9s; }
+.weg.ist-los li:nth-child(5) { transition-delay: 1.2s; }
+.bs-beleg { margin: 26px 0 0; padding: 14px 16px; border-radius: 12px; border: 1px dashed #c9c2b5; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
+.bs-beleg strong { color: var(--dark); }
+.bs-beleg a { color: var(--dark); font-weight: 600; text-underline-offset: 3px; }
+
+/* ── Lösungen ── */
+.loes { display: grid; gap: 18px; margin-top: clamp(24px, 4vw, 40px); }
+@media (min-width: 760px) { .loes { grid-template-columns: 1fr 1fr; } }
+.loes__karte { display: flex; flex-direction: column; padding: clamp(22px, 3vw, 32px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.loes__karte:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.loes__karte h3 { font-size: clamp(1.2rem, 2vw, 1.4rem); margin-bottom: 0.45em; }
+.loes__karte > p { color: var(--ink-soft); line-height: 1.65; margin: 0 0 0.9em; }
+.loes__kopf { margin: 0 0 6px !important; font-weight: 650; color: var(--dark) !important; }
+.loes__punkte { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.loes__punkte li { padding: 4px 11px; border-radius: 999px; background: var(--paper-2); font-size: 0.88rem; font-weight: 600; color: var(--dark); }
+.loes__paket { margin-top: auto !important; padding-top: 14px; border-top: 1px solid var(--line); font-size: 0.92rem; color: var(--ink-soft) !important; }
+.loes__link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 650; color: var(--dark); text-decoration: none; }
+.loes__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.loes__karte:nth-child(2) .loes__link { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
+.loes__hinweis { margin: 22px 0 0; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+.loes__hinweis a { color: var(--dark); font-weight: 650; text-underline-offset: 3px; }
+
+/* ── Warum Unternehmen wechseln: Wünsche ── */
+.wunsch { list-style: none; margin: clamp(22px, 3vw, 36px) 0 0; padding: 0; display: grid; gap: 14px; }
+@media (min-width: 600px) { .wunsch { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .wunsch { grid-template-columns: repeat(3, 1fr); } }
+.wunsch li { padding: 18px 20px 18px 22px; border-left: 3px solid var(--salbei); background: var(--paper); border-radius: 0 12px 12px 0; font-family: var(--font-head); font-size: clamp(1.02rem, 1.6vw, 1.15rem); font-weight: 600; line-height: 1.4; color: var(--dark); }
+.wunsch li:last-child { border-left-color: var(--gold); }
+
+/* ── Woran wir glauben ── */
+.glauben__titel { text-align: center; margin-bottom: clamp(24px, 4vw, 40px) !important; }
+.glauben { list-style: none; margin: 0 auto; padding: 0; max-width: 760px; display: grid; }
+.glauben li { padding: clamp(14px, 2vw, 20px) 4px; border-bottom: 1px solid var(--dark-line); text-align: center; font-family: var(--font-head); font-size: clamp(1.2rem, 3vw, 1.85rem); line-height: 1.3; }
+.glauben li:last-child { border-bottom: 0; }
+.glauben strong { color: var(--white); font-weight: 650; }
+.glauben__vor { color: var(--gold); font-size: 0.7em; font-weight: 600; letter-spacing: 0.04em; padding-inline: 0.2em; }
+.glauben__b { color: var(--dark-soft); font-weight: 500; }
+
+/* ── Abschluss ── */
+.abschluss { padding-bottom: clamp(56px, 8vw, 96px); }
+.abschluss__drei { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 4px 0 26px; font-family: var(--font-head); font-weight: 650; font-size: 1.1rem; color: var(--dark); }
+.naechste { width: 100%; max-width: 720px; margin-top: clamp(34px, 5vw, 52px); }
+.naechste__kopf { margin: 0 0 18px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+.naechste__weg { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+.naechste__weg::before { content: ''; position: absolute; left: 16.66%; right: 16.66%; top: 8px; height: 3px; border-radius: 2px; background: linear-gradient(90deg, var(--salbei), var(--dark) 60%, var(--gold)); transform-origin: left; }
+.naechste__weg li { position: relative; padding: 30px 6px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.4; color: var(--dark); }
+.naechste__weg li::before { content: ''; position: absolute; top: 0; left: 50%; width: 19px; height: 19px; margin-left: -9.5px; box-sizing: border-box; border-radius: 50%; border: 2.5px solid var(--dark); background: var(--paper); }
+.naechste__weg li:first-child::before { border-color: var(--salbei); }
+.naechste__weg li:last-child::before { border-color: var(--gold); background: var(--gold); }
+html.js .naechste__weg:not(.ist-los)::before { transform: scaleX(0); }
+.naechste__weg.ist-los::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
+@media (max-width: 599px) { .naechste__weg li { font-size: 0.85rem; } }
+.signatur { width: 100%; max-width: 640px; margin-top: clamp(48px, 7vw, 80px); padding-top: clamp(32px, 5vw, 44px); border-top: 1px solid var(--line); }
+.signatur__marke { margin: 0 0 10px; font-family: var(--font-head); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -0.01em; color: var(--dark); }
+.signatur__zeilen { margin: 0 0 12px; font-size: 1.08rem; line-height: 1.6; color: var(--ink-soft); }
+.signatur__zeilen strong { color: var(--dark); font-weight: 650; }
+.signatur__claim { margin: 0; font-weight: 650; color: var(--accent-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .vgl .vgl__weg::before, html.js .weg::before, html.js .naechste__weg::before { transform: none !important; }
+  html.js .vgl .vgl__seite--wir .vgl__weg li, html.js .weg li { opacity: 1 !important; }
+  .loes__karte:hover { transform: none; }
+}

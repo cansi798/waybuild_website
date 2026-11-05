@@ -6,14 +6,18 @@ import { branchen } from '../config/branchen';
 import { leistungen } from '../config/leistungen';
 import FooterKontakt from './FooterKontakt.astro';
 
+// thema 'besucherreise' (neue Startseite): ohne waybuild-Logo und ohne Kontaktkopf (der Abschluss der Seite ist der CTA)
+interface Props { thema?: 'besucherreise' }
+const reise = Astro.props.thema === 'besucherreise';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer section--dark">
-  <FooterKontakt />
-  <div class="wrap footer__grid">
+  {!reise && <FooterKontakt />}
+  <div class:list={['wrap footer__grid', { 'footer__grid--ohne-kopf': reise }]}>
     <div>
-      <Logo />
+      {!reise && <Logo />}
       <p class="footer__claim">{company.slogan}</p>
     </div>
     <nav aria-label="Footer">
@@ -57,6 +61,7 @@ const year = new Date().getFullYear();
 <style>
   .footer { padding-block: 0 calc(28px + env(safe-area-inset-bottom)); }
   .footer__grid { padding-top: clamp(32px, 5vw, 48px); border-top: 1px solid var(--dark-line); }
+  .footer__grid--ohne-kopf { border-top: 0; padding-top: clamp(44px, 6vw, 64px); }
   @media (max-width: 599px) {
     .footer__grid { gap: 20px 16px; }
     .footer ul { display: flex; flex-wrap: wrap; gap: 0 16px; }

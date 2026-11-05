@@ -18,9 +18,12 @@ interface Props {
   breadcrumb?: { name: string; path: string }[];
   /** Mobile Sticky-CTA ausblenden (z. B. auf der Kontaktseite selbst) */
   hideMobileCta?: boolean;
+  /** Eigenes Farbschema nur für diese Seite: 'besucherreise' = neue Startseite (Jamil, Talk 4753: Farben
+   *  #1F3140 / #7E9B8A / #D6A85A / #F8F7F4 / #ECE8E1 / #222222, ohne waybuild-Logo, ohne Footer-Kontaktkopf). */
+  thema?: 'besucherreise';
 }
 
-const { title, description, schema = [], noindex = false, breadcrumb, hideMobileCta = false } = Astro.props;
+const { title, description, schema = [], noindex = false, breadcrumb, hideMobileCta = false, thema } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteRoot = absolute('/', Astro.site);
 const ogImage = absolute('/og-image.png', Astro.site);
@@ -97,7 +100,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" data-thema={thema}>
   <head>
     <meta charset="utf-8" />
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -130,13 +133,13 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
     {IS_PREVIEW && <div class="preview-bar">Vorschau, noch nicht veröffentlicht</div>}
-    <Header />
+    <Header thema={thema} />
     <main id="main">
       {breadcrumb && <Breadcrumbs items={breadcrumb} />}
       <slot />
     </main>
-    <Footer />
-    {!hideMobileCta && <StickyBar />}
+    <Footer thema={thema} />
+    {!hideMobileCta && <StickyBar thema={thema} />}
     {SHOW_HINTS && IS_PREVIEW && openTodos > 0 && (
       <a class="todo-badge" href={href('/checkliste/')}>
         <span aria-hidden="true">!</span> {openTodos}<em> Punkte offen bis zum Start</em>

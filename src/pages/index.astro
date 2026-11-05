@@ -1,35 +1,283 @@
 ---
-// Startseite – B2B entlang der Customer Journey (Feedback Jamil, 19.10.2026):
-// 1 Hero (Nutzen + Preisanker + Erstgespräch) → 2 Problem → Lösung (Schmerzpunkte, „eine Sprachnachricht genügt“)
-// → 3 Preise: drei Pakete (Fundament / Wegweiser / Wahrzeichen) → 4 Was der Wegweiser laufend verbessert (Beispiel)
-// → 5 So arbeiten wir: Linien-Story in zwei Abschnitten (Jamil, Talk 4487/4488, 03.11.2026; ersetzt „Ablauf in vier Schritten“) → 6 Service-Versprechen (SLAs in Alltagssprache) → 7 Zielgruppen
-// → 8 Plattform-Ausblick → 9 FAQ → Footer-Kopf mit Direktkontakt (CTA).
+// NEUE STARTSEITE „Besucherreise“ (Jamil, Talk qh87y3sj 4753, 05.11.2026). Die Seite folgt den Gedanken des Besuchers:
+//   1 Bin ich hier richtig?          → Hero (StartHero + Signatur „Komplexität → Verständnis → Klarheit → Fortschritt“)
+//   2 Versteht ihr mein Problem?     → Das Problem liegt selten an der Website
+//   3 Warum scheitern Websites oft?  → Warum viele Website-Projekte anstrengend werden
+//   4 Was macht ihr anders?          → Deshalb gibt es … · Wie wir arbeiten · Für wen wir arbeiten
+//   5 Kann ich euch vertrauen?       → So fühlt sich die Zusammenarbeit an · Vertrauen entsteht durch Klarheit
+//   6 Was bekomme ich konkret?       → Unsere Lösungen (verknüpft mit PAKETE aus site.ts) · Warum Unternehmen wechseln
+//   7 Wie geht es weiter?            → Woran wir glauben · Abschluss mit Erstberatung
+// Texte in src/config/startseite.ts (wörtlich), Stil in src/styles/startseite.css, Farben nur auf dieser Seite
+// (BaseLayout thema="besucherreise"). Die bisherige Startseite steht unverändert unter /hauptseite-alt/.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import Schmerzpunkte from '../components/Schmerzpunkte.astro';
-import Pakete from '../components/Pakete.astro';
-import Vision from '../components/Vision.astro';
-import Prozess from '../components/Prozess.astro';
-import Siegel from '../components/Siegel.astro';
-import Zielgruppen from '../components/Zielgruppen.astro';
-import Plattform from '../components/Plattform.astro';
-import Faq from '../components/Faq.astro';
-import { serviceSchema, faqSchema } from '../lib/schema';
-import { PAKETE, formatEuro } from '../config/site';
+import StartHero from '../components/start/StartHero.astro';
+import Stationen from '../components/start/Stationen.astro';
+import Icon from '../components/Icon.astro';
+import { serviceSchema } from '../lib/schema';
+import { href } from '../lib/paths';
+import { PAKETE, WAAS, formatEuro } from '../config/site';
+import {
+  ANLIEGEN, PROBLEM, ANSTRENGEND, DESHALB, ARBEITSWEISE, FUER_WEN, ZUSAMMENARBEIT, VERTRAUEN, LOESUNGEN, WECHSEL,
+  GLAUBEN, ABSCHLUSS, BOTSCHAFT, MARKE,
+} from '../config/startseite';
+import '../styles/startseite.css';
+
+const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
+const [fundament, wegweiser, wahrzeichen] = PAKETE;
+const preis = (n: number) => `${formatEuro(n)} im Monat netto zzgl. MwSt.`;
+const finde = (p: typeof PAKETE[number], wort: string) => p.features.find((f) => f.includes(wort)) ?? '';
 ---
 
 <BaseLayout
-  title={`Website erstellen lassen ab ${formatEuro(PAKETE[0].preis)} im Monat`}
-  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Drei Pakete ab ${formatEuro(PAKETE[0].preis)} im Monat zzgl. MwSt., 0 € Einrichtung.`}
-  schema={[serviceSchema(Astro.site), faqSchema()]}
+  title="Websites, die Ihr Unternehmen erklären"
+  description={BOTSCHAFT.description}
+  schema={[serviceSchema(Astro.site, BOTSCHAFT.service)]}
+  thema="besucherreise"
 >
-  <Hero />
-  <Schmerzpunkte />
-  <Pakete />
-  <Vision />
-  <Prozess />
-  <Siegel />
-  <Zielgruppen />
-  <Plattform />
-  <Faq />
+  <StartHero />
+
+  <!-- 2 · Versteht ihr mein Problem? -->
+  <section class="bs bs--alt" aria-labelledby="bs-problem">
+    <div class="wrap">
+      <Stationen aktiv={0} />
+      <div class="bs-zwei">
+        <div class="bs-kopf">
+          <p class="eyebrow">{PROBLEM.eyebrow}</p>
+          <h2 id="bs-problem">{PROBLEM.titel}</h2>
+          {PROBLEM.text.map((t) => <p class="bs-lead">{t}</p>)}
+        </div>
+        <ul class="bs-liste bs-liste--grau reveal">
+          {PROBLEM.punkte.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+      <div class="bs-folge reveal">
+        <p class="bs-folge__kopf">{PROBLEM.folgeKopf}</p>
+        <p class="bs-folge__text">{PROBLEM.folge}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Warum scheitern Websites oft? -->
+  <section class="bs" aria-labelledby="bs-anstrengend">
+    <div class="wrap bs-zwei">
+      <div class="bs-kopf">
+        <p class="eyebrow">{ANSTRENGEND.eyebrow}</p>
+        <h2 id="bs-anstrengend">{ANSTRENGEND.titel}</h2>
+        <p class="bs-unter">{ANSTRENGEND.unter}</p>
+      </div>
+      <div class="reveal">
+        <p class="bs-lead">{ANSTRENGEND.einleitung}</p>
+        <ul class="bs-liste bs-liste--grau">
+          {ANSTRENGEND.punkte.map((p) => <li>{p}</li>)}
+        </ul>
+        <div class="bs-schluss">
+          <p>{ANSTRENGEND.schluss[0]}</p>
+          <p class="bs-betont">{ANSTRENGEND.schluss[1]}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Was macht ihr anders? -->
+  <section class="bs bs--dunkel" aria-labelledby="bs-deshalb">
+    <div class="wrap bs-mitte">
+      <Stationen aktiv={1} dunkel class="bs-mitte__stn" />
+      <p class="eyebrow">{DESHALB.eyebrow}</p>
+      <h2 id="bs-deshalb" class="bs-gross">{DESHALB.titel}</h2>
+      <p class="bs-gross-unter">{DESHALB.unter}</p>
+      <p class="bs-lead">{DESHALB.einleitung}</p>
+      <ul class="bs-chips reveal">
+        {DESHALB.verstehen.map((v) => <li>{v}</li>)}
+      </ul>
+      <p class="bs-schluss-dunkel">{DESHALB.schluss[0]}<br /><strong>{DESHALB.schluss[1]}</strong></p>
+    </div>
+  </section>
+
+  <section class="bs" aria-labelledby="bs-arbeitsweise">
+    <div class="wrap">
+      <div class="bs-kopf bs-kopf--mitte">
+        <p class="eyebrow">{ARBEITSWEISE.eyebrow}</p>
+        <h2 id="bs-arbeitsweise">{ARBEITSWEISE.titel}</h2>
+      </div>
+      <div class="vgl" data-zeichne>
+        <div class="vgl__seite vgl__seite--viele">
+          <p class="vgl__kopf">{ARBEITSWEISE.vieleKopf}</p>
+          <ol class="vgl__weg">
+            {ARBEITSWEISE.viele.map((s) => <li>{s}</li>)}
+          </ol>
+        </div>
+        <div class="vgl__seite vgl__seite--wir">
+          <p class="vgl__kopf">{ARBEITSWEISE.wirKopf}</p>
+          <ol class="vgl__weg">
+            {ARBEITSWEISE.wir.map((s) => <li>{s}</li>)}
+          </ol>
+        </div>
+      </div>
+      <div class="bs-glaube reveal">
+        <p class="bs-glaube__kopf">{ARBEITSWEISE.glaubeKopf}</p>
+        <p class="bs-glaube__text">{ARBEITSWEISE.glaube}</p>
+        <p class="bs-lead">{ARBEITSWEISE.deshalb}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bs bs--alt" aria-labelledby="bs-fuerwen">
+    <div class="wrap bs-zwei">
+      <div class="bs-kopf">
+        <p class="eyebrow">{FUER_WEN.eyebrow}</p>
+        <h2 id="bs-fuerwen">{FUER_WEN.titel}</h2>
+        <p class="bs-lead">{FUER_WEN.text}</p>
+      </div>
+      <div class="reveal">
+        <p class="bs-lead">{FUER_WEN.einleitung}</p>
+        <ul class="bs-chips bs-chips--hell">
+          {FUER_WEN.gruppen.map((g) => <li>{g.path ? <a href={href(g.path)}>{g.title}</a> : g.title}</li>)}
+        </ul>
+        <div class="bs-schluss">
+          <p>{FUER_WEN.schluss[0]}</p>
+          <p class="bs-betont">{FUER_WEN.schluss[1]}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Kann ich euch vertrauen? -->
+  <section class="bs" aria-labelledby="bs-zusammenarbeit">
+    <div class="wrap">
+      <Stationen aktiv={2} />
+      <div class="bs-zwei">
+        <div class="bs-kopf">
+          <p class="eyebrow">{ZUSAMMENARBEIT.eyebrow}</p>
+          <h2 id="bs-zusammenarbeit">{ZUSAMMENARBEIT.titel}</h2>
+          <p class="bs-lead">{ZUSAMMENARBEIT.einleitung}</p>
+        </div>
+        <ul class="bs-haken reveal">
+          {ZUSAMMENARBEIT.punkte.map((p) => <li><span class="bs-haken__i"><Icon name="check" size={16} /></span>{p}</li>)}
+        </ul>
+      </div>
+      <div class="bs-folge bs-folge--ziel reveal">
+        <p class="bs-folge__kopf">{ZUSAMMENARBEIT.zielKopf}</p>
+        <p class="bs-folge__text">{ZUSAMMENARBEIT.ziel[0]}<br /><span>{ZUSAMMENARBEIT.ziel[1]}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bs bs--alt" aria-labelledby="bs-vertrauen">
+    <div class="wrap bs-zwei">
+      <div class="bs-kopf">
+        <p class="eyebrow">{VERTRAUEN.eyebrow}</p>
+        <h2 id="bs-vertrauen">{VERTRAUEN.titel}</h2>
+        <p class="bs-lead">{VERTRAUEN.einleitung}</p>
+      </div>
+      <div>
+        <ol class="weg" data-zeichne>
+          {VERTRAUEN.weg.map((w) => <li>{w}</li>)}
+        </ol>
+        <div class="bs-schluss">
+          <p>{VERTRAUEN.schluss[0]}</p>
+          <p class="bs-betont">{VERTRAUEN.schluss[1]}</p>
+        </div>
+        <p class="bs-beleg">
+          <strong>{VERTRAUEN.belegeKopf}:</strong> {VERTRAUEN.belege} <a href={href('/referenzen/')}>Zu den Referenzen</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · Was bekomme ich konkret? -->
+  <section class="bs" aria-labelledby="bs-loesungen" id="loesungen">
+    <div class="wrap">
+      <Stationen aktiv={3} />
+      <div class="bs-kopf">
+        <p class="eyebrow">{LOESUNGEN.eyebrow}</p>
+        <h2 id="bs-loesungen">{LOESUNGEN.titel}</h2>
+      </div>
+      <div class="loes">
+        <article class="loes__karte reveal">
+          <h3>{LOESUNGEN.website.titel}</h3>
+          <p>{LOESUNGEN.website.text}</p>
+          <p class="loes__paket">In allen drei Paketen enthalten, ab {preis(fundament.preis)}</p>
+          <a class="loes__link" href={href('/preise/')}>Pakete ansehen <Icon name="arrow" size={16} /></a>
+        </article>
+        <article class="loes__karte reveal">
+          <h3>{LOESUNGEN.analyse.titel}</h3>
+          <p>{LOESUNGEN.analyse.text}</p>
+          <p class="loes__kopf">{LOESUNGEN.analyse.kopf}</p>
+          <ul class="loes__punkte">{LOESUNGEN.analyse.punkte.map((p) => <li>{p}</li>)}</ul>
+          <a class="loes__link" href={kontakt(ANLIEGEN.analyse.paket)}>{ANLIEGEN.analyse.label} <Icon name="arrow" size={16} /></a>
+        </article>
+        <article class="loes__karte reveal">
+          <h3>{LOESUNGEN.auftritt.titel}</h3>
+          <p>{LOESUNGEN.auftritt.text}</p>
+          <p class="loes__paket">Im Paket {wahrzeichen.name}: {wahrzeichen.extras.join(', ')}. {preis(wahrzeichen.preis)}</p>
+          <a class="loes__link" href={href('/preise/')}>Paket {wahrzeichen.name} ansehen <Icon name="arrow" size={16} /></a>
+        </article>
+        <article class="loes__karte reveal">
+          <h3>{LOESUNGEN.weiter.titel}</h3>
+          <p>{LOESUNGEN.weiter.text}</p>
+          <p class="loes__paket">Ab Paket {wegweiser.name}: {finde(wegweiser, 'Monatsbericht')}. {finde(wegweiser, 'verbessern laufend')}. Ab {preis(wegweiser.preis)}</p>
+          <a class="loes__link" href={href('/preise/')}>Paket {wegweiser.name} ansehen <Icon name="arrow" size={16} /></a>
+        </article>
+      </div>
+      <p class="loes__hinweis">
+        {PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat, alle Preise netto zzgl. gesetzlicher MwSt.
+        {WAAS.einrichtung === 0 && ' 0 € Einrichtung.'} {WAAS.laufzeit}.{' '}
+        <a href={href('/preise/')}>Alle Pakete vergleichen</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="bs bs--alt" aria-labelledby="bs-wechsel">
+    <div class="wrap">
+      <div class="bs-kopf">
+        <p class="eyebrow">{WECHSEL.eyebrow}</p>
+        <h2 id="bs-wechsel">{WECHSEL.titel}</h2>
+        <p class="bs-unter">{WECHSEL.unter}</p>
+        <p class="bs-lead">{WECHSEL.einleitung}</p>
+      </div>
+      <ul class="wunsch">
+        {WECHSEL.wuensche.map((w) => <li class="reveal">{w}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 · Wie geht es weiter? -->
+  <section class="bs bs--dunkel" aria-labelledby="bs-glauben">
+    <div class="wrap">
+      <h2 id="bs-glauben" class="glauben__titel">{GLAUBEN.titel}</h2>
+      <ul class="glauben">
+        {GLAUBEN.saetze.map(([a, b]) => <li class="reveal"><strong>{a}</strong> <span class="glauben__vor">vor</span> <span class="glauben__b">{b}.</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bs abschluss" aria-labelledby="bs-abschluss">
+    <div class="wrap bs-mitte">
+      <h2 id="bs-abschluss" class="bs-gross">{ABSCHLUSS.titel}</h2>
+      <p class="bs-gross-unter">{ABSCHLUSS.unter}</p>
+      <p class="bs-lead">{ABSCHLUSS.text}</p>
+      <p class="abschluss__drei">{ABSCHLUSS.dreiklang.map((d) => <span>{d}</span>)}</p>
+      <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ABSCHLUSS.cta}</a>
+      <div class="naechste">
+        <p class="naechste__kopf">{ABSCHLUSS.wegKopf}</p>
+        <ol class="naechste__weg" data-zeichne>
+          {ABSCHLUSS.weg.map((w) => <li>{w}</li>)}
+        </ol>
+      </div>
+      <div class="signatur">
+        <p class="signatur__marke">{MARKE}</p>
+        <p class="signatur__zeilen">{ABSCHLUSS.signatur.zeilen[0]}<br /><strong>{ABSCHLUSS.signatur.zeilen[1]}</strong></p>
+        <p class="signatur__claim">{ABSCHLUSS.signatur.claim}</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // Linien zeichnen sich einmal beim ersten Sichtkontakt (Hero-Signatur, Stationen, Vergleich, Wege).
+  const els = document.querySelectorAll<HTMLElement>('[data-zeichne]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('ist-los'); io.unobserve(e.target); } }), { threshold: 0.35 });
+    els.forEach((el) => io.observe(el));
+  } else els.forEach((el) => el.classList.add('ist-los'));
+</script>

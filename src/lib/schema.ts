@@ -36,7 +36,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
   }));
 }
 
-export function serviceSchema(site: URL | undefined) {
+export function serviceSchema(site: URL | undefined, beschreibung?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -45,7 +45,7 @@ export function serviceSchema(site: URL | undefined) {
     provider: { '@id': `${absolute('/', site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     audience: { '@type': 'BusinessAudience', name: 'Kleine und mittlere Unternehmen' },
-    description: `${company.name} verbindet persönliche Beratung mit KI-gestützter Umsetzung. ${WAAS.name}: ${WAAS.claim}`,
+    description: beschreibung ?? `${company.name} verbindet persönliche Beratung mit KI-gestützter Umsetzung. ${WAAS.name}: ${WAAS.claim}`,
     offers: waasOffers(site),
   };
 }

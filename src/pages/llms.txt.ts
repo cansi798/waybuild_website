@@ -8,6 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
+import { START_HERO, PROBLEM, ANSTRENGEND, DESHALB, ARBEITSWEISE, FUER_WEN, ZUSAMMENARBEIT, LOESUNGEN, GLAUBEN, ABSCHLUSS, STUFEN, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -18,6 +19,20 @@ export const GET: APIRoute = async ({ site }) => {
     `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in drei Paketen ab ${formatEuro(Math.min(...PAKETE.map((p) => p.preis)))} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     PREIS_HINWEIS,
+    '',
+    '## Kernbotschaft',
+    `${START_HERO.titel} ${START_HERO.unter} ${START_HERO.aussage}`,
+    `- ${BOTSCHAFT.service}`,
+    `- Typische Probleme bestehender Websites: ${PROBLEM.punkte.join('; ')}. ${PROBLEM.folge}`,
+    `- Warum Website-Projekte anstrengend werden: ${ANSTRENGEND.titel} ${ANSTRENGEND.unter}`,
+    `- Haltung: ${DESHALB.titel} ${DESHALB.unter} Vor der Gestaltung verstehen wir ${DESHALB.verstehen.join(', ')}. ${DESHALB.schluss.join(' ')}`,
+    `- Arbeitsweise: ${ARBEITSWEISE.wir.join(' → ')} statt nur ${ARBEITSWEISE.viele.join(' → ')}. ${ARBEITSWEISE.glaube} ${ARBEITSWEISE.deshalb}`,
+    `- Der Weg für Kunden: ${STUFEN.join(' → ')}.`,
+    `- Zusammenarbeit: ${ZUSAMMENARBEIT.punkte.join(', ')}.`,
+    `- Für: ${FUER_WEN.gruppen.map((g) => g.title).join(', ')}; Unternehmen, die mehr erwarten als reine Umsetzung.`,
+    `- Lösungen: ${[LOESUNGEN.website, LOESUNGEN.analyse, LOESUNGEN.auftritt, LOESUNGEN.weiter].map((l) => `${l.titel} (${l.text.replace(/\.$/, '')})`).join('; ')}. Website-Analyse von ${LOESUNGEN.analyse.punkte.join(', ')}.`,
+    `- Grundsätze: ${GLAUBEN.saetze.map(([a, b]) => `${a} vor ${b}`).join('; ')}.`,
+    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.unter}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
     `${WAAS.claim} Drei Pakete. ${OFFER}`,

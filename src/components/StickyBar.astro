@@ -4,10 +4,13 @@
 import { href } from '../lib/paths';
 import { whatsappLink } from '../config/site';
 import Icon from './Icon.astro';
+import { ANLIEGEN } from '../config/startseite';
+interface Props { thema?: 'besucherreise' }
+const reise = Astro.props.thema === 'besucherreise';
 ---
 
 <div class="sticky-bar">
-  <a class="btn btn--primary btn--sm sticky-bar__btn" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+  <a class="btn btn--primary btn--sm sticky-bar__btn" href={reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/')}>{reise ? ANLIEGEN.erstberatung.label : 'Kostenloses Erstgespräch'}</a>
   <a class="btn btn--ghost btn--sm sticky-bar__btn sticky-bar__wa" href={whatsappLink()} target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben">
     <Icon name="whatsapp" size={18} /> WhatsApp
   </a>

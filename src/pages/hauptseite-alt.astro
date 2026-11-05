@@ -1,0 +1,40 @@
+---
+// HAUPTSEITE (ALT): die bisherige Startseite, unverändert gesichert (Jamil, Talk qh87y3sj 4753, 05.11.2026:
+// „Erstelle für die jetzige Hauptseite eine neue Seite mit dem Namen Hauptseite (alt) … unverändert, bis ich dir
+// was anderes sage“). noindex, nicht in Sitemap und Navigation; die neue Startseite ist src/pages/index.astro.
+// Ursprünglicher Kopf der Startseite:
+// Startseite – B2B entlang der Customer Journey (Feedback Jamil, 19.10.2026):
+// 1 Hero (Nutzen + Preisanker + Erstgespräch) → 2 Problem → Lösung (Schmerzpunkte, „eine Sprachnachricht genügt“)
+// → 3 Preise: drei Pakete (Fundament / Wegweiser / Wahrzeichen) → 4 Was der Wegweiser laufend verbessert (Beispiel)
+// → 5 So arbeiten wir: Linien-Story in zwei Abschnitten (Jamil, Talk 4487/4488, 03.11.2026; ersetzt „Ablauf in vier Schritten“) → 6 Service-Versprechen (SLAs in Alltagssprache) → 7 Zielgruppen
+// → 8 Plattform-Ausblick → 9 FAQ → Footer-Kopf mit Direktkontakt (CTA).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Schmerzpunkte from '../components/Schmerzpunkte.astro';
+import Pakete from '../components/Pakete.astro';
+import Vision from '../components/Vision.astro';
+import Prozess from '../components/Prozess.astro';
+import Siegel from '../components/Siegel.astro';
+import Zielgruppen from '../components/Zielgruppen.astro';
+import Plattform from '../components/Plattform.astro';
+import Faq from '../components/Faq.astro';
+import { serviceSchema, faqSchema } from '../lib/schema';
+import { PAKETE, formatEuro } from '../config/site';
+---
+
+<BaseLayout
+  title="Hauptseite (alt)"
+  noindex
+  description={`Website as a Service für KMU: Beratung, Erstellung, Hosting und Betreuung. Drei Pakete ab ${formatEuro(PAKETE[0].preis)} im Monat zzgl. MwSt., 0 € Einrichtung.`}
+  schema={[serviceSchema(Astro.site), faqSchema()]}
+>
+  <Hero />
+  <Schmerzpunkte />
+  <Pakete />
+  <Vision />
+  <Prozess />
+  <Siegel />
+  <Zielgruppen />
+  <Plattform />
+  <Faq />
+</BaseLayout>
