@@ -28,7 +28,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')}`,
     `- ${BEREICHE.titel} ${BEREICHE.bereiche.map((b) => `${b.titel}: ${b.teile.map(([t, imPaket]) => (imPaket ? t : `${t} (individuelles Angebot)`)).join(', ')}`).join('; ')}.`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
-    `- ${GLAUBEN.titel}: ${GLAUBEN.werte.map((w) => `${w.titel}: ${w.text.join(' ')}`).join(' ')} ${GLAUBEN.nichtKopf}: ${GLAUBEN.nicht.join(', ')}.`,
+    `- ${GLAUBEN.titel}: ${GLAUBEN.werte.map((w) => `${w.titel}: ${w.leit} ${w.text}`).join(' ')} ${GLAUBEN.nichtKopf}: ${GLAUBEN.nicht.join(', ')}.`,
     `- ${CHECK.eyebrow} auf der Startseite: 10 Fragen zu ${CHECK.bereiche.map((b) => b.name).join(', ')}; Ergebnis in Punkten von 100, berechnet nur im Browser (nichts wird gespeichert oder gesendet).`,
     `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,
     `- Leitsatz: ${CLAIM}`,

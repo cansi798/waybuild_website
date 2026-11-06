@@ -81,13 +81,14 @@ export const VERLASSEN = {
   saetze: ['Wir übernehmen Verantwortung.', 'Wir denken mit.', 'Wir halten Dinge einfach.', 'Wir empfehlen nicht das Meiste.', 'Wir empfehlen das Richtige.'],
 };
 
-/** Fortsetzung von Abschnitt 5 (4795): drei Werte, darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
+/** Fortsetzung von Abschnitt 5 (4795, Werte-Texte 4796): drei Werte, darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
 export const GLAUBEN = {
   titel: 'Woran wir glauben',
+  /** Texte 4796 (ersetzen die kurzen aus 4795); leit = erster Satz, groß gesetzt */
   werte: [
-    { titel: 'Verantwortung', text: ['Wir setzen nicht einfach um.', 'Wir empfehlen, was für Ihr Unternehmen sinnvoll ist.', 'Nicht das, was sich am einfachsten verkaufen lässt.'] },
-    { titel: 'Einfachheit', text: ['Gute Lösungen sollten Arbeit erleichtern.', 'Nicht neue Probleme schaffen.'] },
-    { titel: 'Verlässlichkeit', text: ['Niemand sollte einem Dienstleister hinterherlaufen müssen.'] },
+    { titel: 'Verantwortung', leit: 'Wir setzen nicht einfach um.', text: 'Wir denken mit, hinterfragen und empfehlen den Weg, den wir selbst gehen würden. Wenn wir ein Risiko erkennen, sprechen wir es an. Wenn wir einen besseren Weg sehen, zeigen wir ihn auf.' },
+    { titel: 'Einfachheit', leit: 'Technologie sollte Unternehmen entlasten.', text: 'Nicht zusätzliche Arbeit erzeugen. Deshalb übernehmen wir die Komplexität und halten den Aufwand für unsere Kunden so gering wie möglich. Denn gute Lösungen sollten nicht nur funktionieren. Sie sollten auch einfach umzusetzen sein.' },
+    { titel: 'Verlässlichkeit', leit: 'Niemand sollte einem Dienstleister hinterherlaufen müssen.', text: 'Eine Anfrage genügt. Offene Punkte gehen nicht verloren. Verantwortlichkeiten sind klar. Der aktuelle Stand ist jederzeit nachvollziehbar. Und wenn sich etwas verzögert, erfahren Sie es von uns, bevor Sie nachfragen müssen. Für uns ist das keine Besonderheit. Sondern professionelle Zusammenarbeit.' },
   ],
   nichtKopf: 'Was Sie von uns nicht erwarten müssen',
   nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Kein Projekt, das nach der Umsetzung endet', 'Keine fünf verschiedenen Ansprechpartner'],

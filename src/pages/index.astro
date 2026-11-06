@@ -148,7 +148,7 @@ const BEREICH_ICON = [
     </div>
   </section>
 
-  <!-- 5 (Fortsetzung) · Woran wir glauben (Jamil 4795): drei Werte, darunter dezent die Minus-Liste, keine Icons -->
+  <!-- 5 (Fortsetzung) · Woran wir glauben (Jamil 4795/4796): drei Werte, darunter dezent die Minus-Liste, keine Icons -->
   <section class="bs glauben" aria-labelledby="bs-glauben">
     <div class="wrap">
       <h2 id="bs-glauben" class="glauben__titel">{GLAUBEN.titel}</h2>
@@ -156,7 +156,8 @@ const BEREICH_ICON = [
         {GLAUBEN.werte.map((w, i) => (
           <li class="wert reveal" style={`transition-delay:${i * 90}ms`}>
             <h3 class="wert__titel">{w.titel}</h3>
-            {w.text.map((t) => <p>{t}</p>)}
+            <p class="wert__leit">{w.leit}</p>
+            <p class="wert__text">{w.text}</p>
           </li>
         ))}
       </ul>
