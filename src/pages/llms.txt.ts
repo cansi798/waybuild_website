@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -24,10 +24,9 @@ export const GET: APIRoute = async ({ site }) => {
     `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
     `- ${BAUSTEINE.titel} ${BAUSTEINE.unter} ${BAUSTEINE.werkzeuge.join(' ')} ${BAUSTEINE.text.join(' ')} ${BAUSTEINE.verluste.join(' ')}`,
-    `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')}`,
-    `- ${BEREICHE.titel} ${BEREICHE.unter} Bereiche: ${BEREICHE.bereiche.map((b) => `${b.titel}: ${b.teile.map(([t, imPaket]) => (imPaket ? t : `${t} (individuelles Angebot)`)).join(', ')}`).join('; ')}.`,
+    `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')} ${VERSTEHEN.karten.map((k) => `${k.wort}: ${k.leit} ${k.text}`).join(' ')} ${VERSTEHEN.nichtKopf} ${VERSTEHEN.nicht.join(', ')}.`,
+    `- ${BEREICHE.titel} ${BEREICHE.unter} ${BEREICHE.stationen.map((st) => `${st.titel} (${st.ziel}): ${st.teile.map(([t, s]) => `${t} [${BEREICHE.stufen[s]}]`).join(', ')}`).join('; ')}.`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
-    `- ${GLAUBEN.titel}: ${VERSTEHEN.karten.map((k) => `${k.wort} (${GLAUBEN.werte[k.wert].titel}): ${GLAUBEN.werte[k.wert].leit} ${GLAUBEN.werte[k.wert].text}`).join(' ')} ${GLAUBEN.nichtKopf}: ${GLAUBEN.nicht.join(', ')}.`,
     `- ${CHECK.eyebrow} auf der Startseite: ${CHECK.fragen.length} kurze Fragen (${CHECK.fragen.map((f) => f.schritt).join(', ')}); Ergebnis als Ampel je Station mit Tipp, berechnet nur im Browser. Mitgeschickt wird nur, wenn der Besucher das Ergebnis aktiv mit seiner Anfrage sendet.`,
     `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,
     `- Leitsatz: ${CLAIM}`,

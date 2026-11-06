@@ -2,7 +2,7 @@
 //   Hero: Headline 4771, Subheadline 4783, Animation 4784 (Kundengeschichte in fünf Stationen)
 //   (Abschnitt 1 „Kunden erleben keine einzelnen Systeme.“ entfernt, Jamil 4806) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
 //   · 4 Alles zwischen erstem Kontakt und zufriedenem Kunden (4789, + Pakete) · 5 Darauf können Sie sich verlassen (4790/4791)
-//   · „Woran wir glauben“ (4795/4796) ist seit 4809 mit Abschnitt 3 zusammengelegt
+//   · „Woran wir glauben“ (4795/4796) seit 4809 in Abschnitt 3, seit 4868–4870 verdichtet
 //   · Check (Konzept 4768, als Vorschlag) · Abschluss (4792) · Claim (4793)
 // Frühere Stände: „Unternehmensauftritt“ (4768, nach Website Rethinking, NC Rethinking_Unternehmensauftritt_2026-11-06),
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
@@ -49,43 +49,82 @@ export const VERSTEHEN = {
   einleitung: 'Bevor wir Lösungen entwickeln, möchten wir verstehen:',
   liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Ziele'],
   schluss: ['Denn gute Entscheidungen entstehen durch Verständnis.', 'Nicht durch Vermutungen.'],
-  /** Zusammengelegt mit „Woran wir glauben“ (Jamil 4809): jede Karte trägt den inhaltlich passenden Wert aus GLAUBEN.werte
-   *  Verstehen ↔ Verantwortung (mitdenken, hinterfragen, Risiken ansprechen) · Empfehlen ↔ Einfachheit (Aufwand gering,
-   *  Lösungen einfach umsetzbar) · Umsetzen ↔ Verlässlichkeit (Anfrage genügt, nichts geht verloren, Stand nachvollziehbar) */
-  karten: [{ wort: 'Verstehen', wert: 0 }, { wort: 'Empfehlen', wert: 1 }, { wort: 'Umsetzen', wert: 2 }],
+  /** Karten, verdichtet aus Jamils Texten 4788/4795/4796 (Feedback 4868–4870: „zusammenfassen, sodass es Sinn macht“) */
+  karten: [
+    { wort: 'Verstehen', leit: 'Erst zuhören, dann handeln.', text: 'Wir denken mit und fragen nach, bevor wir etwas vorschlagen.' },
+    { wort: 'Empfehlen', leit: 'Den sinnvollsten Weg, nicht den größten.', text: 'Wir sagen offen, was sich lohnt, und sprechen Risiken an.' },
+    { wort: 'Umsetzen', leit: 'Wir kümmern uns. Sie bleiben informiert.', text: 'Eine Anfrage genügt, nichts geht verloren. Verzögert sich etwas, hören Sie es zuerst von uns.' },
+  ],
+  nichtKopf: 'Was Sie von uns nicht erwarten müssen',
+  nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Keine fünf Ansprechpartner'],
 };
 
 /** Abschnitt 4 (4789): vier Bereiche. paket=false = nicht in den Monatspaketen (Ausbaustufe, individuelles Angebot). */
+export type Stufe = 'alle' | 'wegweiser' | 'wahrzeichen' | 'anfrage';
+/** Neu geordnet nach Jamil 4871–4876: jede Leistung hat genau EINEN Platz (Station der Kundenreise) und ein Kennzeichen,
+ *  wo sie steckt. Inhalte entsprechen PAKETE/IN_ALLEN in site.ts (dort nichts geändert); „anfrage“ = Ausbaustufe. */
 export const BEREICHE = {
-  /** Headline + Unterzeile neu (Jamil 4811) */
+  /** Headline + Unterzeile (Jamil 4811) */
   titel: 'Ein Kunde interessiert sich nicht für Ihre Systeme.',
   unter: 'Ein Kunde interessiert sich für das Erlebnis.',
-  bereiche: [
-    { titel: 'Aufmerksamkeit', teile: [['Website', true], ['Google', true], ['Social Media', false], ['Video', false]] },
-    { titel: 'Anfrage', teile: [['Formulare', true], ['Terminbuchung', false], ['CRM', false]] },
-    { titel: 'Bearbeitung', teile: [['Prozesse', false], ['Automatisierung', false], ['Systeme', false]] },
-    { titel: 'Betreuung', teile: [['Service', true], ['Kommunikation', true], ['Weiterentwicklung', true]] },
-  ] as { titel: string; teile: [string, boolean][] }[],
-  hinweis: 'Gestrichelt: Ausbaustufe mit individuellem Angebot. Alles andere steckt in unseren Monatspaketen.',
+  einleitung: 'Darum ordnen wir alles nach dem, was Ihr Kunde erlebt:',
+  stationen: [
+    { titel: 'Aufmerksamkeit', ziel: 'Gefunden werden und überzeugen', teile: [
+      ['Website ohne Seitenbegrenzung, fürs Handy optimiert', 'alle'], ['Für Google und KI-Suche aufbereitet', 'alle'],
+      ['Google-Unternehmensprofil eingerichtet', 'wegweiser'], ['Eigene Seiten für Ihre Orte und Leistungen', 'wegweiser'],
+      ['Logo und kurzer CI-Leitfaden', 'wahrzeichen'], ['Social Media und Video', 'anfrage'],
+    ] },
+    { titel: 'Anfrage', ziel: 'Anfragen sicher empfangen', teile: [
+      ['Kontaktformular und direkte Kontaktwege auf der Website', 'alle'], ['20 E-Mail-Postfächer mit Signatur nach DIN 5008', 'alle'],
+      ['Postfächer mit Ordnern und Regeln für den Alltag', 'wegweiser'], ['Online-Terminbuchung und CRM', 'anfrage'],
+    ] },
+    { titel: 'Bearbeitung', ziel: 'Zügig und einheitlich antworten', teile: [
+      ['Briefvorlage nach DIN 5008', 'wegweiser'], ['Geschäftsbriefe für Angebot und Rechnung im eigenen Design', 'wahrzeichen'],
+      ['Abläufe, Automatisierung und eigene Software', 'anfrage'],
+    ] },
+    { titel: 'Betreuung', ziel: 'Dranbleiben, ohne Aufwand', teile: [
+      ['Hosting in Deutschland, Updates und Backups', 'alle'], ['Änderungen per Sprachnachricht oder Text, im fairen Rahmen', 'alle'],
+      ['Monatsbericht und laufende Verbesserung', 'wegweiser'], ['Quartalsgespräch und ständige Optimierung', 'wahrzeichen'],
+    ] },
+  ] as { titel: string; ziel: string; teile: [string, Stufe][] }[],
+  stufen: { alle: 'In allen Paketen', wegweiser: 'Ab Wegweiser', wahrzeichen: 'Wahrzeichen', anfrage: 'Auf Anfrage' } as Record<Stufe, string>,
+  kombiTitel: 'So kombinieren Sie das',
+  kombiText: 'Drei Pakete bauen aufeinander auf. Was „auf Anfrage“ steht, bekommen Sie als eigenes Angebot.',
+  anfrageTitel: 'Auf Anfrage',
+  anfrageText: 'Individuelles Angebot, passend zu Ihren Abläufen.',
+};
+
+/** Referenzen (Jamil 4876, Projekte WS-0002 bis WS-0006). WICHTIG: Name, Link und Bild NUR eintragen und freigegeben: true
+ *  setzen, wenn der Kunde zugestimmt hat (öffentliches Repo!). Bis dahin anonym: Branche, Ausgangslage, Umsetzung, Ergebnis.
+ *  Nur Belegtes, keine erfundenen Zahlen oder Zitate. motiv = Symbol in der stilisierten Vorschau. */
+export const REFERENZEN = {
+  titel: 'Beispiele aus unserer Arbeit',
+  einleitung: 'Namen, Links und Bilder zeigen wir, sobald unsere Kunden zugestimmt haben. Bis dahin beschreiben wir die Projekte ohne Namen.',
+  liste: [
+    { freigegeben: false, branche: 'Handwerksbetrieb für Badsanierung', region: 'Schleswig-Holstein', status: 'online', motiv: 'bad',
+      ausgang: 'Gesucht war ein Auftritt, der Leistungen, Preise und Ablauf einer Badsanierung verständlich zeigt.',
+      gemacht: 'Website mit Kostenrechner, Anfrage für den Vor-Ort-Termin und Leistungsseiten, online unter eigener Domain.',
+      ergebnis: 'Google Lighthouse am Handy: 98 von 100.' },
+    { freigegeben: false, branche: 'Autolackiererei, Meisterbetrieb', region: 'Schleswig-Holstein', status: 'vorschau', motiv: 'lack',
+      ausgang: 'Die bisherige Website sollte modernisiert werden, mit den vorhandenen Inhalten.',
+      gemacht: 'Neue Website mit „Schaden melden“ in drei Schritten, per WhatsApp oder E-Mail.' },
+    { freigegeben: false, branche: 'Dolmetscher und Übersetzer', region: 'Norddeutschland', status: 'vorschau', motiv: 'sprache',
+      ausgang: 'Die bisherige Baukasten-Website sollte durch einen eigenen Auftritt ersetzt werden.',
+      gemacht: 'Zweisprachige Website (Deutsch und Türkisch) mit Einsatzgebiet, Ablauf und Antworten auf häufige Fragen.',
+      ergebnis: 'Google Lighthouse am Handy: 97 von 100 (Vorschau).' },
+    { freigegeben: false, branche: 'Videograf', region: 'Hamburg', status: 'vorschau', motiv: 'film',
+      ausgang: 'Die alte Website war schwer und langsam: Google Lighthouse 36 von 100.',
+      gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.' },
+    { freigegeben: false, branche: 'Bildungsprojekt mit Erklärvideos', region: 'Deutschland', status: 'vorschau', motiv: 'wissen',
+      ausgang: 'Ein neues Projekt brauchte einen ersten Auftritt.',
+      gemacht: 'Website mit Team, Videos und häufigen Fragen, für Google und KI-Suche aufbereitet.' },
+  ] as { freigegeben: boolean; name?: string; url?: string; bild?: string; branche: string; region: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string }[],
 };
 
 /** Abschnitt 5 (4790/4791): große Schlagworte, viel Weißraum, keine Icons */
 export const VERLASSEN = {
   titel: 'Darauf können Sie sich verlassen',
   saetze: ['Wir übernehmen Verantwortung.', 'Wir denken mit.', 'Wir halten Dinge einfach.', 'Wir empfehlen nicht das Meiste.', 'Wir empfehlen das Richtige.'],
-};
-
-/** Werte (4795, Texte 4796), seit 4809 in den Karten von Abschnitt 3; darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
-export const GLAUBEN = {
-  titel: 'Woran wir glauben',
-  /** Texte 4796 (ersetzen die kurzen aus 4795); leit = erster Satz, groß gesetzt */
-  werte: [
-    { titel: 'Verantwortung', leit: 'Wir setzen nicht einfach um.', text: 'Wir denken mit, hinterfragen und empfehlen den Weg, den wir selbst gehen würden. Wenn wir ein Risiko erkennen, sprechen wir es an. Wenn wir einen besseren Weg sehen, zeigen wir ihn auf.' },
-    { titel: 'Einfachheit', leit: 'Technologie sollte Unternehmen entlasten.', text: 'Nicht zusätzliche Arbeit erzeugen. Deshalb übernehmen wir die Komplexität und halten den Aufwand für unsere Kunden so gering wie möglich. Denn gute Lösungen sollten nicht nur funktionieren. Sie sollten auch einfach umzusetzen sein.' },
-    { titel: 'Verlässlichkeit', leit: 'Niemand sollte einem Dienstleister hinterherlaufen müssen.', text: 'Eine Anfrage genügt. Offene Punkte gehen nicht verloren. Verantwortlichkeiten sind klar. Der aktuelle Stand ist jederzeit nachvollziehbar. Und wenn sich etwas verzögert, erfahren Sie es von uns, bevor Sie nachfragen müssen. Für uns ist das keine Besonderheit. Sondern professionelle Zusammenarbeit.' },
-  ],
-  nichtKopf: 'Was Sie von uns nicht erwarten müssen',
-  nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Kein Projekt, das nach der Umsetzung endet', 'Keine fünf verschiedenen Ansprechpartner'],
 };
 
 /** Kundenreise-Check (Jamil 4835; Grundlage Vorschlag „Website-Selbstcheck“, NC f/22627): 7 Fragen, eine pro Karte,

@@ -93,17 +93,6 @@ html.js [data-p] { --p: 0; }
 .verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .verstehen-chips li { padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 650; color: var(--dark); }
 
-/* ── 4 · Vier Bereiche zwischen erstem Kontakt und zufriedenem Kunden ── */
-.bereiche { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
-@media (min-width: 640px) { .bereiche { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1040px) { .bereiche { grid-template-columns: repeat(4, 1fr); } }
-.bereich { padding: clamp(20px, 3vw, 28px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
-.bereich__icon { display: block; margin-bottom: 10px; }
-.bereich h3 { margin: 0 0 12px; font-size: clamp(1.2rem, 2vw, 1.35rem); }
-.bereich__teile { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.bereich__teile li { padding: 5px 12px; border-radius: 999px; background: var(--paper-2); border: 1.5px solid transparent; font-size: 0.92rem; font-weight: 600; color: var(--dark); }
-.bereich__teile li.ist-extra { background: transparent; border: 1.5px dashed #b7beb9; color: var(--ink-soft); }
-.bereiche__hinweis { margin: 14px 0 0; text-align: center; font-size: 0.88rem; color: var(--ink-soft); }
 
 /* ── 5 · Darauf können Sie sich verlassen: große Schlagworte, viel Weißraum, keine Icons ── */
 .verlassen { padding-block: clamp(80px, 12vw, 160px); }
@@ -117,16 +106,6 @@ html.js [data-p] { --p: 0; }
 .claim__marke { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
 
 
-/* ── A5 · Pakete kurz ── */
-.pakete-kurz { max-width: 860px; margin: clamp(32px, 5vw, 52px) auto 0; padding: clamp(20px, 3vw, 28px); border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); }
-.pakete-kurz__kopf { margin: 0 0 12px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
-.pakete-kurz__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.pakete-kurz__liste li { display: grid; gap: 2px; padding-bottom: 10px; border-bottom: 1px solid var(--line); color: var(--ink-soft); line-height: 1.5; }
-.pakete-kurz__liste li:last-child { border-bottom: 0; padding-bottom: 0; }
-.pakete-kurz__liste strong { font-family: var(--font-head); color: var(--dark); }
-.pakete-kurz__preis { font-weight: 650; color: var(--dark); }
-@media (min-width: 760px) { .pakete-kurz__liste li { grid-template-columns: 150px 1fr auto; gap: 16px; align-items: baseline; } }
-.pakete-kurz .loes__hinweis { text-align: left; margin: 14px 0 0; max-width: none; }
 
 /* ── A9 · Abschluss: viel Weißraum, keine Animation ── */
 .abschluss { padding-block: clamp(96px, 14vw, 180px); }
@@ -142,23 +121,79 @@ html.js [data-p] { --p: 0; }
 .bs--dunkel .bs-gross-unter { color: var(--gold); }
 .abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }
 
-/* ── 3 · Karten Verstehen/Empfehlen/Umsetzen mit Werten (Woran wir glauben), Minus-Liste; ruhig, keine Icons ── */
-.werte { list-style: none; margin: clamp(32px, 5vw, 56px) auto 0; padding: 0; display: grid; gap: clamp(28px, 4vw, 48px); }
-@media (min-width: 900px) { .werte { grid-template-columns: repeat(3, 1fr); } }
-.wert { padding-top: 18px; border-top: 2px solid var(--dark); }
-.wert:last-child { border-top-color: var(--gold); }
-.wert__titel { margin: 0 0 12px; font-size: clamp(1.35rem, 2.4vw, 1.65rem) !important; }
-.wert { padding: 22px clamp(20px, 2.6vw, 30px) clamp(24px, 3vw, 32px); border-radius: 0 0 var(--radius) var(--radius); background: var(--white); }
-.wert__wort { margin: 0 0 14px; font-family: var(--font-head); font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 650; letter-spacing: -0.02em; line-height: 1.1; color: var(--dark); }
-.wert:last-child .wert__wort { color: var(--accent-ink); }
-.wert { border: 1px solid var(--line); border-top: 2px solid var(--dark); }
-.wert:last-child { border-top-color: var(--gold); }
-.wert__titel { font-size: 0.82rem !important; font-weight: 700 !important; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink) !important; }
-.wert__leit { margin: 0 0 14px; font-family: var(--font-head); font-size: clamp(1.3rem, 2.3vw, 1.6rem); font-weight: 650; line-height: 1.3; color: var(--dark); }
-.wert__text { margin: 0; font-size: 1.02rem; line-height: 1.75; color: var(--ink-soft); }
-.nicht-erwarten { max-width: 640px; margin: clamp(56px, 8vw, 96px) auto 0; text-align: center; }
-.nicht-erwarten__kopf { margin: 0 0 16px; font-size: 0.82rem !important; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink) !important; }
-.nicht-erwarten__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.nicht-erwarten__liste li { display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-size: 1.02rem; color: var(--ink-soft); }
-.nicht-erwarten__liste li::before { content: ''; flex: none; width: 14px; height: 2px; border-radius: 2px; background: #9aa19c; }
+/* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei gleich breite, gleich hohe Karten, verdichtet (Jamil 4868–4870) ── */
+.schritte3 { list-style: none; width: 100%; max-width: 1100px; margin: clamp(32px, 5vw, 52px) auto 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 860px) { .schritte3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; } }
+.schritt3 { position: relative; display: flex; flex-direction: column; padding: clamp(24px, 3vw, 34px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--dark); }
+.schritt3:nth-child(2) { border-top-color: var(--salbei); }
+.schritt3:nth-child(3) { border-top-color: var(--gold); }
+.schritt3__nr { position: absolute; top: clamp(24px, 3vw, 34px); right: clamp(24px, 3vw, 34px); font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: #6b736e; }
+.schritt3__wort { margin: 0 0 12px; font-size: clamp(1.8rem, 3.4vw, 2.4rem) !important; letter-spacing: -0.02em; line-height: 1.1; }
+.schritt3__leit { margin: 0 0 10px; font-family: var(--font-head); font-size: clamp(1.12rem, 1.9vw, 1.3rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
+.schritt3__text { margin: 0; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); }
 .bs-unter--mitte { margin-inline: auto; max-width: none; }
+
+
+
+/* 3 · „Was Sie von uns nicht erwarten müssen“: gut lesbar, als Teil des Abschnitts */
+.ohne { max-width: 980px; margin: clamp(32px, 5vw, 48px) auto 0; padding: clamp(18px, 3vw, 26px); border-radius: var(--radius); background: var(--paper-2); text-align: center; }
+.ohne__kopf { margin: 0 0 12px; font-family: var(--font-head); font-weight: 650; font-size: clamp(1.05rem, 1.8vw, 1.2rem); color: var(--dark); }
+.ohne__liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; }
+.ohne__liste li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--white); font-weight: 600; font-size: 0.98rem; color: var(--dark); }
+.ohne__liste li::before { content: ''; width: 12px; height: 2px; border-radius: 2px; background: #b5654a; }
+
+/* ── 4 · Leistungen entlang der Kundenreise, je Leistung ein Kennzeichen, darunter die Paket-Kombination ── */
+.reise4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 760px) { .reise4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .reise4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.station4 { display: flex; flex-direction: column; padding: clamp(18px, 2.4vw, 24px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
+.station4__kopf { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
+.station4__icon { flex: none; }
+.station4 h3 { margin: 0; font-size: 1.25rem !important; }
+.station4__ziel { margin: 2px 0 0; font-size: 0.92rem; color: var(--accent-ink); font-weight: 600; }
+.station4__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.station4__liste li { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--line); }
+.station4__text { font-size: 0.97rem; line-height: 1.45; color: var(--ink); }
+.stufe { justify-self: start; padding: 2px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; }
+.stufe--alle { background: rgb(126 155 138 / 20%); color: #3f6550; }
+.stufe--wegweiser { background: var(--dark); color: var(--white); }
+.stufe--wahrzeichen { border: 1.5px solid var(--dark); color: var(--dark); }
+.stufe--anfrage { border: 1.5px dashed #9aa19c; color: #4f5559; }
+.kombi { margin-top: clamp(40px, 6vw, 64px); }
+.kombi__titel { margin: 0 0 6px; font-size: clamp(1.4rem, 2.8vw, 1.9rem) !important; }
+.kombi__liste { list-style: none; margin: clamp(20px, 3vw, 28px) 0 0; padding: 0; display: grid; gap: 14px; }
+@media (min-width: 760px) { .kombi__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .kombi__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.paket4 { display: flex; flex-direction: column; padding: clamp(18px, 2.4vw, 24px); border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); }
+.paket4--empfohlen { border: 2px solid var(--dark); background: var(--white); }
+.paket4--anfrage { background: transparent; border: 1.5px dashed #b7beb9; }
+.paket4__name { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--dark); }
+.paket4__preis { margin: 4px 0 6px; font-weight: 700; color: var(--dark); }
+.paket4__kurz { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+.paket4__basis { margin: 0 0 6px; font-size: 0.85rem; font-weight: 700; color: var(--accent-ink); }
+.paket4__neu { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.93rem; line-height: 1.45; color: var(--ink); }
+.paket4__neu li { position: relative; padding-left: 18px; }
+.paket4__neu li::before { content: '+'; position: absolute; left: 0; font-weight: 700; color: var(--accent-ink); }
+.paket4__link { margin-top: auto; padding-top: 14px; font-weight: 650; color: var(--dark); text-underline-offset: 3px; }
+.kombi .loes__hinweis { margin: 18px auto 0; max-width: 760px; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+.kombi .loes__hinweis a { color: var(--dark); font-weight: 650; }
+
+/* ── Referenzen: anonym mit stilisierter Vorschau, bis freigegeben ── */
+.refs4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 18px; }
+@media (min-width: 700px) { .refs4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .refs4 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ref4 { display: flex; flex-direction: column; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); overflow: hidden; }
+.ref4__bild { padding: 14px 14px 0; background: var(--paper-2); }
+.ref4__bild svg, .ref4__bild img { display: block; width: 100%; height: auto; border-radius: 12px 12px 0 0; }
+.ref4__inhalt { padding: 18px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.ref4__kopf { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 0.8rem; }
+.ref4__status { padding: 2px 9px; border-radius: 999px; font-weight: 700; }
+.ref4__status--online { background: rgb(126 155 138 / 20%); color: #3f6550; }
+.ref4__status--vorschau { background: var(--paper-2); color: #4f5559; }
+.ref4__region { color: var(--ink-soft); font-weight: 600; }
+.ref4__titel { margin: 0 0 10px; font-size: 1.2rem !important; line-height: 1.3; }
+.ref4__branche { margin: -6px 0 10px; color: var(--ink-soft); }
+.ref4__fakten { margin: 0; display: grid; gap: 8px; }
+.ref4__fakten dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+.ref4__fakten dd { margin: 2px 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--ink); }
+.ref4__link { margin-top: 14px; font-weight: 650; color: var(--dark); }
