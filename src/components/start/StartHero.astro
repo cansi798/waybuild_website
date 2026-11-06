@@ -1,51 +1,40 @@
 ---
-// Hero der neuen Startseite (Jamil, Talk 4753) – Frage 1 des Besuchers: „Bin ich hier richtig?“
-// Text steht beim Laden sofort (kein Einblenden, gut für LCP). Desktop: links Überschrift + Signatur-Grafik,
-// rechts Einordnung, Aussage und die zwei Knöpfe. Handy: Überschrift → Grafik → Text → Knöpfe.
-import { href } from '../../lib/paths';
-import { START_HERO as H, ANLIEGEN } from '../../config/startseite';
-import Leitlinie from './Leitlinie.astro';
-
-const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
+// Abschnitt 1, Hero der Startseite „Unternehmensauftritt“ (Jamil, Talk 4768). Text steht beim Laden sofort
+// (kein Einblenden, gut für LCP). Rechts bzw. darunter die Bühne: acht Berührungspunkte schweben einzeln und
+// verschmelzen beim Scrollen zu „Unternehmensauftritt“. Knöpfe springen zum Check (#check) und zu Abschnitt 5 (#denkweise).
+import { HERO as H, BERUEHRUNGSPUNKTE } from '../../config/startseite';
+import Verschmelzen from './Verschmelzen.astro';
 ---
 <section class="sh" aria-labelledby="sh-titel">
   <div class="wrap sh__raster">
-    <h1 id="sh-titel" class="sh__titel">
-      <span class="sh__haupt">{H.titel}</span>
-      <span class="sh__unter">{H.unter}</span>
-    </h1>
-    <div class="sh__bild"><Leitlinie /></div>
     <div class="sh__text">
-      <p class="sh__einleitung">{H.einleitung}</p>
-      <ul class="sh__gefuehle">
-        {H.gefuehle.map((g) => <li>{g}</li>)}
-      </ul>
-      <p class="sh__aussage">{H.aussage}</p>
+      <p class="sh__zeile">{H.zeile}</p>
+      <h1 id="sh-titel" class="sh__titel">{H.titel}</h1>
+      <p class="sh__unter">{H.unter}</p>
       <div class="sh__knoepfe">
-        <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ANLIEGEN.erstberatung.label}</a>
-        <a class="btn btn--umriss btn--lg" href={kontakt(ANLIEGEN.analyse.paket)}>{ANLIEGEN.analyse.label}</a>
+        <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>
+        <a class="btn btn--umriss btn--lg" href="#denkweise">{H.cta2}</a>
       </div>
     </div>
+    <figure class="sh__bild">
+      <Verschmelzen kern={H.kern} label={`Acht Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}. Zusammen ergeben sie den ${H.kern}.`} />
+      <figcaption class="sh__botschaft">{H.botschaft[0]} <strong>{H.botschaft[1]}</strong></figcaption>
+    </figure>
   </div>
 </section>
 
 <style>
-  .sh { padding-block: clamp(28px, 5vw, 72px) clamp(44px, 6vw, 88px); background: var(--paper); }
-  .sh__raster { display: grid; gap: clamp(22px, 4vw, 36px); grid-template-areas: 'titel' 'bild' 'text'; }
-  .sh__titel { grid-area: titel; margin: 0; }
-  .sh__bild { grid-area: bild; max-width: 640px; }
-  .sh__text { grid-area: text; }
-  .sh__haupt { display: block; font-size: clamp(2.2rem, 6.2vw, 4.1rem); font-weight: 650; line-height: 1.06; letter-spacing: -0.03em; color: var(--dark); }
-  .sh__unter { display: block; margin-top: 0.55em; font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 500; line-height: 1.38; letter-spacing: -0.01em; color: #3d4b57; max-width: 30ch; }
-  .sh__einleitung { margin: 0 0 12px; font-size: 1.08rem; line-height: 1.7; color: var(--ink-soft); }
-  .sh__gefuehle { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 8px; }
-  .sh__gefuehle li { position: relative; padding-left: 26px; line-height: 1.55; color: var(--ink); }
-  .sh__gefuehle li::before { content: ''; position: absolute; left: 2px; top: 0.78em; width: 14px; height: 2px; border-radius: 2px; background: #a3aea7; }
-  .sh__aussage { margin: 0 0 26px; padding-left: 16px; border-left: 3px solid #d6a85a; font-family: var(--font-head); font-size: clamp(1.08rem, 1.8vw, 1.25rem); font-weight: 600; line-height: 1.5; color: var(--dark); }
-  .sh__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
+  .sh { padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 80px); background: var(--paper); overflow: hidden; }
+  .sh__raster { display: grid; gap: clamp(20px, 4vw, 40px); align-items: center; }
+  .sh__zeile { margin: 0 0 14px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+  .sh__titel { margin: 0; font-size: clamp(2.1rem, 5.6vw, 3.9rem); font-weight: 650; line-height: 1.07; letter-spacing: -0.03em; color: var(--dark); max-width: 15ch; }
+  .sh__unter { margin: 0.8em 0 0; font-size: clamp(1.1rem, 2vw, 1.32rem); line-height: 1.55; color: #3d4b57; max-width: 36ch; }
+  .sh__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 3vw, 32px); }
   @media (max-width: 599px) { .sh__knoepfe .btn { width: 100%; } }
+  .sh__bild { margin: 0; }
+  .sh__botschaft { max-width: 460px; margin: 10px auto 0; text-align: center; font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
+  .sh__botschaft strong { display: block; color: var(--dark); font-weight: 650; }
   @media (min-width: 960px) {
-    .sh__raster { grid-template-columns: 1.12fr 0.88fr; grid-template-areas: 'titel text' 'bild text'; column-gap: clamp(48px, 6vw, 88px); row-gap: 40px; align-items: start; }
-    .sh__text { align-self: end; padding-bottom: 8px; }
+    .sh__raster { grid-template-columns: 1fr 1fr; column-gap: clamp(32px, 5vw, 72px); }
   }
 </style>

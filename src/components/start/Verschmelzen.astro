@@ -1,0 +1,71 @@
+---
+// Bühne „Berührungspunkte verschmelzen“ (Jamil, Talk 4768): einzelne Begriffe schweben im Raum und ziehen sich
+// beim Scrollen zu einem Kern zusammen (Hero: „Unternehmensauftritt“, Abschnitt 12: „Vertrauen“).
+// Technik: Jede Bahn ist eine Ebene in Bühnengröße; translate in % bewegt sie um % der Bühne. --p (0…1) setzt
+// src/scripts/startseite.ts beim Scrollen. Schweben = CSS-Keyframes (nur transform), läuft nur im Sichtbereich.
+// Ohne JS bzw. bei reduzierter Bewegung: ruhiges Endbild (Begriffe nah am Kern, Kern sichtbar). Begriffe sind
+// für Screenreader als Liste vorhanden.
+import { BERUEHRUNGSPUNKTE } from '../../config/startseite';
+interface Props { kern: string; label: string; klein?: boolean; class?: string }
+const { kern, label, klein = false, class: cls } = Astro.props;
+---
+<div class:list={['vs', { 'vs--klein': klein }, cls]} data-p="vs" data-schweben>
+  <p class="sr-only">{label}</p>
+  <ul class="vs__liste" aria-hidden="true">
+    {BERUEHRUNGSPUNKTE.map((b, i) => (
+      <li class="vs__bahn" style={`--dx:${b.dx};--dy:${b.dy};--i:${i}`}>
+        <span class="vs__chip"><span class="vs__chipin">{b.text}</span></span>
+      </li>
+    ))}
+  </ul>
+  <span class="vs__ring" aria-hidden="true"></span>
+  <span class="vs__kern" aria-hidden="true">{kern}</span>
+</div>
+
+<style>
+  .vs { --p: 0; position: relative; width: 100%; aspect-ratio: 1 / 0.92; max-width: 560px; margin-inline: auto; overflow: hidden; }
+  .vs--klein { aspect-ratio: 1 / 0.8; max-width: 520px; }
+  .vs__liste { list-style: none; margin: 0; padding: 0; }
+  .vs__bahn {
+    position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+    transform: translate(calc(var(--dx) * 1% * (1 - var(--p))), calc(var(--dy) * 1% * (1 - var(--p))));
+  }
+  .vs__chip {
+    display: block;
+    opacity: clamp(0, (1 - var(--p)) * 2.4, 1);
+    transform: scale(calc(1 - var(--p) * 0.45));
+  }
+  .vs__chipin {
+    display: block; padding: 9px 16px; border-radius: 999px; white-space: nowrap;
+    background: var(--white); border: 1px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 6%), 0 6px 18px rgb(31 49 64 / 7%);
+    font-family: var(--font-head); font-weight: 600; font-size: clamp(0.82rem, 2.6vw, 1rem); color: var(--dark);
+    animation: vs-schweben 6s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -0.8s); animation-play-state: paused;
+  }
+  .vs__bahn:nth-child(3n) .vs__chipin { animation-duration: 7.4s; }
+  .vs__bahn:nth-child(3n + 1) .vs__chipin { animation-duration: 5.2s; }
+  .vs.ist-sichtbar .vs__chipin { animation-play-state: running; }
+  @keyframes vs-schweben { from { transform: translate(-5px, -6px); } to { transform: translate(6px, 7px); } }
+
+  .vs__ring {
+    position: absolute; left: 50%; top: 50%; width: 58%; aspect-ratio: 1; margin: -29% 0 0 -29%; border-radius: 50%;
+    border: 1.5px dashed #c9c2b5;
+    opacity: calc(1 - var(--p) * 0.6);
+    transform: scale(calc(1 - var(--p) * 0.25));
+  }
+  .vs__kern {
+    position: absolute; left: 50%; top: 50%; padding: 16px 26px; border-radius: 999px; white-space: nowrap;
+    background: var(--dark); color: var(--white); box-shadow: 0 0 0 8px rgb(214 168 90 / 28%), 0 14px 40px rgb(31 49 64 / 22%);
+    font-family: var(--font-head); font-weight: 700; font-size: clamp(1.05rem, 3.6vw, 1.5rem); letter-spacing: -0.01em;
+    opacity: clamp(0, (var(--p) - 0.42) * 3, 1);
+    transform: translate(-50%, -50%) scale(calc(0.82 + var(--p) * 0.18));
+  }
+
+  /* Ohne JS bzw. reduzierte Bewegung: ruhiges Endbild, Begriffe an ihren Plätzen, Kern sichtbar */
+  :global(html:not(.js)) .vs { --p: 0 !important; }
+  :global(html:not(.js)) .vs__kern { opacity: 1; transform: translate(-50%, -50%); }
+  @media (prefers-reduced-motion: reduce) {
+    .vs { --p: 0 !important; }
+    .vs__kern { opacity: 1 !important; transform: translate(-50%, -50%) !important; }
+    .vs__chipin { animation: none !important; }
+  }
+</style>

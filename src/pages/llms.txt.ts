@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { START_HERO, PROBLEM, ANSTRENGEND, DESHALB, ARBEITSWEISE, FUER_WEN, ZUSAMMENARBEIT, LOESUNGEN, GLAUBEN, ABSCHLUSS, STUFEN, BOTSCHAFT } from '../config/startseite';
+import { HERO, BERUEHRUNGSPUNKTE, EINDRUCK, PREIS, LUECKE, DESIGN, ARBEITSWEISE, LOESUNGEN, ZUSAMMENARBEIT, UEBERZEUGUNG, ERGEBNIS, CHECK, ABSCHLUSS, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -20,19 +20,21 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     PREIS_HINWEIS,
     '',
-    '## Kernbotschaft',
-    `${START_HERO.titel} ${START_HERO.unter} ${START_HERO.aussage}`,
+    '## Kernbotschaft: Unternehmensauftritt',
+    `${HERO.titel} ${HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
-    `- Typische Probleme bestehender Websites: ${PROBLEM.punkte.join('; ')}. ${PROBLEM.folge}`,
-    `- Warum Website-Projekte anstrengend werden: ${ANSTRENGEND.titel} ${ANSTRENGEND.unter}`,
-    `- Haltung: ${DESHALB.titel} ${DESHALB.unter} Vor der Gestaltung verstehen wir ${DESHALB.verstehen.join(', ')}. ${DESHALB.schluss.join(' ')}`,
-    `- Arbeitsweise: ${ARBEITSWEISE.wir.join(' → ')} statt nur ${ARBEITSWEISE.viele.join(' → ')}. ${ARBEITSWEISE.glaube} ${ARBEITSWEISE.deshalb}`,
-    `- Der Weg für Kunden: ${STUFEN.join(' → ')}.`,
-    `- Zusammenarbeit: ${ZUSAMMENARBEIT.punkte.join(', ')}.`,
-    `- Für: ${FUER_WEN.gruppen.map((g) => g.title).join(', ')}; Unternehmen, die mehr erwarten als reine Umsetzung.`,
-    `- Lösungen: ${[LOESUNGEN.website, LOESUNGEN.analyse, LOESUNGEN.auftritt, LOESUNGEN.weiter].map((l) => `${l.titel} (${l.text.replace(/\.$/, '')})`).join('; ')}. Website-Analyse von ${LOESUNGEN.analyse.punkte.join(', ')}.`,
-    `- Grundsätze: ${GLAUBEN.saetze.map(([a, b]) => `${a} vor ${b}`).join('; ')}.`,
-    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.unter}`,
+    `- Ein Unternehmensauftritt ist das Zusammenspiel aller Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}. ${HERO.botschaft.join(' ')}`,
+    `- ${EINDRUCK.titel}: ${EINDRUCK.einleitung} ${EINDRUCK.kurz.join(' ')}`,
+    `- ${PREIS.titel}: ${PREIS.text.join(' ')} Folgen: ${PREIS.folgen.join(', ')}. ${PREIS.leitgedanke}`,
+    `- ${LUECKE.titel}: Der Auftritt muss beantworten: ${LUECKE.fragen.join(' ')}`,
+    `- ${DESIGN.titel}. ${DESIGN.unter} Vorher klären wir: ${DESIGN.fragen.join(' ')} ${DESIGN.botschaft.join(' ')}`,
+    `- Arbeitsweise: ${ARBEITSWEISE.karten.map((k) => `${k.titel} (${k.text.join(' ').replace(/\.$/, '')})`).join(' → ')}.`,
+    `- Lösungen: ${[LOESUNGEN.auftritt, LOESUNGEN.analyse, LOESUNGEN.dna, LOESUNGEN.weiter].map((l) => `${l.titel} (${l.text.replace(/\.$/, '')})`).join('; ')}. Die Website-Analyse ist kostenlos. ${LOESUNGEN.botschaft}`,
+    `- Zusammenarbeit: ${ZUSAMMENARBEIT.punkte.map((p) => p.titel).join(', ')}.`,
+    `- Überzeugung: ${UEBERZEUGUNG.satz} ${UEBERZEUGUNG.verben.join(' ')} ${UEBERZEUGUNG.botschaft}`,
+    `- Ergebnis: ${ERGEBNIS.einleitung} ${ERGEBNIS.wirkungen.join(', ')}.`,
+    `- ${CHECK.eyebrow} auf der Startseite: 10 Fragen zu ${CHECK.bereiche.map((b) => b.name).join(', ')}; Ergebnis in Punkten von 100, berechnet nur im Browser (nichts wird gespeichert oder gesendet).`,
+    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.unterCta}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
     `${WAAS.claim} Drei Pakete. ${OFFER}`,
