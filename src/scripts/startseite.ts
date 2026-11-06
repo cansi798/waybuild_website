@@ -66,11 +66,16 @@ if (!ruhig && 'IntersectionObserver' in window) {
   };
   const plane = () => { if (!geplant) { geplant = true; requestAnimationFrame(rechne); } };
 
+  // Beim Laden NICHT rechnen (kein erzwungenes Layout, gut für die Ladezeit): oben gilt ohnehin --p: 0.
+  // Erst beim Scrollen; wurde die Seite schon gescrollt geladen (Anker, Zurück), einmal nach dem Laden.
+  let los = false;
   const nah = new IntersectionObserver(
-    (es) => { es.forEach((e) => (e.isIntersecting ? aktiv.add(e.target as HTMLElement) : aktiv.delete(e.target as HTMLElement))); plane(); },
+    (es) => { es.forEach((e) => (e.isIntersecting ? aktiv.add(e.target as HTMLElement) : aktiv.delete(e.target as HTMLElement))); if (los) plane(); },
     { rootMargin: '15% 0px' },
   );
   els.forEach((el) => nah.observe(el));
-  addEventListener('scroll', plane, { passive: true });
+  const start = () => { los = true; plane(); };
+  addEventListener('scroll', () => (los ? plane() : start()), { passive: true });
   addEventListener('resize', plane, { passive: true });
+  addEventListener('load', () => setTimeout(() => { if (!los && scrollY > 0) start(); }, 1200), { once: true });
 }

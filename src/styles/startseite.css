@@ -37,6 +37,8 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
  * Kopfzeile ohne Weichzeichner (Hintergrund ist ohnehin fast deckend). */
 html[data-thema='besucherreise'] .hdr::before { backdrop-filter: none; background: rgb(248 247 244 / 97%); }
 .bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+/* Abschnitt vor einem dunklen Abschnitt mit stark wechselnder Höhe: immer berechnen (sonst falsche Kontrastmessung) */
+.bs.bs--voll { content-visibility: visible; }
 
 /* Fortschritt: Standard ohne JS / reduzierte Bewegung = fertig */
 [data-p] { --p: 1; }
