@@ -28,7 +28,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${BEREICHE.titel} ${BEREICHE.unter} Bereiche: ${BEREICHE.bereiche.map((b) => `${b.titel}: ${b.teile.map(([t, imPaket]) => (imPaket ? t : `${t} (individuelles Angebot)`)).join(', ')}`).join('; ')}.`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
     `- ${GLAUBEN.titel}: ${VERSTEHEN.karten.map((k) => `${k.wort} (${GLAUBEN.werte[k.wert].titel}): ${GLAUBEN.werte[k.wert].leit} ${GLAUBEN.werte[k.wert].text}`).join(' ')} ${GLAUBEN.nichtKopf}: ${GLAUBEN.nicht.join(', ')}.`,
-    `- ${CHECK.eyebrow} auf der Startseite: 10 Fragen zu ${CHECK.bereiche.map((b) => b.name).join(', ')}; Ergebnis in Punkten von 100, berechnet nur im Browser (nichts wird gespeichert oder gesendet).`,
+    `- ${CHECK.eyebrow} auf der Startseite: ${CHECK.fragen.length} kurze Fragen (${CHECK.fragen.map((f) => f.schritt).join(', ')}); Ergebnis als Ampel je Station mit Tipp, berechnet nur im Browser. Mitgeschickt wird nur, wenn der Besucher das Ergebnis aktiv mit seiner Anfrage sendet.`,
     `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,
     `- Leitsatz: ${CLAIM}`,
     '',

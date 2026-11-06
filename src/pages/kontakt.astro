@@ -53,6 +53,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
         <input type="hidden" name="branche" value="" />
         <input type="hidden" name="paket" value="" />
         <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="check-mit" id="check-mit" hidden>
+          <p class="check-mit__kopf">Diese Angaben aus dem Kundenreise-Check senden wir mit</p>
+          <p class="check-mit__text" id="check-mit-text"></p>
+          <button type="button" class="btn btn--ghost btn--sm" id="check-mit-weg">Nicht mitsenden</button>
+        </div>
         <label class="check">
           <input type="checkbox" name="datenschutz" required />
           <span>Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span>
@@ -110,6 +115,22 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const paket = params.get('paket');
     if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
 
+    // Kundenreise-Check (Startseite): nur wenn der Besucher „Ergebnis mitschicken“ gewählt hat. Sichtbar und abwählbar,
+    // übertragen erst beim Absenden zusammen mit der Anfrage (sessionStorage, endet mit dem Tab).
+    let checkText = '';
+    try { checkText = sessionStorage.getItem('wb-kundenreise-check') ?? ''; } catch { checkText = ''; }
+    const checkBox = document.getElementById('check-mit');
+    if (checkText && checkBox) {
+      document.getElementById('check-mit-text')!.textContent = checkText;
+      checkBox.hidden = false;
+      document.getElementById('check-mit-weg')?.addEventListener('click', () => {
+        checkText = '';
+        try { sessionStorage.removeItem('wb-kundenreise-check'); } catch { /* egal */ }
+        checkBox.hidden = true;
+      });
+    }
+    const mitCheck = (nachricht: string) => (checkText ? `${nachricht ? `${nachricht}\n\n` : ''}Kundenreise-Check:\n${checkText}` : nachricht);
+
     const interessText = (d: Record<string, string>) => interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
     const status = form.querySelector<HTMLElement>('.form__status')!;
     form.addEventListener('submit', async (e) => {
@@ -118,6 +139,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
       if (data.website) return; // Honeypot: Bots füllen das versteckte Feld aus
       delete data.website;
+      data.nachricht = mitCheck(data.nachricht ?? '');
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
@@ -144,6 +166,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
         const json = await res.json().catch(() => ({}));
         if (!res.ok || json.success === false) throw new Error(String(res.status));
         // Abschluss der Journey: Danke-Seite mit nächsten Schritten
+        try { sessionStorage.removeItem('wb-kundenreise-check'); } catch { /* egal */ }
         location.href = `${form.dataset.thanks}?name=${encodeURIComponent(data.name.split(' ')[0])}`;
       } catch {
         button.disabled = false;
@@ -169,6 +192,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
   .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
   .hp { position: absolute; left: -9999px; }
+  .check-mit { display: grid; gap: 8px; padding: 14px 16px; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--paper); }
+  .check-mit[hidden] { display: none; }
+  .check-mit__kopf { margin: 0; font-weight: 650; font-size: 0.95rem; }
+  .check-mit__text { margin: 0; white-space: pre-line; font-size: 0.9rem; line-height: 1.55; color: var(--ink-soft); }
+  .check-mit .btn { justify-self: start; }
   .form .btn { justify-self: stretch; }
   @media (min-width: 640px) { .form .btn { justify-self: start; } }
   label small { font-weight: 400; color: var(--ink-soft); }

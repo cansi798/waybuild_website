@@ -88,49 +88,51 @@ export const GLAUBEN = {
   nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Kein Projekt, das nach der Umsetzung endet', 'Keine fünf verschiedenen Ansprechpartner'],
 };
 
-/** Check (Konzept 4768, als Vorschlag vor dem Abschluss behalten): 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */
+/** Kundenreise-Check (Jamil 4835; Grundlage Vorschlag „Website-Selbstcheck“, NC f/22627): 7 Fragen, eine pro Karte,
+ *  die man spontan beantworten kann: Betrieb (F01), Ziel (F24) und je eine Frage pro Station der Kundengeschichte.
+ *  Ampel je Antwort: 'g' läuft gut · 'y' ausbaufähig · 'r' hier geht etwas verloren · null = ohne Wertung.
+ *  Auswertung nur im Browser; mitgeschickt wird nur, wenn der Besucher „Ergebnis mitschicken“ wählt (sessionStorage → Kontaktseite). */
+export type Ampel = 'g' | 'y' | 'r';
 export const CHECK = {
-  eyebrow: 'Unternehmensauftritt-Check',
-  titel: 'Wie professionell wirkt Ihr Unternehmen aktuell?',
-  einleitung: '10 Fragen, rund zwei Minuten. Am Ende sehen Sie Ihre Punktzahl und wo Ihr Auftritt Vertrauen gewinnt oder verliert.',
-  datenschutz: 'Ihre Antworten bleiben in Ihrem Browser. Wir speichern nichts und senden nichts.',
-  antworten: [['Ja', 10], ['Teilweise', 5], ['Nein', 0]] as [string, number][],
-  bereiche: [
-    {
-      id: 'verstaendlich', name: 'Verständlichkeit',
-      fragen: ['Versteht man Ihr Angebot innerhalb von 10 Sekunden?', 'Erkennen Kunden Ihren Unterschied zu anderen Anbietern?'],
-      urteil: ['Besucher verstehen zu spät, was Sie anbieten. Hier beginnt die Unsicherheit.', 'Ihr Angebot ist erkennbar, Ihr Unterschied noch nicht klar genug.', 'Besucher verstehen schnell, was Sie anbieten und warum Sie.'],
-    },
-    {
-      id: 'vertrauen', name: 'Vertrauen',
-      fragen: ['Sind Bewertungen gut sichtbar?', 'Zeigen Sie echte Beispiele Ihrer Arbeit und die Menschen dahinter?'],
-      urteil: ['Besucher finden kaum Gründe, Ihnen zu vertrauen.', 'Vertrauen ist da, aber schwer zu finden. Zeigen Sie Bewertungen und Beispiele sichtbarer.', 'Bewertungen und echte Beispiele stärken Ihren Eindruck.'],
-    },
-    {
-      id: 'sichtbar', name: 'Sichtbarkeit',
-      fragen: ['Ist Ihr Google-Profil aktuell?', 'Findet man Sie, wenn man Ihre Leistung in Ihrer Region sucht?'],
-      urteil: ['Viele Interessenten finden Sie gar nicht erst.', 'Man findet Sie, aber nicht immer aktuell oder vollständig.', 'Wer Sie sucht, findet aktuelle Informationen.'],
-    },
-    {
-      id: 'einheitlich', name: 'Einheitlicher Auftritt',
-      fragen: ['Ist Ihr Auftritt überall konsistent?', 'Wirken E-Mails, Signatur, Angebote und Dokumente wie aus einem Guss?'],
-      urteil: ['Website, E-Mails und Dokumente erzählen verschiedene Geschichten.', 'Einzelne Berührungspunkte wirken anders als der Rest.', 'Ihr Auftritt wirkt überall wie aus einem Guss.'],
-    },
-    {
-      id: 'fuehrung', name: 'Nutzerführung',
-      fragen: ['Wissen Besucher sofort, was sie als Nächstes tun sollen?', 'Funktioniert Ihre Website auf dem Handy genauso gut wie am PC?'],
-      urteil: ['Besucher wissen nicht, was sie als Nächstes tun sollen.', 'Der nächste Schritt ist da, aber nicht überall leicht zu finden.', 'Besucher wissen, was sie als Nächstes tun sollen, auch am Handy.'],
-    },
-  ],
-  /** Gesamturteil: [ab Punkte, Satz] absteigend */
-  gesamt: [
-    [80, 'Ihr Auftritt überzeugt. Feinschliff lohnt sich an einzelnen Stellen.'],
-    [50, 'Eine solide Basis. Trotzdem gehen an einigen Stellen Chancen verloren.'],
-    [0, 'Ihr Auftritt bleibt hinter der Qualität Ihrer Arbeit zurück. Hier liegt viel Potenzial.'],
-  ] as [number, string][],
-  hinweis: 'Der Check ist eine Selbsteinschätzung. Eine Analyse durch uns geht tiefer und ist kostenlos.',
-  ctaHinweis: 'Nur wenn Sie auf den Knopf klicken, nehmen wir Ihre Punktzahl in das Anfrageformular mit. Absenden entscheiden Sie selbst.',
-  cta: 'Kostenlose Analyse anfordern',
+  eyebrow: 'Kundenreise-Check',
+  titel: 'Wie erleben Ihre Kunden Ihr Unternehmen?',
+  einleitung: '7 kurze Fragen, rund eine Minute. Einfach antippen, die nächste Frage kommt von allein.',
+  datenschutz: 'Ihre Antworten bleiben in Ihrem Browser. Nur wenn Sie Ihr Ergebnis mitschicken, erhalten wir es mit Ihrer Anfrage.',
+  fragen: [
+    { id: 'groesse', schritt: 'Ihr Betrieb', frage: 'Wie viele Personen arbeiten in Ihrem Betrieb, Sie eingeschlossen?', hinweis: 'Ohne Wertung. So passen die Tipps besser zu Ihnen.',
+      antworten: [['1', null], ['2 bis 5', null], ['6 bis 10', null], ['11 bis 25', null], ['mehr als 25', null]] },
+    { id: 'ziel', schritt: 'Ihr Ziel', frage: 'Was ist Ihnen in den nächsten 12 Monaten am wichtigsten?',
+      antworten: [['Mehr Anfragen', null], ['Passendere Anfragen', null], ['Weniger Büroarbeit', null], ['Mitarbeitende finden', null], ['Ein einheitlicher Auftritt', null]] },
+    { id: 'aufmerksamkeit', schritt: 'Aufmerksamkeit', frage: 'Suchen Sie bei Google nach Ihrer Leistung und Ihrem Ort. Wo erscheinen Sie?', hinweis: 'Zum Beispiel „Elektriker Norderstedt“. Der Test, den Ihre Kunden jeden Tag machen.',
+      antworten: [['Unter den ersten 3 in der Karte', 'g'], ['Auf der ersten Seite', 'g'], ['Weiter hinten', 'y'], ['Gar nicht', 'r'], ['Noch nicht ausprobiert', 'y']] },
+    { id: 'vertrauen', schritt: 'Vertrauen', frage: 'Wann haben Sie Ihre letzte Google-Bewertung bekommen?',
+      antworten: [['In den letzten 4 Wochen', 'g'], ['In den letzten 6 Monaten', 'g'], ['Länger her', 'y'], ['Noch keine', 'r'], ['Ich habe kein Google-Profil', 'r'], ['Weiß nicht', 'y']] },
+    { id: 'anfrage', schritt: 'Anfrage', frage: 'Wann melden Sie sich meistens auf eine neue Anfrage zurück?',
+      antworten: [['Am selben Tag', 'g'], ['Am nächsten Werktag', 'g'], ['Innerhalb einer Woche', 'y'], ['Später oder ganz unterschiedlich', 'r']] },
+    { id: 'bearbeitung', schritt: 'Bearbeitung', frage: 'Wo stehen Ihre Anfragen und Kundendaten?',
+      antworten: [['An einem Ort, zum Beispiel in einem Programm', 'g'], ['Verteilt auf E-Mail, Handy und Zettel', 'y'], ['Vor allem im Kopf', 'r']] },
+    { id: 'zufrieden', schritt: 'Zufriedener Kunde', frage: 'Bitten Sie zufriedene Kunden nach dem Auftrag um eine Bewertung oder Empfehlung?',
+      antworten: [['Ja, immer, mit festem Ablauf', 'g'], ['Manchmal', 'y'], ['Nie', 'r']] },
+  ] as { id: string; schritt: string; frage: string; hinweis?: string; antworten: [string, Ampel | null][] }[],
+  ampel: { g: 'Läuft gut', y: 'Ausbaufähig', r: 'Hier geht etwas verloren' } as Record<Ampel, string>,
+  /** je Station und Ampel: [Das bedeutet für Sie, Tipp] */
+  texte: {
+    aufmerksamkeit: { g: ['Wer Sie sucht, findet Sie.', 'Hier müssen Sie gerade nichts tun.'], y: ['Man findet Sie, aber nicht immer zuerst.', 'Google-Profil mit Fotos und Leistungen vervollständigen.'], r: ['Neue Kunden finden Sie kaum über Google.', 'Hier liegt Ihr größter Hebel: Google-Profil und Seiten für Ihren Ort.'] },
+    vertrauen: { g: ['Interessenten sehen aktuelle Bewertungen.', 'Bewertungen weiter pflegen.'], y: ['Ihre Bewertungen sind nicht mehr ganz frisch.', 'Nach jedem Auftrag freundlich um eine Bewertung bitten.'], r: ['Interessenten finden wenig Gründe, Ihnen zu vertrauen, bevor sie anrufen.', 'Google-Profil einrichten und erste Bewertungen sammeln.'] },
+    anfrage: { g: ['Wer anfragt, bekommt schnell Antwort. Das ist ein echter Vorteil.', 'So beibehalten.'], y: ['Manche Anfragen warten zu lange. Viele fragen bei mehreren Betrieben an.', 'Eine feste Rückrufzeit am Tag einplanen.'], r: ['Hier gehen wahrscheinlich Anfragen verloren, bevor ein Gespräch entsteht.', 'Jede Anfrage sofort bestätigen und eine feste Antwortzeit zusagen.'] },
+    bearbeitung: { g: ['Nach der Anfrage läuft es geordnet.', 'Gut so.'], y: ['Es läuft, kostet aber Zeit und Suchen.', 'Anfragen und Kundendaten an einem Ort sammeln.'], r: ['Wichtige Infos hängen an einzelnen Personen. Das bremst, etwa bei Urlaub oder Krankheit.', 'Ein einfaches System für Anfragen und Kunden einführen.'] },
+    zufrieden: { g: ['Zufriedene Kunden werden bei Ihnen zu Empfehlern.', 'Weiter so.'], y: ['Da geht mehr.', 'Nach jedem Auftrag den Bewertungslink schicken.'], r: ['Ihre zufriedenen Kunden bleiben unsichtbar.', 'Nach jedem Auftrag kurz um eine Bewertung bitten, mit Link.'] },
+  } as Record<string, Record<Ampel, [string, string]>>,
+  /** Ziel (Frage 2) → Station, die im Ergebnis als „Ihr Ziel“ markiert wird */
+  zielStation: { 'Mehr Anfragen': 'aufmerksamkeit', 'Passendere Anfragen': 'vertrauen', 'Weniger Büroarbeit': 'bearbeitung', 'Mitarbeitende finden': 'vertrauen', 'Ein einheitlicher Auftritt': 'vertrauen' } as Record<string, string>,
+  ergebnis: {
+    viel: 'An mehreren Stellen gehen Ihnen wahrscheinlich Kunden verloren. Wir sehen uns das kostenlos mit Ihnen an.',
+    mittel: 'Ihr Auftritt hat eine gute Basis. An einer Stelle lohnt sich gezielte Hilfe.',
+    wenig: 'Ehrlich gesagt: Sie sind gut aufgestellt. Unser Tipp:',
+    individuell: 'Unser Vorschlag: ein Erstgespräch zu Ihren Abläufen, etwa Terminbuchung, CRM oder Automatisierung. Das ist ein individuelles Angebot.',
+  },
+  hinweis: 'Das ist eine Selbsteinschätzung, keine Messung. Die Einordnung beruht auf unserer Erfahrung, nicht auf einer Studie.',
+  mitschicken: 'Mein Ergebnis mit der Anfrage mitschicken',
 };
 
 /** Abschluss (4792) mit CTA, darunter der Claim (4793) */
