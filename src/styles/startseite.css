@@ -103,57 +103,58 @@ html.js [data-p] { --p: 0; }
 .reise__oder { color: var(--ink-soft); font-weight: 500 !important; font-size: 0.92rem; }
 .reise__aus--ja svg, .reise__aus--nein svg { transform: scale(clamp(0.4, (var(--p) - 0.7) * 4 + 0.4, 1)); }
 
-/* ── A2 · Werkzeug-Chaos: einzelne Werkzeuge ohne Verbindung, beim Scrollen driften sie weiter auseinander ── */
-.chaos { position: relative; isolation: isolate; margin: 0; width: 100%; max-width: 480px; margin-inline: auto; aspect-ratio: 1 / 0.82; border-radius: var(--radius); border: 1.5px dashed #cdc6ba; }
-.chaos__k { position: absolute; padding: 12px 18px; border-radius: 12px; background: var(--white); border: 1px solid var(--line); box-shadow: var(--shadow); font-family: var(--font-head); font-weight: 650; font-size: clamp(0.92rem, 2.4vw, 1.05rem); color: var(--dark); white-space: nowrap;
-  transform: translate(-50%, -50%) translate(calc(var(--dx) * var(--p) * 1px), calc(var(--dy) * var(--p) * 1px)) rotate(calc(var(--r) * 1deg + var(--r) * var(--p) * 0.6deg)); }
-.chaos__k:nth-of-type(1) { left: 24%; top: 22%; --dx: -10; --dy: -8; --r: -6; }
-.chaos__k:nth-of-type(2) { left: 76%; top: 24%; --dx: 12; --dy: -6; --r: 5; }
-.chaos__k:nth-of-type(3) { left: 24%; top: 78%; --dx: -12; --dy: 8; --r: 4; }
-.chaos__k:nth-of-type(4) { left: 74%; top: 76%; --dx: 10; --dy: 10; --r: -5; }
-.chaos__mitte { position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; border: 2px dashed #b7beb9; display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; color: #6b726e; }
-.chaos__linien { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
-.chaos__linien path { fill: none; stroke: #b7beb9; stroke-width: 1.5; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
-.luecke--mitte { max-width: 640px; margin: clamp(32px, 5vw, 56px) auto 0; }
+/* ── 2 · Bausteine, die nicht zusammenpassen: sie versuchen ineinanderzugreifen und rutschen wieder ab ── */
+.werkzeuge { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 2px; }
+.werkzeuge li { font-family: var(--font-head); font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 650; line-height: 1.3; color: var(--dark); }
+.verluste { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.verluste li { padding: 7px 14px; border-radius: 999px; background: var(--paper-2); font-weight: 650; font-size: 0.95rem; color: #4f5559; }
+.bausteine { margin: 0; }
+.bausteine svg { display: block; width: 100%; max-width: 460px; height: auto; margin-inline: auto; overflow: visible; }
+.baustein { transform-box: view-box; transform-origin: 150px 120px; }
+.baustein text { font-family: var(--font-head); }
+.baustein:nth-child(1) { transform: translate(-6px, -4px) rotate(-4deg); }
+.baustein:nth-child(2) { transform: translate(8px, -6px) rotate(5deg); }
+.baustein:nth-child(3) { transform: translate(-8px, 8px) rotate(3deg); }
+.baustein:nth-child(4) { transform: translate(6px, 6px) rotate(-6deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .bausteine.ist-los .baustein { animation: baustein-probieren 1.6s cubic-bezier(0.45, 0, 0.3, 1) both; animation-delay: calc(var(--i) * 0.08s); }
+}
+@keyframes baustein-probieren { 0% { transform: translate(0, 0) rotate(0deg); } 35% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(2px, 1px) rotate(1deg); } }
 
-/* ── A2 · offene Fragen: Lücken zwischen Unternehmen und Kunde schließen sich ── */
-.luecke__einl { margin: 0 0 14px; font-weight: 650; color: var(--dark); }
-.luecke__kopf { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
-.luecke__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.luecke__liste li { display: grid; gap: 6px; padding: 14px 16px; border-radius: 12px; background: var(--paper); }
-.luecke__q { font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; color: var(--dark); text-align: center; }
-.luecke__bruecke { position: relative; display: block; height: 14px; margin-inline: 4px; }
-.luecke__bruecke::before, .luecke__bruecke::after { content: ''; position: absolute; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--dark); z-index: 1; }
-.luecke__bruecke::before { left: -4px; }
-.luecke__bruecke::after { right: -4px; background: var(--gold); }
-.luecke__fuell { position: absolute; inset: 6px 0 auto; height: 2px; background: linear-gradient(90deg, #cdc6ba 0 34%, transparent 34% 66%, #cdc6ba 66%); }
-.luecke__fuell::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--dark), var(--salbei) 60%, var(--gold)); transform-origin: left; transform: scaleX(clamp(0, var(--p) * 5.2 - var(--i), 1)); }
-.zwischenruf { max-width: 760px; margin: clamp(32px, 4vw, 48px) auto 0; text-align: center; font-family: var(--font-head); font-weight: 600; font-size: 1.12rem; color: var(--dark); }
-.zwischenruf a { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; color: var(--dark); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+/* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei große Karten mit reinem Text ── */
+.verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.verstehen-chips li { padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 650; color: var(--dark); }
+.karten--gross .karte { display: grid; place-items: center; min-height: clamp(140px, 22vw, 240px); text-align: center; }
+.karte__wort { margin: 0 !important; font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 650; letter-spacing: -0.02em; color: var(--dark) !important; }
+.karten--gross .karte:last-child .karte__wort { color: var(--accent-ink) !important; }
 
-/* ── A3 · Verständnis-Liste: Linie durch die Punkte bis zur Lösung ── */
-.verstehen { position: relative; max-width: 460px; }
-.verstehen__liste { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.verstehen__liste li { position: relative; padding: 14px 18px 14px 48px; border-radius: 12px; background: var(--paper); font-family: var(--font-head); font-weight: 600; font-size: 1.08rem; color: var(--dark); }
-.verstehen__liste li::before { content: ''; position: absolute; left: 18px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; border: 2.5px solid var(--salbei); background: var(--paper); box-sizing: border-box; z-index: 1; }
-.verstehen::before { content: ''; position: absolute; left: 24px; top: 24px; bottom: 30px; width: 2px; background: linear-gradient(var(--salbei), var(--dark) 75%, var(--gold)); transform-origin: top; z-index: 1; }
-.verstehen__ziel { position: relative; margin: 14px 0 0; padding: 12px 18px 12px 48px; font-family: var(--font-head); font-weight: 700; color: var(--dark); }
-.verstehen__ziel::before { content: ''; position: absolute; left: 15px; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 5px rgb(214 168 90 / 25%); }
-html.js .verstehen:not(.ist-los)::before { transform: scaleY(0); }
-html.js .verstehen:not(.ist-los) .verstehen__liste li::before, html.js .verstehen:not(.ist-los) .verstehen__ziel::before { transform: scale(0.3); opacity: 0; }
-.verstehen.ist-los::before { transition: transform 1.4s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
-.verstehen.ist-los .verstehen__liste li::before { transition: transform 0.4s cubic-bezier(0.3, 1.5, 0.5, 1), opacity 0.3s ease; transition-delay: calc(0.15s + var(--i) * 0.22s); }
-.verstehen.ist-los .verstehen__ziel::before { transition: transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) 1.4s, opacity 0.3s ease 1.4s; }
+/* ── 4 · Vier Bereiche zwischen erstem Kontakt und zufriedenem Kunden ── */
+.bereiche { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 640px) { .bereiche { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1040px) { .bereiche { grid-template-columns: repeat(4, 1fr); } }
+.bereich { padding: clamp(20px, 3vw, 28px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
+.bereich__icon { display: block; margin-bottom: 10px; }
+.bereich h3 { margin: 0 0 12px; font-size: clamp(1.2rem, 2vw, 1.35rem); }
+.bereich__teile { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.bereich__teile li { padding: 5px 12px; border-radius: 999px; background: var(--paper-2); border: 1.5px solid transparent; font-size: 0.92rem; font-weight: 600; color: var(--dark); }
+.bereich__teile li.ist-extra { background: transparent; border: 1.5px dashed #b7beb9; color: var(--ink-soft); }
+.bereiche__hinweis { margin: 14px 0 0; text-align: center; font-size: 0.88rem; color: var(--ink-soft); }
 
-/* ── A4 · Arbeitsweise: drei Karten, verbunden durch eine Linie, Karte im Fokus ── */
+/* ── 5 · Darauf können Sie sich verlassen: große Schlagworte, viel Weißraum, keine Icons ── */
+.verlassen { padding-block: clamp(80px, 12vw, 160px); }
+.verlassen__titel { margin: 0 0 clamp(32px, 5vw, 56px) !important; text-align: center; font-size: 0.85rem !important; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold) !important; }
+.verlassen__liste { list-style: none; margin: 0 auto; padding: 0; max-width: 900px; display: grid; gap: clamp(18px, 3vw, 30px); text-align: center; }
+.verlassen__liste li { font-family: var(--font-head); font-size: clamp(1.6rem, 4.6vw, 3rem); font-weight: 650; line-height: 1.15; letter-spacing: -0.02em; color: var(--white); }
+.verlassen__liste li.ist-letzt { color: var(--gold); }
+
+/* ── Claim unter dem Abschluss ── */
+.claim { display: grid; gap: 6px; margin: clamp(48px, 7vw, 80px) 0 0; padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--line); width: 100%; max-width: 640px; font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 650; color: var(--dark); }
+.claim__marke { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+
+/* ── Karten (Abschnitt 3): Karte im Fokus ── */
 .karten { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
 @media (min-width: 900px) { .karten { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
 .karten { position: relative; }
-.karten::before { content: ''; position: absolute; left: 50%; top: 20px; bottom: 20px; width: 2px; margin-left: -1px; background: linear-gradient(var(--salbei), var(--dark) 60%, var(--gold)); transform-origin: top; }
-@media (min-width: 900px) { .karten::before { left: 8%; right: 8%; top: 52px; bottom: auto; width: auto; height: 2px; margin: 0; background: linear-gradient(90deg, var(--salbei), var(--dark) 60%, var(--gold)); transform-origin: left; } }
-html.js .karten:not(.ist-los)::before { transform: scaleY(0); }
-@media (min-width: 900px) { html.js .karten:not(.ist-los)::before { transform: scaleX(0); } }
-.karten.ist-los::before { transition: transform 1.3s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
 .karte { position: relative; z-index: 1; padding: clamp(24px, 3vw, 36px); border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease; }
 .karte h3 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 10px 0 0.35em; letter-spacing: -0.02em; }
 .karte p { margin: 0 0 0.6em; line-height: 1.6; color: var(--ink-soft); }
@@ -163,42 +164,6 @@ html.js .karten:not(.ist-los)::before { transform: scaleY(0); }
 .karten[data-aktiv] .karte { opacity: 0.74; transform: scale(0.97); }
 .karten[data-aktiv='0'] .karte:nth-child(1), .karten[data-aktiv='1'] .karte:nth-child(2), .karten[data-aktiv='2'] .karte:nth-child(3) { opacity: 1; transform: none; background: var(--white); border-color: var(--dark); box-shadow: var(--shadow); }
 .karten[data-aktiv='0'] .karte:nth-child(1) .karte__nr, .karten[data-aktiv='1'] .karte:nth-child(2) .karte__nr, .karten[data-aktiv='2'] .karte:nth-child(3) .karte__nr { background: var(--dark); color: var(--white); }
-
-/* ── A5 · Aus einer Hand: aus einem Kern entstehen die vier Säulen ── */
-.netz { position: relative; display: grid; gap: 16px; margin-top: clamp(28px, 4vw, 44px); }
-.netz__linien { display: none; }
-.netz__kern { position: relative; z-index: 1; justify-self: center; display: grid; place-items: center; width: 150px; aspect-ratio: 1; border-radius: 50%; background: var(--dark); color: var(--white); text-align: center; box-shadow: 0 0 0 10px rgb(214 168 90 / 22%); font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.25; padding: 18px; }
-.loes { position: relative; display: flex; flex-direction: column; padding: clamp(22px, 3vw, 30px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); z-index: 1; }
-.loes h3 { font-size: clamp(1.2rem, 2vw, 1.4rem); margin-bottom: 0.3em; }
-.loes__text { margin: 0 0 0.8em; font-family: var(--font-head); font-weight: 600; font-size: 1.05rem; line-height: 1.45; color: var(--accent-ink); }
-.loes__info { margin: 0 0 0.8em; line-height: 1.6; color: var(--ink-soft); }
-.loes__stufen { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
-.loes__stufen strong { color: var(--dark); }
-.loes__preis { margin: auto 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.92rem; color: var(--ink-soft); }
-.loes__link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 650; color: var(--dark); text-decoration: none; }
-.loes__link:hover { text-decoration: underline; text-underline-offset: 3px; }
-.loes--b .loes__link, .loes--c .loes__link { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); width: 100%; }
-/* Handy: Linie vom Kern nach unten durch alle Karten */
-.netz::before { content: ''; position: absolute; left: 50%; top: 75px; bottom: 20px; width: 2px; margin-left: -1px; background: linear-gradient(var(--dark), var(--salbei)); transform-origin: top; }
-html.js .netz:not(.ist-los)::before { transform: scaleY(0); }
-.netz.ist-los::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.25, 1) 0.1s; }
-html.js .netz:not(.ist-los) .loes { opacity: 0; transform: translateY(14px); }
-.netz.ist-los .loes { transition: opacity 0.5s ease, transform 0.5s ease; }
-.netz.ist-los .loes--a { transition-delay: 0.3s; } .netz.ist-los .loes--b { transition-delay: 0.45s; }
-.netz.ist-los .loes--c { transition-delay: 0.6s; } .netz.ist-los .loes--d { transition-delay: 0.75s; }
-@media (min-width: 960px) {
-  .netz { grid-template-columns: 1fr 180px 1fr; grid-template-areas: 'a k b' 'c k d'; gap: 28px 24px; }
-  .netz::before { display: none; }
-  .netz__kern { grid-area: k; align-self: center; z-index: 1; }
-  .loes--a { grid-area: a; } .loes--b { grid-area: b; } .loes--c { grid-area: c; } .loes--d { grid-area: d; }
-  .netz__linien { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
-  .netz__linien path { fill: none; stroke: var(--salbei); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-dasharray: 1 1; stroke-dashoffset: 0; }
-  html.js .netz:not(.ist-los) .netz__linien path { stroke-dashoffset: 1; }
-  .netz.ist-los .netz__linien path { transition: stroke-dashoffset 0.8s ease 0.1s; }
-}
-.netz__botschaft { margin: clamp(24px, 3vw, 36px) 0 0; text-align: center; font-family: var(--font-head); font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 600; color: var(--dark); }
-.loes__hinweis { margin: 14px auto 0; max-width: 760px; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
-.loes__hinweis a { color: var(--dark); font-weight: 650; text-underline-offset: 3px; }
 
 /* ── A5 · Pakete kurz ── */
 .pakete-kurz { max-width: 860px; margin: clamp(32px, 5vw, 52px) auto 0; padding: clamp(20px, 3vw, 28px); border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); }
@@ -211,22 +176,6 @@ html.js .netz:not(.ist-los) .loes { opacity: 0; transform: translateY(14px); }
 @media (min-width: 760px) { .pakete-kurz__liste li { grid-template-columns: 150px 1fr auto; gap: 16px; align-items: baseline; } }
 .pakete-kurz .loes__hinweis { text-align: left; margin: 14px 0 0; max-width: none; }
 
-/* ── A7 · Ergebnis: „nicht wegen …“ ── */
-.nicht { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 4px; }
-.nicht li { position: relative; padding: 10px 0 10px 30px; border-bottom: 1px solid var(--line); line-height: 1.5; color: var(--ink); }
-.nicht li:last-child { border-bottom: 0; }
-.nicht li::before { content: ''; position: absolute; left: 3px; top: 50%; width: 14px; height: 2px; background: #9aa19c; }
-
-/* ── A8 · Komplexität: Einzelteile ordnen sich ── */
-.verben { list-style: none; margin: 4px 0 18px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
-.verben li { padding: 8px 15px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 28%); color: var(--white); font-weight: 600; }
-.teile { margin: 0; text-align: center; }
-.teile__svg { width: min(100%, 360px); height: auto; overflow: visible; }
-.teile__teil { transform-box: fill-box; transform-origin: center; opacity: calc(0.75 + var(--p) * 0.25);
-  transform: translate(calc(var(--sx) * (1 - var(--p)) * 1px), calc(var(--sy) * (1 - var(--p)) * 1px)) rotate(calc(var(--r) * (1 - var(--p)) * 1deg)); }
-.teile__rahmen { fill: none; stroke: var(--gold); stroke-width: 2.5; stroke-dasharray: 1.02 1; stroke-dashoffset: calc(1 - clamp(0, var(--p) * 1.5 - 0.5, 1)); }
-.teile__botschaft { margin-top: 14px; font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 650; color: var(--gold); }
-
 /* ── A9 · Abschluss: viel Weißraum, keine Animation ── */
 .abschluss { padding-block: clamp(96px, 14vw, 180px); }
 .abschluss__innen { display: grid; justify-items: center; text-align: center; max-width: 820px; }
@@ -236,12 +185,8 @@ html.js .netz:not(.ist-los) .loes { opacity: 0; transform: translateY(14px); }
 .abschluss__unter { margin: 18px 0 0; font-family: var(--font-head); font-weight: 600; color: var(--accent-ink); }
 
 @media (prefers-reduced-motion: reduce) {
-  html.js .netz::before, html.js .karten::before, html.js .verstehen::before { transform: none !important; }
-  html.js .verstehen .verstehen__liste li::before, html.js .verstehen .verstehen__ziel::before { transform: none !important; opacity: 1 !important; }
-  html.js .netz .loes { opacity: 1 !important; transform: none !important; }
-  html.js .netz .netz__linien path { stroke-dashoffset: 0 !important; }
   .karte { transition: none; }
 }
-.bs:not(.bs--alt) .luecke__liste li { background: var(--white); border: 1px solid var(--line); }
 .bs-gross-unter { font-family: var(--font-head); font-size: clamp(1.2rem, 2.6vw, 1.75rem); font-weight: 600; line-height: 1.35; color: var(--accent-ink); margin: 0 0 1em; }
 .bs--dunkel .bs-gross-unter { color: var(--gold); }
+.abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }

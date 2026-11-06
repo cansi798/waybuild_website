@@ -1,6 +1,6 @@
 // Bewegung der Startseite „Unternehmensauftritt“ (Jamil, Talk 4768). Nur transform, opacity und stroke-dashoffset.
 // 1. [data-p]: Fortschritt --p (0…1) beim Scrollen, nur solange das Element im Sichtbereich ist (rAF-gedrosselt).
-//    data-p="vs": Bühne „Verschmelzen“ (Hero / Ergebnis), sonst Standard-Verlauf (Oberkante 85 % → 25 % der Fensterhöhe,
+//    data-p="vs": Bühne (derzeit nicht genutzt), sonst Standard-Verlauf (Oberkante 85 % → 25 % der Fensterhöhe,
 //    verlängert um einen Teil der Elementhöhe).
 // 2. [data-fokus]: Karte im Fokus (Arbeitsweise) als data-aktiv am Container.
 // 3. [data-zeichne]: Klasse .ist-los beim ersten Sichtkontakt (Linien zeichnen, Folgen erscheinen).

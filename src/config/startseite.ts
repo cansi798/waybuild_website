@@ -1,10 +1,10 @@
-// Startseite der waybuild Website (Stand 06.11.2026 mittags): Hero + Abschnitte 1–5, 7–9 WÖRTLICH von Jamil
-// (Talk qh87y3sj 4771, 4773–4781). Abschnitt 6 offen; dort steht als Vorschlag der Unternehmensauftritt-Check aus Jamils
-// Konzept vom Morgen (4768). Davor: Konzept „Unternehmensauftritt“ (4768) nach Website Rethinking
-// (NC Projekte/waybuild/Website/Rethinking_Unternehmensauftritt_2026-11-06), davor „Besucherreise“ (05.11.).
-// Reihenfolge: Hero · 1 Keine einzelnen Systeme · 2 Werkzeuge/offene Fragen · 3 Verständnis · 4 Bessere Entscheidungen
-//   · 5 Aus einer Hand (+ Pakete) · 6 Check (Vorschlag) · 7 Ergebnis/Vertrauen · 8 Komplexität · 9 Abschluss
-// Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
+// Startseite der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil:
+//   Hero: Headline 4771, Subheadline 4783, Animation 4784 (Kundengeschichte in fünf Stationen)
+//   1 „Kunden erleben keine einzelnen Systeme.“ (4774, mittags) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
+//   · 4 Alles zwischen erstem Kontakt und zufriedenem Kunden (4789, + Pakete) · 5 Darauf können Sie sich verlassen (4790/4791)
+//   · Check (Konzept 4768, als Vorschlag) · Abschluss (4792) · Claim (4793)
+// Frühere Stände: „Unternehmensauftritt“ (4768, nach Website Rethinking, NC Rethinking_Unternehmensauftritt_2026-11-06),
+// „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
 // Die alte Startseite (vor dem 05.11.) steht unverändert unter /hauptseite-alt/.
 
 /** Name oben in der Kopfzeile der Startseite. An einer Stelle änderbar. */
@@ -17,33 +17,22 @@ export const ANLIEGEN = {
   bewerten: { label: 'Unternehmensauftritt bewerten lassen', paket: 'Unternehmensauftritt bewerten lassen' },
 };
 
-/** Die Berührungspunkte (Hero und Abschnitt 12). dx/dy = Startposition in % der Bühne, vom Mittelpunkt aus. */
-export const BERUEHRUNGSPUNKTE = [
-  { text: 'Website', dx: -32, dy: -27 },
-  { text: 'Google', dx: -11, dy: -40 },
-  { text: 'Bewertungen', dx: 14, dy: -32 },
-  { text: 'LinkedIn', dx: 34, dy: -21 },
-  { text: 'E-Mails', dx: -34, dy: 23 },
-  { text: 'Angebote', dx: -12, dy: 37 },
-  { text: 'Signatur', dx: 12, dy: 28 },
-  { text: 'Dokumente', dx: 33, dy: 21 },
-];
-
 export const HERO = {
   /** Rethinking: Zielgruppe in drei Sekunden („Bin ich hier richtig?“), hilft auch Suchmaschinen. */
   zeile: 'Für kleine und mittlere Unternehmen',
-  /** Hero-Texte wörtlich von Jamil: Headline Talk qh87y3sj 4771, Subheadline Korrektur 4773 (06.11.2026), in zwei Absätzen */
+  /** Hero-Texte wörtlich von Jamil: Headline Talk qh87y3sj 4771, Subheadline 4783 (06.11.2026, 19:56; ersetzt 4773), in zwei Absätzen */
   titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
   unter: [
-    'Kunden erleben Ihr Unternehmen nicht in einzelnen Systemen. Sie erleben jeden Kontakt mit Ihrem Unternehmen als Ganzes.',
-    'Deshalb verbinden wir Ihre Website, Kommunikation, Prozesse und Systeme zu einem durchgängigen Erlebnis.',
+    'Kunden erleben Ihr Unternehmen nicht in einzelnen Systemen. Sie erleben einen zusammenhängenden Prozess.',
+    'Deshalb entwickeln wir keine einzelnen Lösungen. Wir entwickeln digitale Unternehmensabläufe, die funktionieren.',
   ],
   cta: 'Unternehmensauftritt bewerten',
   cta2: 'Unsere Denkweise kennenlernen',
-  kern: 'Unternehmensauftritt',
+  /** Hero-Animation (Jamil 4784): kleine Geschichte eines Kunden in fünf Stationen, keine Linie, kein Prozessbild */
+  stationen: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'Bearbeitung', 'Zufriedener Kunde'],
 };
 
-// Abschnitte 1–4 nach dem Hero: Texte WÖRTLICH von Jamil (Talk qh87y3sj 4774–4777, 06.11.2026, 12:06–12:07).
+// Abschnitt 1 WÖRTLICH von Jamil (Talk qh87y3sj 4774, 06.11.2026, 12:06).
 
 /** Abschnitt 1 (4774): Visual = Wanderung über die Wege, auf denen Kunden das Unternehmen entdecken */
 export const EINDRUCK = {
@@ -56,89 +45,42 @@ export const EINDRUCK = {
   schluss: ['Nicht durch eine einzelne Website.', 'Sondern durch das Zusammenspiel aller Berührungspunkte.'],
 };
 
-/** Abschnitt 2 (4775): Visual = Werkzeug-Chaos + Lücken zwischen Unternehmen und Kunde */
-export const WERKZEUGE = {
-  titel: 'Genau hier entstehen die meisten Probleme.',
-  einleitung: 'Viele Unternehmen investieren in einzelne Werkzeuge.',
-  liste: 'Eine neue Website. Ein neues CRM. Eine neue Software. Ein neues Marketing-Tool.',
-  /** Beschriftung der Werkzeug-Kärtchen in der Grafik (nur Bild, Text steht oben in „liste“) */
-  kaertchen: ['Website', 'CRM', 'Software', 'Marketing-Tool'],
-  trotzdem: 'Trotzdem wirkt das Gesamterlebnis oft uneinheitlich.',
-  fragenKopf: 'Kunden wissen nicht sofort:',
-  fragen: ['Was macht dieses Unternehmen?', 'Warum sollte ich ihm vertrauen?', 'Warum sollte ich mich melden?'],
-  links: 'Unternehmen',
-  rechts: 'Kunde',
-  schluss: 'Jede offene Frage kostet Vertrauen.',
-  /** Rethinking: Zwischenruf zum Check, damit niemand bis zum Ende scrollen muss */
-  zwischenruf: 'Wie ist das bei Ihnen?',
-  zwischenrufLink: 'Zum Unternehmensauftritt-Check',
+/** Abschnitt 2 (4786/4787): Visual = vier Bausteine mit unterschiedlichen Kanten, die nicht ineinanderpassen */
+export const BAUSTEINE = {
+  titel: 'Die meisten Unternehmen optimieren einzelne Werkzeuge.',
+  werkzeuge: ['Website.', 'CRM.', 'Social Media.', 'Prozesse.'],
+  text: ['Doch Kunden erleben das Gesamtbild.', 'Wenn einzelne Bausteine nicht zusammenarbeiten, entstehen Reibungsverluste.'],
+  verluste: ['Verlorene Anfragen.', 'Unnötiger Aufwand.', 'Unklare Abläufe.'],
 };
 
-/** Abschnitt 3 (4776): Visual = Verständnis-Liste als Linie, die bei der Lösung ankommt */
-export const VERSTAENDNIS = {
-  titel: 'Deshalb beginnen wir nicht mit Lösungen.',
-  unter: 'Wir beginnen mit Verständnis.',
-  einleitung: 'Bevor wir Empfehlungen aussprechen, möchten wir verstehen:',
-  liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Leistungen', 'Ihre Ziele', 'Ihre Herausforderungen'],
-  ziel: 'Die richtige Lösung',
-  botschaft: ['Denn die richtige Lösung entsteht nicht durch Vermutungen.', 'Sondern durch Verständnis.'],
+/** Abschnitt 3 (4788): drei große Karten mit reinem Text */
+export const VERSTEHEN = {
+  titel: 'Verstehen. Empfehlen. Umsetzen.',
+  einleitung: 'Bevor wir Lösungen entwickeln, möchten wir verstehen:',
+  liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Ziele'],
+  schluss: ['Denn gute Entscheidungen entstehen durch Verständnis.', 'Nicht durch Vermutungen.'],
+  karten: ['Verstehen', 'Empfehlen', 'Umsetzen'],
 };
 
-/** Abschnitt 4 (4777) mit den drei Karten der Arbeitsweise (4768), verbunden durch eine Linie */
-export const ARBEITSWEISE = {
-  eyebrow: 'Unsere Arbeitsweise',
-  titel: 'Aus Verständnis entstehen bessere Entscheidungen.',
-  einleitung: ['Viele Anbieter starten mit der Umsetzung.', 'Wir gehen einen Schritt zurück.'],
-  karten: [
-    { titel: 'Verstehen', text: ['Zuerst verstehen wir die Situation.'] },
-    { titel: 'Empfehlen', text: ['Dann empfehlen wir den sinnvollsten Weg.'], betont: ['Nicht den einfachsten.', 'Nicht den teuersten.', 'Den richtigen.'] },
-    { titel: 'Umsetzen', text: ['Erst danach wird umgesetzt.'], betont: ['Klar.', 'Professionell.', 'Durchdacht.'] },
-  ] as { titel: string; text: string[]; betont?: string[] }[],
+/** Abschnitt 4 (4789): vier Bereiche. paket=false = nicht in den Monatspaketen (Ausbaustufe, individuelles Angebot). */
+export const BEREICHE = {
+  titel: 'Alles, was zwischen dem ersten Kontakt und dem zufriedenen Kunden passiert.',
+  bereiche: [
+    { titel: 'Aufmerksamkeit', teile: [['Website', true], ['Google', true], ['Social Media', false], ['Video', false]] },
+    { titel: 'Anfrage', teile: [['Formulare', true], ['Terminbuchung', false], ['CRM', false]] },
+    { titel: 'Bearbeitung', teile: [['Prozesse', false], ['Automatisierung', false], ['Systeme', false]] },
+    { titel: 'Betreuung', teile: [['Service', true], ['Kommunikation', true], ['Weiterentwicklung', true]] },
+  ] as { titel: string; teile: [string, boolean][] }[],
+  hinweis: 'Gestrichelt: Ausbaustufe mit individuellem Angebot. Alles andere steckt in unseren Monatspaketen.',
 };
 
-// Abschnitte 5, 7, 8, 9 WÖRTLICH von Jamil (Talk qh87y3sj 4778–4781, 06.11.2026, 12:08–12:09). Abschnitt 6 offen.
-
-/** Abschnitt 5 (4778): vier Säulen aus einem Kern. info = ehrliche Zuordnung zu Paketen bzw. Ausbaustufen (Rethinking). */
-export const EINE_HAND = {
-  titel: 'Alles aus einer Hand.',
-  text: [
-    'Ein Unternehmen sollte nicht fünf Ansprechpartner benötigen, um einen professionellen Auftritt aufzubauen.',
-    'Deshalb begleiten wir Unternehmen vom ersten digitalen Kontakt bis zum laufenden Betrieb.',
-  ],
-  kern: 'Aus einer Hand',
-  saeulen: [
-    { titel: 'Digitale Präsenz', text: 'Website, Google-Unternehmensprofil, Bewertungen und Sichtbarkeit.' },
-    { titel: 'Kommunikation', text: 'E-Mail, Signaturen, Kontaktwege und digitale Geschäftskommunikation.' },
-    { titel: 'Systeme', text: 'CRM, Workflows, Automatisierung und digitale Prozesse.' },
-    { titel: 'Betreuung', text: 'Beratung, Weiterentwicklung und langfristige Unterstützung.' },
-  ],
+/** Abschnitt 5 (4790/4791): große Schlagworte, viel Weißraum, keine Icons */
+export const VERLASSEN = {
+  titel: 'Darauf können Sie sich verlassen',
+  saetze: ['Wir übernehmen Verantwortung.', 'Wir denken mit.', 'Wir halten Dinge einfach.', 'Wir empfehlen nicht das Meiste.', 'Wir empfehlen das Richtige.'],
 };
 
-/** Abschnitt 7 (4779): Visual = Berührungspunkte verschmelzen zu „Vertrauen“ */
-export const ERGEBNIS = {
-  titel: 'Am Ende zählt nicht die Technologie.',
-  unter: 'Am Ende zählt das Ergebnis.',
-  saetze: [
-    'Menschen kaufen nicht wegen einer Website.',
-    'Menschen kaufen nicht wegen eines CRM-Systems.',
-    'Menschen kaufen nicht wegen einer Automatisierung.',
-  ],
-  vertrauen: 'Sie entscheiden sich für Unternehmen, denen sie vertrauen.',
-  schluss: 'Genau deshalb betrachten wir immer das Gesamtbild.',
-  kern: 'Vertrauen',
-};
-
-/** Abschnitt 8 (4780): dunkel, Visual = Einzelteile ordnen sich zu einem klaren Bild */
-export const KOMPLEXITAET = {
-  titel: 'Wir übernehmen die Komplexität.',
-  unter: 'Sie behalten den Fokus.',
-  text: [
-    'Digitale Lösungen sollten Unternehmen unterstützen. Nicht zusätzlich beschäftigen.',
-    'Deshalb übernehmen wir Verantwortung für die Dinge, die im Hintergrund funktionieren müssen, damit Sie sich auf Ihr Unternehmen konzentrieren können.',
-  ],
-};
-
-/** Check (Konzept 4768, als Vorschlag für den offenen Abschnitt 6 behalten): 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */
+/** Check (Konzept 4768, als Vorschlag vor dem Abschluss behalten): 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */
 export const CHECK = {
   eyebrow: 'Unternehmensauftritt-Check',
   titel: 'Wie professionell wirkt Ihr Unternehmen aktuell?',
@@ -183,18 +125,20 @@ export const CHECK = {
   cta: 'Kostenlose Analyse anfordern',
 };
 
-/** Abschnitt 9 (4781): Abschluss, viel Weißraum, keine Animation, CTA wie bisher */
+/** Abschluss (4792) mit CTA, darunter der Claim (4793) */
 export const ABSCHLUSS = {
-  titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
-  zeile: 'Digitale Präsenz. Kommunikation. Systeme. Betreuung.',
-  stark: 'Aus einer Hand.',
+  titel: 'Wir übernehmen die Komplexität. Sie behalten den Fokus.',
+  text: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden entwickeln wir Lösungen, die zusammenarbeiten und Unternehmen nachhaltig unterstützen.',
   cta: 'Unternehmensauftritt bewerten lassen',
   unterCta: 'Kurzes Gespräch. Klare Einschätzung. Konkrete Empfehlungen.',
 };
 
+/** Claim (4793): unter dem Abschluss, als Slogan in JSON-LD und im Title */
+export const CLAIM = 'Alles aus einer Hand. Von Anfang bis Wachstum.';
+
 /** Für Meta-Description, JSON-LD und llms.txt */
 export const BOTSCHAFT = {
-  titel: 'Ein durchgängiges Erlebnis für Ihre Kunden',
-  description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Wir verbinden Website, Kommunikation, Prozesse und Systeme zu einem durchgängigen Erlebnis.',
-  service: 'Durchgängige Kundenerlebnisse für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Digitale Präsenz, Kommunikation, Systeme und Betreuung aus einer Hand. Website, Google-Profil, E-Mail-Postfächer, Signatur, Briefvorlage, Logo und Geschäftspapiere in festen Monatspaketen; CRM, Workflows und Automatisierung als individuelles Angebot. Erst verstehen, dann empfehlen, dann umsetzen; fester Ansprechpartner und laufende Weiterentwicklung im festen Monatspreis.',
+  titel: CLAIM,
+  description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung aus einer Hand. Für kleine und mittlere Unternehmen.',
+  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Aufmerksamkeit (Website, Google), Anfrage (Formulare), Bearbeitung und Betreuung (Service, Kommunikation, Weiterentwicklung) aus einer Hand. Website, Google-Profil, E-Mail-Postfächer, Signatur, Briefvorlage, Logo und Geschäftspapiere in festen Monatspaketen; Social Media, Video, Terminbuchung, CRM, Prozesse, Automatisierung und Systeme als individuelles Angebot.',
 };

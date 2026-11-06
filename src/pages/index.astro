@@ -1,52 +1,46 @@
 ---
-// STARTSEITE der waybuild Website (Stand 06.11.2026 mittags). Hero + Abschnitte 1–5, 7–9 WÖRTLICH von Jamil
-// (Talk qh87y3sj 4771, 4773–4781); Abschnitt 6 offen, dort als Vorschlag der Unternehmensauftritt-Check (Konzept 4768).
+// STARTSEITE der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj):
+//   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
+//   · 1 Kunden erleben keine einzelnen Systeme (4774, Wanderung) · 2 Bausteine, die nicht passen (4786/4787)
+//   · 3 Verstehen. Empfehlen. Umsetzen. (4788, #denkweise, drei große Karten) · 4 Vier Bereiche + Pakete (4789)
+//   · 5 Darauf können Sie sich verlassen (4790/4791) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
-//   Hero (Berührungspunkte verschmelzen) · A1 Keine einzelnen Systeme (Wanderung) · A2 Werkzeug-Chaos + offene Fragen
-//   · A3 Verständnis (#denkweise) · A4 Bessere Entscheidungen (Verstehen → Empfehlen → Umsetzen als Linie)
-//   · A5 Aus einer Hand (4 Säulen aus einem Kern + Pakete) · A6 Check (#check, Vorschlag) · A7 Ergebnis → Vertrauen
-//   · A8 Komplexität (dunkel, Einzelteile ordnen sich) · A9 Abschluss (keine Animation)
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
 // Die alte Startseite steht unverändert unter /hauptseite-alt/.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StartHero from '../components/start/StartHero.astro';
-import Verschmelzen from '../components/start/Verschmelzen.astro';
 import Check from '../components/start/Check.astro';
-import Icon from '../components/Icon.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { PAKETE, WAAS, formatEuro } from '../config/site';
-import {
-  ANLIEGEN, BERUEHRUNGSPUNKTE, EINDRUCK, WERKZEUGE, VERSTAENDNIS, ARBEITSWEISE, EINE_HAND, ERGEBNIS, KOMPLEXITAET,
-  ABSCHLUSS, BOTSCHAFT,
-} from '../config/startseite';
+import { ANLIEGEN, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
-const [fundament, wegweiser, wahrzeichen] = PAKETE;
-const hat = (p: typeof PAKETE[number], wort: string) => [...p.extras, ...p.features].some((f) => f.includes(wort));
+const preis = (p: typeof PAKETE[number]) => `${formatEuro(p.preis)} im Monat netto zzgl. MwSt.`;
 
-// Abschnitt 5: ehrliche Zuordnung der vier Säulen zu Paketen (Inhalte + Preise aus PAKETE) bzw. Ausbaustufen
-const ab = (p: typeof PAKETE[number]) => `${formatEuro(p.preis)} im Monat netto zzgl. MwSt.`;
-const saeulenInfo = [
-  `In allen Paketen: Website. Ab ${wegweiser.name}: ${hat(wegweiser, 'Google') ? 'Google-Unternehmensprofil, ' : ''}lokale Seiten und Monatsbericht.`,
-  `In allen Paketen: ${hat(fundament, '20 E-Mail') ? '20 E-Mail-Postfächer und ' : ''}Signatur nach DIN 5008. ${wahrzeichen.name}: Logo und Geschäftsbriefe.`,
-  'Ausbaustufe mit individuellem Angebot.',
-  `Fester Ansprechpartner in allen Paketen. ${wahrzeichen.name}: Quartalsgespräch.`,
+// Abschnitt 2: vier Bausteine mit Kanten, die nicht zueinander passen (Knauf ↔ Dreieck, Steg ↔ Rundung)
+const BLOECKE = [
+  { d: 'M30 30 H140 V58 A12 12 0 0 1 140 82 V110 H30 Z', fill: '#1f3140', text: '#f8f7f4', x: 85, y: 75 },
+  { d: 'M160 30 H270 V110 H160 V86 L178 70 L160 54 Z', fill: '#7e9b8a', text: '#1f3140', x: 220, y: 75 },
+  { d: 'M30 130 H64 V116 H96 V130 H140 V210 H30 Z', fill: '#d6a85a', text: '#1f3140', x: 85, y: 175 },
+  { d: 'M160 130 H198 A15 15 0 0 0 228 130 H270 V210 H160 Z', fill: '#ffffff', text: '#1f3140', x: 215, y: 175 },
 ];
 
-// Abschnitt 8: Einzelteile (3 × 3), die sich zu einem Bild ordnen. sx/sy = Versatz am Anfang, r = Drehung.
-const TEILE = [
-  [-70, -60, -28], [10, -84, 18], [80, -50, 40], [-90, 6, 22], [0, 0, -12], [92, 14, -34], [-64, 78, 34], [16, 92, -20], [84, 70, 26],
+// Abschnitt 4: kleine Zeichnungen je Bereich (dieselben Motive wie in der Hero-Geschichte)
+const BEREICH_ICON = [
+  '<rect x="13" y="6" width="22" height="36" rx="5" fill="#1f3140"/><rect x="16" y="11" width="16" height="24" rx="2" fill="#f8f7f4"/><circle cx="35" cy="8" r="6" fill="#d6a85a"/>',
+  '<rect x="6" y="12" width="36" height="25" rx="4" fill="#fff" stroke="#1f3140" stroke-width="2.4"/><path d="M6 14 L24 28 L42 14" fill="none" stroke="#1f3140" stroke-width="2.4" stroke-linejoin="round"/><circle cx="40" cy="12" r="5" fill="#d6a85a"/>',
+  '<circle cx="19" cy="20" r="10" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.6 2.7"/><circle cx="19" cy="20" r="7" fill="#1f3140"/><circle cx="19" cy="20" r="2.8" fill="#f8f7f4"/><circle cx="34" cy="33" r="7" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.8 2.1"/><circle cx="34" cy="33" r="5" fill="#7e9b8a"/><circle cx="34" cy="33" r="2" fill="#f8f7f4"/>',
+  '<path d="M24 40 c-2 -2 -16 -10 -16 -20 c0 -6 5 -10 10 -10 c3 0 5 2 6 4 c1 -2 3 -4 6 -4 c5 0 10 4 10 10 c0 10 -14 18 -16 20 Z" fill="#d6a85a"/>',
 ];
-const teilFarbe = ['#7e9b8a', '#ece8e1', '#7e9b8a', '#ece8e1', '#d6a85a', '#ece8e1', '#7e9b8a', '#ece8e1', '#7e9b8a'];
 ---
 
 <BaseLayout
   title={BOTSCHAFT.titel}
   description={BOTSCHAFT.description}
-  schema={[serviceSchema(Astro.site, BOTSCHAFT.service)]}
+  schema={[{ ...serviceSchema(Astro.site, BOTSCHAFT.service), slogan: CLAIM }]}
   thema="besucherreise"
 >
   <!-- Hero -->
@@ -75,108 +69,66 @@ const teilFarbe = ['#7e9b8a', '#ece8e1', '#7e9b8a', '#ece8e1', '#d6a85a', '#ece8
     </div>
   </section>
 
-  <!-- A2 · Genau hier entstehen die meisten Probleme (Jamil 4775): Werkzeug-Chaos + Lücken -->
-  <section class="bs" aria-labelledby="bs-werkzeuge">
-    <div class="wrap bs-zwei">
+  <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): Bausteine, die nicht passen -->
+  <section class="bs" aria-labelledby="bs-bausteine">
+    <div class="wrap bs-zwei bs-zwei--mitte">
       <div class="bs-kopf">
-        <h2 id="bs-werkzeuge">{WERKZEUGE.titel}</h2>
-        <p class="bs-lead">{WERKZEUGE.einleitung}</p>
-        <p class="bs-lead bs-stark">{WERKZEUGE.liste}</p>
-        <p class="bs-lead">{WERKZEUGE.trotzdem}</p>
+        <h2 id="bs-bausteine">{BAUSTEINE.titel}</h2>
+        <ul class="werkzeuge">{BAUSTEINE.werkzeuge.map((w) => <li>{w}</li>)}</ul>
+        <p class="bs-lead"><strong>{BAUSTEINE.text[0]}</strong></p>
+        <p class="bs-lead">{BAUSTEINE.text[1]}</p>
+        <ul class="verluste">{BAUSTEINE.verluste.map((v) => <li>{v}</li>)}</ul>
       </div>
-      <figure class="chaos" data-p data-p-lang="0.4" aria-hidden="true">
-        {WERKZEUGE.kaertchen.map((k, i) => <span class="chaos__k" style={`--i:${i}`}>{k}</span>)}
-        <span class="chaos__mitte">?</span>
-        <svg class="chaos__linien" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M24 22 L40 38" /><path d="M76 24 L60 40" /><path d="M24 78 L40 62" /><path d="M76 76 L60 60" />
+      <figure class="bausteine" data-zeichne aria-hidden="true">
+        <svg viewBox="0 0 300 240" focusable="false">
+          {BLOECKE.map((b, i) => (
+            <g class="baustein" style={`--i:${i}`}>
+              <path d={b.d} fill={b.fill} stroke={i === 3 ? '#cdc6ba' : 'none'} stroke-width="1.5" />
+              <text x={b.x} y={b.y + 5} text-anchor="middle" font-size="14" font-weight="650" fill={b.text}>{BAUSTEINE.werkzeuge[i].replace('.', '')}</text>
+            </g>
+          ))}
         </svg>
       </figure>
     </div>
-    <div class="wrap">
-      <div class="luecke luecke--mitte" data-p data-p-lang="0.45">
-        <p class="luecke__einl">{WERKZEUGE.fragenKopf}</p>
-        <div class="luecke__kopf" aria-hidden="true"><span>{WERKZEUGE.links}</span><span>{WERKZEUGE.rechts}</span></div>
-        <ul class="luecke__liste">
-          {WERKZEUGE.fragen.map((f, i) => (
-            <li style={`--i:${i}`}>
-              <span class="luecke__q">{f}</span>
-              <span class="luecke__bruecke" aria-hidden="true"><span class="luecke__fuell"></span></span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-    <div class="wrap">
-      <p class="leitsatz reveal">{WERKZEUGE.schluss}</p>
-      <p class="zwischenruf reveal">{WERKZEUGE.zwischenruf} <a href="#check">{WERKZEUGE.zwischenrufLink} <Icon name="arrow" size={16} /></a></p>
-    </div>
   </section>
 
-  <!-- A3 · Deshalb beginnen wir nicht mit Lösungen (Jamil 4776): Verständnis-Liste als Linie bis zur Lösung -->
-  <section class="bs bs--alt" id="denkweise" aria-labelledby="bs-design">
-    <div class="wrap bs-zwei">
-      <div class="bs-kopf">
-        <h2 id="bs-design">{VERSTAENDNIS.titel}</h2>
-        <p class="bs-unter">{VERSTAENDNIS.unter}</p>
-        <p class="bs-lead">{VERSTAENDNIS.einleitung}</p>
-      </div>
-      <div class="verstehen" data-zeichne>
-        <ul class="verstehen__liste">{VERSTAENDNIS.liste.map((f, i) => <li style={`--i:${i}`}>{f}</li>)}</ul>
-        <p class="verstehen__ziel" aria-hidden="true">{VERSTAENDNIS.ziel}</p>
-      </div>
-    </div>
-    <div class="wrap">
-      <p class="leitsatz reveal">{VERSTAENDNIS.botschaft[0]} <strong>{VERSTAENDNIS.botschaft[1]}</strong></p>
-    </div>
-  </section>
-
-  <!-- A4 · Aus Verständnis entstehen bessere Entscheidungen (Jamil 4777): Verstehen → Empfehlen → Umsetzen als Linie -->
-  <section class="bs" aria-labelledby="bs-arbeit">
+  <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788): drei große Karten mit reinem Text -->
+  <section class="bs bs--alt" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
-        <p class="eyebrow">{ARBEITSWEISE.eyebrow}</p>
-        <h2 id="bs-arbeit">{ARBEITSWEISE.titel}</h2>
-        <p class="bs-lead">{ARBEITSWEISE.einleitung[0]} <strong>{ARBEITSWEISE.einleitung[1]}</strong></p>
+        <h2 id="bs-verstehen">{VERSTEHEN.titel}</h2>
+        <p class="bs-lead">{VERSTEHEN.einleitung}</p>
+        <ul class="verstehen-chips">{VERSTEHEN.liste.map((l) => <li>{l}</li>)}</ul>
+        <p class="bs-lead">{VERSTEHEN.schluss[0]} <strong>{VERSTEHEN.schluss[1]}</strong></p>
       </div>
-      <ol class="karten" data-fokus data-zeichne>
-        {ARBEITSWEISE.karten.map((k, i) => (
-          <li class="karte">
-            <span class="karte__nr">{i + 1}</span>
-            <h3>{k.titel}</h3>
-            {k.text.map((t) => <p>{t}</p>)}
-            {k.betont && <p class="karte__betont">{k.betont.map((b, j) => <span class:list={{ 'ist-letzt': j === k.betont!.length - 1 }}>{b}</span>)}</p>}
-          </li>
-        ))}
+      <ol class="karten karten--gross" data-fokus>
+        {VERSTEHEN.karten.map((k) => <li class="karte"><p class="karte__wort">{k}</p></li>)}
       </ol>
     </div>
   </section>
 
-  <!-- A5 · Alles aus einer Hand (Jamil 4778): vier Säulen aus einem Kern, darunter die Pakete -->
-  <section class="bs bs--alt" id="loesungen" aria-labelledby="bs-hand">
+  <!-- 4 · Alles zwischen erstem Kontakt und zufriedenem Kunden (Jamil 4789): vier Bereiche, darunter die Pakete -->
+  <section class="bs" id="loesungen" aria-labelledby="bs-bereiche">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
-        <h2 id="bs-hand">{EINE_HAND.titel}</h2>
-        <p class="bs-lead">{EINE_HAND.text[0]}</p>
-        <p class="bs-lead"><strong>{EINE_HAND.text[1]}</strong></p>
+        <h2 id="bs-bereiche">{BEREICHE.titel}</h2>
       </div>
-      <div class="netz" data-zeichne>
-        <svg class="netz__linien" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path pathLength="1" d="M50 50 L22 26" /><path pathLength="1" d="M50 50 L78 26" />
-          <path pathLength="1" d="M50 50 L22 74" /><path pathLength="1" d="M50 50 L78 74" />
-        </svg>
-        <div class="netz__kern" aria-hidden="true"><span>{EINE_HAND.kern}</span></div>
-        {EINE_HAND.saeulen.map((k, i) => (
-          <article class:list={['loes', `loes--${'abcd'[i]}`]}>
-            <h3>{k.titel}</h3>
-            <p class="loes__text">{k.text}</p>
-            <p class="loes__preis">{saeulenInfo[i]}</p>
-          </article>
+      <ul class="bereiche">
+        {BEREICHE.bereiche.map((b, i) => (
+          <li class="bereich reveal" style={`transition-delay:${i * 90}ms`}>
+            <svg class="bereich__icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" set:html={BEREICH_ICON[i]} />
+            <h3>{b.titel}</h3>
+            <ul class="bereich__teile">
+              {b.teile.map(([t, imPaket]) => <li class:list={{ 'ist-extra': !imPaket }}>{t}{!imPaket && <span class="sr-only"> (individuelles Angebot)</span>}</li>)}
+            </ul>
+          </li>
         ))}
-      </div>
+      </ul>
+      <p class="bereiche__hinweis">{BEREICHE.hinweis}</p>
       <div class="pakete-kurz">
-        <p class="pakete-kurz__kopf">So steckt das in unseren Paketen</p>
+        <p class="pakete-kurz__kopf">Unsere Monatspakete</p>
         <ul class="pakete-kurz__liste">
-          {PAKETE.map((p) => <li><strong>{p.name}</strong><span>{p.kurz}</span><span class="pakete-kurz__preis">{ab(p)}</span></li>)}
+          {PAKETE.map((p) => <li><strong>{p.name}</strong><span>{p.kurz}</span><span class="pakete-kurz__preis">{preis(p)}</span></li>)}
         </ul>
         <p class="loes__hinweis">
           Alle Preise netto zzgl. gesetzlicher MwSt.{WAAS.einrichtung === 0 && ' 0 € Einrichtung.'} {WAAS.laufzeit}.{' '}
@@ -186,52 +138,27 @@ const teilFarbe = ['#7e9b8a', '#ece8e1', '#7e9b8a', '#ece8e1', '#d6a85a', '#ece8
     </div>
   </section>
 
-  <!-- A6 · offen bei Jamil; Vorschlag: Unternehmensauftritt-Check (Konzept 4768) -->
+  <!-- 5 · Darauf können Sie sich verlassen (Jamil 4790/4791): große Schlagworte, viel Weißraum, keine Icons -->
+  <section class="bs bs--dunkel verlassen" aria-labelledby="bs-verlassen">
+    <div class="wrap">
+      <h2 id="bs-verlassen" class="verlassen__titel">{VERLASSEN.titel}</h2>
+      <ul class="verlassen__liste">
+        {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Vorschlag (bei Jamil offen): Unternehmensauftritt-Check -->
   <Check />
 
-  <!-- A7 · Am Ende zählt das Ergebnis (Jamil 4779): Berührungspunkte verschmelzen zu „Vertrauen“ -->
-  <section class="bs" aria-labelledby="bs-ergebnis">
-    <div class="wrap bs-zwei bs-zwei--mitte">
-      <div class="bs-kopf">
-        <h2 id="bs-ergebnis">{ERGEBNIS.titel}</h2>
-        <p class="bs-unter">{ERGEBNIS.unter}</p>
-        <ul class="nicht">{ERGEBNIS.saetze.map((t) => <li>{t}</li>)}</ul>
-        <p class="bs-lead"><strong>{ERGEBNIS.vertrauen}</strong></p>
-        <p class="bs-lead">{ERGEBNIS.schluss}</p>
-      </div>
-      <Verschmelzen kern={ERGEBNIS.kern} klein label={`Alle Berührungspunkte (${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}) verschmelzen zu: ${ERGEBNIS.kern}.`} />
-    </div>
-  </section>
-
-  <!-- A8 · Wir übernehmen die Komplexität (Jamil 4780): Einzelteile ordnen sich -->
-  <section class="bs bs--dunkel" aria-labelledby="bs-komplex">
-    <div class="wrap bs-zwei bs-zwei--mitte">
-      <div class="bs-kopf">
-        <h2 id="bs-komplex" class="bs-gross">{KOMPLEXITAET.titel}</h2>
-        <p class="bs-gross-unter">{KOMPLEXITAET.unter}</p>
-        <p class="bs-lead">{KOMPLEXITAET.text[0]}</p>
-        <p class="bs-lead bs-lead--hell">{KOMPLEXITAET.text[1]}</p>
-      </div>
-      <figure class="teile" data-p data-p-lang="0.5" aria-hidden="true">
-        <svg class="teile__svg" viewBox="0 0 300 300" focusable="false">
-          <rect class="teile__rahmen" x="30" y="30" width="240" height="240" rx="18" pathLength="1" />
-          {TEILE.map(([sx, sy, r], i) => (
-            <rect class="teile__teil" x={44 + (i % 3) * 74} y={44 + Math.floor(i / 3) * 74} width="64" height="64" rx="10"
-              fill={teilFarbe[i]} style={`--sx:${sx};--sy:${sy};--r:${r}`} />
-          ))}
-        </svg>
-      </figure>
-    </div>
-  </section>
-
-  <!-- A9 · Abschluss (Jamil 4781): viel Weißraum, keine Animation -->
+  <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
   <section class="bs abschluss" aria-labelledby="bs-abschluss">
     <div class="wrap abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
-      <p class="abschluss__text">{ABSCHLUSS.zeile}</p>
-      <p class="abschluss__text abschluss__text--stark">{ABSCHLUSS.stark}</p>
+      <p class="abschluss__text abschluss__text--ruhig">{ABSCHLUSS.text}</p>
       <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>
       <p class="abschluss__unter">{ABSCHLUSS.unterCta}</p>
+      <p class="claim"><span class="claim__marke">{MARKE}</span>{CLAIM}</p>
     </div>
   </section>
 </BaseLayout>

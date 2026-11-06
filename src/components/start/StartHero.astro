@@ -1,9 +1,9 @@
 ---
-// Abschnitt 1, Hero der Startseite „Unternehmensauftritt“ (Jamil, Talk 4768). Text steht beim Laden sofort
-// (kein Einblenden, gut für LCP). Rechts bzw. darunter die Bühne: acht Berührungspunkte schweben einzeln und
-// verschmelzen beim Scrollen zu „Unternehmensauftritt“ (Botschaft darunter steht jetzt in Abschnitt A1). Knöpfe springen zum Check (#check) und zu Abschnitt 5 (#denkweise).
-import { HERO as H, BERUEHRUNGSPUNKTE } from '../../config/startseite';
-import Verschmelzen from './Verschmelzen.astro';
+// Hero der Startseite (Texte Jamil, Talk qh87y3sj 4771 + 4783). Text steht beim Laden sofort (kein Einblenden, gut für
+// LCP). Rechts bzw. darunter die kleine Kundengeschichte in fünf Stationen (Jamil 4784, KundenGeschichte.astro).
+// Knöpfe springen zum Check (#check) und zum Abschnitt Verständnis (#denkweise).
+import { HERO as H } from '../../config/startseite';
+import KundenGeschichte from './KundenGeschichte.astro';
 ---
 <section class="sh" aria-labelledby="sh-titel">
   <div class="wrap sh__raster">
@@ -17,7 +17,7 @@ import Verschmelzen from './Verschmelzen.astro';
       </div>
     </div>
     <figure class="sh__bild">
-      <Verschmelzen kern={H.kern} label={`Acht Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}. Zusammen ergeben sie den ${H.kern}.`} />
+      <KundenGeschichte />
     </figure>
   </div>
 </section>

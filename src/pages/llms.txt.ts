@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, BERUEHRUNGSPUNKTE, EINDRUCK, WERKZEUGE, VERSTAENDNIS, ARBEITSWEISE, EINE_HAND, ERGEBNIS, KOMPLEXITAET, CHECK, ABSCHLUSS, BOTSCHAFT } from '../config/startseite';
+import { HERO, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -23,16 +23,14 @@ export const GET: APIRoute = async ({ site }) => {
     '## Kernbotschaft: Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden',
     `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${EINDRUCK.titel} ${EINDRUCK.unter} ${EINDRUCK.einleitung} ${EINDRUCK.minuten} ${EINDRUCK.schluss.join(' ')} Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}.`,
-    `- ${WERKZEUGE.titel} ${WERKZEUGE.einleitung} ${WERKZEUGE.liste} ${WERKZEUGE.trotzdem} ${WERKZEUGE.fragenKopf} ${WERKZEUGE.fragen.join(' ')} ${WERKZEUGE.schluss}`,
-    `- ${VERSTAENDNIS.titel} ${VERSTAENDNIS.unter} ${VERSTAENDNIS.einleitung} ${VERSTAENDNIS.liste.join(', ')}. ${VERSTAENDNIS.botschaft.join(' ')}`,
-    `- ${ARBEITSWEISE.titel} ${ARBEITSWEISE.einleitung.join(' ')}`,
-    `- Arbeitsweise: ${ARBEITSWEISE.karten.map((k) => `${k.titel} (${k.text.join(' ').replace(/\.$/, '')})`).join(' → ')}.`,
-    `- ${EINE_HAND.titel} ${EINE_HAND.text.join(' ')} ${EINE_HAND.saeulen.map((k) => `${k.titel}: ${k.text}`).join(' ')} Website, Kommunikation und Betreuung stecken in den drei Monatspaketen; CRM, Workflows und Automatisierung gibt es als individuelles Angebot.`,
-    `- ${ERGEBNIS.titel} ${ERGEBNIS.unter} ${ERGEBNIS.saetze.join(' ')} ${ERGEBNIS.vertrauen} ${ERGEBNIS.schluss}`,
-    `- ${KOMPLEXITAET.titel} ${KOMPLEXITAET.unter} ${KOMPLEXITAET.text.join(' ')}`,
+    `- ${EINDRUCK.titel} ${EINDRUCK.unter} ${EINDRUCK.einleitung} ${EINDRUCK.minuten} ${EINDRUCK.schluss.join(' ')}`,
+    `- ${BAUSTEINE.titel} ${BAUSTEINE.werkzeuge.join(' ')} ${BAUSTEINE.text.join(' ')} ${BAUSTEINE.verluste.join(' ')}`,
+    `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')}`,
+    `- ${BEREICHE.titel} ${BEREICHE.bereiche.map((b) => `${b.titel}: ${b.teile.map(([t, imPaket]) => (imPaket ? t : `${t} (individuelles Angebot)`)).join(', ')}`).join('; ')}.`,
+    `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
     `- ${CHECK.eyebrow} auf der Startseite: 10 Fragen zu ${CHECK.bereiche.map((b) => b.name).join(', ')}; Ergebnis in Punkten von 100, berechnet nur im Browser (nichts wird gespeichert oder gesendet).`,
-    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.zeile} ${ABSCHLUSS.stark}`,
+    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,
+    `- Leitsatz: ${CLAIM}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
     `${WAAS.claim} Drei Pakete. ${OFFER}`,
