@@ -2,7 +2,7 @@
 //   Hero: Headline 4771, Subheadline 4783, Animation 4784 (Kundengeschichte in fünf Stationen)
 //   (Abschnitt 1 „Kunden erleben keine einzelnen Systeme.“ entfernt, Jamil 4806) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
 //   · 4 Alles zwischen erstem Kontakt und zufriedenem Kunden (4789, + Pakete) · 5 Darauf können Sie sich verlassen (4790/4791)
-//   · Woran wir glauben (4795, Fortsetzung von 5)
+//   · „Woran wir glauben“ (4795/4796) ist seit 4809 mit Abschnitt 3 zusammengelegt
 //   · Check (Konzept 4768, als Vorschlag) · Abschluss (4792) · Claim (4793)
 // Frühere Stände: „Unternehmensauftritt“ (4768, nach Website Rethinking, NC Rethinking_Unternehmensauftritt_2026-11-06),
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
@@ -47,7 +47,10 @@ export const VERSTEHEN = {
   einleitung: 'Bevor wir Lösungen entwickeln, möchten wir verstehen:',
   liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Ziele'],
   schluss: ['Denn gute Entscheidungen entstehen durch Verständnis.', 'Nicht durch Vermutungen.'],
-  karten: ['Verstehen', 'Empfehlen', 'Umsetzen'],
+  /** Zusammengelegt mit „Woran wir glauben“ (Jamil 4809): jede Karte trägt den inhaltlich passenden Wert aus GLAUBEN.werte
+   *  Verstehen ↔ Verantwortung (mitdenken, hinterfragen, Risiken ansprechen) · Empfehlen ↔ Einfachheit (Aufwand gering,
+   *  Lösungen einfach umsetzbar) · Umsetzen ↔ Verlässlichkeit (Anfrage genügt, nichts geht verloren, Stand nachvollziehbar) */
+  karten: [{ wort: 'Verstehen', wert: 0 }, { wort: 'Empfehlen', wert: 1 }, { wort: 'Umsetzen', wert: 2 }],
 };
 
 /** Abschnitt 4 (4789): vier Bereiche. paket=false = nicht in den Monatspaketen (Ausbaustufe, individuelles Angebot). */
@@ -68,7 +71,7 @@ export const VERLASSEN = {
   saetze: ['Wir übernehmen Verantwortung.', 'Wir denken mit.', 'Wir halten Dinge einfach.', 'Wir empfehlen nicht das Meiste.', 'Wir empfehlen das Richtige.'],
 };
 
-/** Fortsetzung von Abschnitt 5 (4795, Werte-Texte 4796): drei Werte, darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
+/** Werte (4795, Texte 4796), seit 4809 in den Karten von Abschnitt 3; darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
 export const GLAUBEN = {
   titel: 'Woran wir glauben',
   /** Texte 4796 (ersetzen die kurzen aus 4795); leit = erster Satz, groß gesetzt */

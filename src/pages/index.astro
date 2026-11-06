@@ -2,8 +2,8 @@
 // STARTSEITE der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj):
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
 //   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
-//   · 3 Verstehen. Empfehlen. Umsetzen. (4788, #denkweise, drei große Karten) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (4790/4791) + Woran wir glauben (4795) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+//   · 3 Verstehen. Empfehlen. Umsetzen. (4788) + Woran wir glauben (4795/4796) in einem Abschnitt (4809, #denkweise) · 4 Vier Bereiche + Pakete (4789)
+//   · 5 Darauf können Sie sich verlassen (4790/4791) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
@@ -69,7 +69,8 @@ const BEREICH_ICON = [
     </div>
   </section>
 
-  <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788): drei große Karten mit reinem Text -->
+  <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788) zusammengelegt mit „Woran wir glauben“ (4795/4796, Jamil 4809):
+       drei große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“ -->
   <section class="bs" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -78,9 +79,23 @@ const BEREICH_ICON = [
         <ul class="verstehen-chips">{VERSTEHEN.liste.map((l) => <li>{l}</li>)}</ul>
         <p class="bs-lead">{VERSTEHEN.schluss[0]} <strong>{VERSTEHEN.schluss[1]}</strong></p>
       </div>
-      <ol class="karten karten--gross" data-fokus>
-        {VERSTEHEN.karten.map((k) => <li class="karte"><p class="karte__wort">{k}</p></li>)}
+      <ol class="werte">
+        {VERSTEHEN.karten.map((k, i) => {
+          const w = GLAUBEN.werte[k.wert];
+          return (
+            <li class="wert reveal" style={`transition-delay:${i * 90}ms`}>
+              <p class="wert__wort">{k.wort}</p>
+              <h3 class="wert__titel">{w.titel}</h3>
+              <p class="wert__leit">{w.leit}</p>
+              <p class="wert__text">{w.text}</p>
+            </li>
+          );
+        })}
       </ol>
+      <div class="nicht-erwarten">
+        <h3 class="nicht-erwarten__kopf">{GLAUBEN.nichtKopf}</h3>
+        <ul class="nicht-erwarten__liste">{GLAUBEN.nicht.map((n) => <li>{n}</li>)}</ul>
+      </div>
     </div>
   </section>
 
@@ -122,26 +137,6 @@ const BEREICH_ICON = [
       <ul class="verlassen__liste">
         {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
       </ul>
-    </div>
-  </section>
-
-  <!-- 5 (Fortsetzung) · Woran wir glauben (Jamil 4795/4796): drei Werte, darunter dezent die Minus-Liste, keine Icons -->
-  <section class="bs glauben" aria-labelledby="bs-glauben">
-    <div class="wrap">
-      <h2 id="bs-glauben" class="glauben__titel">{GLAUBEN.titel}</h2>
-      <ul class="werte">
-        {GLAUBEN.werte.map((w, i) => (
-          <li class="wert reveal" style={`transition-delay:${i * 90}ms`}>
-            <h3 class="wert__titel">{w.titel}</h3>
-            <p class="wert__leit">{w.leit}</p>
-            <p class="wert__text">{w.text}</p>
-          </li>
-        ))}
-      </ul>
-      <div class="nicht-erwarten">
-        <h3 class="nicht-erwarten__kopf">{GLAUBEN.nichtKopf}</h3>
-        <ul class="nicht-erwarten__liste">{GLAUBEN.nicht.map((n) => <li>{n}</li>)}</ul>
-      </div>
     </div>
   </section>
 
