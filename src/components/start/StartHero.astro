@@ -1,7 +1,7 @@
 ---
 // Abschnitt 1, Hero der Startseite „Unternehmensauftritt“ (Jamil, Talk 4768). Text steht beim Laden sofort
 // (kein Einblenden, gut für LCP). Rechts bzw. darunter die Bühne: acht Berührungspunkte schweben einzeln und
-// verschmelzen beim Scrollen zu „Unternehmensauftritt“. Knöpfe springen zum Check (#check) und zu Abschnitt 5 (#denkweise).
+// verschmelzen beim Scrollen zu „Unternehmensauftritt“ (Botschaft darunter steht jetzt in Abschnitt A1). Knöpfe springen zum Check (#check) und zu Abschnitt 5 (#denkweise).
 import { HERO as H, BERUEHRUNGSPUNKTE } from '../../config/startseite';
 import Verschmelzen from './Verschmelzen.astro';
 ---
@@ -10,7 +10,7 @@ import Verschmelzen from './Verschmelzen.astro';
     <div class="sh__text">
       <p class="sh__zeile">{H.zeile}</p>
       <h1 id="sh-titel" class="sh__titel">{H.titel}</h1>
-      <p class="sh__unter">{H.unter}</p>
+      {H.unter.map((u) => <p class="sh__unter">{u}</p>)}
       <div class="sh__knoepfe">
         <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>
         <a class="btn btn--umriss btn--lg" href="#denkweise">{H.cta2}</a>
@@ -18,7 +18,6 @@ import Verschmelzen from './Verschmelzen.astro';
     </div>
     <figure class="sh__bild">
       <Verschmelzen kern={H.kern} label={`Acht Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}. Zusammen ergeben sie den ${H.kern}.`} />
-      <figcaption class="sh__botschaft">{H.botschaft[0]} <strong>{H.botschaft[1]}</strong></figcaption>
     </figure>
   </div>
 </section>
@@ -27,7 +26,8 @@ import Verschmelzen from './Verschmelzen.astro';
   .sh { padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 80px); background: var(--paper); overflow: hidden; }
   .sh__raster { display: grid; gap: clamp(20px, 4vw, 40px); align-items: center; }
   .sh__zeile { margin: 0 0 14px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
-  .sh__titel { margin: 0; font-size: clamp(2.1rem, 5.6vw, 3.9rem); font-weight: 650; line-height: 1.07; letter-spacing: -0.03em; color: var(--dark); max-width: 15ch; }
+  .sh__titel { margin: 0; font-size: clamp(2rem, 4.4vw, 3.25rem); font-weight: 650; line-height: 1.07; letter-spacing: -0.03em; color: var(--dark); max-width: 18ch; }
+  .sh__unter + .sh__unter { margin-top: 0.7em; }
   .sh__unter { margin: 0.8em 0 0; font-size: clamp(1.1rem, 2vw, 1.32rem); line-height: 1.55; color: #3d4b57; max-width: 36ch; }
   .sh__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 3vw, 32px); }
   @media (max-width: 599px) { .sh__knoepfe .btn { width: 100%; } }

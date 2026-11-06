@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, BERUEHRUNGSPUNKTE, EINDRUCK, PREIS, LUECKE, DESIGN, ARBEITSWEISE, LOESUNGEN, ZUSAMMENARBEIT, UEBERZEUGUNG, ERGEBNIS, CHECK, ABSCHLUSS, BOTSCHAFT } from '../config/startseite';
+import { HERO, BERUEHRUNGSPUNKTE, EINDRUCK, WERKZEUGE, VERSTAENDNIS, ARBEITSWEISE, EINE_HAND, ERGEBNIS, KOMPLEXITAET, CHECK, ABSCHLUSS, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -20,21 +20,19 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     PREIS_HINWEIS,
     '',
-    '## Kernbotschaft: Unternehmensauftritt',
-    `${HERO.titel} ${HERO.unter}`,
+    '## Kernbotschaft: Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden',
+    `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
-    `- Ein Unternehmensauftritt ist das Zusammenspiel aller Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}. ${HERO.botschaft.join(' ')}`,
-    `- ${EINDRUCK.titel}: ${EINDRUCK.einleitung} ${EINDRUCK.kurz.join(' ')}`,
-    `- ${PREIS.titel}: ${PREIS.text.join(' ')} Folgen: ${PREIS.folgen.join(', ')}. ${PREIS.leitgedanke}`,
-    `- ${LUECKE.titel}: Der Auftritt muss beantworten: ${LUECKE.fragen.join(' ')}`,
-    `- ${DESIGN.titel}. ${DESIGN.unter} Vorher klären wir: ${DESIGN.fragen.join(' ')} ${DESIGN.botschaft.join(' ')}`,
+    `- ${EINDRUCK.titel} ${EINDRUCK.unter} ${EINDRUCK.einleitung} ${EINDRUCK.minuten} ${EINDRUCK.schluss.join(' ')} Berührungspunkte: ${BERUEHRUNGSPUNKTE.map((b) => b.text).join(', ')}.`,
+    `- ${WERKZEUGE.titel} ${WERKZEUGE.einleitung} ${WERKZEUGE.liste} ${WERKZEUGE.trotzdem} ${WERKZEUGE.fragenKopf} ${WERKZEUGE.fragen.join(' ')} ${WERKZEUGE.schluss}`,
+    `- ${VERSTAENDNIS.titel} ${VERSTAENDNIS.unter} ${VERSTAENDNIS.einleitung} ${VERSTAENDNIS.liste.join(', ')}. ${VERSTAENDNIS.botschaft.join(' ')}`,
+    `- ${ARBEITSWEISE.titel} ${ARBEITSWEISE.einleitung.join(' ')}`,
     `- Arbeitsweise: ${ARBEITSWEISE.karten.map((k) => `${k.titel} (${k.text.join(' ').replace(/\.$/, '')})`).join(' → ')}.`,
-    `- Lösungen: ${[LOESUNGEN.auftritt, LOESUNGEN.analyse, LOESUNGEN.dna, LOESUNGEN.weiter].map((l) => `${l.titel} (${l.text.replace(/\.$/, '')})`).join('; ')}. Die Website-Analyse ist kostenlos. ${LOESUNGEN.botschaft}`,
-    `- Zusammenarbeit: ${ZUSAMMENARBEIT.punkte.map((p) => p.titel).join(', ')}.`,
-    `- Überzeugung: ${UEBERZEUGUNG.satz} ${UEBERZEUGUNG.verben.join(' ')} ${UEBERZEUGUNG.botschaft}`,
-    `- Ergebnis: ${ERGEBNIS.einleitung} ${ERGEBNIS.wirkungen.join(', ')}.`,
+    `- ${EINE_HAND.titel} ${EINE_HAND.text.join(' ')} ${EINE_HAND.saeulen.map((k) => `${k.titel}: ${k.text}`).join(' ')} Website, Kommunikation und Betreuung stecken in den drei Monatspaketen; CRM, Workflows und Automatisierung gibt es als individuelles Angebot.`,
+    `- ${ERGEBNIS.titel} ${ERGEBNIS.unter} ${ERGEBNIS.saetze.join(' ')} ${ERGEBNIS.vertrauen} ${ERGEBNIS.schluss}`,
+    `- ${KOMPLEXITAET.titel} ${KOMPLEXITAET.unter} ${KOMPLEXITAET.text.join(' ')}`,
     `- ${CHECK.eyebrow} auf der Startseite: 10 Fragen zu ${CHECK.bereiche.map((b) => b.name).join(', ')}; Ergebnis in Punkten von 100, berechnet nur im Browser (nichts wird gespeichert oder gesendet).`,
-    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.unterCta}`,
+    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.zeile} ${ABSCHLUSS.stark}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
     `${WAAS.claim} Drei Pakete. ${OFFER}`,

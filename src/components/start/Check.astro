@@ -9,7 +9,7 @@ let nr = 0;
 const kontaktBasis = href('/kontakt/');
 const urteile = Object.fromEntries(C.bereiche.map((b) => [b.id, b.urteil]));
 ---
-<section class="bs bs--alt chk-abschnitt" id="check" aria-labelledby="bs-check">
+<section class="bs chk-abschnitt" id="check" aria-labelledby="bs-check">
   <div class="wrap">
     <div class="bs-kopf bs-kopf--mitte">
       <p class="eyebrow">{C.eyebrow}</p>
@@ -139,7 +139,7 @@ const urteile = Object.fromEntries(C.bereiche.map((b) => [b.id, b.urteil]));
   .chk__daten svg { flex: none; }
   .chk { max-width: 860px; margin: clamp(28px, 4vw, 44px) auto 0; }
   .chk__fragen { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .chk__frage fieldset { margin: 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); display: grid; gap: 12px; transition: border-color 0.2s ease; }
+  .chk__frage fieldset { margin: 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); display: grid; gap: 12px; transition: border-color 0.2s ease; }
   .chk__frage.ist-beantwortet fieldset { border-color: #b9c7bd; }
   .chk__frage legend { float: left; width: 100%; padding: 0; display: flex; gap: 12px; align-items: flex-start; }
   .chk__frage legend + * { clear: both; }

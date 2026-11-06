@@ -1,9 +1,9 @@
-// Startseite „Unternehmensauftritt“ (Jamil, Talk qh87y3sj 4768, 06.11.2026), nach Website Rethinking
-// (NC Projekte/waybuild/Website/Rethinking_Unternehmensauftritt_2026-11-06). Ersetzt die „Besucherreise“ vom 05.11.
-// Texte im Kern WÖRTLICH aus Jamils Konzept. Abweichungen sind unten mit „Rethinking:“ markiert und begründet.
-// 14 Abschnitte: 1 Hero · 2 Erster Eindruck · 3 Preis eines schwachen Auftritts · 4 Besser als ihr Auftritt
-//   · 5 Nicht mit Design beginnen · 6 Arbeitsweise · 7 Lösungen · 8 Zusammenarbeit · 9 Kundenstimmen (nur echte)
-//   · 10 Vorher/Nachher · 11 Überzeugung · 12 Ergebnis · 13 Check · 14 Abschluss
+// Startseite der waybuild Website (Stand 06.11.2026 mittags): Hero + Abschnitte 1–5, 7–9 WÖRTLICH von Jamil
+// (Talk qh87y3sj 4771, 4773–4781). Abschnitt 6 offen; dort steht als Vorschlag der Unternehmensauftritt-Check aus Jamils
+// Konzept vom Morgen (4768). Davor: Konzept „Unternehmensauftritt“ (4768) nach Website Rethinking
+// (NC Projekte/waybuild/Website/Rethinking_Unternehmensauftritt_2026-11-06), davor „Besucherreise“ (05.11.).
+// Reihenfolge: Hero · 1 Keine einzelnen Systeme · 2 Werkzeuge/offene Fragen · 3 Verständnis · 4 Bessere Entscheidungen
+//   · 5 Aus einer Hand (+ Pakete) · 6 Check (Vorschlag) · 7 Ergebnis/Vertrauen · 8 Komplexität · 9 Abschluss
 // Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
 // Die alte Startseite (vor dem 05.11.) steht unverändert unter /hauptseite-alt/.
 
@@ -15,7 +15,6 @@ export const ANLIEGEN = {
   erstberatung: { label: 'Kostenfreie Erstberatung', paket: 'Kostenfreie Erstberatung' },
   analyse: { label: 'Kostenlose Analyse anfordern', paket: 'Kostenlose Analyse' },
   bewerten: { label: 'Unternehmensauftritt bewerten lassen', paket: 'Unternehmensauftritt bewerten lassen' },
-  dna: { label: 'Über Unternehmens-DNA sprechen', paket: 'Unternehmens-DNA' },
 };
 
 /** Die Berührungspunkte (Hero und Abschnitt 12). dx/dy = Startposition in % der Bühne, vom Mittelpunkt aus. */
@@ -33,159 +32,113 @@ export const BERUEHRUNGSPUNKTE = [
 export const HERO = {
   /** Rethinking: Zielgruppe in drei Sekunden („Bin ich hier richtig?“), hilft auch Suchmaschinen. */
   zeile: 'Für kleine und mittlere Unternehmen',
-  titel: 'Gute Arbeit überzeugt erst dann, wenn man sie erkennt.',
-  unter: 'Wir entwickeln Unternehmensauftritte, die Vertrauen schaffen, Orientierung geben und Kaufentscheidungen erleichtern.',
+  /** Hero-Texte wörtlich von Jamil: Headline Talk qh87y3sj 4771, Subheadline Korrektur 4773 (06.11.2026), in zwei Absätzen */
+  titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
+  unter: [
+    'Kunden erleben Ihr Unternehmen nicht in einzelnen Systemen. Sie erleben jeden Kontakt mit Ihrem Unternehmen als Ganzes.',
+    'Deshalb verbinden wir Ihre Website, Kommunikation, Prozesse und Systeme zu einem durchgängigen Erlebnis.',
+  ],
   cta: 'Unternehmensauftritt bewerten',
   cta2: 'Unsere Denkweise kennenlernen',
   kern: 'Unternehmensauftritt',
-  botschaft: ['Ein guter Eindruck entsteht nicht durch eine Website.', 'Er entsteht durch das Zusammenspiel aller Berührungspunkte.'],
 };
 
+// Abschnitte 1–4 nach dem Hero: Texte WÖRTLICH von Jamil (Talk qh87y3sj 4774–4777, 06.11.2026, 12:06–12:07).
+
+/** Abschnitt 1 (4774): Visual = Wanderung über die Wege, auf denen Kunden das Unternehmen entdecken */
 export const EINDRUCK = {
-  titel: 'Der erste Eindruck entsteht lange vor dem ersten Gespräch',
-  einleitung: 'Bevor Menschen Kontakt aufnehmen, haben sie oft bereits eine Entscheidung getroffen.',
-  schritte: [
-    'Sie besuchen Ihre Website.',
-    'Sie sehen Ihr Google-Profil.',
-    'Sie lesen Bewertungen.',
-    'Sie vergleichen Alternativen.',
-    'Sie prüfen, ob Ihr Unternehmen vertrauenswürdig wirkt.',
-  ],
+  titel: 'Kunden erleben keine einzelnen Systeme.',
+  unter: 'Sie erleben Ihr Unternehmen.',
+  einleitung: 'Ein potenzieller Kunde entdeckt Ihr Unternehmen über Google, Social Media, Empfehlungen oder andere Wege.',
+  /** Stationen der Wanderung (aus Jamils Satz oben) */
+  wege: ['Google', 'Social Media', 'Empfehlungen', 'andere Wege'],
   minuten: 'Innerhalb weniger Minuten entsteht ein Eindruck.',
-  frageKopf: 'Die entscheidende Frage:',
-  frage: 'Entspricht dieser Eindruck der Qualität Ihrer Arbeit?',
-  /** Rethinking: statt ✅/❌-Emojis gezeichnete Zeichen (einheitlich, für Screenreader benannt) */
-  ende: ['Vertrauen', 'Unsicherheit'],
-  kurzKopf: 'Kurz zusammengefasst',
-  kurz: ['Menschen entscheiden nicht erst im Gespräch.', 'Sie bilden sich ihren Eindruck schon vorher.'],
+  schluss: ['Nicht durch eine einzelne Website.', 'Sondern durch das Zusammenspiel aller Berührungspunkte.'],
 };
 
-export const PREIS = {
-  titel: 'Der Preis eines schwachen Auftritts',
-  text: [
-    'Viele Unternehmen verlieren Chancen, ohne es zu bemerken.',
-    'Nicht weil ihre Leistung schlecht ist.',
-    'Sondern weil ihr Auftritt keine ausreichenden Gründe liefert, Vertrauen aufzubauen.',
-  ],
-  folgeKopf: 'Die Folge:',
-  folgen: ['weniger Anfragen', 'mehr Preisvergleiche', 'längere Entscheidungsprozesse', 'verlorene Chancen'],
-  /** Animation: Besucher kommen auf die Website und gehen wieder */
-  buehne: 'Ihre Website',
-  keine: ['Keine Anfrage.', 'Keine Bewertung.', 'Kein Kontakt.', 'Keine Sichtbarkeit.'],
-  leitgedanke: 'Was nicht verstanden wird, wird selten gekauft.',
-};
-
-export const LUECKE = {
-  titel: 'Viele Unternehmen sind besser als ihr Auftritt',
-  text: ['Wir erleben regelmäßig Unternehmen mit hervorragender Arbeit.', 'Doch ihr Auftritt beantwortet die wichtigsten Fragen nicht.'],
-  fragenKopf: 'Besucher verstehen nicht sofort:',
-  fragen: ['Was wird angeboten?', 'Warum gerade dieses Unternehmen?', 'Warum kann man vertrauen?', 'Was sollte ich jetzt tun?'],
+/** Abschnitt 2 (4775): Visual = Werkzeug-Chaos + Lücken zwischen Unternehmen und Kunde */
+export const WERKZEUGE = {
+  titel: 'Genau hier entstehen die meisten Probleme.',
+  einleitung: 'Viele Unternehmen investieren in einzelne Werkzeuge.',
+  liste: 'Eine neue Website. Ein neues CRM. Eine neue Software. Ein neues Marketing-Tool.',
+  /** Beschriftung der Werkzeug-Kärtchen in der Grafik (nur Bild, Text steht oben in „liste“) */
+  kaertchen: ['Website', 'CRM', 'Software', 'Marketing-Tool'],
+  trotzdem: 'Trotzdem wirkt das Gesamterlebnis oft uneinheitlich.',
+  fragenKopf: 'Kunden wissen nicht sofort:',
+  fragen: ['Was macht dieses Unternehmen?', 'Warum sollte ich ihm vertrauen?', 'Warum sollte ich mich melden?'],
   links: 'Unternehmen',
-  rechts: 'Interessent',
-  schluss: ['Dadurch entsteht Unsicherheit.', 'Und Unsicherheit verhindert Entscheidungen.'],
+  rechts: 'Kunde',
+  schluss: 'Jede offene Frage kostet Vertrauen.',
   /** Rethinking: Zwischenruf zum Check, damit niemand bis zum Ende scrollen muss */
   zwischenruf: 'Wie ist das bei Ihnen?',
   zwischenrufLink: 'Zum Unternehmensauftritt-Check',
 };
 
-export const DESIGN = {
-  titel: 'Deshalb beginnen wir nicht mit Design',
+/** Abschnitt 3 (4776): Visual = Verständnis-Liste als Linie, die bei der Lösung ankommt */
+export const VERSTAENDNIS = {
+  titel: 'Deshalb beginnen wir nicht mit Lösungen.',
   unter: 'Wir beginnen mit Verständnis.',
   einleitung: 'Bevor wir Empfehlungen aussprechen, möchten wir verstehen:',
-  fragen: [
-    'Wer sind Ihre Kunden?',
-    'Warum entscheiden sie sich für Ihr Unternehmen?',
-    'Welche Fragen stellen sie?',
-    'Welche Einwände haben sie?',
-    'Was macht Sie besonders?',
-  ],
-  danach: 'Erst danach sprechen wir über Inhalte, Design oder Funktionen.',
-  sichtbar: 'Website',
-  unsichtbar: ['Zielgruppe', 'Vertrauen', 'Positionierung', 'Kaufmotive', 'Erwartungen', 'Kommunikation'],
-  botschaft: ['Gute Websites entstehen nicht durch Design.', 'Sie entstehen durch Verständnis.'],
+  liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Leistungen', 'Ihre Ziele', 'Ihre Herausforderungen'],
+  ziel: 'Die richtige Lösung',
+  botschaft: ['Denn die richtige Lösung entsteht nicht durch Vermutungen.', 'Sondern durch Verständnis.'],
 };
 
+/** Abschnitt 4 (4777) mit den drei Karten der Arbeitsweise (4768), verbunden durch eine Linie */
 export const ARBEITSWEISE = {
-  titel: 'Unsere Arbeitsweise',
+  eyebrow: 'Unsere Arbeitsweise',
+  titel: 'Aus Verständnis entstehen bessere Entscheidungen.',
+  einleitung: ['Viele Anbieter starten mit der Umsetzung.', 'Wir gehen einen Schritt zurück.'],
   karten: [
-    { titel: 'Verstehen', text: ['Wir lernen Ihr Unternehmen und Ihre Kunden kennen.'] },
-    { titel: 'Empfehlen', text: ['Wir zeigen den Weg, den wir für sinnvoll halten.'], betont: ['Nicht den einfachsten.', 'Nicht den teuersten.', 'Den richtigen.'] },
-    { titel: 'Umsetzen', text: ['Erst dann entsteht Ihr Unternehmensauftritt.'], betont: ['Klar.', 'Professionell.', 'Durchdacht.'] },
+    { titel: 'Verstehen', text: ['Zuerst verstehen wir die Situation.'] },
+    { titel: 'Empfehlen', text: ['Dann empfehlen wir den sinnvollsten Weg.'], betont: ['Nicht den einfachsten.', 'Nicht den teuersten.', 'Den richtigen.'] },
+    { titel: 'Umsetzen', text: ['Erst danach wird umgesetzt.'], betont: ['Klar.', 'Professionell.', 'Durchdacht.'] },
   ] as { titel: string; text: string[]; betont?: string[] }[],
 };
 
-export const LOESUNGEN = {
-  titel: 'Unsere Lösungen',
-  kern: 'Eine Denkweise',
-  botschaft: 'Alles basiert auf derselben Denkweise.',
-  auftritt: { titel: 'Unternehmensauftritt', text: 'Alles wirkt wie aus einem Guss.' },
-  analyse: {
-    titel: 'Website-Analyse',
-    text: 'Verstehen, wie Ihr Unternehmen aktuell wahrgenommen wird.',
-    /** Rethinking: „kostenlos“ nach Jamils Knopf „Kostenlose Analyse anfordern“ (Abschnitt 13) */
-    info: 'Kostenlos. Einen ersten Eindruck gibt Ihnen der Check weiter unten.',
-  },
-  dna: {
-    titel: 'Unternehmens-DNA',
-    text: 'Die Grundlage für klare Entscheidungen.',
-    /** Rethinking [Annahme, offen bei Jamil]: Inhalt aus Abschnitt 5 abgeleitet, Preis noch nicht festgelegt */
-    info: 'Wir halten fest, wer Ihre Kunden sind, warum sie sich für Sie entscheiden und was Sie besonders macht. Individuell, auf Anfrage.',
-  },
-  weiter: { titel: 'Laufende Weiterentwicklung', text: 'Ihr Unternehmen entwickelt sich. Ihr Auftritt sollte das ebenfalls tun.' },
-};
+// Abschnitte 5, 7, 8, 9 WÖRTLICH von Jamil (Talk qh87y3sj 4778–4781, 06.11.2026, 12:08–12:09). Abschnitt 6 offen.
 
-export const ZUSAMMENARBEIT = {
-  /** Rethinking: statt „Was Kunden besonders schätzen“ (ohne freigegebene Kundenstimmen wäre das eine Behauptung) */
-  titel: 'Was gute Zusammenarbeit ausmacht',
-  einleitung: ['Gute Zusammenarbeit spart Zeit.', 'Deshalb legen wir Wert auf:'],
-  szenenKopf: 'So sieht das im Alltag aus',
-  /** Rethinking: „echte Szenen statt Icons“ als kurze Alltagssituationen, passend zu unseren Leistungen
-   *  (fester Ansprechpartner, Antwort spätestens am nächsten Werktag, Änderungen per Sprachnachricht). Fotos folgen. */
-  punkte: [
-    { titel: 'Klare Kommunikation', szene: 'Sie bekommen eine Antwort in ganzen Sätzen. Ohne Fachbegriffe, mit einem klaren nächsten Schritt.' },
-    { titel: 'Verständliche Empfehlungen', szene: 'Statt zehn Möglichkeiten hören Sie: Das empfehlen wir, und das ist der Grund.' },
-    { titel: 'Feste Ansprechpartner', szene: 'Sie rufen an und sprechen mit derselben Person wie beim letzten Mal. Sie müssen nichts neu erklären.' },
-    { titel: 'Wenig Abstimmungsaufwand', szene: 'Eine Sprachnachricht mit Ihrer Änderung genügt. Den Rest erledigen wir.' },
-    { titel: 'Schnelle Rückmeldungen', szene: 'Sie schreiben am Vormittag. Spätestens am nächsten Werktag haben Sie eine Antwort.' },
-    { titel: 'Sichtbarer Fortschritt', szene: 'Nach jedem Schritt wissen Sie, was erledigt ist und was als Nächstes kommt.' },
+/** Abschnitt 5 (4778): vier Säulen aus einem Kern. info = ehrliche Zuordnung zu Paketen bzw. Ausbaustufen (Rethinking). */
+export const EINE_HAND = {
+  titel: 'Alles aus einer Hand.',
+  text: [
+    'Ein Unternehmen sollte nicht fünf Ansprechpartner benötigen, um einen professionellen Auftritt aufzubauen.',
+    'Deshalb begleiten wir Unternehmen vom ersten digitalen Kontakt bis zum laufenden Betrieb.',
+  ],
+  kern: 'Aus einer Hand',
+  saeulen: [
+    { titel: 'Digitale Präsenz', text: 'Website, Google-Unternehmensprofil, Bewertungen und Sichtbarkeit.' },
+    { titel: 'Kommunikation', text: 'E-Mail, Signaturen, Kontaktwege und digitale Geschäftskommunikation.' },
+    { titel: 'Systeme', text: 'CRM, Workflows, Automatisierung und digitale Prozesse.' },
+    { titel: 'Betreuung', text: 'Beratung, Weiterentwicklung und langfristige Unterstützung.' },
   ],
 };
 
-/** Abschnitt 9: NUR echte, freigegebene Stimmen (Name + Unternehmen). Solange leer, wird der Abschnitt nicht gezeigt.
- *  Beispiel-Eintrag: { zitat: '…', name: 'Vorname Nachname', firma: 'Firma GmbH', rolle: 'Inhaber' } */
-export const STIMMEN: { zitat: string; name: string; firma: string; rolle?: string }[] = [];
-
-export const VORHER_NACHHER = {
-  titel: 'Vorher / Nachher',
-  unter: 'Der erste Fall: unser eigener Auftritt.',
-  einleitung: 'Kundenprojekte und Kundenstimmen zeigen wir hier, sobald unsere Kunden sie freigegeben haben. Den ersten Fall können Sie schon heute selbst prüfen: unsere eigene Startseite.',
-  alt: { kopf: 'Alter Auftritt', text: 'Pakete und Preise ganz oben, viele Fachbegriffe, die Vision vor dem Nutzen.', link: 'Alte Startseite ansehen' },
-  neu: { kopf: 'Neuer Auftritt', text: 'Erst die Fragen des Besuchers, dann die Lösung, dazu ein Check zum Mitmachen.', link: 'Sie sind gerade hier' },
-  fall: [
-    { kopf: 'Ausgangssituation', text: 'Die alte Startseite zählte vor allem Leistungen und Preise auf. Wer uns nicht kannte, erfuhr spät, wie wir arbeiten und warum.' },
-    { kopf: 'Erkenntnis', text: 'Besucher entscheiden über Vertrauen, nicht über Funktionen. Sie wollen zuerst wissen, ob wir ihre Lage verstehen.' },
-    { kopf: 'Umsetzung', text: 'Wir haben die Seite mit unserer Methode Website Rethinking aus Sicht des Besuchers neu aufgebaut: Problem, Haltung, Lösung, Nachweis, Check.' },
-    { kopf: 'Ergebnis', text: 'Die Seite lädt am Handy deutlich schneller: Google Lighthouse mobil vorher 58, jetzt über 90 von 100 Punkten (gemessen im November 2026). Wie sich die Anfragen entwickeln, messen wir in den nächsten Monaten.' },
-  ],
-};
-
-export const UEBERZEUGUNG = {
-  titel: 'Unsere Überzeugung',
-  satz: 'Verantwortung ist wichtiger als Technik.',
-  einleitung: 'Wir liefern nicht nur Ergebnisse.',
-  verben: ['Wir denken mit.', 'Wir hinterfragen.', 'Wir empfehlen.', 'Wir begleiten.'],
-  schluss: 'Denn gute Lösungen entstehen durch bessere Entscheidungen.',
-  botschaft: 'Wir übernehmen die Komplexität.',
-};
-
+/** Abschnitt 7 (4779): Visual = Berührungspunkte verschmelzen zu „Vertrauen“ */
 export const ERGEBNIS = {
-  titel: 'Das Ergebnis',
-  einleitung: 'Ein professioneller Unternehmensauftritt schafft:',
-  wirkungen: ['Vertrauen', 'Orientierung', 'Wiedererkennung', 'Klarheit', 'bessere Entscheidungen'],
+  titel: 'Am Ende zählt nicht die Technologie.',
+  unter: 'Am Ende zählt das Ergebnis.',
+  saetze: [
+    'Menschen kaufen nicht wegen einer Website.',
+    'Menschen kaufen nicht wegen eines CRM-Systems.',
+    'Menschen kaufen nicht wegen einer Automatisierung.',
+  ],
+  vertrauen: 'Sie entscheiden sich für Unternehmen, denen sie vertrauen.',
+  schluss: 'Genau deshalb betrachten wir immer das Gesamtbild.',
   kern: 'Vertrauen',
 };
 
-/** Abschnitt 13: 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */
+/** Abschnitt 8 (4780): dunkel, Visual = Einzelteile ordnen sich zu einem klaren Bild */
+export const KOMPLEXITAET = {
+  titel: 'Wir übernehmen die Komplexität.',
+  unter: 'Sie behalten den Fokus.',
+  text: [
+    'Digitale Lösungen sollten Unternehmen unterstützen. Nicht zusätzlich beschäftigen.',
+    'Deshalb übernehmen wir Verantwortung für die Dinge, die im Hintergrund funktionieren müssen, damit Sie sich auf Ihr Unternehmen konzentrieren können.',
+  ],
+};
+
+/** Check (Konzept 4768, als Vorschlag für den offenen Abschnitt 6 behalten): 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */
 export const CHECK = {
   eyebrow: 'Unternehmensauftritt-Check',
   titel: 'Wie professionell wirkt Ihr Unternehmen aktuell?',
@@ -230,16 +183,18 @@ export const CHECK = {
   cta: 'Kostenlose Analyse anfordern',
 };
 
+/** Abschnitt 9 (4781): Abschluss, viel Weißraum, keine Animation, CTA wie bisher */
 export const ABSCHLUSS = {
-  titel: 'Wir übernehmen die Komplexität. Sie behalten den Fokus.',
-  text: ['Ein professioneller Unternehmensauftritt entsteht nicht durch einzelne Maßnahmen.', 'Er entsteht dann, wenn alles zusammenpasst.', 'Genau dabei unterstützen wir.'],
+  titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
+  zeile: 'Digitale Präsenz. Kommunikation. Systeme. Betreuung.',
+  stark: 'Aus einer Hand.',
   cta: 'Unternehmensauftritt bewerten lassen',
   unterCta: 'Kurzes Gespräch. Klare Einschätzung. Konkrete Empfehlungen.',
 };
 
 /** Für Meta-Description, JSON-LD und llms.txt */
 export const BOTSCHAFT = {
-  titel: 'Unternehmensauftritt, der Vertrauen schafft',
-  description: 'Gute Arbeit überzeugt erst, wenn man sie erkennt: Website, Google-Profil, E-Mails und Geschäftspapiere als ein Auftritt, der Vertrauen schafft.',
-  service: 'Unternehmensauftritte für kleine und mittlere Unternehmen: Website, Google-Profil, E-Mail-Postfächer, Signatur, Briefvorlage, Logo und Geschäftspapiere aus einer Hand. Erst verstehen, dann empfehlen, dann umsetzen; fester Ansprechpartner und laufende Weiterentwicklung im festen Monatspreis.',
+  titel: 'Ein durchgängiges Erlebnis für Ihre Kunden',
+  description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Wir verbinden Website, Kommunikation, Prozesse und Systeme zu einem durchgängigen Erlebnis.',
+  service: 'Durchgängige Kundenerlebnisse für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Digitale Präsenz, Kommunikation, Systeme und Betreuung aus einer Hand. Website, Google-Profil, E-Mail-Postfächer, Signatur, Briefvorlage, Logo und Geschäftspapiere in festen Monatspaketen; CRM, Workflows und Automatisierung als individuelles Angebot. Erst verstehen, dann empfehlen, dann umsetzen; fester Ansprechpartner und laufende Weiterentwicklung im festen Monatspreis.',
 };
