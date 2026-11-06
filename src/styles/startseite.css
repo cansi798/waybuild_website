@@ -190,3 +190,19 @@ html.js [data-p] { --p: 0; }
 .bs-gross-unter { font-family: var(--font-head); font-size: clamp(1.2rem, 2.6vw, 1.75rem); font-weight: 600; line-height: 1.35; color: var(--accent-ink); margin: 0 0 1em; }
 .bs--dunkel .bs-gross-unter { color: var(--gold); }
 .abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }
+
+/* ── 5 (Fortsetzung) · Woran wir glauben: ruhig, viel Weißraum, keine Icons ── */
+.glauben { padding-block: clamp(80px, 11vw, 150px); }
+.glauben__titel { text-align: center; margin-bottom: clamp(32px, 5vw, 56px) !important; }
+.werte { list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; display: grid; gap: clamp(28px, 4vw, 48px); }
+@media (min-width: 900px) { .werte { grid-template-columns: repeat(3, 1fr); } }
+.wert { padding-top: 18px; border-top: 2px solid var(--dark); }
+.wert:last-child { border-top-color: var(--gold); }
+.wert__titel { margin: 0 0 12px; font-size: clamp(1.35rem, 2.4vw, 1.65rem) !important; }
+.wert p { margin: 0 0 0.35em; font-size: 1.05rem; line-height: 1.65; color: var(--ink-soft); }
+.wert p:last-child { color: var(--dark); font-weight: 600; }
+.nicht-erwarten { max-width: 640px; margin: clamp(56px, 8vw, 96px) auto 0; text-align: center; }
+.nicht-erwarten__kopf { margin: 0 0 16px; font-size: 0.82rem !important; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink) !important; }
+.nicht-erwarten__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.nicht-erwarten__liste li { display: inline-flex; align-items: center; justify-content: center; gap: 12px; font-size: 1.02rem; color: var(--ink-soft); }
+.nicht-erwarten__liste li::before { content: ''; flex: none; width: 14px; height: 2px; border-radius: 2px; background: #9aa19c; }

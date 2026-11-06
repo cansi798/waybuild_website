@@ -2,6 +2,7 @@
 //   Hero: Headline 4771, Subheadline 4783, Animation 4784 (Kundengeschichte in fünf Stationen)
 //   1 „Kunden erleben keine einzelnen Systeme.“ (4774, mittags) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
 //   · 4 Alles zwischen erstem Kontakt und zufriedenem Kunden (4789, + Pakete) · 5 Darauf können Sie sich verlassen (4790/4791)
+//   · Woran wir glauben (4795, Fortsetzung von 5)
 //   · Check (Konzept 4768, als Vorschlag) · Abschluss (4792) · Claim (4793)
 // Frühere Stände: „Unternehmensauftritt“ (4768, nach Website Rethinking, NC Rethinking_Unternehmensauftritt_2026-11-06),
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
@@ -78,6 +79,18 @@ export const BEREICHE = {
 export const VERLASSEN = {
   titel: 'Darauf können Sie sich verlassen',
   saetze: ['Wir übernehmen Verantwortung.', 'Wir denken mit.', 'Wir halten Dinge einfach.', 'Wir empfehlen nicht das Meiste.', 'Wir empfehlen das Richtige.'],
+};
+
+/** Fortsetzung von Abschnitt 5 (4795): drei Werte, darunter dezent, was man nicht erwarten muss (Minus statt Haken) */
+export const GLAUBEN = {
+  titel: 'Woran wir glauben',
+  werte: [
+    { titel: 'Verantwortung', text: ['Wir setzen nicht einfach um.', 'Wir empfehlen, was für Ihr Unternehmen sinnvoll ist.', 'Nicht das, was sich am einfachsten verkaufen lässt.'] },
+    { titel: 'Einfachheit', text: ['Gute Lösungen sollten Arbeit erleichtern.', 'Nicht neue Probleme schaffen.'] },
+    { titel: 'Verlässlichkeit', text: ['Niemand sollte einem Dienstleister hinterherlaufen müssen.'] },
+  ],
+  nichtKopf: 'Was Sie von uns nicht erwarten müssen',
+  nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Kein Projekt, das nach der Umsetzung endet', 'Keine fünf verschiedenen Ansprechpartner'],
 };
 
 /** Check (Konzept 4768, als Vorschlag vor dem Abschluss behalten): 10 Fragen in 5 Bereichen (je 2). Jamils 5 Beispielfragen + 5 ergänzt (Rethinking). Ja 10 · Teilweise 5 · Nein 0. */

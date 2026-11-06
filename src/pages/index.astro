@@ -3,7 +3,7 @@
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
 //   · 1 Kunden erleben keine einzelnen Systeme (4774, Wanderung) · 2 Bausteine, die nicht passen (4786/4787)
 //   · 3 Verstehen. Empfehlen. Umsetzen. (4788, #denkweise, drei große Karten) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (4790/4791) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+//   · 5 Darauf können Sie sich verlassen (4790/4791) + Woran wir glauben (4795) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
@@ -14,7 +14,7 @@ import Check from '../components/start/Check.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { PAKETE, WAAS, formatEuro } from '../config/site';
-import { ANLIEGEN, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import { ANLIEGEN, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
@@ -145,6 +145,25 @@ const BEREICH_ICON = [
       <ul class="verlassen__liste">
         {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
       </ul>
+    </div>
+  </section>
+
+  <!-- 5 (Fortsetzung) · Woran wir glauben (Jamil 4795): drei Werte, darunter dezent die Minus-Liste, keine Icons -->
+  <section class="bs glauben" aria-labelledby="bs-glauben">
+    <div class="wrap">
+      <h2 id="bs-glauben" class="glauben__titel">{GLAUBEN.titel}</h2>
+      <ul class="werte">
+        {GLAUBEN.werte.map((w, i) => (
+          <li class="wert reveal" style={`transition-delay:${i * 90}ms`}>
+            <h3 class="wert__titel">{w.titel}</h3>
+            {w.text.map((t) => <p>{t}</p>)}
+          </li>
+        ))}
+      </ul>
+      <div class="nicht-erwarten">
+        <h3 class="nicht-erwarten__kopf">{GLAUBEN.nichtKopf}</h3>
+        <ul class="nicht-erwarten__liste">{GLAUBEN.nicht.map((n) => <li>{n}</li>)}</ul>
+      </div>
     </div>
   </section>
 
