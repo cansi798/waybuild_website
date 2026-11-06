@@ -1,6 +1,6 @@
 // Startseite der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil:
 //   Hero: Headline 4771, Subheadline 4783, Animation 4784 (Kundengeschichte in fünf Stationen)
-//   1 „Kunden erleben keine einzelnen Systeme.“ (4774, mittags) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
+//   (Abschnitt 1 „Kunden erleben keine einzelnen Systeme.“ entfernt, Jamil 4806) · 2 Bausteine (4786/4787) · 3 Verstehen. Empfehlen. Umsetzen. (4788)
 //   · 4 Alles zwischen erstem Kontakt und zufriedenem Kunden (4789, + Pakete) · 5 Darauf können Sie sich verlassen (4790/4791)
 //   · Woran wir glauben (4795, Fortsetzung von 5)
 //   · Check (Konzept 4768, als Vorschlag) · Abschluss (4792) · Claim (4793)
@@ -31,19 +31,6 @@ export const HERO = {
   cta2: 'Unsere Denkweise kennenlernen',
   /** Hero-Animation (Jamil 4784): kleine Geschichte eines Kunden in fünf Stationen, keine Linie, kein Prozessbild */
   stationen: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'Bearbeitung', 'Zufriedener Kunde'],
-};
-
-// Abschnitt 1 WÖRTLICH von Jamil (Talk qh87y3sj 4774, 06.11.2026, 12:06).
-
-/** Abschnitt 1 (4774): Visual = Wanderung über die Wege, auf denen Kunden das Unternehmen entdecken */
-export const EINDRUCK = {
-  titel: 'Kunden erleben keine einzelnen Systeme.',
-  unter: 'Sie erleben Ihr Unternehmen.',
-  einleitung: 'Ein potenzieller Kunde entdeckt Ihr Unternehmen über Google, Social Media, Empfehlungen oder andere Wege.',
-  /** Stationen der Wanderung (aus Jamils Satz oben) */
-  wege: ['Google', 'Social Media', 'Empfehlungen', 'andere Wege'],
-  minuten: 'Innerhalb weniger Minuten entsteht ein Eindruck.',
-  schluss: ['Nicht durch eine einzelne Website.', 'Sondern durch das Zusammenspiel aller Berührungspunkte.'],
 };
 
 /** Abschnitt 2 (4786/4787): Visual = vier Bausteine mit unterschiedlichen Kanten, die nicht ineinanderpassen */

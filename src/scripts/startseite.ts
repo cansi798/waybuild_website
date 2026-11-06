@@ -1,6 +1,6 @@
 // Bewegung der Startseite „Unternehmensauftritt“ (Jamil, Talk 4768). Nur transform, opacity und stroke-dashoffset.
 // 1. [data-p]: Fortschritt --p (0…1) beim Scrollen, nur solange das Element im Sichtbereich ist (rAF-gedrosselt).
-//    data-p="vs": Bühne (derzeit nicht genutzt), sonst Standard-Verlauf (Oberkante 85 % → 25 % der Fensterhöhe,
+//    Verlauf (Oberkante 85 % → 25 % der Fensterhöhe,
 //    verlängert um einen Teil der Elementhöhe).
 // 2. [data-fokus]: Karte im Fokus (Arbeitsweise) als data-aktiv am Container.
 // 3. [data-zeichne]: Klasse .ist-los beim ersten Sichtkontakt (Linien zeichnen, Folgen erscheinen).
@@ -49,18 +49,8 @@ if (!ruhig && 'IntersectionObserver' in window) {
         if (el.dataset.aktiv !== String(idx)) el.dataset.aktiv = String(idx);
         return;
       }
-      let p: number;
-      if (el.dataset.p === 'vs') {
-        // Bühne verschmilzt, während sie von ihrer Startposition bis ins obere Drittel wandert
-        // (im Hero: Startposition = Lage beim Laden, damit oben beim Laden alles einzeln schwebt)
-        const start = el.closest('.sh') ? Math.min(vh * 0.95, r.top + scrollY) : vh * 0.95;
-        const ziel = vh * 0.38 - r.height * 0.5;
-        const weg = Math.max(260, start - ziel);
-        p = clamp((start - r.top) / weg);
-      } else {
-        const f = Number(el.dataset.pLang || 0.35);
-        p = clamp((vh * 0.85 - r.top) / (vh * 0.6 + r.height * f));
-      }
+      const f = Number(el.dataset.pLang || 0.35);
+      const p = clamp((vh * 0.85 - r.top) / (vh * 0.6 + r.height * f));
       el.style.setProperty('--p', p.toFixed(3));
     });
   };

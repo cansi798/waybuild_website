@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -23,7 +23,6 @@ export const GET: APIRoute = async ({ site }) => {
     '## Kernbotschaft: Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden',
     `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${EINDRUCK.titel} ${EINDRUCK.unter} ${EINDRUCK.einleitung} ${EINDRUCK.minuten} ${EINDRUCK.schluss.join(' ')}`,
     `- ${BAUSTEINE.titel} ${BAUSTEINE.werkzeuge.join(' ')} ${BAUSTEINE.text.join(' ')} ${BAUSTEINE.verluste.join(' ')}`,
     `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')}`,
     `- ${BEREICHE.titel} ${BEREICHE.bereiche.map((b) => `${b.titel}: ${b.teile.map(([t, imPaket]) => (imPaket ? t : `${t} (individuelles Angebot)`)).join(', ')}`).join('; ')}.`,

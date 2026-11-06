@@ -71,38 +71,6 @@ html.js [data-p] { --p: 0; }
 .leitsatz { max-width: 760px; margin: clamp(36px, 5vw, 64px) auto 0; padding-top: clamp(24px, 3vw, 32px); border-top: 1px solid var(--line); text-align: center; font-family: var(--font-head); font-size: clamp(1.3rem, 2.8vw, 1.85rem); font-weight: 600; line-height: 1.35; color: var(--dark); }
 .leitsatz strong { display: block; color: var(--accent-ink); font-weight: 650; }
 
-/* ── A1 · Keine einzelnen Systeme: der Kunde wandert über die Wege, auf denen er Sie entdeckt ── */
-.kurz { margin-top: 18px; padding: 18px 20px; border-left: 3px solid var(--gold); background: var(--paper); border-radius: 0 12px 12px 0; max-width: 520px; }
-.kurz__kopf { margin: 0 0 4px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
-.kurz__text { margin: 0; font-family: var(--font-head); font-size: 1.08rem; font-weight: 500; line-height: 1.5; color: var(--ink); }
-.kurz__text strong { font-weight: 650; color: var(--dark); }
-.reise { --n: 5; --q: clamp(0, var(--p) * 1.25, 1); }
-.reise__spur { position: relative; }
-.reise__weg { list-style: none; margin: 0; padding: 0; display: grid; }
-.reise__weg li { position: relative; padding: 13px 0 13px 40px; font-size: 1.05rem; line-height: 1.45; color: var(--ink); border-bottom: 1px solid var(--line); }
-.reise__weg li:last-child { border-bottom: 0; }
-.reise__weg::before { content: ''; position: absolute; left: 9px; top: 24px; bottom: 24px; width: 2px; border-radius: 2px; background: #cdc6ba; }
-.reise__weg::after { content: ''; position: absolute; left: 9px; top: 24px; bottom: 24px; width: 2px; border-radius: 2px; background: var(--dark); transform-origin: top; transform: scaleY(var(--q)); }
-.reise__punkt { position: absolute; left: 3px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; border: 2px solid #b7beb9; background: var(--paper-2); z-index: 1; }
-.reise__punkt::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: var(--salbei); opacity: clamp(0, (var(--q) * (var(--n) - 1) - var(--i) + 0.08) * 6, 1); transform: scale(clamp(0.3, (var(--q) * (var(--n) - 1) - var(--i) + 0.08) * 6, 1)); }
-.reise__ebene { position: absolute; left: 0; top: 24px; bottom: 24px; width: 20px; transform: translateY(calc(var(--q) * 100%)); pointer-events: none; z-index: 2; }
-.reise__wanderer { position: absolute; left: 1px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 5px rgb(214 168 90 / 25%); }
-.reise__minuten { margin: 18px 0 0 40px; font-weight: 650; color: var(--dark); }
-.reise__ende { margin-top: 18px; padding: 20px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
-.reise__frage { margin: 0 0 14px; font-family: var(--font-head); font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.4; color: var(--dark); }
-.reise__frage span { display: block; font-family: var(--font-body, inherit); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
-.reise__aus { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
-.reise__aus li { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; }
-.reise__aus svg { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.reise__aus--ja { padding: 8px 14px 8px 10px; border-radius: 999px; background: rgb(214 168 90 / 18%); color: var(--dark); }
-.reise__aus--ja svg circle { fill: var(--gold); stroke: var(--gold); }
-.reise__aus--ja svg path { stroke: var(--dark); }
-.reise__aus--nein { padding: 8px 14px 8px 10px; border-radius: 999px; background: var(--paper-2); color: #4f5559; }
-.reise__aus--nein svg circle { stroke: #9aa19c; }
-.reise__aus--nein svg path { stroke: #6b726e; }
-.reise__oder { color: var(--ink-soft); font-weight: 500 !important; font-size: 0.92rem; }
-.reise__aus--ja svg, .reise__aus--nein svg { transform: scale(clamp(0.4, (var(--p) - 0.7) * 4 + 0.4, 1)); }
-
 /* ── 2 · Bausteine, die nicht zusammenpassen: sie versuchen ineinanderzugreifen und rutschen wieder ab ── */
 .werkzeuge { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 2px; }
 .werkzeuge li { font-family: var(--font-head); font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 650; line-height: 1.3; color: var(--dark); }
@@ -124,7 +92,7 @@ html.js [data-p] { --p: 0; }
 /* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei große Karten mit reinem Text ── */
 .verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .verstehen-chips li { padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 650; color: var(--dark); }
-.karten--gross .karte { display: grid; place-items: center; min-height: clamp(140px, 22vw, 240px); text-align: center; }
+.karten--gross .karte { background: var(--white); display: grid; place-items: center; min-height: clamp(140px, 22vw, 240px); text-align: center; }
 .karte__wort { margin: 0 !important; font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 650; letter-spacing: -0.02em; color: var(--dark) !important; }
 .karten--gross .karte:last-child .karte__wort { color: var(--accent-ink) !important; }
 

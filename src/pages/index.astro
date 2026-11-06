@@ -1,7 +1,7 @@
 ---
 // STARTSEITE der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj):
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
-//   · 1 Kunden erleben keine einzelnen Systeme (4774, Wanderung) · 2 Bausteine, die nicht passen (4786/4787)
+//   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
 //   · 3 Verstehen. Empfehlen. Umsetzen. (4788, #denkweise, drei große Karten) · 4 Vier Bereiche + Pakete (4789)
 //   · 5 Darauf können Sie sich verlassen (4790/4791) + Woran wir glauben (4795) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
@@ -14,7 +14,7 @@ import Check from '../components/start/Check.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { PAKETE, WAAS, formatEuro } from '../config/site';
-import { ANLIEGEN, EINDRUCK, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, GLAUBEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
@@ -46,31 +46,8 @@ const BEREICH_ICON = [
   <!-- Hero -->
   <StartHero />
 
-  <!-- A1 · Kunden erleben keine einzelnen Systeme (Jamil 4774): Wanderung über die Wege zum Eindruck -->
-  <section class="bs bs--alt" aria-labelledby="bs-eindruck">
-    <div class="wrap bs-zwei">
-      <div class="bs-kopf">
-        <h2 id="bs-eindruck">{EINDRUCK.titel}</h2>
-        <p class="bs-unter">{EINDRUCK.unter}</p>
-        <p class="bs-lead">{EINDRUCK.einleitung}</p>
-      </div>
-      <div class="reise reise--wege" data-p data-p-lang="0.55" style={`--n:${EINDRUCK.wege.length}`}>
-        <div class="reise__spur">
-          <ol class="reise__weg" aria-hidden="true">
-            {EINDRUCK.wege.map((w, i) => <li style={`--i:${i}`}><span class="reise__punkt"></span>{w}</li>)}
-          </ol>
-          <span class="reise__ebene" aria-hidden="true"><span class="reise__wanderer"></span></span>
-        </div>
-        <p class="reise__minuten">{EINDRUCK.minuten}</p>
-        <div class="kurz">
-          <p class="kurz__text">{EINDRUCK.schluss[0]} <strong>{EINDRUCK.schluss[1]}</strong></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): Bausteine, die nicht passen -->
-  <section class="bs" aria-labelledby="bs-bausteine">
+  <section class="bs bs--alt" aria-labelledby="bs-bausteine">
     <div class="wrap bs-zwei bs-zwei--mitte">
       <div class="bs-kopf">
         <h2 id="bs-bausteine">{BAUSTEINE.titel}</h2>
@@ -93,7 +70,7 @@ const BEREICH_ICON = [
   </section>
 
   <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788): drei große Karten mit reinem Text -->
-  <section class="bs bs--alt" id="denkweise" aria-labelledby="bs-verstehen">
+  <section class="bs" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-verstehen">{VERSTEHEN.titel}</h2>
@@ -108,7 +85,7 @@ const BEREICH_ICON = [
   </section>
 
   <!-- 4 · Alles zwischen erstem Kontakt und zufriedenem Kunden (Jamil 4789): vier Bereiche, darunter die Pakete -->
-  <section class="bs bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
+  <section class="bs bs--alt bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-bereiche">{BEREICHE.titel}</h2>
