@@ -156,7 +156,7 @@ html.js .verlust:not(.ist-los) .verlust__keine li::after { transform: scaleX(0);
 .eisberg__koerper { fill: #c5d3ca; stroke: #a9bcb0; stroke-width: 1.5; }
 .eisberg__spitze { fill: var(--dark); }
 .eisberg__linie { fill: none; stroke: #6f8a7b; stroke-width: 2; stroke-dasharray: 1 1; stroke-dashoffset: calc(1 - clamp(0, var(--p) * 1.6, 1)); }
-.eisberg__wort { position: absolute; transform: translate(-50%, calc(-50% + (1 - clamp(0, (var(--p) * 7 - var(--i) - 0.4), 1)) * 10px)); opacity: clamp(0, (var(--p) * 7 - var(--i) - 0.4), 1); padding: 5px 11px; border-radius: 999px; background: rgb(248 247 244 / 92%); font-family: var(--font-head); font-weight: 600; font-size: clamp(0.74rem, 2.1vw, 0.9rem); color: var(--dark); white-space: nowrap; }
+.eisberg__wort { position: absolute; transform: translate(-50%, calc(-50% + (1 - clamp(0, (var(--p) * 9 - var(--i) - 0.4), 1)) * 10px)); opacity: clamp(0, (var(--p) * 9 - var(--i) - 0.4), 1); padding: 5px 11px; border-radius: 999px; background: rgb(248 247 244 / 92%); font-family: var(--font-head); font-weight: 600; font-size: clamp(0.74rem, 2.1vw, 0.9rem); color: var(--dark); white-space: nowrap; }
 .eisberg__wort--oben { left: 50%; top: 7%; opacity: 1; transform: translate(-50%, -50%); background: var(--dark); color: var(--white); }
 .eisberg__wort:nth-of-type(2) { left: 36%; top: 42%; }
 .eisberg__wort:nth-of-type(3) { left: 64%; top: 42%; }
