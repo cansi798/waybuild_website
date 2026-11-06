@@ -51,6 +51,7 @@ const BEREICH_ICON = [
     <div class="wrap bs-zwei bs-zwei--mitte">
       <div class="bs-kopf">
         <h2 id="bs-bausteine">{BAUSTEINE.titel}</h2>
+        <p class="bs-unter">{BAUSTEINE.unter}</p>
         <ul class="werkzeuge">{BAUSTEINE.werkzeuge.map((w) => <li>{w}</li>)}</ul>
         <p class="bs-lead"><strong>{BAUSTEINE.text[0]}</strong></p>
         <p class="bs-lead">{BAUSTEINE.text[1]}</p>
@@ -104,6 +105,7 @@ const BEREICH_ICON = [
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-bereiche">{BEREICHE.titel}</h2>
+        <p class="bs-unter bs-unter--mitte">{BEREICHE.unter}</p>
       </div>
       <ul class="bereiche">
         {BEREICHE.bereiche.map((b, i) => (

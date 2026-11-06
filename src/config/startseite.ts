@@ -35,7 +35,9 @@ export const HERO = {
 
 /** Abschnitt 2 (4786/4787): Visual = vier Bausteine mit unterschiedlichen Kanten, die nicht ineinanderpassen */
 export const BAUSTEINE = {
-  titel: 'Die meisten Unternehmen optimieren einzelne Werkzeuge.',
+  /** Headline + Unterzeile neu (Jamil 4812) */
+  titel: 'Einzelne Lösungen funktionieren.',
+  unter: 'Das Gesamterlebnis oft nicht.',
   werkzeuge: ['Website.', 'CRM.', 'Social Media.', 'Prozesse.'],
   text: ['Doch Kunden erleben das Gesamtbild.', 'Wenn einzelne Bausteine nicht zusammenarbeiten, entstehen Reibungsverluste.'],
   verluste: ['Verlorene Anfragen.', 'Unnötiger Aufwand.', 'Unklare Abläufe.'],
@@ -55,7 +57,9 @@ export const VERSTEHEN = {
 
 /** Abschnitt 4 (4789): vier Bereiche. paket=false = nicht in den Monatspaketen (Ausbaustufe, individuelles Angebot). */
 export const BEREICHE = {
-  titel: 'Alles, was zwischen dem ersten Kontakt und dem zufriedenen Kunden passiert.',
+  /** Headline + Unterzeile neu (Jamil 4811) */
+  titel: 'Ein Kunde interessiert sich nicht für Ihre Systeme.',
+  unter: 'Ein Kunde interessiert sich für das Erlebnis.',
   bereiche: [
     { titel: 'Aufmerksamkeit', teile: [['Website', true], ['Google', true], ['Social Media', false], ['Video', false]] },
     { titel: 'Anfrage', teile: [['Formulare', true], ['Terminbuchung', false], ['CRM', false]] },
