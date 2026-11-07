@@ -7,13 +7,11 @@
 // Kurzfassung in den sessionStorage; die Kontaktseite zeigt sie sichtbar und abwählbar und sendet sie mit der Anfrage.
 import { href } from '../../lib/paths';
 import { CHECK as C, ANLIEGEN } from '../../config/startseite';
-import { PAKETE, formatEuro } from '../../config/site';
 const N = C.fragen.length;
 const stationen = C.fragen.filter((f) => C.texte[f.id]);
 const daten = {
   fragen: C.fragen.map((f) => ({ id: f.id, schritt: f.schritt, antworten: f.antworten })),
   texte: C.texte, ampel: C.ampel, zielStation: C.zielStation, ergebnis: C.ergebnis,
-  pakete: Object.fromEntries(PAKETE.map((p) => [p.id, `${p.name}, ${formatEuro(p.preis)} im Monat netto zzgl. MwSt.`])),
   kontakt: href('/kontakt/'), preise: href('/preise/'),
   analyse: `${ANLIEGEN.analyse.paket} (Kundenreise-Check)`, beratung: ANLIEGEN.erstberatung.paket,
 };
@@ -169,7 +167,7 @@ const ICON: Record<string, string> = {
       if (stufe === 'viel') {
         botschaft.textContent = D.ergebnis.viel;
         cta1.textContent = 'Kostenlose Analyse anfordern'; cta1.href = kontakt(D.analyse);
-        cta2.textContent = 'Pakete ansehen'; cta2.href = D.preise;
+        cta2.textContent = 'Abo zusammenstellen'; cta2.href = '#baukasten';
       } else if (stufe === 'mittel') {
         const hinten = ['anfrage', 'bearbeitung', 'zufrieden'].some((id) => stationen.find((s) => s.id === id)?.a === 'r');
         const keinProfil = String(antwort('vertrauen')[0]).includes('kein Google-Profil');
@@ -182,8 +180,8 @@ const ICON: Record<string, string> = {
           botschaft.textContent = `${D.ergebnis.mittel} ${D.ergebnis.individuell}`;
           cta1.textContent = 'Erstgespräch zu Abläufen'; cta1.href = kontakt('Erstgespräch Abläufe (Kundenreise-Check)');
         } else {
-          botschaft.textContent = `${D.ergebnis.mittel} Unser Vorschlag: Paket ${D.pakete[paket]}`;
-          cta1.textContent = 'Paket ansehen'; cta1.href = D.preise;
+          botschaft.textContent = `${D.ergebnis.mittel} ${D.ergebnis.vorschlag[paket]}`;
+          cta1.textContent = 'Abo zusammenstellen'; cta1.href = '#baukasten';
         }
         cta2.textContent = 'Kurz beraten lassen'; cta2.href = kontakt(D.beratung);
       } else {

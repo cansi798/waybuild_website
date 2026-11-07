@@ -38,7 +38,8 @@ export const BAUSTEINE = {
   /** Headline + Unterzeile neu (Jamil 4812) */
   titel: 'Einzelne Lösungen funktionieren.',
   unter: 'Das Gesamterlebnis oft nicht.',
-  werkzeuge: ['Website.', 'CRM.', 'Social Media.', 'Prozesse.'],
+  /** Rethinking/Jamil 4879 (kundeneinfache Sprache): „CRM.“ → „Kundenverwaltung.“ */
+  werkzeuge: ['Website.', 'Kundenverwaltung.', 'Social Media.', 'Prozesse.'],
   text: ['Doch Kunden erleben das Gesamtbild.', 'Wenn einzelne Bausteine nicht zusammenarbeiten, entstehen Reibungsverluste.'],
   verluste: ['Verlorene Anfragen.', 'Unnötiger Aufwand.', 'Unklare Abläufe.'],
 };
@@ -60,38 +61,58 @@ export const VERSTEHEN = {
 };
 
 /** Abschnitt 4 (4789): vier Bereiche. paket=false = nicht in den Monatspaketen (Ausbaustufe, individuelles Angebot). */
-export type Stufe = 'alle' | 'wegweiser' | 'wahrzeichen' | 'anfrage';
-/** Neu geordnet nach Jamil 4871–4876: jede Leistung hat genau EINEN Platz (Station der Kundenreise) und ein Kennzeichen,
- *  wo sie steckt. Inhalte entsprechen PAKETE/IN_ALLEN in site.ts (dort nichts geändert); „anfrage“ = Ausbaustufe. */
+/** Abschnitt „Ein Kunde interessiert sich nicht für Ihre Systeme“ (Jamil 4811, Neuordnung 4871–4876) + Abo-Baukasten
+ *  (Jamil 4879, 07.11.2026: „statt der Preisschilder eine Art Warenkorb“, ab 39,99 €). TESTANGEBOT nur auf der Startseite:
+ *  /preise/, AGB und PAKETE in site.ts zeigen weiterhin Fundament/Wegweiser/Wahrzeichen (Entscheidung Can + Jamil offen).
+ *  EINE Quelle: Basis-Leistungen und Bausteine tragen ihre Station; die Stationsliste wird daraus erzeugt (jede Leistung
+ *  steht genau einmal). preis = Aufschlag netto/Monat, null = Preis auf Anfrage. Kundeneinfache Sprache, keine Fachbegriffe. */
+export type StationId = 'aufmerksamkeit' | 'anfrage' | 'bearbeitung' | 'betreuung';
 export const BEREICHE = {
   /** Headline + Unterzeile (Jamil 4811) */
   titel: 'Ein Kunde interessiert sich nicht für Ihre Systeme.',
   unter: 'Ein Kunde interessiert sich für das Erlebnis.',
   einleitung: 'Darum ordnen wir alles nach dem, was Ihr Kunde erlebt:',
   stationen: [
-    { titel: 'Aufmerksamkeit', ziel: 'Gefunden werden und überzeugen', teile: [
-      ['Website ohne Seitenbegrenzung, fürs Handy optimiert', 'alle'], ['Für Google und KI-Suche aufbereitet', 'alle'],
-      ['Google-Unternehmensprofil eingerichtet', 'wegweiser'], ['Eigene Seiten für Ihre Orte und Leistungen', 'wegweiser'],
-      ['Logo und kurzer CI-Leitfaden', 'wahrzeichen'], ['Social Media und Video', 'anfrage'],
-    ] },
-    { titel: 'Anfrage', ziel: 'Anfragen sicher empfangen', teile: [
-      ['Kontaktformular und direkte Kontaktwege auf der Website', 'alle'], ['20 E-Mail-Postfächer mit Signatur nach DIN 5008', 'alle'],
-      ['Postfächer mit Ordnern und Regeln für den Alltag', 'wegweiser'], ['Online-Terminbuchung und CRM', 'anfrage'],
-    ] },
-    { titel: 'Bearbeitung', ziel: 'Zügig und einheitlich antworten', teile: [
-      ['Briefvorlage nach DIN 5008', 'wegweiser'], ['Geschäftsbriefe für Angebot und Rechnung im eigenen Design', 'wahrzeichen'],
-      ['Abläufe, Automatisierung und eigene Software', 'anfrage'],
-    ] },
-    { titel: 'Betreuung', ziel: 'Dranbleiben, ohne Aufwand', teile: [
-      ['Hosting in Deutschland, Updates und Backups', 'alle'], ['Änderungen per Sprachnachricht oder Text, im fairen Rahmen', 'alle'],
-      ['Monatsbericht und laufende Verbesserung', 'wegweiser'], ['Quartalsgespräch und ständige Optimierung', 'wahrzeichen'],
-    ] },
-  ] as { titel: string; ziel: string; teile: [string, Stufe][] }[],
-  stufen: { alle: 'In allen Paketen', wegweiser: 'Ab Wegweiser', wahrzeichen: 'Wahrzeichen', anfrage: 'Auf Anfrage' } as Record<Stufe, string>,
-  kombiTitel: 'So kombinieren Sie das',
-  kombiText: 'Drei Pakete bauen aufeinander auf. Was „auf Anfrage“ steht, bekommen Sie als eigenes Angebot.',
-  anfrageTitel: 'Auf Anfrage',
-  anfrageText: 'Individuelles Angebot, passend zu Ihren Abläufen.',
+    { id: 'aufmerksamkeit', titel: 'Aufmerksamkeit', ziel: 'Gefunden werden und überzeugen' },
+    { id: 'anfrage', titel: 'Anfrage', ziel: 'Anfragen sicher empfangen' },
+    { id: 'bearbeitung', titel: 'Bearbeitung', ziel: 'Zügig und einheitlich antworten' },
+    { id: 'betreuung', titel: 'Betreuung', ziel: 'Dranbleiben, ohne Aufwand' },
+  ] as { id: StationId; titel: string; ziel: string }[],
+  kennzeichen: { basis: 'Im Basispaket', zubuch: 'Zubuchbar', anfrage: 'Auf Anfrage' },
+};
+
+export const BAUKASTEN = {
+  titel: 'Stellen Sie Ihr Abo zusammen',
+  einleitung: 'Sie starten mit Ihrer Website und buchen nur dazu, was Sie wirklich brauchen. Der Monatspreis passt sich sofort an.',
+  test: 'Testangebot. Die genauen Konditionen besprechen wir gern mit Ihnen.',
+  basis: {
+    name: 'Ihre Website', preis: 39.99,
+    teile: [
+      { text: 'Neue Website, passt auf Handy und PC', station: 'aufmerksamkeit' },
+      { text: 'Vorab: Analyse und unsere Empfehlung für Sie', station: 'aufmerksamkeit' },
+      { text: 'Kontaktformular und direkte Kontaktwege', station: 'anfrage' },
+      { text: 'Änderungen per Text, Screenshot oder Sprachnachricht', station: 'betreuung', hinweis: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr).' },
+      { text: 'Sichere Technik: Hosting in Deutschland, Updates und Sicherungen', station: 'betreuung' },
+    ] as { text: string; station: StationId; hinweis?: string }[],
+  },
+  bausteine: [
+    { id: 'google-profil', name: 'Google-Profil', text: 'Ihr Eintrag bei Google und Google Maps, eingerichtet und gepflegt: Fotos, Leistungen, Öffnungszeiten.', preis: 14.99, station: 'aufmerksamkeit' },
+    { id: 'gefunden', name: 'Bei Google besser gefunden werden', text: 'Eigene Seiten für Ihre Orte und Leistungen, mit den Wörtern, nach denen Ihre Kunden suchen.', preis: 29.99, station: 'aufmerksamkeit' },
+    { id: 'ki', name: 'In KI-Antworten auftauchen', text: 'Ihre Seite so aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.', preis: 14.99, station: 'aufmerksamkeit' },
+    { id: 'social', name: 'Social Media', text: 'Profile und Beiträge, passend zu Ihrem Auftritt.', preis: null, station: 'aufmerksamkeit' },
+    { id: 'video', name: 'Video', text: 'Kurze Filme über Ihr Unternehmen und Ihre Arbeit.', preis: null, station: 'aufmerksamkeit' },
+    { id: 'email', name: 'E-Mail-Postfächer mit Signatur', text: 'Bis zu 20 Postfächer mit Ihrer Adresse, eingerichtet, mit einheitlicher Signatur.', preis: 9.99, station: 'anfrage' },
+    { id: 'termin', name: 'Online-Terminbuchung', text: 'Kunden buchen freie Termine direkt auf Ihrer Website.', preis: 19.99, station: 'anfrage' },
+    { id: 'kunden', name: 'Kundenverwaltung', text: 'Alle Anfragen und Kunden an einem Ort, nichts geht verloren.', preis: null, station: 'anfrage' },
+    { id: 'logo', name: 'Logo und Geschäftspapiere', text: 'Logo, Briefbogen, Angebot und Rechnung im gleichen Stil.', preis: 39.99, station: 'bearbeitung' },
+    { id: 'ablaeufe', name: 'Abläufe automatisieren', text: 'Wiederkehrende Aufgaben laufen von allein, zum Beispiel Bestätigungen und Erinnerungen.', preis: null, station: 'bearbeitung' },
+    { id: 'bericht', name: 'Monatsbericht', text: 'Jeden Monat kurz und verständlich: Besucher, Anfragen, Suchbegriffe.', preis: 9.99, station: 'betreuung' },
+    { id: 'optimierung', name: 'Laufende Verbesserung', text: 'Wir verbessern jeden Monat, was Besucher zu Anfragen macht. Dazu alle drei Monate ein Gespräch.', preis: 49.99, station: 'betreuung' },
+  ] as { id: string; name: string; text: string; preis: number | null; station: StationId }[],
+  summeKopf: 'Ihr Abo',
+  cta: 'Paket anfragen',
+  ctaHinweis: 'Ihre Auswahl übernehmen wir in das Anfrageformular. Dort sehen Sie sie und können sie ändern.',
+  laufzeit: '24 Monate Mindestlaufzeit, danach monatlich kündbar.',
 };
 
 /** Referenzen (Jamil 4876, Projekte WS-0002 bis WS-0006). WICHTIG: Name, Link und Bild NUR eintragen und freigegeben: true
@@ -117,7 +138,7 @@ export const REFERENZEN = {
       gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.' },
     { freigegeben: false, branche: 'Bildungsprojekt mit Erklärvideos', region: 'Deutschland', status: 'vorschau', motiv: 'wissen',
       ausgang: 'Ein neues Projekt brauchte einen ersten Auftritt.',
-      gemacht: 'Website mit Team, Videos und häufigen Fragen, für Google und KI-Suche aufbereitet.' },
+      gemacht: 'Website mit Team, Videos und häufigen Fragen, so aufbereitet, dass Google und KI-Assistenten sie gut verstehen.' },
   ] as { freigegeben: boolean; name?: string; url?: string; bild?: string; branche: string; region: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string }[],
 };
 
@@ -167,8 +188,14 @@ export const CHECK = {
   ergebnis: {
     viel: 'An mehreren Stellen gehen Ihnen wahrscheinlich Kunden verloren. Wir sehen uns das kostenlos mit Ihnen an.',
     mittel: 'Ihr Auftritt hat eine gute Basis. An einer Stelle lohnt sich gezielte Hilfe.',
+    /** Vorschlag bei „mittel“, passend zum Abo-Baukasten (Testangebot) */
+    vorschlag: {
+      fundament: 'Unser Vorschlag: das Basispaket „Ihre Website“.',
+      wegweiser: 'Unser Vorschlag: Ihre Website mit „Google-Profil“ und „Bei Google besser gefunden werden“.',
+      wahrzeichen: 'Unser Vorschlag: Ihre Website mit „Logo und Geschäftspapiere“.',
+    } as Record<string, string>,
     wenig: 'Ehrlich gesagt: Sie sind gut aufgestellt. Unser Tipp:',
-    individuell: 'Unser Vorschlag: ein Erstgespräch zu Ihren Abläufen, etwa Terminbuchung, CRM oder Automatisierung. Das ist ein individuelles Angebot.',
+    individuell: 'Unser Vorschlag: ein Erstgespräch zu Ihren Abläufen, etwa Terminbuchung, Kundenverwaltung oder automatische Abläufe. Das ist ein individuelles Angebot.',
   },
   hinweis: 'Das ist eine Selbsteinschätzung, keine Messung. Die Einordnung beruht auf unserer Erfahrung, nicht auf einer Studie.',
   mitschicken: 'Mein Ergebnis mit der Anfrage mitschicken',
@@ -189,5 +216,5 @@ export const CLAIM = 'Alles aus einer Hand. Von Anfang bis Wachstum.';
 export const BOTSCHAFT = {
   titel: CLAIM,
   description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung aus einer Hand. Für kleine und mittlere Unternehmen.',
-  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Aufmerksamkeit (Website, Google), Anfrage (Formulare), Bearbeitung und Betreuung (Service, Kommunikation, Weiterentwicklung) aus einer Hand. Website, Google-Profil, E-Mail-Postfächer, Signatur, Briefvorlage, Logo und Geschäftspapiere in festen Monatspaketen; Social Media, Video, Terminbuchung, CRM, Prozesse, Automatisierung und Systeme als individuelles Angebot.',
+  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden, aus einer Hand: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe, Social Media und Video auf Anfrage.',
 };

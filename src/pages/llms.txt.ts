@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -25,7 +25,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${BOTSCHAFT.service}`,
     `- ${BAUSTEINE.titel} ${BAUSTEINE.unter} ${BAUSTEINE.werkzeuge.join(' ')} ${BAUSTEINE.text.join(' ')} ${BAUSTEINE.verluste.join(' ')}`,
     `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')} ${VERSTEHEN.karten.map((k) => `${k.wort}: ${k.leit} ${k.text}`).join(' ')} ${VERSTEHEN.nichtKopf} ${VERSTEHEN.nicht.join(', ')}.`,
-    `- ${BEREICHE.titel} ${BEREICHE.unter} ${BEREICHE.stationen.map((st) => `${st.titel} (${st.ziel}): ${st.teile.map(([t, s]) => `${t} [${BEREICHE.stufen[s]}]`).join(', ')}`).join('; ')}.`,
+    `- ${BEREICHE.titel} ${BEREICHE.unter} Abo-Baukasten (Testangebot auf der Startseite): Basis „${BAUKASTEN.basis.name}“ ab ${formatEuro(BAUKASTEN.basis.preis)} netto im Monat (${BAUKASTEN.basis.teile.map((t) => t.text).join('; ')}), zubuchbar: ${BAUKASTEN.bausteine.map((b) => `${b.name} (${b.preis === null ? 'Preis auf Anfrage' : `+ ${formatEuro(b.preis)}`})`).join(', ')}. ${BAUKASTEN.laufzeit}`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
     `- ${CHECK.eyebrow} auf der Startseite: ${CHECK.fragen.length} kurze Fragen (${CHECK.fragen.map((f) => f.schritt).join(', ')}); Ergebnis als Ampel je Station mit Tipp, berechnet nur im Browser. Mitgeschickt wird nur, wenn der Besucher das Ergebnis aktiv mit seiner Anfrage sendet.`,
     `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,

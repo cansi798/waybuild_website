@@ -155,28 +155,9 @@ html.js [data-p] { --p: 0; }
 .station4__liste li { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--line); }
 .station4__text { font-size: 0.97rem; line-height: 1.45; color: var(--ink); }
 .stufe { justify-self: start; padding: 2px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; }
-.stufe--alle { background: rgb(126 155 138 / 20%); color: #3f6550; }
-.stufe--wegweiser { background: var(--dark); color: var(--white); }
-.stufe--wahrzeichen { border: 1.5px solid var(--dark); color: var(--dark); }
+.stufe--basis { background: rgb(126 155 138 / 20%); color: #3f6550; }
+.stufe--zubuch { background: var(--dark); color: var(--white); }
 .stufe--anfrage { border: 1.5px dashed #9aa19c; color: #4f5559; }
-.kombi { margin-top: clamp(40px, 6vw, 64px); }
-.kombi__titel { margin: 0 0 6px; font-size: clamp(1.4rem, 2.8vw, 1.9rem) !important; }
-.kombi__liste { list-style: none; margin: clamp(20px, 3vw, 28px) 0 0; padding: 0; display: grid; gap: 14px; }
-@media (min-width: 760px) { .kombi__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1180px) { .kombi__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.paket4 { display: flex; flex-direction: column; padding: clamp(18px, 2.4vw, 24px); border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); }
-.paket4--empfohlen { border: 2px solid var(--dark); background: var(--white); }
-.paket4--anfrage { background: transparent; border: 1.5px dashed #b7beb9; }
-.paket4__name { margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 1.3rem; color: var(--dark); }
-.paket4__preis { margin: 4px 0 6px; font-weight: 700; color: var(--dark); }
-.paket4__kurz { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
-.paket4__basis { margin: 0 0 6px; font-size: 0.85rem; font-weight: 700; color: var(--accent-ink); }
-.paket4__neu { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.93rem; line-height: 1.45; color: var(--ink); }
-.paket4__neu li { position: relative; padding-left: 18px; }
-.paket4__neu li::before { content: '+'; position: absolute; left: 0; font-weight: 700; color: var(--accent-ink); }
-.paket4__link { margin-top: auto; padding-top: 14px; font-weight: 650; color: var(--dark); text-underline-offset: 3px; }
-.kombi .loes__hinweis { margin: 18px auto 0; max-width: 760px; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
-.kombi .loes__hinweis a { color: var(--dark); font-weight: 650; }
 
 /* ── Referenzen: anonym mit stilisierter Vorschau, bis freigegeben ── */
 .refs4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 18px; }
