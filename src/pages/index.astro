@@ -14,7 +14,6 @@ import Check from '../components/start/Check.astro';
 import Baukasten from '../components/start/Baukasten.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
-import { formatEuro } from '../config/site';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
@@ -107,7 +106,8 @@ const MOTIV: Record<string, string> = {
   </section>
 
   <!-- 4 · Ein Kunde interessiert sich nicht für Ihre Systeme (Jamil 4811 + 4871–4876 + 4879): jede Leistung genau EIN Mal an
-       ihrer Station (aus BAUKASTEN erzeugt), Kennzeichen Im Basispaket / Zubuchbar · Preis / Auf Anfrage; darunter der
+       ihrer Station (aus BAUKASTEN erzeugt), darunter „Was dazugehört“ (dazu, Jamil 4909: hier keine Preise und keine
+       Kennzeichen mehr; Preise stehen weiter im Baukasten und auf /preise/); darunter der
        Abo-Baukasten (Testangebot ab 39,99 €; /preise/ + AGB zeigen weiter die alten Pakete, Entscheidung Can + Jamil offen) -->
   <section class="bs bs--alt bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
     <div class="wrap">
@@ -124,12 +124,10 @@ const MOTIV: Record<string, string> = {
               <div><h3>{st.titel}</h3><p class="station4__ziel">{st.ziel}</p></div>
             </div>
             <ul class="station4__liste">
-              {BAUKASTEN.basis.teile.filter((t) => t.station === st.id).map((t) => (
-                <li><span class="station4__text">{t.text}</span><span class="stufe stufe--basis">{BEREICHE.kennzeichen.basis}</span></li>
-              ))}
-              {BAUKASTEN.bausteine.filter((b) => b.station === st.id).map((b) => (
-                <li><span class="station4__text">{b.name}</span>
-                  <span class:list={['stufe', b.preis === null ? 'stufe--anfrage' : 'stufe--zubuch']}>{b.preis === null ? BEREICHE.kennzeichen.anfrage : `${BEREICHE.kennzeichen.zubuch} · + ${formatEuro(b.preis)}`}</span></li>
+              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu })), ...BAUKASTEN.bausteine]
+                .filter((l) => l.station === st.id).map((l) => (
+                <li><span class="station4__text">{l.name}</span>
+                  <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul></li>
               ))}
             </ul>
           </li>
