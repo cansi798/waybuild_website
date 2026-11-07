@@ -117,15 +117,35 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
     // Kundenreise-Check / Abo-Baukasten (Startseite): nur nach aktiver Wahl („Ergebnis mitschicken“ bzw. „Paket anfragen“). Sichtbar und abwählbar,
     // übertragen erst beim Absenden zusammen mit der Anfrage (sessionStorage, endet mit dem Tab).
+    // Abo-Baukasten ab 08.11.2026 als JSON (v2): monatliche und einmalige Posten getrennt, je mit Summe netto + inkl. MwSt.
+    // Älterer Stand (reiner Text) wird unverändert übernommen.
+    let abo: { summeMonat: number; summeEinmalig: number } | null = null;
+    const eurF = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: Math.round(n * 100) % 100 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
+    const aboText = (v: string) => {
+      let d: { v?: number; monatlich?: [string, number][]; einmalig?: [string, number][]; anfrage?: string[]; summeMonat?: number; bruttoMonat?: number; summeEinmalig?: number; bruttoEinmalig?: number };
+      try { d = JSON.parse(v); } catch { return v; }
+      if (!d || d.v !== 2 || !Array.isArray(d.monatlich)) return v;
+      abo = { summeMonat: Number(d.summeMonat), summeEinmalig: Number(d.summeEinmalig) };
+      const teile = [
+        'Monatlich:', ...d.monatlich.map(([n, p], i) => `${i ? '+ ' : ''}${n}: ${eurF(p)}`),
+        `Summe monatlich: ${eurF(Number(d.summeMonat))} netto zzgl. MwSt. (${eurF(Number(d.bruttoMonat))} inkl. MwSt.)`,
+      ];
+      if (d.einmalig?.length) teile.push('', 'Einmalig (Festpreis):', ...d.einmalig.map(([n, p]) => `+ ${n}: ${eurF(p)}`),
+        `Summe einmalig: ${eurF(Number(d.summeEinmalig))} netto zzgl. MwSt. (${eurF(Number(d.bruttoEinmalig))} inkl. MwSt.)`);
+      else teile.push('', 'Einmalig: 0 €');
+      if (d.anfrage?.length) teile.push('', `Auf Anfrage: ${d.anfrage.join(', ')}`);
+      teile.push('', 'Testangebot');
+      return teile.join('\n');
+    };
     let checkText = '';
     const ueber: [string, string][] = [['wb-kundenreise-check', 'Kundenreise-Check'], ['wb-abo-baukasten', 'Abo-Baukasten']];
-    try { checkText = ueber.map(([k, t]) => { const v = sessionStorage.getItem(k); return v ? `${t}:\n${v}` : ''; }).filter(Boolean).join('\n\n'); } catch { checkText = ''; }
+    try { checkText = ueber.map(([k, t]) => { const v = sessionStorage.getItem(k); return v ? `${t}:\n${k === 'wb-abo-baukasten' ? aboText(v) : v}` : ''; }).filter(Boolean).join('\n\n'); } catch { checkText = ''; }
     const checkBox = document.getElementById('check-mit');
     if (checkText && checkBox) {
       document.getElementById('check-mit-text')!.textContent = checkText;
       checkBox.hidden = false;
       document.getElementById('check-mit-weg')?.addEventListener('click', () => {
-        checkText = '';
+        checkText = ''; abo = null;
         try { ueber.forEach(([k]) => sessionStorage.removeItem(k)); } catch { /* egal */ }
         checkBox.hidden = true;
       });
@@ -141,6 +161,9 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       if (data.website) return; // Honeypot: Bots füllen das versteckte Feld aus
       delete data.website;
       data.nachricht = mitCheck(data.nachricht ?? '');
+      // Baukasten-Summen zusätzlich als eigene Felder (monatlich und einmalig getrennt)
+      const a = abo as { summeMonat: number; summeEinmalig: number } | null;
+      if (a) { data.abo_monatlich = `${eurF(a.summeMonat)} netto`; data.abo_einmalig = `${eurF(a.summeEinmalig)} netto`; }
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {

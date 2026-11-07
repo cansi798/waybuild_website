@@ -108,7 +108,8 @@ const MOTIV: Record<string, string> = {
   <!-- 4 · Ein Kunde interessiert sich nicht für Ihre Systeme (Jamil 4811 + 4871–4876 + 4879): jede Leistung genau EIN Mal an
        ihrer Station (aus BAUKASTEN erzeugt), darunter „Was dazugehört“ (dazu, Jamil 4909: hier keine Preise und keine
        Kennzeichen mehr; Preise stehen weiter im Baukasten und auf /preise/); darunter der
-       Abo-Baukasten (Testangebot ab 39,99 €; /preise/ + AGB zeigen weiter die alten Pakete, Entscheidung Can + Jamil offen) -->
+       Abo-Baukasten (Testangebot ab 69,99 € im Monat, einige Zusatzleistungen einmalig mit Festpreis, Jamil 4924/4925 vom 08.11.;
+       /preise/ + AGB zeigen weiter die alten Pakete, Entscheidung Can + Jamil offen) -->
   <section class="bs bs--alt bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -124,7 +125,8 @@ const MOTIV: Record<string, string> = {
               <div><h3>{st.titel}</h3><p class="station4__ziel">{st.ziel}</p></div>
             </div>
             <ul class="station4__liste">
-              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu })), ...BAUKASTEN.bausteine]
+              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu })),
+                ...BAUKASTEN.bausteine.filter((b) => !b.zu).map((b) => ({ ...b, dazu: [...b.dazu, ...BAUKASTEN.bausteine.filter((o) => o.zu === b.id).flatMap((o) => o.dazu)] }))]
                 .filter((l) => l.station === st.id).map((l) => (
                 <li><span class="station4__text">{l.name}</span>
                   <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul></li>
