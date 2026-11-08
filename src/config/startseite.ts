@@ -73,13 +73,19 @@ export const VERSTEHEN = {
  *  EINE Quelle: Basis-Leistungen und Bausteine tragen ihre Station; die Stationsliste wird daraus erzeugt (jede Leistung
  *  steht genau einmal). preis = Aufschlag netto/Monat, null = Preis auf Anfrage. Kundeneinfache Sprache, keine Fachbegriffe. */
 export type StationId = 'aufmerksamkeit' | 'anfrage' | 'bearbeitung' | 'betreuung';
+/** Abschnitt 4 (#loesungen): in welchem Paket eine Leistung steckt (Jamil #5056, Inhalte aus pakete-abo.ts).
+ *  Schlüssel = Baustein-id aus BAUKASTEN; die Teile von BAUKASTEN.basis sind immer 'basis'. 'anfrage' = eigenes Angebot. */
+export const PAKET_JE_LEISTUNG: Record<string, 'basis' | 'plus' | 'komplett' | 'anfrage'> = {
+  'google-profil': 'plus', 'google-pflege': 'plus', gefunden: 'plus', ki: 'basis', 'ki-check': 'plus', social: 'komplett', video: 'anfrage',
+  email: 'basis', termin: 'komplett', kunden: 'anfrage', logo: 'komplett', ablaeufe: 'anfrage', bericht: 'plus', optimierung: 'komplett',
+};
 export const BEREICHE = {
   /** Headline + Unterzeile (Jamil 4811) */
   titel: 'Ein Kunde interessiert sich nicht für Ihre Systeme.',
   unter: 'Ein Kunde interessiert sich für das Erlebnis.',
   einleitung: 'Darum ordnen wir alles nach dem, was Ihr Kunde erlebt:',
   /** Rethinking 08.11. („einladender“): Details je Leistung zum Aufklappen, statt alles auf einmal */
-  hinweis: 'Wählen Sie eine Leistung, um zu sehen, was dazugehört.',
+  hinweis: 'Bei jeder Leistung steht, in welchem Paket sie enthalten ist. Wählen Sie eine Leistung, um zu sehen, was dazugehört.',
   stationen: [
     { id: 'aufmerksamkeit', titel: 'Aufmerksamkeit', ziel: 'Gefunden werden und überzeugen' },
     { id: 'anfrage', titel: 'Anfrage', ziel: 'Anfragen sicher empfangen' },
@@ -125,15 +131,15 @@ export const BAUKASTEN = {
     { id: 'google-profil', name: 'Google-Profil', text: 'Ihr Eintrag bei Google und Google Maps, eingerichtet mit Fotos, Leistungen und Öffnungszeiten.', einmalig: 199, station: 'aufmerksamkeit',
       dazu: ['Eintrag bei Google und Google Maps eingerichtet', 'Fotos, Leistungen und Öffnungszeiten eingetragen', 'Passend zu Ihrer Website'] },
     { id: 'google-pflege', name: 'Google-Profil pflegen', text: 'Wir halten Fotos, Leistungen und Öffnungszeiten in Ihrem Profil aktuell.', preis: 19.99, zu: 'google-profil', station: 'aufmerksamkeit',
-      dazu: ['Auf Wunsch laufend gepflegt: Fotos, Leistungen und Öffnungszeiten bleiben aktuell'] },
+      dazu: ['Laufend gepflegt: Fotos, Leistungen und Öffnungszeiten bleiben aktuell'] },
     { id: 'gefunden', name: 'Bei Google besser gefunden werden', text: 'Bis zu 5 eigene Seiten für Ihre Orte und Leistungen, mit den Wörtern, nach denen Ihre Kunden suchen.', einmalig: 390, hinweis: 'Jede weitere Seite 69 €.', station: 'aufmerksamkeit',
-      dazu: ['Eigene Seiten für Ihre Orte und Leistungen', 'Mit den Wörtern, nach denen Ihre Kunden suchen', 'Technische Grundlagen für Google sauber umgesetzt'] },
+      dazu: ['Wir finden heraus, wonach Ihre Kunden suchen, und richten Ihre Seiten gezielt darauf aus', 'Ihr Google-Profil wird mit der Website verknüpft, damit Sie vor Ort besser gefunden werden'] },
     { id: 'ki', name: 'In KI-Antworten auftauchen', text: 'Ihre Seite so aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.', einmalig: 190, station: 'aufmerksamkeit',
       dazu: ['Ihre Seite so aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen', 'In leichter Sprache erklärt, was wir dafür tun'] },
     { id: 'ki-check', name: 'Monatlicher KI-Check', text: 'Wir prüfen jeden Monat, ob KI-Assistenten Ihr Unternehmen richtig nennen.', preis: 14.99, zu: 'ki', station: 'aufmerksamkeit',
-      dazu: ['Auf Wunsch jeden Monat geprüft, ob KI-Assistenten Ihr Unternehmen richtig nennen'] },
+      dazu: ['Jeden Monat geprüft, ob KI-Assistenten Ihr Unternehmen richtig nennen'] },
     { id: 'social', name: 'Social Media', text: 'Profile und Beiträge, passend zu Ihrem Auftritt.', station: 'aufmerksamkeit',
-      dazu: ['Profile und Beiträge', 'Passend zu Ihrem Auftritt'] },
+      dazu: ['Profile eingerichtet, zum Beispiel bei Instagram, Facebook oder LinkedIn', 'Passend zu Ihrem Auftritt gestaltet', 'Regelmäßige Beiträge auf Anfrage'] },
     { id: 'video', name: 'Video', text: 'Kurze Filme über Ihr Unternehmen und Ihre Arbeit.', station: 'aufmerksamkeit',
       dazu: ['Kurze Filme über Ihr Unternehmen und Ihre Arbeit'] },
     { id: 'email', name: 'E-Mail-Postfächer mit Signatur', text: 'Bis zu 20 Postfächer mit Ihrer Adresse, eingerichtet, mit einheitlicher Signatur.', preis: 9.99, station: 'anfrage',
@@ -154,6 +160,7 @@ export const BAUKASTEN = {
         'Daraus ändern wir jeden Monat 2 bis 3 Dinge nach Absprache, zum Beispiel einen klareren Knopf, einen kürzeren Weg zum Kontakt oder eine neue Antwort in den häufigen Fragen.',
         'Nach einem Monat prüfen wir, ob es etwas gebracht hat. Wenn nicht, ändern wir es zurück oder versuchen etwas anderes.',
         'Alle drei Monate ein Gespräch: Was hat sich getan, was ist als Nächstes dran?',
+        'Im Paket Plus: 1 Verbesserung im Monat am Weg bis zur Anfrage',
       ] },
   ] as Baustein[],
   summeKopf: 'Ihr Abo',

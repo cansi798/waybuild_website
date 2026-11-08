@@ -23,8 +23,8 @@ import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS } from '../config/pakete-abo';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import { B2B_HINWEIS, paketById } from '../config/pakete-abo';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
@@ -72,6 +72,9 @@ const MOTIV: Record<string, string> = {
   film: '<rect x="0" y="14" width="62" height="46" rx="8" fill="#004f4c"/><path d="M62 30 L88 16 V58 L62 44 Z" fill="#7fd0cc"/><circle cx="22" cy="37" r="9" fill="#00a6a1"/>',
   wissen: '<circle cx="44" cy="28" r="22" fill="#00a6a1"/><rect x="34" y="50" width="20" height="12" rx="3" fill="#004f4c"/><path d="M36 28 l6 6 l10 -12" fill="none" stroke="#004f4c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
 };
+// Abschnitt 4: Paket-Hinweis je Leistung (Jamil #5056), Namen aus pakete-abo.ts
+const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
+  pk === 'anfrage' ? 'Auf Anfrage, eigenes Angebot' : pk === 'basis' ? 'In allen Paketen enthalten' : pk === 'komplett' ? `Im Paket ${paketById('komplett').name} enthalten` : `Ab Paket ${paketById(pk).name} enthalten`;
 ---
 
 <BaseLayout
@@ -209,11 +212,16 @@ const MOTIV: Record<string, string> = {
               <div><h3>{st.titel}</h3><p class="station4__ziel">{st.ziel}</p></div>
             </div>
             <ul class="station4__liste">
-              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu })),
-                ...BAUKASTEN.bausteine.filter((b) => !b.zu).map((b) => ({ ...b, dazu: [...b.dazu, ...BAUKASTEN.bausteine.filter((o) => o.zu === b.id).flatMap((o) => o.dazu)] }))]
+              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu, pk: 'basis' as const })),
+                ...BAUKASTEN.bausteine.filter((b) => !b.zu).map((b) => {
+                  const pk = PAKET_JE_LEISTUNG[b.id] ?? 'anfrage';
+                  // Ergänzungen (zu) anhängen; steckt die Ergänzung in einem anderen Paket, steht es dahinter
+                  const extra = BAUKASTEN.bausteine.filter((o) => o.zu === b.id).flatMap((o) => o.dazu.map((d) => (PAKET_JE_LEISTUNG[o.id] && PAKET_JE_LEISTUNG[o.id] !== pk && PAKET_JE_LEISTUNG[o.id] !== 'anfrage' ? `${d} (ab Paket ${paketById(PAKET_JE_LEISTUNG[o.id] as 'plus').name})` : d)));
+                  return { ...b, pk, dazu: [...b.dazu, ...extra] };
+                })]
                 .filter((l) => l.station === st.id).map((l) => (
                 <li><details class="station4__mehr">
-                  <summary><span class="station4__text">{l.name}</span><span class="station4__plus" aria-hidden="true"></span></summary>
+                  <summary><span class="station4__text">{l.name}<span class:list={['station4__paket', { 'station4__paket--anfrage': l.pk === 'anfrage' }]}>{paketLabel(l.pk)}</span></span><span class="station4__plus" aria-hidden="true"></span></summary>
                   <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul>
                 </details></li>
               ))}

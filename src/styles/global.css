@@ -70,7 +70,7 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--accent-ink);
   margin-bottom: 0.9rem;
 }
-.section--dark .eyebrow { color: var(--accent); }
+.section--dark .eyebrow { color: var(--accent-light); } /* kleine Schrift auf Dunkel: 5,9 : 1 */
 .lead { font-size: clamp(1.1rem, 2.2vw, 1.3rem); color: var(--ink-soft); max-width: 60ch; }
 .section--dark .lead { color: var(--dark-lead); }
 .section-head { max-width: 720px; margin-bottom: clamp(22px, 5vw, 56px); }
@@ -92,7 +92,7 @@ img { max-width: 100%; height: auto; display: block; }
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .btn:hover { transform: translateY(-1px); }
-.btn--primary { background: var(--accent); color: var(--ink); }
+.btn--primary { background: var(--accent); color: var(--on-accent); } /* 5,1 : 1 (vorher --ink 3,8 : 1) */
 .btn--primary:hover { background: #1fbab5; }
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--dark); color: var(--paper); }
@@ -129,7 +129,8 @@ img { max-width: 100%; height: auto; display: block; }
 /* ---------- Umbau nach Bauwelt-Muster (11.10.2026): Sektions-Köpfe, Häkchen, Slider, Reveal ---------- */
 :root { --header-h: 72px; --stickybar-h: 64px; }
 .accent { color: var(--accent-ink); }
-.section--dark .accent, .section--dark .eyebrow { color: var(--accent); }
+.section--dark .accent { color: var(--accent); }
+.section--dark .eyebrow { color: var(--accent-light); }
 .section--dark h2, .section--dark h3 { color: var(--white); }
 .section--sand { background: var(--paper-2); }
 .rule::after { content: ''; display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--accent); margin-top: 14px; }

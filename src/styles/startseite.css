@@ -272,6 +272,8 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 /* 08.11.: Leistungsname sichtbar, „Was dazugehört“ zum Aufklappen (weniger Textwand, Inhalt bleibt vollständig) */
 .station4__mehr > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 12px 0; cursor: pointer; list-style: none; }
 .station4__text { font-size: 1rem; font-weight: 600; line-height: 1.45; color: var(--dark); }
+.station4__paket { display: block; margin-top: 3px; font-size: 0.84rem; font-weight: 600; line-height: 1.4; color: var(--accent-ink); }
+.station4__paket--anfrage { color: var(--ink-soft); font-weight: 500; }
 .station4__mehr > summary::-webkit-details-marker { display: none; }
 .station4__mehr > summary:hover .station4__text { color: var(--accent-ink); }
 .station4__plus { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); }
