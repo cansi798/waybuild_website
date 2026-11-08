@@ -1,4 +1,34 @@
-# Variante „an firma.de orientiert“: Preisvorschlag
+# Pakete Basis · Plus · Komplett: Preise und Herkunft
+
+## 0. Umgesetzt als richtige Website (08.11.2026, Jamil #5056 „ok go“)
+
+Die Variante ist seit 08.11.2026 abends die richtige Website. Datenquelle: `src/config/pakete-abo.ts` (keine Imports, Preise nie fest in Texte).
+
+| Paket | netto / Monat | brutto / Monat | netto / Jahr | brutto / Jahr (12 × Monat brutto) |
+|---|---|---|---|---|
+| Basis | 79,99 € | 95,19 € | 959,88 € | 1.142,28 € |
+| Plus (Empfehlung) | 149,99 € | 178,49 € | 1.799,88 € | 2.141,88 € |
+| Komplett | 299,99 € | 356,99 € | 3.599,88 € | 4.283,88 € |
+
+Einrichtung 0 €, 24 Monate Mindestlaufzeit (kleiner Hinweis), danach monatlich kündbar.
+
+Einmalig dazubuchen (Festpreis netto): Logo 590 € · E-Mail-Signatur nach DIN 5008 49 € · Geschäftspapiere nach DIN 5008 (Briefbogen, Angebot, Rechnung) 190 € · Visitenkarten (Gestaltung als Druckdatei) 89 €.
+
+Umsetzung #5056 Punkt 1–7: Jahreskosten statt „über 24 Monate“; Preise auf einer Höhe (Etikett über der Karte, CSS subgrid);
+Wertzeile „mindestens rund 309 €“ entfernt; Gründungs-Satz und Gründungspaket entfernt; Einzelpreise wie oben; /preise/ mit Paketen,
+Vergleichstabelle, Jahreskosten, Einmalig dazubuchen, Leistungstausch, FAQ, B2B-Hinweis; Startseite Preisteil #pakete kompakt (Anker #baukasten bleibt);
+Baukasten nicht mehr angezeigt (Komponente `archiv/baukasten-20261108/`, Daten BAUKASTEN weiter in startseite.ts für Abschnitt 4 ohne Preise);
+Banner und /variante/ entfernt (Code `archiv/variante-firma-20261108/`), alte Adressen /variante/, /variante/pakete/, /variante/gruender/ leiten auf /preise/ weiter.
+Sicherung des Stands davor: Branch `vor-pakete-live-20261108` (= 6d0d389).
+
+Weggefallen gegenüber der Variante: monatliche Zusätze „Online-Terminbuchung 24,99 €“ und „Weitere Seite 2,99 €“ (nicht in #5056 genannt).
+Offen (nur Vorschau, rot): Preis ab Monat 25, Logo-Rechte nach Vertragsende, Liste „Nicht im Preis enthalten“.
+
+Alles ab hier ist die Herleitung der Variante (Stand 16:30) und nur noch Geschichte.
+
+---
+
+## Herleitung: Variante „an firma.de orientiert“ (Preisvorschlag)
 
 Stand 08.11.2026, 16:30 · Auftrag Jamil (Talk WS-0007 qh87y3sj, #5016/#5017; Preise und Inhalte #5028–#5035; Komplett und „einmalig dazubuchen“ #5041/#5042) · **nur Vorschlag, die Preise legen Can und Jamil fest**
 

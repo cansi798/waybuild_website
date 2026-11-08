@@ -17,12 +17,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StartHero from '../components/start/StartHero.astro';
 import Check from '../components/start/Check.astro';
-import Baukasten from '../components/start/Baukasten.astro';
+import PaketKarten from '../components/pakete/PaketKarten.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
+import { B2B_HINWEIS } from '../config/pakete-abo';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
@@ -135,7 +136,7 @@ const MOTIV: Record<string, string> = {
             <h3 class="schritt3__wort">{k.wort}</h3>
             <p class="schritt3__leit">{k.leit}</p>
             <p class="schritt3__text">{k.text}</p>
-            {k.hinweis && <p class="schritt3__hinweis"><a href="#baukasten">{k.hinweis}</a></p>}
+            {k.hinweis && <p class="schritt3__hinweis"><a href="#pakete">{k.hinweis}</a></p>}
           </li>
         ))}
       </ol>
@@ -189,10 +190,9 @@ const MOTIV: Record<string, string> = {
   </section>
 
   <!-- 4 · Ein Kunde interessiert sich nicht für Ihre Systeme (Jamil 4811 + 4871–4876 + 4879): jede Leistung genau EIN Mal an
-       ihrer Station (aus BAUKASTEN erzeugt), darunter „Was dazugehört“ (dazu, Jamil 4909: hier keine Preise und keine
-       Kennzeichen mehr; Preise stehen weiter im Baukasten und auf /preise/); darunter der
-       Abo-Baukasten (Testangebot ab 69,99 € im Monat, einige Zusatzleistungen einmalig mit Festpreis, Jamil 4924/4925 vom 08.11.;
-       /preise/ + AGB zeigen weiter die alten Pakete, Entscheidung Can + Jamil offen) -->
+       ihrer Station (Liste weiter aus BAUKASTEN in startseite.ts erzeugt, OHNE Preise), darunter „Was dazugehört“
+       (dazu, Jamil 4909). Der Abo-Baukasten selbst ist seit 08.11.2026 (Jamil #5056) durch die drei Pakete ersetzt
+       (Abschnitt #pakete darunter); Komponente archiviert unter archiv/baukasten-20261108/. -->
   <section class="bs bs--alt bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -221,8 +221,21 @@ const MOTIV: Record<string, string> = {
           </li>
         ))}
       </ol>
+    </div>
+  </section>
 
-      <Baukasten />
+  <!-- Preisteil (Jamil, Talk qh87y3sj #5056, 08.11.2026): die drei Pakete Basis · Plus · Komplett kompakt, Daten aus
+       src/config/pakete-abo.ts, alle Details auf /preise/. Anker #baukasten bleibt für alte Links (Check, Hero). -->
+  <section class="bs bs--alt pk-start" id="pakete" aria-labelledby="bs-pakete">
+    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="bs-kopf bs-kopf--mitte">
+        <h2 id="bs-pakete">Drei Pakete. Fester Monatspreis.</h2>
+        <p class="bs-lead">Website, Technik und Betreuung sind immer dabei. Je nach Paket kommen Google, laufende Verbesserung oder Logo und Geschäftspapiere dazu.</p>
+      </div>
+      <PaketKarten kompakt />
+      <p class="pk-start__mehr"><a class="btn btn--umriss btn--lg" href={href('/preise/')}>Alle Leistungen und Preise vergleichen</a></p>
+      <p class="pk-start__netto">{B2B_HINWEIS} Logo, Geschäftspapiere und Visitenkarten können Sie auch einmalig dazubuchen.</p>
     </div>
   </section>
 

@@ -1,4 +1,6 @@
 // VARIANTE „an firma.de orientiert“ (Jamil, Talk qh87y3sj #5016/#5017, 08.11.2026). NUR VORSCHLAG zum Vergleich.
+// ARCHIV (Jamil, Talk qh87y3sj #5056, 08.11.2026): nicht mehr im Build (tsconfig exclude „archiv“). Zum Zurückholen an den
+// ursprünglichen Ort verschieben (Pfade der Imports gelten von dort). Sicherung des letzten Stands: Branch vor-pakete-live-20261108.
 // Seiten: src/pages/variante/ (noindex, nicht in der Sitemap). Die normale Startseite, /preise/, der Baukasten,
 // PAKETE (site.ts) und AGB bleiben unverändert. Entfernen: Ordner src/pages/variante, src/components/variante und
 // diese Datei löschen, dazu den Sitemap-Ausschluss in astro.config.mjs.

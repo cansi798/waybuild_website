@@ -13,8 +13,8 @@ export const LAUFZEIT_MONATE = 24;
 export const bruttoVon = (netto: number) => Math.round(netto * (1 + MWST_SATZ) * 100) / 100;
 /** Kosten pro Jahr netto (12 Monatspreise). */
 export const jahresPreis = (monatNetto: number) => Math.round(monatNetto * 12 * 100) / 100;
-/** Kosten pro Jahr brutto. */
-export const jahresBrutto = (monatNetto: number) => bruttoVon(jahresPreis(monatNetto));
+/** Kosten pro Jahr brutto = 12 × Monatspreis brutto (so wie monatlich abgerechnet wird). */
+export const jahresBrutto = (monatNetto: number) => Math.round(bruttoVon(monatNetto) * 12 * 100) / 100;
 /** Euro-Format: ganze Beträge ohne Cent (590 €), sonst mit Cent (79,99 €). */
 export const euro = (n: number) =>
   new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
@@ -145,3 +145,53 @@ export const AUF_ANFRAGE = ['Kundenverwaltung', 'Abläufe automatisieren', 'Soci
 export const B2B_HINWEIS = 'Alle Preise netto zzgl. gesetzlicher MwSt. Unser Angebot richtet sich an Unternehmen und Selbstständige.';
 /** Laufzeit als kleiner Hinweis. */
 export const LAUFZEIT_HINWEIS = `${LAUFZEIT_MONATE} Monate Mindestlaufzeit, danach monatlich kündbar.`;
+
+/** Leistungstausch statt Verhandlung (Jamil #5016). */
+export const TAUSCH = {
+  titel: 'Sie brauchen etwas aus dem Paket nicht?',
+  regeln: [
+    { titel: 'Fester Paketinhalt', text: 'Jedes Paket hat einen festen Inhalt und einen festen Preis. So wissen Sie vorher genau, was Sie bekommen.' },
+    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen.' },
+    { titel: 'Oder das kleinere Paket', text: 'Passt ein Paket nur zur Hälfte, empfehlen wir Ihnen ehrlich das kleinere.' },
+    { titel: 'Größerer Umfang: eigenes Angebot', text: 'Brauchen Sie deutlich mehr, zum Beispiel Kundenverwaltung oder Abläufe, bekommen Sie ein individuelles Angebot.' },
+  ],
+  fair: 'Rabatte auf Verhandlung gibt es bei den Paketen nicht. Feste Preise sind fair, weil jeder Kunde für dieselbe Leistung dasselbe zahlt.',
+};
+
+/** Hinweis zu Rechtstexten. */
+export const RECHT = 'Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein. Das ersetzt keine Rechtsberatung. Steuer- und Rechtsberatung übernehmen wir nicht.';
+
+/** Nicht im Preis enthalten. PLATZHALTER (nur Vorschau): Liste legen Can und Jamil fest. */
+export const NICHT_ENTHALTEN = ['Fotograf oder Videodreh vor Ort', 'Gekaufte Bildlizenzen', 'Druck von Visitenkarten oder Briefpapier', 'Lizenzen für fremde Programme'];
+
+/** Fragen zu den Paketen (/preise/). platzhalter = offene Entscheidung, nur in der Vorschau rot gezeigt. */
+export type PaketFrage = { q: string; a: string; platzhalter?: boolean };
+export const FAQ_PAKETE: PaketFrage[] = [
+  { q: 'Ich brauche kein Logo. Muss ich das mitbezahlen?',
+    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
+  { q: 'Kann ich über den Preis verhandeln?',
+    a: 'Bei den drei Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
+  { q: 'Gibt es Einrichtungskosten?',
+    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website, das Google-Profil im Paket Plus oder Logo und Geschäftspapiere im Paket Komplett sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo zum Paket Basis.' },
+  { q: 'Was kostet ein Paket im Jahr?',
+    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Abgerechnet wird monatlich.` },
+  { q: 'Wie lange läuft der Vertrag?',
+    a: `Die Mindestlaufzeit beträgt ${LAUFZEIT_MONATE} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
+  { q: 'Was passiert nach 24 Monaten?', platzhalter: true,
+    a: 'Offen: Ob sich der Monatspreis nach der Mindestlaufzeit ändert, entscheiden Can und Jamil. Bis dahin machen wir hier keine Aussage.' },
+  { q: 'Kann ich das Paket später wechseln?',
+    a: 'Ja, ein Wechsel in ein größeres Paket ist möglich. Sagen Sie uns einfach Bescheid, die Einzelheiten besprechen wir mit Ihnen.' },
+  { q: 'Wem gehört das Logo, wenn ich es monatlich bezahle?', platzhalter: true,
+    a: 'Offen: Die Regelung zu Nutzungsrechten am Logo nach Vertragsende legen Can und Jamil fest (mit anwaltlicher Prüfung). Bis dahin machen wir hier keine Aussage.' },
+  { q: 'Sind die Preise netto?',
+    a: 'Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Unser Angebot richtet sich an Unternehmen und Selbstständige.' },
+  { q: 'Kann ich meine bestehende Domain mitnehmen?',
+    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall.' },
+];
+
+/** Kurzfassung für den Preisteil der Startseite: diese Leistungen je Paket (Rest auf /preise/). */
+export const KOMPAKT: Record<AboPaket['id'], string[]> = {
+  basis: ['website', 'seo', 'email', 'ki'],
+  plus: ['google-profil', 'seo', 'bericht', 'weg'],
+  komplett: ['logo', 'termin', 'optimierung', 'vorrang'],
+};

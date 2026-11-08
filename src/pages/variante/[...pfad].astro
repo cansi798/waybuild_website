@@ -1,0 +1,24 @@
+---
+// Weiterleitung (Jamil, Talk qh87y3sj #5056, 08.11.2026): Die Variante /variante/ ist jetzt die richtige Preisseite.
+// Alte Adressen /variante/, /variante/pakete/, /variante/gruender/ führen auf /preise/, damit keine Links ins Leere zeigen.
+// Eigene Seite statt Astro-redirects, weil diese den Base-Pfad der Vorschau nicht setzen. noindex, nicht in der Sitemap.
+// Der frühere Code liegt in archiv/variante-firma-20261108/.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { href } from '../../lib/paths';
+
+export function getStaticPaths() {
+  return [{ params: { pfad: undefined } }, { params: { pfad: 'pakete' } }, { params: { pfad: 'gruender' } }];
+}
+const ziel = href('/preise/');
+---
+
+<BaseLayout title="Diese Seite ist umgezogen" description="Diese Adresse gibt es nicht mehr. Unsere drei Pakete Basis, Plus und Komplett mit allen Preisen finden Sie jetzt auf der Seite Preise." noindex>
+  <meta http-equiv="refresh" content={`0; url=${ziel}`} />
+  <section class="section">
+    <div class="wrap">
+      <h1>Diese Seite ist umgezogen</h1>
+      <p class="lead">Unsere Pakete und Preise finden Sie jetzt hier: <a href={ziel}>Pakete und Preise</a>.</p>
+    </div>
+  </section>
+  <script is:inline define:vars={{ ziel }}>location.replace(ziel);</script>
+</BaseLayout>

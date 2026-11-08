@@ -1,0 +1,36 @@
+---
+// Kasten „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5): Einzelpreise einmalig, netto.
+// Daten: EINMALIG_DAZU in src/config/pakete-abo.ts. Wird in einen bestehenden Abschnitt eingebettet (gleicher Hintergrund).
+import { EINMALIG_DAZU as E, euro } from '../../config/pakete-abo';
+interface Props { id?: string; kompakt?: boolean }
+const { id = 'einmalig', kompakt = false } = Astro.props;
+---
+
+<div class:list={['ed', { 'ed--kompakt': kompakt }]} id={id} role="region" aria-labelledby={`${id}-h`}>
+  <h3 id={`${id}-h`} class="ed__titel">{E.titel}</h3>
+  <ul class="ed__liste">
+    {E.liste.map((e) => (
+      <li class="ed__k">
+        <p class="ed__name">{e.name}</p>
+        {!kompakt && <p class="ed__text">{e.text}</p>}
+        <p class="ed__preis"><b>{euro(e.preis)}</b> einmalig, netto</p>
+      </li>
+    ))}
+  </ul>
+  <p class="ed__hinweis">{E.hinweis}</p>
+</div>
+
+<style>
+  .ed { margin-top: clamp(40px, 6vw, 64px); scroll-margin-top: 120px; }
+  .ed__titel { margin: 0 0 16px; font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+  .ed__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  @media (min-width: 640px) { .ed__liste { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .ed__liste { grid-template-columns: repeat(4, 1fr); } }
+  .ed__k { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; }
+  .ed__k p { margin: 0; }
+  .ed__name { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
+  .ed__text { line-height: 1.7; color: var(--ink-soft); font-size: 0.95rem; }
+  .ed__preis { margin-top: auto !important; padding-top: 6px; color: var(--ink); font-size: 0.92rem; }
+  .ed__preis b { font-family: var(--font-head); font-size: 1.2rem; }
+  .ed__hinweis { margin: 16px 0 0; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
+</style>

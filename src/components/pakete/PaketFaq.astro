@@ -1,0 +1,42 @@
+---
+// Fragen zu den Paketen (/preise/). Einträge mit platzhalter=true (offene Entscheidung) nur in der Vorschau, rot markiert.
+import type { PaketFrage } from '../../config/pakete-abo';
+import { SHOW_HINTS } from '../../config/site';
+import { IS_PREVIEW } from '../../lib/env';
+
+interface Props { fragen: PaketFrage[]; id?: string; titel?: string; }
+const { fragen, id = 'faq', titel = 'Fragen zu den Paketen' } = Astro.props;
+const zeigen = fragen.filter((f) => !f.platzhalter || (SHOW_HINTS && IS_PREVIEW));
+---
+
+<section class="section section--alt" id={id} aria-labelledby={`${id}-h`}>
+  <div class="wrap pfaq">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2 id={`${id}-h`}>{titel}</h2>
+      <p class="lead">Noch Fragen? Wir antworten innerhalb eines Werktags.</p>
+    </div>
+    <div class="pfaq__liste">
+      {zeigen.map((f) => (
+        <details class:list={['pfaq__item', { 'pfaq--platzhalter': f.platzhalter }]}>
+          <summary><h3>{f.q}</h3></summary>
+          {f.platzhalter && <span class="pfaq__etikett">Platzhalter</span>}
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pfaq__liste { display: grid; gap: 12px; max-width: 860px; }
+  .pfaq__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; }
+  .pfaq__item summary { cursor: pointer; list-style: none; padding-block: 14px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  .pfaq__item summary::-webkit-details-marker { display: none; }
+  .pfaq__item summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--accent-ink); flex: none; }
+  .pfaq__item[open] summary::after { content: '–'; }
+  .pfaq__item h3 { margin: 0; font-size: 1.05rem; line-height: 1.4; }
+  .pfaq__item p { margin: 0 0 16px; line-height: 1.7; color: var(--ink-soft); }
+  .pfaq--platzhalter { border: 2px dashed #b3261e; background: #fffafa; }
+  .pfaq__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+</style>

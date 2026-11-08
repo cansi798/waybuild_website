@@ -1,42 +1,41 @@
 ---
-// Preis-Seite: Website as a Service in drei Paketen (Can, 04.11.2026) – Preise aus config/site.ts → PAKETE.
+// Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die drei Pakete Basis · Plus · Komplett sind die richtige
+// Website. Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
+// Inhalt: Karten mit Jahreskosten · „Einmalig dazubuchen“ · In allen Paketen · Leistungstausch statt Verhandeln ·
+// Vergleichstabelle · So starten Sie · Ausbaustufen · Fragen zu den Paketen · B2B-Hinweis.
 // Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
+// Vorher (Fundament/Wegweiser/Wahrzeichen aus site.ts PAKETE): Sicherung Branch vor-pakete-live-20261108.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Inklusive from '../components/Inklusive.astro';
 import Icon from '../components/Icon.astro';
-import Pakete from '../components/Pakete.astro';
-import Faq from '../components/Faq.astro';
-import { WAAS, PAKETE, formatEuro, gesamtLaufzeit, preiseAlle } from '../config/site';
+import PaketKarten from '../components/pakete/PaketKarten.astro';
+import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
+import PaketFaq from '../components/pakete/PaketFaq.astro';
+import { SHOW_HINTS } from '../config/site';
+import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
 import { leistungenNach } from '../config/leistungen';
-import { faqSchema, serviceSchema } from '../lib/schema';
+import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
+import {
+  ABO_PAKETE, euro, jahresPreis, jahresBrutto, aboPreisAb, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
+  TAUSCH, FAQ_PAKETE, AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
+} from '../config/pakete-abo';
 
 const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
+const zeilen = vergleichsZeilen();
+const hinweise = SHOW_HINTS && IS_PREVIEW;
 
-/** Paketvergleich (true = enthalten, false = nicht enthalten, Text = Umfang). */
-const VERGLEICH: { t: string; w: (boolean | string)[] }[] = [
-  { t: 'Einrichtung', w: ['0 €', '0 €', '0 €'] },
-  { t: 'Seitenbegrenzung', w: ['keine', 'keine', 'keine'] },
-  { t: 'Mobilfreundlich: optimiert für Handy, Tablet und PC', w: [true, true, true] },
-  { t: 'Texte, KI-gestützt und von uns geprüft', w: [true, true, true] },
-  { t: 'SEO und für KI-Suche optimiert, leicht erklärt', w: [true, true, true] },
-  { t: 'E-Mail-Postfächer', w: ['20', '20', '20'] },
-  { t: 'E-Mail-Signatur nach DIN 5008', w: [true, true, true] },
-  { t: 'Impressum und Datenschutzerklärung nach aktuellem Stand', w: [true, true, true] },
-  { t: 'Hosting in Deutschland, SSL, Updates, Backups', w: [true, true, true] },
-  { t: 'Änderungen per Nachricht, im fairen Rahmen', w: [true, true, true] },
-  { t: 'Google-Unternehmensprofil erstellt (einmalig)', w: [false, true, true] },
-  { t: 'Postfächer mit Ordnern und Regeln eingerichtet', w: [false, true, true] },
-  { t: 'Lokale Seiten für Orte und Leistungen', w: [false, true, true] },
-  { t: 'Monatsbericht und laufend bessere Anfragewege', w: [false, true, true] },
-  { t: 'Briefvorlage nach DIN 5008', w: [false, true, true] },
-  { t: 'Ständige Optimierung in Absprache mit Ihnen', w: [false, false, true] },
-  { t: 'Logo-Design', w: [false, false, true] },
-  { t: 'CI-Geschäftsbriefe nach DIN 5008', w: [false, false, true] },
-  { t: 'Mindestlaufzeit', w: ['24 Monate', '24 Monate', '24 Monate'] },
+/** Für alle drei Pakete gleich (aus der Leistung „Website“ und den bisherigen Paketinhalten). */
+const GLEICH: { t: string; w: string | true }[] = [
+  { t: 'Einrichtung', w: '0 €' },
+  { t: 'Mobilfreundlich für Handy, Tablet und PC', w: true },
+  { t: 'Texte mit Ihnen erarbeitet', w: true },
+  { t: 'Impressum und Datenschutzerklärung nach aktuellem Stand', w: true },
+  { t: 'Hosting in Deutschland, SSL, Updates, Sicherungen', w: true },
+  { t: 'Änderungen per Nachricht, im fairen Rahmen', w: true },
 ];
 
 const START = [
@@ -44,46 +43,76 @@ const START = [
   { t: 'Entwurf und Freigabe', x: 'Wir schreiben die Texte mit Ihnen und setzen die Website KI-gestützt um. Sie prüfen und geben frei.' },
   { t: 'Live und betreut', x: 'Ihre Website geht online. Danach pflegen wir sie, und Änderungen schicken Sie einfach per Nachricht.' },
 ];
+
+const faqSichtbar = FAQ_PAKETE.filter((f) => !f.platzhalter);
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqSichtbar.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
 ---
 
 <BaseLayout
-  title={`Preise: Website-Abo ab ${formatEuro(PAKETE[0].preis)} im Monat`}
-  description={`${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto. 0 € Einrichtung, keine Seitenbegrenzung, 20 E-Mail-Postfächer.`}
-  schema={[serviceSchema(Astro.site), faqSchema()]}
+  title={`Preise: Website-Abo ab ${euro(aboPreisAb())} im Monat`}
+  description={`${preiseText} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung, E-Mail-Postfächer inklusive.`}
+  schema={[serviceSchema(Astro.site), faqSchema]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
-  <PageHeader eyebrow="Preise" title="Drei Pakete. Fester Monatspreis." lead={`${preiseAlle()}. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten.`} />
+  <PageHeader eyebrow="Preise" title="Drei Pakete. Fester Monatspreis." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten.`} />
 
-  <Pakete head={false} />
+  <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
+    <div class="wrap">
+      <h2 class="sr-only" id="pakete-h">Die drei Pakete</h2>
+      <span id="preise" class="anker" aria-hidden="true"></span>
+      <PaketKarten />
+      <p class="netto">{B2B_HINWEIS}</p>
+      <EinmaligDazu />
+    </div>
+  </section>
 
   <section class="section" id="websites" aria-labelledby="inkl-h">
     <div class="wrap">
-      <SectionHead center eyebrow="In allen Paketen enthalten" pre="Alles in " accent="einem Preis." text={WAAS.claim} id="inkl-h" />
+      <SectionHead center eyebrow="In allen Paketen enthalten" pre="Alles in " accent="einem Preis." text="Website, Technik, Pflege und Ihr Ansprechpartner stecken im festen Monatspreis." id="inkl-h" />
       <Inklusive />
     </div>
   </section>
 
-  <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
+  <section class="section section--alt" id="tausch" aria-labelledby="tausch-h">
     <div class="wrap">
-      <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Alle Leistungen auf einen Blick. Ein Haken heißt: im Paket enthalten." id="vgl-h" />
-      <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
-        <table class="vgl">
-          <thead>
-            <tr><th scope="col">Leistung</th>{PAKETE.map((p) => <th scope="col">{p.name}<span>{formatEuro(p.preis)} netto / Monat</span></th>)}</tr>
-          </thead>
-          <tbody>
-            {VERGLEICH.map((z) => (
-              <tr><th scope="row">{z.t}</th>{z.w.map((w) => <td>{w === true ? <Icon name="check" size={18} /> : w === false ? <span class="vgl__nein" aria-label="nicht enthalten">–</span> : w}</td>)}</tr>
-            ))}
-            <tr class="vgl__summe"><th scope="row">Kosten über {WAAS.laufzeitMonate} Monate (netto)</th>{PAKETE.map((p) => <td>{formatEuro(gesamtLaufzeit(p))}<span>netto, zzgl. MwSt.</span></td>)}</tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="netto">Einrichtung 0 €. Danach ist das Abo monatlich kündbar, mit einem Monat Frist zum Monatsende.</p>
+      <SectionHead eyebrow="Fair für alle" pre={TAUSCH.titel} id="tausch-h" />
+      <ol class="tausch">
+        {TAUSCH.regeln.map((r, i) => <li class="card"><span class="tausch__n">{i + 1}</span><h3>{r.titel}</h3><p>{r.text}</p></li>)}
+      </ol>
+      <p class="tausch__fair"><Icon name="check" size={20} /> {TAUSCH.fair}</p>
     </div>
   </section>
 
-  <section class="section" id="start" aria-labelledby="start-h">
+  <section class="section" id="vergleich" aria-labelledby="vgl-h">
+    <div class="wrap">
+      <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei." id="vgl-h" />
+      <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
+        <table class="vgl">
+          <thead>
+            <tr><th scope="col">Leistung</th>{ABO_PAKETE.map((p) => <th scope="col">{p.name}<span>{euro(p.preis)} netto / Monat</span></th>)}</tr>
+          </thead>
+          <tbody>
+            {zeilen.map((z) => (
+              <tr><th scope="row">{z.text}</th>{z.werte.map((x) => <td>{typeof x === 'string' ? <span class="vgl__wert">{x}</span> : x ? <><Icon name="check" size={18} /><span class="sr-only">enthalten</span></> : <span class="vgl__nein" aria-label="nicht enthalten">–</span>}</td>)}</tr>
+            ))}
+            {GLEICH.map((g) => (
+              <tr><th scope="row">{g.t}</th>{ABO_PAKETE.map(() => <td>{g.w === true ? <><Icon name="check" size={18} /><span class="sr-only">enthalten</span></> : g.w}</td>)}</tr>
+            ))}
+            <tr><th scope="row">Mindestlaufzeit</th>{ABO_PAKETE.map(() => <td>{LAUFZEIT_MONATE} Monate</td>)}</tr>
+            <tr class="vgl__summe"><th scope="row">Kosten pro Jahr (netto)</th>{ABO_PAKETE.map((p) => <td>{euro(jahresPreis(p.preis))}<span>{euro(jahresBrutto(p.preis))} brutto</span></td>)}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="netto">{LAUFZEIT_MONATE} Monate Mindestlaufzeit. Danach ist das Abo monatlich kündbar, mit einem Monat Frist zum Monatsende. {B2B_HINWEIS}</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="start" aria-labelledby="start-h">
     <div class="wrap">
       <SectionHead center eyebrow="So starten Sie" pre="In drei Schritten " accent="online." id="start-h" />
       <ol class="start">
@@ -96,7 +125,7 @@ const START = [
 
   <section class="section section--sand" id="stundensaetze" aria-labelledby="ausbau-h">
     <div class="wrap">
-      <SectionHead eyebrow="Mehr als eine Website?" pre="Ausbaustufen auf " accent="Anfrage" text="Die Website ist der erste Schritt. Software, Cloud & IT und Beratung bieten wir individuell an." id="ausbau-h" />
+      <SectionHead eyebrow="Mehr als eine Website?" pre="Ausbaustufen auf " accent="Anfrage" text={`Die Website ist der erste Schritt. Für größere Vorhaben, zum Beispiel ${AUF_ANFRAGE.slice(0, 2).join(' oder ')}, erstellen wir ein individuelles Angebot.`} id="ausbau-h" />
       <ul class="ausbau">
         {ausbau.map((s) => (
           <li id={s.id} class="card ausbau__card">
@@ -110,31 +139,60 @@ const START = [
           </li>
         ))}
       </ul>
+      {hinweise && (
+        <div class="card nicht">
+          <span class="nicht__etikett">Platzhalter</span>
+          <h3>Nicht im Preis enthalten</h3>
+          <p>Beispiele, die Can und Jamil noch bestätigen: {NICHT_ENTHALTEN.join(', ')}.</p>
+        </div>
+      )}
+      <p class="netto">{RECHT}</p>
     </div>
   </section>
 
-  <Faq />
+  <PaketFaq fragen={FAQ_PAKETE} />
+
+  <section class="section cta-pk" aria-labelledby="cta-h">
+    <div class="wrap">
+      <h2 id="cta-h">Unsicher, welches Paket passt?</h2>
+      <p class="lead">Im kostenlosen Erstgespräch empfehlen wir Ihnen das passende Paket, auch wenn es das kleinere ist.</p>
+      <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Erstgespräch vereinbaren</a>
+      <p class="netto">{B2B_HINWEIS}</p>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .netto { margin: 20px auto 0; max-width: 820px; text-align: center; font-size: 0.85rem; line-height: 1.6; color: var(--ink-soft); }
-  .vgl__scroll { overflow-x: auto; max-width: 980px; margin-inline: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
+  .anker { display: block; position: relative; top: -120px; }
+  .netto { margin: 22px auto 0; max-width: 820px; text-align: center; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
+  .tausch { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .tausch { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .tausch { grid-template-columns: repeat(4, 1fr); } }
+  .tausch li { display: flex; flex-direction: column; gap: 6px; }
+  .tausch h3, .tausch p { margin: 0; }
+  .tausch p { line-height: 1.7; color: var(--ink-soft); }
+  .tausch__n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 800; }
+  .tausch__fair { display: flex; gap: 10px; align-items: flex-start; max-width: 820px; margin: 24px 0 0; padding: 16px 20px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); font-weight: 600; line-height: 1.6; }
+  .tausch__fair :global(.icon) { flex: none; margin-top: 3px; color: var(--accent-ink); }
+  .vgl__scroll { position: relative; overflow-x: auto; max-width: 980px; margin-inline: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
   .vgl { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.92rem; }
   .vgl th, .vgl td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: center; vertical-align: middle; }
   .vgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); font-size: 1rem; }
-  .vgl thead th span, .vgl__summe td span { display: block; font-family: var(--font-body, inherit); font-size: 0.78rem; font-weight: 500; opacity: 0.85; }
+  .vgl thead th span, .vgl__summe td span { display: block; font-family: var(--font-body, inherit); font-size: 0.78rem; font-weight: 500; }
   .vgl thead th:first-child, .vgl tbody th { text-align: left; }
   .vgl tbody th { font-weight: 600; }
   .vgl td :global(.icon) { color: var(--accent-ink); }
+  .vgl__wert { display: inline-block; max-width: 18ch; font-size: 0.86rem; font-weight: 600; line-height: 1.4; color: var(--accent-ink); }
   .vgl__nein { color: var(--ink-soft); }
   .vgl tbody tr:nth-child(even) { background: #f7fbfb; }
-  .vgl__summe th, .vgl__summe td { font-weight: 700; background: #e9f6f5; border-bottom: 0; }
+  .vgl__summe th, .vgl__summe td { font-weight: 700; background: #e9f6f5 !important; border-bottom: 0; }
+  .vgl__summe td span { color: var(--ink-soft); }
   .start { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 860px) { .start { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
   .start__k { display: flex; flex-direction: column; gap: 6px; border-radius: 18px; }
   .start__k h3, .start__k p { margin: 0; }
-  .start__k p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
-  .start__n { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--dark); font-weight: 800; }
+  .start__k p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
+  .start__n { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 800; }
   .ausbau { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
   @media (min-width: 900px) { .ausbau { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
   .ausbau__card { display: flex; flex-direction: column; gap: 8px; border-radius: 18px; scroll-margin-top: 90px; }
@@ -144,4 +202,15 @@ const START = [
   .ausbau__links { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.92rem; }
   .ausbau__links a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
   .ausbau__tag { margin-top: auto; padding-top: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+  .nicht { margin-top: 20px; border: 2px dashed #b3261e !important; background: #fffafa !important; }
+  .nicht h3 { margin: 0 0 6px; font-size: 1.1rem; }
+  .nicht p { margin: 0; line-height: 1.7; }
+  .nicht__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }
+  .cta-pk { text-align: center; }
+  .cta-pk .lead { margin: 12px auto 24px; max-width: 640px; }
+  .cta-pk .btn--primary { color: var(--on-accent); }
+  /* Kontrast (axe) nur auf dieser Seite, wie zuvor auf /variante/: Knopfschrift auf Türkis 5,1 : 1 statt 3,8 : 1
+     (auch Footer-Kontaktblock und Handy-Leiste), Türkis-Unterzeile im Footer auf Dunkel lesbarer */
+  :global(.btn--primary) { color: var(--on-accent); }
+  :global(.fkontakt__sub) { color: var(--accent-light) !important; }
 </style>

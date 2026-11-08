@@ -60,7 +60,7 @@ export const VERSTEHEN = {
     { wort: 'Umsetzen', leit: 'Wir kümmern uns. Sie bleiben informiert.', text: 'Eine Anfrage genügt, nichts geht verloren. Verzögert sich etwas, hören Sie es zuerst von uns.' },
     /* NEU (Jamil #4989 „Empfehlen und umsetzen, verbessern“): Text aus dem Baustein „Laufende Verbesserung“ (BAUKASTEN) */
     { wort: 'Verbessern', leit: 'Messen statt vermuten.', text: 'Jeden Monat werten wir aus, was Besucher tun, ändern gezielt 2 bis 3 Dinge und prüfen, ob es wirkt.',
-      hinweis: 'Mit dem Baustein „Laufende Verbesserung“' },
+      hinweis: 'Im Paket Komplett, im Paket Plus mit 1 Verbesserung im Monat' },
   ],
   nichtKopf: 'Was Sie von uns nicht erwarten müssen',
   nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Keine fünf Ansprechpartner'],
@@ -92,6 +92,10 @@ export const BEREICHE = {
  *  entfernen, stattdessen auflisten, was dazugehört). NUR aus vorhandenen Texten: PAKETE/IN_ALLEN (site.ts), Leistungsseiten
  *  (leistungen.ts: business-website, website-relaunch, betreuung-pflege), FAQ (site.ts, branchen.ts), angebot.ts (Automatisierung),
  *  CHECK und VERSTEHEN (hier). Preise stehen nur im Baukasten darunter. */
+/** ARCHIV-HINWEIS (Jamil #5056, 08.11.2026): Der Abo-Baukasten wird NICHT mehr angezeigt (ersetzt durch die drei Pakete,
+ *  src/config/pakete-abo.ts). Die Daten bleiben hier, weil Abschnitt 4 (#loesungen) seine Leistungsliste samt „dazu“ daraus
+ *  erzeugt (ohne Preise) und damit der Baukasten zurückgeholt werden kann (Komponente: archiv/baukasten-20261108/).
+ *  Die Preise unten sind damit NICHT mehr gültig. */
 /** Abo-Baukasten (Jamil 4879, TESTANGEBOT nur auf der Startseite). Preise NETTO zzgl. MwSt., Stand 08.11.2026
  *  (Jamil 4924/4925, Quelle Preisvergleich NC f/22843). Ein Baustein hat einen Monatspreis (`preis`), einen einmaligen
  *  Festpreis (`einmalig`) oder keinen von beiden (= auf Anfrage). `zu` = optionale Ergänzung, nur wählbar, wenn der
@@ -199,8 +203,9 @@ export const REFERENZEN = {
   ] as Referenz[],
 };
 
-/** Preis früh (Jamil #4934 Punkt 4): Zeile im ersten Bildschirm. Der Betrag kommt immer aus BAUKASTEN.basis.preis. */
-export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: 'netto zzgl. MwSt.', link: 'Abo zusammenstellen' };
+/** Preis früh (Jamil #4934 Punkt 4): Zeile im ersten Bildschirm. Betrag seit 08.11.2026 (Jamil #5056) aus
+ *  aboPreisAb() in pakete-abo.ts (günstigstes Paket), Link zum Preisteil #pakete. */
+export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: 'netto zzgl. MwSt.', link: 'Pakete ansehen' };
 
 /** „Wer hinter waybuild steht“ (Jamil #4934 Punkt 2: „erstmal für die Testseite erfinden“). BEWUSST NUR PLATZHALTER:
  *  keine KI-Gesichter, keine erfundenen Selbstbeschreibungen. Echt sind nur Namen und Rollen (Can: Geschäftsführer laut
