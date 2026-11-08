@@ -76,7 +76,8 @@ html.js [data-p] { --p: 0; }
  *   0–38 %  eine Anfrage (Brief) verlässt die Website, bleibt in der Lücke hängen, färbt sich rot, verblasst → „Verlorene Anfragen.“
  *  42–62 %  derselbe Eintrag wird erst in der Kundenverwaltung, dann noch einmal bei den Prozessen gepflegt → „Unnötiger Aufwand.“
  *  70–90 %  in der Mitte bleibt ein Fragezeichen, die Bruchstellen pulsieren → „Unklare Abläufe.“
- * Die drei Zeilen links (.verluste) leuchten synchron auf (gleiche Dauer, gleicher Start über :has()).
+ * Die drei Zeilen links (.verluste) leuchten synchron auf (gleiche Dauer; .ist-los/.ist-sichtbar setzt das Skript über
+ * data-mit gleichzeitig an Grafik und Zeilen).
  * Start erst, wenn die Grafik sichtbar wird ([data-zeichne] → .ist-los), Pause außerhalb des Sichtbereichs
  * ([data-schleife] → .ist-sichtbar). Ohne JS bzw. bei reduzierter Bewegung: Standbild mit allen drei Brüchen. */
 .werkzeuge { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 2px; }
@@ -125,8 +126,8 @@ html[data-thema='besucherreise'] { --stoer: #b8695c; --stoer-ink: #9a4a3f; }
   /* vor dem Start (mit JS): ruhiger Ausgangszustand, damit nichts springt */
   html.js .bstn:not(.ist-los) :is(.bstn__brief, .bstn__frage) { opacity: 0; }
   html.js .bstn:not(.ist-los) .bstn__eintrag { transform: scaleX(0); }
-  html.js .bs-zwei:has(.bstn:not(.ist-los)) .verluste li::before { transform: scale(0); }
-  html.js .bs-zwei:has(.bstn:not(.ist-los)) .verluste li::after { opacity: 0; }
+  html.js .verluste:not(.ist-los) li::before { transform: scale(0); }
+  html.js .verluste:not(.ist-los) li::after { opacity: 0; }
 
   .bstn.ist-los .bstn__brief { animation: bstn-brief 10s linear infinite both; }
   .bstn.ist-los .bstn__brief-rot { animation: bstn-rot 10s linear infinite both; }
@@ -134,18 +135,18 @@ html[data-thema='besucherreise'] { --stoer: #b8695c; --stoer-ink: #9a4a3f; }
   .bstn.ist-los .bstn__eintrag--3 { animation: bstn-eintrag3 10s ease-out infinite both; }
   .bstn.ist-los .bstn__frage { animation: bstn-frage 10s ease-out infinite both; }
   .bstn.ist-los .bstn__verb::before, .bstn.ist-los .bstn__verb::after { animation: bstn-bruch 10s ease-in-out infinite both; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li::before { animation: bstn-punkt 10s ease-out infinite both; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li::after { animation: bstn-ring 10s ease-out infinite both; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(2)::before { animation-name: bstn-punkt2; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(2)::after { animation-name: bstn-ring2; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(3)::before { animation-name: bstn-punkt3; }
-  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(3)::after { animation-name: bstn-ring3; }
+  .verluste.ist-los li::before { animation: bstn-punkt 10s ease-out infinite both; }
+  .verluste.ist-los li::after { animation: bstn-ring 10s ease-out infinite both; }
+  .verluste.ist-los li:nth-child(2)::before { animation-name: bstn-punkt2; }
+  .verluste.ist-los li:nth-child(2)::after { animation-name: bstn-ring2; }
+  .verluste.ist-los li:nth-child(3)::before { animation-name: bstn-punkt3; }
+  .verluste.ist-los li:nth-child(3)::after { animation-name: bstn-ring3; }
   /* außerhalb des Sichtbereichs anhalten, Grafik und Zeilen gemeinsam (bleiben synchron) */
   .bstn.ist-los:not(.ist-sichtbar) :is(.bstn__brief, .bstn__brief-rot, .bstn__eintrag, .bstn__frage),
   .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::before,
   .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::after,
-  .bs-zwei:has(.bstn.ist-los:not(.ist-sichtbar)) .verluste li::before,
-  .bs-zwei:has(.bstn.ist-los:not(.ist-sichtbar)) .verluste li::after { animation-play-state: paused; }
+  .verluste.ist-los:not(.ist-sichtbar) li::before,
+  .verluste.ist-los:not(.ist-sichtbar) li::after { animation-play-state: paused; }
 }
 /* Brief: erscheint auf der Website, wandert los, bleibt in der Lücke hängen (Ruckeln), fällt und verblasst */
 @keyframes bstn-brief {

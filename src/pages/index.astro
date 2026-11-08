@@ -94,7 +94,7 @@ const MOTIV: Record<string, string> = {
         <p class="bs-lead">{BAUSTEINE.text[1]}</p>
         <ul class="verluste">{BAUSTEINE.verluste.map((v) => <li>{v}</li>)}</ul>
       </div>
-      <figure class="bstn" data-zeichne data-schleife aria-hidden="true">
+      <figure class="bstn" data-zeichne data-schleife data-mit=".verluste" aria-hidden="true">
         <div class="bstn__raster">
           {BAUSTEINE.werkzeuge.map((w, i) => (
             <div class={`bstn__karte bstn__karte--${i}`}>
