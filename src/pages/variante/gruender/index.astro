@@ -1,0 +1,123 @@
+---
+// VARIANTE „an firma.de orientiert“ – Gründungspaket (Jamil #5017: „Wir machen ebenfalls Gründungspakete, alles,
+// was ein Gründer benötigt“). NUR echte Leistungen aus unserem Angebot. Keine Steuer- oder Rechtsberatung,
+// keine Notar- oder Gründungsformalitäten. noindex, nicht in der Sitemap.
+import VarianteLayout from '../../../components/variante/VarianteLayout.astro';
+import VPaketKarte from '../../../components/variante/VPaketKarte.astro';
+import VAblauf from '../../../components/variante/VAblauf.astro';
+import VFaq from '../../../components/variante/VFaq.astro';
+import Icon from '../../../components/Icon.astro';
+import { href } from '../../../lib/paths';
+import { formatEuro, brutto } from '../../../config/site';
+import { GRUENDUNG, FAQ_GRUENDUNG, VERTRAUEN, preis } from '../../../config/variante';
+
+const p = preis(GRUENDUNG);
+const MACHEN = [
+  { icon: 'layout', t: 'Website', x: 'Ohne Seitenbegrenzung, für Handy, Tablet und PC. Die Texte erarbeiten wir mit Ihnen.' },
+  { icon: 'mail', t: 'E-Mail mit Ihrer Adresse', x: 'Bis zu 20 Postfächer, mit einheitlicher Signatur nach DIN 5008.' },
+  { icon: 'pen', t: 'Logo und Geschäftspapiere', x: 'Logo mit 3 Entwürfen und 2 Korrekturrunden. Briefbogen, Angebot und Rechnung im gleichen Stil.' },
+  { icon: 'pin', t: 'Google-Profil', x: 'Ihr Eintrag bei Google und Google Maps, damit man Sie von Anfang an findet.' },
+  { icon: 'calendar', t: 'Online-Terminbuchung', x: 'Kunden buchen freie Termine direkt auf Ihrer Website.' },
+  { icon: 'chat', t: 'Erstgespräch', x: 'Kostenlos, rund 20 Minuten. Wir klären, was Sie für den Start wirklich brauchen.' },
+] as const;
+const NICHT = ['Steuerberatung', 'Rechtsberatung', 'Gewerbeanmeldung', 'Notartermin und Handelsregister', 'Businessplan und Finanzierung'];
+---
+
+<VarianteLayout
+  aktiv="gruender"
+  title="Variante: Gründungspaket für Ihren Start"
+  description={`Variante zum Vergleich: Website, E-Mail, Google-Profil, Logo und Terminbuchung für Gründer in einem Paket, ${formatEuro(p)} im Monat netto, ohne Startkosten.`}
+>
+  <section class="v-hero" aria-labelledby="v-h1">
+    <div class="wrap vgr__hero">
+      <div>
+        <span class="eyebrow">Gründungspaket</span>
+        <h1 id="v-h1">Alles für Ihren digitalen Start.</h1>
+        <p class="lead">Website, E-Mail, Logo, Geschäftspapiere, Google-Profil und Terminbuchung aus einem Paket. Damit Sie vom ersten Tag an professionell auftreten und sich auf Ihre Gründung konzentrieren können.</p>
+        <div class="v-knopfe">
+          <a class="btn btn--primary btn--lg" href={`${href('/kontakt/')}?paket=${encodeURIComponent(`${GRUENDUNG.name} (${formatEuro(p)} / Monat)`)}`}>Erstgespräch vereinbaren</a>
+          <a class="btn btn--umriss btn--lg" href="#paket">Paket ansehen</a>
+        </div>
+      </div>
+      <div class="vgr__preis card">
+        <p class="vgr__preis-k">Gründungspaket</p>
+        <p class="vgr__preis-b"><b>{formatEuro(p)}</b> netto / Monat</p>
+        <p class="vgr__preis-s">{formatEuro(brutto(p))} inkl. MwSt. · keine Startkosten</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="v-vertrauen" aria-label="Fakten über waybuild">
+    <ul class="wrap">{VERTRAUEN.map((v) => <li><Icon name={v.icon} size={18} /> {v.text}</li>)}</ul>
+  </div>
+
+  <section class="section" id="inhalt" aria-labelledby="inhalt-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Was wir für Sie machen</span>
+        <h2 id="inhalt-h" class="rule">Ihr Auftritt, fertig zum Start</h2>
+        <p class="lead">Sechs Dinge, die fast jede Gründung im ersten Monat braucht. Alles passt zusammen, im gleichen Stil.</p>
+      </div>
+      <ul class="vgr__grid">
+        {MACHEN.map((m) => <li class="card"><span class="vgr__icon"><Icon name={m.icon} size={22} /></span><h3>{m.t}</h3><p>{m.x}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="paket" aria-labelledby="paket-h">
+    <div class="wrap vgr__paket">
+      <div class="section-head">
+        <span class="eyebrow">Preis</span>
+        <h2 id="paket-h" class="rule">Ein Paket, ein fester Monatspreis</h2>
+        <p class="lead">Gerade am Anfang zählt jeder Euro. Darum zahlen Sie keine Startkosten. Logo und Einrichtung sind im Monatspreis enthalten, verteilt auf 24 Monate Mindestlaufzeit.</p>
+        <p class="v-zusatz">Sie brauchen etwas davon nicht? Dann tauschen wir es gegen eine gleichwertige Leistung. Mehr dazu bei den <a href={href('/variante/pakete/#tausch')}>Paketen</a>.</p>
+      </div>
+      <VPaketKarte paket={GRUENDUNG} />
+    </div>
+  </section>
+
+  <section class="section" id="nicht" aria-labelledby="nicht-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Klar gesagt</span>
+        <h2 id="nicht-h" class="rule">Was wir nicht übernehmen</h2>
+        <p class="lead">Wir kümmern uns um Ihren digitalen Auftritt. Für Folgendes sind Steuerberatung, Notariat, Kammern und Behörden die richtigen Ansprechpartner:</p>
+      </div>
+      <ul class="vgr__nicht">{NICHT.map((n) => <li>{n}</li>)}</ul>
+    </div>
+  </section>
+
+  <VAblauf />
+
+  <VFaq fragen={FAQ_GRUENDUNG} />
+
+  <section class="section v-cta" aria-labelledby="cta-h">
+    <div class="wrap">
+      <h2 id="cta-h">Starten Sie mit einem kurzen Gespräch.</h2>
+      <p class="lead" style="margin-inline:auto">Kostenlos und unverbindlich, rund 20 Minuten. Wir melden uns innerhalb eines Werktags.</p>
+      <div class="v-knopfe"><a class="btn btn--primary btn--lg" href={`${href('/kontakt/')}?paket=${encodeURIComponent(`${GRUENDUNG.name} (${formatEuro(p)} / Monat)`)}`}>Erstgespräch vereinbaren</a></div>
+    </div>
+  </section>
+</VarianteLayout>
+
+<style>
+  .vgr__hero { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 960px) { .vgr__hero { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
+  .vgr__preis { border: 2px solid var(--accent); border-radius: 22px; }
+  .vgr__preis p { margin: 0; }
+  .vgr__preis-k { font-weight: 700; color: var(--accent-ink); }
+  .vgr__preis-b { margin-top: 6px !important; }
+  .vgr__preis-b b { font-family: var(--font-head); font-size: clamp(2.2rem, 5vw, 3rem); letter-spacing: -0.02em; }
+  .vgr__preis-s { color: var(--ink-soft); font-size: 0.92rem; }
+  .vgr__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 720px) { .vgr__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .vgr__grid { grid-template-columns: repeat(3, 1fr); } }
+  .vgr__grid h3 { margin: 10px 0 6px; font-size: 1.12rem; }
+  .vgr__grid p { margin: 0; line-height: 1.7; color: var(--ink-soft); }
+  .vgr__icon { width: 44px; height: 44px; border-radius: 12px; background: #e9f6f5; color: var(--accent-ink); display: inline-grid; place-items: center; }
+  .vgr__paket { display: grid; gap: 28px; align-items: start; }
+  @media (min-width: 960px) { .vgr__paket { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  .vgr__nicht { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .vgr__nicht li { padding: 8px 16px; border-radius: 99px; border: 1px dashed var(--ink-soft); color: var(--ink); font-weight: 600; }
+  .vgr__nicht li::before { content: '– '; color: var(--ink-soft); }
+</style>

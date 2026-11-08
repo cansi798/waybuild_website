@@ -15,7 +15,9 @@ export default defineConfig({
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
-      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|hauptseite-alt)\/?$/.test(page),
+      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|hauptseite-alt)\/?$/.test(page)
+        // Variante „an firma.de orientiert“ (Jamil #5016, 08.11.2026): nur zum Vergleich, nie in die Sitemap
+        && !/\/variante\//.test(page),
     }),
   ],
   build: { inlineStylesheets: 'always' },

@@ -1,0 +1,152 @@
+---
+// VARIANTE „an firma.de orientiert“ – Startseite der Variante (Jamil, Talk qh87y3sj #5016/#5017, 08.11.2026).
+// Nur zum Vergleich: noindex, nicht in der Sitemap. Die echte Startseite (src/pages/index.astro) bleibt unverändert.
+// Inhalte aus dem firma.de-Vergleich (NC f/23882): Klarer Satz im ersten Bildschirm, zwei Einstiege, Vertrauensleiste
+// mit belegbaren Fakten, Kontrastsatz, drei feste Pakete, Vergleich nach Anbieter-Art, Zeitleiste, Was Sie beitragen, FAQ.
+// Entfernen: src/pages/variante, src/components/variante, src/config/variante.ts löschen (+ Sitemap-Filter in astro.config.mjs).
+import VarianteLayout from '../../components/variante/VarianteLayout.astro';
+import VPaketKarte from '../../components/variante/VPaketKarte.astro';
+import VAblauf from '../../components/variante/VAblauf.astro';
+import VFaq from '../../components/variante/VFaq.astro';
+import Icon from '../../components/Icon.astro';
+import { href } from '../../lib/paths';
+import { formatEuro } from '../../config/site';
+import { REFERENZEN, ANLIEGEN } from '../../config/startseite';
+import { V_HERO, VERTRAUEN, KONTRAST, VPAKETE, GRUENDUNG, VERGLEICH, FAQ_PAKETE, preis } from '../../config/variante';
+
+const ab = Math.min(...VPAKETE.map(preis));
+const analyse = `${href('/kontakt/')}?paket=${encodeURIComponent(ANLIEGEN.analyse.paket)}`;
+---
+
+<VarianteLayout
+  aktiv="start"
+  title="Variante: Website-Abo mit festen Paketen"
+  description={`Variante zum Vergleich: Website, E-Mail und Google-Profil in drei festen Paketen ab ${formatEuro(ab)} im Monat netto, ohne Einmalkosten.`}
+>
+  <section class="v-hero" aria-labelledby="v-h1">
+    <div class="wrap vhero">
+      <div>
+      <span class="eyebrow">{V_HERO.eyebrow}</span>
+      <h1 id="v-h1">{V_HERO.titel}</h1>
+      <p class="lead">{V_HERO.unter} Ab <strong>{formatEuro(ab)}</strong> im Monat, netto zzgl. MwSt.</p>
+      <div class="v-knopfe">
+        <a class="btn btn--primary btn--lg" href={href('/variante/pakete/')}>Neue Website</a>
+        <a class="btn btn--umriss btn--lg" href={analyse}>Ich habe schon eine Website</a>
+      </div>
+      <p class="v-zusatz">Sie gründen gerade? <a href={href('/variante/gruender/')}>Zum Gründungspaket</a></p>
+      </div>
+      <aside class="vblick card" aria-label="Pakete auf einen Blick">
+        <p class="vblick__k">Auf einen Blick</p>
+        <ul>
+          {[...VPAKETE, GRUENDUNG].map((p) => (
+            <li><a href={href(p.id === 'gruendung' ? '/variante/gruender/' : '/variante/pakete/')}><span><b>{p.name}</b><small>{p.kurz}</small></span><strong>{formatEuro(preis(p))}</strong></a></li>
+          ))}
+        </ul>
+        <p class="vblick__s">netto im Monat zzgl. MwSt. · keine Einmalkosten</p>
+      </aside>
+    </div>
+  </section>
+
+  <div class="v-vertrauen" aria-label="Fakten über waybuild">
+    <ul class="wrap">
+      {VERTRAUEN.map((v) => <li><Icon name={v.icon} size={18} /> {v.text}</li>)}
+      <li><Icon name="layout" size={18} /> <a href={href('/#referenzen')}>{REFERENZEN.liste.length} Kundenprojekte als Beispiel</a></li>
+    </ul>
+  </div>
+
+  <section class="section vkontrast" aria-labelledby="kontrast-h">
+    <div class="wrap v-text">
+      <h2 id="kontrast-h">{KONTRAST.satz}</h2>
+      <p class="lead">{KONTRAST.text}</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Pakete</span>
+        <h2 id="pakete-h" class="rule">Drei Pakete. Feste Monatspreise.</h2>
+        <p class="lead">Alles ist im Monatspreis enthalten, auch Logo und Einrichtung. Keine Rechnung am Anfang.</p>
+      </div>
+      <div class="v-grid3">
+        {VPAKETE.map((p) => <VPaketKarte paket={p} details={false} rechnung={false} />)}
+      </div>
+      <p class="v-hinweis"><a href={href('/variante/pakete/')}>Alle Inhalte, Rechenweg und Zusatzleistungen ansehen</a> · 24 Monate Mindestlaufzeit, danach monatlich kündbar. Alle Preise netto zzgl. MwSt.</p>
+    </div>
+  </section>
+
+  <section class="section section--dark vgruender" aria-labelledby="gr-h">
+    <div class="wrap vgruender__in">
+      <div>
+        <span class="eyebrow">Gründungspaket</span>
+        <h2 id="gr-h">Sie gründen? Alles für Ihren digitalen Start.</h2>
+        <p class="lead">Website, E-Mail-Postfächer mit Signatur, Google-Profil, Logo und Geschäftspapiere und Online-Terminbuchung in einem Paket. Für {formatEuro(preis(GRUENDUNG))} im Monat netto, ohne Startkosten.</p>
+      </div>
+      <a class="btn btn--primary btn--lg" href={href('/variante/gruender/')}>Gründungspaket ansehen</a>
+    </div>
+  </section>
+
+  <section class="section" id="vergleich" aria-labelledby="vgl-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Im Vergleich</span>
+        <h2 id="vgl-h" class="rule">Selbst machen, Baukasten, Agentur oder waybuild?</h2>
+        <p class="lead">Fünf Fragen, die sich fast jeder Betrieb stellt.</p>
+      </div>
+      <div class="vvgl__scroll" role="region" aria-label="Vergleich nach Anbieter-Art" tabindex="0">
+        <table class="vvgl">
+          <thead><tr><th scope="col">Frage</th>{VERGLEICH.spalten.map((s) => <th scope="col">{s}</th>)}</tr></thead>
+          <tbody>
+            {VERGLEICH.zeilen.map((z) => <tr><th scope="row">{z.frage}</th>{z.werte.map((w, i) => <td class:list={{ 'vvgl__wir': i === 3 }}>{w}</td>)}</tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="v-hinweis">{VERGLEICH.hinweis}</p>
+    </div>
+  </section>
+
+  <VAblauf />
+
+  <VFaq fragen={FAQ_PAKETE.slice(0, 5)} />
+
+  <section class="section v-cta" aria-labelledby="cta-h">
+    <div class="wrap">
+      <h2 id="cta-h">Welches Paket passt zu Ihnen?</h2>
+      <p class="lead" style="margin-inline:auto">Im kostenlosen Erstgespräch, rund 20 Minuten, empfehlen wir Ihnen das passende Paket. Ehrlich, auch wenn es das kleinere ist.</p>
+      <div class="v-knopfe">
+        <a class="btn btn--primary btn--lg" href={`${href('/kontakt/')}?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`}>Erstgespräch vereinbaren</a>
+        <a class="btn btn--umriss btn--lg" href={href('/variante/pakete/')}>Pakete vergleichen</a>
+      </div>
+    </div>
+  </section>
+</VarianteLayout>
+
+<style>
+  .vkontrast h2 { max-width: 26ch; }
+  .vhero { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 1040px) { .vhero { grid-template-columns: 1.5fr 1fr; gap: 56px; } }
+  .vblick { border-radius: 22px; box-shadow: var(--shadow); }
+  .vblick p { margin: 0; }
+  .vblick__k { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+  .vblick ul { list-style: none; margin: 12px 0; padding: 0; display: grid; }
+  .vblick li + li { border-top: 1px solid var(--line); }
+  .vblick a { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 0; text-decoration: none; color: inherit; }
+  .vblick a:hover b { color: var(--accent-ink); }
+  .vblick span { display: grid; gap: 2px; }
+  .vblick b { font-family: var(--font-head); font-size: 1.1rem; }
+  .vblick small { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.4; }
+  .vblick strong { font-family: var(--font-head); font-size: 1.25rem; white-space: nowrap; }
+  .vblick__s { font-size: 0.85rem; color: var(--ink-soft); }
+  .vgruender__in { display: grid; gap: 22px; align-items: center; }
+  @media (min-width: 900px) { .vgruender__in { grid-template-columns: 1fr auto; gap: 40px; } }
+  .vgruender .lead { margin: 0; }
+  .vgruender .eyebrow { color: var(--accent-light); }
+  .vvgl__scroll { overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
+  .vvgl { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
+  .vvgl th, .vvgl td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .vvgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); }
+  .vvgl tbody th { font-weight: 650; }
+  .vvgl__wir { background: #e9f6f5; font-weight: 650; color: var(--ink); }
+  .vvgl tbody tr:last-child th, .vvgl tbody tr:last-child td { border-bottom: 0; }
+  .v-hinweis a { color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
+</style>

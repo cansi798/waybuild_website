@@ -1,0 +1,80 @@
+---
+// Paketkarte der Variante: fester Monatspreis, Inhalte „… inklusive“, aufklappbarer Rechenweg (firma.de Punkt 11).
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
+import { brutto, formatEuro } from '../../config/site';
+import { type VPaket, VPAKETE, preis, rechenweg, summeExakt, LAUFZEIT } from '../../config/variante';
+
+interface Props { paket: VPaket; rechnung?: boolean; details?: boolean; }
+const { paket, rechnung = true, details = true } = Astro.props;
+const p = preis(paket);
+const vor = paket.baut ? VPAKETE.find((x) => x.id === paket.baut) : undefined;
+const weg = rechenweg(paket);
+const eur2 = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(n);
+const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} (${formatEuro(p)} / Monat)`)}`;
+---
+
+<article class:list={['vp', { 'vp--top': paket.empfohlen }]} aria-labelledby={`vp-${paket.id}`}>
+  {paket.empfohlen && <span class="vp__badge">Empfehlung</span>}
+  <h3 id={`vp-${paket.id}`}>{paket.name}</h3>
+  <p class="vp__kurz">{paket.kurz}</p>
+  <p class="vp__preis"><b>{formatEuro(p)}</b> <span>netto / Monat zzgl. 19 % MwSt.<br />{formatEuro(brutto(p))} inkl. MwSt.</span></p>
+  <p class="vp__ohne"><Icon name="check" size={16} /> Keine Einmalkosten</p>
+  <p class="vp__fuer">{paket.fuer}</p>
+  <ul class="vp__liste">
+    {vor && <li class="vp__alles"><Icon name="check" size={18} /> <span>Alles aus „{vor.name}“</span></li>}
+    {paket.inhalte.map((i) => (
+      <li><Icon name="check" size={18} /> <span><strong>{i.text}</strong>{details && i.detail && <small>{i.detail}</small>}</span></li>
+    ))}
+  </ul>
+  <a class:list={['btn btn--lg vp__btn', paket.empfohlen ? 'btn--primary' : 'btn--dark']} href={kontakt}>Erstgespräch vereinbaren<span class="sr-only">: Paket {paket.name}</span></a>
+  {rechnung && (
+    <details class="vp__weg">
+      <summary>So setzt sich der Preis zusammen</summary>
+      <table>
+        <caption class="sr-only">Rechenweg Paket {paket.name}, netto</caption>
+        <thead><tr><th scope="col">Leistung</th><th scope="col">je Monat</th></tr></thead>
+        <tbody>
+          {weg.map((w) => (
+            <tr><th scope="row">{w.name}{w.einmalig !== undefined && <small>einmalig {formatEuro(w.einmalig)} ÷ {LAUFZEIT} Monate</small>}</th><td>{eur2(w.anteil)}</td></tr>
+          ))}
+          <tr class="vp__summe"><th scope="row">Summe</th><td>{eur2(summeExakt(paket))}</td></tr>
+          <tr class="vp__summe"><th scope="row">Paketpreis (gerundet)</th><td>{formatEuro(p)}</td></tr>
+        </tbody>
+      </table>
+      <p>Über {LAUFZEIT} Monate: {formatEuro(Math.round(p * LAUFZEIT * 100) / 100)} netto, ohne weitere Kosten.</p>
+    </details>
+  )}
+</article>
+
+<style>
+  .vp { position: relative; display: flex; flex-direction: column; gap: 10px; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: clamp(22px, 3vw, 30px); }
+  .vp > * { margin: 0; }
+  .vp--top { border: 2px solid var(--accent); box-shadow: 0 24px 48px -24px rgb(0 79 76 / 40%); }
+  .vp h3 { font-size: clamp(1.4rem, 2.4vw, 1.65rem); }
+  .vp__badge { align-self: flex-start; padding: 4px 12px; border-radius: 99px; background: var(--accent); color: var(--on-accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .vp__kurz { font-weight: 600; color: var(--accent-ink); }
+  .vp__preis { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-block: 4px; }
+  .vp__preis b { font-family: var(--font-head); font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1; letter-spacing: -0.02em; }
+  .vp__preis span { font-size: 0.85rem; line-height: 1.4; color: var(--ink-soft); }
+  .vp__ohne { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 4px 12px; border-radius: 99px; background: #e9f6f5; color: var(--accent-ink); font-size: 0.85rem; font-weight: 700; }
+  .vp__fuer { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); }
+  .vp__liste { list-style: none; padding: 14px 0 6px; display: grid; gap: 12px; border-top: 1px solid var(--line); }
+  .vp__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.96rem; line-height: 1.5; }
+  .vp__liste li > span { display: grid; gap: 2px; }
+  .vp__liste strong { font-weight: 650; }
+  .vp__liste small { font-size: 0.86rem; line-height: 1.55; color: var(--ink-soft); }
+  .vp__liste :global(.icon) { flex: none; margin-top: 3px; color: var(--accent-ink); }
+  .vp__alles { font-weight: 600; }
+  .vp__btn { margin-top: auto !important; width: 100%; }
+  .vp__weg { border-top: 1px solid var(--line); padding-top: 10px; font-size: 0.9rem; }
+  .vp__weg summary { cursor: pointer; font-weight: 650; color: var(--accent-ink); padding-block: 6px; }
+  .vp__weg table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .vp__weg th, .vp__weg td { padding: 7px 4px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-weight: 500; }
+  .vp__weg td { text-align: right; white-space: nowrap; }
+  .vp__weg thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .vp__weg thead th:last-child { text-align: right; }
+  .vp__weg th small { display: block; color: var(--ink-soft); font-size: 0.8rem; }
+  .vp__summe th, .vp__summe td { font-weight: 700; }
+  .vp__weg p { margin: 10px 0 0; color: var(--ink-soft); line-height: 1.6; }
+</style>

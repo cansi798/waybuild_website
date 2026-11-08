@@ -1,0 +1,39 @@
+---
+// Fragen und Antworten der Variante. Einträge mit platzhalter=true erscheinen nur in der Vorschau, rot markiert.
+import type { Frage } from '../../config/variante';
+import { SHOW_HINTS } from '../../config/site';
+import { IS_PREVIEW } from '../../lib/env';
+
+interface Props { fragen: Frage[]; id?: string; titel?: string; }
+const { fragen, id = 'fragen', titel = 'Fragen und Antworten' } = Astro.props;
+const zeigen = fragen.filter((f) => !f.platzhalter || (SHOW_HINTS && IS_PREVIEW));
+---
+
+<section class="section section--alt" id={id} aria-labelledby={`${id}-h`}>
+  <div class="wrap vfaq">
+    <div class="section-head">
+      <h2 id={`${id}-h`} class="rule">{titel}</h2>
+      <p class="lead">Noch Fragen? Wir antworten innerhalb eines Werktags.</p>
+    </div>
+    <div class="vfaq__liste">
+      {zeigen.map((f) => (
+        <details class:list={['vfaq__item', { 'v-platzhalter': f.platzhalter }]}>
+          <summary><h3>{f.q}</h3></summary>
+          {f.platzhalter && <span class="v-platzhalter__etikett">Platzhalter</span>}
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vfaq__liste { display: grid; gap: 12px; max-width: 860px; }
+  .vfaq__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; }
+  .vfaq__item summary { cursor: pointer; list-style: none; padding-block: 14px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  .vfaq__item summary::-webkit-details-marker { display: none; }
+  .vfaq__item summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--accent-ink); flex: none; }
+  .vfaq__item[open] summary::after { content: '–'; }
+  .vfaq__item h3 { margin: 0; font-size: 1.05rem; line-height: 1.4; }
+  .vfaq__item p { margin: 0 0 16px; line-height: 1.7; color: var(--ink-soft); }
+</style>
