@@ -31,39 +31,52 @@
 .alt-trenner h2 { margin: 0 auto 10px; max-width: 24ch; font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: #3d2f00; }
 .alt-trenner p { margin: 0 auto; max-width: 56ch; font-size: 1rem; line-height: 1.7; font-weight: 600; }
 
-/* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5092, 08.11.2026; Sicherung vor-direkt-buchen-20261108):
- * ganz in Türkis #00807b bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
- * Überschrift, Unterzeile und Knöpfe mittig, keine Preise, keine Grafik. Schrift Weiß (4,8 : 1).
- * Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5 (5,7 : 1); zweiter Knopf weiß umrandet,
- * Hover-Fläche #006b68. Vier Versprechen unten im Türkis auf leicht dunklerem Band (≈ #006d69, Weiß 6,3 : 1).
- * Muster: Netz aus feinen Linien und Punkten (Inline-SVG, 1,4 KB) in dunklem Türkis #002f2d (24 % bzw. 34 %): es dunkelt
- * nur ab, der Kontrast der weißen Schrift steigt dadurch eher. Weiße Linien (6–10 %) wären hinter der Unterzeile unter
- * 4,5 : 1 gefallen (gemessen 4,3). Weicher Verlauf aus dem hellen Logo-Türkis #00a6a1 nur oben links, per Maske aus der
- * Mitte (Text) herausgenommen; am Handy klein. Kontrast AA per Pixelmessung hinter allen Texten geprüft.
- * Einblenden beim Laden (nur CSS): Überschrift, Unterzeile, Knöpfe, Versprechen, je 1.200 ms, Abstand 280 ms,
- * 14 px von unten. Die Überschrift startet bei Deckkraft 0,01 ohne Verzögerung (zählt sofort als LCP).
- * Bei reduzierter Bewegung keine Animation. Der alte Einstieg weiter unten bleibt unverändert. */
+/* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
+ * ganz in Türkis bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
+ * Überschrift, Unterzeile und Knöpfe mittig, keine Preise. Schrift Weiß.
+ * Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5; zweiter Knopf weiß umrandet, Hover #006b68.
+ * HINTERGRUND (#5114, wie firma.de): weicher Mesh-Verlauf aus 4 großen, weichen Farbflächen (.v-blob, radial-gradient)
+ * in #00a6a1, #5fe0da (Hauch), #006b68 und #00807b auf Grund #00807b; jede bewegt sich SEHR langsam (26–38 s, nur
+ * transform, GPU-freundlich). Darüber (::after) eine weiche Abdunklung in #006b68 hinter Unterzeile und Knöpfen und ein
+ * feines Korn (SVG-Rauschen, < 3 % Weiß, 0,4 KB). Kontrast per Pixelmessung bei 320–1920 px und mehreren Zeitpunkten der
+ * Bewegung: hinter Unterzeile und Knöpfen ≥ 4,5 : 1, H1 ≥ 3 : 1 (siehe Talk/Memory). Bei reduzierter Bewegung steht er still.
+ * EINBLENDEN (#5114, wie firma.de): H1 Wort für Wort (.v-wort mit --i): Deckkraft, 0,25 em von unten, Unschärfe 10 px → scharf,
+ * je 850 ms, Abstand 100 ms; erstes Wort startet sofort (H1-Wörter ab Deckkraft 0,01, zählt als LCP). Dann die Unterzeile
+ * genauso, dann Knöpfe weich, dann die Versprechen. Nur CSS. Bei reduzierter Bewegung alles sofort sichtbar.
+ * Der alte Einstieg weiter unten (Bisherige Startseite) bleibt unverändert. */
 .v-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt)); background: #00807b; color: var(--white); }
+  min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt)); background: #00807b; color: var(--white);
+  --v-wortzahl: 7; }
 .preview-bar ~ main .v-hero { min-height: calc(100vh - var(--kopf-gesamt) - var(--vorschau-h)); min-height: calc(100svh - var(--kopf-gesamt) - var(--vorschau-h)); }
-.v-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cpath d='M18 34L96 14M96 14L178 58M178 58L262 22M262 22L330 70M18 34L52 118M96 14L140 128M178 58L140 128M178 58L226 112M262 22L226 112M330 70L306 150M52 118L140 128M140 128L226 112M226 112L306 150M52 118L22 214M52 118L104 200M140 128L104 200M140 128L190 232M226 112L190 232M226 112L276 206M306 150L276 206M306 150L344 252M22 214L104 200M104 200L190 232M190 232L276 206M276 206L344 252M22 214L66 300M104 200L66 300M104 200L150 312M190 232L150 312M190 232L238 296M276 206L238 296M344 252L318 334M66 300L150 312M150 312L238 296M238 296L318 334' fill='none' stroke='%23002f2d' stroke-opacity='.24' stroke-width='1.1'/%3E%3Cg fill='%23002f2d' fill-opacity='.34'%3E%3Ccircle cx=%2218%22 cy=%2234%22 r=%222.6%22/%3E%3Ccircle cx=%2296%22 cy=%2214%22 r=%222.6%22/%3E%3Ccircle cx=%22178%22 cy=%2258%22 r=%222.6%22/%3E%3Ccircle cx=%22262%22 cy=%2222%22 r=%222.6%22/%3E%3Ccircle cx=%22330%22 cy=%2270%22 r=%222.6%22/%3E%3Ccircle cx=%2252%22 cy=%22118%22 r=%222.6%22/%3E%3Ccircle cx=%22140%22 cy=%22128%22 r=%222.6%22/%3E%3Ccircle cx=%22226%22 cy=%22112%22 r=%222.6%22/%3E%3Ccircle cx=%22306%22 cy=%22150%22 r=%222.6%22/%3E%3Ccircle cx=%2222%22 cy=%22214%22 r=%222.6%22/%3E%3Ccircle cx=%22104%22 cy=%22200%22 r=%222.6%22/%3E%3Ccircle cx=%22190%22 cy=%22232%22 r=%222.6%22/%3E%3Ccircle cx=%22276%22 cy=%22206%22 r=%222.6%22/%3E%3Ccircle cx=%22344%22 cy=%22252%22 r=%222.6%22/%3E%3Ccircle cx=%2266%22 cy=%22300%22 r=%222.6%22/%3E%3Ccircle cx=%22150%22 cy=%22312%22 r=%222.6%22/%3E%3Ccircle cx=%22238%22 cy=%22296%22 r=%222.6%22/%3E%3Ccircle cx=%22318%22 cy=%22334%22 r=%222.6%22/%3E%3C/g%3E%3C/svg%3E") center / 360px 360px repeat; }
-.v-hero::after { content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
-  background: radial-gradient(circle var(--v-licht, 640px) at 0 0, rgb(0 166 161 / 92%), rgb(0 166 161 / 0) 100%);
-  -webkit-mask-image: radial-gradient(ellipse 50% 44% at 50% 46%, transparent 62%, #000 100%);
-  mask-image: radial-gradient(ellipse 50% 44% at 50% 46%, transparent 62%, #000 100%); }
+/* Mesh: 4 Farbflächen */
+.v-mesh { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+.v-blob { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; will-change: transform;
+  animation: v-treiben var(--dauer, 32s) ease-in-out infinite alternate; }
+.v-blob--1 { left: -28vmax; top: -34vmax; background: radial-gradient(closest-side, rgb(0 166 161 / 58%), rgb(0 166 161 / 0)); --dauer: 34s; --dx: 9vmax; --dy: 6vmax; }
+.v-blob--2 { right: -30vmax; top: -30vmax; background: radial-gradient(closest-side, rgb(95 224 218 / 16%), rgb(95 224 218 / 0)); --dauer: 38s; --dx: -8vmax; --dy: 9vmax; }
+.v-blob--3 { right: -26vmax; bottom: -38vmax; background: radial-gradient(closest-side, rgb(0 107 104 / 85%), rgb(0 107 104 / 0)); --dauer: 28s; --dx: -10vmax; --dy: -7vmax; }
+.v-blob--4 { left: -24vmax; bottom: -40vmax; background: radial-gradient(closest-side, rgb(0 166 161 / 40%), rgb(0 166 161 / 0)); --dauer: 26s; --dx: 8vmax; --dy: -6vmax; }
+@keyframes v-treiben { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(var(--dx), var(--dy), 0) scale(1.08); } }
+/* Abdunklung hinter dem Text + Korn */
+.v-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(#n)' opacity='.05'/%3E%3C/svg%3E") 0 0 / 140px 140px repeat,
+    radial-gradient(ellipse var(--v-ruhe-x, 46%) var(--v-ruhe-y, 34%) at 50% var(--v-ruhe-mitte, 54%), rgb(0 107 104 / 72%) 0%, rgb(0 107 104 / 62%) 55%, rgb(0 107 104 / 0) 100%); }
 .v-hero__mitte { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   padding-block: clamp(48px, 9vh, 112px) clamp(36px, 6vh, 72px); }
-.v-hero h1 { max-width: 20ch; margin: 0 auto 0.45em; }
-.v-hero .lead { color: var(--white); max-width: 58ch; margin: 0 auto 32px; line-height: 1.65; }
+/* H1 deutlich größer, Wörter brechen nie in sich (inline-block, keine Silbentrennung) */
+.v-hero .v-titel { max-width: 13.5em; margin: 0 auto 0.5em; font-size: clamp(2.6rem, 6.8vw, 92px); line-height: 1.02;
+  letter-spacing: -0.035em; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
+@media (max-width: 379px) { .v-hero .v-titel { font-size: 2.15rem; } }
+.v-hero .v-unter { color: var(--white); max-width: 44ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
 .v-hero .v-knopfe .btn--primary { background: var(--white); color: var(--accent-ink); }
 .v-hero .v-knopfe .btn--primary:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
 .v-hero .v-knopfe .btn--umriss { background: transparent; border-color: var(--white); color: var(--white); }
 .v-hero .v-knopfe .btn--umriss:hover { background: var(--accent-ink); }
-/* Vier Versprechen (Jamil #5097) unten im Türkis: Überschrift Weiß fett, Zeile #e6f6f5 (≈ 5,6 : 1 auf dem Band) */
-.v-versprechen { background: rgb(0 40 38 / 22%); border-top: 1px solid rgb(255 255 255 / 18%); color: var(--white); }
+/* Vier Versprechen (Jamil #5097) unten im Türkis: Überschrift Weiß fett, Zeile #e6f6f5 (Band deckt Verlauf ab: Weiß ≥ 6,8 : 1, #e6f6f5 ≥ 6 : 1) */
+.v-versprechen { position: relative; background: rgb(0 62 60 / 62%); border-top: 1px solid rgb(255 255 255 / 18%); color: var(--white); }
 .v-versprechen ul { list-style: none; margin: 0 auto; padding: 22px 0 24px; display: grid; gap: 16px 28px; }
 @media (min-width: 720px) { .v-versprechen ul { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .v-versprechen ul { grid-template-columns: repeat(4, 1fr); } }
@@ -71,20 +84,21 @@
 .v-versprechen .icon { flex: none; margin-top: 2px; color: var(--white); }
 .v-versprechen span { display: grid; gap: 3px; font-size: 0.9rem; line-height: 1.5; color: var(--on-dark-soft); }
 .v-versprechen strong { font-family: var(--font-head); font-size: 1rem; font-weight: 700; line-height: 1.35; color: var(--white); }
-@media (max-width: 1199px) { .v-hero { --v-licht: 280px; } }
 @media (max-width: 719px) {
-  .v-hero { --v-licht: 170px; }
+  .v-hero { --v-ruhe-x: 96%; --v-ruhe-y: 46%; --v-ruhe-mitte: 50%; }
   .v-versprechen ul { padding: 18px 0 20px; gap: 14px; }
 }
+/* Wort für Wort */
+.v-wort { display: inline-block; animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--i) * 100ms); }
+.v-titel .v-wort { animation-name: v-wort-h1; }
+.v-unter .v-wort { animation-delay: calc(650ms + var(--i) * 100ms); }
+@keyframes v-wort { from { opacity: 0; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes v-wort-h1 { from { opacity: 0.01; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes v-ein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes v-ein-h1 { from { opacity: 0.01; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-/* langsamer (Jamil #5107): je 1.200 ms, Abstand 280 ms, ruhiges Easing; H1 1.100 ms ab Deckkraft 0,01 ohne Verzögerung */
-.v-ein { animation: v-ein 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-.v-ein--1 { animation-name: v-ein-h1; animation-duration: 1100ms; }
-.v-ein--2 { animation-delay: 280ms; }
-.v-ein--3 { animation-delay: 560ms; }
-.v-ein--4 { animation-delay: 840ms; }
-@media (prefers-reduced-motion: reduce) { .v-ein { animation: none !important; } }
+.v-ein { animation: v-ein 1000ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.v-ein--3 { animation-delay: 1500ms; }
+.v-ein--4 { animation-delay: 1900ms; }
+@media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
  * nur der neue obere Teil der Startseite: Einstieg (oben), Kontrastsatz, Pakete, Vergleich, Ablauf, Was Sie beitragen,
