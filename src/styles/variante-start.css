@@ -40,12 +40,12 @@
  * nur ab, der Kontrast der weißen Schrift steigt dadurch eher. Weiße Linien (6–10 %) wären hinter der Unterzeile unter
  * 4,5 : 1 gefallen (gemessen 4,3). Weicher Verlauf aus dem hellen Logo-Türkis #00a6a1 nur oben links, per Maske aus der
  * Mitte (Text) herausgenommen; am Handy klein. Kontrast AA per Pixelmessung hinter allen Texten geprüft.
- * Einblenden beim Laden (nur CSS): Überschrift, Unterzeile, Knöpfe, Versprechen, je 600 ms, Abstand 140 ms,
+ * Einblenden beim Laden (nur CSS): Überschrift, Unterzeile, Knöpfe, Versprechen, je 1.200 ms, Abstand 280 ms,
  * 14 px von unten. Die Überschrift startet bei Deckkraft 0,01 ohne Verzögerung (zählt sofort als LCP).
  * Bei reduzierter Bewegung keine Animation. Der alte Einstieg weiter unten bleibt unverändert. */
 .v-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
-  min-height: calc(100svh - var(--header-h) - 1px); background: #00807b; color: var(--white); }
-.preview-bar ~ main .v-hero { min-height: calc(100svh - var(--header-h) - 31px); }
+  min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt)); background: #00807b; color: var(--white); }
+.preview-bar ~ main .v-hero { min-height: calc(100vh - var(--kopf-gesamt) - var(--vorschau-h)); min-height: calc(100svh - var(--kopf-gesamt) - var(--vorschau-h)); }
 .v-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cpath d='M18 34L96 14M96 14L178 58M178 58L262 22M262 22L330 70M18 34L52 118M96 14L140 128M178 58L140 128M178 58L226 112M262 22L226 112M330 70L306 150M52 118L140 128M140 128L226 112M226 112L306 150M52 118L22 214M52 118L104 200M140 128L104 200M140 128L190 232M226 112L190 232M226 112L276 206M306 150L276 206M306 150L344 252M22 214L104 200M104 200L190 232M190 232L276 206M276 206L344 252M22 214L66 300M104 200L66 300M104 200L150 312M190 232L150 312M190 232L238 296M276 206L238 296M344 252L318 334M66 300L150 312M150 312L238 296M238 296L318 334' fill='none' stroke='%23002f2d' stroke-opacity='.24' stroke-width='1.1'/%3E%3Cg fill='%23002f2d' fill-opacity='.34'%3E%3Ccircle cx=%2218%22 cy=%2234%22 r=%222.6%22/%3E%3Ccircle cx=%2296%22 cy=%2214%22 r=%222.6%22/%3E%3Ccircle cx=%22178%22 cy=%2258%22 r=%222.6%22/%3E%3Ccircle cx=%22262%22 cy=%2222%22 r=%222.6%22/%3E%3Ccircle cx=%22330%22 cy=%2270%22 r=%222.6%22/%3E%3Ccircle cx=%2252%22 cy=%22118%22 r=%222.6%22/%3E%3Ccircle cx=%22140%22 cy=%22128%22 r=%222.6%22/%3E%3Ccircle cx=%22226%22 cy=%22112%22 r=%222.6%22/%3E%3Ccircle cx=%22306%22 cy=%22150%22 r=%222.6%22/%3E%3Ccircle cx=%2222%22 cy=%22214%22 r=%222.6%22/%3E%3Ccircle cx=%22104%22 cy=%22200%22 r=%222.6%22/%3E%3Ccircle cx=%22190%22 cy=%22232%22 r=%222.6%22/%3E%3Ccircle cx=%22276%22 cy=%22206%22 r=%222.6%22/%3E%3Ccircle cx=%22344%22 cy=%22252%22 r=%222.6%22/%3E%3Ccircle cx=%2266%22 cy=%22300%22 r=%222.6%22/%3E%3Ccircle cx=%22150%22 cy=%22312%22 r=%222.6%22/%3E%3Ccircle cx=%22238%22 cy=%22296%22 r=%222.6%22/%3E%3Ccircle cx=%22318%22 cy=%22334%22 r=%222.6%22/%3E%3C/g%3E%3C/svg%3E") center / 360px 360px repeat; }
 .v-hero::after { content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
@@ -78,9 +78,21 @@
 }
 @keyframes v-ein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes v-ein-h1 { from { opacity: 0.01; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-.v-ein { animation: v-ein 600ms cubic-bezier(0.2, 0.65, 0.25, 1) both; }
-.v-ein--1 { animation-name: v-ein-h1; animation-duration: 550ms; }
-.v-ein--2 { animation-delay: 140ms; }
-.v-ein--3 { animation-delay: 280ms; }
-.v-ein--4 { animation-delay: 420ms; }
+/* langsamer (Jamil #5107): je 1.200 ms, Abstand 280 ms, ruhiges Easing; H1 1.100 ms ab Deckkraft 0,01 ohne Verzögerung */
+.v-ein { animation: v-ein 1200ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.v-ein--1 { animation-name: v-ein-h1; animation-duration: 1100ms; }
+.v-ein--2 { animation-delay: 280ms; }
+.v-ein--3 { animation-delay: 560ms; }
+.v-ein--4 { animation-delay: 840ms; }
 @media (prefers-reduced-motion: reduce) { .v-ein { animation: none !important; } }
+
+/* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
+ * nur der neue obere Teil der Startseite: Einstieg (oben), Kontrastsatz, Pakete, Vergleich, Ablauf, Was Sie beitragen,
+ * Fragen, Abschluss. Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
+ * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
+ * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
+:root { --kopf-gesamt: calc(var(--header-h) + 1px); }
+.vkontrast, #pakete, #vergleich, #ablauf, #beitrag, #fragen, .v-cta {
+  min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
+  display: flex; flex-direction: column; justify-content: center;
+}

@@ -167,7 +167,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   .todo-badge span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.72rem; font-weight: 800; }
   @media print { .todo-badge { display: none; } }
   /* Vorschau-Leiste sehr dunkel mit Türkis-Linie unten, klar getrennt von der hellen Kopfzeile (Jamil #5072/#5085) */
-  .preview-bar { background: #002e2c; border-bottom: 2px solid var(--accent); color: var(--dark-soft); text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
+  .preview-bar { box-sizing: border-box; height: var(--vorschau-h); line-height: 1.5; background: #002e2c; border-bottom: 2px solid var(--accent); color: var(--dark-soft); text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
   /* Mobil: über der Sticky-CTA-Leiste, kompakter */
   .todo-badge em { font-style: normal; }
   @media (max-width: 959px) { .todo-badge { bottom: 84px; right: 10px; padding: 6px 10px; font-size: 0.8rem; } .todo-badge em { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }

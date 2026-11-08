@@ -128,7 +128,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ---------- Umbau nach Bauwelt-Muster (11.10.2026): Sektions-Köpfe, Häkchen, Slider, Reveal ---------- */
-:root { --header-h: 72px; --stickybar-h: 64px; }
+:root { --header-h: 72px; --stickybar-h: 64px; --vorschau-h: 30px; } /* --vorschau-h = feste Höhe der Vorschau-Leiste */
 .accent { color: var(--accent-ink); }
 .section--dark .accent { color: var(--accent); }
 .section--dark .eyebrow { color: var(--accent-light); }
