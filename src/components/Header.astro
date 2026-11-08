@@ -2,7 +2,6 @@
 // Site-Header nach Bauwelt-Muster: Desktop-Dropdown-Navigation + CTA „Erstgespräch buchen“,
 // mobil Telefon-/WhatsApp-Icons + Burger → Vollbild-Menü (MobileMenu).
 import { href } from '../lib/paths';
-import { company, phoneTel, whatsappLink } from '../config/site';
 import { NAV } from '../config/nav';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
@@ -85,8 +84,7 @@ const isCurrent = (path?: string) => path && current === href(path);
     </nav>
 
     <div class="hdr__actions">
-      <a class="hdr__iconbtn" href={`tel:${phoneTel()}`} aria-label={`Anrufen: ${company.phone}`}><Icon name="phone" size={22} /></a>
-      <a class="hdr__iconbtn" href={whatsappLink()} target="_blank" rel="noopener" aria-label="WhatsApp-Chat starten"><Icon name="whatsapp" size={22} /></a>
+      {/* Telefon- und WhatsApp-Symbol aus der Kopfzeile entfernt (Jamil #5121–#5124); bleiben im Handy-Menü, in der Handy-Leiste und im Footer */}
       <a class="btn btn--primary btn--sm hdr__cta" href={ctaHref}>{ctaText}</a>
       <button class="hdr__iconbtn hdr__burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menü öffnen">
         <Icon name="menu" size={26} class="hdr__burger-open" />
@@ -169,10 +167,8 @@ const isCurrent = (path?: string) => path && current === href(path);
   @media (min-width: 960px) {
     .hdr__nav { display: flex; }
     .hdr__cta { display: inline-flex; margin-left: 8px; }
-    .hdr__iconbtn:not(.hdr__burger) { display: none; }
     .hdr__burger { display: none; }
   }
-  @media (min-width: 1240px) { .hdr__iconbtn:not(.hdr__burger) { display: inline-flex; } }
 </style>
 
 <script>

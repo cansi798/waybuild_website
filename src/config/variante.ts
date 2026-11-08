@@ -8,19 +8,21 @@
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
 export const V_HERO = {
   titel: 'Ihre Website, fertig betreut, zum festen Monatspreis.',
-  /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Für Gründer oder Unternehmen, die sich neu erfinden wollen.',
+  /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101, neu #5121–#5124). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
+  unter: 'Für Gründer und Unternehmen, die neu durchstarten wollen.',
 };
 
-/** Vier Versprechen unten im ersten Bildschirm (Jamil, Talk qh87y3sj #5097 „ok+“, 08.11.2026). Ersetzen die frühere
- *  Vertrauensleiste (Hosting in Deutschland, Antwort innerhalb eines Werktags, persönlicher Ansprechpartner, Sitz in
- *  Norderstedt, 5 Kundenprojekte) ersatzlos. icon = Name aus src/components/Icon.astro. */
+/** Vier Vorteile unten im ersten Bildschirm (Jamil, Talk qh87y3sj #5097, gekürzt #5121–#5124): je EINE Zeile, kleines
+ *  Symbol, normale Schrift. Ersetzen die frühere Vertrauensleiste. icon = Name aus src/components/Icon.astro. */
 export const VERSPRECHEN = [
-  { icon: 'zap', titel: 'Ihr erster Entwurf in wenigen Stunden', text: 'In der Regel innerhalb von 3 Stunden nach dem Erstgespräch (werktags).' },
-  { icon: 'code', titel: 'Kein Baukasten', text: 'Ihre Website wird für Sie gebaut, nicht aus einer Vorlage zusammengeklickt.' },
-  { icon: 'stern', titel: 'Ihre Wünsche zählen', text: 'Wir setzen fast alles um, was Sie sich vorstellen.' },
-  { icon: 'chat', titel: 'Änderungen ganz einfach', text: 'Per Chat, Sprachnachricht oder Screenshot, wann immer Sie wollen.' },
+  { icon: 'zap', text: 'Erster Entwurf meist in 3 Stunden' },
+  { icon: 'code', text: 'Individuell statt Baukasten' },
+  { icon: 'stern', text: 'Fast jeder Wunsch umsetzbar' },
+  { icon: 'chat', text: 'Änderungen per Chat oder Sprachnachricht' },
 ] as const;
+
+/** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
+export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
 
 /** Kontrastsatz (firma.de-Vergleich Punkt 9). */
 export const KONTRAST = {

@@ -38,7 +38,7 @@ import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, FAQ_PAKETE, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, VERSPRECHEN, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
+import { V_HERO, VERSPRECHEN, HERO_KNOPF, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
@@ -51,7 +51,6 @@ const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
 const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
-const analyse = kontakt(ANLIEGEN.analyse.paket);
 const V_FAQ = FAQ_PAKETE.slice(0, 5);
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
 const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
@@ -115,7 +114,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   thema="besucherreise"
 >
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
-  <!-- Erster Bildschirm (Jamil #5085–#5114): ganz in Türkis, mittig, ohne Preise, vier Versprechen unten; weicher, sehr
+  <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
   <section class="v-hero" aria-labelledby="v-h1">
     <div class="v-mesh" aria-hidden="true"><span class="v-blob v-blob--1"></span><span class="v-blob v-blob--2"></span><span class="v-blob v-blob--3"></span><span class="v-blob v-blob--4"></span></div>
@@ -124,14 +123,14 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
            Satz als aria-label, die Wort-spans sind aria-hidden; Leerzeichen bleiben echte Textknoten (Kopieren = normaler Text). -->
       <h1 id="v-h1" class="v-titel" aria-label={V_HERO.titel}>{woerter(V_HERO.titel).map((w, i) => <><span class="v-wort" aria-hidden="true" style={`--i:${i}`}>{w}</span>{' '}</>)}</h1>
       <p class="lead v-unter">{woerter(V_HERO.unter).map((w, i) => <><span class="v-wort" style={`--i:${i}`}>{w}</span>{' '}</>)}</p>
+      <!-- Ein Knopf (#5121–#5124): weiß, Schrift #006b68, sanfter Lichtschein alle 3 s + Glanz (variante-start.css) -->
       <div class="v-knopfe v-ein v-ein--3">
-        <a class="btn btn--primary btn--lg" href={href('/preise/')}>Neue Website</a>
-        <a class="btn btn--umriss btn--lg" href={analyse}>Ich habe schon eine Website</a>
+        <a class="btn v-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
       </div>
     </div>
     <div class="v-versprechen v-ein v-ein--4">
       <ul class="wrap" aria-label="Unsere Versprechen">
-        {VERSPRECHEN.map((v) => <li><Icon name={v.icon} size={22} /><span><strong>{v.titel}</strong>{v.text}</span></li>)}
+        {VERSPRECHEN.map((v) => <li><Icon name={v.icon} size={18} /><span>{v.text}</span></li>)}
       </ul>
     </div>
   </section>

@@ -34,7 +34,7 @@
 /* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
  * ganz in Türkis bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
  * Überschrift, Unterzeile und Knöpfe mittig, keine Preise. Schrift Weiß.
- * Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5; zweiter Knopf weiß umrandet, Hover #006b68.
+ * Ein Knopf „Jetzt kostenlos beraten lassen“ (weiß, #006b68, Lichtschein, #5121–#5124); der zweite Knopf ist entfallen.
  * HINTERGRUND (#5114, wie firma.de): weicher Mesh-Verlauf aus 4 großen, weichen Farbflächen (.v-blob, radial-gradient)
  * in #00a6a1, #5fe0da (Hauch), #006b68 und #00807b auf Grund #00807b; jede bewegt sich SEHR langsam (26–38 s, nur
  * transform, GPU-freundlich). Darüber (::after) eine weiche Abdunklung in #006b68 hinter Unterzeile und Knöpfen und ein
@@ -61,7 +61,9 @@
 .v-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(#n)' opacity='.05'/%3E%3C/svg%3E") 0 0 / 140px 140px repeat,
-    radial-gradient(ellipse var(--v-ruhe-x, 46%) var(--v-ruhe-y, 34%) at 50% var(--v-ruhe-mitte, 54%), rgb(0 107 104 / 72%) 0%, rgb(0 107 104 / 62%) 55%, rgb(0 107 104 / 0) 100%); }
+    radial-gradient(ellipse var(--v-ruhe-x, 46%) var(--v-ruhe-y, 34%) at 50% var(--v-ruhe-mitte, 54%), rgb(0 107 104 / 72%) 0%, rgb(0 107 104 / 62%) 55%, rgb(0 107 104 / 0) 100%),
+    /* nahtlose Abdunklung unten hinter den vier Vorteilen (kein Band, kein Rand), damit Weiß ≥ 4,5 : 1 bleibt */
+    linear-gradient(to top, rgb(0 107 104 / 66%) 0, rgb(0 107 104 / 66%) var(--v-unten, 90px), rgb(0 107 104 / 0) calc(var(--v-unten, 90px) + 140px)); }
 .v-hero__mitte { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   padding-block: clamp(48px, 9vh, 112px) clamp(36px, 6vh, 72px); }
 /* H1 deutlich größer, Wörter brechen nie in sich (inline-block, keine Silbentrennung) */
@@ -71,22 +73,34 @@
 .v-hero .v-unter { color: var(--white); max-width: 44ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
-.v-hero .v-knopfe .btn--primary { background: var(--white); color: var(--accent-ink); }
-.v-hero .v-knopfe .btn--primary:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
-.v-hero .v-knopfe .btn--umriss { background: transparent; border-color: var(--white); color: var(--white); }
-.v-hero .v-knopfe .btn--umriss:hover { background: var(--accent-ink); }
-/* Vier Versprechen (Jamil #5097) unten im Türkis: Überschrift Weiß fett, Zeile #e6f6f5 (Band deckt Verlauf ab: Weiß ≥ 6,8 : 1, #e6f6f5 ≥ 6 : 1) */
-.v-versprechen { position: relative; background: rgb(0 62 60 / 62%); border-top: 1px solid rgb(255 255 255 / 18%); color: var(--white); }
-.v-versprechen ul { list-style: none; margin: 0 auto; padding: 22px 0 24px; display: grid; gap: 16px 28px; }
-@media (min-width: 720px) { .v-versprechen ul { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1100px) { .v-versprechen ul { grid-template-columns: repeat(4, 1fr); } }
-.v-versprechen li { display: flex; align-items: flex-start; gap: 12px; text-align: left; }
-.v-versprechen .icon { flex: none; margin-top: 2px; color: var(--white); }
-.v-versprechen span { display: grid; gap: 3px; font-size: 0.9rem; line-height: 1.5; color: var(--on-dark-soft); }
-.v-versprechen strong { font-family: var(--font-head); font-size: 1rem; font-weight: 700; line-height: 1.35; color: var(--white); }
+/* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #006b68 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring
+ * (box-shadow, weiß → durchsichtig) und einmal pro Takt ein heller Türkis-Glanz über den Knopf (Schrift darunter ≥ 5 : 1).
+ * Startet nach dem Einblenden. Hover/Fokus: stärkerer, ruhender Schein. Reduzierte Bewegung: nur leichter Schatten. */
+.v-hero .v-leucht { position: relative; isolation: isolate; overflow: hidden; min-height: 60px; padding: 1em 2.3em; font-size: clamp(1.08rem, 1.6vw, 1.2rem);
+  background: var(--white); color: var(--accent-ink); box-shadow: 0 12px 30px -12px rgb(0 40 38 / 55%);
+  animation: v-glow 3s ease-out 2.6s infinite; }
+.v-hero .v-leucht::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgb(95 224 218 / 32%) 50%, transparent 70%); transform: translateX(-120%);
+  animation: v-glanz 3s ease-in-out 2.6s infinite; }
+.v-hero .v-leucht:hover, .v-hero .v-leucht:focus-visible { animation: none; background: var(--white);
+  box-shadow: 0 0 0 6px rgb(255 255 255 / 30%), 0 0 42px 8px rgb(95 224 218 / 45%), 0 12px 30px -12px rgb(0 40 38 / 55%); }
+@keyframes v-glow {
+  0% { box-shadow: 0 0 0 0 rgb(255 255 255 / 55%), 0 0 0 0 rgb(95 224 218 / 0%), 0 12px 30px -12px rgb(0 40 38 / 55%); }
+  35% { box-shadow: 0 0 0 10px rgb(255 255 255 / 12%), 0 0 36px 6px rgb(95 224 218 / 35%), 0 12px 30px -12px rgb(0 40 38 / 55%); }
+  70%, 100% { box-shadow: 0 0 0 18px rgb(255 255 255 / 0%), 0 0 0 0 rgb(95 224 218 / 0%), 0 12px 30px -12px rgb(0 40 38 / 55%); } }
+@keyframes v-glanz { 0% { transform: translateX(-120%); } 40%, 100% { transform: translateX(120%); } }
+.v-hero .v-knopfe .v-leucht { flex: 0 0 auto; max-width: none; white-space: nowrap; }
+.v-hero .v-leucht:focus-visible { border-radius: 999px; outline-offset: 4px; } /* globale Fokusregel setzt sonst 4 px Ecken */
+@media (max-width: 599px) { .v-hero .v-knopfe .v-leucht { flex: 1 1 100%; width: 100%; white-space: normal; padding-inline: 1.2em; } }
+/* Vier Vorteile (Jamil #5097, gekürzt #5121–#5124): im selben Verlauf wie der Hero, nur eine feine helle Linie darüber;
+ * je eine Zeile, kleines Symbol, normale Schrift Weiß (Kontrast per Pixelmessung, siehe Memory) */
+.v-versprechen { position: relative; border-top: 1px solid rgb(255 255 255 / 20%); color: var(--white); }
+.v-versprechen ul { list-style: none; margin: 0 auto; padding: 18px 0 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 32px; }
+.v-versprechen li { display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 400; line-height: 1.4; }
+.v-versprechen .icon { flex: none; color: var(--white); opacity: 0.9; }
 @media (max-width: 719px) {
-  .v-hero { --v-ruhe-x: 96%; --v-ruhe-y: 46%; --v-ruhe-mitte: 50%; }
-  .v-versprechen ul { padding: 18px 0 20px; gap: 14px; }
+  .v-hero { --v-ruhe-x: 96%; --v-ruhe-y: 46%; --v-ruhe-mitte: 50%; --v-unten: 190px; }
+  .v-versprechen ul { flex-direction: column; align-items: flex-start; width: fit-content; max-width: calc(100% - 32px); padding: 16px 0 20px; gap: 8px; }
 }
 /* Wort für Wort */
 .v-wort { display: inline-block; animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--i) * 100ms); }
@@ -98,7 +112,7 @@
 .v-ein { animation: v-ein 1000ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
 .v-ein--3 { animation-delay: 1500ms; }
 .v-ein--4 { animation-delay: 1900ms; }
-@media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
  * nur der neue obere Teil der Startseite: Einstieg (oben), Kontrastsatz, Pakete, Vergleich, Ablauf, Was Sie beitragen,
