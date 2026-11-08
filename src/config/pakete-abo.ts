@@ -163,18 +163,6 @@ export const B2B_HINWEIS = 'Alle Preise netto zzgl. gesetzlicher MwSt. Unser Ang
 /** Laufzeit als kleiner Hinweis. */
 export const LAUFZEIT_HINWEIS = `${LAUFZEIT_MONATE} Monate Mindestlaufzeit, danach monatlich kündbar.`;
 
-/** Leistungstausch statt Verhandlung (Jamil #5016). */
-export const TAUSCH = {
-  titel: 'Sie brauchen etwas aus dem Paket nicht?',
-  regeln: [
-    { titel: 'Fester Paketinhalt', text: 'Jedes Paket hat einen festen Inhalt und einen festen Preis. So wissen Sie vorher genau, was Sie bekommen.' },
-    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen.' },
-    { titel: 'Oder das kleinere Paket', text: 'Passt ein Paket nur zur Hälfte, empfehlen wir Ihnen ehrlich das kleinere.' },
-    { titel: 'Größerer Umfang: eigenes Angebot', text: 'Brauchen Sie deutlich mehr, zum Beispiel Kundenverwaltung oder Abläufe, bekommen Sie ein individuelles Angebot.' },
-  ],
-  fair: 'Rabatte auf Verhandlung gibt es bei den Paketen nicht. Feste Preise sind fair, weil jeder Kunde für dieselbe Leistung dasselbe zahlt.',
-};
-
 /** Hinweis zu Rechtstexten. */
 export const RECHT = 'Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein. Das ersetzt keine Rechtsberatung. Steuer- und Rechtsberatung übernehmen wir nicht.';
 

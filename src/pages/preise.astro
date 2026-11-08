@@ -1,8 +1,8 @@
 ---
 // Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die drei Pakete Basis · Plus · Komplett sind die richtige
 // Website. Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
-// Inhalt: Karten mit Jahreskosten · „Einmalig dazubuchen“ · In allen Paketen · Leistungstausch statt Verhandeln ·
-// Vergleichstabelle · So starten Sie · Ausbaustufen · Fragen zu den Paketen · B2B-Hinweis.
+// Inhalt: Karten mit Jahreskosten · „Einmalig dazubuchen“ · In allen Paketen ·
+// Vergleichstabelle · So starten Sie · Ausbaustufen · B2B-Hinweis (Fragen seit 08.11. auf /fragen/).
 // Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
 // Vorher (Fundament/Wegweiser/Wahrzeichen aus site.ts PAKETE): Sicherung Branch vor-pakete-live-20261108.
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -12,7 +12,6 @@ import Inklusive from '../components/Inklusive.astro';
 import Icon from '../components/Icon.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
-import PaketFaq from '../components/pakete/PaketFaq.astro';
 import { SHOW_HINTS } from '../config/site';
 import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
@@ -21,7 +20,7 @@ import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import {
   ABO_PAKETE, euro, jahresPreis, jahresBrutto, aboPreisAb, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
-  TAUSCH, FAQ_PAKETE, AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
+  AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
 } from '../config/pakete-abo';
 
 const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
@@ -44,19 +43,13 @@ const START = [
   { t: 'Live und betreut', x: 'Ihre Website geht online. Danach pflegen wir sie, und Änderungen schicken Sie einfach per Nachricht.' },
 ];
 
-const faqSichtbar = FAQ_PAKETE.filter((f) => !f.platzhalter);
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqSichtbar.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
 const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
 ---
 
 <BaseLayout
   title={`Preise: Website-Abo ab ${euro(aboPreisAb())} im Monat`}
   description={`${preiseText} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung, E-Mail-Postfächer inklusive.`}
-  schema={[serviceSchema(Astro.site), faqSchema]}
+  schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
   <PageHeader eyebrow="Preise" title="Drei Pakete. Fester Monatspreis." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten.`} />
@@ -78,17 +71,10 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     </div>
   </section>
 
-  <section class="section section--alt" id="tausch" aria-labelledby="tausch-h">
-    <div class="wrap">
-      <SectionHead eyebrow="Fair für alle" pre={TAUSCH.titel} id="tausch-h" />
-      <ol class="tausch">
-        {TAUSCH.regeln.map((r, i) => <li class="card"><span class="tausch__n">{i + 1}</span><h3>{r.titel}</h3><p>{r.text}</p></li>)}
-      </ol>
-      <p class="tausch__fair"><Icon name="check" size={20} /> {TAUSCH.fair}</p>
-    </div>
-  </section>
+  <!-- Abschnitt „Fair für alle / Sie brauchen etwas aus dem Paket nicht?“ entfernt (Jamil #5133/#5134); FAQ-Frage dazu bleibt -->
 
-  <section class="section" id="vergleich" aria-labelledby="vgl-h">
+  <!-- Hintergründe wechseln wieder hell/sand, seit der Abschnitt „Fair für alle“ entfernt ist (#5133/#5134) -->
+  <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
     <div class="wrap">
       <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei." id="vgl-h" />
       <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
@@ -112,7 +98,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     </div>
   </section>
 
-  <section class="section section--alt" id="start" aria-labelledby="start-h">
+  <section class="section" id="start" aria-labelledby="start-h">
     <div class="wrap">
       <SectionHead center eyebrow="So starten Sie" pre="In drei Schritten " accent="online." id="start-h" />
       <ol class="start">
@@ -150,7 +136,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     </div>
   </section>
 
-  <PaketFaq fragen={FAQ_PAKETE} />
+  <!-- Paket-FAQ entfernt: alle Fragen auf /fragen/ (Jamil #5140–#5142) -->
 
   <section class="section cta-pk" aria-labelledby="cta-h">
     <div class="wrap">
@@ -165,15 +151,6 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
 <style>
   .anker { display: block; position: relative; top: -120px; }
   .netto { margin: 22px auto 0; max-width: 820px; text-align: center; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
-  .tausch { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 720px) { .tausch { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1100px) { .tausch { grid-template-columns: repeat(4, 1fr); } }
-  .tausch li { display: flex; flex-direction: column; gap: 6px; }
-  .tausch h3, .tausch p { margin: 0; }
-  .tausch p { line-height: 1.7; color: var(--ink-soft); }
-  .tausch__n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 800; }
-  .tausch__fair { display: flex; gap: 10px; align-items: flex-start; max-width: 820px; margin: 24px 0 0; padding: 16px 20px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); font-weight: 600; line-height: 1.6; }
-  .tausch__fair :global(.icon) { flex: none; margin-top: 3px; color: var(--accent-ink); }
   .vgl__scroll { position: relative; overflow-x: auto; max-width: 980px; margin-inline: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
   .vgl { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.92rem; }
   .vgl th, .vgl td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: center; vertical-align: middle; }

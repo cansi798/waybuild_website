@@ -83,6 +83,8 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
   .pk__mehr { padding-left: 28px; color: var(--ink-soft); font-size: 0.9rem !important; }
   .pk__fuss { display: grid; gap: 10px; align-content: end; }
   .pk__btn { width: 100%; }
-  .pk .btn--primary { color: var(--on-accent); }
+  /* „Direkt buchen“ auf allen drei Karten gleich (Jamil #5133/#5134): Türkis #00807b mit Weiß (4,8 : 1), Hover #006b68 (6,36 : 1) */
+  .pk .pk__btn { background: #00807b; color: var(--white); border-color: transparent; }
+  .pk .pk__btn:hover { background: var(--accent-ink); color: var(--white); }
   .pk__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); text-align: center; }
 </style>

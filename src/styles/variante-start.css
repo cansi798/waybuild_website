@@ -26,10 +26,6 @@
 .vvgl__wir { background: #e9f6f5; font-weight: 650; color: var(--ink); }
 .vvgl tbody tr:last-child th, .vvgl tbody tr:last-child td { border-bottom: 0; }
 
-/* Trenner vor den bisherigen Abschnitten (nur Vorschau) */
-.alt-trenner { padding-block: clamp(36px, 6vw, 64px); background: #fff4c2; border-block: 3px dashed #8a6700; color: #3d2f00; text-align: center; }
-.alt-trenner h2 { margin: 0 auto 10px; max-width: 24ch; font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: #3d2f00; }
-.alt-trenner p { margin: 0 auto; max-width: 56ch; font-size: 1rem; line-height: 1.7; font-weight: 600; }
 
 /* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
  * ganz in Türkis bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
@@ -67,9 +63,10 @@
 .v-hero__mitte { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   padding-block: clamp(48px, 9vh, 112px) clamp(36px, 6vh, 72px); }
 /* H1 deutlich größer, Wörter brechen nie in sich (inline-block, keine Silbentrennung) */
-.v-hero .v-titel { max-width: 13.5em; margin: 0 auto 0.5em; font-size: clamp(2.6rem, 6.8vw, 92px); line-height: 1.02;
+.v-hero .v-titel { max-width: 13.5em; margin: 0 auto 0.5em; line-height: 1.02;
+  /* wie bisher clamp(2.6rem, 6.8vw, 92px), aber nie breiter als das längste Wort „Aufmerksamkeit“ (≈ 8,1 × Schriftgröße) bei 20 px Rand je Seite (Jamil #5129) */
+  font-size: min(92px, max(2.6rem, 6.8vw), calc((100vw - 40px) / 8.4));
   letter-spacing: -0.035em; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
-@media (max-width: 379px) { .v-hero .v-titel { font-size: 2.15rem; } }
 .v-hero .v-unter { color: var(--white); max-width: 44ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
@@ -116,11 +113,11 @@
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
  * nur der neue obere Teil der Startseite: Einstieg (oben), Kontrastsatz, Pakete, Vergleich, Ablauf, Was Sie beitragen,
- * Fragen, Abschluss. Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
+ * Abschluss (Fragen seit #5136–#5138 auf /fragen/). Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
  * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
  * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
 :root { --kopf-gesamt: calc(var(--header-h) + 1px); }
-.vkontrast, #pakete, #vergleich, #ablauf, #beitrag, #fragen, .v-cta {
+.vkontrast, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
   min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
   display: flex; flex-direction: column; justify-content: center;
 }

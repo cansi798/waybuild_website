@@ -3,7 +3,7 @@
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
 //   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
 //   · 3 Verstehen. Empfehlen. Umsetzen. (4788) + Woran wir glauben (4795/4796) in einem Abschnitt (4809, #denkweise) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (4790/4791; seit 08.11. direkt hinter 3) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+//   · 5 Darauf können Sie sich verlassen (entfernt 08.11., #5136–#5138) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
 // 08.11.2026 „einladender“ (Jamil 4927/4929, Rethinking NC Rethinking_Startseite-einladend_2026-11-08; Sicherung Branch
 //   vor-einladend-20261108): Claim oben im Hero, Prinzipien mit Zeichen + Linie, „Verlassen“ hinter die Prinzipien,
 //   Leistungsdetails zum Aufklappen. Texte unverändert.
@@ -21,25 +21,23 @@
 //   Texte src/config/variante.ts, Pakete/Preise/FAQ aus src/config/pakete-abo.ts). Ohne Banner und Navigation der Variante,
 //   ohne Gründungspaket, Links auf /variante/… → /preise/.
 //   DARUNTER alle bisherigen Abschnitte unverändert, getrennt durch „Bisherige Startseite, zum Aussortieren“ (nur Vorschau).
-//   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt, #baukasten-alt, pk-…-alt);
+//   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt samt #baukasten-alt am 08.11. entfernt, #5136–#5138);
 //   #pakete und #baukasten zeigen auf den neuen Teil, #check auf den bisherigen Check (die Variante hat keinen).
 //   Der bisherige Hero ist ein zweiter Block mit H2 statt H1 (Text gleich), damit die Seite genau eine H1 hat.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StartHero from '../components/start/StartHero.astro';
 import Check from '../components/start/Check.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import VAblauf from '../components/variante/VAblauf.astro';
-import VFaq from '../components/variante/VFaq.astro';
 import Icon from '../components/Icon.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, FAQ_PAKETE, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, VERSPRECHEN, HERO_KNOPF, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
+import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
+import { V_HERO, VERSPRECHEN, HERO_KNOPF, KONTRAST, VERGLEICH } from '../config/variante';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 
@@ -51,15 +49,10 @@ const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
 const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
-const V_FAQ = FAQ_PAKETE.slice(0, 5);
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
 const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
-const faqLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: V_FAQ.filter((f) => !f.platzhalter).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-};
+// FAQPage-JSON-LD der Startseite entfällt: die Fragen stehen seit #5136–#5138 auf /fragen/ (dort mit JSON-LD)
 
 // Abschnitt 2 (Jamil #4986, 08.11.2026: Puzzle „zu verspielt“, „seriöser und animiert, damit der Painpoint klar wird“):
 // vier ruhige Module, die nicht verbunden sind. Eine Anfrage wandert von der Website los und bleibt in der Lücke hängen,
@@ -110,13 +103,13 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 <BaseLayout
   title={V_TITEL}
   description={V_DESCRIPTION}
-  schema={[serviceSchema(Astro.site, V_SERVICE), faqLd]}
+  schema={[serviceSchema(Astro.site, V_SERVICE)]}
   thema="besucherreise"
 >
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
-  <section class="v-hero" aria-labelledby="v-h1">
+  <section class="v-hero"><!-- ohne aria-labelledby: gleicher Satz wie die alte H2 weiter unten (axe landmark-unique) -->
     <div class="v-mesh" aria-hidden="true"><span class="v-blob v-blob--1"></span><span class="v-blob v-blob--2"></span><span class="v-blob v-blob--3"></span><span class="v-blob v-blob--4"></span></div>
     <div class="wrap v-hero__mitte">
       <!-- Wort für Wort wie firma.de (Jamil #5114): jedes Wort ein span mit --i (Reihenfolge), nur CSS. Die H1 hat den ganzen
@@ -179,7 +172,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 
   <VAblauf />
 
-  <VFaq fragen={V_FAQ} />
+  <!-- Fragen und Antworten (#fragen) entfernt: eigene Seite /fragen/ (Jamil #5136–#5138) -->
 
   <section class="section v-cta" aria-labelledby="cta-h">
     <div class="wrap">
@@ -192,18 +185,8 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
     </div>
   </section>
 
-  <!-- ============ DARUNTER: bisherige Startseite unverändert, zum Aussortieren durch Jamil ============ -->
-  {PLATZHALTER && (
-    <section class="alt-trenner" id="bisherige-startseite" aria-labelledby="alt-trenner-h">
-      <div class="wrap">
-        <h2 id="alt-trenner-h">{TRENNER.titel}</h2>
-        <p>{TRENNER.hinweis}</p>
-      </div>
-    </section>
-  )}
-
-  <!-- Hero (bisherig; H2 statt H1, Text gleich) -->
-  <StartHero ebene="h2" />
+  <!-- ============ DARUNTER: bisherige Abschnitte. Gelber Trenner „Bisherige Startseite, zum Aussortieren“ und der alte
+       Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
   <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): vier getrennte Module, eine Anfrage geht
        in der Lücke verloren (Jamil #4986). Die Verlust-Zeilen links leuchten synchron zur Animation auf. -->
@@ -299,17 +282,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
     </section>
   )}
 
-  <!-- Darauf können Sie sich verlassen (Jamil 4790/4791): große Schlagworte, viel Weißraum, keine Icons.
-       08.11. (Rethinking „einladender“, Jamil 4927/4929): direkt hinter die drei Prinzipien gerückt, damit die Haltung
-       gebündelt VOR Leistungen und Preisen steht (vorher hinter den Referenzen). -->
-  <section class="bs bs--dunkel verlassen" aria-labelledby="bs-verlassen">
-    <div class="wrap">
-      <h2 id="bs-verlassen" class="verlassen__titel">{VERLASSEN.titel}</h2>
-      <ul class="verlassen__liste">
-        {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
-      </ul>
-    </div>
-  </section>
+  <!-- „Darauf können Sie sich verlassen“ entfernt (Jamil #5136–#5138) -->
 
   <!-- 4 · Ein Kunde interessiert sich nicht für Ihre Systeme (Jamil 4811 + 4871–4876 + 4879): jede Leistung genau EIN Mal an
        ihrer Station (Liste weiter aus BAUKASTEN in startseite.ts erzeugt, OHNE Preise), darunter „Was dazugehört“
@@ -351,20 +324,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
     </div>
   </section>
 
-  <!-- Preisteil (Jamil, Talk qh87y3sj #5056, 08.11.2026): die drei Pakete Basis · Plus · Komplett kompakt, Daten aus
-       src/config/pakete-abo.ts, alle Details auf /preise/. Anker #baukasten bleibt für alte Links (Check, Hero). -->
-  <section class="bs bs--alt pk-start" id="pakete-alt" aria-labelledby="bs-pakete">
-    <span id="baukasten-alt" class="pk-start__anker" aria-hidden="true"></span>
-    <div class="wrap">
-      <div class="bs-kopf bs-kopf--mitte">
-        <h2 id="bs-pakete">Drei Pakete. Fester Monatspreis.</h2>
-        <p class="bs-lead">Website, Technik und Betreuung sind immer dabei. Je nach Paket kommen Google, laufende Verbesserung oder Logo und Geschäftspapiere dazu.</p>
-      </div>
-      <PaketKarten kompakt idSuffix="-alt" />
-      <p class="pk-start__mehr"><a class="btn btn--umriss btn--lg" href={href('/preise/')}>Alle Leistungen und Preise vergleichen</a></p>
-      <p class="pk-start__netto">{B2B_HINWEIS} Logo, Geschäftspapiere und Visitenkarten können Sie auch einmalig dazubuchen.</p>
-    </div>
-  </section>
+  <!-- Preisteil unten (#pakete-alt) entfernt (Jamil #5136–#5138); Pakete stehen oben in #pakete -->
 
   <!-- Referenzen (Jamil 4876; seit 08.11.2026 mit Namen, Jamil #4932): Bild der Kunden-Website oben, darunter Name,
        Branche · Ort, Ausgangslage/Umsetzung/Ergebnis. Link nur bei Live-Seiten, sonst nur das Etikett „Vorschau“. -->

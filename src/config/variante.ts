@@ -7,7 +7,8 @@
 
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
 export const V_HERO = {
-  titel: 'Ihre Website, fertig betreut, zum festen Monatspreis.',
+  /** H1 im Hero, Variante E von Jamil (Talk qh87y3sj #5129). Title und Meta-Description bleiben eigenständig (index.astro). */
+  titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
   /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101, neu #5121–#5124). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
   unter: 'Für Gründer und Unternehmen, die neu durchstarten wollen.',
 };
@@ -61,8 +62,3 @@ export const BEITRAG = [
   { titel: 'Kurze Bestätigungen', text: 'Zum Beispiel, wenn Google beim Einrichten Ihres Profils eine Bestätigung von Ihnen verlangt.' },
 ];
 
-/** Zwischenüberschrift vor den bisherigen Abschnitten (nur Vorschau). */
-export const TRENNER = {
-  titel: 'Bisherige Startseite, zum Aussortieren',
-  hinweis: 'Diese Abschnitte stammen von der bisherigen Startseite. Jamil entscheidet, was bleibt.',
-};
