@@ -3,47 +3,33 @@
 // PAKETE (site.ts) und AGB bleiben unverändert. Entfernen: Ordner src/pages/variante, src/components/variante und
 // diese Datei löschen, dazu den Sitemap-Ausschluss in astro.config.mjs.
 //
-// Idee: drei feste Monatspakete OHNE Einmalkosten. Einmalige Leistungen (Logo, Google-Profil einrichten, Ortsseiten,
-// KI-Aufbereitung) werden über die Mindestlaufzeit (24 Monate) in den Monatspreis eingerechnet:
-//   Paketpreis = Summe der Monatsbausteine + Summe(Einmalpreis ÷ 24), auf den nächsten Betrag mit ,99 gerundet.
-// Alle Einzelpreise kommen aus BAUKASTEN (startseite.ts, Stand Jamil #4924/#4925), damit es nur EINE Zahlenquelle gibt.
-// Rechnung und Quellen zur Logo-Frage: docs/variante-firma/preise.md. Preise legen Can und Jamil fest.
+// Idee: drei feste Monatspakete OHNE Einmalkosten. Einmalige Leistungen (Logo, Google-Profil einrichten,
+// Suchmaschinen-Optimierung beim Erstellen, KI-Aufbereitung) stecken im festen Monatspreis.
+// PREISE (Jamil, Talk qh87y3sj #5028–#5034, 08.11.2026 16:22–16:26): von Jamil GESETZT, nicht mehr aus der Rechnung
+// „Monatsbausteine + Einmalpreis ÷ 24“. Basis 79,99 · Plus 149,99 · Komplett 299,99 (unverändert) · Gründung 153,99
+// (unverändert). Brutto rechnet brutto() in site.ts. Weiterhin Vorschlag zur Entscheidung durch Can und Jamil;
+// alte Rechnung und Begründung: docs/variante-firma/preise.md.
 import { BAUKASTEN } from './startseite';
 import { WAAS } from './site';
 
 export const LAUFZEIT = WAAS.laufzeitMonate; // 24
 
-/** Nächster Betrag mit ,99 (87,90 → 87,99 · 152,42 → 151,99 · 300,32 → 299,99). */
+/** Nächster Betrag mit ,99 (2,88 → 2,99). */
 export const auf99 = (x: number) => Math.round(x - 0.99) + 0.99;
-const cent = (x: number) => Math.round(x * 100) / 100;
 
-type Quelle = { name: string; monatlich?: number; einmalig?: number };
-const baustein = (id: string): Quelle => {
-  const b = BAUKASTEN.bausteine.find((x) => x.id === id);
-  if (!b) throw new Error(`variante.ts: Baustein ${id} fehlt in BAUKASTEN`);
-  return { name: b.name, monatlich: b.preis, einmalig: b.einmalig };
-};
-const QUELLEN: Record<string, Quelle> = {
-  website: { name: BAUKASTEN.basis.name, monatlich: BAUKASTEN.basis.preis },
-  email: baustein('email'),
-  ki: baustein('ki'),
-  'google-profil': baustein('google-profil'),
-  'google-pflege': baustein('google-pflege'),
-  gefunden: baustein('gefunden'),
-  bericht: baustein('bericht'),
-  logo: baustein('logo'),
-  optimierung: baustein('optimierung'),
-  'ki-check': baustein('ki-check'),
-  termin: baustein('termin'),
-};
+const terminBaustein = BAUKASTEN.bausteine.find((x) => x.id === 'termin');
+if (!terminBaustein?.preis) throw new Error('variante.ts: Baustein termin fehlt in BAUKASTEN');
 
-/** Ein Paketinhalt: Text für Kunden („… inklusive“) + Herkunft für die Preisrechnung. */
-export type Inhalt = { quelle: keyof typeof QUELLEN; text: string; detail?: string };
+/** Ein Paketinhalt: Text für Kunden („… inklusive“). Für die Vergleichstabelle: `zeile` (Zeilenname, sonst `text`
+ *  ohne „inklusive“) und `wert` (Text statt Haken). Gleiche `zeile` in einem späteren Paket ersetzt den Wert. */
+export type Inhalt = { id: string; text: string; detail?: string; zeile?: string; wert?: string };
 
 export type VPaket = {
   id: 'basis' | 'plus' | 'komplett' | 'gruendung';
   name: string;
   kurz: string;
+  /** Monatspreis netto, von Jamil gesetzt (08.11.2026) */
+  preis: number;
   fuer: string;
   empfohlen?: boolean;
   /** Paketinhalte, die über dem vorherigen Paket hinzukommen (bei Basis: alle) */
@@ -53,47 +39,57 @@ export type VPaket = {
 };
 
 const WEBSITE: Inhalt[] = [
-  { quelle: 'website', text: 'Website inklusive', detail: 'Ohne Seitenbegrenzung, für Handy, Tablet und PC, Texte mit Ihnen erarbeitet. Hosting in Deutschland, Updates, Sicherungen, Änderungen per Nachricht im fairen Rahmen.' },
-  { quelle: 'email', text: 'E-Mail-Postfächer mit Signatur inklusive', detail: 'Bis zu 20 Postfächer mit Ihrer Adresse, einheitliche Signatur nach DIN 5008.' },
-  { quelle: 'ki', text: 'Aufbereitung für KI-Assistenten inklusive', detail: 'So aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.' },
+  { id: 'website', text: 'Website inklusive', detail: 'Ohne Seitenbegrenzung, für Handy, Tablet und PC, Texte mit Ihnen erarbeitet. Hosting in Deutschland, Updates, Sicherungen, Änderungen per Nachricht im fairen Rahmen.' },
+  { id: 'email', text: 'E-Mail-Postfächer mit Signatur inklusive', detail: 'Bis zu 20 Postfächer mit Ihrer Adresse, einheitliche Signatur nach DIN 5008.' },
+  { id: 'ki', text: 'Aufbereitung für KI-Assistenten inklusive', detail: 'So aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.' },
 ];
 
 export const VPAKETE: VPaket[] = [
   {
-    id: 'basis', name: 'Basis', kurz: 'Professionell online',
+    id: 'basis', name: 'Basis', kurz: 'Professionell online', preis: 79.99,
     fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
-    inhalte: WEBSITE,
-  },
-  {
-    id: 'plus', name: 'Plus', kurz: 'Gefunden werden und Anfragen gewinnen', empfohlen: true, baut: 'basis',
-    fuer: 'Für Betriebe vor Ort, die über Google regelmäßig neue Kunden gewinnen wollen.',
     inhalte: [
-      { quelle: 'google-profil', text: 'Google-Profil einrichten inklusive', detail: 'Ihr Eintrag bei Google und Google Maps, mit Fotos, Leistungen und Öffnungszeiten.' },
-      { quelle: 'google-pflege', text: 'Google-Profil pflegen inklusive', detail: 'Fotos, Leistungen und Öffnungszeiten bleiben aktuell.' },
-      { quelle: 'gefunden', text: '5 Seiten für Ihre Orte und Leistungen inklusive', detail: 'Mit den Wörtern, nach denen Ihre Kunden suchen.' },
-      { quelle: 'bericht', text: 'Monatsbericht inklusive', detail: 'Besucher, Anfragen, Suchbegriffe, kurz und verständlich.' },
+      WEBSITE[0],
+      { id: 'seo', text: 'Suchmaschinen-Optimierung beim Erstellen inklusive', zeile: 'Suchmaschinen-Optimierung', wert: 'Grundoptimierung beim Erstellen',
+        detail: 'Wir richten Ihre Website von Anfang an so ein, dass Google sie gut versteht: klare Seitentitel und Beschreibungen, saubere Überschriften, schnelle Ladezeit, gut auf dem Handy.' },
+      ...WEBSITE.slice(1),
     ],
   },
   {
-    id: 'komplett', name: 'Komplett', kurz: 'Ein einheitlicher Auftritt, laufend verbessert', baut: 'plus',
+    id: 'plus', name: 'Plus', kurz: 'Gefunden werden und Anfragen gewinnen', preis: 149.99, empfohlen: true, baut: 'basis',
+    fuer: 'Für Betriebe vor Ort, die über Google regelmäßig neue Kunden gewinnen wollen.',
+    inhalte: [
+      { id: 'google-profil', text: 'Google-Profil einrichten inklusive', detail: 'Ihr Eintrag bei Google und Google Maps, mit Fotos, Leistungen und Öffnungszeiten.' },
+      { id: 'google-pflege', text: 'Google-Profil pflegen inklusive', detail: 'Fotos, Leistungen und Öffnungszeiten bleiben aktuell.' },
+      { id: 'seo', text: 'Erweiterte Suchmaschinen-Optimierung inklusive', zeile: 'Suchmaschinen-Optimierung', wert: 'Erweiterte Optimierung',
+        detail: 'Wir finden heraus, wonach Ihre Kunden suchen, und richten Ihre Seiten gezielt darauf aus. Ihr Google-Profil wird mit der Website verknüpft, damit Sie vor Ort besser gefunden werden.' },
+      { id: 'mail-ordner', text: 'E-Mail-Organisation mit Unterordnern inklusive', zeile: 'E-Mail-Organisation mit Ordnern',
+        detail: 'Ihre Postfächer werden mit Ordnern und Regeln eingerichtet, damit Anfragen nicht im Posteingang untergehen.' },
+      { id: 'bericht', text: 'Monatsbericht inklusive', detail: 'Besucher, Anfragen, Suchbegriffe, kurz und verständlich.' },
+      { id: 'ki-check', text: 'Monatlicher KI-Check inklusive', detail: 'Jeden Monat prüfen wir, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben.' },
+      { id: 'weg', text: 'Den Weg bis zur Anfrage verbessern inklusive', zeile: 'Weg bis zur Anfrage verbessern',
+        detail: 'Wir prüfen regelmäßig, wo Besucher abspringen, und verbessern den Weg bis zur Anfrage.' },
+    ],
+  },
+  {
+    id: 'komplett', name: 'Komplett', kurz: 'Ein einheitlicher Auftritt, laufend verbessert', preis: 299.99, baut: 'plus',
     fuer: 'Für Unternehmen, die einen einheitlichen Auftritt wollen, von der Website bis zum Brief, und laufend dranbleiben möchten.',
     inhalte: [
-      { quelle: 'logo', text: 'Logo und Geschäftspapiere inklusive', detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
-      { quelle: 'optimierung', text: 'Laufende Verbesserung inklusive', detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache, alle drei Monate ein Gespräch.' },
-      { quelle: 'ki-check', text: 'Monatlicher KI-Check inklusive', detail: 'Wir prüfen, ob KI-Assistenten Ihr Unternehmen richtig nennen.' },
+      { id: 'logo', text: 'Logo und Geschäftspapiere inklusive', detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
+      { id: 'optimierung', text: 'Laufende Verbesserung inklusive', detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache, alle drei Monate ein Gespräch.' },
     ],
   },
 ];
 
 /** Gründungspaket (Jamil #5017): nur echte Leistungen, keine Rechts- oder Steuerberatung, keine Gründungsformalitäten. */
 export const GRUENDUNG: VPaket = {
-  id: 'gruendung', name: 'Gründung', kurz: 'Alles für Ihren digitalen Start',
+  id: 'gruendung', name: 'Gründung', kurz: 'Alles für Ihren digitalen Start', preis: 153.99,
   fuer: 'Für Gründerinnen und Gründer, die vom ersten Tag an professionell auftreten wollen.',
   inhalte: [
     ...WEBSITE,
-    { quelle: 'logo', text: 'Logo und Geschäftspapiere inklusive', detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
-    { quelle: 'google-profil', text: 'Google-Profil einrichten inklusive', detail: 'Damit man Sie bei Google und Google Maps von Anfang an findet.' },
-    { quelle: 'termin', text: 'Online-Terminbuchung inklusive', detail: 'Kunden buchen freie Termine direkt auf Ihrer Website.' },
+    { id: 'logo', text: 'Logo und Geschäftspapiere inklusive', detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
+    { id: 'google-profil', text: 'Google-Profil einrichten inklusive', detail: 'Damit man Sie bei Google und Google Maps von Anfang an findet.' },
+    { id: 'termin', text: 'Online-Terminbuchung inklusive', detail: 'Kunden buchen freie Termine direkt auf Ihrer Website.' },
   ],
 };
 
@@ -103,26 +99,27 @@ export const alleInhalte = (p: VPaket): Inhalt[] => {
   return [...(vor ? alleInhalte(vor) : []), ...p.inhalte];
 };
 
-/** Rechenweg je Inhalt: Monatsanteil netto. */
-export const rechenweg = (p: VPaket) =>
-  alleInhalte(p).map((i) => {
-    const q = QUELLEN[i.quelle];
-    const anteil = q.monatlich ?? (q.einmalig ?? 0) / LAUFZEIT;
-    return { name: q.name, monatlich: q.monatlich, einmalig: q.einmalig, anteil: cent(anteil) };
-  });
+/** Monatspreis netto (von Jamil gesetzt) und Kosten über die Mindestlaufzeit. */
+export const preis = (p: VPaket) => p.preis;
+export const gesamt = (p: VPaket) => Math.round(p.preis * LAUFZEIT * 100) / 100;
 
-/** Exakte Summe (ungerundet) und Paketpreis (auf ,99). */
-export const summeExakt = (p: VPaket) => cent(alleInhalte(p).reduce((s, i) => { const q = QUELLEN[i.quelle]; return s + (q.monatlich ?? (q.einmalig ?? 0) / LAUFZEIT); }, 0));
-export const preis = (p: VPaket) => auf99(summeExakt(p));
-/** Nur die laufenden Monatsbausteine (für den Vorschlag „ab Monat 25“). */
-export const nurMonatlich = (p: VPaket) => auf99(cent(alleInhalte(p).reduce((s, i) => s + (QUELLEN[i.quelle].monatlich ?? 0), 0)));
+/** Vergleichstabelle: eine Zeile je `zeile` (bzw. Inhalt), Wert je Paket = Text, Haken (true) oder nicht enthalten (false). */
+export const vergleichZeilen = () => {
+  const name = (i: Inhalt) => i.zeile ?? i.text.replace(/ inklusive$/, '');
+  const zeilen: string[] = [];
+  for (const p of VPAKETE) for (const i of alleInhalte(p)) if (!zeilen.includes(name(i))) zeilen.push(name(i));
+  return zeilen.map((z) => ({
+    text: z,
+    werte: VPAKETE.map((p) => { const treffer = alleInhalte(p).filter((i) => name(i) === z).at(-1); return treffer ? (treffer.wert ?? true) : false; }),
+  }));
+};
 
 /** Auf Wunsch dazu (monatlich, keine Einmalkosten). */
-const termin = QUELLEN.termin.monatlich!;
-const weitereSeite = auf99(69 / LAUFZEIT); // BAUKASTEN-Hinweis „Jede weitere Seite 69 €“ ÷ 24
+const termin = terminBaustein.preis;
+const weitereSeite = auf99(69 / LAUFZEIT); // BAUKASTEN-Hinweis „Jede weitere Seite 69 €“ ÷ 24 (Zusatzleistung, kein Paketinhalt)
 export const DAZU = [
   { name: 'Online-Terminbuchung', text: 'Kunden buchen freie Termine direkt auf Ihrer Website.', preis: termin },
-  { name: 'Weitere Seite für einen Ort oder eine Leistung', text: 'Je Seite, zusätzlich zu den 5 Seiten im Paket Plus.', preis: weitereSeite },
+  { name: 'Weitere Seite für einen Ort oder eine Leistung', text: 'Je Seite, mit Text und Bildern passend zu Ihrem Angebot.', preis: weitereSeite },
 ];
 export const AUF_ANFRAGE = ['Kundenverwaltung', 'Abläufe automatisieren', 'Social Media', 'Video', 'Software, Cloud und IT'];
 
@@ -186,7 +183,7 @@ export const TAUSCH = {
   titel: 'Sie brauchen etwas aus dem Paket nicht?',
   regeln: [
     { titel: 'Fester Paketinhalt', text: 'Jedes Paket hat einen festen Inhalt und einen festen Preis. So wissen Sie vorher genau, was Sie bekommen.' },
-    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte oder die Online-Terminbuchung.' },
+    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel die Online-Terminbuchung.' },
     { titel: 'Oder das kleinere Paket', text: 'Passt ein Paket nur zur Hälfte, empfehlen wir Ihnen ehrlich das kleinere.' },
     { titel: 'Größerer Umfang: eigenes Angebot', text: 'Brauchen Sie deutlich mehr, zum Beispiel Kundenverwaltung oder Abläufe, bekommen Sie ein individuelles Angebot.' },
   ],
@@ -195,20 +192,18 @@ export const TAUSCH = {
 
 export type Frage = { q: string; a: string; platzhalter?: boolean };
 
-const p = (id: VPaket['id']) => (id === 'gruendung' ? GRUENDUNG : VPAKETE.find((x) => x.id === id)!);
-const eur = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(n);
 
 export const FAQ_PAKETE: Frage[] = [
   { q: 'Ich brauche kein Logo. Muss ich das mitbezahlen?',
-    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte oder die Online-Terminbuchung. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
+    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel die Online-Terminbuchung. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
   { q: 'Kann ich über den Preis verhandeln?',
     a: 'Bei den drei Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
   { q: 'Gibt es Einrichtungs- oder Einmalkosten?',
-    a: `Nein. Auch einmalige Arbeiten wie Logo, Google-Profil oder die Seiten für Ihre Orte sind im Monatspreis enthalten. Wir verteilen sie auf die ${LAUFZEIT} Monate Mindestlaufzeit, darum gibt es keine Rechnung am Anfang.` },
+    a: `Nein. Auch einmalige Arbeiten wie Logo, Google-Profil oder die Suchmaschinen-Optimierung beim Erstellen sind im Monatspreis enthalten. Sie zahlen ab dem ersten Monat denselben festen Betrag, darum gibt es keine Rechnung am Anfang.` },
   { q: 'Wie lange läuft der Vertrag?',
     a: `Die Mindestlaufzeit beträgt ${LAUFZEIT} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
   { q: 'Was passiert nach 24 Monaten?', platzhalter: true,
-    a: `Vorschlag zur Entscheidung: Ab Monat 25 sinkt der Preis um den Anteil der einmaligen Leistungen, weil diese dann bezahlt sind. Zum Beispiel Plus von ${eur(preis(p('plus')))} auf ${eur(nurMonatlich(p('plus')))} im Monat. Ob wir das so anbieten, entscheiden Can und Jamil.` },
+    a: `Offen: Ob sich der Monatspreis nach der Mindestlaufzeit ändert, entscheiden Can und Jamil. Bis dahin machen wir hier keine Aussage.` },
   { q: 'Kann ich das Paket später wechseln?',
     a: 'Ja, ein Wechsel in ein größeres Paket ist möglich. Sagen Sie uns einfach Bescheid, die Einzelheiten besprechen wir mit Ihnen.' },
   { q: 'Wem gehört das Logo, wenn ich es monatlich bezahle?', platzhalter: true,

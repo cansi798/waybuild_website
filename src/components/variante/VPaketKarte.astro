@@ -1,16 +1,15 @@
 ---
-// Paketkarte der Variante: fester Monatspreis, Inhalte „… inklusive“, aufklappbarer Rechenweg (firma.de Punkt 11).
+// Paketkarte der Variante: fester Monatspreis (von Jamil gesetzt, 08.11.2026), Inhalte „… inklusive“,
+// Kosten über die Mindestlaufzeit (firma.de Punkt 11). Der frühere Rechenweg „Einmalpreis ÷ 24“ entfällt.
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
 import { brutto, formatEuro } from '../../config/site';
-import { type VPaket, VPAKETE, preis, rechenweg, summeExakt, LAUFZEIT } from '../../config/variante';
+import { type VPaket, VPAKETE, preis, gesamt, LAUFZEIT } from '../../config/variante';
 
 interface Props { paket: VPaket; rechnung?: boolean; details?: boolean; }
 const { paket, rechnung = true, details = true } = Astro.props;
 const p = preis(paket);
 const vor = paket.baut ? VPAKETE.find((x) => x.id === paket.baut) : undefined;
-const weg = rechenweg(paket);
-const eur2 = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(n);
 const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} (${formatEuro(p)} / Monat)`)}`;
 ---
 
@@ -28,23 +27,7 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} 
     ))}
   </ul>
   <a class:list={['btn btn--lg vp__btn', paket.empfohlen ? 'btn--primary' : 'btn--dark']} href={kontakt}>Erstgespräch vereinbaren<span class="sr-only">: Paket {paket.name}</span></a>
-  {rechnung && (
-    <details class="vp__weg">
-      <summary>So setzt sich der Preis zusammen</summary>
-      <table>
-        <caption class="sr-only">Rechenweg Paket {paket.name}, netto</caption>
-        <thead><tr><th scope="col">Leistung</th><th scope="col">je Monat</th></tr></thead>
-        <tbody>
-          {weg.map((w) => (
-            <tr><th scope="row">{w.name}{w.einmalig !== undefined && <small>einmalig {formatEuro(w.einmalig)} ÷ {LAUFZEIT} Monate</small>}</th><td>{eur2(w.anteil)}</td></tr>
-          ))}
-          <tr class="vp__summe"><th scope="row">Summe</th><td>{eur2(summeExakt(paket))}</td></tr>
-          <tr class="vp__summe"><th scope="row">Paketpreis (gerundet)</th><td>{formatEuro(p)}</td></tr>
-        </tbody>
-      </table>
-      <p>Über {LAUFZEIT} Monate: {formatEuro(Math.round(p * LAUFZEIT * 100) / 100)} netto, ohne weitere Kosten.</p>
-    </details>
-  )}
+  {rechnung && <p class="vp__gesamt">Über {LAUFZEIT} Monate: <strong>{formatEuro(gesamt(paket))}</strong> netto ({formatEuro(brutto(gesamt(paket)))} inkl. MwSt.), ohne weitere Kosten.</p>}
 </article>
 
 <style>
@@ -67,14 +50,6 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} 
   .vp__liste :global(.icon) { flex: none; margin-top: 3px; color: var(--accent-ink); }
   .vp__alles { font-weight: 600; }
   .vp__btn { margin-top: auto !important; width: 100%; }
-  .vp__weg { border-top: 1px solid var(--line); padding-top: 10px; font-size: 0.9rem; }
-  .vp__weg summary { cursor: pointer; font-weight: 650; color: var(--accent-ink); padding-block: 6px; }
-  .vp__weg table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-  .vp__weg th, .vp__weg td { padding: 7px 4px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-weight: 500; }
-  .vp__weg td { text-align: right; white-space: nowrap; }
-  .vp__weg thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
-  .vp__weg thead th:last-child { text-align: right; }
-  .vp__weg th small { display: block; color: var(--ink-soft); font-size: 0.8rem; }
-  .vp__summe th, .vp__summe td { font-weight: 700; }
-  .vp__weg p { margin: 10px 0 0; color: var(--ink-soft); line-height: 1.6; }
+  .vp__gesamt { border-top: 1px solid var(--line); padding-top: 12px; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+  .vp__gesamt strong { color: var(--ink); }
 </style>
