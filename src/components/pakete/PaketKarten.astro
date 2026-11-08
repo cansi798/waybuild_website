@@ -6,7 +6,8 @@
 // Kartenzeilen per CSS subgrid ausgerichtet. Am Handy normal untereinander.
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
-import { ABO_PAKETE, KOMPAKT, paketById, bruttoVon, jahresPreis, jahresBrutto, euro, LAUFZEIT_HINWEIS, type AboPaket } from '../../config/pakete-abo';
+import BuchenDialog from './BuchenDialog.astro';
+import { ABO_PAKETE, KOMPAKT, paketById, bruttoVon, jahresPreis, jahresBrutto, euro, LAUFZEIT_HINWEIS, BUCHEN, type AboPaket } from '../../config/pakete-abo';
 
 // 08.11.2026 (Jamil #5061/#5062): `details` = Erklärsatz je Leistung (aus = Karten wie auf der Variante-Startseite, alle
 // Leistungen ohne Erklärung); `idSuffix` für eine zweite Instanz auf derselben Seite (keine doppelten IDs).
@@ -15,7 +16,9 @@ const { kompakt = false, details = true, idSuffix = '' } = Astro.props;
 
 const liste = (p: AboPaket) => (kompakt ? KOMPAKT[p.id].map((id) => p.leistungen.find((l) => l.id === id)).filter((l) => !!l) : p.leistungen);
 const weitere = (p: AboPaket) => p.leistungen.length - liste(p).length;
-const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponent(`${p.name} (${euro(p.preis)} / Monat)`)}`;
+// „Direkt buchen“ (Jamil #5085–#5089): mit JS öffnet sich BuchenDialog (einmal pro Seite, bei der Instanz ohne idSuffix),
+// ohne JS direkt zum Kontaktformular mit Paket-Vorauswahl.
+const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponent(p.name)}&buchen=1`;
 ---
 
 <div class:list={['pk-grid', { 'pk-grid--kompakt': kompakt }]}>
@@ -40,12 +43,13 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
         {kompakt && weitere(p) > 0 && <li class="pk__mehr"><span>und {weitere(p)} weitere {weitere(p) === 1 ? 'Leistung' : 'Leistungen'}</span></li>}
       </ul>
       <div class="pk__fuss">
-        <a class:list={['btn btn--lg pk__btn', p.empfohlen ? 'btn--primary' : 'btn--dark']} href={kontakt(p)}>Erstgespräch vereinbaren<span class="sr-only">: Paket {p.name}</span></a>
+        <a class:list={['btn btn--lg pk__btn', p.empfohlen ? 'btn--primary' : 'btn--dark']} href={kontakt(p)} data-buchen={p.id}>{BUCHEN.knopf}<span class="sr-only">: Paket {p.name}</span></a>
         <p class="pk__laufzeit">{LAUFZEIT_HINWEIS}</p>
       </div>
     </article>
   ))}
 </div>
+{!idSuffix && <BuchenDialog />}
 
 <style>
   .pk-grid { display: grid; gap: 34px; padding-top: 14px; }

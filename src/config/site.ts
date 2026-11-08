@@ -1,5 +1,5 @@
 // Zentrale Inhalte der Website. Alles mit "TODO" sind Platzhalter, bis die echten Firmendaten vorliegen.
-import { ABO_PAKETE, EINMALIG_DAZU, LAUFZEIT_MONATE, MWST_SATZ, paketById, type AboPaket } from './pakete-abo';
+import { ABO_PAKETE, EINMALIG_DAZU, LAUFZEIT_MONATE, MWST_SATZ, paketById, einmalSumme, type AboPaket } from './pakete-abo';
 
 /**
  * Gelbe "Fehlt: …"-Hinweise auf der Website anzeigen.
@@ -214,7 +214,7 @@ export const faqs = [
   },
   {
     q: 'Was kann ich einmalig dazubuchen?',
-    a: `${EINMALIG_DAZU.liste.map((e) => `${e.name} für ${formatEuro(e.preis)}`).join(', ')}. Das sind einmalige Festpreise netto zzgl. MwSt., ohne monatliche Kosten. Im Paket ${paketById('komplett').name} sind Logo und Geschäftspapiere bereits enthalten.`,
+    a: `${EINMALIG_DAZU.liste.map((e) => `${e.name} für ${formatEuro(e.preis)}`).join(', ')}, oder alle vier zusammen als Gesamtpaket für ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(einmalSumme())}. Das sind einmalige Festpreise netto zzgl. MwSt., ohne monatliche Kosten. Im Paket ${paketById('komplett').name} sind Logo und Geschäftspapiere bereits enthalten.`,
   },
   {
     q: 'Wie viele Seiten bekommt meine Website?',

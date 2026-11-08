@@ -7,17 +7,19 @@
 
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
 export const V_HERO = {
-  eyebrow: 'Website-Abo für kleine und mittlere Unternehmen',
   titel: 'Ihre Website, fertig betreut, zum festen Monatspreis.',
-  unter: 'Wir erstellen Ihre Website, richten E-Mail-Postfächer und Google-Profil ein und kümmern uns danach um alles. Drei feste Pakete, keine Einrichtungskosten.',
+  /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
+  unter: 'Für Gründer oder Unternehmen, die sich neu erfinden wollen.',
 };
 
-/** Vertrauensleiste: NUR, was die Website heute schon belegt (site.ts, kontakt.astro, startseite.ts). */
-export const VERTRAUEN = [
-  { icon: 'server', text: 'Hosting in Deutschland' },
-  { icon: 'clock', text: 'Antwort innerhalb eines Werktags' },
-  { icon: 'user', text: 'Ein persönlicher Ansprechpartner' },
-  { icon: 'pin', text: 'Sitz in Norderstedt' },
+/** Vier Versprechen unten im ersten Bildschirm (Jamil, Talk qh87y3sj #5097 „ok+“, 08.11.2026). Ersetzen die frühere
+ *  Vertrauensleiste (Hosting in Deutschland, Antwort innerhalb eines Werktags, persönlicher Ansprechpartner, Sitz in
+ *  Norderstedt, 5 Kundenprojekte) ersatzlos. icon = Name aus src/components/Icon.astro. */
+export const VERSPRECHEN = [
+  { icon: 'zap', titel: 'Ihr erster Entwurf in wenigen Stunden', text: 'In der Regel innerhalb von 3 Stunden nach dem Erstgespräch (werktags).' },
+  { icon: 'code', titel: 'Kein Baukasten', text: 'Ihre Website wird für Sie gebaut, nicht aus einer Vorlage zusammengeklickt.' },
+  { icon: 'stern', titel: 'Ihre Wünsche zählen', text: 'Wir setzen fast alles um, was Sie sich vorstellen.' },
+  { icon: 'chat', titel: 'Änderungen ganz einfach', text: 'Per Chat, Sprachnachricht oder Screenshot, wann immer Sie wollen.' },
 ] as const;
 
 /** Kontrastsatz (firma.de-Vergleich Punkt 9). */

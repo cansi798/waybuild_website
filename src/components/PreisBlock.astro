@@ -82,6 +82,7 @@ const hid = `${id}-h`;
       <p class="pb__einmal-kopf">{EINMALIG_DAZU.titel}</p>
       <ul class="pb__einmal-liste" role="list">
         {EINMALIG_DAZU.liste.map((e) => <li><span>{e.name}</span> <b>{euro(e.preis)}</b></li>)}
+        <li class="pb__gesamt"><span>{EINMALIG_DAZU.gesamt.name} als Gesamtpaket</span> <b>{euro(EINMALIG_DAZU.gesamt.preis)}</b></li>
       </ul>
       <p class="pb__klein">{EINMALIG_DAZU.hinweis}</p>
     </div>
@@ -124,6 +125,7 @@ const hid = `${id}-h`;
   .pb__einmal-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px 24px; }
   @media (min-width: 720px) { .pb__einmal-liste { grid-template-columns: 1fr 1fr; } }
   .pb__einmal-liste li { display: flex; justify-content: space-between; gap: 12px; line-height: 1.6; }
+  .pb__einmal-liste .pb__gesamt { font-weight: 650; color: var(--accent-ink); }
   .pb__klein { margin: 10px 0 0; font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
   .pb__klein--mitte { text-align: center; }
   .pb__aktion { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 22px; margin: 26px 0 0; }

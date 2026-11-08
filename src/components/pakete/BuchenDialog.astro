@@ -1,0 +1,163 @@
+---
+// Fenster „Direkt buchen“ (Jamil, Talk qh87y3sj #5085–#5089, 08.11.2026). Wird von PaketKarten EINMAL pro Seite eingebunden;
+// jeder Knopf mit data-buchen="<paket-id>" öffnet es. Ohne JavaScript führt der Knopf direkt zu /kontakt/?paket=…&buchen=1.
+// Native <dialog> mit showModal(): Escape schließt, Rest der Seite ist inert; zusätzlich Fokusfalle für Tab/Umschalt+Tab,
+// Fokus geht beim Schließen zurück auf den Knopf. Am Handy Vollbild-Blatt.
+// Extras: vier einzeln ankreuzbar ODER „Alle vier als Gesamtpaket“ (wird automatisch gewählt, wenn alle vier angekreuzt sind).
+// Im Paket Komplett sind Logo und Geschäftspapiere schon enthalten: dort nicht wählbar, Gesamtpaket ebenfalls nicht.
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
+import { ABO_PAKETE, EINMALIG_DAZU as E, BUCHEN, euro, gesamtZeile } from '../../config/pakete-abo';
+
+const pakete = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, { name: p.name, preis: p.preis }]));
+/** Im Paket Komplett schon enthalten (pakete-abo.ts: Leistung „logo“ = Logo und Geschäftspapiere) */
+const inKomplett = ['logo', 'papiere'];
+---
+
+<dialog class="bd" id="buchen-dialog" aria-modal="true" aria-labelledby="bd-titel" aria-describedby="bd-hinweis"
+  data-kontakt={href('/kontakt/')} data-pakete={JSON.stringify(pakete)} data-inkomplett={inKomplett.join(',')} data-gesamt={E.gesamt.preis}>
+  <div class="bd__innen">
+    <div class="bd__kopf">
+      <h2 id="bd-titel">{BUCHEN.titel}</h2>
+      <button type="button" class="bd__zu" data-bd-zu aria-label="Fenster schließen"><Icon name="close" size={24} /></button>
+    </div>
+
+    <p class="bd__paket">Ihr Paket: <b id="bd-paket-name"></b> <span><b id="bd-paket-preis"></b> netto im Monat</span></p>
+
+    <fieldset class="bd__extras">
+      <legend>{E.titel} <small>(optional, einmalig, netto)</small></legend>
+      {E.liste.map((e) => (
+        <label class="bd__opt">
+          <input type="checkbox" name="bd_extra" value={e.id} data-preis={e.preis} />
+          <span class="bd__name">{e.name}<small class="bd__inkl" hidden>Im Paket Komplett schon enthalten</small></span>
+          <b>{euro(e.preis)}</b>
+        </label>
+      ))}
+      <label class="bd__opt bd__opt--alle">
+        <input type="checkbox" name="bd_alle" value={E.gesamt.id} />
+        <span class="bd__name">{gesamtZeile()}<small>{E.gesamt.text}</small></span>
+      </label>
+    </fieldset>
+
+    <p class="bd__summe" aria-live="polite">Extras einmalig: <b id="bd-summe">0 €</b> netto</p>
+    <p class="bd__hinweis" id="bd-hinweis">{BUCHEN.kaufHinweis}</p>
+
+    <div class="bd__knoepfe">
+      <a class="btn btn--lg bd__weiter" id="bd-weiter" href={href('/kontakt/')}>{BUCHEN.weiter}</a>
+      <a class="btn btn--lg bd__ohne" id="bd-ohne" href={href('/kontakt/')}>{BUCHEN.ohne}</a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .bd { width: min(600px, 100% - 32px); max-height: min(92vh, 900px); padding: 0; border: 0; border-radius: 22px; background: var(--white); color: var(--ink); box-shadow: 0 30px 80px -20px rgb(0 47 45 / 55%); overflow: auto; overscroll-behavior: contain; }
+  .bd::backdrop { background: rgb(0 30 29 / 55%); }
+  .bd__innen { display: grid; gap: 16px; padding: clamp(20px, 4vw, 30px); }
+  .bd__kopf { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .bd h2 { margin: 0; font-size: clamp(1.3rem, 3.2vw, 1.6rem); line-height: 1.25; }
+  .bd__zu { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -6px -8px 0 0; border: 0; border-radius: 50%; background: none; color: var(--ink); cursor: pointer; }
+  .bd__zu:hover { background: var(--paper-2); }
+  .bd :focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
+  .bd p { margin: 0; }
+  .bd__paket { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 14px; padding: 14px 16px; border-radius: 14px; background: #e9f6f5; line-height: 1.5; }
+  .bd__paket b { font-family: var(--font-head); }
+  .bd__extras { margin: 0; padding: 0; border: 0; display: grid; gap: 2px; min-width: 0; }
+  .bd__extras legend { padding: 0; margin-bottom: 6px; font-weight: 650; }
+  .bd__extras legend small { font-weight: 400; color: var(--ink-soft); }
+  .bd__opt { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 4px; border-bottom: 1px solid var(--line); cursor: pointer; line-height: 1.45; }
+  .bd__opt input { width: 22px; height: 22px; flex: none; accent-color: var(--accent-ink); }
+  .bd__name { flex: 1; display: grid; gap: 2px; }
+  .bd__name small { font-size: 0.85rem; color: var(--ink-soft); }
+  .bd__opt b { font-family: var(--font-head); white-space: nowrap; }
+  .bd__opt--alle { margin-top: 8px; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 14px; font-weight: 650; color: var(--accent-ink); }
+  .bd__opt--alle small { font-weight: 400; }
+  .bd__opt[hidden] { display: none; }
+  .bd__opt:has(input:disabled) { cursor: default; color: var(--ink-soft); }
+  .bd__summe { font-size: 1.05rem; }
+  .bd__summe b { font-family: var(--font-head); }
+  .bd__hinweis { padding: 12px 14px; border-left: 4px solid var(--accent-ink); background: var(--paper); font-size: 0.92rem; line-height: 1.6; }
+  .bd__knoepfe { display: grid; gap: 10px; }
+  @media (min-width: 600px) { .bd__knoepfe { grid-template-columns: 1fr 1fr; } }
+  .bd__weiter { background: var(--accent-ink); color: var(--white); }
+  .bd__weiter:hover { background: var(--dark); }
+  .bd__ohne { border-color: var(--accent-ink); color: var(--accent-ink); background: transparent; }
+  .bd__ohne:hover { background: rgb(0 107 104 / 7%); }
+  /* Handy: Vollbild-Blatt */
+  @media (max-width: 599px) {
+    .bd { width: 100%; max-width: 100%; height: 100%; height: 100dvh; max-height: none; margin: 0; border-radius: 0; }
+    .bd__innen { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  }
+</style>
+
+<script>
+  const dlg = document.getElementById('buchen-dialog') as HTMLDialogElement | null;
+  if (dlg && typeof dlg.showModal === 'function') {
+    const pakete = JSON.parse(dlg.dataset.pakete ?? '{}') as Record<string, { name: string; preis: number }>;
+    const inKomplett = (dlg.dataset.inkomplett ?? '').split(',');
+    const gesamtPreis = Number(dlg.dataset.gesamt);
+    const eur = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
+    const extras = [...dlg.querySelectorAll<HTMLInputElement>('input[name="bd_extra"]')];
+    const alle = dlg.querySelector<HTMLInputElement>('input[name="bd_alle"]')!;
+    const summe = dlg.querySelector<HTMLElement>('#bd-summe')!;
+    const weiter = dlg.querySelector<HTMLAnchorElement>('#bd-weiter')!;
+    const ohne = dlg.querySelector<HTMLAnchorElement>('#bd-ohne')!;
+    let paketId = 'basis';
+    let opener: HTMLElement | null = null;
+
+    const link = (dazu: string) => {
+      const q = new URLSearchParams({ paket: pakete[paketId]?.name ?? '', buchen: '1' });
+      if (dazu) q.set('dazu', dazu);
+      return `${dlg.dataset.kontakt}?${q.toString().replace(/%2C/g, ',')}`;
+    };
+    const aktualisieren = () => {
+      const frei = extras.filter((c) => !c.disabled);
+      if (frei.length === extras.length && extras.every((c) => c.checked)) alle.checked = true;
+      const gewaehlt = extras.filter((c) => c.checked && !c.disabled);
+      const betrag = alle.checked ? gesamtPreis : gewaehlt.reduce((s, c) => s + Number(c.dataset.preis), 0);
+      summe.textContent = eur(betrag);
+      weiter.href = link(alle.checked ? 'alle' : gewaehlt.map((c) => c.value).join(','));
+      ohne.href = link('');
+    };
+    extras.forEach((c) => c.addEventListener('change', () => { if (!c.checked) alle.checked = false; aktualisieren(); }));
+    alle.addEventListener('change', () => { extras.forEach((c) => { if (!c.disabled) c.checked = alle.checked; }); aktualisieren(); });
+
+    const oeffnen = (id: string, von: HTMLElement) => {
+      paketId = pakete[id] ? id : 'basis';
+      opener = von;
+      dlg.querySelector('#bd-paket-name')!.textContent = pakete[paketId].name;
+      dlg.querySelector('#bd-paket-preis')!.textContent = eur(pakete[paketId].preis);
+      const komplett = paketId === 'komplett';
+      extras.forEach((c) => {
+        const drin = komplett && inKomplett.includes(c.value);
+        c.disabled = drin; if (drin) c.checked = false;
+        c.closest('label')!.querySelector<HTMLElement>('.bd__inkl')!.hidden = !drin;
+      });
+      alle.disabled = komplett; if (komplett) alle.checked = false;
+      alle.closest('label')!.hidden = komplett;
+      aktualisieren();
+      document.documentElement.style.overflow = 'hidden';
+      dlg.showModal();
+      dlg.querySelector<HTMLElement>('[data-bd-zu]')?.focus();
+    };
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-buchen]');
+      if (!btn) return;
+      e.preventDefault();
+      oeffnen(btn.dataset.buchen ?? '', btn);
+    });
+    document.querySelectorAll('[data-buchen]').forEach((b) => b.setAttribute('aria-haspopup', 'dialog'));
+    dlg.querySelector('[data-bd-zu]')?.addEventListener('click', () => dlg.close());
+    // Klick auf den abgedunkelten Rand schließt
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', () => { document.documentElement.style.overflow = ''; opener?.focus(); });
+    // Fokusfalle: Tab bleibt im Fenster
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const f = [...dlg.querySelectorAll<HTMLElement>('button, a[href], input:not([disabled])')].filter((x) => x.offsetParent !== null);
+      if (!f.length) return;
+      const erstes = f[0], letztes = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === erstes) { e.preventDefault(); letztes.focus(); }
+      else if (!e.shiftKey && document.activeElement === letztes) { e.preventDefault(); erstes.focus(); }
+    });
+  }
+</script>

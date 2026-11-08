@@ -98,34 +98,32 @@ const isCurrent = (path?: string) => path && current === href(path);
 </header>
 
 <style>
-  /* Kopfzeile dunkel auf der ganzen Website (Jamil, Talk qh87y3sj #5072, 08.11.2026; Sicherung vor-header-dunkel-20261108):
-   * Fläche dunkles Logo-Türkis #006b68 deckend; Marke, Links, Zeichen und Pfeile Weiß (6,36 : 1);
-   * Hover/aktuelle Seite Weiß 12 % (#1f7d7a, Schrift 4,9 : 1); Fokusrahmen Weiß.
-   * Knopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5 (5,7 : 1).
-   * Dropdown-Panel und Handy-Menü bleiben HELL (weiß bzw. Papier): lange Listen mit Beschreibungen und kleiner Schrift
-   * lesen sich auf Hell besser, die Farben sind dort schon geprüft, und das Panel hebt sich als eigene Ebene klar ab. */
-  .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--dark); transition: box-shadow 0.2s ease; }
+  /* Kopfzeile auf ALLEN Seiten gleich (Jamil, Talk qh87y3sj #5072 + Korrektur #5085–#5089, 08.11.2026):
+   * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #3a3a3a, 10,4 : 1),
+   * Hover/aktuelle Seite --paper-2 mit #006b68; Fokusrahmen #006b68. Knopf „Kostenfreie Erstberatung“ dunkles
+   * Logo-Türkis #006b68 mit Weiß (6,36 : 1), Hover #004f4c (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
+  .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
   .hdr::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: var(--accent-ink);
+    background: var(--paper);
   }
+  .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
+  .hdr .hdr__cta { background: var(--accent-ink); color: var(--white); }
+  .hdr .hdr__cta:hover { background: var(--dark); color: var(--white); }
   .hdr.is-scrolled { box-shadow: var(--shadow); }
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
-  .hdr__marke { font-family: var(--font-head); font-weight: 700; font-size: 1.12rem; letter-spacing: -0.01em; color: var(--white); }
-  /* Logo (übrige Seiten) auf weißer Kachel wie im Footer, Logo selbst bleibt original */
-  .hdr__logo :global(.logo) { background: var(--white); border-radius: 10px; padding: 5px 10px; }
-  .hdr__inner :global(:focus-visible) { outline-color: var(--white); }
+  .hdr__marke { font-family: var(--font-head); font-weight: 700; font-size: 1.12rem; letter-spacing: -0.01em; color: var(--dark); }
 
   .hdr__nav { display: none; flex: 1; justify-content: center; }
   .hdr__nav > ul { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
   .hdr__link {
     display: inline-flex; align-items: center; gap: 6px; padding: 9px 13px;
     border: 0; background: none; border-radius: 999px; cursor: pointer;
-    font: inherit; font-weight: 600; font-size: 0.95rem; color: var(--white); text-decoration: none;
+    font: inherit; font-weight: 600; font-size: 0.95rem; color: var(--ink); text-decoration: none;
     transition: background 0.2s ease;
   }
-  .hdr__link:hover, .hdr__link[aria-current='page'], .dd.open > .hdr__link { background: rgb(255 255 255 / 12%); color: var(--white); }
+  .hdr__link:hover, .hdr__link[aria-current='page'] { background: var(--paper-2); color: var(--accent-ink); }
   .dd { position: relative; }
   .dd :global(.dd__chev) { transition: transform 0.2s ease; }
   .dd__panel {
@@ -135,7 +133,6 @@ const isCurrent = (path?: string) => path && current === href(path);
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
-  .dd__panel :global(:focus-visible) { outline-color: var(--accent-ink); }
   .dd:hover .dd__panel, .dd:focus-within .dd__panel, .dd.open .dd__panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
   .dd:hover :global(.dd__chev), .dd.open :global(.dd__chev) { transform: rotate(180deg); }
   .dd__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
@@ -161,12 +158,10 @@ const isCurrent = (path?: string) => path && current === href(path);
   .hdr__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
   .hdr__iconbtn {
     display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
-    border-radius: 50%; border: 0; background: none; color: var(--white); cursor: pointer; transition: background 0.2s ease;
+    border-radius: 50%; border: 0; background: none; color: var(--ink); cursor: pointer; transition: background 0.2s ease;
   }
-  .hdr__iconbtn:hover { background: rgb(255 255 255 / 12%); }
+  .hdr__iconbtn:hover { background: var(--paper-2); }
   .hdr__cta { display: none; white-space: nowrap; }
-  .hdr .hdr__cta { background: var(--white); color: var(--accent-ink); }
-  .hdr .hdr__cta:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
   .hdr__burger :global(.hdr__burger-close) { display: none; }
   .hdr__burger[aria-expanded='true'] :global(.hdr__burger-open) { display: none; }
   .hdr__burger[aria-expanded='true'] :global(.hdr__burger-close) { display: block; }

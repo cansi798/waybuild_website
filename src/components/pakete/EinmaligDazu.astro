@@ -1,7 +1,7 @@
 ---
 // Kasten „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5): Einzelpreise einmalig, netto.
 // Daten: EINMALIG_DAZU in src/config/pakete-abo.ts. Wird in einen bestehenden Abschnitt eingebettet (gleicher Hintergrund).
-import { EINMALIG_DAZU as E, euro } from '../../config/pakete-abo';
+import { EINMALIG_DAZU as E, euro, einmalSumme } from '../../config/pakete-abo';
 interface Props { id?: string; kompakt?: boolean }
 const { id = 'einmalig', kompakt = false } = Astro.props;
 ---
@@ -17,6 +17,7 @@ const { id = 'einmalig', kompakt = false } = Astro.props;
       </li>
     ))}
   </ul>
+  <p class="ed__gesamt"><b>{E.gesamt.name} als Gesamtpaket: {euro(E.gesamt.preis)}</b> statt {euro(einmalSumme())} einmalig, netto. <span>{E.gesamt.text}</span></p>
   <p class="ed__hinweis">{E.hinweis}</p>
 </div>
 
@@ -32,5 +33,8 @@ const { id = 'einmalig', kompakt = false } = Astro.props;
   .ed__text { line-height: 1.7; color: var(--ink-soft); font-size: 0.95rem; }
   .ed__preis { margin-top: auto !important; padding-top: 6px; color: var(--ink); font-size: 0.92rem; }
   .ed__preis b { font-family: var(--font-head); font-size: 1.2rem; }
+  .ed__gesamt { margin: 14px 0 0; padding: 14px 18px; border: 2px solid var(--accent); border-radius: 16px; background: #e9f6f5; line-height: 1.6; color: var(--ink); }
+  .ed__gesamt b { font-family: var(--font-head); color: var(--accent-ink); }
+  .ed__gesamt span { color: var(--ink-soft); }
   .ed__hinweis { margin: 16px 0 0; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
 </style>

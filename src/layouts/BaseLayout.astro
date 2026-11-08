@@ -109,7 +109,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={IS_PREVIEW ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-    <meta name="theme-color" content="#006b68" />
+    <meta name="theme-color" content="#004f4c" />
     <link rel="icon" href={href('/favicon.ico')} sizes="any" />
     <link rel="icon" href={href('/icon-192.png')} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
@@ -166,7 +166,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   }
   .todo-badge span { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #d4a300; color: #fff; font-size: 0.72rem; font-weight: 800; }
   @media print { .todo-badge { display: none; } }
-  /* Vorschau-Leiste dunkler als die Kopfzeile #006b68 und mit Türkis-Linie unten, damit beide klar getrennt sind (Jamil #5072) */
+  /* Vorschau-Leiste sehr dunkel mit Türkis-Linie unten, klar getrennt von der hellen Kopfzeile (Jamil #5072/#5085) */
   .preview-bar { background: #002e2c; border-bottom: 2px solid var(--accent); color: var(--dark-soft); text-align: center; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 16px; }
   /* Mobil: über der Sticky-CTA-Leiste, kompakter */
   .todo-badge em { font-style: normal; }

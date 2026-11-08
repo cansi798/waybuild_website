@@ -38,7 +38,7 @@ import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, FAQ_PAKETE, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, VERTRAUEN, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
+import { V_HERO, VERSPRECHEN, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
@@ -113,35 +113,23 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   thema="besucherreise"
 >
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
+  <!-- Erster Bildschirm (Jamil #5085–#5097): ganz in Türkis #00807b, mittig, ohne Preise, vier Versprechen unten im Türkis,
+       dezentes Netz aus Linien und Punkten, gestaffeltes Einblenden (nur CSS, variante-start.css). -->
   <section class="v-hero" aria-labelledby="v-h1">
-    <div class="wrap vhero">
-      <div>
-      <span class="eyebrow">{V_HERO.eyebrow}</span>
-      <h1 id="v-h1">{V_HERO.titel}</h1>
-      <p class="lead">{V_HERO.unter} Ab <strong>{euro(ab)}</strong> im Monat, netto zzgl. MwSt.</p>
-      <div class="v-knopfe">
+    <div class="wrap v-hero__mitte">
+      <h1 id="v-h1" class="v-ein v-ein--1">{V_HERO.titel}</h1>
+      <p class="lead v-ein v-ein--2">{V_HERO.unter}</p>
+      <div class="v-knopfe v-ein v-ein--3">
         <a class="btn btn--primary btn--lg" href={href('/preise/')}>Neue Website</a>
         <a class="btn btn--umriss btn--lg" href={analyse}>Ich habe schon eine Website</a>
       </div>
-      </div>
-      <aside class="vblick card" aria-label="Pakete auf einen Blick">
-        <p class="vblick__k">Auf einen Blick</p>
-        <ul>
-          {ABO_PAKETE.map((p) => (
-            <li><a href={href('/preise/')}><span><b>{p.name}</b><small>{p.kurz}</small></span><strong>{euro(p.preis)}</strong></a></li>
-          ))}
-        </ul>
-        <p class="vblick__s">netto im Monat zzgl. MwSt. · keine Einrichtungskosten</p>
-      </aside>
+    </div>
+    <div class="v-versprechen v-ein v-ein--4">
+      <ul class="wrap" aria-label="Unsere Versprechen">
+        {VERSPRECHEN.map((v) => <li><Icon name={v.icon} size={22} /><span><strong>{v.titel}</strong>{v.text}</span></li>)}
+      </ul>
     </div>
   </section>
-
-  <div class="v-vertrauen" aria-label="Fakten über waybuild">
-    <ul class="wrap">
-      {VERTRAUEN.map((v) => <li><Icon name={v.icon} size={18} /> {v.text}</li>)}
-      <li><Icon name="layout" size={18} /> <a href="#referenzen">{REFERENZEN.liste.length} Kundenprojekte als Beispiel</a></li>
-    </ul>
-  </div>
 
   <section class="section vkontrast" aria-labelledby="kontrast-h">
     <div class="wrap v-text">

@@ -38,7 +38,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
       referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
     },
   }));
-  const einmalig = EINMALIG_DAZU.liste.map((e) => ({
+  const einmalig = [...EINMALIG_DAZU.liste, EINMALIG_DAZU.gesamt].map((e) => ({
     '@type': 'Offer',
     name: `${e.name} (einmalig dazubuchbar)`,
     url,

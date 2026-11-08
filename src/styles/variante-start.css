@@ -3,17 +3,9 @@
    Navigation der Variante. Knopfschrift auf Türkis (--on-accent) gilt seit 80ba83c ohnehin global.
    Dazu der Trenner „Bisherige Startseite, zum Aussortieren“ (nur Vorschau). */
 
-.v-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
-.v-hero h1 { max-width: 18ch; }
-.v-hero .lead { margin-bottom: 26px; }
 .v-knopfe { display: flex; flex-wrap: wrap; gap: 12px; }
 .v-knopfe .btn { flex: 1 1 220px; max-width: 320px; }
 @media (max-width: 599px) { .v-knopfe .btn { max-width: none; } }
-.v-vertrauen { background: var(--white); border-block: 1px solid var(--line); }
-.v-vertrauen ul { list-style: none; margin: 0 auto; padding: 16px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; }
-.v-vertrauen li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
-.v-vertrauen .icon { color: var(--accent-ink); }
-.v-vertrauen a { color: inherit; text-underline-offset: 3px; }
 .v-text { line-height: 1.7; }
 .v-text p { margin-bottom: 20px; }
 .v-hinweis { max-width: 820px; margin: 22px auto 0; text-align: center; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
@@ -23,36 +15,7 @@
 .v-cta { text-align: center; }
 .v-cta .v-knopfe { justify-content: center; }
 
-/* Einstieg mit Kasten „Auf einen Blick“ */
 .vkontrast h2 { max-width: 26ch; }
-.vhero { display: grid; gap: 32px; align-items: center; }
-@media (min-width: 1040px) { .vhero { grid-template-columns: 1.5fr 1fr; gap: 56px; } }
-.vblick { border-radius: 22px; box-shadow: var(--shadow); }
-.vblick p { margin: 0; }
-.vblick__k { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
-.vblick ul { list-style: none; margin: 12px 0; padding: 0; display: grid; }
-.vblick li + li { border-top: 1px solid var(--line); }
-.vblick a { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 0; text-decoration: none; color: inherit; }
-.vblick a:hover b { color: var(--accent-ink); }
-.vblick span { display: grid; gap: 2px; }
-.vblick b { font-family: var(--font-head); font-size: 1.1rem; }
-.vblick small { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.4; }
-.vblick strong { font-family: var(--font-head); font-size: 1.25rem; white-space: nowrap; }
-.vblick__s { font-size: 0.85rem; color: var(--ink-soft); }
-
-/* Einstieg dunkel (Jamil, Talk qh87y3sj #5072, 08.11.2026): Fläche #00807b, Schrift Weiß (4,8 : 1). Eyebrow und Unterzeile
- * Weiß (#e6f6f5 hätte hier nur 4,3 : 1). Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5 (5,7 : 1);
- * zweiter Knopf weiß umrandet mit weißer Schrift, Hover-Fläche #006b68 (6,36 : 1). Helles Logo-Türkis #00a6a1 nur als
- * Linie (Unterkante). Kasten „Auf einen Blick“ bleibt weiß mit dunkler Schrift. Der alte Einstieg weiter unten bleibt unverändert. */
-.v-hero { background: #00807b; color: var(--white); border-bottom: 4px solid var(--accent); }
-.v-hero .vhero > div > .eyebrow, .v-hero .vhero > div > .lead { color: var(--white); }
-.v-hero .vhero :focus-visible { outline-color: var(--white); }
-.v-hero .v-knopfe .btn--primary { background: var(--white); color: var(--accent-ink); }
-.v-hero .v-knopfe .btn--primary:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
-.v-hero .v-knopfe .btn--umriss { background: transparent; border-color: var(--white); color: var(--white); }
-.v-hero .v-knopfe .btn--umriss:hover { background: var(--accent-ink); }
-.v-hero .vblick { color: var(--ink); }
-.v-hero .vhero .vblick :focus-visible { outline-color: var(--accent-ink); }
 
 /* Vergleich nach Anbieter-Art */
 .vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
@@ -67,3 +30,57 @@
 .alt-trenner { padding-block: clamp(36px, 6vw, 64px); background: #fff4c2; border-block: 3px dashed #8a6700; color: #3d2f00; text-align: center; }
 .alt-trenner h2 { margin: 0 auto 10px; max-width: 24ch; font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: #3d2f00; }
 .alt-trenner p { margin: 0 auto; max-width: 56ch; font-size: 1rem; line-height: 1.7; font-weight: 600; }
+
+/* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5092, 08.11.2026; Sicherung vor-direkt-buchen-20261108):
+ * ganz in Türkis #00807b bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
+ * Überschrift, Unterzeile und Knöpfe mittig, keine Preise, keine Grafik. Schrift Weiß (4,8 : 1).
+ * Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5 (5,7 : 1); zweiter Knopf weiß umrandet,
+ * Hover-Fläche #006b68. Vier Versprechen unten im Türkis auf leicht dunklerem Band (≈ #006d69, Weiß 6,3 : 1).
+ * Muster: Netz aus feinen Linien und Punkten (Inline-SVG, 1,4 KB) in dunklem Türkis #002f2d (24 % bzw. 34 %): es dunkelt
+ * nur ab, der Kontrast der weißen Schrift steigt dadurch eher. Weiße Linien (6–10 %) wären hinter der Unterzeile unter
+ * 4,5 : 1 gefallen (gemessen 4,3). Weicher Verlauf aus dem hellen Logo-Türkis #00a6a1 nur oben links, per Maske aus der
+ * Mitte (Text) herausgenommen; am Handy klein. Kontrast AA per Pixelmessung hinter allen Texten geprüft.
+ * Einblenden beim Laden (nur CSS): Überschrift, Unterzeile, Knöpfe, Versprechen, je 600 ms, Abstand 140 ms,
+ * 14 px von unten. Die Überschrift startet bei Deckkraft 0,01 ohne Verzögerung (zählt sofort als LCP).
+ * Bei reduzierter Bewegung keine Animation. Der alte Einstieg weiter unten bleibt unverändert. */
+.v-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--header-h) - 1px); background: #00807b; color: var(--white); }
+.preview-bar ~ main .v-hero { min-height: calc(100svh - var(--header-h) - 31px); }
+.v-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cpath d='M18 34L96 14M96 14L178 58M178 58L262 22M262 22L330 70M18 34L52 118M96 14L140 128M178 58L140 128M178 58L226 112M262 22L226 112M330 70L306 150M52 118L140 128M140 128L226 112M226 112L306 150M52 118L22 214M52 118L104 200M140 128L104 200M140 128L190 232M226 112L190 232M226 112L276 206M306 150L276 206M306 150L344 252M22 214L104 200M104 200L190 232M190 232L276 206M276 206L344 252M22 214L66 300M104 200L66 300M104 200L150 312M190 232L150 312M190 232L238 296M276 206L238 296M344 252L318 334M66 300L150 312M150 312L238 296M238 296L318 334' fill='none' stroke='%23002f2d' stroke-opacity='.24' stroke-width='1.1'/%3E%3Cg fill='%23002f2d' fill-opacity='.34'%3E%3Ccircle cx=%2218%22 cy=%2234%22 r=%222.6%22/%3E%3Ccircle cx=%2296%22 cy=%2214%22 r=%222.6%22/%3E%3Ccircle cx=%22178%22 cy=%2258%22 r=%222.6%22/%3E%3Ccircle cx=%22262%22 cy=%2222%22 r=%222.6%22/%3E%3Ccircle cx=%22330%22 cy=%2270%22 r=%222.6%22/%3E%3Ccircle cx=%2252%22 cy=%22118%22 r=%222.6%22/%3E%3Ccircle cx=%22140%22 cy=%22128%22 r=%222.6%22/%3E%3Ccircle cx=%22226%22 cy=%22112%22 r=%222.6%22/%3E%3Ccircle cx=%22306%22 cy=%22150%22 r=%222.6%22/%3E%3Ccircle cx=%2222%22 cy=%22214%22 r=%222.6%22/%3E%3Ccircle cx=%22104%22 cy=%22200%22 r=%222.6%22/%3E%3Ccircle cx=%22190%22 cy=%22232%22 r=%222.6%22/%3E%3Ccircle cx=%22276%22 cy=%22206%22 r=%222.6%22/%3E%3Ccircle cx=%22344%22 cy=%22252%22 r=%222.6%22/%3E%3Ccircle cx=%2266%22 cy=%22300%22 r=%222.6%22/%3E%3Ccircle cx=%22150%22 cy=%22312%22 r=%222.6%22/%3E%3Ccircle cx=%22238%22 cy=%22296%22 r=%222.6%22/%3E%3Ccircle cx=%22318%22 cy=%22334%22 r=%222.6%22/%3E%3C/g%3E%3C/svg%3E") center / 360px 360px repeat; }
+.v-hero::after { content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: radial-gradient(circle var(--v-licht, 640px) at 0 0, rgb(0 166 161 / 92%), rgb(0 166 161 / 0) 100%);
+  -webkit-mask-image: radial-gradient(ellipse 50% 44% at 50% 46%, transparent 62%, #000 100%);
+  mask-image: radial-gradient(ellipse 50% 44% at 50% 46%, transparent 62%, #000 100%); }
+.v-hero__mitte { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding-block: clamp(48px, 9vh, 112px) clamp(36px, 6vh, 72px); }
+.v-hero h1 { max-width: 20ch; margin: 0 auto 0.45em; }
+.v-hero .lead { color: var(--white); max-width: 58ch; margin: 0 auto 32px; line-height: 1.65; }
+.v-hero .v-knopfe { justify-content: center; width: 100%; }
+.v-hero :focus-visible { outline-color: var(--white) !important; }
+.v-hero .v-knopfe .btn--primary { background: var(--white); color: var(--accent-ink); }
+.v-hero .v-knopfe .btn--primary:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
+.v-hero .v-knopfe .btn--umriss { background: transparent; border-color: var(--white); color: var(--white); }
+.v-hero .v-knopfe .btn--umriss:hover { background: var(--accent-ink); }
+/* Vier Versprechen (Jamil #5097) unten im Türkis: Überschrift Weiß fett, Zeile #e6f6f5 (≈ 5,6 : 1 auf dem Band) */
+.v-versprechen { background: rgb(0 40 38 / 22%); border-top: 1px solid rgb(255 255 255 / 18%); color: var(--white); }
+.v-versprechen ul { list-style: none; margin: 0 auto; padding: 22px 0 24px; display: grid; gap: 16px 28px; }
+@media (min-width: 720px) { .v-versprechen ul { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .v-versprechen ul { grid-template-columns: repeat(4, 1fr); } }
+.v-versprechen li { display: flex; align-items: flex-start; gap: 12px; text-align: left; }
+.v-versprechen .icon { flex: none; margin-top: 2px; color: var(--white); }
+.v-versprechen span { display: grid; gap: 3px; font-size: 0.9rem; line-height: 1.5; color: var(--on-dark-soft); }
+.v-versprechen strong { font-family: var(--font-head); font-size: 1rem; font-weight: 700; line-height: 1.35; color: var(--white); }
+@media (max-width: 1199px) { .v-hero { --v-licht: 280px; } }
+@media (max-width: 719px) {
+  .v-hero { --v-licht: 170px; }
+  .v-versprechen ul { padding: 18px 0 20px; gap: 14px; }
+}
+@keyframes v-ein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes v-ein-h1 { from { opacity: 0.01; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.v-ein { animation: v-ein 600ms cubic-bezier(0.2, 0.65, 0.25, 1) both; }
+.v-ein--1 { animation-name: v-ein-h1; animation-duration: 550ms; }
+.v-ein--2 { animation-delay: 140ms; }
+.v-ein--3 { animation-delay: 280ms; }
+.v-ein--4 { animation-delay: 420ms; }
+@media (prefers-reduced-motion: reduce) { .v-ein { animation: none !important; } }

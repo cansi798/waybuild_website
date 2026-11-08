@@ -29,9 +29,9 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 
 /* Leistung am Handy: Abschnitte unterhalb des ersten Bildschirms erst berechnen, wenn sie in die Nähe kommen. */
 
-/* Kopfzeile: seit 08.11.2026 (Jamil, Talk qh87y3sj #5072) auf ALLEN Seiten gleich, dunkles Logo-Türkis #006b68 mit Weiß
- * (Header.astro). Die frühere Startseiten-Sonderregel „Kopfzeile Türkis #00a6a1 mit dunkler Schrift“ (#5011, Commit 725904a)
- * ist entfernt; Sicherung Branch vor-header-dunkel-20261108. */
+/* Kopfzeile: seit 08.11.2026 (Jamil, Talk qh87y3sj #5072/#5085) auf ALLEN Seiten gleich, hell (--paper) mit dunkler Schrift
+ * und Knopf #006b68 (Header.astro). Die frühere Startseiten-Sonderregel „Kopfzeile Türkis #00a6a1 mit dunkler Schrift“
+ * (#5011, Commit 725904a) ist entfernt; Sicherungen vor-header-dunkel-20261108 und vor-direkt-buchen-20261108. */
 .bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 /* Abschnitt vor einem dunklen Abschnitt mit stark wechselnder Höhe: immer berechnen (sonst falsche Kontrastmessung) */
 .bs.bs--voll { content-visibility: visible; }
