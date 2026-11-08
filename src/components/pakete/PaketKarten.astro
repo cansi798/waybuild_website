@@ -8,8 +8,10 @@ import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
 import { ABO_PAKETE, KOMPAKT, paketById, bruttoVon, jahresPreis, jahresBrutto, euro, LAUFZEIT_HINWEIS, type AboPaket } from '../../config/pakete-abo';
 
-interface Props { kompakt?: boolean; }
-const { kompakt = false } = Astro.props;
+// 08.11.2026 (Jamil #5061/#5062): `details` = Erklärsatz je Leistung (aus = Karten wie auf der Variante-Startseite, alle
+// Leistungen ohne Erklärung); `idSuffix` für eine zweite Instanz auf derselben Seite (keine doppelten IDs).
+interface Props { kompakt?: boolean; details?: boolean; idSuffix?: string; }
+const { kompakt = false, details = true, idSuffix = '' } = Astro.props;
 
 const liste = (p: AboPaket) => (kompakt ? KOMPAKT[p.id].map((id) => p.leistungen.find((l) => l.id === id)).filter((l) => !!l) : p.leistungen);
 const weitere = (p: AboPaket) => p.leistungen.length - liste(p).length;
@@ -18,10 +20,10 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
 
 <div class:list={['pk-grid', { 'pk-grid--kompakt': kompakt }]}>
   {ABO_PAKETE.map((p) => (
-    <article class:list={['pk', { 'pk--top': p.empfohlen }]} aria-labelledby={`pk-${p.id}`}>
+    <article class:list={['pk', { 'pk--top': p.empfohlen }]} aria-labelledby={`pk-${p.id}${idSuffix}`}>
       {p.empfohlen && <p class="pk__badge">Empfehlung</p>}
       <div class="pk__kopf">
-        <h3 id={`pk-${p.id}`}>{p.name}</h3>
+        <h3 id={`pk-${p.id}${idSuffix}`}>{p.name}</h3>
         <p class="pk__kurz">{p.kurz}</p>
       </div>
       <div class="pk__preis">
@@ -33,7 +35,7 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
       <ul class="pk__liste">
         {p.baut && <li class="pk__alles"><Icon name="check" size={18} /> <span>Alles aus „{paketById(p.baut).name}“</span></li>}
         {liste(p).map((l) => (
-          <li><Icon name="check" size={18} /> <span><strong>{l.text}</strong>{!kompakt && <small>{l.detail}</small>}</span></li>
+          <li><Icon name="check" size={18} /> <span><strong>{l.text}</strong>{!kompakt && details && <small>{l.detail}</small>}</span></li>
         ))}
         {kompakt && weitere(p) > 0 && <li class="pk__mehr"><span>und {weitere(p)} weitere {weitere(p) === 1 ? 'Leistung' : 'Leistungen'}</span></li>}
       </ul>

@@ -11,11 +11,16 @@
 import { HERO as H, PREIS_FRUEH as P } from '../../config/startseite';
 import { aboPreisAb, euro } from '../../config/pakete-abo';
 import KundenGeschichte from './KundenGeschichte.astro';
+// 08.11.2026 (Jamil #5061/#5062): Seit oben die Variante-Startseite steht, ist dieser Hero ein zweiter Block weiter unten.
+// `ebene="h2"` macht aus der H1 eine H2 (Text und Aussehen gleich), damit die Seite genau EINE H1 hat.
+interface Props { ebene?: 'h1' | 'h2'; }
+const { ebene = 'h1' } = Astro.props;
+const Titel = ebene;
 ---
 <section class="sh" aria-labelledby="sh-titel">
   <div class="wrap sh__raster">
     <div class="sh__text">
-      <h1 id="sh-titel" class="sh__titel">{H.titel}</h1>
+      <Titel id="sh-titel" class="sh__titel">{H.titel}</Titel>
       {H.unter.map((u) => <p class="sh__unter">{u}</p>)}
       <div class="sh__knoepfe">
         <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>

@@ -14,22 +14,51 @@
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben seit 08.11.2026 (Jamil #5008) wieder CI-Türkis wie alle Seiten; thema="besucherreise" steuert nur noch Kopf/Fuß-Inhalte.
 // Die alte Startseite steht unverändert unter /hauptseite-alt/.
+//
+// 08.11.2026 19:23 (Jamil, Talk qh87y3sj #5061/#5062 „Go“/„Ok“; Sicherung Branch vor-variante-start-20261108 = 80ba83c):
+//   OBEN steht jetzt die KOMPLETTE Startseite der Variante „an firma.de orientiert“ (Einstieg, Vertrauensleiste, Kontrastsatz,
+//   Pakete, Vergleich, Zeitleiste, Was Sie beitragen, Fragen und Antworten, Abschluss; Code aus archiv/variante-firma-20261108,
+//   Texte src/config/variante.ts, Pakete/Preise/FAQ aus src/config/pakete-abo.ts). Ohne Banner und Navigation der Variante,
+//   ohne Gründungspaket, Links auf /variante/… → /preise/.
+//   DARUNTER alle bisherigen Abschnitte unverändert, getrennt durch „Bisherige Startseite, zum Aussortieren“ (nur Vorschau).
+//   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt, #baukasten-alt, pk-…-alt);
+//   #pakete und #baukasten zeigen auf den neuen Teil, #check auf den bisherigen Check (die Variante hat keinen).
+//   Der bisherige Hero ist ein zweiter Block mit H2 statt H1 (Text gleich), damit die Seite genau eine H1 hat.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StartHero from '../components/start/StartHero.astro';
 import Check from '../components/start/Check.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
+import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
+import VAblauf from '../components/variante/VAblauf.astro';
+import VFaq from '../components/variante/VFaq.astro';
+import Icon from '../components/Icon.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS, paketById } from '../config/pakete-abo';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, FAQ_PAKETE, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
+import { V_HERO, VERTRAUEN, KONTRAST, VERGLEICH, TRENNER } from '../config/variante';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
+import '../styles/variante-start.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
 // Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
 const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
+
+// Neuer Teil oben (Variante-Startseite, Jamil #5061/#5062)
+const ab = aboPreisAb();
+const analyse = kontakt(ANLIEGEN.analyse.paket);
+const V_FAQ = FAQ_PAKETE.slice(0, 5);
+const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
+const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
+const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: V_FAQ.filter((f) => !f.platzhalter).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 
 // Abschnitt 2 (Jamil #4986, 08.11.2026: Puzzle „zu verspielt“, „seriöser und animiert, damit der Painpoint klar wird“):
 // vier ruhige Module, die nicht verbunden sind. Eine Anfrage wandert von der Website los und bleibt in der Lücke hängen,
@@ -78,13 +107,111 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 ---
 
 <BaseLayout
-  title={BOTSCHAFT.titel}
-  description={BOTSCHAFT.description}
-  schema={[{ ...serviceSchema(Astro.site, BOTSCHAFT.service), offers: undefined, slogan: CLAIM }]}
+  title={V_TITEL}
+  description={V_DESCRIPTION}
+  schema={[serviceSchema(Astro.site, V_SERVICE), faqLd]}
   thema="besucherreise"
 >
-  <!-- Hero -->
-  <StartHero />
+  <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
+  <section class="v-hero" aria-labelledby="v-h1">
+    <div class="wrap vhero">
+      <div>
+      <span class="eyebrow">{V_HERO.eyebrow}</span>
+      <h1 id="v-h1">{V_HERO.titel}</h1>
+      <p class="lead">{V_HERO.unter} Ab <strong>{euro(ab)}</strong> im Monat, netto zzgl. MwSt.</p>
+      <div class="v-knopfe">
+        <a class="btn btn--primary btn--lg" href={href('/preise/')}>Neue Website</a>
+        <a class="btn btn--umriss btn--lg" href={analyse}>Ich habe schon eine Website</a>
+      </div>
+      </div>
+      <aside class="vblick card" aria-label="Pakete auf einen Blick">
+        <p class="vblick__k">Auf einen Blick</p>
+        <ul>
+          {ABO_PAKETE.map((p) => (
+            <li><a href={href('/preise/')}><span><b>{p.name}</b><small>{p.kurz}</small></span><strong>{euro(p.preis)}</strong></a></li>
+          ))}
+        </ul>
+        <p class="vblick__s">netto im Monat zzgl. MwSt. · keine Einrichtungskosten</p>
+      </aside>
+    </div>
+  </section>
+
+  <div class="v-vertrauen" aria-label="Fakten über waybuild">
+    <ul class="wrap">
+      {VERTRAUEN.map((v) => <li><Icon name={v.icon} size={18} /> {v.text}</li>)}
+      <li><Icon name="layout" size={18} /> <a href="#referenzen">{REFERENZEN.liste.length} Kundenprojekte als Beispiel</a></li>
+    </ul>
+  </div>
+
+  <section class="section vkontrast" aria-labelledby="kontrast-h">
+    <div class="wrap v-text">
+      <h2 id="kontrast-h">{KONTRAST.satz}</h2>
+      <p class="lead">{KONTRAST.text}</p>
+    </div>
+  </section>
+
+  <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
+       Anker #pakete und #baukasten (alte Links aus Check und Hero) zeigen hierher. -->
+  <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
+    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Pakete</span>
+        <h2 id="pakete-h" class="rule">Drei Pakete. Feste Monatspreise.</h2>
+        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Rechnung am Anfang.</p>
+      </div>
+      <PaketKarten details={false} />
+      <EinmaligDazu id="einmalig" />
+      <p class="v-hinweis"><a href={href('/preise/')}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+    </div>
+  </section>
+
+  <section class="section" id="vergleich" aria-labelledby="vgl-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Im Vergleich</span>
+        <h2 id="vgl-h" class="rule">Selbst machen, Baukasten, Agentur oder waybuild?</h2>
+        <p class="lead">Fünf Fragen, die sich fast jeder Betrieb stellt.</p>
+      </div>
+      <div class="vvgl__scroll" role="region" aria-label="Vergleich nach Anbieter-Art" tabindex="0">
+        <table class="vvgl">
+          <thead><tr><th scope="col">Frage</th>{VERGLEICH.spalten.map((sp) => <th scope="col">{sp}</th>)}</tr></thead>
+          <tbody>
+            {VERGLEICH.zeilen.map((z) => <tr><th scope="row">{z.frage}</th>{z.werte.map((w, i) => <td class:list={{ 'vvgl__wir': i === 3 }}>{w}</td>)}</tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="v-hinweis">{VERGLEICH.hinweis}</p>
+    </div>
+  </section>
+
+  <VAblauf />
+
+  <VFaq fragen={V_FAQ} />
+
+  <section class="section v-cta" aria-labelledby="cta-h">
+    <div class="wrap">
+      <h2 id="cta-h">Welches Paket passt zu Ihnen?</h2>
+      <p class="lead" style="margin-inline:auto">Im kostenlosen Erstgespräch, rund 20 Minuten, empfehlen wir Ihnen das passende Paket. Ehrlich, auch wenn es das kleinere ist.</p>
+      <div class="v-knopfe">
+        <a class="btn btn--primary btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>Erstgespräch vereinbaren</a>
+        <a class="btn btn--umriss btn--lg" href={href('/preise/')}>Pakete vergleichen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DARUNTER: bisherige Startseite unverändert, zum Aussortieren durch Jamil ============ -->
+  {PLATZHALTER && (
+    <section class="alt-trenner" id="bisherige-startseite" aria-labelledby="alt-trenner-h">
+      <div class="wrap">
+        <h2 id="alt-trenner-h">{TRENNER.titel}</h2>
+        <p>{TRENNER.hinweis}</p>
+      </div>
+    </section>
+  )}
+
+  <!-- Hero (bisherig; H2 statt H1, Text gleich) -->
+  <StartHero ebene="h2" />
 
   <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): vier getrennte Module, eine Anfrage geht
        in der Lücke verloren (Jamil #4986). Die Verlust-Zeilen links leuchten synchron zur Animation auf. -->
@@ -234,14 +361,14 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 
   <!-- Preisteil (Jamil, Talk qh87y3sj #5056, 08.11.2026): die drei Pakete Basis · Plus · Komplett kompakt, Daten aus
        src/config/pakete-abo.ts, alle Details auf /preise/. Anker #baukasten bleibt für alte Links (Check, Hero). -->
-  <section class="bs bs--alt pk-start" id="pakete" aria-labelledby="bs-pakete">
-    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
+  <section class="bs bs--alt pk-start" id="pakete-alt" aria-labelledby="bs-pakete">
+    <span id="baukasten-alt" class="pk-start__anker" aria-hidden="true"></span>
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-pakete">Drei Pakete. Fester Monatspreis.</h2>
         <p class="bs-lead">Website, Technik und Betreuung sind immer dabei. Je nach Paket kommen Google, laufende Verbesserung oder Logo und Geschäftspapiere dazu.</p>
       </div>
-      <PaketKarten kompakt />
+      <PaketKarten kompakt idSuffix="-alt" />
       <p class="pk-start__mehr"><a class="btn btn--umriss btn--lg" href={href('/preise/')}>Alle Leistungen und Preise vergleichen</a></p>
       <p class="pk-start__netto">{B2B_HINWEIS} Logo, Geschäftspapiere und Visitenkarten können Sie auch einmalig dazubuchen.</p>
     </div>

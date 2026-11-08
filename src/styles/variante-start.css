@@ -1,0 +1,55 @@
+/* Startseite OBEN = Variante „an firma.de orientiert“ (Jamil, Talk qh87y3sj #5061/#5062, 08.11.2026).
+   Stile aus archiv/variante-firma-20261108 (VarianteLayout.astro + pages/index.astro), OHNE Banner und OHNE eigene
+   Navigation der Variante. Knopfschrift auf Türkis (--on-accent) gilt seit 80ba83c ohnehin global.
+   Dazu der Trenner „Bisherige Startseite, zum Aussortieren“ (nur Vorschau). */
+
+.v-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
+.v-hero h1 { max-width: 18ch; }
+.v-hero .lead { margin-bottom: 26px; }
+.v-knopfe { display: flex; flex-wrap: wrap; gap: 12px; }
+.v-knopfe .btn { flex: 1 1 220px; max-width: 320px; }
+@media (max-width: 599px) { .v-knopfe .btn { max-width: none; } }
+.v-vertrauen { background: var(--white); border-block: 1px solid var(--line); }
+.v-vertrauen ul { list-style: none; margin: 0 auto; padding: 16px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; }
+.v-vertrauen li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
+.v-vertrauen .icon { color: var(--accent-ink); }
+.v-vertrauen a { color: inherit; text-underline-offset: 3px; }
+.v-text { line-height: 1.7; }
+.v-text p { margin-bottom: 20px; }
+.v-hinweis { max-width: 820px; margin: 22px auto 0; text-align: center; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
+.v-hinweis a { color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
+.v-platzhalter { position: relative; border: 2px dashed #b3261e !important; background: #fffafa !important; }
+.v-platzhalter__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+.v-cta { text-align: center; }
+.v-cta .v-knopfe { justify-content: center; }
+
+/* Einstieg mit Kasten „Auf einen Blick“ */
+.vkontrast h2 { max-width: 26ch; }
+.vhero { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 1040px) { .vhero { grid-template-columns: 1.5fr 1fr; gap: 56px; } }
+.vblick { border-radius: 22px; box-shadow: var(--shadow); }
+.vblick p { margin: 0; }
+.vblick__k { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+.vblick ul { list-style: none; margin: 12px 0; padding: 0; display: grid; }
+.vblick li + li { border-top: 1px solid var(--line); }
+.vblick a { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 0; text-decoration: none; color: inherit; }
+.vblick a:hover b { color: var(--accent-ink); }
+.vblick span { display: grid; gap: 2px; }
+.vblick b { font-family: var(--font-head); font-size: 1.1rem; }
+.vblick small { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.4; }
+.vblick strong { font-family: var(--font-head); font-size: 1.25rem; white-space: nowrap; }
+.vblick__s { font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Vergleich nach Anbieter-Art */
+.vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
+.vvgl { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
+.vvgl th, .vvgl td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.vvgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); }
+.vvgl tbody th { font-weight: 650; }
+.vvgl__wir { background: #e9f6f5; font-weight: 650; color: var(--ink); }
+.vvgl tbody tr:last-child th, .vvgl tbody tr:last-child td { border-bottom: 0; }
+
+/* Trenner vor den bisherigen Abschnitten (nur Vorschau) */
+.alt-trenner { padding-block: clamp(36px, 6vw, 64px); background: #fff4c2; border-block: 3px dashed #8a6700; color: #3d2f00; text-align: center; }
+.alt-trenner h2 { margin: 0 auto 10px; max-width: 24ch; font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: #3d2f00; }
+.alt-trenner p { margin: 0 auto; max-width: 56ch; font-size: 1rem; line-height: 1.7; font-weight: 600; }
