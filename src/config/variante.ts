@@ -235,6 +235,20 @@ export const FAQ_GRUENDUNG: Frage[] = [
 /** Nicht im Preis enthalten (firma.de Punkt 5). PLATZHALTER: Liste legen Can und Jamil fest. */
 export const NICHT_ENTHALTEN = ['Fotograf oder Videodreh vor Ort', 'Gekaufte Bildlizenzen', 'Druck von Visitenkarten oder Briefpapier', 'Lizenzen für fremde Programme'];
 
+/** Navigation der Variante (Agent A). Alle Ziele unter /variante/. Seiten, die es im Build noch nicht gibt,
+ *  zeigt VarianteLayout als „folgt“ ohne Link an, damit das SEO-Audit (tote Links) grün bleibt. */
+export const V_NAV = [
+  { id: 'start', name: 'Start', path: '/variante/' },
+  { id: 'pakete', name: 'Pakete', path: '/variante/pakete/' },
+  { id: 'gruender', name: 'Gründer', path: '/variante/gruender/' },
+  { id: 'leistungen', name: 'Leistungen', path: '/variante/leistungen/' },
+  { id: 'ablauf', name: 'So arbeiten wir', path: '/variante/ablauf/' },
+  { id: 'referenzen', name: 'Referenzen', path: '/variante/referenzen/' },
+  { id: 'ueber-uns', name: 'Über uns', path: '/variante/ueber-uns/' },
+  { id: 'kontakt', name: 'Kontakt', path: '/variante/kontakt/' },
+] as const;
+export type VSeite = (typeof V_NAV)[number]['id'];
+
 export const BANNER = {
   text: 'Variante zum Vergleich (an firma.de orientiert) – die aktuelle Website bleibt unverändert',
   link: 'Zur normalen Startseite',

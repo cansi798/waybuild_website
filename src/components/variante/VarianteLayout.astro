@@ -1,17 +1,20 @@
 ---
 // Rahmen für die Variante „an firma.de orientiert“ (Jamil #5016/#5017, 08.11.2026): immer noindex, nicht in der Sitemap,
 // oben das Vergleichs-Banner mit Link zur normalen Startseite. Stile nur für diese Seiten (wird nur hier geladen).
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { BANNER } from '../../config/variante';
+import { BANNER, V_NAV, type VSeite } from '../../config/variante';
 import { href } from '../../lib/paths';
 
-interface Props { title: string; description: string; aktiv: 'start' | 'pakete' | 'gruender'; }
+interface Props { title: string; description: string; aktiv: VSeite; }
 const { title, description, aktiv } = Astro.props;
-const NAV = [
-  { id: 'start', name: 'Übersicht', path: '/variante/' },
-  { id: 'pakete', name: 'Pakete', path: '/variante/pakete/' },
-  { id: 'gruender', name: 'Gründung', path: '/variante/gruender/' },
-];
+// Nur verlinken, was es im Build gibt (src/pages/variante/<x>/index.astro oder <x>.astro); sonst „folgt“.
+const gibtEs = (path: string) => {
+  const p = join(process.cwd(), 'src/pages', path.replace(/\/$/, ''));
+  return existsSync(join(p, 'index.astro')) || existsSync(`${p}.astro`);
+};
+const NAV = V_NAV.map((n) => ({ ...n, da: gibtEs(n.path) }));
 ---
 
 <BaseLayout title={title} description={description} noindex>
@@ -20,10 +23,18 @@ const NAV = [
       <p><strong>{BANNER.text}</strong></p>
       <a class="vbanner__link" href={href('/')}>{BANNER.link}</a>
     </div>
-    <nav class="wrap vnav" aria-label="Seiten der Variante">
-      {NAV.map((n) => <a href={href(n.path)} aria-current={n.id === aktiv ? 'page' : undefined}>{n.name}</a>)}
-    </nav>
   </div>
+  <nav class="vnav" aria-label="Seiten der Variante">
+    <ul class="wrap vnav__liste">
+      {NAV.map((n) => (
+        <li>
+          {n.da
+            ? <a href={href(n.path)} aria-current={n.id === aktiv ? 'page' : undefined}>{n.name}</a>
+            : <span class="vnav__folgt" title="Seite folgt">{n.name}</span>}
+        </li>
+      ))}
+    </ul>
+  </nav>
   <slot />
 </BaseLayout>
 
@@ -36,9 +47,18 @@ const NAV = [
   .vbanner__in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 18px; padding-block: 12px 6px; }
   .vbanner__in p { margin: 0; font-size: 0.95rem; line-height: 1.5; }
   .vbanner__link { font-weight: 700; color: #3d2f00; text-underline-offset: 3px; }
-  .vnav { display: flex; gap: 6px; flex-wrap: wrap; padding-block: 4px 12px; }
-  .vnav a { padding: 6px 14px; border-radius: 99px; border: 1px solid #a37b00; color: #3d2f00; text-decoration: none; font-size: 0.9rem; font-weight: 650; }
-  .vnav a[aria-current='page'] { background: #3d2f00; color: #fff4c2; border-color: #3d2f00; }
+  .vbanner__in { padding-block: 10px; }
+  /* Navigation der Variante: eigene Leiste unter dem Banner, Türkis-CI. Am Handy seitlich wischbar (nur die Leiste). */
+  .vnav { background: var(--white); border-bottom: 1px solid var(--line); }
+  .vnav__liste { list-style: none; margin: 0 auto; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-block: 6px; }
+  .vnav__liste::-webkit-scrollbar { display: none; }
+  .vnav li { flex: none; }
+  .vnav a, .vnav__folgt { display: block; padding: 9px 14px; border-radius: 10px; font-size: 0.93rem; font-weight: 650; white-space: nowrap; text-decoration: none; }
+  .vnav a { color: var(--ink); }
+  .vnav a:hover { background: #e9f6f5; color: var(--accent-ink); }
+  .vnav a[aria-current='page'] { background: var(--accent-ink); color: var(--white); }
+  .vnav__folgt { color: #6b6b6b; }
+  @media (min-width: 1100px) { .vnav__liste { justify-content: center; } }
 
   /* Gemeinsame Bausteine der Variante */
   .v-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
