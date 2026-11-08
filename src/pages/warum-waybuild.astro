@@ -15,7 +15,7 @@ const andere = ANBIETER_TYPEN.slice(0, WB);
 const unterschiede: { icon: IconName; title: string; text: string; link?: { label: string; path: string } }[] = [
   { icon: 'compass', title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
   { icon: 'spark', title: 'KI-gestützte Umsetzung', text: 'Die Ideen entwickeln wir mit Ihnen. Danach beschleunigt die KI die Umsetzung, und Ihre Website ist deutlich schneller fertig.' },
-  { icon: 'euro', title: 'Fester Monatspreis, alles drin', text: 'Zwei klare Varianten, keine Einrichtungskosten, keine versteckten Kosten.', link: { label: 'Zum Preis', path: '/preise/' } },
+  { icon: 'euro', title: 'Fester Monatspreis, alles drin', text: 'Drei feste Pakete, keine Einrichtungskosten, keine versteckten Kosten.', link: { label: 'Zum Preis', path: '/preise/' } },
   { icon: 'layers', title: 'Keine Seitenbegrenzung', text: 'Ihre Website wächst mit Ihrem Unternehmen. Wir zählen keine Seiten, eine neue Seite kostet keinen Aufpreis.' },
   { icon: 'chart', title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
   { icon: 'user', title: 'Ein Ansprechpartner', text: 'Vom Erstgespräch bis zur Betreuung spricht dieselbe Person mit Ihnen, die Ihr Unternehmen kennt.' },
@@ -151,7 +151,7 @@ const passtNicht = [
 
   <section class="section section--sand" aria-labelledby="saeulen-h">
     <div class="wrap">
-      <SectionHead eyebrow="Unser Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entwickeln wir Baustein für Baustein ein digitales Betriebssystem für KMU." id="saeulen-h" />
+      <SectionHead eyebrow="Unser Ziel" pre="Die Website ist nur der " accent="erste Schritt." text="Daraus entwickeln wir Schritt für Schritt ein digitales Betriebssystem für KMU." id="saeulen-h" />
       <div class="saeulen">
         {SAEULEN.map((s) => (
           <a class="card scard reveal" href={href(s.id === 'websites' ? '/leistungen/#websites' : `/leistungen/#${s.id}`)}>

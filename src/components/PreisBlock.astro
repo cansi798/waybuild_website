@@ -1,0 +1,141 @@
+---
+// PreisBlock für Leistungs-, Branchen- und Ratgeberseiten (Jamil, Talk qh87y3sj #5056, 08.11.2026):
+// zeigt die drei festen Monatspakete Basis · Plus · Komplett, ab welchem Paket die Leistung enthalten ist,
+// einzelne Merkmale mit „ab Paket …“ (Leistungs-ids aus config/pakete-abo.ts), die Einmal-Leistungen und den Link zu /preise/.
+// Alle Namen, Preise und Texte kommen aus config/pakete-abo.ts – hier steht kein Preis fest im Text.
+import { ABO_PAKETE, EINMALIG_DAZU, LAUFZEIT_HINWEIS, B2B_HINWEIS, aboPreisAb, bruttoVon, euro, type AboPaket } from '../config/pakete-abo';
+import { href } from '../lib/paths';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Ab welchem Paket die Leistung enthalten ist; ohne Angabe: „welches Paket passt, klären wir im Erstgespräch“. */
+  ab?: AboPaket['id'];
+  /** Leistungs-ids aus pakete-abo.ts, die mit „ab Paket …“ gezeigt werden (z. B. 'google-profil'). */
+  merkmale?: string[];
+  /** Überschrift-Zusatz, z. B. der Leistungs- oder Branchenname */
+  thema?: string;
+  hinweis?: string;
+  /** Ziel des Anfrage-Knopfs (ohne ?paket=…) */
+  kontakt?: string;
+  /** Hintergrund der Sektion */
+  ton?: 'sand' | 'alt' | 'weiss';
+  id?: string;
+}
+const { ab, merkmale = [], thema, hinweis, kontakt = href('/kontakt/'), ton = 'sand', id = 'pakete' } = Astro.props;
+
+const index = (pid: AboPaket['id']) => ABO_PAKETE.findIndex((p) => p.id === pid);
+const abIndex = ab ? index(ab) : -1;
+const abPaket = ab ? ABO_PAKETE[abIndex] : undefined;
+// Mengenangaben („1 Verbesserung im Monat“) mit Zeilenname, sonst der aussagekräftigere (längere) Text.
+const merkmalText = (l: AboPaket['leistungen'][number]) =>
+  l.wert && /\d/.test(l.wert) ? `${l.zeile ?? l.text}: ${l.wert}` : [l.text, l.zeile ?? ''].sort((x, y) => y.length - x.length)[0];
+// Jede Fundstelle einer Leistungs-id (z. B. 'seo' in Basis und Plus) wird eine eigene Zeile.
+const zeilen = merkmale.flatMap((mid) =>
+  ABO_PAKETE.flatMap((p) =>
+    p.leistungen.filter((l) => l.id === mid).map((l) => ({ text: merkmalText(l), detail: l.detail, paket: p })),
+  ),
+);
+const mitParam = (name: string) => `${kontakt}${kontakt.includes('?') ? '&' : '?'}paket=${encodeURIComponent(name)}`;
+const hid = `${id}-h`;
+---
+
+<section class:list={['section', 'pb', { 'section--sand': ton === 'sand', 'section--alt': ton === 'alt' }]} id={id} aria-labelledby={hid}>
+  <div class="wrap">
+    <div class="pb__kopf">
+      <span class="eyebrow">Preis · Website as a Service</span>
+      <h2 id={hid}>{abPaket ? <>{thema ? `${thema}: ab Paket ` : 'Enthalten ab Paket '}<span class="accent">{abPaket.name}</span></> : <>Drei feste <span class="accent">Monatspakete</span></>}</h2>
+      <p class="pb__lead">Ab {euro(aboPreisAb())} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung.{hinweis ? ` ${hinweis}` : ''}</p>
+    </div>
+
+    <ul class="pb__pakete" role="list">
+      {ABO_PAKETE.map((p, i) => {
+        const drin = abIndex >= 0 && i >= abIndex;
+        return (
+          <li class:list={['pb__paket', { 'pb__paket--drin': drin, 'pb__paket--top': p.empfohlen }]}>
+            <p class="pb__name">{p.name}{p.empfohlen && <span class="pb__empf">Empfehlung</span>}</p>
+            <p class="pb__preis"><b>{euro(p.preis)}</b> <span>netto / Monat</span></p>
+            <p class="pb__brutto">{euro(bruttoVon(p.preis))} inkl. MwSt.</p>
+            <p class="pb__kurz">{p.kurz}</p>
+            {abIndex >= 0 && (
+              <p class:list={['pb__status', { 'pb__status--nein': !drin }]}>
+                {drin ? <><Icon name="check" size={16} /> Enthalten</> : 'Nicht enthalten'}
+              </p>
+            )}
+            <a class="pb__anfrage" href={mitParam(p.name)}>Paket {p.name} anfragen</a>
+          </li>
+        );
+      })}
+    </ul>
+
+    {zeilen.length > 0 && (
+      <div class="pb__merk">
+        <p class="pb__merk-kopf">Was in welchem Paket steckt</p>
+        <ul class="pb__merk-liste" role="list">
+          {zeilen.map((z) => (
+            <li><span class="pb__merk-text"><Icon name="check" size={18} /> {z.text}</span><span class="pb__ab">ab {z.paket.name}</span></li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="pb__einmal">
+      <p class="pb__einmal-kopf">{EINMALIG_DAZU.titel}</p>
+      <ul class="pb__einmal-liste" role="list">
+        {EINMALIG_DAZU.liste.map((e) => <li><span>{e.name}</span> <b>{euro(e.preis)}</b></li>)}
+      </ul>
+      <p class="pb__klein">{EINMALIG_DAZU.hinweis}</p>
+    </div>
+
+    <p class="pb__aktion">
+      <a class="btn btn--primary" href={abPaket ? mitParam(abPaket.name) : kontakt}>Kostenloses Erstgespräch</a>
+      <a class="pb__mehr" href={href('/preise/')}>Alle Pakete im Vergleich →</a>
+    </p>
+    <p class="pb__klein pb__klein--mitte">{LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+  </div>
+</section>
+
+<style>
+  .pb:not(.section--sand):not(.section--alt) { border-top: 1px solid var(--line); }
+  .pb__kopf { max-width: 760px; margin-bottom: 26px; }
+  .pb__kopf h2 { margin: 6px 0 10px; }
+  .pb__lead { margin: 0; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.7; }
+  .pb__pakete { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  @media (min-width: 820px) { .pb__pakete { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+  .pb__paket { display: grid; gap: 4px; align-content: start; background: var(--white); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+  .pb__paket--drin { border-color: var(--accent); }
+  .pb__paket--top { box-shadow: 0 14px 30px -18px rgb(0 79 76 / 45%); }
+  .pb__paket p { margin: 0; }
+  .pb__name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; }
+  .pb__empf { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; background: var(--dark); color: var(--white); }
+  .pb__preis b { font-family: var(--font-head); font-size: 1.5rem; }
+  .pb__preis span, .pb__brutto { font-size: 0.85rem; color: var(--ink-soft); }
+  .pb__kurz { margin-top: 6px !important; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
+  .pb__status { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px !important; font-weight: 650; font-size: 0.9rem; color: var(--accent-ink); }
+  .pb__status--nein { color: var(--ink-soft); font-weight: 500; }
+  .pb__anfrage { margin-top: 10px; font-weight: 650; font-size: 0.92rem; color: var(--accent-ink); min-height: 24px; }
+  .pb__merk { margin-top: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; }
+  .pb__merk-kopf, .pb__einmal-kopf { margin: 0 0 10px; font-weight: 700; }
+  .pb__merk-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .pb__merk-liste li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 14px; line-height: 1.6; }
+  .pb__merk-text { display: inline-flex; gap: 8px; align-items: baseline; min-width: 0; }
+  .pb__merk-text :global(.icon) { flex: none; color: var(--accent-ink); position: relative; top: 3px; }
+  .pb__ab { justify-self: end; white-space: nowrap; flex: none; font-size: 0.82rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: rgb(0 166 161 / 14%); color: var(--accent-ink); }
+  .pb__einmal { margin-top: 18px; padding: 18px 20px; border: 1.5px dashed var(--line); border-radius: 16px; }
+  .pb__einmal-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px 24px; }
+  @media (min-width: 720px) { .pb__einmal-liste { grid-template-columns: 1fr 1fr; } }
+  .pb__einmal-liste li { display: flex; justify-content: space-between; gap: 12px; line-height: 1.6; }
+  .pb__klein { margin: 10px 0 0; font-size: 0.85rem; color: var(--ink-soft); line-height: 1.6; }
+  .pb__klein--mitte { text-align: center; }
+  .pb__aktion { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 22px; margin: 26px 0 0; }
+  .pb__mehr { font-weight: 650; color: var(--accent-ink); }
+  @media (max-width: 599px) {
+    .pb__aktion .btn { width: 100%; }
+    .pb__paket { padding: 14px 16px; grid-template-columns: 1fr auto; column-gap: 12px; }
+    .pb__name, .pb__kurz, .pb__anfrage { grid-column: 1 / -1; }
+    .pb__preis { grid-column: 1; }
+    .pb__brutto { grid-column: 1; }
+    .pb__status { grid-column: 2; grid-row: 2 / span 2; align-self: center; margin-top: 0 !important; }
+    .pb__kurz { margin-top: 2px !important; }
+    .pb__anfrage { margin-top: 4px; }
+  }
+</style>

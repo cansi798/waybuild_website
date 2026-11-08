@@ -1,8 +1,10 @@
 ---
 // Ratgeber-Artikel. Journey: Kurzfassung → Artikel → Website as a Service bzw. Leistungs-Empfehlung → Anfrage.
+// Website-Artikel (ohne `leistung`) zeigen darunter den PreisBlock (Pakete aus pakete-abo.ts).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { company, WAAS, MODELL, preisKurz } from '../../config/site';
+import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
+import PreisBlock from '../../components/PreisBlock.astro';
 import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
 
@@ -75,7 +77,7 @@ const schema = [
           <div>
             <p class="art__cta-label">Passend zum Thema</p>
             <h2 id="art-cta-h">{WAAS.name}</h2>
-            <p>{preisKurz()} · {MODELL.slice(0, 3).join(' · ')}</p>
+            <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Keine Seitenbegrenzung</p>
           </div>
           <div class="art__cta-btns">
             <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenloses Erstgespräch</a>
@@ -92,6 +94,7 @@ const schema = [
       )}
     </div>
   </article>
+  {!leistung && <PreisBlock ab="basis" merkmale={['website', 'seo', 'google-profil', 'weg']} kontakt={`${href('/kontakt/')}?leistung=business-website`} id="preis" />}
 </BaseLayout>
 
 <style>

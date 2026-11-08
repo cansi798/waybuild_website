@@ -1,5 +1,6 @@
-// JSON-LD-Bausteine für strukturierte Daten (Rich Results bei Google)
+// JSON-LD für strukturierte Daten (Rich Results bei Google)
 import { faqs, company, WAAS, PAKETE, brutto } from '../config/site';
+import { EINMALIG_DAZU } from '../config/pakete-abo';
 import { absolute } from './paths';
 
 export function faqSchema() {
@@ -14,16 +15,19 @@ export function faqSchema() {
   };
 }
 
-/** Die drei Pakete als schema.org-Offers (netto zzgl. MwSt., pro Monat) – Preise aus PAKETE. */
+const eurText = (n: number) => n.toFixed(2).replace('.', ',');
+
+/** Die drei Monatspakete (Basis, Plus, Komplett) als schema.org-Offers (netto zzgl. MwSt., pro Monat), dazu die
+ *  einmalig dazubuchbaren Leistungen (Festpreis netto). Daten aus config/pakete-abo.ts (über PAKETE in site.ts). */
 export function waasOffers(site: URL | undefined, path = '/preise/') {
   const url = absolute(path, site);
-  return PAKETE.map((p) => ({
+  const monatlich = PAKETE.map((p) => ({
     '@type': 'Offer',
-    name: `${WAAS.name}: ${p.name}`,
+    name: `${WAAS.name}: Paket ${p.name}`,
     url,
     priceCurrency: 'EUR',
     price: p.preis,
-    description: `${p.kurz}. ${[...p.extras, ...p.features].join(', ')}. Keine Einrichtungskosten, keine Seitenbegrenzung, ${WAAS.laufzeit}. Preis netto zzgl. 19 % MwSt. (${brutto(p.preis).toFixed(2).replace('.', ',')} € inkl. MwSt.).`,
+    description: `${p.kurz}. ${p.features.join(', ')}. Keine Einrichtungskosten, keine Seitenbegrenzung, ${WAAS.laufzeit}. Preis netto zzgl. 19 % MwSt. (${eurText(brutto(p.preis))} € inkl. MwSt.).`,
     eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
     priceSpecification: {
       '@type': 'UnitPriceSpecification',
@@ -34,6 +38,17 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
       referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
     },
   }));
+  const einmalig = EINMALIG_DAZU.liste.map((e) => ({
+    '@type': 'Offer',
+    name: `${e.name} (einmalig dazubuchbar)`,
+    url,
+    priceCurrency: 'EUR',
+    price: e.preis,
+    description: `${e.text} Einmaliger Festpreis netto zzgl. 19 % MwSt. (${eurText(brutto(e.preis))} € inkl. MwSt.), keine monatlichen Kosten.`,
+    eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
+    priceSpecification: { '@type': 'PriceSpecification', price: e.preis, priceCurrency: 'EUR', valueAddedTaxIncluded: false },
+  }));
+  return [...monatlich, ...einmalig];
 }
 
 export function serviceSchema(site: URL | undefined, beschreibung?: string) {

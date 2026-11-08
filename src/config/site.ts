@@ -1,4 +1,5 @@
 // Zentrale Inhalte der Website. Alles mit "TODO" sind Platzhalter, bis die echten Firmendaten vorliegen.
+import { ABO_PAKETE, EINMALIG_DAZU, LAUFZEIT_MONATE, MWST_SATZ, paketById, type AboPaket } from './pakete-abo';
 
 /**
  * Gelbe "Fehlt: …"-Hinweise auf der Website anzeigen.
@@ -43,28 +44,30 @@ export const HOURS = 'Montag bis Freitag, 9 bis 18 Uhr';
 // Beispiel: { name: 'Tischlerei Muster', branche: 'Handwerk', url: 'https://…', text: 'Neue Website, 3× mehr Anfragen', bild: 'referenzen/projekt-1' }
 export const references: { name: string; branche: string; url?: string; text: string; bild?: string }[] = [];
 
-export const VAT_RATE = 0.19;
+export const VAT_RATE = MWST_SATZ;
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * DAS ANGEBOT „Website as a Service“ in drei Paketen (Can, Talk qh87y3sj 4499–4510, 04.11.2026):
- * Fundament 79,99 € · Wegweiser 149,99 € · Wahrzeichen 299,99 € im Monat.
- * Preise sind NETTO zzgl. 19 % USt (B2B, Can Talk 4526), der Bruttopreis steht klein darunter.
- * Preise NIE fest in Texte schreiben – immer aus PAKETE.
- * Laufzeit: 24 Monate Mindestlaufzeit, danach monatlich kündbar (Can, Talk 4511, 04.11.2026; AGB § 5).
+ * DAS ANGEBOT „Website as a Service“ in drei festen Monatspaketen ohne Einmalkosten
+ * (Jamil, Talk qh87y3sj #5056, 08.11.2026): Basis · Plus · Komplett.
+ * EINZIGE Datenquelle für Namen, Preise und Inhalte: config/pakete-abo.ts (ABO_PAKETE, EINMALIG_DAZU).
+ * PAKETE hier ist nur die daraus abgeleitete Kurzform für ältere Komponenten, FAQ, JSON-LD und llms.txt.
+ * Preise sind NETTO zzgl. 19 % USt (B2B), der Bruttopreis steht klein darunter.
+ * Preise NIE fest in Texte schreiben – immer aus pakete-abo.ts bzw. PAKETE.
+ * Laufzeit: 24 Monate Mindestlaufzeit, danach monatlich kündbar (AGB § 5).
  * Keine Eigentumsaussagen zu Website/Code/Domain (Can, Talk 4513 – Mietmodell offen).
- * (Frühere Varianten 79 € / 139 € netto und Start/Business/Premium: siehe Git-Historie.)
+ * (Frühere Pakete Fundament/Wegweiser/Wahrzeichen und der Abo-Baukasten: siehe Git-Historie.)
  * ───────────────────────────────────────────────────────────────────────────── */
 export const WAAS = {
   name: 'Website as a Service',
   claim: 'Ein Ansprechpartner, ein System, ein fester Monatspreis.',
   einrichtung: 0,
-  laufzeitMonate: 24,
+  laufzeitMonate: LAUFZEIT_MONATE,
   /** Laufzeit in einem Satz (AGB § 5). */
-  laufzeit: '24 Monate Mindestlaufzeit, danach monatlich kündbar',
+  laufzeit: `${LAUFZEIT_MONATE} Monate Mindestlaufzeit, danach monatlich kündbar`,
 };
 
 export type Paket = {
-  id: 'fundament' | 'wegweiser' | 'wahrzeichen';
+  id: AboPaket['id'];
   name: string;
   /** Kurz-Nutzen unter dem Namen */
   kurz: string;
@@ -72,81 +75,48 @@ export type Paket = {
   preis: number;
   /** Für wen – ein Satz aus Kundensicht */
   fuer: string;
-  /** Herausgehobene Extras als Chips (Signatur, Briefe, Logo) */
+  /** Herausgehobene Extras als Chips (bei den neuen Paketen leer) */
   extras: string[];
+  /** Inhalte als Kurztexte; ab Plus beginnt die Liste mit „Alles aus …“ */
   features: string[];
   empfohlen?: boolean;
 };
 
-export const PAKETE: Paket[] = [
-  {
-    id: 'fundament',
-    name: 'Fundament',
-    kurz: 'Professionell online, ohne Startkosten',
-    preis: 79.99,
-    fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
-    extras: ['E-Mail-Signatur nach DIN 5008'],
-    features: [
-      'Website ohne Seitenbegrenzung nach persönlichem Erstgespräch',
-      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
-      'Texte schreiben wir mit Ihnen, KI-gestützt und von uns geprüft',
-      'SEO und für KI-Suche optimiert, in leichter Sprache erklärt',
-      '20 E-Mail-Postfächer',
-      'Impressum und Datenschutzerklärung nach aktuellem Stand',
-      'Hosting in Deutschland, DSGVO-orientiert eingerichtet',
-      'Änderungen per Sprachnachricht oder Text, im fairen Rahmen',
-    ],
-  },
-  {
-    id: 'wegweiser',
-    name: 'Wegweiser',
-    kurz: 'Zeigt neuen Kunden den Weg zu Ihnen',
-    preis: 149.99,
-    fuer: 'Für Unternehmen, die über ihre Website regelmäßig neue Kunden gewinnen wollen.',
-    extras: ['E-Mail-Signatur nach DIN 5008', 'Briefvorlage nach DIN 5008'],
-    features: [
-      'Alles aus „Fundament“',
-      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
-      'Google-Unternehmensprofil erstellt und eingerichtet (einmalig)',
-      'E-Mail-Postfächer strukturiert eingerichtet, mit Unterordnern und Regeln für den Alltag',
-      'Lokale Seiten für Ihre Orte und Leistungen',
-      'Monatsbericht: Besucher, Anfragen, Suchbegriffe',
-      'Wir verbessern laufend den Weg vom Besucher zur Anfrage',
-    ],
-    empfohlen: true,
-  },
-  {
-    id: 'wahrzeichen',
-    name: 'Wahrzeichen',
-    kurz: 'Website, Logo und Geschäftspapiere aus einer Hand',
-    preis: 299.99,
-    fuer: 'Für Gründer und Betriebe, die einen einheitlichen Auftritt wollen, von der Website bis zum Brief.',
-    extras: ['Logo-Design', 'CI-Geschäftsbriefe nach DIN 5008', 'E-Mail-Signatur nach DIN 5008'],
-    features: [
-      'Alles aus „Wegweiser“',
-      'Mobilfreundlich: optimiert für Handy, Tablet und PC',
-      'Ständige Optimierung in Absprache mit Ihnen',
-      'Logo-Design: 3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck',
-      'CI-Geschäftsbriefe nach DIN 5008: Briefbogen, Angebot, Rechnung',
-      'Kurzer CI-Leitfaden: Farben, Schriften, Logo-Einsatz',
-      'Quartalsgespräch zur Weiterentwicklung',
-    ],
-  },
-];
+/** Kurztext einer Paket-Leistung (der längere von text/zeile); Mengenangaben (z. B. „1 Verbesserung im Monat“) in Klammern. */
+const leistungText = (l: AboPaket['leistungen'][number]) =>
+  l.wert && /\d/.test(l.wert) ? `${l.text} (${l.wert})` : [l.text, l.zeile ?? ''].sort((x, y) => y.length - x.length)[0];
 
-/** In allen drei Paketen enthalten. */
+export const PAKETE: Paket[] = ABO_PAKETE.map((p) => ({
+  id: p.id,
+  name: p.name,
+  kurz: p.kurz,
+  preis: p.preis,
+  fuer: p.fuer,
+  empfohlen: p.empfohlen,
+  extras: [],
+  features: [...(p.baut ? [`Alles aus „${paketById(p.baut).name}“`] : []), ...p.leistungen.map(leistungText)],
+}));
+
+/** Paket per id (für „ab Paket …“-Hinweise auf Leistungs-, Branchen- und Ratgeberseiten). */
+export const paketVon = (id: Paket['id']) => PAKETE.find((p) => p.id === id)!;
+
+/** Einmalig dazubuchbare Leistungen als eine Zeile, z. B. „Logo 590 €, …“. */
+export const einmaligZeile = () => EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)}`).join(', ');
+
+/** In allen drei Paketen enthalten (aus den Basis-Leistungen in pakete-abo.ts). */
 export const IN_ALLEN = [
   'Keine Seitenbegrenzung',
   'Mobilfreundlich für Handy, Tablet und PC',
   '0 € Einrichtung',
-  '20 E-Mail-Postfächer',
+  'Bis zu 20 E-Mail-Postfächer',
   'E-Mail-Signatur nach DIN 5008',
-  'SEO und KI-Suche optimiert, leicht erklärt',
+  'Suchmaschinen-Optimierung beim Erstellen',
+  'Aufbereitung für KI-Assistenten',
   'Impressum und Datenschutzerklärung nach aktuellem Stand',
   'Hosting in Deutschland, DSGVO-orientiert',
   'SSL, Domain, Updates und Backups',
   'Änderungen per Nachricht, im fairen Rahmen',
-  '24 Monate Mindestlaufzeit',
+  `${LAUFZEIT_MONATE} Monate Mindestlaufzeit`,
 ];
 
 export const VAT_FAKTOR = 1 + VAT_RATE;
@@ -192,7 +162,7 @@ export const INKLUSIVE: { icon: IconName; title: string }[] = [
   { icon: 'user', title: 'Laufende Betreuung' },
   { icon: 'spark', title: 'KI-gestützte Erstellung' },
   { icon: 'mic', title: 'Sprachgesteuerte Änderungen' },
-  { icon: 'mail', title: '20 E-Mail-Postfächer' },
+  { icon: 'mail', title: 'Bis zu 20 E-Mail-Postfächer' },
   { icon: 'search', title: 'SEO und KI-Suche' },
   { icon: 'layers', title: 'Keine Seitenbegrenzung' },
 ];
@@ -220,15 +190,15 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei waybuild?',
-    a: `Es gibt drei Pakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Alle Preise netto zzgl. gesetzlicher MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung.`,
+    a: `Es gibt drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den drei Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online, mit 20 E-Mail-Postfächern und einer E-Mail-Signatur nach DIN 5008. ${PAKETE[1].name} erstellt zusätzlich Ihr Google-Unternehmensprofil, richtet Ihre Postfächer mit Ordnern und Regeln ein und verbessert laufend den Weg zur Anfrage. ${PAKETE[2].name} enthält außerdem Logo-Design, Geschäftsbriefe nach DIN 5008 und eine ständige Optimierung in Absprache mit Ihnen.`,
+    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und eine Aufbereitung für KI-Assistenten. ${PAKETE[1].name} richtet zusätzlich Ihr Google-Profil ein und pflegt es, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht, prüft monatlich, wie KI-Assistenten Sie beschreiben, und verbessert jeden Monat eine Stelle am Weg bis zur Anfrage. ${PAKETE[2].name} enthält außerdem Logo und Geschäftspapiere, E-Mail-Vorlagen, Online-Terminbuchung, eingerichtete Social-Media-Profile, eine zweite Sprache, 2 bis 3 Verbesserungen im Monat mit Strategiegespräch alle drei Monate und bevorzugte Bearbeitung.`,
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
-    a: 'Persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, 20 E-Mail-Postfächer, eine E-Mail-Signatur nach DIN 5008 und laufende Betreuung. Ihre Website ist für Google und KI-Suchen optimiert, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
+    a: 'Schon im Paket Basis: persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
   },
   {
     q: 'Wie lange läuft der Vertrag?',
@@ -236,11 +206,15 @@ export const faqs = [
   },
   {
     q: 'Was passiert nach 24 Monaten?',
-    a: 'Nichts Überraschendes: Ihre Website läuft weiter wie bisher, zum gleichen Monatspreis und mit derselben Betreuung. Ab dann können Sie jeden Monat kündigen, mit einem Monat Frist zum Monatsende.',
+    a: 'Ihre Website läuft weiter, mit derselben Betreuung. Ab dann können Sie jeden Monat kündigen, mit einem Monat Frist zum Monatsende.',
   },
   {
     q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. In allen drei Paketen zahlen Sie keine Einrichtungsgebühr, nur den festen Monatspreis. Viele Anbieter verlangen vorab mehrere hundert Euro, bei uns fällt das weg.',
+    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website, das Google-Profil im Paket Plus oder Logo und Geschäftspapiere im Paket Komplett sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo zum Paket Basis.',
+  },
+  {
+    q: 'Was kann ich einmalig dazubuchen?',
+    a: `${EINMALIG_DAZU.liste.map((e) => `${e.name} für ${formatEuro(e.preis)}`).join(', ')}. Das sind einmalige Festpreise netto zzgl. MwSt., ohne monatliche Kosten. Im Paket ${paketById('komplett').name} sind Logo und Geschäftspapiere bereits enthalten.`,
   },
   {
     q: 'Wie viele Seiten bekommt meine Website?',
@@ -252,7 +226,7 @@ export const faqs = [
   },
   {
     q: 'Wie schnell ist meine Website online?',
-    a: 'Spätestens 14 Tage, nachdem Ihre Inhalte (Texte, Bilder, Logo) vorliegen. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen.',
+    a: 'In der Regel innerhalb von 14 Tagen, nachdem Ihre Inhalte (Texte, Bilder, Logo) vorliegen. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen.',
   },
   {
     q: 'Welche Rolle spielt KI?',
@@ -268,6 +242,6 @@ export const faqs = [
   },
   {
     q: 'Sind die Preise netto?',
-    a: 'Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Zum Beispiel kostet Fundament 79,99 € netto im Monat, das sind 95,19 € inkl. MwSt. Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).',
+    a: `Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Zum Beispiel kostet ${PAKETE[0].name} ${formatEuro(PAKETE[0].preis)} netto im Monat, das sind ${formatEuro(brutto(PAKETE[0].preis))} inkl. MwSt. Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).`,
   },
 ];

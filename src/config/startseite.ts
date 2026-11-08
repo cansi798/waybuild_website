@@ -275,11 +275,13 @@ export const CHECK = {
   ergebnis: {
     viel: 'An mehreren Stellen gehen Ihnen wahrscheinlich Kunden verloren. Wir sehen uns das kostenlos mit Ihnen an.',
     mittel: 'Ihr Auftritt hat eine gute Basis. An einer Stelle lohnt sich gezielte Hilfe.',
-    /** Vorschlag bei „mittel“, passend zum Abo-Baukasten (Testangebot) */
+    /** Vorschlag bei „mittel“ (Jamil #5056): ein Paket aus pakete-abo.ts statt Bausteinen. Check.astro hängt Name und
+     *  Monatspreis bzw. die Einmalpreise an; hier stehen nur die Begründungen. „basis-auftritt“ = Basis + Logo und
+     *  Geschäftspapiere einmalig (für „Ein einheitlicher Auftritt“, ohne gleich das größte Paket zu empfehlen). */
     vorschlag: {
-      fundament: 'Unser Vorschlag: das Basispaket „Ihre Website“.',
-      wegweiser: 'Unser Vorschlag: Ihre Website mit „Google-Profil“ und „Bei Google besser gefunden werden“.',
-      wahrzeichen: 'Unser Vorschlag: Ihre Website mit „Logo und Geschäftspapiere“.',
+      basis: 'Website, Suchmaschinen-Optimierung beim Erstellen und E-Mail-Postfächer reichen Ihnen für den Anfang.',
+      plus: 'Damit richten wir Ihr Google-Profil ein, optimieren Ihre Seiten für die Suchen Ihrer Kunden und verbessern jeden Monat den Weg bis zur Anfrage.',
+      'basis-auftritt': 'Für einen einheitlichen Auftritt buchen Sie Logo und Geschäftspapiere einmalig dazu.',
     } as Record<string, string>,
     wenig: 'Ehrlich gesagt: Sie sind gut aufgestellt. Unser Tipp:',
     individuell: 'Unser Vorschlag: ein Erstgespräch zu Ihren Abläufen, etwa Terminbuchung, Kundenverwaltung oder automatische Abläufe. Das ist ein individuelles Angebot.',

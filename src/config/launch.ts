@@ -74,14 +74,14 @@ const manual: Todo[] = [
   },
   {
     title: 'Monatspreise für Website as a Service festlegen',
-    detail: 'Festgelegt von Can am 04.11.2026: Fundament 79,99 €, Wegweiser 149,99 €, Wahrzeichen 299,99 € im Monat, netto zzgl. MwSt. (Korrektur Can Talk 4526), 24 Monate Mindestlaufzeit.',
-    where: 'src/config/site.ts → PAKETE',
+    detail: 'Festgelegt (Jamil, Talk qh87y3sj #5056, 08.11.2026): Basis 79,99 €, Plus 149,99 €, Komplett 299,99 € im Monat, netto zzgl. MwSt., ohne Einmalkosten; einmalig dazubuchbar Logo 590 €, E-Mail-Signatur 49 €, Geschäftspapiere 190 €, Visitenkarten 89 €; 24 Monate Mindestlaufzeit.',
+    where: 'src/config/pakete-abo.ts → ABO_PAKETE, EINMALIG_DAZU',
     done: true,
     priority: 'pflicht',
   },
   {
     title: 'AGB an Website as a Service anpassen',
-    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website (04.11.2026): drei Pakete Fundament / Wegweiser / Wahrzeichen (79,99 / 149,99 / 299,99 € netto), keine Einrichtungskosten, 24 Monate Mindestlaufzeit (§ 5 schon angepasst), keine Eigentumsaussage zu Website/Code/Domain (Mietmodell offen), 20 E-Mail-Postfächer, Logo und Geschäftsbriefe – § 2, § 4, § 6 und Fair-Use-Regel anwaltlich angleichen lassen.',
+    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website (08.11.2026, Jamil #5056): drei Pakete Basis / Plus / Komplett (79,99 / 149,99 / 299,99 € netto), keine Einrichtungskosten, einmalig dazubuchbar Logo / E-Mail-Signatur / Geschäftspapiere / Visitenkarten (590 / 49 / 190 / 89 € netto), 24 Monate Mindestlaufzeit (§ 5 schon angepasst), keine Eigentumsaussage zu Website/Code/Domain (Mietmodell offen), bis zu 20 E-Mail-Postfächer, Logo und Geschäftspapiere im Paket Komplett, Nutzungsrechte am Logo – § 2, § 4, § 6 und Fair-Use-Regel anwaltlich angleichen lassen.',
     where: 'src/pages/agb.astro',
     done: false,
     priority: 'pflicht',

@@ -3,6 +3,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import More from '../../components/More.astro';
+import PreisBlock from '../../components/PreisBlock.astro';
 import { branchen, type Branche } from '../../config/branchen';
 import { WAAS, INKLUSIVE, MODELL, PAKETE, formatEuro, preisLang } from '../../config/site';
 import { waasOffers } from '../../lib/schema';
@@ -61,7 +62,7 @@ const schema = [
         <p class="reco__why">{b.fokus}</p>
         <ul class="reco__list">{PAKETE.map((p) => <li>{p.name}: {formatEuro(p.preis)} / Monat</li>)}{MODELL.slice(0, 2).map((f) => <li>{f}</li>)}</ul>
         <a class="btn btn--primary reco__btn" href={contact}>Erstgespräch anfragen</a>
-        <a class="reco__all" href={href('/preise/')}>Preise im Vergleich</a>
+        <a class="reco__all" href="#preis">Was in welchem Paket steckt</a>
       </aside>
     </div>
   </section>
@@ -92,6 +93,8 @@ const schema = [
       </p>
     </div>
   </section>
+
+  <PreisBlock ab="basis" merkmale={b.merkmale} thema={`Website für ${b.name}`} kontakt={contact} ton="weiss" id="preis" />
 
   <section class="section section--alt" aria-labelledby="bfaq-h">
     <div class="wrap bfaq">

@@ -7,12 +7,16 @@ import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
 import { SAEULEN } from '../config/angebot';
+import { ABO_PAKETE, EINMALIG_DAZU, euro } from '../config/pakete-abo';
 
 const interessen = [
   { value: 'website', label: WAAS.name },
   ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => leistungen.filter((l) => l.saeule === s.id && l.slug !== 'abo-wartung').map((l) => ({ value: l.slug, label: `Auf Anfrage: ${l.title}` }))),
 ];
 const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) => l.slug);
+// Paketwahl (Jamil #5056): ?paket=Plus (auch „Paket Plus“ oder „Plus (149,99 € / Monat)“) wählt das Paket vor,
+// ?dazu=logo,papiere hakt Einmal-Leistungen an. Beides sichtbar und änderbar, gesendet als Text.
+const paketText = (p: (typeof ABO_PAKETE)[number]) => `${p.name} (${euro(p.preis)} / Monat netto)`;
 
 // Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
 // Ohne Key öffnet sich als Rückfall das E-Mail-Programm. Key setzen: GitHub → Settings → Variables → WEB3FORMS_KEY
@@ -41,6 +45,19 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
             {interessen.map((i) => <option value={i.value}>{i.label}</option>)}
           </select>
         </label>
+        <fieldset class="wahl" id="wahl" hidden>
+          <legend>Paket <small>(optional, ändern geht auch später)</small></legend>
+          <select name="paket_wahl" aria-label="Paket">
+            <option value="">Noch offen, bitte beraten Sie mich</option>
+            {ABO_PAKETE.map((p) => <option value={p.id} data-name={p.name} data-text={paketText(p)}>{p.name}: {euro(p.preis)} im Monat netto</option>)}
+          </select>
+          <p class="wahl__kopf">{EINMALIG_DAZU.titel} <small>(optional, Festpreis netto)</small></p>
+          <div class="wahl__dazu">
+            {EINMALIG_DAZU.liste.map((e) => (
+              <label class="wahl__opt"><input type="checkbox" name="einmalig_wahl" value={e.id} data-text={`${e.name} (${euro(e.preis)} einmalig netto)`} /> <span>{e.name} <b>{euro(e.preis)}</b></span></label>
+            ))}
+          </div>
+        </fieldset>
         <div class="row">
           <label>Name*<input name="name" autocomplete="name" required /></label>
           <label>E-Mail*<input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
@@ -112,13 +129,24 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const leistung = params.get('leistung') ?? '';
     if (websiteSlugs.includes(leistung) || tarif || params.get('paket')) interesse.value = 'website';
     else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
-    const paket = params.get('paket');
-    if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
+    // Paketwahl: sichtbar, sobald es um Website as a Service geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
+    const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
+    const wahlSelect = form.elements.namedItem('paket_wahl') as HTMLSelectElement | null;
+    const paket = (params.get('paket') ?? '').trim();
+    const norm = (t: string) => t.toLowerCase().replace(/^paket\s+/, '');
+    const treffer = wahlSelect ? [...wahlSelect.options].find((o) => o.dataset.name && norm(paket).startsWith(o.dataset.name.toLowerCase())) : undefined;
+    if (treffer && wahlSelect) wahlSelect.value = treffer.value;
+    else if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
+    const dazu = (params.get('dazu') ?? '').split(',').map((d) => d.trim()).filter(Boolean);
+    form.querySelectorAll<HTMLInputElement>('input[name="einmalig_wahl"]').forEach((c) => { if (dazu.includes(c.value)) c.checked = true; });
+    const zeigeWahl = () => { if (wahl) wahl.hidden = interesse.value !== 'website'; };
+    zeigeWahl();
+    interesse.addEventListener('change', zeigeWahl);
 
-    // Kundenreise-Check / Abo-Baukasten (Startseite): nur nach aktiver Wahl („Ergebnis mitschicken“ bzw. „Paket anfragen“). Sichtbar und abwählbar,
+    // Kundenreise-Check (Startseite): nur nach aktiver Wahl („Ergebnis mitschicken“). Sichtbar und abwählbar,
     // übertragen erst beim Absenden zusammen mit der Anfrage (sessionStorage, endet mit dem Tab).
-    // Abo-Baukasten ab 08.11.2026 als JSON (v2): monatliche und einmalige Posten getrennt, je mit Summe netto + inkl. MwSt.
-    // Älterer Stand (reiner Text) wird unverändert übernommen.
+    // 'wb-abo-baukasten' = Zusammenstellung vom früheren Startseiten-Stand (bis 08.11.2026); wird weiter gelesen,
+    // falls ein alter Tab noch offen ist (JSON v2 oder reiner Text).
     let abo: { summeMonat: number; summeEinmalig: number } | null = null;
     const eurF = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: Math.round(n * 100) % 100 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
     const aboText = (v: string) => {
@@ -132,13 +160,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       ];
       if (d.einmalig?.length) teile.push('', 'Einmalig (Festpreis):', ...d.einmalig.map(([n, p]) => `+ ${n}: ${eurF(p)}`),
         `Summe einmalig: ${eurF(Number(d.summeEinmalig))} netto zzgl. MwSt. (${eurF(Number(d.bruttoEinmalig))} inkl. MwSt.)`);
-      else teile.push('', 'Einmalig: 0 €');
       if (d.anfrage?.length) teile.push('', `Auf Anfrage: ${d.anfrage.join(', ')}`);
-      teile.push('', 'Testangebot');
       return teile.join('\n');
     };
     let checkText = '';
-    const ueber: [string, string][] = [['wb-kundenreise-check', 'Kundenreise-Check'], ['wb-abo-baukasten', 'Abo-Baukasten']];
+    const ueber: [string, string][] = [['wb-kundenreise-check', 'Kundenreise-Check'], ['wb-abo-baukasten', 'Frühere Auswahl']];
     try { checkText = ueber.map(([k, t]) => { const v = sessionStorage.getItem(k); return v ? `${t}:\n${k === 'wb-abo-baukasten' ? aboText(v) : v}` : ''; }).filter(Boolean).join('\n\n'); } catch { checkText = ''; }
     const checkBox = document.getElementById('check-mit');
     if (checkText && checkBox) {
@@ -161,13 +187,19 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       if (data.website) return; // Honeypot: Bots füllen das versteckte Feld aus
       delete data.website;
       data.nachricht = mitCheck(data.nachricht ?? '');
-      // Baukasten-Summen zusätzlich als eigene Felder (monatlich und einmalig getrennt)
+      // Paketwahl als lesbarer Text: gewähltes Paket vor einem evtl. Anliegen-Text (z. B. vom Check), Einmal-Leistungen als Liste
+      delete data.paket_wahl; delete data.einmalig_wahl;
+      const gewaehlt = interesse.value === 'website' ? wahlSelect?.selectedOptions[0]?.dataset.text ?? '' : '';
+      if (gewaehlt) data.paket = data.paket ? `${gewaehlt}; ${data.paket}` : gewaehlt;
+      const einmalig = interesse.value === 'website' ? [...form.querySelectorAll<HTMLInputElement>('input[name="einmalig_wahl"]:checked')].map((c) => c.dataset.text ?? c.value) : [];
+      if (einmalig.length) data.einmalig = einmalig.join(', ');
+      // Summen der früheren Zusammenstellung zusätzlich als eigene Felder (nur alter Stand)
       const a = abo as { summeMonat: number; summeEinmalig: number } | null;
       if (a) { data.abo_monatlich = `${eurF(a.summeMonat)} netto`; data.abo_einmalig = `${eurF(a.summeEinmalig)} netto`; }
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.einmalig ? `\nEinmalig dazu: ${data.einmalig}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`Anfrage: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm hat sich geöffnet. Bitte senden Sie die Nachricht dort ab.';
         return;
@@ -216,6 +248,17 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
   .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
   .hp { position: absolute; left: -9999px; }
+  .wahl { display: grid; gap: 10px; margin: 0; padding: 14px 16px 16px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--paper); min-width: 0; }
+  .wahl[hidden] { display: none; }
+  .wahl legend { padding: 0 6px; font-weight: 600; font-size: 0.95rem; }
+  .wahl select { background: var(--white); }
+  .wahl__kopf { margin: 4px 0 0; font-weight: 600; font-size: 0.95rem; }
+  .wahl__kopf small { font-weight: 400; color: var(--ink-soft); }
+  .wahl__dazu { display: grid; gap: 4px 18px; }
+  @media (min-width: 640px) { .wahl__dazu { grid-template-columns: 1fr 1fr; } }
+  .wahl__opt { display: flex; gap: 10px; align-items: center; font-weight: 400; min-height: 44px; }
+  .wahl__opt input { width: 20px; min-height: 20px; height: 20px; flex: none; accent-color: var(--accent); }
+  .wahl__opt b { font-weight: 650; white-space: nowrap; }
   .check-mit { display: grid; gap: 8px; padding: 14px 16px; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--paper); }
   .check-mit[hidden] { display: none; }
   .check-mit__kopf { margin: 0; font-weight: 650; font-size: 0.95rem; }

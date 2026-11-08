@@ -1,5 +1,6 @@
 // Branchen-Landingpages: /website-fuer/<slug>/
-// Jede Seite rankt auf "Website für <Branche>" und führt zu Website as a Service (zwei Varianten, fester Monatspreis).
+// Jede Seite rankt auf "Website für <Branche>" und führt zu Website as a Service (drei feste Monatspakete Basis/Plus/Komplett,
+// Daten in pakete-abo.ts). `merkmale` = Leistungs-ids aus pakete-abo.ts, die der PreisBlock mit „ab Paket …“ zeigt.
 import type { IconName } from './site';
 
 export type Branche = {
@@ -18,15 +19,18 @@ export type Branche = {
   /** Worauf es bei dieser Branche ankommt (ein Satz) */
   fokus: string;
   faqs: { q: string; a: string }[];
+  /** Für diese Branche wichtige Paket-Leistungen (ids aus pakete-abo.ts) */
+  merkmale: string[];
 };
 
 export const branchen: Branche[] = [
   {
     slug: 'handwerker',
+    merkmale: ['website', 'google-profil', 'seo'],
     name: 'Handwerker',
     label: 'Handwerk',
     title: 'Website für Handwerker mit Betreuung',
-    description: 'Website für Handwerksbetriebe als Service: individuell, mobil, lokal bei Google gefunden. Mit Anfrageformular, Hosting & Betreuung. Live in 14 Tagen.',
+    description: 'Website für Handwerksbetriebe als Service: individuell, mobil, lokal bei Google gefunden. Mit Anfrageformular, Hosting & Betreuung. Meist in 14 Tagen online.',
     claim: 'Mehr Aufträge aus der Region, und um die Technik kümmern wir uns.',
     pains: ['Keine Zeit für die Website', 'Kunden finden Sie nicht bei Google', 'Veraltete Seite schreckt ab'],
     features: [
@@ -43,6 +47,7 @@ export const branchen: Branche[] = [
   },
   {
     slug: 'arztpraxen',
+    merkmale: ['website', 'termin'],
     name: 'Arztpraxen',
     label: 'Arztpraxen',
     title: 'Website für Arztpraxen mit Betreuung',
@@ -63,6 +68,7 @@ export const branchen: Branche[] = [
   },
   {
     slug: 'gastronomie',
+    merkmale: ['website', 'google-profil', 'sprache'],
     name: 'Restaurants & Cafés',
     label: 'Gastronomie',
     title: 'Website für Restaurants & Cafés',
@@ -83,6 +89,7 @@ export const branchen: Branche[] = [
   },
   {
     slug: 'kanzleien',
+    merkmale: ['website', 'seo'],
     name: 'Kanzleien & Steuerberater',
     label: 'Kanzleien',
     title: 'Website für Kanzleien & Steuerberater',
@@ -103,6 +110,7 @@ export const branchen: Branche[] = [
   },
   {
     slug: 'immobilienmakler',
+    merkmale: ['website', 'google-profil', 'bericht'],
     name: 'Immobilienmakler',
     label: 'Immobilien',
     title: 'Website für Immobilienmakler mit Betreuung',
@@ -123,6 +131,7 @@ export const branchen: Branche[] = [
   },
   {
     slug: 'friseure-kosmetik',
+    merkmale: ['website', 'termin', 'google-profil'],
     name: 'Friseure & Kosmetikstudios',
     label: 'Beauty & Friseur',
     title: 'Website für Friseure & Kosmetikstudios',

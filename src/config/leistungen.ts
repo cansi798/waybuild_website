@@ -1,8 +1,10 @@
 // Leistungen (Stand: Unternehmensvision 17.10.2026). Es gibt EIN Angebot: „Website as a Service“.
-// Die Website-Leistungen (Säule „websites“) beschreiben, was wir in diesem Modell bauen – ohne eigene Pakete/Preise.
+// Die Website-Leistungen (Säule „websites“) beschreiben, was wir in diesem Modell bauen. Preise gibt es nur als Pakete
+// Basis/Plus/Komplett (config/pakete-abo.ts); `paket` sagt, ab welchem Paket die Leistung enthalten ist (PreisBlock).
 // Software, Cloud & IT und Beratung sind „Ausbaustufen auf Anfrage“ (Schritte zur digitalen Unternehmensplattform).
 // Jede Leistung hat eine eigene Seite unter /leistungen/<slug>/ (URLs bleiben stabil).
-import { WAAS, type IconName } from './site';
+import { WAAS, paketVon, formatEuro, type IconName } from './site';
+import type { AboPaket } from './pakete-abo';
 import type { Saeule } from './angebot';
 
 export type Leistung = {
@@ -32,6 +34,9 @@ export type Leistung = {
   faq: { q: string; a: string }[];
   /** Passende Ratgeber-Artikel (IDs aus src/content/ratgeber/) – interne Verlinkung für Leser und Google */
   ratgeber?: string[];
+  /** Nur Website-Leistungen: ab welchem Paket enthalten (ohne `ab` = Paket klären wir im Erstgespräch).
+   *  `merkmale` = Leistungs-ids aus pakete-abo.ts, die der PreisBlock mit „ab Paket …“ zeigt. */
+  paket?: { ab?: AboPaket['id']; merkmale: string[]; hinweis?: string };
   /** Grafik der Kachel (kein Foto nötig) */
   grafik: 'seite' | 'shop' | 'landing' | 'relaunch' | 'pflege' | 'software' | 'code' | 'cloud' | 'it' | 'analyse' | 'abo';
 };
@@ -57,6 +62,7 @@ export const leistungen: Leistung[] = [
       'Technisches und lokales SEO',
     ],
     siegel: 'seiten',
+    paket: { ab: 'basis', merkmale: ['website', 'seo', 'google-profil', 'sprache'] },
     faq: [
       { q: 'Wie viele Seiten sind sinnvoll?', a: 'Das klären wir in der Beratung anhand Ihrer Zielgruppen und Leistungen. Für die meisten Unternehmen reichen 5 bis 12 Seiten.' },
       { q: 'Können wir Inhalte später ändern?', a: 'Ja. Änderungen gehören zur laufenden Betreuung. Sagen Sie uns einfach, was sich ändern soll.' },
@@ -66,7 +72,7 @@ export const leistungen: Leistung[] = [
   {
     saeule: 'websites',
     slug: 'online-shop',
-    seo: { title: 'Online-Shop als Service für Unternehmen', description: 'Online-Shop für Unternehmen als Service: schnell, mobil und rechtssicher. Mit Beratung, KI-gestützter Umsetzung, Hosting und laufender Betreuung.' },
+    seo: { title: 'Online-Shop als Service für Unternehmen', description: 'Online-Shop für Unternehmen als Service: schnell, mobil und mit sauberer Bestellstrecke. Mit Beratung, KI-gestützter Umsetzung, Hosting und laufender Betreuung.' },
     icon: 'cart',
     title: 'Online-Shop',
     pre: 'Verkaufen rund um die ',
@@ -77,10 +83,11 @@ export const leistungen: Leistung[] = [
       'Produktkatalog mit Varianten, Kategorien und Suche',
       'Bezahlung per PayPal, Kreditkarte, Rechnung, SEPA',
       'Versandregeln, Gutscheine, Steuersätze',
-      'Rechtssichere Bestellstrecke',
+      'Bestellstrecke mit den vorgeschriebenen Angaben und Schaltflächen',
       'Anbindung an Warenwirtschaft oder Kasse auf Anfrage',
     ],
     siegel: 'transparenz',
+    paket: { merkmale: ['website', 'seo'], hinweis: 'Den Shop setzen wir im Rahmen von Website as a Service um. Welches Paket passt und welchen Umfang Ihr Shop braucht (Produkte, Zahlungsarten, Versand), klären wir im Erstgespräch.' },
     faq: [
       { q: 'Welches Shop-System nutzen Sie?', a: 'Das wählen wir passend zu Ihrem Sortiment und Ihren Abläufen aus. Unsere Empfehlung bekommen Sie im Erstgespräch.' },
       { q: 'Fallen Transaktionsgebühren an?', a: 'Von uns nicht. Gebühren der Zahlungsanbieter (z. B. PayPal) rechnen diese direkt mit Ihnen ab.' },
@@ -104,8 +111,9 @@ export const leistungen: Leistung[] = [
       'Varianten für A/B-Tests auf Wunsch',
     ],
     siegel: 'einrichtung',
+    paket: { ab: 'basis', merkmale: ['website', 'weg', 'termin'] },
     faq: [
-      { q: 'Wie schnell ist eine Landingpage online?', a: 'Oft innerhalb einer Woche, nachdem Ihre Inhalte vorliegen, spätestens nach 14 Tagen.' },
+      { q: 'Wie schnell ist eine Landingpage online?', a: 'Oft innerhalb einer Woche, nachdem Ihre Inhalte vorliegen, in der Regel innerhalb von 14 Tagen.' },
       { q: 'Kann ich mehrere Landingpages haben?', a: 'Ja. Weitere Seiten ergänzen wir, wenn sie Ihr Ziel unterstützen. Das besprechen wir vorher offen mit Ihnen.' },
     ],
     grafik: 'landing',
@@ -129,6 +137,7 @@ export const leistungen: Leistung[] = [
       'Umzug ohne Ausfallzeit',
     ],
     siegel: 'laufzeit',
+    paket: { ab: 'basis', merkmale: ['website', 'seo'] },
     faq: [
       { q: 'Verliere ich meine Google-Platzierungen?', a: 'Nein. Wir leiten jede alte Adresse auf die neue Seite weiter und übernehmen Titel, Texte und Struktur. Meist verbessern sich die Rankings durch die schnellere Seite.' },
       { q: 'Was passiert mit meiner WordPress-Seite?', a: 'Wir übernehmen die Inhalte und schalten die alte Seite erst ab, wenn die neue läuft. Auf Wunsch sichern wir Ihnen ein Backup.' },
@@ -154,6 +163,7 @@ export const leistungen: Leistung[] = [
       'Kontinuierliche Verbesserung Ihrer Inhalte',
     ],
     siegel: 'festpreis',
+    paket: { ab: 'basis', merkmale: ['website', 'weg', 'optimierung', 'vorrang'] },
     faq: [
       { q: 'Was zählt als Änderung?', a: 'Alles, was Inhalte oder Design Ihrer bestehenden Seiten betrifft: Texte, Bilder, Öffnungszeiten, Team, Aktionen. Neue Funktionen besprechen wir vorher mit Ihnen.' },
       { q: 'Muss ich mich um Updates kümmern?', a: 'Nein. Updates, Backups und Sicherheit laufen im Hintergrund und sind im Monatspreis enthalten.' },
@@ -206,12 +216,12 @@ export const leistungen: Leistung[] = [
     saeule: 'software',
     slug: 'software-webentwicklung',
     ratgeber: ['was-kostet-individuelle-software'],
-    seo: { title: 'Software- & Webentwicklung: Web-Apps & APIs', description: 'Web-Anwendungen, Kundenportale und Schnittstellen für Unternehmen. Konzept und Umsetzung aus einer Hand, individuelles Angebot auf Anfrage.' },
+    seo: { title: 'Software- & Webentwicklung: Web-Apps & APIs', description: 'Web-Anwendungen, Kundenportale und Schnittstellen für Unternehmen. Konzept und Umsetzung mit festem Ansprechpartner, individuelles Angebot auf Anfrage.' },
     icon: 'code',
     title: 'Software- & Webentwicklung',
     pre: 'Von der Idee zur ',
     accent: 'Web-Anwendung',
-    teaser: 'Kundenportale, Buchungssysteme, Dashboards und Schnittstellen aus einer Hand.',
+    teaser: 'Kundenportale, Buchungssysteme, Dashboards und Schnittstellen, von Konzept bis Betrieb.',
     lead: 'Digitale Lösungen, die im Browser auf jedem Gerät laufen: vom Kundenportal bis zur Schnittstelle zwischen Ihren Programmen.',
     problem: [
       'Kunden fragen per Telefon, was sie online selbst erledigen könnten',
@@ -234,7 +244,7 @@ export const leistungen: Leistung[] = [
       { title: 'Livegang', text: 'Wir bringen die Anwendung online und entwickeln sie mit Ihnen weiter.' },
     ],
     siegel: 'festpreis',
-    zusage: { icon: 'gauge', title: 'Schnell und schlank gebaut', text: 'Wir setzen auf wenige, bewährte Bausteine und verzichten auf überladene Frameworks. Das lädt schnell, bietet weniger Angriffsfläche und bleibt langfristig pflegbar.' },
+    zusage: { icon: 'gauge', title: 'Schnell und schlank gebaut', text: 'Wir setzen auf wenige, bewährte Werkzeuge und verzichten auf überladene Frameworks. Das lädt schnell, bietet weniger Angriffsfläche und bleibt langfristig pflegbar.' },
     faq: [
       { q: 'Brauche ich eine App aus dem App-Store?', a: 'Meist nicht. Web-Anwendungen laufen im Browser auf Smartphone, Tablet und PC und lassen sich wie eine App auf den Startbildschirm legen.' },
       { q: 'Können Sie unsere bestehende Software erweitern?', a: 'Ja, sofern Quellcode oder Schnittstellen zugänglich sind. Nach einer kurzen Sichtung nennen wir Ihnen den Aufwand vorab.' },
@@ -392,5 +402,10 @@ export const leistungen: Leistung[] = [
 
 export const leistungBySlug = (slug: string) => leistungen.find((l) => l.slug === slug);
 export const leistungenNach = (saeule: Saeule) => leistungen.filter((l) => l.saeule === saeule);
-/** Kurz-Label für Kacheln/Navigation – keine Paketpreise mehr. */
-export const leistungAb = (l: Leistung) => (l.saeule === 'websites' ? `Im ${WAAS.name}` : 'Ausbaustufe · auf Anfrage');
+/** Kurz-Label für Kacheln/Navigation: ab welchem Paket (Preis aus pakete-abo.ts) bzw. „auf Anfrage“. */
+export const leistungAb = (l: Leistung) => {
+  if (l.saeule !== 'websites') return 'Ausbaustufe · auf Anfrage';
+  if (!l.paket?.ab) return `Im ${WAAS.name}`;
+  const p = paketVon(l.paket.ab);
+  return `Ab Paket ${p.name} · ${formatEuro(p.preis)} / Monat`;
+};
