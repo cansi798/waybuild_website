@@ -210,7 +210,6 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
   .cta-pk .lead { margin: 12px auto 24px; max-width: 640px; }
   .cta-pk .btn--primary { color: var(--on-accent); }
   /* Kontrast (axe) nur auf dieser Seite, wie zuvor auf /variante/: Knopfschrift auf Türkis 5,1 : 1 statt 3,8 : 1
-     (auch Footer-Kontaktblock und Handy-Leiste), Türkis-Unterzeile im Footer auf Dunkel lesbarer */
+     (auch Handy-Leiste). Footer-Unterzeile seit #5072 global #e6f6f5 auf #006b68 (FooterKontakt.astro). */
   :global(.btn--primary) { color: var(--on-accent); }
-  :global(.fkontakt__sub) { color: var(--accent-light) !important; }
 </style>

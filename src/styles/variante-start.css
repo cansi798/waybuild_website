@@ -40,6 +40,20 @@
 .vblick strong { font-family: var(--font-head); font-size: 1.25rem; white-space: nowrap; }
 .vblick__s { font-size: 0.85rem; color: var(--ink-soft); }
 
+/* Einstieg dunkel (Jamil, Talk qh87y3sj #5072, 08.11.2026): Fläche #00807b, Schrift Weiß (4,8 : 1). Eyebrow und Unterzeile
+ * Weiß (#e6f6f5 hätte hier nur 4,3 : 1). Knöpfe: Hauptknopf weiß mit Schrift #006b68 (6,36 : 1), Hover #e6f6f5 (5,7 : 1);
+ * zweiter Knopf weiß umrandet mit weißer Schrift, Hover-Fläche #006b68 (6,36 : 1). Helles Logo-Türkis #00a6a1 nur als
+ * Linie (Unterkante). Kasten „Auf einen Blick“ bleibt weiß mit dunkler Schrift. Der alte Einstieg weiter unten bleibt unverändert. */
+.v-hero { background: #00807b; color: var(--white); border-bottom: 4px solid var(--accent); }
+.v-hero .vhero > div > .eyebrow, .v-hero .vhero > div > .lead { color: var(--white); }
+.v-hero .vhero :focus-visible { outline-color: var(--white); }
+.v-hero .v-knopfe .btn--primary { background: var(--white); color: var(--accent-ink); }
+.v-hero .v-knopfe .btn--primary:hover { background: var(--on-dark-soft); color: var(--accent-ink); }
+.v-hero .v-knopfe .btn--umriss { background: transparent; border-color: var(--white); color: var(--white); }
+.v-hero .v-knopfe .btn--umriss:hover { background: var(--accent-ink); }
+.v-hero .vblick { color: var(--ink); }
+.v-hero .vhero .vblick :focus-visible { outline-color: var(--accent-ink); }
+
 /* Vergleich nach Anbieter-Art */
 .vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
 .vvgl { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }

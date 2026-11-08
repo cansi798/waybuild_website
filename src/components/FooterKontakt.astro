@@ -26,16 +26,20 @@ import Icon from './Icon.astro';
 </section>
 
 <style>
-  .fkontakt { padding-block: clamp(48px, 7vw, 72px) 48px; }
+  /* Teil der Fußzeile: Fläche #006b68 wie Footer (Jamil #5072), Schrift Weiß bzw. #e6f6f5, Knopf weiß mit #006b68 */
+  .fkontakt { padding-block: clamp(48px, 7vw, 72px) 48px; background: transparent; color: var(--white); }
+  .fkontakt :global(.accent) { color: var(--white); }
   .fkontakt__inner { display: grid; justify-items: center; text-align: center; gap: 12px; }
   .fkontakt__inner h2, .fkontakt__inner h3, .fkontakt__inner p { margin: 0; }
-  .fkontakt__sub { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; color: var(--accent-light); } /* auf --dark 5,9 : 1 */
-  .fkontakt__text { color: var(--dark-lead); max-width: 46rem; }
+  .fkontakt__sub { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; color: var(--on-dark-soft); } /* auf #006b68 5,7 : 1 */
+  .fkontakt__text { color: var(--on-dark-soft); max-width: 46rem; }
   .fkontakt__head { margin-top: 24px !important; font-size: 1.35rem; }
   .fkontakt__actions { display: grid; gap: 10px; width: 100%; max-width: 22rem; margin-top: 6px; }
   @media (min-width: 960px) { .fkontakt__actions { grid-template-columns: auto auto; justify-content: center; max-width: 48rem; } .fkontakt__actions .btn { white-space: nowrap; } }
   .fkontakt__actions .btn { justify-content: center; padding: 0.7em 1.4em; font-size: 0.95rem; gap: 8px; }
-  .fkontakt__ghost { background: transparent; border-color: rgb(255 255 255 / 50%); color: var(--white); }
+  .fkontakt__actions .btn--primary { background: var(--white); color: var(--accent-ink); }
+  .fkontakt__actions .btn--primary:hover { background: var(--on-dark-soft); }
+  .fkontakt__ghost { background: transparent; border-color: rgb(255 255 255 / 70%); color: var(--white); }
   .fkontakt__ghost:hover { background: rgb(255 255 255 / 12%); border-color: var(--white); }
-  .fkontakt__zeiten { color: var(--dark-soft); font-size: 0.9rem; margin-top: 4px !important; }
+  .fkontakt__zeiten { color: var(--on-dark-soft); font-size: 0.9rem; margin-top: 4px !important; }
 </style>

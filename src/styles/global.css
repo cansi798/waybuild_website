@@ -17,6 +17,7 @@
   --accent-mid: #008f8a;   /* Türkis für Linien/Zeichen auf Hell (≥ 3 : 1), wie Hauptseite */
   --accent-light: #5fe0da; /* Türkis als Schrift auf Dunkel (5,9 : 1), wie Hauptseite */
   --on-accent: #0b2a29;    /* Schrift auf Türkis-Flächen (5,1 : 1), wie Hauptseite */
+  --on-dark-soft: #e6f6f5;  /* Nebentext auf Kopf-/Fußzeile #006b68 (5,7 : 1), Jamil #5072 */
   --line: #ddd6c9;
   --ok: #177049;
   --radius: 14px;
