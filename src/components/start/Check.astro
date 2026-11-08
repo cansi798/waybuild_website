@@ -186,7 +186,7 @@ const ICON: Record<string, string> = {
         } else {
           // Vorschlag: Paket Plus bzw. Basis (bei „einheitlicher Auftritt“ mit Logo und Geschäftspapieren einmalig dazu)
           const p = D.pakete[paket === 'plus' ? 'plus' : 'basis'];
-          const dazu = paket === 'basis-auftritt' ? ` Einmalig dazu: ${D.auftritt} (netto).` : '';
+          const dazu = paket === 'basis-auftritt' ? ` ${D.auftritt} (netto).` : '';
           botschaft.textContent = `${D.ergebnis.mittel} Unser Vorschlag: das Paket ${p.name} für ${p.preis} im Monat netto. ${D.ergebnis.vorschlag[paket]}${dazu}`;
           cta1.textContent = `Paket ${p.name} anfragen`;
           cta1.href = `${kontakt(p.name)}${paket === 'basis-auftritt' ? '&dazu=logo,papiere' : ''}`;

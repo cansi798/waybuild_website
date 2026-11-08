@@ -286,7 +286,7 @@ export const CHECK = {
     vorschlag: {
       basis: 'Website, Suchmaschinen-Optimierung beim Erstellen und E-Mail-Postfächer reichen Ihnen für den Anfang.',
       plus: 'Damit richten wir Ihr Google-Profil ein, optimieren Ihre Seiten für die Suchen Ihrer Kunden und verbessern jeden Monat den Weg bis zur Anfrage.',
-      'basis-auftritt': 'Für einen einheitlichen Auftritt buchen Sie Logo und Geschäftspapiere einmalig dazu.',
+      'basis-auftritt': 'Für einen einheitlichen Auftritt buchen Sie einmalig dazu:',
     } as Record<string, string>,
     wenig: 'Ehrlich gesagt: Sie sind gut aufgestellt. Unser Tipp:',
     individuell: 'Unser Vorschlag: ein Erstgespräch zu Ihren Abläufen, etwa Terminbuchung, Kundenverwaltung oder automatische Abläufe. Das ist ein individuelles Angebot.',
