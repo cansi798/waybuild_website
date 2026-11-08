@@ -12,7 +12,7 @@
 //   (vier Schritte Verstehen/Empfehlen/Umsetzen/Verbessern), eigener Abschnitt „So läuft die Erstberatung“ entfernt.
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
-// (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
+// (nur transform/opacity/stroke-dashoffset). Farben seit 08.11.2026 (Jamil #5008) wieder CI-Türkis wie alle Seiten; thema="besucherreise" steuert nur noch Kopf/Fuß-Inhalte.
 // Die alte Startseite steht unverändert unter /hauptseite-alt/.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StartHero from '../components/start/StartHero.astro';
@@ -35,10 +35,10 @@ const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
 // dann wird derselbe Eintrag zweimal von Hand gepflegt, am Ende bleibt offen, wie alles zusammenhängt.
 // Reihenfolge = BAUSTEINE.werkzeuge (Website, Kundenverwaltung, Social Media, Prozesse). Icons 24er-Raster, nur Linien.
 const MODUL_ICON = [
-  '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 8.5h18"/><path d="M6.5 12h7M6.5 15.5h10" stroke="#7e9b8a"/>',
-  '<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10.6" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4"/><path d="M14.5 10h3.5M14.5 13.5h3.5" stroke="#7e9b8a"/>',
-  '<circle cx="17" cy="6" r="2.5"/><circle cx="7" cy="12" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M9.2 10.8l5.6-3.4M9.2 13.2l5.6 3.4" stroke="#7e9b8a"/>',
-  '<rect x="3" y="3.5" width="7.5" height="6" rx="1.5"/><rect x="13.5" y="14.5" width="7.5" height="6" rx="1.5"/><path d="M6.75 9.5v4a2 2 0 0 0 2 2h4.75" stroke="#7e9b8a"/><path d="M11.5 13.5l2 2-2 2" stroke="#7e9b8a"/>',
+  '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 8.5h18"/><path d="M6.5 12h7M6.5 15.5h10" stroke="#00a6a1"/>',
+  '<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10.6" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4"/><path d="M14.5 10h3.5M14.5 13.5h3.5" stroke="#00a6a1"/>',
+  '<circle cx="17" cy="6" r="2.5"/><circle cx="7" cy="12" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M9.2 10.8l5.6-3.4M9.2 13.2l5.6 3.4" stroke="#00a6a1"/>',
+  '<rect x="3" y="3.5" width="7.5" height="6" rx="1.5"/><rect x="13.5" y="14.5" width="7.5" height="6" rx="1.5"/><path d="M6.75 9.5v4a2 2 0 0 0 2 2h4.75" stroke="#00a6a1"/><path d="M11.5 13.5l2 2-2 2" stroke="#00a6a1"/>',
 ];
 // Lange Wörter dürfen nur an der Silbengrenze umbrechen (Jamils Text bleibt unverändert, nur ein weiches Trennzeichen)
 const modulName = (w: string) => w.replace(/\.$/, '').replace('Kundenverwaltung', 'Kunden\u00ADverwaltung');
@@ -47,29 +47,29 @@ const MODUL_VERB: string[][] = [['h', 'v'], ['v'], ['h'], []];
 
 // Abschnitt 4: kleine Zeichnungen je Bereich (dieselben Motive wie in der Hero-Geschichte)
 const BEREICH_ICON = [
-  '<rect x="13" y="6" width="22" height="36" rx="5" fill="#1f3140"/><rect x="16" y="11" width="16" height="24" rx="2" fill="#f8f7f4"/><circle cx="35" cy="8" r="6" fill="#d6a85a"/>',
-  '<rect x="6" y="12" width="36" height="25" rx="4" fill="#fff" stroke="#1f3140" stroke-width="2.4"/><path d="M6 14 L24 28 L42 14" fill="none" stroke="#1f3140" stroke-width="2.4" stroke-linejoin="round"/><circle cx="40" cy="12" r="5" fill="#d6a85a"/>',
-  '<circle cx="19" cy="20" r="10" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.6 2.7"/><circle cx="19" cy="20" r="7" fill="#1f3140"/><circle cx="19" cy="20" r="2.8" fill="#f8f7f4"/><circle cx="34" cy="33" r="7" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.8 2.1"/><circle cx="34" cy="33" r="5" fill="#7e9b8a"/><circle cx="34" cy="33" r="2" fill="#f8f7f4"/>',
-  '<path d="M24 40 c-2 -2 -16 -10 -16 -20 c0 -6 5 -10 10 -10 c3 0 5 2 6 4 c1 -2 3 -4 6 -4 c5 0 10 4 10 10 c0 10 -14 18 -16 20 Z" fill="#d6a85a"/>',
+  '<rect x="13" y="6" width="22" height="36" rx="5" fill="#004f4c"/><rect x="16" y="11" width="16" height="24" rx="2" fill="#f7f5f0"/><circle cx="35" cy="8" r="6" fill="#00a6a1"/>',
+  '<rect x="6" y="12" width="36" height="25" rx="4" fill="#fff" stroke="#004f4c" stroke-width="2.4"/><path d="M6 14 L24 28 L42 14" fill="none" stroke="#004f4c" stroke-width="2.4" stroke-linejoin="round"/><circle cx="40" cy="12" r="5" fill="#00a6a1"/>',
+  '<circle cx="19" cy="20" r="10" fill="none" stroke="#004f4c" stroke-width="5" stroke-dasharray="3.6 2.7"/><circle cx="19" cy="20" r="7" fill="#004f4c"/><circle cx="19" cy="20" r="2.8" fill="#f7f5f0"/><circle cx="34" cy="33" r="7" fill="none" stroke="#7fd0cc" stroke-width="4" stroke-dasharray="2.8 2.1"/><circle cx="34" cy="33" r="5" fill="#7fd0cc"/><circle cx="34" cy="33" r="2" fill="#f7f5f0"/>',
+  '<path d="M24 40 c-2 -2 -16 -10 -16 -20 c0 -6 5 -10 10 -10 c3 0 5 2 6 4 c1 -2 3 -4 6 -4 c5 0 10 4 10 10 c0 10 -14 18 -16 20 Z" fill="#00a6a1"/>',
 ];
 
 // Abschnitt 3: ruhige Zeichen für die drei Prinzipien statt Nummern (Rethinking 08.11.): Gespräch = Verstehen,
-// Wegweiser = Empfehlen, Haken = Umsetzen. Stil wie die Hero-Geschichte (Navy, Salbei, Gold, runde Enden).
+// Wegweiser = Empfehlen, Haken = Umsetzen. Stil wie die Hero-Geschichte (Dunkeltürkis, Türkis, Hell-Türkis, runde Enden).
 const PRINZIP_ICON = [
-  '<path d="M7 11 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-3 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 z" fill="#1f3140"/><path d="M36 19 h5 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-2 v5 l-6 -5 h-9 a4 4 0 0 1 -4 -4 v-1" fill="#7e9b8a"/><circle cx="12" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="18" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="24" cy="20.5" r="2" fill="#f8f7f4"/>',
-  '<rect x="22" y="6" width="4" height="38" rx="2" fill="#1f3140"/><path d="M10 10 h24 l6 5 l-6 5 h-24 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 z" fill="#7e9b8a"/><path d="M38 23 h-24 l-6 5 l6 5 h24 a2 2 0 0 0 2 -2 v-6 a2 2 0 0 0 -2 -2 z" fill="#d6a85a"/>',
-  '<circle cx="24" cy="24" r="18" fill="#d6a85a"/><path d="M15.5 24.5 l6 6 l11 -12" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  '<path d="M7 11 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-3 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 z" fill="#004f4c"/><path d="M36 19 h5 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-2 v5 l-6 -5 h-9 a4 4 0 0 1 -4 -4 v-1" fill="#7fd0cc"/><circle cx="12" cy="20.5" r="2" fill="#f7f5f0"/><circle cx="18" cy="20.5" r="2" fill="#f7f5f0"/><circle cx="24" cy="20.5" r="2" fill="#f7f5f0"/>',
+  '<rect x="22" y="6" width="4" height="38" rx="2" fill="#004f4c"/><path d="M10 10 h24 l6 5 l-6 5 h-24 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 z" fill="#7fd0cc"/><path d="M38 23 h-24 l-6 5 l6 5 h24 a2 2 0 0 0 2 -2 v-6 a2 2 0 0 0 -2 -2 z" fill="#00a6a1"/>',
+  '<circle cx="24" cy="24" r="18" fill="#00a6a1"/><path d="M15.5 24.5 l6 6 l11 -12" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
   // Verbessern (Jamil #4989): steigende Linie über einer Grundlinie, gleicher Stil
-  '<rect x="6" y="39" width="36" height="3.6" rx="1.8" fill="#7e9b8a"/><path d="M8 32 L18 22 L26 28 L39 14" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 13 h10 v10" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  '<rect x="6" y="39" width="36" height="3.6" rx="1.8" fill="#7fd0cc"/><path d="M8 32 L18 22 L26 28 L39 14" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 13 h10 v10" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
 ];
 
 // Referenzen: Symbol in der stilisierten Vorschau (keine echten Screenshots/Logos, solange nicht freigegeben)
 const MOTIV: Record<string, string> = {
-  bad: '<rect x="0" y="34" width="86" height="34" rx="12" fill="#7e9b8a"/><path d="M14 34 V12 a10 10 0 0 1 20 0" fill="none" stroke="#1f3140" stroke-width="5" stroke-linecap="round"/><circle cx="34" cy="20" r="4" fill="#d6a85a"/>',
-  lack: '<rect x="8" y="8" width="34" height="58" rx="8" fill="#1f3140"/><rect x="16" y="0" width="18" height="12" rx="3" fill="#7e9b8a"/><circle cx="62" cy="22" r="7" fill="#d6a85a"/><circle cx="74" cy="40" r="5" fill="#d6a85a" opacity="0.7"/><circle cx="62" cy="54" r="4" fill="#d6a85a" opacity="0.5"/>',
-  sprache: '<rect x="0" y="6" width="54" height="36" rx="10" fill="#1f3140"/><path d="M12 42 l0 12 l12 -12" fill="#1f3140"/><rect x="34" y="30" width="54" height="36" rx="10" fill="#7e9b8a"/><path d="M76 66 l0 10 l-10 -10" fill="#7e9b8a"/>',
-  film: '<rect x="0" y="14" width="62" height="46" rx="8" fill="#1f3140"/><path d="M62 30 L88 16 V58 L62 44 Z" fill="#7e9b8a"/><circle cx="22" cy="37" r="9" fill="#d6a85a"/>',
-  wissen: '<circle cx="44" cy="28" r="22" fill="#d6a85a"/><rect x="34" y="50" width="20" height="12" rx="3" fill="#1f3140"/><path d="M36 28 l6 6 l10 -12" fill="none" stroke="#1f3140" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+  bad: '<rect x="0" y="34" width="86" height="34" rx="12" fill="#7fd0cc"/><path d="M14 34 V12 a10 10 0 0 1 20 0" fill="none" stroke="#004f4c" stroke-width="5" stroke-linecap="round"/><circle cx="34" cy="20" r="4" fill="#00a6a1"/>',
+  lack: '<rect x="8" y="8" width="34" height="58" rx="8" fill="#004f4c"/><rect x="16" y="0" width="18" height="12" rx="3" fill="#7fd0cc"/><circle cx="62" cy="22" r="7" fill="#00a6a1"/><circle cx="74" cy="40" r="5" fill="#00a6a1" opacity="0.7"/><circle cx="62" cy="54" r="4" fill="#00a6a1" opacity="0.5"/>',
+  sprache: '<rect x="0" y="6" width="54" height="36" rx="10" fill="#004f4c"/><path d="M12 42 l0 12 l12 -12" fill="#004f4c"/><rect x="34" y="30" width="54" height="36" rx="10" fill="#7fd0cc"/><path d="M76 66 l0 10 l-10 -10" fill="#7fd0cc"/>',
+  film: '<rect x="0" y="14" width="62" height="46" rx="8" fill="#004f4c"/><path d="M62 30 L88 16 V58 L62 44 Z" fill="#7fd0cc"/><circle cx="22" cy="37" r="9" fill="#00a6a1"/>',
+  wissen: '<circle cx="44" cy="28" r="22" fill="#00a6a1"/><rect x="34" y="50" width="20" height="12" rx="3" fill="#004f4c"/><path d="M36 28 l6 6 l10 -12" fill="none" stroke="#004f4c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
 };
 ---
 
@@ -98,13 +98,13 @@ const MOTIV: Record<string, string> = {
         <div class="bstn__raster">
           {BAUSTEINE.werkzeuge.map((w, i) => (
             <div class={`bstn__karte bstn__karte--${i}`}>
-              <span class="bstn__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1f3140" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" set:html={MODUL_ICON[i]} /></span>
+              <span class="bstn__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#004f4c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" set:html={MODUL_ICON[i]} /></span>
               <span class="bstn__name">{modulName(w)}</span>
               <span class="bstn__zeilen"><i></i><i></i>{(i === 1 || i === 3) && <i class={`bstn__eintrag bstn__eintrag--${i}`}></i>}</span>
               {MODUL_VERB[i].map((r) => <span class={`bstn__verb bstn__verb--${r}`}><i></i></span>)}
               {i === 0 && (
                 <span class="bstn__brief">
-                  <svg viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fff" stroke="#1f3140" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#1f3140" stroke-width="1.6" stroke-linejoin="round"/><circle cx="21" cy="2.5" r="3.2" fill="#d6a85a"/></svg>
+                  <svg viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fff" stroke="#004f4c" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#004f4c" stroke-width="1.6" stroke-linejoin="round"/><circle cx="21" cy="2.5" r="3.2" fill="#00a6a1"/></svg>
                   <svg class="bstn__brief-rot" viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fbf1ee" stroke="#b8695c" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#b8695c" stroke-width="1.6" stroke-linejoin="round"/></svg>
                 </span>
               )}
@@ -119,7 +119,7 @@ const MOTIV: Record<string, string> = {
   <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788) zusammengelegt mit „Woran wir glauben“ (4795/4796, Jamil 4809):
        große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“.
        08.11.2026 (Jamil #4988/#4989): mit „So läuft die Erstberatung“ kombiniert (Verstehen = das kurze Gespräch) und um
-       „Verbessern“ ergänzt, vier Schritte an einer goldenen Linie; CTA Erstberatung darunter. Anker #erstberatung = Karte 1. -->
+       „Verbessern“ ergänzt, vier Schritte an einer türkisen Linie; CTA Erstberatung darunter. Anker #erstberatung = Karte 1. -->
   <section class="bs" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -243,11 +243,11 @@ const MOTIV: Record<string, string> = {
                 : (
                   <svg viewBox="0 0 320 200" focusable="false" aria-hidden="true">
                     <rect x="0" y="0" width="320" height="200" rx="14" fill="#ffffff" />
-                    <rect x="0" y="0" width="320" height="24" rx="14" fill="#ece8e1" /><rect x="0" y="12" width="320" height="12" fill="#ece8e1" />
+                    <rect x="0" y="0" width="320" height="24" rx="14" fill="#efebe3" /><rect x="0" y="12" width="320" height="12" fill="#efebe3" />
                     <circle cx="16" cy="12" r="4" fill="#cdc6ba" /><circle cx="30" cy="12" r="4" fill="#cdc6ba" /><circle cx="44" cy="12" r="4" fill="#cdc6ba" />
-                    <rect x="22" y="46" width="130" height="14" rx="7" fill="#1f3140" /><rect x="22" y="70" width="110" height="9" rx="4.5" fill="#cdc6ba" /><rect x="22" y="86" width="90" height="9" rx="4.5" fill="#cdc6ba" />
-                    <rect x="22" y="110" width="74" height="22" rx="11" fill="#7e9b8a" />
-                    <rect x="22" y="152" width="80" height="30" rx="8" fill="#f8f7f4" /><rect x="112" y="152" width="80" height="30" rx="8" fill="#f8f7f4" /><rect x="202" y="152" width="96" height="30" rx="8" fill="#f8f7f4" />
+                    <rect x="22" y="46" width="130" height="14" rx="7" fill="#004f4c" /><rect x="22" y="70" width="110" height="9" rx="4.5" fill="#cdc6ba" /><rect x="22" y="86" width="90" height="9" rx="4.5" fill="#cdc6ba" />
+                    <rect x="22" y="110" width="74" height="22" rx="11" fill="#7fd0cc" />
+                    <rect x="22" y="152" width="80" height="30" rx="8" fill="#f7f5f0" /><rect x="112" y="152" width="80" height="30" rx="8" fill="#f7f5f0" /><rect x="202" y="152" width="96" height="30" rx="8" fill="#f7f5f0" />
                     <g transform="translate(212 40)" set:html={MOTIV[r.motiv] ?? ''} />
                   </svg>
                 )}

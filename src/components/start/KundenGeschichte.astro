@@ -22,23 +22,23 @@ const stern = (x: number, y: number, r: number) => {
 };
 const ICON = [
   // Aufmerksamkeit: Handy mit Benachrichtigung
-  `<rect x="15" y="7" width="18" height="30" rx="4" fill="#1f3140"/><rect x="18" y="11" width="12" height="20" rx="1.5" fill="#f8f7f4"/><rect x="20" y="14" width="8" height="2.4" rx="1.2" fill="#7e9b8a"/><rect x="20" y="19" width="6" height="2.4" rx="1.2" fill="#cdc6ba"/><circle cx="33" cy="9" r="5.5" fill="#d6a85a"/>`,
+  `<rect x="15" y="7" width="18" height="30" rx="4" fill="#004f4c"/><rect x="18" y="11" width="12" height="20" rx="1.5" fill="#f7f5f0"/><rect x="20" y="14" width="8" height="2.4" rx="1.2" fill="#7fd0cc"/><rect x="20" y="19" width="6" height="2.4" rx="1.2" fill="#cdc6ba"/><circle cx="33" cy="9" r="5.5" fill="#00a6a1"/>`,
   // Vertrauen: Sterne
-  `<polygon points="${stern(12, 24, 7)}" fill="#d6a85a"/><polygon points="${stern(24, 16, 8.5)}" fill="#d6a85a"/><polygon points="${stern(36, 24, 7)}" fill="#d6a85a"/><rect x="12" y="33" width="24" height="3" rx="1.5" fill="#cdc6ba"/>`,
+  `<polygon points="${stern(12, 24, 7)}" fill="#00a6a1"/><polygon points="${stern(24, 16, 8.5)}" fill="#00a6a1"/><polygon points="${stern(36, 24, 7)}" fill="#00a6a1"/><rect x="12" y="33" width="24" height="3" rx="1.5" fill="#cdc6ba"/>`,
   // Anfrage: Brief
-  `<g><rect x="9" y="14" width="30" height="21" rx="3" fill="#fff" stroke="#1f3140" stroke-width="2.2"/><path d="M9 16 L24 27 L39 16" fill="none" stroke="#1f3140" stroke-width="2.2" stroke-linejoin="round"/></g><circle cx="38" cy="14" r="4" fill="#d6a85a"/>`,
+  `<g><rect x="9" y="14" width="30" height="21" rx="3" fill="#fff" stroke="#004f4c" stroke-width="2.2"/><path d="M9 16 L24 27 L39 16" fill="none" stroke="#004f4c" stroke-width="2.2" stroke-linejoin="round"/></g><circle cx="38" cy="14" r="4" fill="#00a6a1"/>`,
   // Bearbeitung: Zahnräder
-  `<g><circle cx="20" cy="22" r="9.5" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.3 2.6"/><circle cx="20" cy="22" r="6.5" fill="#1f3140"/><circle cx="20" cy="22" r="2.6" fill="#f8f7f4"/></g><circle cx="34" cy="33" r="6.5" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.6 2"/><circle cx="34" cy="33" r="4.5" fill="#7e9b8a"/><circle cx="34" cy="33" r="1.8" fill="#f8f7f4"/>`,
+  `<g><circle cx="20" cy="22" r="9.5" fill="none" stroke="#004f4c" stroke-width="5" stroke-dasharray="3.3 2.6"/><circle cx="20" cy="22" r="6.5" fill="#004f4c"/><circle cx="20" cy="22" r="2.6" fill="#f7f5f0"/></g><circle cx="34" cy="33" r="6.5" fill="none" stroke="#7fd0cc" stroke-width="4" stroke-dasharray="2.6 2"/><circle cx="34" cy="33" r="4.5" fill="#7fd0cc"/><circle cx="34" cy="33" r="1.8" fill="#f7f5f0"/>`,
   // Zufriedener Kunde: Herz
-  `<path d="M24 39 c-2 -2 -15 -9 -15 -19 c0 -6 5 -9 9.5 -9 c3 0 4.6 1.6 5.5 3.6 c0.9 -2 2.5 -3.6 5.5 -3.6 c4.5 0 9.5 3 9.5 9 c0 10 -13 17 -15 19 Z" fill="#d6a85a"/>`,
+  `<path d="M24 39 c-2 -2 -15 -9 -15 -19 c0 -6 5 -9 9.5 -9 c3 0 4.6 1.6 5.5 3.6 c0.9 -2 2.5 -3.6 5.5 -3.6 c4.5 0 9.5 3 9.5 9 c0 10 -13 17 -15 19 Z" fill="#00a6a1"/>`,
 ];
 
 ---
 <div class="ks" role="img" aria-label={`Die Geschichte eines Kunden als Kreislauf: ${S.join(', ')}. Zufriedene Kunden empfehlen weiter, und alles beginnt von vorn.`}>
   <div class="ks__buehne">
     <svg class="ks__kreis" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <circle cx="50" cy="50" r={R} fill="none" stroke="#c9bfb2" stroke-width="1.5" stroke-dasharray="3 4" vector-effect="non-scaling-stroke" />
-      {bogen.map((d, i) => <path class={`ks__bogen ks__bogen--${i + 1}`} d={d} pathLength="1" fill="none" stroke="#7e9b8a" stroke-width="0.7" stroke-linecap="round" />)}
+      <circle cx="50" cy="50" r={R} fill="none" stroke="#9fcfcc" stroke-width="1.5" stroke-dasharray="3 4" vector-effect="non-scaling-stroke" />
+      {bogen.map((d, i) => <path class={`ks__bogen ks__bogen--${i + 1}`} d={d} pathLength="1" fill="none" stroke="#00a6a1" stroke-width="0.7" stroke-linecap="round" />)}
     </svg>
     {S.map((label, i) => (
       <div class:list={['ks__station', `ks__station--${i + 1}`]} style={`left:${pos[i].x.toFixed(2)}%;top:${pos[i].y.toFixed(2)}%;--i:${i}`} aria-hidden="true">
@@ -69,7 +69,7 @@ const ICON = [
   /* Station: Mittelpunkt der Scheibe liegt genau auf dem Kreis, Beschriftung darunter (mit Seitenfarbe hinterlegt,
      damit die Linie dahinter verschwindet; Breite begrenzt, damit am Handy nichts über den Rand läuft) */
   .ks__station { position: absolute; width: 17%; transform: translate(-50%, -50%); }
-  .ks__scheibe { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--white); border: 1.5px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 6%), 0 6px 16px rgb(31 49 64 / 7%); }
+  .ks__scheibe { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--white); border: 1.5px solid var(--line); box-shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 6px 16px rgb(0 79 76 / 7%); }
   .ks__ring { position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--gold); opacity: 0; }
   .ks__icon { position: relative; width: 66%; height: auto; overflow: visible; }
   .ks__label { position: absolute; left: 50%; top: calc(100% + 6px); width: 176%; transform: translateX(-50%); text-align: center; }
@@ -78,7 +78,7 @@ const ICON = [
   .ks__station--1 .ks__label { width: 300%; } /* oben mittig: viel Platz, „Aufmerksamkeit“ bleibt einzeilig */
   .ks__label::before { content: ''; position: absolute; inset: -2px 8% -3px; z-index: -1; border-radius: 6px; background: var(--paper); }
 
-  /* Ablauf: 5 Abschnitte je 20 % von --dauer. Station i leuchtet in ihrem Abschnitt (Goldring, minimal größer),
+  /* Ablauf: 5 Abschnitte je 20 % von --dauer. Station i leuchtet in ihrem Abschnitt (Türkisring, minimal größer),
      danach zeichnet sich der Bogen zur nächsten Station; alle Bögen bleiben bis 94 % stehen und blenden dann aus. */
   @media (prefers-reduced-motion: no-preference) {
     html.js .ks__bogen { stroke-dashoffset: 1; animation: ks-bogen1 var(--dauer) linear infinite both; animation-play-state: paused; }
