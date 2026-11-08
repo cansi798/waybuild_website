@@ -7,6 +7,9 @@
 // 08.11.2026 „einladender“ (Jamil 4927/4929, Rethinking NC Rethinking_Startseite-einladend_2026-11-08; Sicherung Branch
 //   vor-einladend-20261108): Claim oben im Hero, Prinzipien mit Zeichen + Linie, „Verlassen“ hinter die Prinzipien,
 //   Leistungsdetails zum Aufklappen. Texte unverändert.
+// 08.11.2026 (Jamil #4983–#4989; Sicherung Branch vor-hero-bausteine-20261108): Hero ohne Claim- und Zielgruppenzeile,
+//   Bausteine als vier getrennte Module mit verlorener Anfrage (statt Puzzle), Erstberatung in #denkweise integriert
+//   (vier Schritte Verstehen/Empfehlen/Umsetzen/Verbessern), eigener Abschnitt „So läuft die Erstberatung“ entfernt.
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
@@ -20,20 +23,27 @@ import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ERSTBERATUNG, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
 // Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
 const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
 
-// Abschnitt 2: vier Bausteine mit Kanten, die nicht zueinander passen (Knauf ↔ Dreieck, Steg ↔ Rundung)
-const BLOECKE = [
-  { d: 'M30 30 H140 V58 A12 12 0 0 1 140 82 V110 H30 Z', fill: '#1f3140', text: '#f8f7f4', x: 85, y: 75 },
-  { d: 'M160 30 H270 V110 H160 V86 L178 70 L160 54 Z', fill: '#7e9b8a', text: '#1f3140', x: 220, y: 75 },
-  { d: 'M30 130 H64 V116 H96 V130 H140 V210 H30 Z', fill: '#d6a85a', text: '#1f3140', x: 85, y: 175 },
-  { d: 'M160 130 H198 A15 15 0 0 0 228 130 H270 V210 H160 Z', fill: '#ffffff', text: '#1f3140', x: 215, y: 175 },
+// Abschnitt 2 (Jamil #4986, 08.11.2026: Puzzle „zu verspielt“, „seriöser und animiert, damit der Painpoint klar wird“):
+// vier ruhige Module, die nicht verbunden sind. Eine Anfrage wandert von der Website los und bleibt in der Lücke hängen,
+// dann wird derselbe Eintrag zweimal von Hand gepflegt, am Ende bleibt offen, wie alles zusammenhängt.
+// Reihenfolge = BAUSTEINE.werkzeuge (Website, Kundenverwaltung, Social Media, Prozesse). Icons 24er-Raster, nur Linien.
+const MODUL_ICON = [
+  '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 8.5h18"/><path d="M6.5 12h7M6.5 15.5h10" stroke="#7e9b8a"/>',
+  '<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10.6" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4"/><path d="M14.5 10h3.5M14.5 13.5h3.5" stroke="#7e9b8a"/>',
+  '<circle cx="17" cy="6" r="2.5"/><circle cx="7" cy="12" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M9.2 10.8l5.6-3.4M9.2 13.2l5.6 3.4" stroke="#7e9b8a"/>',
+  '<rect x="3" y="3.5" width="7.5" height="6" rx="1.5"/><rect x="13.5" y="14.5" width="7.5" height="6" rx="1.5"/><path d="M6.75 9.5v4a2 2 0 0 0 2 2h4.75" stroke="#7e9b8a"/><path d="M11.5 13.5l2 2-2 2" stroke="#7e9b8a"/>',
 ];
+// Lange Wörter dürfen nur an der Silbengrenze umbrechen (Jamils Text bleibt unverändert, nur ein weiches Trennzeichen)
+const modulName = (w: string) => w.replace(/\.$/, '').replace('Kundenverwaltung', 'Kunden\u00ADverwaltung');
+// Verbindungen: h = nach rechts zum Nachbarn, v = nach unten
+const MODUL_VERB: string[][] = [['h', 'v'], ['v'], ['h'], []];
 
 // Abschnitt 4: kleine Zeichnungen je Bereich (dieselben Motive wie in der Hero-Geschichte)
 const BEREICH_ICON = [
@@ -49,6 +59,8 @@ const PRINZIP_ICON = [
   '<path d="M7 11 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-3 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 z" fill="#1f3140"/><path d="M36 19 h5 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-2 v5 l-6 -5 h-9 a4 4 0 0 1 -4 -4 v-1" fill="#7e9b8a"/><circle cx="12" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="18" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="24" cy="20.5" r="2" fill="#f8f7f4"/>',
   '<rect x="22" y="6" width="4" height="38" rx="2" fill="#1f3140"/><path d="M10 10 h24 l6 5 l-6 5 h-24 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 z" fill="#7e9b8a"/><path d="M38 23 h-24 l-6 5 l6 5 h24 a2 2 0 0 0 2 -2 v-6 a2 2 0 0 0 -2 -2 z" fill="#d6a85a"/>',
   '<circle cx="24" cy="24" r="18" fill="#d6a85a"/><path d="M15.5 24.5 l6 6 l11 -12" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  // Verbessern (Jamil #4989): steigende Linie über einer Grundlinie, gleicher Stil
+  '<rect x="6" y="39" width="36" height="3.6" rx="1.8" fill="#7e9b8a"/><path d="M8 32 L18 22 L26 28 L39 14" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 13 h10 v10" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
 ];
 
 // Referenzen: Symbol in der stilisierten Vorschau (keine echten Screenshots/Logos, solange nicht freigegeben)
@@ -70,7 +82,8 @@ const MOTIV: Record<string, string> = {
   <!-- Hero -->
   <StartHero />
 
-  <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): Bausteine, die nicht passen -->
+  <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): vier getrennte Module, eine Anfrage geht
+       in der Lücke verloren (Jamil #4986). Die Verlust-Zeilen links leuchten synchron zur Animation auf. -->
   <section class="bs bs--alt" aria-labelledby="bs-bausteine">
     <div class="wrap bs-zwei bs-zwei--mitte">
       <div class="bs-kopf">
@@ -81,21 +94,32 @@ const MOTIV: Record<string, string> = {
         <p class="bs-lead">{BAUSTEINE.text[1]}</p>
         <ul class="verluste">{BAUSTEINE.verluste.map((v) => <li>{v}</li>)}</ul>
       </div>
-      <figure class="bausteine" data-zeichne aria-hidden="true">
-        <svg viewBox="0 0 300 240" focusable="false">
-          {BLOECKE.map((b, i) => (
-            <g class="baustein" style={`--i:${i}`}>
-              <path d={b.d} fill={b.fill} stroke={i === 3 ? '#cdc6ba' : 'none'} stroke-width="1.5" />
-              <text x={b.x} y={b.y + 5} text-anchor="middle" font-size="14" font-weight="650" fill={b.text}>{BAUSTEINE.werkzeuge[i].replace('.', '')}</text>
-            </g>
+      <figure class="bstn" data-zeichne data-schleife aria-hidden="true">
+        <div class="bstn__raster">
+          {BAUSTEINE.werkzeuge.map((w, i) => (
+            <div class={`bstn__karte bstn__karte--${i}`}>
+              <span class="bstn__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1f3140" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" set:html={MODUL_ICON[i]} /></span>
+              <span class="bstn__name">{modulName(w)}</span>
+              <span class="bstn__zeilen"><i></i><i></i>{(i === 1 || i === 3) && <i class={`bstn__eintrag bstn__eintrag--${i}`}></i>}</span>
+              {MODUL_VERB[i].map((r) => <span class={`bstn__verb bstn__verb--${r}`}><i></i></span>)}
+              {i === 0 && (
+                <span class="bstn__brief">
+                  <svg viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fff" stroke="#1f3140" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#1f3140" stroke-width="1.6" stroke-linejoin="round"/><circle cx="21" cy="2.5" r="3.2" fill="#d6a85a"/></svg>
+                  <svg class="bstn__brief-rot" viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fbf1ee" stroke="#b8695c" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#b8695c" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </span>
+              )}
+            </div>
           ))}
-        </svg>
+          <span class="bstn__frage"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#9a4a3f" stroke-width="2" stroke-linecap="round" focusable="false"><path d="M9.2 9.2a2.9 2.9 0 1 1 4 2.7c-.8.35-1.2.95-1.2 1.8v.6"/><circle cx="12" cy="17.6" r="1.1" fill="#9a4a3f" stroke="none"/></svg></span>
+        </div>
       </figure>
     </div>
   </section>
 
   <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788) zusammengelegt mit „Woran wir glauben“ (4795/4796, Jamil 4809):
-       drei große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“ -->
+       große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“.
+       08.11.2026 (Jamil #4988/#4989): mit „So läuft die Erstberatung“ kombiniert (Verstehen = das kurze Gespräch) und um
+       „Verbessern“ ergänzt, vier Schritte an einer goldenen Linie; CTA Erstberatung darunter. Anker #erstberatung = Karte 1. -->
   <section class="bs" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -106,11 +130,12 @@ const MOTIV: Record<string, string> = {
       </div>
       <ol class="schritte3" data-zeichne>
         {VERSTEHEN.karten.map((k, i) => (
-          <li class="schritt3" style={`--i:${i}`}>
+          <li class="schritt3" id={i === 0 ? 'erstberatung' : undefined} style={`--i:${i}`}>
             <span class="schritt3__zeichen" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" focusable="false" set:html={PRINZIP_ICON[i]} /></span>
             <h3 class="schritt3__wort">{k.wort}</h3>
             <p class="schritt3__leit">{k.leit}</p>
             <p class="schritt3__text">{k.text}</p>
+            {k.hinweis && <p class="schritt3__hinweis"><a href="#baukasten">{k.hinweis}</a></p>}
           </li>
         ))}
       </ol>
@@ -118,6 +143,7 @@ const MOTIV: Record<string, string> = {
         <p class="ohne__kopf">{VERSTEHEN.nichtKopf}</p>
         <ul class="ohne__liste">{VERSTEHEN.nicht.map((n) => <li>{n}</li>)}</ul>
       </div>
+      <p class="erst4__cta"><a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ANLIEGEN.erstberatung.label}</a></p>
     </div>
   </section>
 
@@ -267,26 +293,7 @@ const MOTIV: Record<string, string> = {
   <!-- Kundenreise-Check: seit 08.11. (Jamil #4934 Punkt 6) weiter unten, hinter Referenzen und Kundenstimmen -->
   <Check />
 
-  <!-- So läuft die Erstberatung (Jamil #4934 Punkt 5): drei Schritte kurz vor dem Abschluss, nur was die Kontaktseite
-       schon zusagt (1 Werktag, rund 20 Minuten, kostenlos und unverbindlich) -->
-  <section class="bs" id="erstberatung" aria-labelledby="bs-erstberatung">
-    <div class="wrap">
-      <div class="bs-kopf bs-kopf--mitte">
-        <h2 id="bs-erstberatung">{ERSTBERATUNG.titel}</h2>
-        <p class="bs-lead">{ERSTBERATUNG.einleitung}</p>
-      </div>
-      <ol class="erst4">
-        {ERSTBERATUNG.schritte.map((st, i) => (
-          <li class="erst4__schritt">
-            <span class="erst4__nr" aria-hidden="true">{i + 1}</span>
-            <h3 class="erst4__titel">{st.titel}</h3>
-            <p class="erst4__text">{st.text}</p>
-          </li>
-        ))}
-      </ol>
-      <p class="erst4__cta"><a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ANLIEGEN.erstberatung.label}</a></p>
-    </div>
-  </section>
+  <!-- „So läuft die Erstberatung“ seit 08.11.2026 Teil von #denkweise (Jamil #4988/#4989) -->
 
   <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
   <section class="bs abschluss" aria-labelledby="bs-abschluss">

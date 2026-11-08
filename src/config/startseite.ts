@@ -19,8 +19,7 @@ export const ANLIEGEN = {
 };
 
 export const HERO = {
-  /** Rethinking: Zielgruppe in drei Sekunden („Bin ich hier richtig?“), hilft auch Suchmaschinen. */
-  zeile: 'Für kleine und mittlere Unternehmen',
+  /* Zielgruppenzeile „Für kleine und mittlere Unternehmen“ im Hero entfernt (Jamil #4984/#4985, 08.11.2026) */
   /** Hero-Texte wörtlich von Jamil: Headline Talk qh87y3sj 4771, Subheadline 4783 (06.11.2026, 19:56; ersetzt 4773), in zwei Absätzen */
   titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
   unter: [
@@ -46,15 +45,22 @@ export const BAUSTEINE = {
 
 /** Abschnitt 3 (4788): drei große Karten mit reinem Text */
 export const VERSTEHEN = {
-  titel: 'Verstehen. Empfehlen. Umsetzen.',
+  /** Jamil #4988/#4989 (08.11.2026): Erstberatung hier integriert, vierter Schritt „Verbessern“ */
+  titel: 'Verstehen. Empfehlen. Umsetzen. Verbessern.',
   einleitung: 'Bevor wir Lösungen entwickeln, möchten wir verstehen:',
   liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Ziele'],
   schluss: ['Denn gute Entscheidungen entstehen durch Verständnis.', 'Nicht durch Vermutungen.'],
   /** Karten, verdichtet aus Jamils Texten 4788/4795/4796 (Feedback 4868–4870: „zusammenfassen, sodass es Sinn macht“) */
-  karten: [
-    { wort: 'Verstehen', leit: 'Erst zuhören, dann handeln.', text: 'Wir denken mit und fragen nach, bevor wir etwas vorschlagen.' },
+  karten: <{ wort: string; leit: string; text: string; hinweis?: string }[]>[
+    /* Verstehen = das kurze Gespräch der Erstberatung (Jamil #4989). Nur, was die Website schon zusagt (kontakt.astro:
+     * „Antwort in 1 Werktag“, „20 Min. Erstgespräch“, „Kostenlos & unverbindlich“); Unternehmens-DNA wie im Auftrag beschrieben. */
+    { wort: 'Verstehen', leit: 'Erst zuhören, dann handeln.',
+      text: 'Sie senden eine Anfrage, wir melden uns innerhalb eines Werktags. Im kurzen Gespräch, kostenlos, unverbindlich und rund 20 Minuten, nehmen wir Ihre Unternehmens-DNA auf: was Sie ausmacht, wofür Sie stehen, wie Sie mit Kunden sprechen.' },
     { wort: 'Empfehlen', leit: 'Den sinnvollsten Weg, nicht den größten.', text: 'Wir sagen offen, was sich lohnt, und sprechen Risiken an.' },
     { wort: 'Umsetzen', leit: 'Wir kümmern uns. Sie bleiben informiert.', text: 'Eine Anfrage genügt, nichts geht verloren. Verzögert sich etwas, hören Sie es zuerst von uns.' },
+    /* NEU (Jamil #4989 „Empfehlen und umsetzen, verbessern“): Text aus dem Baustein „Laufende Verbesserung“ (BAUKASTEN) */
+    { wort: 'Verbessern', leit: 'Messen statt vermuten.', text: 'Jeden Monat werten wir aus, was Besucher tun, ändern gezielt 2 bis 3 Dinge und prüfen, ob es wirkt.',
+      hinweis: 'Mit dem Baustein „Laufende Verbesserung“' },
   ],
   nichtKopf: 'Was Sie von uns nicht erwarten müssen',
   nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Keine fünf Ansprechpartner'],
@@ -220,18 +226,8 @@ export const STIMMEN = {
   quellen: ['Kundenstimme folgt (z. B. Handwerk)', 'Kundenstimme folgt (z. B. Dienstleistung)', 'Kundenstimme folgt (z. B. Kreativbranche)'],
 };
 
-/** „So läuft die Erstberatung“ (Jamil #4934 Punkt 5), kurz vor dem Abschluss. Nur, was die Website schon zusagt
- *  (kontakt.astro: „Antwort in 1 Werktag“, „20 Min. Erstgespräch“, „Kostenlos & unverbindlich“). „30 Minuten“ steht
- *  nirgends, daher die vorhandenen 20 Minuten. */
-export const ERSTBERATUNG = {
-  titel: 'So läuft die Erstberatung',
-  einleitung: 'Kostenlos und unverbindlich.',
-  schritte: [
-    { titel: 'Anfrage senden', text: 'Über das Kontaktformular oder per E‑Mail. Ein paar Sätze genügen.' },
-    { titel: 'Wir melden uns', text: 'Innerhalb von einem Werktag, persönlich und nicht automatisiert.' },
-    { titel: 'Kurzes Gespräch', text: 'Rund 20 Minuten. Wir hören zu und sagen ehrlich, was sich für Sie lohnt.' },
-  ],
-};
+/* „So läuft die Erstberatung“ (Jamil #4934 Punkt 5) ist seit 08.11.2026 (Jamil #4988/#4989) Teil von VERSTEHEN
+ * (Schritt „Verstehen“ = das kurze Gespräch); eigener Abschnitt entfernt, Anker #erstberatung sitzt jetzt auf dieser Karte. */
 
 /** Abschnitt 5 (4790/4791): große Schlagworte, viel Weißraum, keine Icons */
 export const VERLASSEN = {

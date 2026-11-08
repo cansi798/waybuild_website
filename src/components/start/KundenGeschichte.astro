@@ -1,15 +1,20 @@
 ---
 // Hero-Animation (Jamil, Talk qh87y3sj 4784 + 4837, 06.11.2026): die Kundengeschichte als KREISLAUF.
 // Alle fünf Momente sind gleichzeitig zu sehen (Aufmerksamkeit, Vertrauen, Anfrage, Bearbeitung, Zufriedener Kunde).
-// Eine kleine Figur geht ruhig von Station zu Station; dort, wo sie steht, leuchtet die Station kurz auf. Nach dem
-// zufriedenen Kunden geht sie weiter zur Aufmerksamkeit: Zufriedene Kunden empfehlen weiter, die Geschichte beginnt
-// von vorn. Kein Stillstand, kein Karussell, kein Prozess-Diagramm.
-// Technik: nur CSS-Keyframes auf HTML-Ebenen (transform/opacity, läuft auf dem Compositor), ein Umlauf 15 s.
-// Läuft nur im Sichtbereich (IntersectionObserver → .ist-sichtbar). Reduzierte Bewegung / ohne JS: ruhiges Gesamtbild.
+// 08.11.2026 (Jamil #4994/#4995): graue Fläche, Figur und Kreispfeil in der Mitte ENTFERNT, Ablauf seriöser:
+// die Stationen werden der Reihe nach ruhig hervorgehoben (feiner Goldring), auf dem gestrichelten Kreis zeichnet sich
+// die Verbindung als durchgehende Salbei-Linie von Station zu Station; nach „Zufriedener Kunde“ schließt sie sich zur
+// „Aufmerksamkeit“ (Empfehlung), blendet aus und beginnt von vorn. Gleiche Formensprache wie die Bausteine-Grafik.
+// Technik: SVG-Kreis (stroke-dashoffset, pathLength 1) + CSS opacity/transform, ein Umlauf 15 s, läuft nur im
+// Sichtbereich (.ist-sichtbar). Ohne JS / reduzierte Bewegung: vollständiger Kreislauf als Standbild.
+// Sicherung des Stands davor: Branch vor-hero-bausteine-20261108.
 import { HERO } from '../../config/startseite';
 const S = HERO.stationen;
-const R = 37; // Abstand der Stationen vom Mittelpunkt in % der Bühne
-const pos = S.map((_, i) => { const a = ((-90 + i * 72) * Math.PI) / 180; return { x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) }; });
+const R = 35; // Radius des Kreises (Mittelpunkte der Stationen) in % der Bühne
+const winkel = (i: number) => ((-90 + i * 72) * Math.PI) / 180;
+const pos = S.map((_, i) => ({ x: 50 + R * Math.cos(winkel(i)), y: 50 + R * Math.sin(winkel(i)) }));
+// Bogen von Station i zur nächsten (die letzte schließt den Kreis zurück zur ersten)
+const bogen = S.map((_, i) => { const a = pos[i], b = pos[(i + 1) % S.length]; return `M${a.x.toFixed(2)} ${a.y.toFixed(2)} A${R} ${R} 0 0 1 ${b.x.toFixed(2)} ${b.y.toFixed(2)}`; });
 const stern = (x: number, y: number, r: number) => {
   const p: string[] = [];
   for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k * Math.PI) / 5; const rr = k % 2 ? r * 0.45 : r; p.push(`${(x + rr * Math.cos(a)).toFixed(1)},${(y + rr * Math.sin(a)).toFixed(1)}`); }
@@ -17,44 +22,33 @@ const stern = (x: number, y: number, r: number) => {
 };
 const ICON = [
   // Aufmerksamkeit: Handy mit Benachrichtigung
-  `<rect x="15" y="7" width="18" height="30" rx="4" fill="#1f3140"/><rect x="18" y="11" width="12" height="20" rx="1.5" fill="#f8f7f4"/><rect x="20" y="14" width="8" height="2.4" rx="1.2" fill="#7e9b8a"/><rect x="20" y="19" width="6" height="2.4" rx="1.2" fill="#cdc6ba"/><circle class="ks-pop" cx="33" cy="9" r="5.5" fill="#d6a85a"/>`,
+  `<rect x="15" y="7" width="18" height="30" rx="4" fill="#1f3140"/><rect x="18" y="11" width="12" height="20" rx="1.5" fill="#f8f7f4"/><rect x="20" y="14" width="8" height="2.4" rx="1.2" fill="#7e9b8a"/><rect x="20" y="19" width="6" height="2.4" rx="1.2" fill="#cdc6ba"/><circle cx="33" cy="9" r="5.5" fill="#d6a85a"/>`,
   // Vertrauen: Sterne
-  `<polygon points="${stern(12, 24, 7)}" fill="#d6a85a"/><polygon class="ks-pop" points="${stern(24, 16, 8.5)}" fill="#d6a85a"/><polygon points="${stern(36, 24, 7)}" fill="#d6a85a"/><rect x="12" y="33" width="24" height="3" rx="1.5" fill="#cdc6ba"/>`,
+  `<polygon points="${stern(12, 24, 7)}" fill="#d6a85a"/><polygon points="${stern(24, 16, 8.5)}" fill="#d6a85a"/><polygon points="${stern(36, 24, 7)}" fill="#d6a85a"/><rect x="12" y="33" width="24" height="3" rx="1.5" fill="#cdc6ba"/>`,
   // Anfrage: Brief
-  `<g class="ks-pop"><rect x="9" y="14" width="30" height="21" rx="3" fill="#fff" stroke="#1f3140" stroke-width="2.2"/><path d="M9 16 L24 27 L39 16" fill="none" stroke="#1f3140" stroke-width="2.2" stroke-linejoin="round"/></g><circle cx="38" cy="14" r="4" fill="#d6a85a"/>`,
+  `<g><rect x="9" y="14" width="30" height="21" rx="3" fill="#fff" stroke="#1f3140" stroke-width="2.2"/><path d="M9 16 L24 27 L39 16" fill="none" stroke="#1f3140" stroke-width="2.2" stroke-linejoin="round"/></g><circle cx="38" cy="14" r="4" fill="#d6a85a"/>`,
   // Bearbeitung: Zahnräder
-  `<g class="ks-dreh"><circle cx="20" cy="22" r="9.5" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.3 2.6"/><circle cx="20" cy="22" r="6.5" fill="#1f3140"/><circle cx="20" cy="22" r="2.6" fill="#f8f7f4"/></g><circle cx="34" cy="33" r="6.5" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.6 2"/><circle cx="34" cy="33" r="4.5" fill="#7e9b8a"/><circle cx="34" cy="33" r="1.8" fill="#f8f7f4"/>`,
+  `<g><circle cx="20" cy="22" r="9.5" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.3 2.6"/><circle cx="20" cy="22" r="6.5" fill="#1f3140"/><circle cx="20" cy="22" r="2.6" fill="#f8f7f4"/></g><circle cx="34" cy="33" r="6.5" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.6 2"/><circle cx="34" cy="33" r="4.5" fill="#7e9b8a"/><circle cx="34" cy="33" r="1.8" fill="#f8f7f4"/>`,
   // Zufriedener Kunde: Herz
-  `<path class="ks-pop" d="M24 39 c-2 -2 -15 -9 -15 -19 c0 -6 5 -9 9.5 -9 c3 0 4.6 1.6 5.5 3.6 c0.9 -2 2.5 -3.6 5.5 -3.6 c4.5 0 9.5 3 9.5 9 c0 10 -13 17 -15 19 Z" fill="#d6a85a"/>`,
+  `<path d="M24 39 c-2 -2 -15 -9 -15 -19 c0 -6 5 -9 9.5 -9 c3 0 4.6 1.6 5.5 3.6 c0.9 -2 2.5 -3.6 5.5 -3.6 c4.5 0 9.5 3 9.5 9 c0 10 -13 17 -15 19 Z" fill="#d6a85a"/>`,
 ];
+
 ---
 <div class="ks" role="img" aria-label={`Die Geschichte eines Kunden als Kreislauf: ${S.join(', ')}. Zufriedene Kunden empfehlen weiter, und alles beginnt von vorn.`}>
   <div class="ks__buehne">
-    <span class="ks__weg" aria-hidden="true"></span>
-    <span class="ks__mitte" aria-hidden="true">
-      <svg viewBox="0 0 48 48" width="34" height="34"><path d="M10 26 a14 14 0 1 1 6 11" fill="none" stroke="#7e9b8a" stroke-width="3" stroke-linecap="round"/><path d="M10 33 l0 -7 l7 1" fill="none" stroke="#7e9b8a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </span>
+    <svg class="ks__kreis" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <circle cx="50" cy="50" r={R} fill="none" stroke="#c9bfb2" stroke-width="1.5" stroke-dasharray="3 4" vector-effect="non-scaling-stroke" />
+      {bogen.map((d, i) => <path class={`ks__bogen ks__bogen--${i + 1}`} d={d} pathLength="1" fill="none" stroke="#7e9b8a" stroke-width="0.7" stroke-linecap="round" />)}
+    </svg>
     {S.map((label, i) => (
       <div class:list={['ks__station', `ks__station--${i + 1}`]} style={`left:${pos[i].x.toFixed(2)}%;top:${pos[i].y.toFixed(2)}%;--i:${i}`} aria-hidden="true">
         <span class="ks__scheibe">
-          <span class="ks__glanz"></span>
+          <span class="ks__ring"></span>
           <svg class="ks__icon" viewBox="0 0 48 48" set:html={ICON[i]} />
         </span>
         <span class="ks__label">{label}</span>
       </div>
     ))}
-    <div class="ks__bahn" aria-hidden="true">
-      <div class="ks__figur">
-        <svg class="ks__person" viewBox="0 0 40 52">
-          <path d="M6 51 C6 36 11 30 20 30 C29 30 34 36 34 51 Z" fill="#7e9b8a" />
-          <path d="M15 30 L20 36 L25 30" fill="none" stroke="#f8f7f4" stroke-width="2" stroke-linejoin="round" />
-          <circle cx="20" cy="17" r="10.5" fill="#f8f7f4" stroke="#1f3140" stroke-width="2" />
-          <path d="M9.6 15 C9 7 15 4 20.5 5 C26.5 5.5 30.5 9.5 30 15 C27 11 22 10 18 11 C14.5 12 12 13 9.6 15 Z" fill="#1f3140" />
-          <circle cx="16.5" cy="17" r="1.3" fill="#1f3140" /><circle cx="23.5" cy="17" r="1.3" fill="#1f3140" />
-          <path d="M16 21 Q20 24.5 24 21" fill="none" stroke="#1f3140" stroke-width="1.6" stroke-linecap="round" />
-        </svg>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -67,44 +61,40 @@ const ICON = [
 
 <style>
   .ks { --dauer: 15s; width: 100%; max-width: 500px; margin-inline: auto; }
-  .ks__buehne { position: relative; width: 100%; aspect-ratio: 1; border-radius: 28px; background: var(--paper-2); overflow: hidden; }
-  .ks__weg { position: absolute; left: 50%; top: 50%; width: 52%; aspect-ratio: 1; margin: -26% 0 0 -26%; border-radius: 50%; border: 2px dashed #cdc6ba; }
-  .ks__mitte { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 17%; aspect-ratio: 1; border-radius: 50%; background: var(--paper); }
-  .ks__mitte svg { width: 62%; height: auto; }
+  .ks__buehne { position: relative; width: 100%; aspect-ratio: 1; }
+  .ks__kreis { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  /* Standbild (ohne JS / reduzierte Bewegung): der Kreislauf ist vollständig gezeichnet */
+  .ks__bogen { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
 
-  .ks__station { position: absolute; width: 30%; transform: translate(-50%, -38%); display: grid; justify-items: center; gap: 6px; text-align: center; }
-  .ks__scheibe { position: relative; display: grid; place-items: center; width: 52%; aspect-ratio: 1; border-radius: 50%; background: var(--white); border: 1.5px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 6%), 0 6px 16px rgb(31 49 64 / 7%); }
-  .ks__glanz { position: absolute; inset: -9%; border-radius: 50%; background: radial-gradient(circle, rgb(214 168 90 / 30%) 55%, rgb(214 168 90 / 0) 72%); opacity: 0; }
-  .ks__icon { position: relative; width: 72%; height: auto; overflow: visible; }
-  .ks__label { font-family: var(--font-head); font-weight: 650; font-size: clamp(0.72rem, 2.6vw, 0.92rem); line-height: 1.2; color: var(--dark); }
+  /* Station: Mittelpunkt der Scheibe liegt genau auf dem Kreis, Beschriftung darunter (mit Seitenfarbe hinterlegt,
+     damit die Linie dahinter verschwindet; Breite begrenzt, damit am Handy nichts über den Rand läuft) */
+  .ks__station { position: absolute; width: 17%; transform: translate(-50%, -50%); }
+  .ks__scheibe { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--white); border: 1.5px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 6%), 0 6px 16px rgb(31 49 64 / 7%); }
+  .ks__ring { position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--gold); opacity: 0; }
+  .ks__icon { position: relative; width: 66%; height: auto; overflow: visible; }
+  .ks__label { position: absolute; left: 50%; top: calc(100% + 6px); width: 176%; transform: translateX(-50%); text-align: center; }
+  .ks__label { font-family: var(--font-head); font-weight: 650; font-size: clamp(0.7rem, 2.4vw, 0.92rem); line-height: 1.2; color: var(--dark); }
   .ks__station--5 .ks__label { color: var(--accent-ink); }
+  .ks__station--1 .ks__label { width: 300%; } /* oben mittig: viel Platz, „Aufmerksamkeit“ bleibt einzeilig */
+  .ks__label::before { content: ''; position: absolute; inset: -2px 8% -3px; z-index: -1; border-radius: 6px; background: var(--paper); }
 
-  /* Die Figur geht auf dem inneren Weg im Kreis: Ebene dreht sich, Figur dreht sich gegen (bleibt aufrecht) */
-  .ks__bahn { position: absolute; inset: 0; }
-  .ks__figur { position: absolute; left: 50%; top: 34%; width: 10%; transform: translate(-50%, -50%); }
-  .ks__person { display: block; width: 100%; height: auto; }
-
-  /* Bewegung nur im Sichtbereich und nicht bei reduzierter Bewegung */
+  /* Ablauf: 5 Abschnitte je 20 % von --dauer. Station i leuchtet in ihrem Abschnitt (Goldring, minimal größer),
+     danach zeichnet sich der Bogen zur nächsten Station; alle Bögen bleiben bis 94 % stehen und blenden dann aus. */
   @media (prefers-reduced-motion: no-preference) {
-    .ks__bahn { animation: ks-umlauf var(--dauer) cubic-bezier(0.45, 0, 0.3, 1) infinite; animation-play-state: paused; }
-    .ks__figur { animation: ks-gegen var(--dauer) cubic-bezier(0.45, 0, 0.3, 1) infinite; animation-play-state: paused; }
-    .ks__person { animation: ks-schritt 0.42s ease-in-out infinite alternate; animation-play-state: paused; }
-    .ks__glanz { animation: ks-glanz var(--dauer) ease infinite; animation-delay: calc(var(--i) * var(--dauer) / 5); animation-play-state: paused; }
-    .ks__scheibe { animation: ks-aktiv var(--dauer) ease infinite; animation-delay: calc(var(--i) * var(--dauer) / 5); animation-play-state: paused; }
-    .ks.ist-sichtbar .ks__bahn, .ks.ist-sichtbar .ks__figur, .ks.ist-sichtbar .ks__person,
-    .ks.ist-sichtbar .ks__glanz, .ks.ist-sichtbar .ks__scheibe { animation-play-state: running; }
+    html.js .ks__bogen { stroke-dashoffset: 1; animation: ks-bogen1 var(--dauer) linear infinite both; animation-play-state: paused; }
+    html.js .ks__bogen--2 { animation-name: ks-bogen2; }
+    html.js .ks__bogen--3 { animation-name: ks-bogen3; }
+    html.js .ks__bogen--4 { animation-name: ks-bogen4; }
+    html.js .ks__bogen--5 { animation-name: ks-bogen5; }
+    html.js .ks__ring { animation: ks-ring var(--dauer) ease infinite both; animation-delay: calc(var(--i) * var(--dauer) / 5); animation-play-state: paused; }
+    html.js .ks__scheibe { animation: ks-aktiv var(--dauer) ease infinite both; animation-delay: calc(var(--i) * var(--dauer) / 5); animation-play-state: paused; }
+    .ks.ist-sichtbar :is(.ks__bogen, .ks__ring, .ks__scheibe) { animation-play-state: running; }
   }
-  /* 5 Stationen je 20 %: 14 % stehen, 6 % gehen */
-  @keyframes ks-umlauf {
-    0%, 14% { transform: rotate(0deg); } 20%, 34% { transform: rotate(72deg); } 40%, 54% { transform: rotate(144deg); }
-    60%, 74% { transform: rotate(216deg); } 80%, 94% { transform: rotate(288deg); } 100% { transform: rotate(360deg); }
-  }
-  @keyframes ks-gegen {
-    0%, 14% { transform: translate(-50%, -50%) rotate(0deg); } 20%, 34% { transform: translate(-50%, -50%) rotate(-72deg); }
-    40%, 54% { transform: translate(-50%, -50%) rotate(-144deg); } 60%, 74% { transform: translate(-50%, -50%) rotate(-216deg); }
-    80%, 94% { transform: translate(-50%, -50%) rotate(-288deg); } 100% { transform: translate(-50%, -50%) rotate(-360deg); }
-  }
-  @keyframes ks-schritt { from { transform: translateY(0); } to { transform: translateY(-4%); } }
-  @keyframes ks-glanz { 0% { opacity: 0; } 3%, 13% { opacity: 1; } 18%, 100% { opacity: 0; } }
-  @keyframes ks-aktiv { 0% { transform: scale(1); } 3%, 13% { transform: scale(1.12); } 18%, 100% { transform: scale(1); } }
+  @keyframes ks-ring { 0% { opacity: 0; } 4%, 16% { opacity: 1; } 21%, 100% { opacity: 0; } }
+  @keyframes ks-aktiv { 0% { transform: scale(1); } 4%, 16% { transform: scale(1.05); } 21%, 100% { transform: scale(1); } }
+  @keyframes ks-bogen1 { 0%, 9% { stroke-dashoffset: 1; opacity: 1; } 19%, 94% { stroke-dashoffset: 0; opacity: 1; } 99%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes ks-bogen2 { 0%, 29% { stroke-dashoffset: 1; opacity: 1; } 39%, 94% { stroke-dashoffset: 0; opacity: 1; } 99%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes ks-bogen3 { 0%, 49% { stroke-dashoffset: 1; opacity: 1; } 59%, 94% { stroke-dashoffset: 0; opacity: 1; } 99%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes ks-bogen4 { 0%, 69% { stroke-dashoffset: 1; opacity: 1; } 79%, 94% { stroke-dashoffset: 0; opacity: 1; } 99%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes ks-bogen5 { 0%, 85% { stroke-dashoffset: 1; opacity: 1; } 93%, 94% { stroke-dashoffset: 0; opacity: 1; } 99%, 100% { stroke-dashoffset: 0; opacity: 0; } }
 </style>

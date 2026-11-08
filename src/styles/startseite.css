@@ -71,23 +71,105 @@ html.js [data-p] { --p: 0; }
 .leitsatz { max-width: 760px; margin: clamp(36px, 5vw, 64px) auto 0; padding-top: clamp(24px, 3vw, 32px); border-top: 1px solid var(--line); text-align: center; font-family: var(--font-head); font-size: clamp(1.3rem, 2.8vw, 1.85rem); font-weight: 600; line-height: 1.35; color: var(--dark); }
 .leitsatz strong { display: block; color: var(--accent-ink); font-weight: 650; }
 
-/* ── 2 · Bausteine, die nicht zusammenpassen: sie versuchen ineinanderzugreifen und rutschen wieder ab ── */
+/* ── 2 · Einzelne Lösungen, die nicht verbunden sind (Jamil #4986, 08.11.2026: statt Puzzle seriös und animiert) ──
+ * Vier ruhige Module (Karten) mit Lücken in den Verbindungen. Ablauf in einer Schleife von 10 s, nur transform/opacity:
+ *   0–38 %  eine Anfrage (Brief) verlässt die Website, bleibt in der Lücke hängen, färbt sich rot, verblasst → „Verlorene Anfragen.“
+ *  42–62 %  derselbe Eintrag wird erst in der Kundenverwaltung, dann noch einmal bei den Prozessen gepflegt → „Unnötiger Aufwand.“
+ *  70–90 %  in der Mitte bleibt ein Fragezeichen, die Bruchstellen pulsieren → „Unklare Abläufe.“
+ * Die drei Zeilen links (.verluste) leuchten synchron auf (gleiche Dauer, gleicher Start über :has()).
+ * Start erst, wenn die Grafik sichtbar wird ([data-zeichne] → .ist-los), Pause außerhalb des Sichtbereichs
+ * ([data-schleife] → .ist-sichtbar). Ohne JS bzw. bei reduzierter Bewegung: Standbild mit allen drei Brüchen. */
 .werkzeuge { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 2px; }
 .werkzeuge li { font-family: var(--font-head); font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 650; line-height: 1.3; color: var(--dark); }
+html[data-thema='besucherreise'] { --stoer: #b8695c; --stoer-ink: #9a4a3f; }
 .verluste { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.verluste li { padding: 7px 14px; border-radius: 999px; background: var(--paper-2); font-weight: 650; font-size: 0.95rem; color: #4f5559; }
-.bausteine { margin: 0; }
-.bausteine svg { display: block; width: 100%; max-width: 460px; height: auto; margin-inline: auto; overflow: visible; }
-.baustein { transform-box: view-box; transform-origin: 150px 120px; }
-.baustein text { font-family: var(--font-head); }
-.baustein:nth-child(1) { transform: translate(-6px, -4px) rotate(-4deg); }
-.baustein:nth-child(2) { transform: translate(8px, -6px) rotate(5deg); }
-.baustein:nth-child(3) { transform: translate(-8px, 8px) rotate(3deg); }
-.baustein:nth-child(4) { transform: translate(6px, 6px) rotate(-6deg); }
+.verluste li { position: relative; padding: 7px 14px 7px 29px; border-radius: 999px; background: var(--paper); font-weight: 650; font-size: 0.95rem; color: #4f5559; }
+.verluste li::before { content: ''; position: absolute; left: 13px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--stoer); }
+.verluste li::after { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid var(--stoer); pointer-events: none; }
+
+.bstn { --gx: 72px; --gy: 56px; --bw: 28px; --bh: 21px; margin: 0; }
+.bstn__raster { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: var(--gy) var(--gx); max-width: 540px; margin-inline: auto; }
+.bstn__karte { position: relative; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 16px 18px 18px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 5%), 0 6px 18px rgb(31 49 64 / 6%); }
+.bstn__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--paper-2); }
+.bstn__name { display: block; max-width: 100%; margin-top: 12px; font-family: var(--font-head); font-size: clamp(0.86rem, 0.72rem + 0.55vw, 1.05rem); font-weight: 650; line-height: 1.25; color: var(--dark); hyphens: manual; overflow-wrap: break-word; }
+.bstn__zeilen { display: grid; gap: 6px; width: 100%; margin-top: auto; padding-top: 14px; }
+.bstn__zeilen i { display: block; height: 6px; border-radius: 3px; background: #ebe6dd; }
+.bstn__zeilen i:nth-child(1) { width: 78%; }
+.bstn__zeilen i:nth-child(2) { width: 52%; }
+.bstn__zeilen .bstn__eintrag { width: 66%; background: var(--salbei); transform-origin: left center; }
+
+/* Verbindungen: gestrichelt, in der Mitte unterbrochen (Maske auf der Linie <i>), Bruchkanten gedämpft rot (::before/::after) */
+.bstn__verb { position: absolute; z-index: 0; }
+.bstn__verb i { position: absolute; inset: 0; }
+.bstn__verb--h { left: 100%; top: 50%; width: var(--gx); height: 2px; margin-top: -1px; }
+.bstn__verb--h i { background: repeating-linear-gradient(90deg, #a89c8d 0 6px, transparent 6px 11px);
+  -webkit-mask: linear-gradient(90deg, #000 0 32%, transparent 32% 68%, #000 68%); mask: linear-gradient(90deg, #000 0 32%, transparent 32% 68%, #000 68%); }
+.bstn__verb--v { top: 100%; left: 50%; height: var(--gy); width: 2px; margin-left: -1px; }
+.bstn__verb--v i { background: repeating-linear-gradient(180deg, #a89c8d 0 6px, transparent 6px 11px);
+  -webkit-mask: linear-gradient(180deg, #000 0 30%, transparent 30% 70%, #000 70%); mask: linear-gradient(180deg, #000 0 30%, transparent 30% 70%, #000 70%); }
+.bstn__verb::before, .bstn__verb::after { content: ''; position: absolute; background: var(--stoer); border-radius: 1px; }
+.bstn__verb--h::before, .bstn__verb--h::after { top: -5px; width: 2px; height: 12px; transform: rotate(18deg); }
+.bstn__verb--h::before { left: 32%; }
+.bstn__verb--h::after { left: calc(68% - 2px); }
+.bstn__verb--v::before, .bstn__verb--v::after { left: -5px; height: 2px; width: 12px; transform: rotate(-18deg); }
+.bstn__verb--v::before { top: 30%; }
+.bstn__verb--v::after { top: calc(70% - 2px); }
+
+/* Die Anfrage: sitzt (Standbild) mitten in der Lücke zwischen Website und Kundenverwaltung, rot markiert */
+.bstn__brief { position: absolute; z-index: 2; left: 100%; top: 50%; width: var(--bw); height: var(--bh); margin-top: calc(var(--bh) / -2); transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
+.bstn__brief svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.bstn__brief-rot { opacity: 1; }
+.bstn__frage { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; width: var(--fq, 34px); height: var(--fq, 34px); margin: calc(var(--fq, 34px) / -2) 0 0 calc(var(--fq, 34px) / -2); border-radius: 50%; background: var(--paper); border: 1.5px solid var(--stoer); }
+
 @media (prefers-reduced-motion: no-preference) {
-  .bausteine.ist-los .baustein { animation: baustein-probieren 1.6s cubic-bezier(0.45, 0, 0.3, 1) both; animation-delay: calc(var(--i) * 0.08s); }
+  /* vor dem Start (mit JS): ruhiger Ausgangszustand, damit nichts springt */
+  html.js .bstn:not(.ist-los) :is(.bstn__brief, .bstn__frage) { opacity: 0; }
+  html.js .bstn:not(.ist-los) .bstn__eintrag { transform: scaleX(0); }
+  html.js .bs-zwei:has(.bstn:not(.ist-los)) .verluste li::before { transform: scale(0); }
+  html.js .bs-zwei:has(.bstn:not(.ist-los)) .verluste li::after { opacity: 0; }
+
+  .bstn.ist-los .bstn__brief { animation: bstn-brief 10s linear infinite both; }
+  .bstn.ist-los .bstn__brief-rot { animation: bstn-rot 10s linear infinite both; }
+  .bstn.ist-los .bstn__eintrag--1 { animation: bstn-eintrag1 10s ease-out infinite both; }
+  .bstn.ist-los .bstn__eintrag--3 { animation: bstn-eintrag3 10s ease-out infinite both; }
+  .bstn.ist-los .bstn__frage { animation: bstn-frage 10s ease-out infinite both; }
+  .bstn.ist-los .bstn__verb::before, .bstn.ist-los .bstn__verb::after { animation: bstn-bruch 10s ease-in-out infinite both; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li::before { animation: bstn-punkt 10s ease-out infinite both; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li::after { animation: bstn-ring 10s ease-out infinite both; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(2)::before { animation-name: bstn-punkt2; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(2)::after { animation-name: bstn-ring2; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(3)::before { animation-name: bstn-punkt3; }
+  .bs-zwei:has(.bstn.ist-los) .verluste li:nth-child(3)::after { animation-name: bstn-ring3; }
+  /* außerhalb des Sichtbereichs anhalten, Grafik und Zeilen gemeinsam (bleiben synchron) */
+  .bstn.ist-los:not(.ist-sichtbar) :is(.bstn__brief, .bstn__brief-rot, .bstn__eintrag, .bstn__frage),
+  .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::before,
+  .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::after,
+  .bs-zwei:has(.bstn.ist-los:not(.ist-sichtbar)) .verluste li::before,
+  .bs-zwei:has(.bstn.ist-los:not(.ist-sichtbar)) .verluste li::after { animation-play-state: paused; }
 }
-@keyframes baustein-probieren { 0% { transform: translate(0, 0) rotate(0deg); } 35% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(2px, 1px) rotate(1deg); } }
+/* Brief: erscheint auf der Website, wandert los, bleibt in der Lücke hängen (Ruckeln), fällt und verblasst */
+@keyframes bstn-brief {
+  0% { opacity: 0; transform: translateX(calc(var(--bw) * -1.3)) scale(0.6); }
+  5%, 11% { opacity: 1; transform: translateX(calc(var(--bw) * -1.3)) scale(1); }
+  21% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
+  23% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 + 3px)); }
+  25% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 - 3px)); }
+  27% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 + 2px)); }
+  29%, 31% { opacity: 1; transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
+  38%, 100% { opacity: 0; transform: translate(calc(var(--gx) * 0.5 - var(--bw) / 2), 16px) scale(0.85); }
+}
+@keyframes bstn-rot { 0%, 22% { opacity: 0; } 26%, 100% { opacity: 1; } }
+@keyframes bstn-eintrag1 { 0%, 43% { opacity: 1; transform: scaleX(0); } 51%, 90% { opacity: 1; transform: scaleX(1); } 96%, 100% { opacity: 0; transform: scaleX(1); } }
+@keyframes bstn-eintrag3 { 0%, 53% { opacity: 1; transform: scaleX(0); } 61%, 90% { opacity: 1; transform: scaleX(1); } 96%, 100% { opacity: 0; transform: scaleX(1); } }
+@keyframes bstn-frage { 0%, 69% { opacity: 0; transform: scale(0.6); } 74% { opacity: 1; transform: scale(1.08); } 77%, 90% { opacity: 1; transform: scale(1); } 96%, 100% { opacity: 0; transform: scale(1); } }
+@keyframes bstn-bruch { 0%, 70% { opacity: 0.55; } 74%, 88% { opacity: 1; } 96%, 100% { opacity: 0.55; } }
+/* Zeilen links: 1 ab 25 %, 2 ab 56 %, 3 ab 74 %, gemeinsam aus bei 92–97 % */
+@keyframes bstn-punkt { 0%, 24% { transform: scale(0); } 28%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
+@keyframes bstn-ring { 0%, 24% { opacity: 0; } 28%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes bstn-punkt2 { 0%, 55% { transform: scale(0); } 59%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
+@keyframes bstn-ring2 { 0%, 55% { opacity: 0; } 59%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes bstn-punkt3 { 0%, 73% { transform: scale(0); } 77%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
+@keyframes bstn-ring3 { 0%, 73% { opacity: 0; } 77%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
 
 /* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei große Karten mit reinem Text ── */
 .verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
@@ -121,9 +203,10 @@ html.js [data-p] { --p: 0; }
 .bs--dunkel .bs-gross-unter { color: var(--gold); }
 .abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }
 
-/* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei gleich breite, gleich hohe Karten, verdichtet (Jamil 4868–4870) ── */
-.schritte3 { list-style: none; width: 100%; max-width: 1100px; margin: clamp(32px, 5vw, 52px) auto 0; padding: 0; display: grid; gap: 16px; }
-@media (min-width: 860px) { .schritte3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; } }
+/* ── 3 · Verstehen. Empfehlen. Umsetzen. Verbessern.: gleich breite, gleich hohe Karten (Jamil 4868–4870; seit 08.11.
+ *     #4988/#4989 vier Schritte, Erstberatung in „Verstehen“). Unter 1100 px untereinander (max. 640 px breit). ── */
+.schritte3 { list-style: none; width: 100%; max-width: 640px; margin: clamp(32px, 5vw, 52px) auto 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 1100px) { .schritte3 { max-width: 1240px; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; align-items: stretch; } }
 /* 08.11. (Rethinking „einladender“): Zeichen statt Nummern, Karten mittig; die drei Zeichen sitzen auf der Oberkante
  * und sind durch EINE goldene Linie verbunden (Start und Ende exakt in der Mitte des ersten bzw. letzten Zeichens).
  * Sie zeichnet sich einmal beim Sichtbarwerden ([data-zeichne] → .ist-los); ohne JS / reduzierte Bewegung steht sie fertig. */
@@ -134,19 +217,24 @@ html.js [data-p] { --p: 0; }
 .schritt3:not(:last-child)::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 20px; margin-left: -1px; border-radius: 2px; background: var(--gold); transform-origin: top; }
 html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 .schritte3.ist-los .schritt3::after { transition: transform 0.5s ease; transition-delay: calc(0.35s + var(--i) * 0.35s); }
-@media (min-width: 860px) {
+@media (min-width: 1100px) {
   .schritt3:not(:last-child)::after { display: none; }
-  /* eine Linie von der Mitte der ersten bis zur Mitte der dritten Karte (Spaltenabstand 22px) */
-  .schritte3::before { content: ''; position: absolute; top: -1px; left: calc((100% - 44px) / 6); width: calc((200% + 44px) / 3); height: 2px; border-radius: 2px; background: var(--gold); transform-origin: left; z-index: 1; }
+  /* eine Linie von der Mitte der ersten bis zur Mitte der vierten Karte (Spaltenabstand 22px):
+   * Karte c = (100% − 66px) / 4, Start c/2, Länge 100% − c */
+  .schritte3::before { content: ''; position: absolute; top: -1px; left: calc((100% - 66px) / 8); width: calc((300% + 66px) / 4); height: 2px; border-radius: 2px; background: var(--gold); transform-origin: left; z-index: 1; }
   html.js .schritte3:not(.ist-los)::before { transform: scaleX(0); }
   .schritte3.ist-los::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.3, 1) 0.3s; }
 }
 @media (prefers-reduced-motion: reduce) {
   html.js .schritte3:not(.ist-los)::before, html.js .schritte3:not(.ist-los) .schritt3::after { transform: none; }
 }
-.schritt3__wort { margin: 0 0 12px; font-size: clamp(1.8rem, 3.4vw, 2.4rem) !important; letter-spacing: -0.02em; line-height: 1.1; }
+.schritt3__wort { margin: 0 0 12px; font-size: clamp(1.7rem, 2.3vw, 2.1rem) !important; letter-spacing: -0.02em; line-height: 1.1; }
 .schritt3__leit { margin: 0 0 10px; font-family: var(--font-head); font-size: clamp(1.12rem, 1.9vw, 1.3rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
 .schritt3__text { margin: 0; max-width: 34ch; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); }
+.schritt3__text + .schritt3__hinweis { margin-top: 12px; }
+.schritt3__hinweis { margin: 0; font-size: 0.92rem; line-height: 1.6; }
+.schritt3__hinweis a { font-weight: 650; color: var(--dark); text-underline-offset: 3px; }
+@media (min-width: 1100px) { .schritt3 { padding-inline: 24px; } .schritt3__text { font-size: 0.98rem; } }
 .bs-unter--mitte { margin-inline: auto; max-width: none; }
 
 
@@ -234,23 +322,16 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 .stimme4__zitat p { margin: 0; font-family: var(--font-head); font-size: 1.05rem; line-height: 1.6; color: var(--dark); }
 .stimme4__quelle { margin: 12px 0 0; font-size: 0.9rem; font-weight: 600; color: #a1261d; }
 
-/* So läuft die Erstberatung: drei Schritte, ruhig */
-.erst4 { list-style: none; margin: clamp(28px, 4vw, 44px) auto 0; padding: 0; display: grid; gap: 16px; max-width: 980px; counter-reset: none; }
-@media (min-width: 800px) { .erst4 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; } }
-.erst4__schritt { padding: 22px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
-.erst4__nr { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 12px; border-radius: 50%; background: var(--gold); color: var(--dark); font-weight: 700; }
-.erst4__titel { margin: 0 0 6px; font-size: 1.15rem !important; }
-.erst4__text { margin: 0; font-size: 0.97rem; line-height: 1.7; color: var(--ink-soft); }
-@media (max-width: 799px) {
-  .erst4__schritt { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; padding: 16px 18px; }
-  .erst4__nr { grid-row: span 2; margin: 2px 0 0; }
-}
+/* CTA „Kostenfreie Erstberatung“ unter dem Abschnitt #denkweise (seit 08.11. Jamil #4989; eigener Abschnitt entfernt) */
 .erst4__cta { margin: clamp(24px, 3vw, 32px) 0 0; text-align: center; }
 
-/* Bausteine am Handy kürzer (Jamil #4934 Punkt 6): Wortliste nur für Screenreader (das Puzzle zeigt dieselben Wörter),
-   Puzzle kleiner */
+/* Bausteine am Handy kürzer (Jamil #4934 Punkt 6): Wortliste nur für Screenreader (die Module zeigen dieselben Wörter),
+   Module enger */
 @media (max-width: 959px) {
   .werkzeuge { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
-  .bausteine svg { max-width: 270px; }
+  .bstn { --gx: 40px; --gy: 34px; --bw: 22px; --bh: 16.5px; --fq: 28px; }
+  .bstn__karte { padding: 12px 12px 14px; border-radius: 12px; }
+  .bstn__icon { width: 34px; height: 34px; }
+  .bstn__name { margin-top: 10px; }
   .bs-zwei--mitte { gap: 18px; }
 }
