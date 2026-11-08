@@ -124,13 +124,29 @@ html.js [data-p] { --p: 0; }
 /* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei gleich breite, gleich hohe Karten, verdichtet (Jamil 4868–4870) ── */
 .schritte3 { list-style: none; width: 100%; max-width: 1100px; margin: clamp(32px, 5vw, 52px) auto 0; padding: 0; display: grid; gap: 16px; }
 @media (min-width: 860px) { .schritte3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: stretch; } }
-.schritt3 { position: relative; display: flex; flex-direction: column; padding: clamp(24px, 3vw, 34px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--dark); }
-.schritt3:nth-child(2) { border-top-color: var(--salbei); }
-.schritt3:nth-child(3) { border-top-color: var(--gold); }
-.schritt3__nr { position: absolute; top: clamp(24px, 3vw, 34px); right: clamp(24px, 3vw, 34px); font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: #6b736e; }
+/* 08.11. (Rethinking „einladender“): Zeichen statt Nummern, Karten mittig; die drei Zeichen sitzen auf der Oberkante
+ * und sind durch EINE goldene Linie verbunden (Start und Ende exakt in der Mitte des ersten bzw. letzten Zeichens).
+ * Sie zeichnet sich einmal beim Sichtbarwerden ([data-zeichne] → .ist-los); ohne JS / reduzierte Bewegung steht sie fertig. */
+.schritte3 { position: relative; margin-top: clamp(64px, 7vw, 84px); row-gap: 52px; }
+.schritt3 { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 52px clamp(22px, 3vw, 34px) clamp(26px, 3vw, 34px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); box-shadow: 0 1px 2px rgb(31 49 64 / 4%), 0 10px 30px rgb(31 49 64 / 5%); }
+.schritt3__zeichen { position: absolute; top: 0; left: 50%; z-index: 2; display: grid; place-items: center; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--line); }
+/* Verbindung am Handy: von der Unterkante einer Karte bis zum Zeichen der nächsten */
+.schritt3:not(:last-child)::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 20px; margin-left: -1px; border-radius: 2px; background: var(--gold); transform-origin: top; }
+html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
+.schritte3.ist-los .schritt3::after { transition: transform 0.5s ease; transition-delay: calc(0.35s + var(--i) * 0.35s); }
+@media (min-width: 860px) {
+  .schritt3:not(:last-child)::after { display: none; }
+  /* eine Linie von der Mitte der ersten bis zur Mitte der dritten Karte (Spaltenabstand 22px) */
+  .schritte3::before { content: ''; position: absolute; top: -1px; left: calc((100% - 44px) / 6); width: calc((200% + 44px) / 3); height: 2px; border-radius: 2px; background: var(--gold); transform-origin: left; z-index: 1; }
+  html.js .schritte3:not(.ist-los)::before { transform: scaleX(0); }
+  .schritte3.ist-los::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.3, 1) 0.3s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .schritte3:not(.ist-los)::before, html.js .schritte3:not(.ist-los) .schritt3::after { transform: none; }
+}
 .schritt3__wort { margin: 0 0 12px; font-size: clamp(1.8rem, 3.4vw, 2.4rem) !important; letter-spacing: -0.02em; line-height: 1.1; }
 .schritt3__leit { margin: 0 0 10px; font-family: var(--font-head); font-size: clamp(1.12rem, 1.9vw, 1.3rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
-.schritt3__text { margin: 0; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); }
+.schritt3__text { margin: 0; max-width: 34ch; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); }
 .bs-unter--mitte { margin-inline: auto; max-width: none; }
 
 
@@ -152,8 +168,20 @@ html.js [data-p] { --p: 0; }
 .station4 h3 { margin: 0; font-size: 1.25rem !important; }
 .station4__ziel { margin: 2px 0 0; font-size: 0.92rem; color: var(--accent-ink); font-weight: 600; }
 .station4__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.station4__liste > li { display: grid; gap: 6px; padding: 14px 0 16px; border-top: 1px solid var(--line); }
+.station4__liste > li { border-top: 1px solid var(--line); }
+/* 08.11.: Leistungsname sichtbar, „Was dazugehört“ zum Aufklappen (weniger Textwand, Inhalt bleibt vollständig) */
+.station4__mehr > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 12px 0; cursor: pointer; list-style: none; }
 .station4__text { font-size: 1rem; font-weight: 600; line-height: 1.45; color: var(--dark); }
+.station4__mehr > summary::-webkit-details-marker { display: none; }
+.station4__mehr > summary:hover .station4__text { color: var(--accent-ink); }
+.station4__plus { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); }
+.station4__plus::before, .station4__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 2px; margin: -1px 0 0 -5px; border-radius: 2px; background: var(--dark); transition: transform 0.25s ease; }
+.station4__plus::after { transform: rotate(90deg); }
+.station4__mehr[open] .station4__plus::after { transform: rotate(0deg); }
+.station4__mehr[open] .station4__plus { background: var(--gold); border-color: var(--gold); }
+.station4__mehr[open] > .station4__dazu { padding-bottom: 14px; }
+@media (prefers-reduced-motion: reduce) { .station4__plus::before, .station4__plus::after { transition: none; } }
+.bs-hinweis { margin: 0 auto; font-size: 0.95rem; color: var(--ink-soft); }
 /* „Was dazugehört“ (Jamil 4909): ruhige Stichpunkte statt Preis-Kennzeichen, großzügiger Zeilenabstand */
 .station4__dazu { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .station4__dazu li { position: relative; padding-left: 16px; font-size: 0.93rem; line-height: 1.7; color: var(--ink-soft); }

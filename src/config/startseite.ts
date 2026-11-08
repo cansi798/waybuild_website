@@ -72,6 +72,8 @@ export const BEREICHE = {
   titel: 'Ein Kunde interessiert sich nicht für Ihre Systeme.',
   unter: 'Ein Kunde interessiert sich für das Erlebnis.',
   einleitung: 'Darum ordnen wir alles nach dem, was Ihr Kunde erlebt:',
+  /** Rethinking 08.11. („einladender“): Details je Leistung zum Aufklappen, statt alles auf einmal */
+  hinweis: 'Wählen Sie eine Leistung, um zu sehen, was dazugehört.',
   stationen: [
     { id: 'aufmerksamkeit', titel: 'Aufmerksamkeit', ziel: 'Gefunden werden und überzeugen' },
     { id: 'anfrage', titel: 'Anfrage', ziel: 'Anfragen sicher empfangen' },

@@ -3,7 +3,10 @@
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
 //   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
 //   · 3 Verstehen. Empfehlen. Umsetzen. (4788) + Woran wir glauben (4795/4796) in einem Abschnitt (4809, #denkweise) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (4790/4791) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+//   · 5 Darauf können Sie sich verlassen (4790/4791; seit 08.11. direkt hinter 3) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+// 08.11.2026 „einladender“ (Jamil 4927/4929, Rethinking NC Rethinking_Startseite-einladend_2026-11-08; Sicherung Branch
+//   vor-einladend-20261108): Claim oben im Hero, Prinzipien mit Zeichen + Linie, „Verlassen“ hinter die Prinzipien,
+//   Leistungsdetails zum Aufklappen. Texte unverändert.
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
 // Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
 // (nur transform/opacity/stroke-dashoffset). Farben nur auf dieser Seite (BaseLayout thema="besucherreise").
@@ -33,6 +36,14 @@ const BEREICH_ICON = [
   '<rect x="6" y="12" width="36" height="25" rx="4" fill="#fff" stroke="#1f3140" stroke-width="2.4"/><path d="M6 14 L24 28 L42 14" fill="none" stroke="#1f3140" stroke-width="2.4" stroke-linejoin="round"/><circle cx="40" cy="12" r="5" fill="#d6a85a"/>',
   '<circle cx="19" cy="20" r="10" fill="none" stroke="#1f3140" stroke-width="5" stroke-dasharray="3.6 2.7"/><circle cx="19" cy="20" r="7" fill="#1f3140"/><circle cx="19" cy="20" r="2.8" fill="#f8f7f4"/><circle cx="34" cy="33" r="7" fill="none" stroke="#7e9b8a" stroke-width="4" stroke-dasharray="2.8 2.1"/><circle cx="34" cy="33" r="5" fill="#7e9b8a"/><circle cx="34" cy="33" r="2" fill="#f8f7f4"/>',
   '<path d="M24 40 c-2 -2 -16 -10 -16 -20 c0 -6 5 -10 10 -10 c3 0 5 2 6 4 c1 -2 3 -4 6 -4 c5 0 10 4 10 10 c0 10 -14 18 -16 20 Z" fill="#d6a85a"/>',
+];
+
+// Abschnitt 3: ruhige Zeichen für die drei Prinzipien statt Nummern (Rethinking 08.11.): Gespräch = Verstehen,
+// Wegweiser = Empfehlen, Haken = Umsetzen. Stil wie die Hero-Geschichte (Navy, Salbei, Gold, runde Enden).
+const PRINZIP_ICON = [
+  '<path d="M7 11 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-3 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 z" fill="#1f3140"/><path d="M36 19 h5 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-2 v5 l-6 -5 h-9 a4 4 0 0 1 -4 -4 v-1" fill="#7e9b8a"/><circle cx="12" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="18" cy="20.5" r="2" fill="#f8f7f4"/><circle cx="24" cy="20.5" r="2" fill="#f8f7f4"/>',
+  '<rect x="22" y="6" width="4" height="38" rx="2" fill="#1f3140"/><path d="M10 10 h24 l6 5 l-6 5 h-24 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 z" fill="#7e9b8a"/><path d="M38 23 h-24 l-6 5 l6 5 h24 a2 2 0 0 0 2 -2 v-6 a2 2 0 0 0 -2 -2 z" fill="#d6a85a"/>',
+  '<circle cx="24" cy="24" r="18" fill="#d6a85a"/><path d="M15.5 24.5 l6 6 l11 -12" fill="none" stroke="#1f3140" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
 ];
 
 // Referenzen: Symbol in der stilisierten Vorschau (keine echten Screenshots/Logos, solange nicht freigegeben)
@@ -88,10 +99,10 @@ const MOTIV: Record<string, string> = {
         <ul class="verstehen-chips">{VERSTEHEN.liste.map((l) => <li>{l}</li>)}</ul>
         <p class="bs-lead">{VERSTEHEN.schluss[0]} <strong>{VERSTEHEN.schluss[1]}</strong></p>
       </div>
-      <ol class="schritte3">
+      <ol class="schritte3" data-zeichne>
         {VERSTEHEN.karten.map((k, i) => (
-          <li class="schritt3 reveal" style={`transition-delay:${i * 90}ms`}>
-            <span class="schritt3__nr" aria-hidden="true">{i + 1}</span>
+          <li class="schritt3" style={`--i:${i}`}>
+            <span class="schritt3__zeichen" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" focusable="false" set:html={PRINZIP_ICON[i]} /></span>
             <h3 class="schritt3__wort">{k.wort}</h3>
             <p class="schritt3__leit">{k.leit}</p>
             <p class="schritt3__text">{k.text}</p>
@@ -102,6 +113,18 @@ const MOTIV: Record<string, string> = {
         <p class="ohne__kopf">{VERSTEHEN.nichtKopf}</p>
         <ul class="ohne__liste">{VERSTEHEN.nicht.map((n) => <li>{n}</li>)}</ul>
       </div>
+    </div>
+  </section>
+
+  <!-- Darauf können Sie sich verlassen (Jamil 4790/4791): große Schlagworte, viel Weißraum, keine Icons.
+       08.11. (Rethinking „einladender“, Jamil 4927/4929): direkt hinter die drei Prinzipien gerückt, damit die Haltung
+       gebündelt VOR Leistungen und Preisen steht (vorher hinter den Referenzen). -->
+  <section class="bs bs--dunkel verlassen" aria-labelledby="bs-verlassen">
+    <div class="wrap">
+      <h2 id="bs-verlassen" class="verlassen__titel">{VERLASSEN.titel}</h2>
+      <ul class="verlassen__liste">
+        {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
+      </ul>
     </div>
   </section>
 
@@ -116,6 +139,7 @@ const MOTIV: Record<string, string> = {
         <h2 id="bs-bereiche">{BEREICHE.titel}</h2>
         <p class="bs-unter bs-unter--mitte">{BEREICHE.unter}</p>
         <p class="bs-lead">{BEREICHE.einleitung}</p>
+        <p class="bs-hinweis">{BEREICHE.hinweis}</p>
       </div>
       <ol class="reise4">
         {BEREICHE.stationen.map((st, i) => (
@@ -128,8 +152,10 @@ const MOTIV: Record<string, string> = {
               {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu })),
                 ...BAUKASTEN.bausteine.filter((b) => !b.zu).map((b) => ({ ...b, dazu: [...b.dazu, ...BAUKASTEN.bausteine.filter((o) => o.zu === b.id).flatMap((o) => o.dazu)] }))]
                 .filter((l) => l.station === st.id).map((l) => (
-                <li><span class="station4__text">{l.name}</span>
-                  <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul></li>
+                <li><details class="station4__mehr">
+                  <summary><span class="station4__text">{l.name}</span><span class="station4__plus" aria-hidden="true"></span></summary>
+                  <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul>
+                </details></li>
               ))}
             </ul>
           </li>
@@ -178,16 +204,6 @@ const MOTIV: Record<string, string> = {
             </div>
           </li>
         ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- 5 · Darauf können Sie sich verlassen (Jamil 4790/4791): große Schlagworte, viel Weißraum, keine Icons -->
-  <section class="bs bs--dunkel verlassen" aria-labelledby="bs-verlassen">
-    <div class="wrap">
-      <h2 id="bs-verlassen" class="verlassen__titel">{VERLASSEN.titel}</h2>
-      <ul class="verlassen__liste">
-        {VERLASSEN.saetze.map((t, i) => <li class:list={['reveal', { 'ist-letzt': i === VERLASSEN.saetze.length - 1 }]}>{t}</li>)}
       </ul>
     </div>
   </section>

@@ -2,19 +2,22 @@
 // Hero der Startseite (Texte Jamil, Talk qh87y3sj 4771 + 4783). Text steht beim Laden sofort (kein Einblenden, gut für
 // LCP). Rechts bzw. darunter die kleine Kundengeschichte in fünf Stationen (Jamil 4784, KundenGeschichte.astro).
 // Knöpfe springen zum Check (#check) und zum Abschnitt Verständnis (#denkweise).
-import { HERO as H } from '../../config/startseite';
+// 08.11.2026 (Jamil 4927/4929, Rethinking „einladender“): der Claim (Jamil 4793) steht als Botschaftszeile über der
+// Überschrift (vorher nur ganz unten), die Zielgruppe rückt unter die Knöpfe. Knöpfe am PC nebeneinander.
+import { HERO as H, CLAIM } from '../../config/startseite';
 import KundenGeschichte from './KundenGeschichte.astro';
 ---
 <section class="sh" aria-labelledby="sh-titel">
   <div class="wrap sh__raster">
     <div class="sh__text">
-      <p class="sh__zeile">{H.zeile}</p>
+      <p class="sh__claim">{CLAIM}</p>
       <h1 id="sh-titel" class="sh__titel">{H.titel}</h1>
       {H.unter.map((u) => <p class="sh__unter">{u}</p>)}
       <div class="sh__knoepfe">
         <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>
         <a class="btn btn--umriss btn--lg" href="#denkweise">{H.cta2}</a>
       </div>
+      <p class="sh__zeile">{H.zeile}</p>
     </div>
     <figure class="sh__bild">
       <KundenGeschichte />
@@ -25,16 +28,20 @@ import KundenGeschichte from './KundenGeschichte.astro';
 <style>
   .sh { padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 80px); background: var(--paper); overflow: hidden; }
   .sh__raster { display: grid; gap: clamp(20px, 4vw, 40px); align-items: center; }
-  .sh__zeile { margin: 0 0 14px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+  /* Botschaftszeile: kurz, warm, mit feiner Goldlinie davor */
+  .sh__claim { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 18px; font-family: var(--font-head); font-size: clamp(1rem, 1.6vw, 1.15rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
+  .sh__claim::before { content: ''; flex: none; width: 28px; height: 2px; margin-top: 0.66em; border-radius: 2px; background: var(--gold); }
+  .sh__zeile { margin: 18px 0 0; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
   .sh__titel { margin: 0; font-size: clamp(2rem, 4.4vw, 3.25rem); font-weight: 650; line-height: 1.07; letter-spacing: -0.03em; color: var(--dark); max-width: 18ch; }
   .sh__unter + .sh__unter { margin-top: 0.7em; }
   .sh__unter { margin: 0.8em 0 0; font-size: clamp(1.1rem, 2vw, 1.32rem); line-height: 1.55; color: #3d4b57; max-width: 36ch; }
   .sh__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(22px, 3vw, 32px); }
+  .sh__knoepfe .btn { padding-inline: 1.3em; }
   @media (max-width: 599px) { .sh__knoepfe .btn { width: 100%; } }
   .sh__bild { margin: 0; }
   .sh__botschaft { max-width: 460px; margin: 10px auto 0; text-align: center; font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
   .sh__botschaft strong { display: block; color: var(--dark); font-weight: 650; }
   @media (min-width: 960px) {
-    .sh__raster { grid-template-columns: 1fr 1fr; column-gap: clamp(32px, 5vw, 72px); }
+    .sh__raster { grid-template-columns: 1.25fr 1fr; column-gap: clamp(32px, 5vw, 72px); }
   }
 </style>
