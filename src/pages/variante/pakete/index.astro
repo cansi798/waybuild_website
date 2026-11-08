@@ -5,6 +5,7 @@
 import VarianteLayout from '../../../components/variante/VarianteLayout.astro';
 import VPaketKarte from '../../../components/variante/VPaketKarte.astro';
 import VFaq from '../../../components/variante/VFaq.astro';
+import VEinmalig from '../../../components/variante/VEinmalig.astro';
 import Icon from '../../../components/Icon.astro';
 import { href } from '../../../lib/paths';
 import { formatEuro, SHOW_HINTS, PREIS_HINWEIS } from '../../../config/site';
@@ -38,6 +39,7 @@ const hinweise = SHOW_HINTS && IS_PREVIEW;
       </div>
       <p class="v-hinweis">{LAUFZEIT} Monate Mindestlaufzeit, danach monatlich kündbar. {PREIS_HINWEIS}</p>
       <p class="v-zusatz vpk__gr">Sie gründen gerade? Das <a href={href('/variante/gruender/')}>Gründungspaket für {formatEuro(preis(GRUENDUNG))} im Monat</a> enthält Logo, Google-Profil und Terminbuchung.</p>
+      <VEinmalig />
     </div>
   </section>
 
@@ -59,7 +61,7 @@ const hinweise = SHOW_HINTS && IS_PREVIEW;
       <div class="section-head center">
         <span class="eyebrow">Im Überblick</span>
         <h2 id="vgl-h" class="rule">Welches Paket passt?</h2>
-        <p class="lead">Ein Haken heißt: im Paket inklusive. Bei der Suchmaschinen-Optimierung steht der Umfang dabei.</p>
+        <p class="lead">Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei.</p>
       </div>
       <div class="vpk__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
         <table class="vpk">

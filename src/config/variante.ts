@@ -67,16 +67,22 @@ export const VPAKETE: VPaket[] = [
         detail: 'Ihre Postfächer werden mit Ordnern und Regeln eingerichtet, damit Anfragen nicht im Posteingang untergehen.' },
       { id: 'bericht', text: 'Monatsbericht inklusive', detail: 'Besucher, Anfragen, Suchbegriffe, kurz und verständlich.' },
       { id: 'ki-check', text: 'Monatlicher KI-Check inklusive', detail: 'Jeden Monat prüfen wir, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben.' },
-      { id: 'weg', text: 'Den Weg bis zur Anfrage verbessern inklusive', zeile: 'Weg bis zur Anfrage verbessern',
-        detail: 'Wir prüfen regelmäßig, wo Besucher abspringen, und verbessern den Weg bis zur Anfrage.' },
+      { id: 'weg', text: 'Den Weg bis zur Anfrage verbessern inklusive', zeile: 'Weg bis zur Anfrage verbessern', wert: '1 Verbesserung im Monat',
+        detail: 'Jeden Monat prüfen wir, wo Besucher abspringen, und setzen eine Verbesserung am Weg bis zur Anfrage um.' },
     ],
   },
   {
     id: 'komplett', name: 'Komplett', kurz: 'Ein einheitlicher Auftritt, laufend verbessert', preis: 299.99, baut: 'plus',
-    fuer: 'Für Unternehmen, die einen einheitlichen Auftritt wollen, von der Website bis zum Brief, und laufend dranbleiben möchten.',
+    fuer: 'Für Unternehmen, die einen eigenen Auftritt von der Website bis zum Brief wollen, mehr Kunden gewinnen möchten und sich darauf verlassen wollen, dass wir uns aktiv kümmern.',
     inhalte: [
       { id: 'logo', text: 'Logo und Geschäftspapiere inklusive', detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
-      { id: 'optimierung', text: 'Laufende Verbesserung inklusive', detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache, alle drei Monate ein Gespräch.' },
+      { id: 'mail-vorlagen', text: 'E-Mail-Vorlagen im gleichen Stil inklusive', detail: 'Vorlagen für Angebote und Antworten, passend zu Logo und Geschäftspapieren.' },
+      { id: 'termin', text: 'Online-Terminbuchung inklusive', detail: 'Kunden buchen direkt auf Ihrer Website. Bestätigung und Erinnerung kommen automatisch.' },
+      { id: 'social', text: 'Social-Media-Profile eingerichtet inklusive', detail: 'Ihre Profile, zum Beispiel bei Instagram, Facebook oder LinkedIn, eingerichtet und passend zur Website gestaltet.' },
+      { id: 'sprache', text: 'Website in einer zweiten Sprache inklusive', detail: 'Ihre Website zusätzlich in einer zweiten Sprache, zum Beispiel Englisch.' },
+      { id: 'optimierung', text: 'Laufende Verbesserung inklusive', zeile: 'Weg bis zur Anfrage verbessern', wert: '2 bis 3 Verbesserungen im Monat, Strategiegespräch alle drei Monate',
+        detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache statt einer, dazu alle drei Monate ein Strategiegespräch mit Ihnen.' },
+      { id: 'vorrang', text: 'Bevorzugte Bearbeitung inklusive', detail: 'Ihre Änderungswünsche kommen bei uns zuerst dran.' },
     ],
   },
 ];
@@ -99,6 +105,23 @@ export const alleInhalte = (p: VPaket): Inhalt[] => {
   return [...(vor ? alleInhalte(vor) : []), ...p.inhalte];
 };
 
+/** Wertzeile Komplett (Jamil #5041/#5042): NUR Leistungen mit Baustein-Preis in BAUKASTEN, Einmalpreise ÷ 24 + Monatsbausteine.
+ *  Nicht mitgerechnet (kein Baustein-Preis): beide Stufen Suchmaschinen-Optimierung, E-Mail-Organisation, „Weg bis zur
+ *  Anfrage“ (in Komplett durch „Laufende Verbesserung“ ersetzt), E-Mail-Vorlagen, Social Media, zweite Sprache, Vorrang.
+ *  Darum „mindestens“. Rechnung: docs/variante-firma/preise.md, Abschnitt 2a. */
+const BAUSTEIN_FUER: Record<string, string> = { ki: 'ki', 'google-profil': 'google-profil', 'google-pflege': 'google-pflege', email: 'email', bericht: 'bericht', 'ki-check': 'ki-check', logo: 'logo', termin: 'termin', optimierung: 'optimierung' };
+export const einzelWert = (p: VPaket) => {
+  const ids = new Set(alleInhalte(p).map((i) => i.id));
+  let summe = ids.has('website') ? BAUKASTEN.basis.preis : 0;
+  for (const id of ids) {
+    const b = BAUKASTEN.bausteine.find((x) => x.id === BAUSTEIN_FUER[id]);
+    if (b) summe += b.preis ?? (b.einmalig ?? 0) / LAUFZEIT;
+  }
+  return summe;
+};
+/** Nur anzeigen, wenn der Einzelwert ehrlich über dem Paketpreis liegt. */
+export const WERTZEILE: Partial<Record<VPaket['id'], true>> = { komplett: true };
+
 /** Monatspreis netto (von Jamil gesetzt) und Kosten über die Mindestlaufzeit. */
 export const preis = (p: VPaket) => p.preis;
 export const gesamt = (p: VPaket) => Math.round(p.preis * LAUFZEIT * 100) / 100;
@@ -118,9 +141,24 @@ export const vergleichZeilen = () => {
 const termin = terminBaustein.preis;
 const weitereSeite = auf99(69 / LAUFZEIT); // BAUKASTEN-Hinweis „Jede weitere Seite 69 €“ ÷ 24 (Zusatzleistung, kein Paketinhalt)
 export const DAZU = [
-  { name: 'Online-Terminbuchung', text: 'Kunden buchen freie Termine direkt auf Ihrer Website.', preis: termin },
+  { name: 'Online-Terminbuchung', text: 'Kunden buchen freie Termine direkt auf Ihrer Website. Im Paket Komplett schon enthalten.', preis: termin },
   { name: 'Weitere Seite für einen Ort oder eine Leistung', text: 'Je Seite, mit Text und Bildern passend zu Ihrem Angebot.', preis: weitereSeite },
 ];
+/** Kasten „einmalig dazubuchen“ (Jamil #5041/#5042) unter den Paketen und auf /variante/gruender/.
+ *  Logo-Preis aus BAUKASTEN (dort heißt der Baustein „Logo und Geschäftspapiere“, 790 € einmalig). */
+const logoBaustein = BAUKASTEN.bausteine.find((x) => x.id === 'logo');
+if (!logoBaustein?.einmalig) throw new Error('variante.ts: Baustein logo fehlt in BAUKASTEN');
+export const EINMALIG = {
+  titel: 'Für Gründer und alle, die neu starten: einmalig dazubuchen',
+  hinweis: 'Einmaliger Festpreis, keine monatlichen Kosten. Alle Preise netto zzgl. MwSt.',
+  liste: [
+    { name: 'Logo', text: '3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck.', preis: logoBaustein.einmalig as number | null },
+    { name: 'E-Mail-Signatur nach DIN 5008', text: 'Eine einheitliche Signatur für alle Ihre Postfächer.', preis: null },
+    { name: 'Geschäftspapiere nach DIN 5008', text: 'Briefbogen, Angebot und Rechnung im gleichen Stil.', preis: null },
+    { name: 'Visitenkarten', text: 'Gestaltung passend zu Ihrem Logo, als druckfertige Datei. Der Druck ist nicht enthalten.', preis: null },
+  ],
+};
+
 export const AUF_ANFRAGE = ['Kundenverwaltung', 'Abläufe automatisieren', 'Social Media', 'Video', 'Software, Cloud und IT'];
 
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
@@ -183,7 +221,7 @@ export const TAUSCH = {
   titel: 'Sie brauchen etwas aus dem Paket nicht?',
   regeln: [
     { titel: 'Fester Paketinhalt', text: 'Jedes Paket hat einen festen Inhalt und einen festen Preis. So wissen Sie vorher genau, was Sie bekommen.' },
-    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel die Online-Terminbuchung.' },
+    { titel: 'Gleichwertig tauschen', text: 'Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen.' },
     { titel: 'Oder das kleinere Paket', text: 'Passt ein Paket nur zur Hälfte, empfehlen wir Ihnen ehrlich das kleinere.' },
     { titel: 'Größerer Umfang: eigenes Angebot', text: 'Brauchen Sie deutlich mehr, zum Beispiel Kundenverwaltung oder Abläufe, bekommen Sie ein individuelles Angebot.' },
   ],
@@ -195,7 +233,7 @@ export type Frage = { q: string; a: string; platzhalter?: boolean };
 
 export const FAQ_PAKETE: Frage[] = [
   { q: 'Ich brauche kein Logo. Muss ich das mitbezahlen?',
-    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel die Online-Terminbuchung. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
+    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
   { q: 'Kann ich über den Preis verhandeln?',
     a: 'Bei den drei Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
   { q: 'Gibt es Einrichtungs- oder Einmalkosten?',

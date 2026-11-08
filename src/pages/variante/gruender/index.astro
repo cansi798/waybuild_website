@@ -4,6 +4,7 @@
 // keine Notar- oder Gründungsformalitäten. noindex, nicht in der Sitemap.
 import VarianteLayout from '../../../components/variante/VarianteLayout.astro';
 import VPaketKarte from '../../../components/variante/VPaketKarte.astro';
+import VEinmalig from '../../../components/variante/VEinmalig.astro';
 import VAblauf from '../../../components/variante/VAblauf.astro';
 import VFaq from '../../../components/variante/VFaq.astro';
 import Icon from '../../../components/Icon.astro';
@@ -74,6 +75,7 @@ const NICHT = ['Steuerberatung', 'Rechtsberatung', 'Gewerbeanmeldung', 'Notarter
       </div>
       <VPaketKarte paket={GRUENDUNG} />
     </div>
+    <div class="wrap"><VEinmalig /></div>
   </section>
 
   <section class="section" id="nicht" aria-labelledby="nicht-h">

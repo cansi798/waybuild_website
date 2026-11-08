@@ -1,6 +1,6 @@
 # Variante „an firma.de orientiert“: Preisvorschlag
 
-Stand 08.11.2026, 16:30 · Auftrag Jamil (Talk WS-0007 qh87y3sj, #5016/#5017; Preise und Inhalte #5028–#5035) · **nur Vorschlag, die Preise legen Can und Jamil fest**
+Stand 08.11.2026, 16:30 · Auftrag Jamil (Talk WS-0007 qh87y3sj, #5016/#5017; Preise und Inhalte #5028–#5035; Komplett und „einmalig dazubuchen“ #5041/#5042) · **nur Vorschlag, die Preise legen Can und Jamil fest**
 
 Vorschau: /variante/, /variante/pakete/, /variante/gruender/ (noindex, nicht in der Sitemap).
 Die normale Startseite, /preise/, der Abo-Baukasten, PAKETE in site.ts und die AGB sind unverändert.
@@ -23,7 +23,7 @@ Weiterhin **Vorschlag zur Entscheidung durch Can und Jamil**.
 |---|---|---|---|---|---|
 | **Basis** | Website · Suchmaschinen-Optimierung beim Erstellen · E-Mail-Postfächer mit Signatur · Aufbereitung für KI-Assistenten | **79,99 €** | 95,19 € | 1.919,76 € | 2.284,51 € |
 | **Plus** (Empfehlung) | Alles aus Basis · Google-Profil einrichten · Google-Profil pflegen · Erweiterte Suchmaschinen-Optimierung · E-Mail-Organisation mit Unterordnern · Monatsbericht · Monatlicher KI-Check · Den Weg bis zur Anfrage verbessern | **149,99 €** | 178,49 € | 3.599,76 € | 4.283,71 € |
-| **Komplett** | Alles aus Plus · Logo und Geschäftspapiere · Laufende Verbesserung | **299,99 €** (unverändert) | 356,99 € | 7.199,76 € | 8.567,71 € |
+| **Komplett** | Alles aus Plus · Logo und Geschäftspapiere · E-Mail-Vorlagen im gleichen Stil · Online-Terminbuchung · Social-Media-Profile eingerichtet · Website in einer zweiten Sprache · Laufende Verbesserung (2 bis 3 im Monat + Strategiegespräch alle drei Monate) · Bevorzugte Bearbeitung | **299,99 €** (unverändert) | 356,99 € | 7.199,76 € | 8.567,71 € |
 | **Gründung** | Website · E-Mail-Postfächer mit Signatur · KI-Aufbereitung · Logo und Geschäftspapiere · Google-Profil einrichten · Online-Terminbuchung | **153,99 €** (unverändert) | 183,25 € | 3.695,76 € | 4.397,95 € |
 
 Änderungen 08.11.2026 16:30 (Jamil #5028–#5035):
@@ -33,6 +33,14 @@ Weiterhin **Vorschlag zur Entscheidung durch Can und Jamil**.
 - Komplett: Preis unverändert. Erbt die Plus-Änderungen (keine Ortsseiten mehr, dafür erweiterte Optimierung). KI-Check kommt jetzt über Plus.
 - Gründung: unverändert.
 - Keine Prozentzahlen, keine Ranking- oder Platz-1-Versprechen (UWG).
+
+Änderungen 08.11.2026 ~16:45 (Jamil #5041/#5042 „ok – alles umsetzen“):
+
+- Komplett (299,99 € bleibt) aufgewertet: neu Online-Terminbuchung (Bestätigung und Erinnerung automatisch), Social-Media-Profile eingerichtet (z. B. Instagram, Facebook, LinkedIn), Website in einer zweiten Sprache, Bevorzugte Bearbeitung (Änderungswünsche kommen zuerst dran, **keine** Stunden-Zusage), E-Mail-Vorlagen für Angebote und Antworten im gleichen Stil. Logo und Geschäftspapiere bleiben.
+- Unterschied Verbesserung: Plus = jeden Monat prüfen, **1** Verbesserung am Weg bis zur Anfrage. Komplett = **2 bis 3** Verbesserungen im Monat, dazu alle drei Monate ein Strategiegespräch. In der Tabelle eine Zeile „Weg bis zur Anfrage verbessern“ mit beiden Umfängen.
+- Satz unter Komplett: eigener Auftritt + mehr Kunden + wir kümmern uns aktiv.
+- Neuer Kasten „Für Gründer und alle, die neu starten: einmalig dazubuchen“ (unter den Paketen auf /variante/pakete/ und auf /variante/gruender/): Logo 790 € einmalig (aus BAUKASTEN), E-Mail-Signatur nach DIN 5008, Geschäftspapiere nach DIN 5008 (Briefbogen, Angebot, Rechnung), Visitenkarten (Gestaltung, Druck nicht enthalten) jeweils „Festpreis auf Anfrage“. Hinweis „Einmaliger Festpreis, keine monatlichen Kosten“.
+- Zusatz „Online-Terminbuchung“ (24,99 €/Monat) bleibt für Basis und Plus; Text: „Im Paket Komplett schon enthalten“.
 
 Vergleichstabelle auf /variante/pakete/: Zeile „Suchmaschinen-Optimierung“ Basis „Grundoptimierung beim Erstellen“, Plus und Komplett „Erweiterte Optimierung“; „E-Mail-Organisation mit Ordnern“, „Monatlicher KI-Check“ und „Weg bis zur Anfrage verbessern“ je Plus ✓, Komplett ✓.
 
@@ -45,6 +53,28 @@ Namen bewusst schlicht (Jamil 04.11.: keine Marketing-Fantasienamen): Basis, Plu
 
 Nur echte Leistungen im Gründungspaket. Ausdrücklich NICHT: Steuer- oder Rechtsberatung, Gewerbeanmeldung, Notar, Handelsregister, Businessplan/Finanzierung (steht so auf /variante/gruender/).
 
+### 2a. Wertzeile Komplett: „Einzeln gebucht wären das mindestens rund 309 € im Monat, im Paket 299,99 €“
+
+Gerechnet NUR mit Leistungen, die im Baukasten (`BAUKASTEN`, src/config/startseite.ts) einen Preis haben, nach der Regel Monatsbaustein + Einmalpreis ÷ 24. Die Seite rechnet live (`einzelWert()` in src/config/variante.ts) und rundet ab.
+
+| Leistung in Komplett | Baukasten | Anteil je Monat |
+|---|---|---|
+| Website | 69,99 €/Monat | 69,99 € |
+| E-Mail-Postfächer mit Signatur | 9,99 €/Monat | 9,99 € |
+| Aufbereitung für KI-Assistenten | 190 € einmalig ÷ 24 | 7,92 € |
+| Google-Profil einrichten | 199 € einmalig ÷ 24 | 8,29 € |
+| Google-Profil pflegen | 19,99 €/Monat | 19,99 € |
+| Monatsbericht | 19,99 €/Monat | 19,99 € |
+| Monatlicher KI-Check | 14,99 €/Monat | 14,99 € |
+| Logo und Geschäftspapiere | 790 € einmalig ÷ 24 | 32,92 € |
+| Online-Terminbuchung | 24,99 €/Monat | 24,99 € |
+| Laufende Verbesserung (2 bis 3 im Monat, Gespräch alle drei Monate) | 99,99 €/Monat | 99,99 € |
+| **Summe** | | **309,06 €** → „mindestens rund 309 €“ |
+
+Nicht mitgerechnet, weil es dafür keinen Baustein-Preis gibt: Suchmaschinen-Optimierung (beide Stufen; der alte Baustein „Bei Google besser gefunden werden“ 390 € waren die Ortsseiten und ist nicht dasselbe), E-Mail-Organisation mit Unterordnern, „Weg bis zur Anfrage“ (in Komplett durch „Laufende Verbesserung“ ersetzt, nicht doppelt gezählt), E-Mail-Vorlagen, Social-Media-Profile (Baustein „Social Media“ ohne Preis), zweite Sprache, Bevorzugte Bearbeitung. Darum „mindestens“. Ehrlich aufgehen tut es knapp: Der Paketvorteil aus Baustein-Preisen sind rund 9 € im Monat, der eigentliche Mehrwert liegt in den Leistungen ohne Einzelpreis.
+
+Für Basis und Plus gibt es keine Wertzeile (nicht beauftragt): Basis aus Baukasten-Preisen 87,90 € (über 79,99 €), Plus 151,16 € (ohne Ortsseiten, also nur gut 1 € über 149,99 €; als Werbeaussage zu knapp).
+
 ---
 
 ## 3. Offene Entscheidungen für Can und Jamil
@@ -55,8 +85,11 @@ Nur echte Leistungen im Gründungspaket. Ausdrücklich NICHT: Steuer- oder Recht
 4. **Logo bei Monatszahlung:** Wem gehören die Nutzungsrechte nach Vertragsende? Muss anwaltlich geklärt werden (Mietmodell, AGB). Platzhalter.
 5. **Kündigung vor Ablauf:** 24 Monate Mindestlaufzeit; AGB-Prüfung nötig.
 6. **„Nicht im Preis enthalten“** (Fotograf, Bildlizenzen, Druck, fremde Lizenzen): Liste bestätigen (Platzhalter).
-7. **Zusatz „Weitere Seite für einen Ort oder eine Leistung“ (2,99 €)** bleibt buchbar, obwohl Ortsseiten nicht mehr im Plus-Paket sind. Behalten oder streichen?
-8. Die Variante widerspricht dem aktuellen Baukasten (Einmalpreise). Erst nach eurer Entscheidung eine Seite umstellen.
+7. **Logo-Preis im Kasten „einmalig dazubuchen“:** Im Baukasten kosten „Logo und Geschäftspapiere“ zusammen 790 €. Im Kasten steht jetzt Logo allein 790 € und Geschäftspapiere zusätzlich „Festpreis auf Anfrage“. Soll das Logo allein günstiger werden, oder Logo + Geschäftspapiere zusammen 790 € bleiben?
+8. **Festpreise auf Anfrage** für Signatur, Geschäftspapiere, Visitenkarten festlegen.
+9. **Komplett-Leistungen ohne Preisbasis** (zweite Sprache: Umfang/Übersetzung durch wen? Social Media: welche und wie viele Profile? Bevorzugte Bearbeitung: wie organisiert?) vor einer Veröffentlichung genauer fassen.
+10. **Zusatz „Weitere Seite für einen Ort oder eine Leistung“ (2,99 €)** bleibt buchbar, obwohl Ortsseiten nicht mehr im Plus-Paket sind. Behalten oder streichen?
+11. Die Variante widerspricht dem aktuellen Baukasten (Einmalpreise). Erst nach eurer Entscheidung eine Seite umstellen.
 
 ---
 

@@ -4,11 +4,12 @@
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
 import { brutto, formatEuro } from '../../config/site';
-import { type VPaket, VPAKETE, preis, gesamt, LAUFZEIT } from '../../config/variante';
+import { type VPaket, VPAKETE, preis, gesamt, einzelWert, WERTZEILE, LAUFZEIT } from '../../config/variante';
 
 interface Props { paket: VPaket; rechnung?: boolean; details?: boolean; }
 const { paket, rechnung = true, details = true } = Astro.props;
 const p = preis(paket);
+const wert = WERTZEILE[paket.id] ? Math.floor(einzelWert(paket)) : 0;
 const vor = paket.baut ? VPAKETE.find((x) => x.id === paket.baut) : undefined;
 const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} (${formatEuro(p)} / Monat)`)}`;
 ---
@@ -19,6 +20,7 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} 
   <p class="vp__kurz">{paket.kurz}</p>
   <p class="vp__preis"><b>{formatEuro(p)}</b> <span>netto / Monat zzgl. 19 % MwSt.<br />{formatEuro(brutto(p))} inkl. MwSt.</span></p>
   <p class="vp__ohne"><Icon name="check" size={16} /> Keine Einmalkosten</p>
+  {wert > p && <p class="vp__wert">Einzeln gebucht wären das mindestens rund <strong>{formatEuro(wert)}</strong> im Monat, im Paket {formatEuro(p)}.<small>Gerechnet mit unseren Einzelpreisen. Leistungen ohne Einzelpreis, zum Beispiel Social Media oder die zweite Sprache, sind nicht mitgezählt.</small></p>}
   <p class="vp__fuer">{paket.fuer}</p>
   <ul class="vp__liste">
     {vor && <li class="vp__alles"><Icon name="check" size={18} /> <span>Alles aus „{vor.name}“</span></li>}
@@ -41,6 +43,8 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(`${paket.name} 
   .vp__preis b { font-family: var(--font-head); font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1; letter-spacing: -0.02em; }
   .vp__preis span { font-size: 0.85rem; line-height: 1.4; color: var(--ink-soft); }
   .vp__ohne { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 4px 12px; border-radius: 99px; background: #e9f6f5; color: var(--accent-ink); font-size: 0.85rem; font-weight: 700; }
+  .vp__wert { font-size: 0.92rem; line-height: 1.6; color: var(--ink); }
+  .vp__wert small { display: block; margin-top: 2px; font-size: 0.8rem; line-height: 1.5; color: var(--ink-soft); }
   .vp__fuer { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); }
   .vp__liste { list-style: none; padding: 14px 0 6px; display: grid; gap: 12px; border-top: 1px solid var(--line); }
   .vp__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.96rem; line-height: 1.5; }
