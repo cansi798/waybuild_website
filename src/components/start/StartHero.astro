@@ -4,7 +4,9 @@
 // Knöpfe springen zum Check (#check) und zum Abschnitt Verständnis (#denkweise).
 // 08.11.2026 (Jamil 4927/4929, Rethinking „einladender“): der Claim (Jamil 4793) steht als Botschaftszeile über der
 // Überschrift (vorher nur ganz unten), die Zielgruppe rückt unter die Knöpfe. Knöpfe am PC nebeneinander.
-import { HERO as H, CLAIM } from '../../config/startseite';
+// 08.11.2026 (Jamil #4934 Punkt 4): Preis früh nennen, Zeile unter den Knöpfen; Betrag aus BAUKASTEN.basis.preis.
+import { HERO as H, CLAIM, BAUKASTEN, PREIS_FRUEH as P } from '../../config/startseite';
+import { formatEuro } from '../../config/site';
 import KundenGeschichte from './KundenGeschichte.astro';
 ---
 <section class="sh" aria-labelledby="sh-titel">
@@ -17,6 +19,7 @@ import KundenGeschichte from './KundenGeschichte.astro';
         <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>
         <a class="btn btn--umriss btn--lg" href="#denkweise">{H.cta2}</a>
       </div>
+      <p class="sh__preis">{P.vor} <strong>{formatEuro(BAUKASTEN.basis.preis)}</strong> {P.nach} <span class="sh__preis-zeile"><span class="sh__preis-zusatz">{P.zusatz}</span> <a href="#baukasten">{P.link}</a></span></p>
       <p class="sh__zeile">{H.zeile}</p>
     </div>
     <figure class="sh__bild">
@@ -31,6 +34,11 @@ import KundenGeschichte from './KundenGeschichte.astro';
   /* Botschaftszeile: kurz, warm, mit feiner Goldlinie davor */
   .sh__claim { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 18px; font-family: var(--font-head); font-size: clamp(1rem, 1.6vw, 1.15rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
   .sh__claim::before { content: ''; flex: none; width: 28px; height: 2px; margin-top: 0.66em; border-radius: 2px; background: var(--gold); }
+  .sh__preis { margin: 18px 0 0; font-size: 1.05rem; line-height: 1.6; color: var(--ink); }
+  .sh__preis strong { font-family: var(--font-head); font-size: 1.2em; font-weight: 700; color: var(--dark); }
+  .sh__preis-zeile { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .sh__preis-zusatz { font-size: 0.85rem; color: var(--ink-soft); }
+  .sh__preis a { font-weight: 650; color: var(--dark); text-underline-offset: 3px; white-space: nowrap; }
   .sh__zeile { margin: 18px 0 0; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
   .sh__titel { margin: 0; font-size: clamp(2rem, 4.4vw, 3.25rem); font-weight: 650; line-height: 1.07; letter-spacing: -0.03em; color: var(--dark); max-width: 18ch; }
   .sh__unter + .sh__unter { margin-top: 0.7em; }

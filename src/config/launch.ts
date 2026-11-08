@@ -115,6 +115,20 @@ const manual: Todo[] = [
     priority: 'wichtig',
   },
   {
+    title: 'Startseite: Fotos und Kurzvorstellung von Can und Jamil',
+    detail: 'Abschnitt „Wer hinter waybuild steht“ zeigt noch rot gestrichelte Platzhalter („Foto folgt“, Beispieltext). Echte Fotos (keine KI-Bilder) und 1–2 Sätze je Person eintragen.',
+    where: 'src/config/startseite.ts → TEAM, src/pages/index.astro (#team)',
+    done: false,
+    priority: 'wichtig',
+  },
+  {
+    title: 'Startseite: echte Kundenstimmen',
+    detail: 'Abschnitt „Was unsere Kunden sagen“ zeigt noch rot gestrichelte Platzhalter. Nur echte Zitate mit Zustimmung der Kunden eintragen, keine erfundenen Bewertungen oder Sterne.',
+    where: 'src/config/startseite.ts → STIMMEN, src/pages/index.astro (#stimmen)',
+    done: false,
+    priority: 'wichtig',
+  },
+  {
     title: 'Erste Referenzprojekte',
     detail: 'Sobald die ersten Kunden live sind (mit deren Freigabe) eintragen. Keine erfundenen Referenzen oder Bewertungen!',
     where: 'src/config/site.ts → references',

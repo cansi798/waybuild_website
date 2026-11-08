@@ -17,10 +17,15 @@ import Check from '../components/start/Check.astro';
 import Baukasten from '../components/start/Baukasten.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
+import Bild from '../components/Bild.astro';
+import { IS_PREVIEW } from '../lib/env';
+import { SHOW_HINTS } from '../config/site';
+import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ERSTBERATUNG, VERLASSEN, ABSCHLUSS, CLAIM, BOTSCHAFT, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
+// Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
+const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
 
 // Abschnitt 2: vier Bausteine mit Kanten, die nicht zueinander passen (Knauf ↔ Dreieck, Steg ↔ Rundung)
 const BLOECKE = [
@@ -116,6 +121,35 @@ const MOTIV: Record<string, string> = {
     </div>
   </section>
 
+  <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026): direkt nach den Prinzipien. NUR PLATZHALTER (rot
+       gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
+  {PLATZHALTER && (
+    <section class="bs bs--alt" id="team" aria-labelledby="bs-team">
+      <div class="wrap">
+        <div class="bs-kopf bs-kopf--mitte">
+          <h2 id="bs-team">{TEAM.titel}</h2>
+          <p class="bs-lead">{TEAM.einleitung}</p>
+        </div>
+        <ul class="team4">
+          {TEAM.personen.map((m) => (
+            <li class="team4__karte platzhalter">
+              <span class="platzhalter__etikett">{TEAM.platzhalter}</span>
+              <div class="team4__foto" role="img" aria-label={`${TEAM.fotoFolgt}: ${m.name}`}>
+                <span class="team4__kuerzel" aria-hidden="true">{m.kuerzel}</span>
+                <span class="team4__folgt" aria-hidden="true">{TEAM.fotoFolgt}</span>
+              </div>
+              <div>
+                <h3 class="team4__name">{m.name}</h3>
+                <p class="team4__rolle">{m.rolle}</p>
+                <p class="team4__text">{m.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <!-- Darauf können Sie sich verlassen (Jamil 4790/4791): große Schlagworte, viel Weißraum, keine Icons.
        08.11. (Rethinking „einladender“, Jamil 4927/4929): direkt hinter die drei Prinzipien gerückt, damit die Haltung
        gebündelt VOR Leistungen und Preisen steht (vorher hinter den Referenzen). -->
@@ -166,7 +200,8 @@ const MOTIV: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Referenzen (Jamil 4876): anonym, bis der Kunde zugestimmt hat (freigegeben: true → Name, Link, Bild) -->
+  <!-- Referenzen (Jamil 4876; seit 08.11.2026 mit Namen, Jamil #4932): Bild der Kunden-Website oben, darunter Name,
+       Branche · Ort, Ausgangslage/Umsetzung/Ergebnis. Link nur bei Live-Seiten, sonst nur das Etikett „Vorschau“. -->
   <section class="bs" id="referenzen" aria-labelledby="bs-referenzen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
@@ -176,11 +211,11 @@ const MOTIV: Record<string, string> = {
       <ul class="refs4">
         {REFERENZEN.liste.map((r, i) => (
           <li class="ref4 reveal" style={`transition-delay:${(i % 3) * 80}ms`}>
-            <div class:list={['ref4__bild', `ref4__bild--${r.motiv}`]} aria-hidden="true">
-              {r.freigegeben && r.bild
-                ? <img src={r.bild} alt="" loading="lazy" width="640" height="400" />
+            <div class:list={['ref4__bild', `ref4__bild--${r.motiv}`]}>
+              {r.name && r.bild
+                ? <Bild name={r.bild} alt={`Startseite der Website von ${r.name}${r.status === 'vorschau' ? ' (Vorschau)' : ''}`} widths={[400, 800]} sizes="(min-width: 1100px) 360px, (min-width: 700px) 46vw, calc(100vw - 72px)" class="ref4__img" />
                 : (
-                  <svg viewBox="0 0 320 200" focusable="false">
+                  <svg viewBox="0 0 320 200" focusable="false" aria-hidden="true">
                     <rect x="0" y="0" width="320" height="200" rx="14" fill="#ffffff" />
                     <rect x="0" y="0" width="320" height="24" rx="14" fill="#ece8e1" /><rect x="0" y="12" width="320" height="12" fill="#ece8e1" />
                     <circle cx="16" cy="12" r="4" fill="#cdc6ba" /><circle cx="30" cy="12" r="4" fill="#cdc6ba" /><circle cx="44" cy="12" r="4" fill="#cdc6ba" />
@@ -190,26 +225,68 @@ const MOTIV: Record<string, string> = {
                     <g transform="translate(212 40)" set:html={MOTIV[r.motiv] ?? ''} />
                   </svg>
                 )}
+              <span class:list={['ref4__etikett', `ref4__etikett--${r.status}`]}>{REFERENZEN.etikett[r.status]}</span>
             </div>
             <div class="ref4__inhalt">
-              <p class="ref4__kopf"><span class:list={['ref4__status', `ref4__status--${r.status}`]}>{r.status === 'online' ? 'Online' : 'In Vorbereitung'}</span><span class="ref4__region">{r.region}</span></p>
-              <h3 class="ref4__titel">{r.freigegeben && r.name ? r.name : r.branche}</h3>
-              {r.freigegeben && r.name && <p class="ref4__branche">{r.branche}</p>}
+              <h3 class="ref4__titel">{r.name ?? r.branche}</h3>
+              <p class="ref4__branche">{r.name ? r.branche : ''}{r.name && r.ort ? ' · ' : ''}{r.ort}</p>
               <dl class="ref4__fakten">
                 <div><dt>Ausgangslage</dt><dd>{r.ausgang}</dd></div>
                 <div><dt>Umsetzung</dt><dd>{r.gemacht}</dd></div>
-                {r.ergebnis && <div><dt>Ergebnis</dt><dd>{r.ergebnis}</dd></div>}
+                {r.ergebnis && <div class="ref4__ergebnis"><dt>Ergebnis</dt><dd>{r.ergebnis}</dd></div>}
               </dl>
-              {r.freigegeben && r.url && <a class="ref4__link" href={r.url} target="_blank" rel="noopener">Website ansehen</a>}
+              {r.status === 'online' && r.url && (
+                <a class="ref4__link" href={r.url} target="_blank" rel="noopener">Website ansehen<span class="ref4__url">{r.urlText ?? r.url}</span><span class="sr-only"> (öffnet in neuem Tab)</span></a>
+              )}
             </div>
           </li>
         ))}
       </ul>
+      <p class="ref4__messung">{REFERENZEN.messung}</p>
     </div>
   </section>
 
-  <!-- Vorschlag (bei Jamil offen): Unternehmensauftritt-Check -->
+  <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne. Nur in der Vorschau. -->
+  {PLATZHALTER && (
+    <section class="bs bs--alt" id="stimmen" aria-labelledby="bs-stimmen">
+      <div class="wrap">
+        <div class="bs-kopf bs-kopf--mitte"><h2 id="bs-stimmen">{STIMMEN.titel}</h2></div>
+        <ul class="stimmen4">
+          {STIMMEN.quellen.map((q) => (
+            <li class="stimme4 platzhalter">
+              <span class="platzhalter__etikett">{STIMMEN.platzhalter}</span>
+              <blockquote class="stimme4__zitat"><p>{STIMMEN.zitat}</p></blockquote>
+              <p class="stimme4__quelle">{q}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Kundenreise-Check: seit 08.11. (Jamil #4934 Punkt 6) weiter unten, hinter Referenzen und Kundenstimmen -->
   <Check />
+
+  <!-- So läuft die Erstberatung (Jamil #4934 Punkt 5): drei Schritte kurz vor dem Abschluss, nur was die Kontaktseite
+       schon zusagt (1 Werktag, rund 20 Minuten, kostenlos und unverbindlich) -->
+  <section class="bs" id="erstberatung" aria-labelledby="bs-erstberatung">
+    <div class="wrap">
+      <div class="bs-kopf bs-kopf--mitte">
+        <h2 id="bs-erstberatung">{ERSTBERATUNG.titel}</h2>
+        <p class="bs-lead">{ERSTBERATUNG.einleitung}</p>
+      </div>
+      <ol class="erst4">
+        {ERSTBERATUNG.schritte.map((st, i) => (
+          <li class="erst4__schritt">
+            <span class="erst4__nr" aria-hidden="true">{i + 1}</span>
+            <h3 class="erst4__titel">{st.titel}</h3>
+            <p class="erst4__text">{st.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="erst4__cta"><a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ANLIEGEN.erstberatung.label}</a></p>
+    </div>
+  </section>
 
   <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
   <section class="bs abschluss" aria-labelledby="bs-abschluss">

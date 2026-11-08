@@ -155,31 +155,82 @@ export const BAUKASTEN = {
   einmaligLabel: 'einmalig, Festpreis',
 };
 
-/** Referenzen (Jamil 4876, Projekte WS-0002 bis WS-0006). WICHTIG: Name, Link und Bild NUR eintragen und freigegeben: true
- *  setzen, wenn der Kunde zugestimmt hat (öffentliches Repo!). Bis dahin anonym: Branche, Ausgangslage, Umsetzung, Ergebnis.
- *  Nur Belegtes, keine erfundenen Zahlen oder Zitate. motiv = Symbol in der stilisierten Vorschau. */
+/** Referenzen (Jamil 4876, Projekte WS-0002 bis WS-0006). Seit 08.11.2026 MIT NAMEN: Jamil Talk qh87y3sj #4932
+ *  („Alle unsere Kundenprojekte dürfen wir als Referenzen nennen.“). Regeln: nur Belegtes (Impressum/Config der Kunden-Repos,
+ *  eigene Messungen mit Datum), keine erfundenen Zahlen oder Zitate, Personennamen nur als Teil des Firmen-/Markennamens,
+ *  keine Porträtfotos von Kunden. Link NUR bei status 'online'; Vorschau-Adressen sind nicht für Besucher gedacht.
+ *  bild = Bildschirmfoto der Kunden-Startseite (1440 × 900, 08.11.2026) unter src/assets/bilder/referenzen/.
+ *  Ohne name/bild wird die Karte anonym mit stilisierter Vorschau (motiv) gezeigt. */
+export type Referenz = { name?: string; url?: string; urlText?: string; bild?: string; branche: string; ort?: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string };
 export const REFERENZEN = {
   titel: 'Beispiele aus unserer Arbeit',
-  einleitung: 'Namen, Links und Bilder zeigen wir, sobald unsere Kunden zugestimmt haben. Bis dahin beschreiben wir die Projekte ohne Namen.',
+  einleitung: 'Echte Projekte unserer Kunden. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.',
+  etikett: { online: 'Online', vorschau: 'Vorschau' } as Record<Referenz['status'], string>,
+  /** Erklärung der Messwerte unter den Karten */
+  messung: 'Gemessen am 08.11.2026 mit Google Lighthouse, einem kostenlosen Prüfwerkzeug von Google, in der Handy-Einstellung. Jeweils der mittlere von drei Durchläufen. Leistung und Barrierefreiheit werden von 0 bis 100 bewertet.',
   liste: [
-    { freigegeben: false, branche: 'Handwerksbetrieb für Badsanierung', region: 'Schleswig-Holstein', status: 'online', motiv: 'bad',
+    { name: 'Bauwelt Handwerk', branche: 'Badsanierung und Sanierung', ort: 'Norderstedt', status: 'online', motiv: 'bad', bild: 'referenzen/bauwelt',
+      url: 'https://www.bauwelt-handwerk.de/', urlText: 'bauwelt-handwerk.de',
       ausgang: 'Gesucht war ein Auftritt, der Leistungen, Preise und Ablauf einer Badsanierung verständlich zeigt.',
       gemacht: 'Website mit Kostenrechner, Anfrage für den Vor-Ort-Termin und Leistungsseiten, online unter eigener Domain.',
-      ergebnis: 'Google Lighthouse am Handy: 98 von 100.' },
-    { freigegeben: false, branche: 'Autolackiererei, Meisterbetrieb', region: 'Schleswig-Holstein', status: 'vorschau', motiv: 'lack',
+      ergebnis: 'Google Lighthouse am Handy: Leistung 93, Barrierefreiheit 100 von 100.' },
+    { name: 'Destar Lackdoktor', branche: 'Autolackiererei, Meisterbetrieb', ort: 'Norderstedt', status: 'vorschau', motiv: 'lack', bild: 'referenzen/destar',
       ausgang: 'Die bisherige Website sollte modernisiert werden, mit den vorhandenen Inhalten.',
-      gemacht: 'Neue Website mit „Schaden melden“ in drei Schritten, per WhatsApp oder E-Mail.' },
-    { freigegeben: false, branche: 'Dolmetscher und Übersetzer', region: 'Norddeutschland', status: 'vorschau', motiv: 'sprache',
+      gemacht: 'Neue Website mit „Schaden melden“ in drei Schritten, per WhatsApp oder E-Mail.',
+      ergebnis: 'Datenmenge der Startseite von 1,7 MB auf 0,18 MB gesenkt. Hauptinhalt am Handy nach 1,8 statt 11,1 Sekunden sichtbar (alte Website gegen Vorschau).' },
+    { name: 'Kerim Tanrikulu', branche: 'Dolmetscher und Übersetzer für Türkisch', ort: 'Hamburg', status: 'vorschau', motiv: 'sprache', bild: 'referenzen/kerim',
       ausgang: 'Die bisherige Baukasten-Website sollte durch einen eigenen Auftritt ersetzt werden.',
       gemacht: 'Zweisprachige Website (Deutsch und Türkisch) mit Einsatzgebiet, Ablauf und Antworten auf häufige Fragen.',
-      ergebnis: 'Google Lighthouse am Handy: 97 von 100 (Vorschau).' },
-    { freigegeben: false, branche: 'Videograf', region: 'Hamburg', status: 'vorschau', motiv: 'film',
-      ausgang: 'Die alte Website war schwer und langsam: Google Lighthouse 36 von 100.',
-      gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.' },
-    { freigegeben: false, branche: 'Bildungsprojekt mit Erklärvideos', region: 'Deutschland', status: 'vorschau', motiv: 'wissen',
+      ergebnis: 'Google Lighthouse am Handy: Leistung 95, Barrierefreiheit 100 von 100 (Vorschau).' },
+    { name: 'Funkelfilm', branche: 'Unternehmensfilme, Videograf', ort: 'Hamburg', status: 'vorschau', motiv: 'film', bild: 'referenzen/funkelfilm',
+      ausgang: 'Die alte Website war schwer und langsam: fast 48 MB Daten schon beim Öffnen der Startseite.',
+      gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.',
+      ergebnis: 'Google Lighthouse am Handy: Leistung 40 (alte Website) und 84 (Vorschau). Datenmenge 47,8 MB statt jetzt 1,0 MB.' },
+    { name: 'ilm me up', branche: 'Unabhängige Medienplattform für Wissen', status: 'vorschau', motiv: 'wissen', bild: 'referenzen/ilmmeup',
       ausgang: 'Ein neues Projekt brauchte einen ersten Auftritt.',
-      gemacht: 'Website mit Team, Videos und häufigen Fragen, so aufbereitet, dass Google und KI-Assistenten sie gut verstehen.' },
-  ] as { freigegeben: boolean; name?: string; url?: string; bild?: string; branche: string; region: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string }[],
+      gemacht: 'Website mit Team, Videos und häufigen Fragen, so aufbereitet, dass Google und KI-Assistenten sie gut verstehen.',
+      ergebnis: 'Google Lighthouse am Handy: Leistung 89, Barrierefreiheit 100 von 100 (Vorschau).' },
+  ] as Referenz[],
+};
+
+/** Preis früh (Jamil #4934 Punkt 4): Zeile im ersten Bildschirm. Der Betrag kommt immer aus BAUKASTEN.basis.preis. */
+export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: 'netto zzgl. MwSt.', link: 'Abo zusammenstellen' };
+
+/** „Wer hinter waybuild steht“ (Jamil #4934 Punkt 2: „erstmal für die Testseite erfinden“). BEWUSST NUR PLATZHALTER:
+ *  keine KI-Gesichter, keine erfundenen Selbstbeschreibungen. Echt sind nur Namen und Rollen (Can: Geschäftsführer laut
+ *  Impressum/site.ts; Jamil: „Key Account & Process Manager“ laut seiner E-Mail-Signatur). Wird nur in der Vorschau
+ *  gezeigt (SHOW_HINTS + PUBLIC_PREVIEW), rot gestrichelt; offen in der Checkliste (launch.ts). */
+export const TEAM = {
+  titel: 'Wer hinter waybuild steht',
+  einleitung: 'Sie sprechen mit Menschen, nicht mit einer Hotline.',
+  platzhalter: 'Platzhalter',
+  fotoFolgt: 'Foto folgt',
+  personen: [
+    { name: 'Can Siebert', rolle: 'Geschäftsführer', kuerzel: 'CS', text: 'Beispieltext: Hier stellt sich Can bald in ein bis zwei Sätzen selbst vor.' },
+    { name: 'Jamil Iqbal', rolle: 'Key Account & Process Manager', kuerzel: 'JI', text: 'Beispieltext: Hier stellt sich Jamil bald in ein bis zwei Sätzen selbst vor.' },
+  ],
+};
+
+/** Kundenstimmen (Jamil #4934 Punkt 3). BEWUSST NUR PLATZHALTER: keine erfundenen Zitate, keine Kundennamen, keine Sterne
+ *  (erfundene Bewertungen wären irreführend, UWG). Nur in der Vorschau sichtbar, rot gestrichelt; offen in der Checkliste. */
+export const STIMMEN = {
+  titel: 'Was unsere Kunden sagen',
+  platzhalter: 'Platzhalter',
+  zitat: 'Beispiel: Hier steht bald ein echtes Zitat unserer Kunden.',
+  quellen: ['Kundenstimme folgt (z. B. Handwerk)', 'Kundenstimme folgt (z. B. Dienstleistung)', 'Kundenstimme folgt (z. B. Kreativbranche)'],
+};
+
+/** „So läuft die Erstberatung“ (Jamil #4934 Punkt 5), kurz vor dem Abschluss. Nur, was die Website schon zusagt
+ *  (kontakt.astro: „Antwort in 1 Werktag“, „20 Min. Erstgespräch“, „Kostenlos & unverbindlich“). „30 Minuten“ steht
+ *  nirgends, daher die vorhandenen 20 Minuten. */
+export const ERSTBERATUNG = {
+  titel: 'So läuft die Erstberatung',
+  einleitung: 'Kostenlos und unverbindlich.',
+  schritte: [
+    { titel: 'Anfrage senden', text: 'Über das Kontaktformular oder per E‑Mail. Ein paar Sätze genügen.' },
+    { titel: 'Wir melden uns', text: 'Innerhalb von einem Werktag, persönlich und nicht automatisiert.' },
+    { titel: 'Kurzes Gespräch', text: 'Rund 20 Minuten. Wir hören zu und sagen ehrlich, was sich für Sie lohnt.' },
+  ],
 };
 
 /** Abschnitt 5 (4790/4791): große Schlagworte, viel Weißraum, keine Icons */
