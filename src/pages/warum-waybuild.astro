@@ -6,11 +6,14 @@ import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import type { IconName } from '../config/site';
-import { ANBIETER_TYPEN, ANBIETER_VERGLEICH, SAEULEN } from '../config/angebot';
+import { SAEULEN } from '../config/angebot';
+// Vergleich aus derselben Quelle wie die Startseite (VVergleich.astro), damit beide nie auseinanderlaufen (Jamil, Talk qh87y3sj #5369)
+import { VERGLEICH } from '../config/variante';
 import { href } from '../lib/paths';
 
-const WB = ANBIETER_TYPEN.length - 1; // Spalte „waybuild“ (letzte)
-const andere = ANBIETER_TYPEN.slice(0, WB);
+const TYPEN = VERGLEICH.spalten;
+const WB = TYPEN.length - 1; // Spalte „waybuild“ (letzte)
+const andere = TYPEN.slice(0, WB);
 
 const unterschiede: { icon: IconName; title: string; text: string; link?: { label: string; path: string } }[] = [
   { icon: 'compass', title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
@@ -43,7 +46,7 @@ const passtNicht = [
 
 <BaseLayout
   title="Warum waybuild? Keine klassische Webagentur"
-  description="Was waybuild von Baukasten, Freelancer und Agentur unterscheidet: persönliche Beratung, KI-gestützte Umsetzung, ein Ansprechpartner und ein fester Monatspreis."
+  description="Was waybuild von Selbst machen, Baukasten und Agentur oder Softwarehaus unterscheidet: persönliche Beratung, KI-gestützte Umsetzung, ein Ansprechpartner und ein fester Monatspreis."
   breadcrumb={[{ name: 'Warum waybuild', path: '/warum-waybuild/' }]}
 >
   <PageHeader
@@ -87,7 +90,7 @@ const passtNicht = [
 
   <section class="section section--sand" aria-labelledby="vergleich-h">
     <div class="wrap">
-      <SectionHead eyebrow="Im Vergleich" pre="Baukasten, Freelancer, Agentur " accent="oder waybuild?" text="So unterscheiden sich die typischen Anbieter-Typen." id="vergleich-h" />
+      <SectionHead eyebrow="Im Vergleich" pre="Selbst machen, Baukasten, Agentur " accent="oder waybuild?" text="So unterscheiden sich die typischen Anbieter-Typen." id="vergleich-h" />
 
       {/* Desktop: Tabelle */}
       <div class="vgl">
@@ -96,13 +99,13 @@ const passtNicht = [
           <thead>
             <tr>
               <th scope="col"><span class="sr-only">Kriterium</span></th>
-              {ANBIETER_TYPEN.map((t, i) => <th scope="col" class:list={{ wb: i === WB }}>{t}</th>)}
+              {TYPEN.map((t, i) => <th scope="col" class:list={{ wb: i === WB }}>{t}</th>)}
             </tr>
           </thead>
           <tbody>
-            {ANBIETER_VERGLEICH.map((z) => (
+            {VERGLEICH.zeilen.map((z) => (
               <tr>
-                <th scope="row">{z.kriterium}</th>
+                <th scope="row">{z.frage}</th>
                 {z.werte.map((w, i) => <td class:list={{ wb: i === WB }}>{w}</td>)}
               </tr>
             ))}
@@ -112,10 +115,10 @@ const passtNicht = [
 
       {/* Mobil: eine Karte je Kriterium, waybuild hervorgehoben */}
       <ul class="vglm">
-        {ANBIETER_VERGLEICH.map((z) => (
+        {VERGLEICH.zeilen.map((z) => (
           <li class="vglm__card">
-            <p class="vglm__krit">{z.kriterium}</p>
-            <p class="vglm__wb"><span>{ANBIETER_TYPEN[WB]}</span>{z.werte[WB]}</p>
+            <p class="vglm__krit">{z.frage}</p>
+            <p class="vglm__wb"><span>{TYPEN[WB]}</span>{z.werte[WB]}</p>
             <dl class="vglm__rest">
               {andere.map((t, i) => (
                 <div><dt>{t}</dt><dd>{z.werte[i]}</dd></div>

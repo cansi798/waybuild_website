@@ -216,13 +216,5 @@ export const SAEULEN: { id: Saeule; title: string; claim: string; icon: IconName
 ];
 
 
-/* ───────────── Positionierung (nur Anbieter-TYPEN, keine echten Wettbewerber) ───────────── */
-
-export const ANBIETER_TYPEN = ['Baukasten', 'Freelancer', 'Klassische Agentur', 'waybuild'] as const;
-export const ANBIETER_VERGLEICH: { kriterium: string; werte: [string, string, string, string] }[] = [
-  { kriterium: 'Kosten', werte: ['Niedrig, aber viel Eigenarbeit', 'Projektpreis, Pflege extra', 'Meist fünfstellige Projekte', 'Fester Monatspreis, keine Einrichtungskosten'] },
-  { kriterium: 'Strategie & Beratung', werte: ['Keine', 'Selten', 'Gegen Aufpreis', 'Fester Bestandteil, vor der Umsetzung'] },
-  { kriterium: 'Tempo', werte: ['Abhängig von Ihnen', 'Je nach Verfügbarkeit', 'Wochen bis Monate', 'Schnell, weil KI die Umsetzung übernimmt'] },
-  { kriterium: 'Wer kümmert sich danach?', werte: ['Sie selbst', 'Je nach Verfügbarkeit', 'Ticket oder Account-Manager', 'Fester Ansprechpartner'] },
-  { kriterium: 'Vertragsbindung', werte: ['Monatlich', 'Pro Projekt', 'Projekt + Wartungsvertrag', `${WAAS.laufzeitMonate} Monate, danach monatlich kündbar`] },
-];
+/* Positionierung: Vergleich nach Anbieter-Art (ANBIETER_TYPEN/ANBIETER_VERGLEICH) am 10.11.2026 durch VERGLEICH in config/variante.ts ersetzt,
+   den Startseite und /warum-waybuild/ gemeinsam lesen (Jamil, Talk qh87y3sj #5369). */
