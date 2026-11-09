@@ -29,14 +29,13 @@ import Check from '../components/start/Check.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import VAblauf from '../components/variante/VAblauf.astro';
-import Icon from '../components/Icon.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, VERSPRECHEN, HERO_KNOPF, KONTRAST, VERGLEICH } from '../config/variante';
+import { V_HERO, HERO_KNOPF, KONTRAST, VERGLEICH } from '../config/variante';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
@@ -119,19 +118,15 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
       <!-- Wort für Wort wie firma.de (Jamil #5114): jedes Wort ein span mit --i (Reihenfolge), nur CSS. Die H1 hat den ganzen
            Satz als aria-label, die Wort-spans sind aria-hidden; Leerzeichen bleiben echte Textknoten (Kopieren = normaler Text). -->
       <h1 id="v-h1" class="v-titel" aria-label={V_HERO.titel}>{woerter(V_HERO.titel).map((w, i) => <><span class="v-wort" aria-hidden="true" style={`--i:${i}`}>{w}</span>{' '}</>)}</h1>
-      <p class="lead v-unter">{woerter(V_HERO.unter).map((w, i) => <><span class="v-wort" style={`--i:${i}`}>{w}</span>{' '}</>)}</p>
-      <!-- Zweite Zeile: was wir technisch übernehmen (Jamil, Talk qh87y3sj #5159–#5163, 09.11.2026). Blendet als Ganzes ein (nicht Wort für Wort). -->
-      <p class="v-leistung v-ein v-ein--2">{V_HERO.leistung}</p>
+      <!-- Unterzeile: was wir technisch übernehmen (Jamil, Talk qh87y3sj #5159–#5168, 09.11.2026). „Für Gründer …“ entfernt (#5165);
+           blendet als Ganzes nach der H1 ein (nicht Wort für Wort, dafür ist der Satz zu lang). -->
+      <p class="lead v-unter v-ein v-ein--2">{V_HERO.unter}</p>
       <!-- Ein Knopf (#5121–#5124): weiß, Schrift #006b68, sanfter Lichtschein alle 3 s + Glanz (variante-start.css) -->
       <div class="v-knopfe v-ein v-ein--3">
         <a class="btn v-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
       </div>
     </div>
-    <div class="v-versprechen v-ein v-ein--4">
-      <ul class="wrap" aria-label="Unsere Versprechen">
-        {VERSPRECHEN.map((v) => <li><Icon name={v.icon} size={18} /><span>{v.text}</span></li>)}
-      </ul>
-    </div>
+    <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
   <section class="section vkontrast" aria-labelledby="kontrast-h">

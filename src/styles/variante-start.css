@@ -67,10 +67,7 @@
   /* wie bisher clamp(2.6rem, 6.8vw, 92px), aber nie breiter als das längste Wort „Aufmerksamkeit“ (≈ 8,1 × Schriftgröße) bei 20 px Rand je Seite (Jamil #5129) */
   font-size: min(92px, max(2.6rem, 6.8vw), calc((100vw - 40px) / 8.4));
   letter-spacing: -0.035em; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
-.v-hero .v-unter { color: var(--white); max-width: 44ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
-/* Zweite Zeile unter der Unterzeile (Jamil #5163): etwas kleiner, rückt an die Unterzeile heran; Abstand zum Knopf wie bisher */
-.v-hero .v-unter:has(+ .v-leistung) { margin-bottom: 14px; }
-.v-hero .v-leistung { color: var(--white); max-width: 58ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1rem, 1.5vw, 1.15rem); line-height: 1.6; }
+.v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
 /* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #006b68 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring
@@ -92,20 +89,12 @@
 .v-hero .v-knopfe .v-leucht { flex: 0 0 auto; max-width: none; white-space: nowrap; }
 .v-hero .v-leucht:focus-visible { border-radius: 999px; outline-offset: 4px; } /* globale Fokusregel setzt sonst 4 px Ecken */
 @media (max-width: 599px) { .v-hero .v-knopfe .v-leucht { flex: 1 1 100%; width: 100%; white-space: normal; padding-inline: 1.2em; } }
-/* Vier Vorteile (Jamil #5097, gekürzt #5121–#5124): im selben Verlauf wie der Hero, nur eine feine helle Linie darüber;
- * je eine Zeile, kleines Symbol, normale Schrift Weiß (Kontrast per Pixelmessung, siehe Memory) */
-.v-versprechen { position: relative; border-top: 1px solid rgb(255 255 255 / 20%); color: var(--white); }
-.v-versprechen ul { list-style: none; margin: 0 auto; padding: 18px 0 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 32px; }
-.v-versprechen li { display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 400; line-height: 1.4; }
-.v-versprechen .icon { flex: none; color: var(--white); opacity: 0.9; }
 @media (max-width: 719px) {
   .v-hero { --v-ruhe-x: 96%; --v-ruhe-y: 46%; --v-ruhe-mitte: 50%; --v-unten: 190px; }
-  .v-versprechen ul { flex-direction: column; align-items: flex-start; width: fit-content; max-width: calc(100% - 32px); padding: 16px 0 20px; gap: 8px; }
 }
 /* Wort für Wort */
 .v-wort { display: inline-block; animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--i) * 100ms); }
 .v-titel .v-wort { animation-name: v-wort-h1; }
-.v-unter .v-wort { animation-delay: calc(650ms + var(--i) * 100ms); }
 @keyframes v-wort { from { opacity: 0; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes v-wort-h1 { from { opacity: 0.01; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes v-ein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }

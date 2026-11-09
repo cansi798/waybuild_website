@@ -9,21 +9,10 @@
 export const V_HERO = {
   /** H1 im Hero, Variante E von Jamil (Talk qh87y3sj #5129). Title und Meta-Description bleiben eigenständig (index.astro). */
   titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
-  /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101, neu #5121–#5124). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Für Gründer und Unternehmen, die neu durchstarten wollen.',
-  /** Zweite Zeile unter der Unterzeile: was wir technisch übernehmen. Wortlaut von Jamil (Talk qh87y3sj #5163, 09.11.2026, Variante „2“ = zusätzlich
-   *  unter der alten Zeile; nur „Wir entwickelt“ → „Wir entwickeln“ korrigiert). */
-  leistung: 'Website, Online-Anfrage und Auftragsverwaltungssoftware: Wir entwickeln alles individuell nach Ihren Prozessen und verknüpfen es, damit Anfragen zukünftig nicht verloren gehen.',
+  /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5163, 09.11.2026; nur „Wir entwickelt“ → „Wir entwickeln“). Ersetzt seit #5165 die
+   *  frühere Zeile „Für Gründer und Unternehmen, die neu durchstarten wollen.“ Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
+  unter: 'Website, Online-Anfrage und Auftragsverwaltungssoftware: Wir entwickeln alles individuell nach Ihren Prozessen und verknüpfen es, damit Anfragen zukünftig nicht verloren gehen.',
 };
-
-/** Vier Vorteile unten im ersten Bildschirm (Jamil, Talk qh87y3sj #5097, gekürzt #5121–#5124): je EINE Zeile, kleines
- *  Symbol, normale Schrift. Ersetzen die frühere Vertrauensleiste. icon = Name aus src/components/Icon.astro. */
-export const VERSPRECHEN = [
-  { icon: 'zap', text: 'Erster Entwurf meist in 3 Stunden' },
-  { icon: 'code', text: 'Individuell statt Baukasten' },
-  { icon: 'stern', text: 'Nahezu jeder Wunsch umsetzbar' },
-  { icon: 'chat', text: 'Änderungen per Chat oder Sprachnachricht' },
-] as const;
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
 export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
