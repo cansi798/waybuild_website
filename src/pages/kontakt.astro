@@ -43,7 +43,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
-            <option value="">Ich bin noch unsicher, bitte beraten Sie mich</option>
+            <option value="">Noch unsicher – bitte beraten Sie mich</option>
             {interessen.map((i) => <option value={i.value}>{i.label}</option>)}
           </select>
         </label>
@@ -269,6 +269,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     padding: 12px 14px; min-height: 48px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper);
   }
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--dark); background: var(--white); }
+  /* Handy: Auswahltexte („Worum geht es?“) passen bei 390 px ganz ins Feld (Prüfung Unterseiten, Jamil, Talk qh87y3sj #5215) */
+  @media (max-width: 480px) {
+    .form.card { padding-left: 14px; padding-right: 14px; }
+    select { padding-left: 10px; padding-right: 8px; }
+  }
   .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
   .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
   .hp { position: absolute; left: -9999px; }

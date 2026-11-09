@@ -258,10 +258,8 @@ function siegel(a: Ansicht): Szene {
       SIEGEL_MOTIV[v.id]?.(z, cx, cy, s);
     });
     z.bei(t + 0.45);
-    const [z1, z2] = v.zeilen;
     const ty = cy + d / 2 + (mobil ? 22 : 28);
-    z.text(cx, ty, z1, { groesse: mobil ? 13 : 15, gewicht: 600 });
-    z.text(cx, ty + (mobil ? 17 : 20), z2, { groesse: mobil ? 13 : 15, gewicht: 600 });
+    v.zeilen.forEach((zeile, k) => z.text(cx, ty + k * (mobil ? 17 : 20), zeile, { groesse: mobil ? 13 : 15, gewicht: 600 }));
   });
   return { breite: B, hoehe: H, elemente: z.elemente, ende: 0.2 + (n - 1) * 0.55 + 1 };
 }

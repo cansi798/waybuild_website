@@ -12,7 +12,7 @@ const { fakten = [] } = Astro.props;
 
 <section class="section" id="versprechen" aria-labelledby="versprechen-h">
   <div class="wrap">
-    <SectionHead center eyebrow="Unsere Service-Versprechen (SLAs)" pre="Darauf können Sie sich " accent="verlassen." text={fakten.length ? undefined : 'Unsere Service-Zusagen in Alltagssprache. Sie gelten für jeden Kunden.'} id="versprechen-h" />
+    <SectionHead center eyebrow="Unsere Service-Versprechen" pre="Darauf können Sie sich " accent="verlassen." text={fakten.length ? undefined : 'Unsere Service-Zusagen in Alltagssprache. Sie gelten für jeden Kunden.'} id="versprechen-h" />
     {fakten.length > 0 && (
       <ul class="check-row siegel__fakten">{fakten.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
     )}

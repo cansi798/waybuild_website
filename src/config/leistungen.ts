@@ -37,6 +37,9 @@ export type Leistung = {
   /** Nur Website-Leistungen: ab welchem Paket enthalten (ohne `ab` = Paket klären wir im Erstgespräch).
    *  `merkmale` = Leistungs-ids aus pakete-abo.ts, die der PreisBlock mit „ab Paket …“ zeigt. */
   paket?: { ab?: AboPaket['id']; merkmale: string[]; hinweis?: string };
+  /** Optional: eigene Oberzeile und eigene Häkchen im Seitenkopf statt der Standardwerte der Säule
+   *  (abo-wartung: Website-Abo-Kontext statt „Ausbaustufe · Software“, Jamil, Talk qh87y3sj #5215). */
+  kopf?: { eyebrow: string; checks: string[] };
   /** Grafik der Kachel (kein Foto nötig) */
   grafik: 'seite' | 'shop' | 'landing' | 'relaunch' | 'pflege' | 'software' | 'code' | 'cloud' | 'it' | 'analyse' | 'abo';
 };
@@ -385,7 +388,10 @@ export const leistungen: Leistung[] = [
     pre: 'Ein Modell. ',
     accent: 'Alles betreut.',
     teaser: `Statt vieler Abos: ${WAAS.name}. Betreuung für Software, Cloud und IT auf Anfrage.`,
-    lead: `Wir haben unsere Abos vereinfacht: Für Websites gibt es nur noch ${WAAS.name}. Betreuung für Software, Nextcloud und IT stimmen wir individuell ab.`,
+    lead: `Für Websites gibt es ein Modell: ${WAAS.name}. Betreuung für Software, Nextcloud und IT stimmen wir individuell mit Ihnen ab.`,
+    // Keine Software-Badges („Festpreis nach Konzept“, „Quellcode gehört Ihnen“): Das ist das Website-Abo, und Eigentumsfragen
+    // sind noch offen (AGB/Anwalt) – deshalb hier KEINE Eigentumsaussage (Jamil, Talk qh87y3sj #5215).
+    kopf: { eyebrow: `${WAAS.name} · Betreuung im Abo`, checks: ['Fester Monatspreis', 'Individuell abgestimmt', 'Ein Ansprechpartner'] },
     umfang: [
       `${WAAS.name}: Hosting, Wartung, Backups und Betreuung in einem Preis`,
       'Software-Pflege mit Betrieb, Updates und Weiterentwicklung auf Anfrage',

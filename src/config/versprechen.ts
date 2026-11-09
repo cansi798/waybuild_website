@@ -10,8 +10,8 @@ export type Versprechen = {
   id: string;
   icon: IconName;
   title: string;
-  /** Zweizeilig für die animierte Szene */
-  zeilen: [string, string];
+  /** Zwei- (oder drei-)zeilig für die animierte Szene */
+  zeilen: [string, string] | [string, string, string];
   short: string;
   long: string;
 };
@@ -37,7 +37,8 @@ export const VERSPRECHEN: Versprechen[] = [
     id: 'minuten',
     icon: 'zap',
     title: 'Kleine Änderungen in der Regel in 1 Stunde',
-    zeilen: ['Änderungen', 'meist in 1 Std.'],
+    // dritte Zeile „werktags“: kurze Stempel-Zeilen passen am Handy nicht breiter (Jamil, Talk qh87y3sj #5215)
+    zeilen: ['Änderungen', 'meist in 1 Std.', 'werktags'],
     short: 'Werktags 9 bis 17 Uhr.',
     long: 'Kleine Änderungen wie ein neuer Text, ein Bild oder geänderte Öffnungszeiten sind in der Regel innerhalb von 1 Stunde online (werktags 9 bis 17 Uhr). Bei größeren Wünschen sagen wir Ihnen vorher, wann sie fertig sind.',
   },

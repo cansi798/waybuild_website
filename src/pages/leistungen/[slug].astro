@@ -66,11 +66,11 @@ const schema = [
   <section class="phero">
     <div class="wrap phero__grid">
       <div class="phero__copy">
-        <span class="eyebrow">{istWebsite ? `${WAAS.name} · ${l.title}` : `Ausbaustufe · ${saeule.title}`}</span>
+        <span class="eyebrow">{l.kopf?.eyebrow ?? (istWebsite ? `${WAAS.name} · ${l.title}` : `Ausbaustufe · ${saeule.title}`)}</span>
         <h1>{l.pre}<span class="accent">{l.accent}</span></h1>
         <p class="lead">{l.lead}</p>
         <ul class="check-row">
-          {checks[l.saeule].map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
+          {(l.kopf?.checks ?? checks[l.saeule]).map((c) => <li><Icon name="check" size={18} /> {c}</li>)}
         </ul>
         <div class="phero__actions">
           <a class="btn btn--primary btn--lg" href={contact}>Kostenloses Erstgespräch</a>
@@ -167,7 +167,7 @@ const schema = [
       <p class="others">
         {andere.length > 0 && <>{istWebsite ? `Ebenfalls im ${WAAS.name}` : `Weitere Leistungen im Bereich ${saeule.title}`}: {andere.map((o) => <a href={href(`/leistungen/${o.slug}/`)}>{o.title}</a>)}</>}
         <a href={href('/leistungen/')}>Alle Leistungen</a>
-        <a href={href('/preise/')}>Preis</a>
+        <a href={href('/preise/')}>Preise</a>
       </p>
     </div>
   </section>

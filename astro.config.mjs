@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
+import { tabellenPlugin } from './src/lib/markdown-tabellen.mjs';
 
 // Standard = Live-Version für den eigenen Server (waybuild.de, Pfad "/").
 // Die GitHub-Pages-VORSCHAU setzt SITE, BASE und PUBLIC_PREVIEW=true im Workflow.
@@ -20,5 +22,8 @@ export default defineConfig({
         && !/\/variante\//.test(page),
     }),
   ],
+  // Ratgeber-Tabellen: per Tastatur erreichbarer Scroll-Bereich + Name für leere Kopfzellen (Jamil, Talk qh87y3sj #5215)
+  // (satteri() ist Astros Standard-Prozessor; hier nur um das Tabellen-Plugin ergänzt)
+  markdown: { processor: satteri({ hastPlugins: [tabellenPlugin] }) },
   build: { inlineStylesheets: 'always' },
 });
