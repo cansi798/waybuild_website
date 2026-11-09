@@ -32,28 +32,9 @@ export const HERO = {
   stationen: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'Bearbeitung', 'Zufriedener Kunde'],
 };
 
-/** Abschnitt 3 (4788): drei große Karten mit reinem Text */
-export const VERSTEHEN = {
-  /** Jamil #4988/#4989 (08.11.2026): Erstberatung hier integriert, vierter Schritt „Verbessern“ */
-  titel: 'Verstehen. Empfehlen. Umsetzen. Verbessern.',
-  einleitung: 'Bevor wir Lösungen entwickeln, möchten wir verstehen:',
-  liste: ['Ihr Unternehmen', 'Ihre Kunden', 'Ihre Ziele'],
-  schluss: ['Denn gute Entscheidungen entstehen durch Verständnis.', 'Nicht durch Vermutungen.'],
-  /** Karten, verdichtet aus Jamils Texten 4788/4795/4796 (Feedback 4868–4870: „zusammenfassen, sodass es Sinn macht“) */
-  karten: <{ wort: string; leit: string; text: string; hinweis?: string }[]>[
-    /* Verstehen = das kurze Gespräch der Erstberatung (Jamil #4989). Nur, was die Website schon zusagt (kontakt.astro:
-     * „Antwort in 1 Werktag“, „20 Min. Erstgespräch“, „Kostenlos & unverbindlich“); Unternehmens-DNA wie im Auftrag beschrieben. */
-    { wort: 'Verstehen', leit: 'Erst zuhören, dann handeln.',
-      text: 'Sie senden eine Anfrage, wir melden uns innerhalb eines Werktags. Im kurzen Gespräch, kostenlos, unverbindlich und rund 20 Minuten, nehmen wir Ihre Unternehmens-DNA auf: was Sie ausmacht, wofür Sie stehen, wie Sie mit Kunden sprechen.' },
-    { wort: 'Empfehlen', leit: 'Den sinnvollsten Weg, nicht den größten.', text: 'Wir sagen offen, was sich lohnt, und sprechen Risiken an.' },
-    { wort: 'Umsetzen', leit: 'Wir kümmern uns. Sie bleiben informiert.', text: 'Eine Anfrage genügt, nichts geht verloren. Verzögert sich etwas, hören Sie es zuerst von uns.' },
-    /* NEU (Jamil #4989 „Empfehlen und umsetzen, verbessern“): Text aus dem Baustein „Laufende Verbesserung“ (BAUKASTEN) */
-    { wort: 'Verbessern', leit: 'Messen statt vermuten.', text: 'Jeden Monat werten wir aus, was Besucher tun, ändern gezielt 2 bis 3 Dinge und prüfen, ob es wirkt.',
-      hinweis: 'Im Paket Komplett, im Paket Plus mit 1 Verbesserung im Monat' },
-  ],
-  nichtKopf: 'Was Sie von uns nicht erwarten müssen',
-  nicht: ['Kein Fachchinesisch', 'Keine unnötige Komplexität', 'Keine Empfehlungen, die nur uns helfen', 'Keine fünf Ansprechpartner'],
-};
+/* Abschnitt 3 „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (VERSTEHEN, Jamil 4788/4795/4796, #4988/#4989) am 09.11.2026 entfernt:
+ * ersetzt durch „So gehen wir vor“ nach der Kundenreise (Jamil, Talk qh87y3sj #5188/#5190; Texte src/config/vorgehen.ts).
+ * Sicherung: Branch vor-so-gehen-wir-vor-20261109. */
 
 /* Abschnitt „Einzelne Lösungen funktionieren.“ (BAUSTEINE) und Abschnitt 4 „Ein Kunde interessiert sich nicht für Ihre Systeme.“
  * (#loesungen: BEREICHE, PAKET_JE_LEISTUNG) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5181–#5187: doppelt zur neuen Kundenreise
@@ -126,8 +107,8 @@ export const STIMMEN = {
   quellen: ['Kundenstimme folgt (z. B. Handwerk)', 'Kundenstimme folgt (z. B. Dienstleistung)', 'Kundenstimme folgt (z. B. Kreativbranche)'],
 };
 
-/* „So läuft die Erstberatung“ (Jamil #4934 Punkt 5) ist seit 08.11.2026 (Jamil #4988/#4989) Teil von VERSTEHEN
- * (Schritt „Verstehen“ = das kurze Gespräch); eigener Abschnitt entfernt, Anker #erstberatung sitzt jetzt auf dieser Karte. */
+/* „So läuft die Erstberatung“ (Jamil #4934 Punkt 5): Anker #erstberatung sitzt seit 09.11.2026 auf Schritt 1 („Verstehen“)
+ * von „So gehen wir vor“ (src/config/vorgehen.ts). */
 
 /** Abschnitt 5 (4790/4791): große Schlagworte, viel Weißraum, keine Icons */
 export const VERLASSEN = {

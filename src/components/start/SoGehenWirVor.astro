@@ -1,0 +1,37 @@
+---
+// „So gehen wir vor“ (Jamil, Talk qh87y3sj #5188, freigegeben „ok 2b 3 ja“ #5190, 09.11.2026). Texte: src/config/vorgehen.ts.
+// Drei Schritte Verstehen → Verbinden → Verbessern, verbunden durch eine feine türkise Linie (PC waagerecht, Handy senkrecht).
+// Ruhiges Einblenden beim ersten Sichtkontakt: Schritte nacheinander, die Linie zeichnet sich zum nächsten Schritt
+// (src/scripts/vorgehen.ts setzt .vg-bereit, dann einmal .ist-los). Ohne JS und bei reduzierter Bewegung steht alles fertig da.
+// Anker: #denkweise = Abschnitt, #erstberatung = Schritt 1 (alte Links treffen weiter).
+import { VORGEHEN } from '../../config/vorgehen';
+import '../../styles/vorgehen.css';
+---
+
+<section class="section vg" id="denkweise" aria-labelledby="vg-h">
+  <div class="wrap">
+    <div class="section-head center vg-kopf">
+      <h2 id="vg-h" class="rule">{VORGEHEN.titel}</h2>
+      <p class="vg-unter">{VORGEHEN.unter}</p>
+      <p class="lead vg-intro">{VORGEHEN.intro}</p>
+      <p class="vg-ueber">{VORGEHEN.ueberleitung}</p>
+    </div>
+    <ol class="vg-schritte" data-vorgehen>
+      {VORGEHEN.schritte.map((s, i) => (
+        <li class="vg-schritt" id={s.anker} style={`--i:${i}`}>
+          <span class="vg-nr" aria-hidden="true">{i + 1}</span>
+          <div class="vg-inhalt">
+            <h3 class="vg-wort">{s.wort}</h3>
+            <p class="vg-text">{s.text}</p>
+            {s.betont && <p class="vg-betont">{s.betont}</p>}
+            {s.hinweis && <p class="vg-hinweis">{s.hinweis}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/vorgehen.ts';
+</script>

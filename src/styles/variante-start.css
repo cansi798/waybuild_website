@@ -13,6 +13,8 @@
 .v-platzhalter { position: relative; border: 2px dashed #b3261e !important; background: #fffafa !important; }
 .v-platzhalter__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
 .v-cta { text-align: center; }
+/* CTA weiß (09.11.2026): hält den Wechsel der Hintergründe nach dem Entfernen von #denkweise (#beitrag sand → CTA weiß → #team/#referenzen hell) */
+.section.v-cta { background: var(--white); }
 .v-cta .v-knopfe { justify-content: center; }
 
 /* KUNDENREISE als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,

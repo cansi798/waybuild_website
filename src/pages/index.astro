@@ -28,8 +28,12 @@
 //   Journey-Map (#kundenreise), danach „So arbeiten wir.“ (#arbeitsweise). Entfernt: „Einzelne Lösungen funktionieren.“
 //   (Bausteine) und „Ein Kunde interessiert sich nicht für Ihre Systeme.“ (#loesungen); BAUSTEINE/BEREICHE/BAUKASTEN-Daten
 //   sind aus startseite.ts entfernt (Baukasten-Daten liegen bei der archivierten Komponente unter archiv/baukasten-20261108/).
+// 09.11.2026 (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190; Sicherung Branch vor-so-gehen-wir-vor-20261109): nach der Kundenreise
+//   „So gehen wir vor“ (Verstehen, Verbinden, Verbessern; Komponente start/SoGehenWirVor.astro, Texte config/vorgehen.ts). Er trägt
+//   jetzt die Anker #denkweise und #erstberatung; der alte Abschnitt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (VERSTEHEN) ist entfernt.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Check from '../components/start/Check.astro';
+import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import VAblauf from '../components/variante/VAblauf.astro';
@@ -41,7 +45,7 @@ import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
 import { V_HERO, HERO_KNOPF, KUNDENREISE, ARBEITSWEISE, VERGLEICH } from '../config/variante';
 import Icon from '../components/Icon.astro';
-import { ANLIEGEN, VERSTEHEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
+import { ANLIEGEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 
@@ -74,15 +78,6 @@ const krPfad = (() => {
 })();
 const krFlaeche = `${krPfad}L1000 160L0 160Z`;
 const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
-// Abschnitt 3: ruhige Zeichen für die drei Prinzipien statt Nummern (Rethinking 08.11.): Gespräch = Verstehen,
-// Wegweiser = Empfehlen, Haken = Umsetzen. Stil wie die Hero-Geschichte (Dunkeltürkis, Türkis, Hell-Türkis, runde Enden).
-const PRINZIP_ICON = [
-  '<path d="M7 11 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-7 6 v-6 h-3 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 z" fill="#004f4c"/><path d="M36 19 h5 a4 4 0 0 1 4 4 v10 a4 4 0 0 1 -4 4 h-2 v5 l-6 -5 h-9 a4 4 0 0 1 -4 -4 v-1" fill="#7fd0cc"/><circle cx="12" cy="20.5" r="2" fill="#f7f5f0"/><circle cx="18" cy="20.5" r="2" fill="#f7f5f0"/><circle cx="24" cy="20.5" r="2" fill="#f7f5f0"/>',
-  '<rect x="22" y="6" width="4" height="38" rx="2" fill="#004f4c"/><path d="M10 10 h24 l6 5 l-6 5 h-24 a2 2 0 0 1 -2 -2 v-6 a2 2 0 0 1 2 -2 z" fill="#7fd0cc"/><path d="M38 23 h-24 l-6 5 l6 5 h24 a2 2 0 0 0 2 -2 v-6 a2 2 0 0 0 -2 -2 z" fill="#00a6a1"/>',
-  '<circle cx="24" cy="24" r="18" fill="#00a6a1"/><path d="M15.5 24.5 l6 6 l11 -12" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
-  // Verbessern (Jamil #4989): steigende Linie über einer Grundlinie, gleicher Stil
-  '<rect x="6" y="39" width="36" height="3.6" rx="1.8" fill="#7fd0cc"/><path d="M8 32 L18 22 L26 28 L39 14" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 13 h10 v10" fill="none" stroke="#004f4c" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>',
-];
 
 // Referenzen: Symbol in der stilisierten Vorschau (keine echten Screenshots/Logos, solange nicht freigegeben)
 const MOTIV: Record<string, string> = {
@@ -169,6 +164,11 @@ const MOTIV: Record<string, string> = {
   </section>
   </div>
 
+  <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026): drei Schritte an einer feinen türkisen Linie,
+       ruhiges Einblenden beim ersten Sichtkontakt; ohne JS und bei reduzierter Bewegung steht alles da. Anker #denkweise und
+       #erstberatung (Schritt 1, Erstgespräch). Ersetzt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ weiter unten. -->
+  <SoGehenWirVor />
+
   <!-- So arbeiten wir (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026): drei Grundsätze, ruhig, eigener Abschnitt nach der
        Kundenreise (nicht Teil des Stapels). Sanftes Einblenden beim ersten Sichtkontakt ([data-zeichne] → .ist-los, startseite.ts). -->
   <section class="section vprinzip" id="arbeitsweise" aria-labelledby="arbeiten-h">
@@ -241,41 +241,12 @@ const MOTIV: Record<string, string> = {
   <!-- ============ DARUNTER: bisherige Abschnitte. Gelber Trenner „Bisherige Startseite, zum Aussortieren“ und der alte
        Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
-  <!-- Hintergründe nach dem Entfernen von „Einzelne Lösungen funktionieren.“ und „Ein Kunde interessiert sich nicht für Ihre Systeme.“
-       (Jamil #5187, 09.11.2026) wieder im Wechsel hell/sand: #denkweise sand, #team hell, #referenzen sand (nur wenn Team/Stimmen
-       als Platzhalter zu sehen sind, sonst hell), #stimmen hell, #check sand. -->
-  <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788) zusammengelegt mit „Woran wir glauben“ (4795/4796, Jamil 4809):
-       große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“.
-       08.11.2026 (Jamil #4988/#4989): mit „So läuft die Erstberatung“ kombiniert (Verstehen = das kurze Gespräch) und um
-       „Verbessern“ ergänzt, vier Schritte an einer türkisen Linie; CTA Erstberatung darunter. Anker #erstberatung = Karte 1. -->
-  <section class="bs bs--alt" id="denkweise" aria-labelledby="bs-verstehen">
-    <div class="wrap">
-      <div class="bs-kopf bs-kopf--mitte">
-        <h2 id="bs-verstehen">{VERSTEHEN.titel}</h2>
-        <p class="bs-lead">{VERSTEHEN.einleitung}</p>
-        <ul class="verstehen-chips">{VERSTEHEN.liste.map((l) => <li>{l}</li>)}</ul>
-        <p class="bs-lead">{VERSTEHEN.schluss[0]} <strong>{VERSTEHEN.schluss[1]}</strong></p>
-      </div>
-      <ol class="schritte3" data-zeichne>
-        {VERSTEHEN.karten.map((k, i) => (
-          <li class="schritt3" id={i === 0 ? 'erstberatung' : undefined} style={`--i:${i}`}>
-            <span class="schritt3__zeichen" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" focusable="false" set:html={PRINZIP_ICON[i]} /></span>
-            <h3 class="schritt3__wort">{k.wort}</h3>
-            <p class="schritt3__leit">{k.leit}</p>
-            <p class="schritt3__text">{k.text}</p>
-            {k.hinweis && <p class="schritt3__hinweis"><a href="#pakete">{k.hinweis}</a></p>}
-          </li>
-        ))}
-      </ol>
-      <div class="ohne">
-        <p class="ohne__kopf">{VERSTEHEN.nichtKopf}</p>
-        <ul class="ohne__liste">{VERSTEHEN.nicht.map((n) => <li>{n}</li>)}</ul>
-      </div>
-      <p class="erst4__cta"><a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>{ANLIEGEN.erstberatung.label}</a></p>
-    </div>
-  </section>
+  <!-- Hintergründe unten im Wechsel (nach dem Entfernen von „Verstehen. Empfehlen. Umsetzen. Verbessern.“, Jamil #5188/#5190,
+       09.11.2026): #beitrag sand, CTA weiß, #team hell, #referenzen sand (nur wenn Team/Stimmen als Platzhalter zu sehen sind,
+       sonst hell), #stimmen hell, #check sand, Abschluss hell. -->
+  <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
 
-  <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026): direkt nach den Prinzipien. NUR PLATZHALTER (rot
+  <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026). NUR PLATZHALTER (rot
        gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
   {PLATZHALTER && (
     <section class="bs" id="team" aria-labelledby="bs-team">
@@ -375,7 +346,7 @@ const MOTIV: Record<string, string> = {
   <!-- Kundenreise-Check: seit 08.11. (Jamil #4934 Punkt 6) weiter unten, hinter Referenzen und Kundenstimmen -->
   <Check />
 
-  <!-- „So läuft die Erstberatung“ seit 08.11.2026 Teil von #denkweise (Jamil #4988/#4989) -->
+  <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 auf Schritt 1 von „So gehen wir vor“ (Jamil #5188/#5190) -->
 
   <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
   <section class="bs abschluss" aria-labelledby="bs-abschluss">

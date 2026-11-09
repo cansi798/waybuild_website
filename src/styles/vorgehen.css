@@ -1,0 +1,58 @@
+/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190), 09.11.2026.
+ * Reihenfolge der Hintergründe: Kundenreise (Papier, weiße Karte) → So gehen wir vor (Weiß) → So arbeiten wir. (zartes Türkis
+ * #eaf5f4) → Pakete (Sand). Kontrast (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4), Fließtext
+ * --ink-soft (7,5 : 1), Hervorhebungen #004f4c; Linien #00807b (4,8 : 1 auf Weiß). Mindestens eine Bildschirmseite. */
+
+/* ── So gehen wir vor ── */
+.section.vg { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
+  display: flex; flex-direction: column; justify-content: center; }
+.section.vg { background: var(--white); }
+.vg-kopf { max-width: 760px; }
+.vg-unter { margin: 0 auto 18px; max-width: 34ch; font-family: var(--font-head); font-size: clamp(1.2rem, 2.3vw, 1.55rem); font-weight: 600;
+  line-height: 1.4; color: var(--accent-ink); text-wrap: balance; }
+.vg-intro { margin: 0 auto 16px; line-height: 1.7; text-wrap: pretty; }
+.vg-ueber { margin: 0 auto; max-width: 56ch; font-size: 1.06rem; line-height: 1.7; font-weight: 600; color: var(--dark); text-wrap: balance; }
+
+.vg-schritte { --vg-nr: 56px; --vg-abstand: 40px; --vg-linie: #00807b; position: relative; list-style: none; width: 100%; max-width: 1120px;
+  margin: clamp(8px, 2vh, 24px) auto 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--vg-abstand); }
+.vg-schritt { position: relative; display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+.vg-nr { position: relative; z-index: 1; display: grid; place-items: center; flex: none; width: var(--vg-nr); height: var(--vg-nr); margin-bottom: 22px;
+  border-radius: 50%; background: var(--white); border: 2px solid var(--vg-linie); box-shadow: 0 0 0 6px rgb(0 128 123 / 10%);
+  font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; line-height: 1; color: var(--accent-ink); }
+/* feine Linie von einem Schritt zum nächsten (zwischen den Kreisen, mit kleinem Abstand) */
+.vg-schritt:not(:last-child)::after { content: ''; position: absolute; top: calc(var(--vg-nr) / 2 - 1px); left: calc(50% + var(--vg-nr) / 2 + 10px);
+  width: calc(100% + var(--vg-abstand) - var(--vg-nr) - 20px); height: 2px; border-radius: 2px; background: var(--vg-linie); transform-origin: left; }
+.vg-inhalt { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 34ch; }
+.vg-wort { margin: 0; font-size: clamp(1.5rem, 2.2vw, 1.85rem) !important; line-height: 1.15; letter-spacing: -0.02em; color: var(--accent-ink); }
+.vg-text { margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.vg-betont { margin: 4px 0 0; padding: 10px 16px; border-radius: 12px; background: #eaf5f4; font-family: var(--font-head); font-size: 1.02rem;
+  font-weight: 650; line-height: 1.5; color: var(--dark); text-wrap: balance; }
+.vg-hinweis { margin: 4px 0 0; padding: 6px 14px; border-radius: 14px; border: 1px solid #cfe5e3; font-size: 0.9rem; font-weight: 600; line-height: 1.5; color: var(--accent-ink); text-wrap: balance; }
+@media (min-width: 1100px) { .vg-inhalt { max-width: 36ch; } .vg-hinweis { white-space: nowrap; } }
+
+@media (max-width: 899px) {
+  .vg-schritte { --vg-nr: 48px; --vg-abstand: 34px; grid-template-columns: 1fr; max-width: 560px; }
+  .vg-schritt { display: grid; grid-template-columns: var(--vg-nr) minmax(0, 1fr); column-gap: 18px; align-items: start; text-align: left; }
+  .vg-nr { margin-bottom: 0; font-size: 1.15rem; }
+  .vg-schritt:not(:last-child)::after { top: calc(var(--vg-nr) + 8px); left: calc(var(--vg-nr) / 2 - 1px); bottom: calc(var(--vg-abstand) * -1 + 8px);
+    width: 2px; height: auto; transform-origin: top; }
+  .vg-inhalt { align-items: flex-start; gap: 10px; max-width: none; padding-top: 8px; }
+  .vg-betont, .vg-hinweis { text-wrap: pretty; }
+}
+
+/* Einblenden (nur mit .vg-bereit vom Skript; Endzustand = Zustand ohne JS) */
+.vg-bereit .vg-nr { opacity: 0; transform: scale(0.6); }
+.vg-bereit .vg-inhalt { opacity: 0; transform: translateY(14px); filter: blur(8px); }
+.vg-bereit .vg-schritt::after { transform: scaleX(0); }
+@media (max-width: 899px) { .vg-bereit .vg-schritt::after { transform: scaleY(0); } }
+.vg-bereit.ist-los .vg-nr { opacity: 1; transform: none;
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1); transition-delay: calc(150ms + var(--i) * 750ms); }
+.vg-bereit.ist-los .vg-inhalt { opacity: 1; transform: none; filter: blur(0);
+  transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(250ms + var(--i) * 750ms); }
+.vg-bereit.ist-los .vg-schritt::after { transform: none; transition: transform 0.65s cubic-bezier(0.45, 0, 0.3, 1); transition-delay: calc(600ms + var(--i) * 750ms); }
+@media (prefers-reduced-motion: reduce) {
+  .vg-schritte *, .vg-schritte *::after { transition: none !important; }
+  .vg-bereit .vg-nr, .vg-bereit .vg-inhalt { opacity: 1; transform: none; filter: none; }
+  .vg-bereit .vg-schritt::after { transform: none; }
+}

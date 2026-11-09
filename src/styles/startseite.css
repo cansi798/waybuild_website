@@ -60,10 +60,6 @@ html.js [data-p] { --p: 0; }
 .leitsatz { max-width: 760px; margin: clamp(36px, 5vw, 64px) auto 0; padding-top: clamp(24px, 3vw, 32px); border-top: 1px solid var(--line); text-align: center; font-family: var(--font-head); font-size: clamp(1.3rem, 2.8vw, 1.85rem); font-weight: 600; line-height: 1.35; color: var(--dark); }
 .leitsatz strong { display: block; color: var(--accent-ink); font-weight: 650; }
 
-/* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei große Karten mit reinem Text ── */
-.verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.verstehen-chips li { padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 650; color: var(--dark); }
-
 /* ── 5 · Darauf können Sie sich verlassen: große Schlagworte, viel Weißraum, keine Icons ── */
 .verlassen { padding-block: clamp(80px, 12vw, 160px); }
 .verlassen__titel { margin: 0 0 clamp(32px, 5vw, 56px) !important; text-align: center; font-size: 0.85rem !important; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-light) !important; }
@@ -88,46 +84,6 @@ html.js [data-p] { --p: 0; }
 .bs-gross-unter { font-family: var(--font-head); font-size: clamp(1.2rem, 2.6vw, 1.75rem); font-weight: 600; line-height: 1.35; color: var(--accent-ink); margin: 0 0 1em; }
 .bs--dunkel .bs-gross-unter { color: var(--accent-light); }
 .abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }
-
-/* ── 3 · Verstehen. Empfehlen. Umsetzen. Verbessern.: gleich breite, gleich hohe Karten (Jamil 4868–4870; seit 08.11.
- *     #4988/#4989 vier Schritte, Erstberatung in „Verstehen“). Unter 1100 px untereinander (max. 640 px breit). ── */
-.schritte3 { list-style: none; width: 100%; max-width: 640px; margin: clamp(32px, 5vw, 52px) auto 0; padding: 0; display: grid; gap: 16px; }
-@media (min-width: 1100px) { .schritte3 { max-width: 1240px; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; align-items: stretch; } }
-/* 08.11. (Rethinking „einladender“): Zeichen statt Nummern, Karten mittig; die drei Zeichen sitzen auf der Oberkante
- * und sind durch EINE goldene Linie verbunden (Start und Ende exakt in der Mitte des ersten bzw. letzten Zeichens).
- * Sie zeichnet sich einmal beim Sichtbarwerden ([data-zeichne] → .ist-los); ohne JS / reduzierte Bewegung steht sie fertig. */
-.schritte3 { position: relative; margin-top: clamp(64px, 7vw, 84px); row-gap: 52px; }
-.schritt3 { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 52px clamp(22px, 3vw, 34px) clamp(26px, 3vw, 34px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 10px 30px rgb(0 79 76 / 5%); }
-.schritt3__zeichen { position: absolute; top: 0; left: 50%; z-index: 2; display: grid; place-items: center; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--line); }
-/* Verbindung am Handy: von der Unterkante einer Karte bis zum Zeichen der nächsten */
-.schritt3:not(:last-child)::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 20px; margin-left: -1px; border-radius: 2px; background: var(--gold); transform-origin: top; }
-html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
-.schritte3.ist-los .schritt3::after { transition: transform 0.5s ease; transition-delay: calc(0.35s + var(--i) * 0.35s); }
-@media (min-width: 1100px) {
-  .schritt3:not(:last-child)::after { display: none; }
-  /* eine Linie von der Mitte der ersten bis zur Mitte der vierten Karte (Spaltenabstand 22px):
-   * Karte c = (100% − 66px) / 4, Start c/2, Länge 100% − c */
-  .schritte3::before { content: ''; position: absolute; top: -1px; left: calc((100% - 66px) / 8); width: calc((300% + 66px) / 4); height: 2px; border-radius: 2px; background: var(--gold); transform-origin: left; z-index: 1; }
-  html.js .schritte3:not(.ist-los)::before { transform: scaleX(0); }
-  .schritte3.ist-los::before { transition: transform 1.2s cubic-bezier(0.45, 0, 0.3, 1) 0.3s; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html.js .schritte3:not(.ist-los)::before, html.js .schritte3:not(.ist-los) .schritt3::after { transform: none; }
-}
-.schritt3__wort { margin: 0 0 12px; font-size: clamp(1.7rem, 2.3vw, 2.1rem) !important; letter-spacing: -0.02em; line-height: 1.1; }
-.schritt3__leit { margin: 0 0 10px; font-family: var(--font-head); font-size: clamp(1.12rem, 1.9vw, 1.3rem); font-weight: 650; line-height: 1.35; color: var(--accent-ink); }
-.schritt3__text { margin: 0; max-width: 34ch; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); }
-.schritt3__text + .schritt3__hinweis { margin-top: 12px; }
-.schritt3__hinweis { margin: 0; font-size: 0.92rem; line-height: 1.6; }
-.schritt3__hinweis a { font-weight: 650; color: var(--dark); text-underline-offset: 3px; }
-@media (min-width: 1100px) { .schritt3 { padding-inline: 24px; } .schritt3__text { font-size: 0.98rem; } }
-
-/* 3 · „Was Sie von uns nicht erwarten müssen“: gut lesbar, als Teil des Abschnitts */
-.ohne { max-width: 980px; margin: clamp(32px, 5vw, 48px) auto 0; padding: clamp(18px, 3vw, 26px); border-radius: var(--radius); background: var(--paper-2); text-align: center; }
-.ohne__kopf { margin: 0 0 12px; font-family: var(--font-head); font-weight: 650; font-size: clamp(1.05rem, 1.8vw, 1.2rem); color: var(--dark); }
-.ohne__liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; }
-.ohne__liste li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--white); font-weight: 600; font-size: 0.98rem; color: var(--dark); }
-.ohne__liste li::before { content: ''; width: 12px; height: 2px; border-radius: 2px; background: #b5654a; }
 
 /* ── Referenzen (08.11.2026 mit Namen, Jamil #4932): Karte mit Bild der Kunden-Website oben, Etikett Online/Vorschau ── */
 .refs4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 20px; }
@@ -175,9 +131,6 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 .stimme4__zitat { margin: 0; }
 .stimme4__zitat p { margin: 0; font-family: var(--font-head); font-size: 1.05rem; line-height: 1.6; color: var(--dark); }
 .stimme4__quelle { margin: 12px 0 0; font-size: 0.9rem; font-weight: 600; color: #a1261d; }
-
-/* CTA „Kostenfreie Erstberatung“ unter dem Abschnitt #denkweise (seit 08.11. Jamil #4989; eigener Abschnitt entfernt) */
-.erst4__cta { margin: clamp(24px, 3vw, 32px) 0 0; text-align: center; }
 
 /* Preisteil: drei Pakete kompakt (Jamil #5056, 08.11.2026; ersetzt den Abo-Baukasten). Karten: components/pakete/PaketKarten.astro */
 .pk-start { position: relative; }

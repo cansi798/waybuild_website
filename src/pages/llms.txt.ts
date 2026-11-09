@@ -9,8 +9,9 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, VERSTEHEN, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { HERO, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
 import { KUNDENREISE, ARBEITSWEISE } from '../config/variante';
+import { VORGEHEN } from '../config/vorgehen';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -26,8 +27,8 @@ export const GET: APIRoute = async ({ site }) => {
     `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
     `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} ${st.leistungen.join(', ')})`).join('; ')}. ${KUNDENREISE.schluss}`,
+    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} ${VORGEHEN.ueberleitung} ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.wort}: ${s.text}${s.betont ? ` ${s.betont}` : ''}${s.hinweis ? ` ${s.hinweis}` : ''}`).join(' ')}`,
     `- ${ARBEITSWEISE.titel} ${ARBEITSWEISE.prinzipien.map((p) => `${p.wort}: ${p.text}`).join(' ')}`,
-    `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')} ${VERSTEHEN.karten.map((k) => `${k.wort}: ${k.leit} ${k.text}${k.hinweis ? ` ${k.hinweis}.` : ''}`).join(' ')} ${VERSTEHEN.nichtKopf} ${VERSTEHEN.nicht.join(', ')}.`,
     `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
     `- ${CHECK.eyebrow} auf der Startseite: ${CHECK.fragen.length} kurze Fragen (${CHECK.fragen.map((f) => f.schritt).join(', ')}); Ergebnis als Ampel je Station mit Tipp, berechnet nur im Browser. Mitgeschickt wird nur, wenn der Besucher das Ergebnis aktiv mit seiner Anfrage sendet.`,
