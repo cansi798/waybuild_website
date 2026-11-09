@@ -1,156 +1,124 @@
 ---
-// Leistungen nach der Unternehmensvision (17.10.2026): EINE Lösung „Website as a Service“.
-// 1 Was drin ist (9 Bestandteile) → 2 Was wir damit bauen (#websites) → 3 Ausbaustufen auf Anfrage (#ausbau,
-// mit den alten Sprungmarken #software, #cloud, #beratung) → CTA.
+// /leistungen/ – Übersicht NEU (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): vier Gruppen entlang der
+// Kundenreise, je Leistung eine Karte (menuTitel, kurz, Paket-Hinweis ohne Preis). Daten: src/content/leistungen/ +
+// src/config/leistungen-neu.ts. Die frühere Übersicht „Website as a Service“ mit Ausbaustufen (Altbestand
+// src/config/leistungen.ts) liegt in Git (Sicherung Branch vor-leistungen-neu-20261109).
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import SectionHead from '../../components/SectionHead.astro';
-import LeistungGrafik from '../../components/LeistungGrafik.astro';
-import Inklusive from '../../components/Inklusive.astro';
 import Icon from '../../components/Icon.astro';
-import { leistungen, leistungenNach, leistungAb } from '../../config/leistungen';
-import { WAAS, preisLang } from '../../config/site';
-import { SAEULEN, NETTO_HINWEIS } from '../../config/angebot';
+import { gruppenMitLeistungen, ICONS, paketAnzeige } from '../../config/leistungen-neu';
+import { ANLIEGEN } from '../../config/startseite';
 import { href, absolute } from '../../lib/paths';
-import { serviceSchema } from '../../lib/schema';
 
-const websites = leistungenNach('websites');
-const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
+const gruppen = await gruppenMitLeistungen();
+const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Leistungen von waybuild',
-  itemListElement: leistungen.map((l, i) => ({
+  itemListElement: gruppen.flatMap((g) => g.eintraege).map((l, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    name: l.title,
-    url: absolute(`/leistungen/${l.slug}/`, Astro.site),
+    name: l.data.title,
+    url: absolute(`/leistungen/${l.id}/`, Astro.site),
   })),
 };
 ---
 
 <BaseLayout
-  title="Leistungen: Website as a Service"
-  description={`${WAAS.name}: Beratung, KI-gestützte Erstellung, Hosting, Wartung und Betreuung zum festen Monatspreis, ${preisLang()}`}
-  schema={[serviceSchema(Astro.site), itemList]}
+  title="Leistungen: von Website bis Betreuung"
+  description="Alle Leistungen von waybuild entlang der Kundenreise: gefunden werden, Vertrauen gewinnen, Anfragen und Abläufe, Betreuung und Verbesserung."
+  schema={[itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >
-  <PageHeader eyebrow="Leistungen" title={`Eine Lösung: ${WAAS.name}.`} lead={WAAS.claim}>
-    <p class="ph-preis"><Icon name="euro" size={20} /> {preisLang()} · 0 € Einrichtung · {WAAS.laufzeitMonate} Monate Mindestlaufzeit</p>
+  <PageHeader eyebrow="Leistungen" title="Alles, was aus Interessenten Kunden macht." lead="Unsere Leistungen folgen dem Weg Ihrer Kunden: vom ersten Eindruck über die Anfrage bis zur Betreuung danach.">
+    <p class="ph-hinweis"><a href={href('/#kundenreise')}>Die Kundenreise auf der Startseite ansehen</a></p>
   </PageHeader>
 
-  <section class="section" aria-labelledby="inkl-h">
-    <div class="wrap">
-      <SectionHead eyebrow="Enthalten" pre="Was " accent="drin ist" id="inkl-h" />
-      <Inklusive />
-    </div>
-  </section>
+  <nav class="lsprung wrap" aria-label="Leistungsgruppen">
+    <ul>
+      {gruppen.map((g, i) => (
+        <li><a href={`#${g.id}`}><span aria-hidden="true">{i + 1}</span>{g.titel}</a></li>
+      ))}
+    </ul>
+  </nav>
 
-  <section class="section section--sand saeule" id="websites" aria-labelledby="websites-h">
-    <div class="wrap">
-      <SectionHead eyebrow={WAAS.name} pre="Was wir damit " accent="bauen" text="Gleiches Modell, gleicher Service, je nachdem, was Ihr Unternehmen braucht." id="websites-h" />
-      <div class="lgrid">
-        {websites.map((l) => (
-          <a class="card lcard reveal" href={href(`/leistungen/${l.slug}/`)}>
-            <div class="lcard__media"><LeistungGrafik art={l.grafik} /></div>
-            <div class="lcard__body">
-              <span class="lcard__icon"><Icon name={l.icon} size={22} /></span>
-              <h3>{l.title}</h3>
-              <p>{l.teaser}</p>
-              <span class="lcard__plan">{leistungAb(l)}</span>
-            </div>
-          </a>
-        ))}
-        <div class="card lfill">
-          <span class="eyebrow">Erstgespräch</span>
-          <p class="lfill__ab">Nicht sicher, was Sie brauchen?</p>
-          <p>In der Beratung klären wir Zielgruppen, Positionierung und Ziele. Danach wissen Sie, was Ihre Website leisten muss.</p>
-          <div class="lfill__actions">
-            <a class="btn btn--primary btn--sm" href={href('/kontakt/')}>Erstgespräch</a>
-            <a class="btn btn--sm lfill__ghost" href={href('/preise/')}>Preis ansehen</a>
+  {gruppen.map((g, i) => (
+    <section class:list={['section lgruppe', { 'section--sand': i % 2 === 1 }]} id={g.id} aria-labelledby={`${g.id}-h`}>
+      <div class="wrap">
+        <div class="lgruppe__kopf">
+          <span class="lgruppe__nr" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h2 id={`${g.id}-h`}>{g.titel}</h2>
+            <p class="lead">{g.text}</p>
           </div>
         </div>
+        <ul class="lkarten">
+          {g.eintraege.map((l) => (
+            <li>
+              <a class="card lkarte" href={href(`/leistungen/${l.id}/`)}>
+                <span class="lkarte__icon"><Icon name={ICONS[l.id] ?? 'check'} size={22} /></span>
+                <h3>{l.data.menuTitel}</h3>
+                <p>{l.data.kurz}</p>
+                <span class="lkarte__paket">{paketAnzeige(l.data.paket)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
-  </section>
+    </section>
+  ))}
 
-  <section class="section saeule" id="ausbau" aria-labelledby="ausbau-h">
-    <div class="wrap">
-      <SectionHead eyebrow="Ausbaustufen · auf Anfrage" pre="Die Website ist der " accent="erste Schritt." text="Darauf aufbauend setzen wir individuelle Projekte um, Schritt für Schritt bis zur digitalen Unternehmensplattform." id="ausbau-h" />
-      <div class="ausbau">
-        {ausbau.map((s) => (
-          <div class="ausbau__gruppe" id={s.id}>
-            <h3><Icon name={s.icon} size={20} /> {s.title}</h3>
-            <ul>
-              {leistungenNach(s.id).map((l) => (
-                <li><a href={href(`/leistungen/${l.slug}/`)}><strong>{l.title}</strong><span>{l.teaser}</span></a></li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <p class="incl"><a href={href('/#plattform')}>Unsere Plattform-Vision ansehen →</a></p>
-    </div>
-  </section>
-
-  <section class="section section--dark">
-    <div class="wrap cta">
+  <section class="section lcta-sec">
+    <div class="wrap lcta">
       <div>
-        <span class="eyebrow">Keine klassische Webagentur</span>
-        <h2>Menschliche Beratung. KI-gestützte Umsetzung.</h2>
-        <p class="lead">Und danach: kontinuierliche Verbesserung.</p>
+        <h2>Nicht sicher, was Sie brauchen?</h2>
+        <p class="lead">In der kostenlosen Erstberatung, rund 20 Minuten, sehen wir uns gemeinsam an, wo Sie am meisten gewinnen.</p>
       </div>
-      <div class="cta__actions">
-        <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
-        <a class="btn btn--lg cta__ghost" href={href('/warum-waybuild/')}>Warum waybuild?</a>
+      <div class="lcta__knoepfe">
+        <a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a>
+        <a class="btn btn--lg btn--ghost lcta__ghost" href={href('/preise/')}>Preise ansehen</a>
       </div>
     </div>
-    <p class="wrap netto">{NETTO_HINWEIS}</p>
   </section>
 </BaseLayout>
 
 <style>
-  .ph-preis { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 6px 0 0; font-weight: 650; }
-  .ph-preis :global(.icon) { color: var(--accent-ink); }
-  .saeule { scroll-margin-top: 72px; }
-  .lgrid { display: grid; gap: 20px; }
-  @media (min-width: 720px) { .lgrid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1100px) { .lgrid { grid-template-columns: repeat(3, 1fr); } }
-  .lcard { padding: 0; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
-  .lcard__media { position: relative; aspect-ratio: 16 / 8; background: var(--paper-2); overflow: hidden; }
-  .lcard__body { padding: 22px; display: grid; gap: 8px; align-content: start; }
-  .lcard__icon { z-index: 2; width: 44px; height: 44px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; margin-top: -44px; position: relative; box-shadow: var(--shadow); }
-  .lcard h3 { font-size: 1.3rem; margin: 6px 0 0; }
-  .lcard p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
-  .lcard__plan { font-size: 0.82rem; font-weight: 650; color: var(--accent-ink); margin-top: 4px; }
-  .lfill { background: var(--dark); color: var(--paper); border-color: var(--dark); display: grid; align-content: center; gap: 10px; }
-  .lfill .eyebrow { margin: 0; color: var(--accent-light); }
-  .lfill p { margin: 0; color: var(--dark-lead); font-size: 0.95rem; max-width: 52ch; }
-  .lfill .lfill__ab { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; color: var(--white); }
-  .lfill__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-  .lfill__ghost { border-color: rgb(255 255 255 / 55%); color: var(--white); background: transparent; }
+  .ph-hinweis { margin: 10px 0 0; }
+  .ph-hinweis a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
 
-  .ausbau { display: grid; gap: 16px; }
-  @media (min-width: 900px) { .ausbau { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .ausbau__gruppe { scroll-margin-top: 90px; background: var(--white); border: 1.5px dashed var(--line); border-radius: 18px; padding: 20px; }
-  .ausbau__gruppe h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 1.15rem; }
-  .ausbau__gruppe h3 :global(.icon) { color: var(--accent-ink); }
-  .ausbau__gruppe ul { list-style: none; margin: 0; padding: 0; display: grid; }
-  .ausbau__gruppe li + li { border-top: 1px solid var(--line); }
-  .ausbau__gruppe a { display: grid; gap: 2px; padding: 10px 0; text-decoration: none; }
-  .ausbau__gruppe a strong { color: var(--accent-ink); }
-  .ausbau__gruppe a span { font-size: 0.88rem; color: var(--ink-soft); }
-  .ausbau__gruppe a:hover strong { text-decoration: underline; }
-  .incl { margin: 24px 0 0; text-align: center; font-size: 0.92rem; }
-  .incl a { font-weight: 650; color: var(--accent-ink); }
+  /* Sprungleiste zu den vier Gruppen */
+  .lsprung { padding-block: 18px; }
+  .lsprung ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .lsprung a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 650; font-size: 0.92rem; color: var(--ink); text-decoration: none; }
+  .lsprung a:hover { border-color: var(--accent-ink); }
+  .lsprung a span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-ink); color: var(--white); font-size: 0.8rem; }
 
-  .cta { display: grid; gap: 24px; align-items: center; }
-  @media (min-width: 960px) { .cta { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
-  .cta h2 { margin-bottom: 0.4em; }
-  .cta__actions { display: flex; flex-wrap: wrap; gap: 12px; }
-  .cta__ghost { background: transparent; border-color: rgb(255 255 255 / 55%); color: var(--white); }
-  .cta__ghost:hover { background: rgb(255 255 255 / 12%); }
-  .netto { margin-top: 28px; font-size: 0.82rem; color: var(--dark-soft); }
-  @media (max-width: 767px) { .cta__actions .btn { width: 100%; } }
+  .lgruppe { scroll-margin-top: calc(var(--header-h) + 8px); padding-block: clamp(40px, 7vw, 88px); }
+  .lgruppe__kopf { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; max-width: 760px; margin-bottom: clamp(20px, 4vw, 36px); }
+  .lgruppe__kopf h2 { margin: 0 0 0.3em; overflow-wrap: break-word; }
+  .lgruppe__kopf .lead { margin: 0; }
+  .lgruppe__nr { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: var(--accent); font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; margin-top: 2px; }
+
+  .lkarten { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 700px) { .lkarten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .lkarten { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .lkarte { display: grid; gap: 6px; align-content: start; height: 100%; text-decoration: none; color: var(--ink); transition: border-color 0.2s ease, transform 0.2s ease; }
+  .lkarte:hover { border-color: var(--accent-ink); transform: translateY(-2px); }
+  .lkarte h3 { margin: 4px 0 0; font-size: 1.15rem; color: var(--dark); overflow-wrap: break-word; hyphens: auto; }
+  .lkarte p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
+  .lkarte__icon { width: 42px; height: 42px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; }
+  .lkarte__paket { margin-top: 6px; font-size: 0.82rem; font-weight: 650; color: var(--accent-ink); }
+  @media (prefers-reduced-motion: reduce) { .lkarte, .lkarte:hover { transition: none; transform: none; } }
+
+  .lcta { display: grid; gap: 24px; align-items: center; }
+  @media (min-width: 960px) { .lcta { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
+  .lcta h2 { margin-bottom: 0.4em; }
+  .lcta .lead { margin: 0; }
+  .lcta__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
+  .lcta-sec { padding-block: clamp(40px, 6vw, 72px); }
+  .lcta { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: clamp(24px, 4vw, 44px); width: min(100% - 32px, var(--wrap)); }
+  .lcta__ghost { color: var(--accent-ink); }
+  @media (max-width: 767px) { .lcta__knoepfe .btn { width: 100%; } }
 </style>

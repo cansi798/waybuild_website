@@ -69,7 +69,8 @@ const schema = [
           </div>
           <div class="art__cta-btns">
             <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=${leistung.slug}`}>Kostenloses Erstgespräch</a>
-            <a class="btn btn--ghost" href={href(`/leistungen/${leistung.slug}/`)}>Mehr zur Leistung</a>
+            {/* Alte Leistungsseiten sind seit 09.11.2026 unverlinkt (noindex); stattdessen die neue Übersicht (Jamil #5274/#5276) */}
+            <a class="btn btn--ghost" href={href('/leistungen/')}>Alle Leistungen</a>
           </div>
         </aside>
       ) : (

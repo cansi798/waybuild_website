@@ -4,8 +4,7 @@ import type { APIRoute } from 'astro';
 import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, INKLUSIVE, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, PREIS_HINWEIS, formatEuro, brutto, HOURS, einmaligZeile } from '../config/site';
 import { EINMALIG_DAZU, AUF_ANFRAGE, aboPreisAb } from '../config/pakete-abo';
 import { absolute } from '../lib/paths';
-import { leistungenNach } from '../config/leistungen';
-import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
+import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
 import { CLAIM, BOTSCHAFT } from '../config/startseite';
@@ -14,6 +13,8 @@ import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
+  // Leistungen NEU: 4 Gruppen / 13 Leistungen (Jamil, Talk qh87y3sj #5274/#5276); Altbestand nicht mehr aufgeführt
+  const gruppen = await gruppenMitLeistungen();
   // Blog (Jamil #5264): nur freigegebene Beiträge, Entwürfe (draft: true) bleiben draußen
   const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
@@ -48,14 +49,11 @@ export const GET: APIRoute = async ({ site }) => {
     `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
     '',
-    '## Was wir im Rahmen von Website as a Service bauen',
-    ...leistungenNach('websites').map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser}`),
-    '',
-    '## Ausbaustufen auf Anfrage (individuelles Angebot)',
-    ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => [
-      `### ${s.title}`,
-      s.claim,
-      ...leistungenNach(s.id).map((l) => `- [${l.title}](${url(`/leistungen/${l.slug}/`)}): ${l.teaser}`),
+    '## Leistungen (entlang der Kundenreise, je Leistung eine eigene Seite)',
+    ...gruppen.flatMap((g) => [
+      `### ${g.titel}`,
+      g.text,
+      ...g.eintraege.map((l) => `- [${l.data.menuTitel}: ${l.data.title}](${url(`/leistungen/${l.id}/`)}): ${l.data.kurz} Paket: ${l.data.paket}.`),
       '',
     ]),
     '## Vision',
@@ -66,7 +64,8 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Seiten',
     `- [Startseite](${url('/')})`,
-    `- [Leistungen](${url('/leistungen/')}): Website as a Service und Ausbaustufen`,
+    `- [Leistungen](${url('/leistungen/')}): alle Leistungen in vier Gruppen (${gruppen.map((g) => g.titel).join(', ')})`,
+    `- [Referenzen](${url('/referenzen/')}): echte Projekte, Bereich Websites`,
     `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt.`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen Baukasten, Freelancer, Agentur und waybuild`,
     `- [Wissen](${url('/wissen/')}): Übersicht über Ratgeber, Häufige Fragen und Blog`,

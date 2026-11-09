@@ -30,4 +30,23 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { ratgeber, blog };
+// Leistungen NEU (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): 13 Seiten in 4 Gruppen, nur aus der
+// Startseite abgeleitet. Seiten unter /leistungen/<slug>/ (src/pages/leistungen/[slug].astro), Gruppen/Reihenfolge in
+// src/config/leistungen-neu.ts. Links im Text als /leistungen/<slug>/ schreiben; den Basis-Pfad setzt
+// src/lib/markdown-basislinks.mjs beim Bauen davor. Keine Preise in diesen Dateien (Preise nur auf /preise/).
+const leistungen = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/leistungen' }),
+  schema: z.object({
+    title: z.string().max(52), // H1 und <title> (+ " | Waybuild")
+    menuTitel: z.string().max(30),
+    gruppe: z.enum(['gefunden', 'vertrauen', 'anfragen', 'betreuung']),
+    station: z.enum(['aufmerksamkeit', 'vertrauen', 'anfrage', 'bearbeitung', 'betreuung']),
+    kurz: z.string().max(100),
+    description: z.string().min(70).max(165),
+    /** Paket-Hinweis nur wie auf der Startseite belegt, sonst „auf Anfrage“ */
+    paket: z.string(),
+    fragen: z.array(z.object({ frage: z.string(), antwort: z.string() })).min(1),
+  }),
+});
+
+export const collections = { ratgeber, blog, leistungen };

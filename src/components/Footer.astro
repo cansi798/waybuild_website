@@ -2,7 +2,7 @@
 import { company } from '../config/site';
 import { href } from '../lib/paths';
 import Logo from './Logo.astro';
-import { leistungen } from '../config/leistungen';
+import { GRUPPEN } from '../config/leistungen-neu';
 import FooterKontakt from './FooterKontakt.astro';
 
 // thema 'besucherreise' (neue Startseite): ohne Kontaktkopf (der Abschluss der Seite ist der CTA).
@@ -23,8 +23,9 @@ const year = new Date().getFullYear();
     <nav aria-label="Footer">
       <h2 class="footer__h">Leistungen</h2>
       <ul>
-        <li><a href={href('/leistungen/')}>Website as a Service</a></li>
-        {leistungen.filter((l) => l.saeule !== 'websites').map((l) => <li><a href={href(`/leistungen/${l.slug}/`)}>{l.title}</a></li>)}
+        {/* Neue Leistungen in vier Gruppen, Altbestand nicht mehr verlinkt (Jamil, Talk qh87y3sj #5274/#5276) */}
+        {GRUPPEN.map((g) => <li><a href={href(`/leistungen/#${g.id}`)}>{g.titel}</a></li>)}
+        <li><a href={href('/leistungen/')}>Alle Leistungen im Überblick</a></li>
         <li><a href={href('/preise/')}>Preise</a></li>
       </ul>
     </nav>

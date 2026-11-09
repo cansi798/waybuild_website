@@ -46,7 +46,7 @@ const isCurrent = (path?: string) => path && current === href(path);
                               <li>
                                 <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
                                   {c.icon && <Icon name={c.icon} size={20} class="dd__icon" />}
-                                  <span class="dd__text"><strong>{c.label}</strong>{c.desc && <small>{c.desc}</small>}</span>
+                                  <span class="dd__text"><strong>{c.label}</strong>{c.desc && <small>{c.desc}</small>}{c.tag && <em class="dd__tag">{c.tag}</em>}</span>
                                 </a>
                               </li>
                             ))}
@@ -142,9 +142,13 @@ const isCurrent = (path?: string) => path && current === href(path);
   /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */
   .hdr__inner { position: relative; }
   .dd--mega { position: static; }
-  .dd--mega .dd__panel { left: 50%; width: min(1000px, 100%); max-width: none; min-width: 0; padding: 18px; }
+  /* Seit 09.11.2026 vier Gruppen der Kundenreise nebeneinander (Jamil #5274/#5276), Kurztext + Paket-Etikett je Eintrag */
+  .dd--mega .dd__panel { left: 50%; width: min(1120px, 100%); max-width: none; min-width: 0; padding: 18px; }
   .dd--mega .dd__panel::before { content: ''; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
-  .dd__groups { columns: 3 230px; column-gap: 12px; }
+  .dd__groups { columns: 4 200px; column-gap: 12px; }
+  .dd--mega .dd__item { align-items: flex-start; }
+  .dd--mega .dd__item :global(.dd__icon) { margin-top: 2px; }
+  .dd__tag { justify-self: start; margin-top: 4px; padding: 1px 8px; border-radius: 999px; background: rgb(0 166 161 / 12%); color: var(--dark); font-style: normal; font-size: 0.72rem; font-weight: 650; }
   .dd__group { break-inside: avoid; margin-bottom: 10px; }
   .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
   .dd--mega .dd__item { padding: 7px 12px; }
