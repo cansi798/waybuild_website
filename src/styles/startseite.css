@@ -13,8 +13,6 @@ html[data-thema='besucherreise'] {
   /* Rollen der früheren Sonder-Palette, jetzt auf die CI gelegt */
   --gold: var(--accent);          /* Linien, Ringe, Akzentflächen: Türkis */
   --salbei: var(--accent-mid);    /* kleine Zeichen, Punkte, Balken: Türkis mittel (≥ 3 : 1 auf Weiß) */
-  --stoer: #b8695c;               /* Bruchstellen: gedämpftes Rot */
-  --stoer-ink: #9a4a3f;
   scroll-padding-top: 84px;
 }
 html[data-thema='besucherreise'] :focus-visible { outline-color: var(--accent-ink); }
@@ -33,8 +31,6 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
  * und Knopf #006b68 (Header.astro). Die frühere Startseiten-Sonderregel „Kopfzeile Türkis #00a6a1 mit dunkler Schrift“
  * (#5011, Commit 725904a) ist entfernt; Sicherungen vor-header-dunkel-20261108 und vor-direkt-buchen-20261108. */
 .bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
-/* Abschnitt vor einem dunklen Abschnitt mit stark wechselnder Höhe: immer berechnen (sonst falsche Kontrastmessung) */
-.bs.bs--voll { content-visibility: visible; }
 
 /* Fortschritt: Standard ohne JS / reduzierte Bewegung = fertig */
 [data-p] { --p: 1; }
@@ -53,12 +49,9 @@ html.js [data-p] { --p: 0; }
 .bs-lead strong, .bs-stark { color: var(--dark); font-weight: 650; }
 .bs--dunkel .bs-lead { color: var(--dark-lead); }
 .bs-lead--hell { color: var(--white) !important; font-weight: 600; }
-.bs-unter { font-family: var(--font-head); font-size: clamp(1.15rem, 2vw, 1.4rem); font-weight: 600; line-height: 1.4; color: var(--accent-ink); margin: -0.2em 0 0.8em; max-width: 34ch; }
 .bs-kopf { max-width: 720px; }
 .bs-kopf--mitte { margin-inline: auto; text-align: center; }
 .bs-kopf--mitte .bs-lead { margin-inline: auto; }
-.bs-zwei { display: grid; gap: clamp(28px, 5vw, 80px); }
-@media (min-width: 960px) { .bs-zwei { grid-template-columns: 1fr 1fr; align-items: start; } .bs-zwei--mitte { align-items: center; } }
 .bs-gross { font-size: clamp(1.9rem, 4.4vw, 3rem) !important; line-height: 1.12 !important; letter-spacing: -0.025em; max-width: 18ch; }
 .bs-schluss { margin: 18px 0 0; font-size: 1.08rem; line-height: 1.65; color: var(--ink-soft); }
 .bs-schluss strong { display: block; font-family: var(--font-head); font-weight: 650; color: var(--dark); }
@@ -67,110 +60,9 @@ html.js [data-p] { --p: 0; }
 .leitsatz { max-width: 760px; margin: clamp(36px, 5vw, 64px) auto 0; padding-top: clamp(24px, 3vw, 32px); border-top: 1px solid var(--line); text-align: center; font-family: var(--font-head); font-size: clamp(1.3rem, 2.8vw, 1.85rem); font-weight: 600; line-height: 1.35; color: var(--dark); }
 .leitsatz strong { display: block; color: var(--accent-ink); font-weight: 650; }
 
-/* ── 2 · Einzelne Lösungen, die nicht verbunden sind (Jamil #4986, 08.11.2026: statt Puzzle seriös und animiert) ──
- * Vier ruhige Module (Karten) mit Lücken in den Verbindungen. Ablauf in einer Schleife von 10 s, nur transform/opacity:
- *   0–38 %  eine Anfrage (Brief) verlässt die Website, bleibt in der Lücke hängen, färbt sich rot, verblasst → „Verlorene Anfragen.“
- *  42–62 %  derselbe Eintrag wird erst in der Kundenverwaltung, dann noch einmal bei den Prozessen gepflegt → „Unnötiger Aufwand.“
- *  70–90 %  in der Mitte bleibt ein Fragezeichen, die Bruchstellen pulsieren → „Unklare Abläufe.“
- * Die drei Zeilen links (.verluste) leuchten synchron auf (gleiche Dauer; .ist-los/.ist-sichtbar setzt das Skript über
- * data-mit gleichzeitig an Grafik und Zeilen).
- * Start erst, wenn die Grafik sichtbar wird ([data-zeichne] → .ist-los), Pause außerhalb des Sichtbereichs
- * ([data-schleife] → .ist-sichtbar). Ohne JS bzw. bei reduzierter Bewegung: Standbild mit allen drei Brüchen. */
-.werkzeuge { list-style: none; margin: 4px 0 18px; padding: 0; display: grid; gap: 2px; }
-.werkzeuge li { font-family: var(--font-head); font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 650; line-height: 1.3; color: var(--dark); }
-.verluste { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.verluste li { position: relative; padding: 7px 14px 7px 29px; border-radius: 999px; background: var(--paper); font-weight: 650; font-size: 0.95rem; color: #4f5559; }
-.verluste li::before { content: ''; position: absolute; left: 13px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--stoer); }
-.verluste li::after { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid var(--stoer); pointer-events: none; }
-
-.bstn { --gx: 72px; --gy: 56px; --bw: 28px; --bh: 21px; margin: 0; }
-.bstn__raster { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: var(--gy) var(--gx); max-width: 540px; margin-inline: auto; }
-.bstn__karte { position: relative; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; padding: 16px 18px 18px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); box-shadow: 0 1px 2px rgb(0 79 76 / 5%), 0 6px 18px rgb(0 79 76 / 6%); }
-.bstn__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--paper-2); }
-.bstn__name { display: block; max-width: 100%; margin-top: 12px; font-family: var(--font-head); font-size: clamp(0.86rem, 0.72rem + 0.55vw, 1.05rem); font-weight: 650; line-height: 1.25; color: var(--dark); hyphens: manual; overflow-wrap: break-word; }
-.bstn__zeilen { display: grid; gap: 6px; width: 100%; margin-top: auto; padding-top: 14px; }
-.bstn__zeilen i { display: block; height: 6px; border-radius: 3px; background: #ebe6dd; }
-.bstn__zeilen i:nth-child(1) { width: 78%; }
-.bstn__zeilen i:nth-child(2) { width: 52%; }
-.bstn__zeilen .bstn__eintrag { width: 66%; background: var(--salbei); transform-origin: left center; }
-
-/* Verbindungen: gestrichelt, in der Mitte unterbrochen (Maske auf der Linie <i>), Bruchkanten gedämpft rot (::before/::after) */
-.bstn__verb { position: absolute; z-index: 0; }
-.bstn__verb i { position: absolute; inset: 0; }
-.bstn__verb--h { left: 100%; top: 50%; width: var(--gx); height: 2px; margin-top: -1px; }
-.bstn__verb--h i { background: repeating-linear-gradient(90deg, #a89c8d 0 6px, transparent 6px 11px);
-  -webkit-mask: linear-gradient(90deg, #000 0 32%, transparent 32% 68%, #000 68%); mask: linear-gradient(90deg, #000 0 32%, transparent 32% 68%, #000 68%); }
-.bstn__verb--v { top: 100%; left: 50%; height: var(--gy); width: 2px; margin-left: -1px; }
-.bstn__verb--v i { background: repeating-linear-gradient(180deg, #a89c8d 0 6px, transparent 6px 11px);
-  -webkit-mask: linear-gradient(180deg, #000 0 30%, transparent 30% 70%, #000 70%); mask: linear-gradient(180deg, #000 0 30%, transparent 30% 70%, #000 70%); }
-.bstn__verb::before, .bstn__verb::after { content: ''; position: absolute; background: var(--stoer); border-radius: 1px; }
-.bstn__verb--h::before, .bstn__verb--h::after { top: -5px; width: 2px; height: 12px; transform: rotate(18deg); }
-.bstn__verb--h::before { left: 32%; }
-.bstn__verb--h::after { left: calc(68% - 2px); }
-.bstn__verb--v::before, .bstn__verb--v::after { left: -5px; height: 2px; width: 12px; transform: rotate(-18deg); }
-.bstn__verb--v::before { top: 30%; }
-.bstn__verb--v::after { top: calc(70% - 2px); }
-
-/* Die Anfrage: sitzt (Standbild) mitten in der Lücke zwischen Website und Kundenverwaltung, rot markiert */
-.bstn__brief { position: absolute; z-index: 2; left: 100%; top: 50%; width: var(--bw); height: var(--bh); margin-top: calc(var(--bh) / -2); transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
-.bstn__brief svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
-.bstn__brief-rot { opacity: 1; }
-.bstn__frage { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; width: var(--fq, 34px); height: var(--fq, 34px); margin: calc(var(--fq, 34px) / -2) 0 0 calc(var(--fq, 34px) / -2); border-radius: 50%; background: var(--paper); border: 1.5px solid var(--stoer); }
-
-@media (prefers-reduced-motion: no-preference) {
-  /* vor dem Start (mit JS): ruhiger Ausgangszustand, damit nichts springt */
-  html.js .bstn:not(.ist-los) :is(.bstn__brief, .bstn__frage) { opacity: 0; }
-  html.js .bstn:not(.ist-los) .bstn__eintrag { transform: scaleX(0); }
-  html.js .verluste:not(.ist-los) li::before { transform: scale(0); }
-  html.js .verluste:not(.ist-los) li::after { opacity: 0; }
-
-  .bstn.ist-los .bstn__brief { animation: bstn-brief 10s linear infinite both; }
-  .bstn.ist-los .bstn__brief-rot { animation: bstn-rot 10s linear infinite both; }
-  .bstn.ist-los .bstn__eintrag--1 { animation: bstn-eintrag1 10s ease-out infinite both; }
-  .bstn.ist-los .bstn__eintrag--3 { animation: bstn-eintrag3 10s ease-out infinite both; }
-  .bstn.ist-los .bstn__frage { animation: bstn-frage 10s ease-out infinite both; }
-  .bstn.ist-los .bstn__verb::before, .bstn.ist-los .bstn__verb::after { animation: bstn-bruch 10s ease-in-out infinite both; }
-  .verluste.ist-los li::before { animation: bstn-punkt 10s ease-out infinite both; }
-  .verluste.ist-los li::after { animation: bstn-ring 10s ease-out infinite both; }
-  .verluste.ist-los li:nth-child(2)::before { animation-name: bstn-punkt2; }
-  .verluste.ist-los li:nth-child(2)::after { animation-name: bstn-ring2; }
-  .verluste.ist-los li:nth-child(3)::before { animation-name: bstn-punkt3; }
-  .verluste.ist-los li:nth-child(3)::after { animation-name: bstn-ring3; }
-  /* außerhalb des Sichtbereichs anhalten, Grafik und Zeilen gemeinsam (bleiben synchron) */
-  .bstn.ist-los:not(.ist-sichtbar) :is(.bstn__brief, .bstn__brief-rot, .bstn__eintrag, .bstn__frage),
-  .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::before,
-  .bstn.ist-los:not(.ist-sichtbar) .bstn__verb::after,
-  .verluste.ist-los:not(.ist-sichtbar) li::before,
-  .verluste.ist-los:not(.ist-sichtbar) li::after { animation-play-state: paused; }
-}
-/* Brief: erscheint auf der Website, wandert los, bleibt in der Lücke hängen (Ruckeln), fällt und verblasst */
-@keyframes bstn-brief {
-  0% { opacity: 0; transform: translateX(calc(var(--bw) * -1.3)) scale(0.6); }
-  5%, 11% { opacity: 1; transform: translateX(calc(var(--bw) * -1.3)) scale(1); }
-  21% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
-  23% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 + 3px)); }
-  25% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 - 3px)); }
-  27% { transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2 + 2px)); }
-  29%, 31% { opacity: 1; transform: translateX(calc(var(--gx) * 0.5 - var(--bw) / 2)); }
-  38%, 100% { opacity: 0; transform: translate(calc(var(--gx) * 0.5 - var(--bw) / 2), 16px) scale(0.85); }
-}
-@keyframes bstn-rot { 0%, 22% { opacity: 0; } 26%, 100% { opacity: 1; } }
-@keyframes bstn-eintrag1 { 0%, 43% { opacity: 1; transform: scaleX(0); } 51%, 90% { opacity: 1; transform: scaleX(1); } 96%, 100% { opacity: 0; transform: scaleX(1); } }
-@keyframes bstn-eintrag3 { 0%, 53% { opacity: 1; transform: scaleX(0); } 61%, 90% { opacity: 1; transform: scaleX(1); } 96%, 100% { opacity: 0; transform: scaleX(1); } }
-@keyframes bstn-frage { 0%, 69% { opacity: 0; transform: scale(0.6); } 74% { opacity: 1; transform: scale(1.08); } 77%, 90% { opacity: 1; transform: scale(1); } 96%, 100% { opacity: 0; transform: scale(1); } }
-@keyframes bstn-bruch { 0%, 70% { opacity: 0.55; } 74%, 88% { opacity: 1; } 96%, 100% { opacity: 0.55; } }
-/* Zeilen links: 1 ab 25 %, 2 ab 56 %, 3 ab 74 %, gemeinsam aus bei 92–97 % */
-@keyframes bstn-punkt { 0%, 24% { transform: scale(0); } 28%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
-@keyframes bstn-ring { 0%, 24% { opacity: 0; } 28%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
-@keyframes bstn-punkt2 { 0%, 55% { transform: scale(0); } 59%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
-@keyframes bstn-ring2 { 0%, 55% { opacity: 0; } 59%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
-@keyframes bstn-punkt3 { 0%, 73% { transform: scale(0); } 77%, 92% { transform: scale(1); } 97%, 100% { transform: scale(0); } }
-@keyframes bstn-ring3 { 0%, 73% { opacity: 0; } 77%, 92% { opacity: 1; } 97%, 100% { opacity: 0; } }
-
 /* ── 3 · Verstehen. Empfehlen. Umsetzen.: drei große Karten mit reinem Text ── */
 .verstehen-chips { list-style: none; margin: 4px 0 16px; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .verstehen-chips li { padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 650; color: var(--dark); }
-
 
 /* ── 5 · Darauf können Sie sich verlassen: große Schlagworte, viel Weißraum, keine Icons ── */
 .verlassen { padding-block: clamp(80px, 12vw, 160px); }
@@ -182,8 +74,6 @@ html.js [data-p] { --p: 0; }
 /* ── Claim unter dem Abschluss ── */
 .claim { display: grid; gap: 6px; margin: clamp(48px, 7vw, 80px) 0 0; padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--line); width: 100%; max-width: 640px; font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 650; color: var(--dark); }
 .claim__marke { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
-
-
 
 /* ── A9 · Abschluss: viel Weißraum, keine Animation ── */
 .abschluss { padding-block: clamp(96px, 14vw, 180px); }
@@ -231,9 +121,6 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 .schritt3__hinweis { margin: 0; font-size: 0.92rem; line-height: 1.6; }
 .schritt3__hinweis a { font-weight: 650; color: var(--dark); text-underline-offset: 3px; }
 @media (min-width: 1100px) { .schritt3 { padding-inline: 24px; } .schritt3__text { font-size: 0.98rem; } }
-.bs-unter--mitte { margin-inline: auto; max-width: none; }
-
-
 
 /* 3 · „Was Sie von uns nicht erwarten müssen“: gut lesbar, als Teil des Abschnitts */
 .ohne { max-width: 980px; margin: clamp(32px, 5vw, 48px) auto 0; padding: clamp(18px, 3vw, 26px); border-radius: var(--radius); background: var(--paper-2); text-align: center; }
@@ -241,38 +128,6 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 .ohne__liste { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; }
 .ohne__liste li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--white); font-weight: 600; font-size: 0.98rem; color: var(--dark); }
 .ohne__liste li::before { content: ''; width: 12px; height: 2px; border-radius: 2px; background: #b5654a; }
-
-/* ── 4 · Leistungen entlang der Kundenreise, je Leistung ein Kennzeichen, darunter die Paket-Kombination ── */
-.reise4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
-@media (min-width: 760px) { .reise4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1180px) { .reise4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.station4 { display: flex; flex-direction: column; padding: clamp(18px, 2.4vw, 24px); border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
-.station4__kopf { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
-.station4__icon { flex: none; }
-.station4 h3 { margin: 0; font-size: 1.25rem !important; }
-.station4__ziel { margin: 2px 0 0; font-size: 0.92rem; color: var(--accent-ink); font-weight: 600; }
-.station4__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.station4__liste > li { border-top: 1px solid var(--line); }
-/* 08.11.: Leistungsname sichtbar, „Was dazugehört“ zum Aufklappen (weniger Textwand, Inhalt bleibt vollständig) */
-.station4__mehr > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 12px 0; cursor: pointer; list-style: none; }
-.station4__text { font-size: 1rem; font-weight: 600; line-height: 1.45; color: var(--dark); }
-.station4__paket { display: block; margin-top: 3px; font-size: 0.84rem; font-weight: 600; line-height: 1.4; color: var(--accent-ink); }
-.station4__paket--anfrage { color: var(--ink-soft); font-weight: 500; }
-.station4__mehr > summary::-webkit-details-marker { display: none; }
-.station4__mehr > summary:hover .station4__text { color: var(--accent-ink); }
-.station4__plus { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); }
-.station4__plus::before, .station4__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 2px; margin: -1px 0 0 -5px; border-radius: 2px; background: var(--dark); transition: transform 0.25s ease; }
-.station4__plus::after { transform: rotate(90deg); }
-.station4__mehr[open] .station4__plus::after { transform: rotate(0deg); }
-.station4__mehr[open] .station4__plus { background: var(--accent); border-color: var(--accent); }
-.station4__mehr[open] .station4__plus::before, .station4__mehr[open] .station4__plus::after { background: var(--on-accent); }
-.station4__mehr[open] > .station4__dazu { padding-bottom: 14px; }
-@media (prefers-reduced-motion: reduce) { .station4__plus::before, .station4__plus::after { transition: none; } }
-.bs-hinweis { margin: 0 auto; font-size: 0.95rem; color: var(--ink-soft); }
-/* „Was dazugehört“ (Jamil 4909): ruhige Stichpunkte statt Preis-Kennzeichen, großzügiger Zeilenabstand */
-.station4__dazu { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.station4__dazu li { position: relative; padding-left: 16px; font-size: 0.93rem; line-height: 1.7; color: var(--ink-soft); }
-.station4__dazu li::before { content: ''; position: absolute; left: 2px; top: 0.72em; width: 6px; height: 6px; border-radius: 50%; background: var(--salbei); }
 
 /* ── Referenzen (08.11.2026 mit Namen, Jamil #4932): Karte mit Bild der Kunden-Website oben, Etikett Online/Vorschau ── */
 .refs4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 20px; }
@@ -323,17 +178,6 @@ html.js .schritte3:not(.ist-los) .schritt3::after { transform: scaleY(0); }
 
 /* CTA „Kostenfreie Erstberatung“ unter dem Abschnitt #denkweise (seit 08.11. Jamil #4989; eigener Abschnitt entfernt) */
 .erst4__cta { margin: clamp(24px, 3vw, 32px) 0 0; text-align: center; }
-
-/* Bausteine am Handy kürzer (Jamil #4934 Punkt 6): Wortliste nur für Screenreader (die Module zeigen dieselben Wörter),
-   Module enger */
-@media (max-width: 959px) {
-  .werkzeuge { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
-  .bstn { --gx: 40px; --gy: 34px; --bw: 22px; --bh: 16.5px; --fq: 28px; }
-  .bstn__karte { padding: 12px 12px 14px; border-radius: 12px; }
-  .bstn__icon { width: 34px; height: 34px; }
-  .bstn__name { margin-top: 10px; }
-  .bs-zwei--mitte { gap: 18px; }
-}
 
 /* Preisteil: drei Pakete kompakt (Jamil #5056, 08.11.2026; ersetzt den Abo-Baukasten). Karten: components/pakete/PaketKarten.astro */
 .pk-start { position: relative; }

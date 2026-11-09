@@ -17,25 +17,32 @@ export const V_HERO = {
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
 export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
 
-/** Abschnitt direkt nach dem Hero „Zusammenspiel“: Wortlaut von Jamil (Talk qh87y3sj #5176, Vorschlag 2 #5178, „Ok“ #5179, 09.11.2026).
- *  Ersetzt den Kontrastsatz „Eine Website ist schnell gebaut …“ samt Monatspreis-Satz (Sicherung davor: Branch vor-zusammenspiel-20261109).
- *  Bausteine in Jamils Reihenfolge, in den Kacheln ohne Schlusspunkt; Weg = die vier Stationen der Animation. Nie „aus einer Hand“. */
-export const ZUSAMMENSPIEL = {
+/** Abschnitt direkt nach dem Hero „Kundenreise“ als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182: „wirkt wie ein Arbeitsprozess,
+ *  muss eine Customer Journey sein“, Variante B #5184, Text #5185, Plan „ok“ #5187, 09.11.2026). Ersetzt das „Zusammenspiel“ mit
+ *  sieben Kacheln (#5176–#5179; Sicherung davor: Branch vor-kundenreise-20261109). Überschrift bleibt, Fragen und Leistungen
+ *  wörtlich von Jamil. ziel = kleine Beschriftung am Ende der Kurve. Nie „aus einer Hand“. */
+export const KUNDENREISE = {
   titel: 'Ein guter erster Eindruck allein reicht nicht aus.',
-  unter: 'Entscheidend ist das Zusammenspiel aller Berührungspunkte.',
-  bausteine: [
-    { name: 'Website', icon: 'layout' },
-    { name: 'Google', icon: 'search' },
-    { name: 'Bewertungen', icon: 'stern' },
-    { name: 'Social Media', icon: 'users' },
-    { name: 'Kommunikation', icon: 'chat' },
-    { name: 'Prozesse', icon: 'ablauf' },
-    { name: 'CRM', icon: 'database' },
-  ] as const,
-  wirkung: 'Jeder dieser Bausteine beeinflusst, wie Ihr Unternehmen wahrgenommen wird.',
-  weg: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'zufriedener Kunde'],
-  saetze: ['Wir sorgen dafür, dass aus Aufmerksamkeit Vertrauen wird.', 'Aus Vertrauen eine Anfrage.', 'Und aus einer Anfrage ein zufriedener Kunde.'],
+  intro: 'Das Problem ist nicht das einzelne Werkzeug, sondern das Zusammenspiel. Deshalb betrachten wir nicht nur Ihre Website, sondern den gesamten Weg Ihrer Kunden.',
+  stationen: [
+    { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', leistungen: ['Website', 'Google', 'Bewertungen', 'Social Media'] },
+    { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', leistungen: ['klare Inhalte', 'Referenzen', 'Kundenstimmen'] },
+    { name: 'Anfrage', frage: 'Wie einfach wird aus Interesse ein Kontakt?', leistungen: ['Formulare', 'Terminbuchung', 'CRM'] },
+    { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', leistungen: ['Prozesse', 'Automatisierung', 'Systeme'] },
+    { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', leistungen: ['Nachfassen', 'Bewertungsanfragen', 'Auswertung'] },
+  ],
+  ziel: 'zufriedener Kunde',
   schluss: 'Von Anfang bis Ende. Alles aufeinander abgestimmt.',
+};
+
+/** Abschnitt direkt nach der Kundenreise „So arbeiten wir.“ (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026). Wortlaut aus dem Plan. */
+export const ARBEITSWEISE = {
+  titel: 'So arbeiten wir.',
+  prinzipien: [
+    { wort: 'Verantwortung', text: 'Wir kümmern uns, bis es läuft, und sagen offen, wenn sich etwas nicht lohnt.', icon: 'shield' },
+    { wort: 'Einfachheit', text: 'Klare Sprache, feste Monatspreise, Änderungen per Chat oder Sprachnachricht.', icon: 'chat' },
+    { wort: 'Verlässlichkeit', text: 'Antwort innerhalb eines Werktags. Verzögert sich etwas, hören Sie es zuerst von uns.', icon: 'clock' },
+  ] as const,
 };
 
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */

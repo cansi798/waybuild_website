@@ -9,7 +9,8 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { HERO, BAUSTEINE, VERSTEHEN, BEREICHE, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { HERO, VERSTEHEN, VERLASSEN, CHECK, ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { KUNDENREISE, ARBEITSWEISE } from '../config/variante';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -24,9 +25,10 @@ export const GET: APIRoute = async ({ site }) => {
     '## Kernbotschaft: Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden',
     `${HERO.titel} ${HERO.unter.join(' ')}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${BAUSTEINE.titel} ${BAUSTEINE.unter} ${BAUSTEINE.werkzeuge.join(' ')} ${BAUSTEINE.text.join(' ')} ${BAUSTEINE.verluste.join(' ')}`,
+    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} ${st.leistungen.join(', ')})`).join('; ')}. ${KUNDENREISE.schluss}`,
+    `- ${ARBEITSWEISE.titel} ${ARBEITSWEISE.prinzipien.map((p) => `${p.wort}: ${p.text}`).join(' ')}`,
     `- ${VERSTEHEN.titel} ${VERSTEHEN.einleitung} ${VERSTEHEN.liste.join(', ')}. ${VERSTEHEN.schluss.join(' ')} ${VERSTEHEN.karten.map((k) => `${k.wort}: ${k.leit} ${k.text}${k.hinweis ? ` ${k.hinweis}.` : ''}`).join(' ')} ${VERSTEHEN.nichtKopf} ${VERSTEHEN.nicht.join(', ')}.`,
-    `- ${BEREICHE.titel} ${BEREICHE.unter} Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
+    `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- ${VERLASSEN.titel}: ${VERLASSEN.saetze.join(' ')}`,
     `- ${CHECK.eyebrow} auf der Startseite: ${CHECK.fragen.length} kurze Fragen (${CHECK.fragen.map((f) => f.schritt).join(', ')}); Ergebnis als Ampel je Station mit Tipp, berechnet nur im Browser. Mitgeschickt wird nur, wenn der Besucher das Ergebnis aktiv mit seiner Anfrage sendet.`,
     `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,

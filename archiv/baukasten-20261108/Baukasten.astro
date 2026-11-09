@@ -9,7 +9,7 @@
 // sessionStorage und öffnet das Kontaktformular, dort sichtbar und abwählbar.
 // Ohne JS: alle Bausteine mit Preis sichtbar und wählbar, Knopf führt zum Kontaktformular. TESTANGEBOT (siehe startseite.ts).
 import { href } from '../../lib/paths';
-import { BAUKASTEN as B, type Baustein } from '../../config/startseite';
+import { BAUKASTEN as B, type Baustein } from '../../config/baukasten-daten'; // archiv/baukasten-20261108/baukasten-daten.ts
 import { formatEuro, brutto, WAAS } from '../../config/site';
 const MWST = brutto(100) / 100;
 const haupt = B.bausteine.filter((b) => !b.zu);

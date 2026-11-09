@@ -4,30 +4,21 @@
 //    verlängert um einen Teil der Elementhöhe).
 // 2. [data-fokus]: Karte im Fokus (Arbeitsweise) als data-aktiv am Container.
 // 3. [data-zeichne]: Klasse .ist-los beim ersten Sichtkontakt (Linien zeichnen, Folgen erscheinen).
-// 4. [data-schweben] / [data-schleife]: Dauer-Animationen laufen nur im Sichtbereich (.ist-sichtbar).
-// [data-mit="<Selektor>"]: die Klassen aus 3. und 4. gehen gleichzeitig auch an dieses Element (Bausteine: Grafik +
-//    Verlust-Zeilen starten und pausieren gemeinsam, ohne teure :has()-Selektoren).
+// (4. [data-schweben]/[data-schleife] und [data-mit] am 09.11.2026 entfernt: nur der Abschnitt „Einzelne Lösungen funktionieren.“ nutzte sie.)
 // Bei reduzierter Bewegung: nichts davon außer 3 (dort greifen CSS-Endzustände); ohne JS steht alles fertig da.
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-const mit = (el: Element) => { const s = (el as HTMLElement).dataset.mit; return s ? document.querySelector(s) : null; };
 const zeichne = document.querySelectorAll<HTMLElement>('[data-zeichne]');
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver(
-    (es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('ist-los'); mit(e.target)?.classList.add('ist-los'); io.unobserve(e.target); } }),
+    (es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('ist-los'); io.unobserve(e.target); } }),
     { threshold: 0.3 },
   );
   zeichne.forEach((el) => io.observe(el));
-} else zeichne.forEach((el) => { el.classList.add('ist-los'); mit(el)?.classList.add('ist-los'); });
+} else zeichne.forEach((el) => el.classList.add('ist-los'));
 
 if (!ruhig && 'IntersectionObserver' in window) {
-  const sichtbar = new IntersectionObserver(
-    (es) => es.forEach((e) => { e.target.classList.toggle('ist-sichtbar', e.isIntersecting); mit(e.target)?.classList.toggle('ist-sichtbar', e.isIntersecting); }),
-    { rootMargin: '0px' },
-  );
-  document.querySelectorAll('[data-schweben], [data-schleife]').forEach((el) => sichtbar.observe(el));
-
   const els = [...document.querySelectorAll<HTMLElement>('[data-p], [data-fokus]')];
   const aktiv = new Set<HTMLElement>();
   let geplant = false;

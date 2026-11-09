@@ -24,6 +24,10 @@
 //   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt samt #baukasten-alt am 08.11. entfernt, #5136–#5138);
 //   #pakete und #baukasten zeigen auf den neuen Teil, #check auf den bisherigen Check (die Variante hat keinen).
 //   Der bisherige Hero ist ein zweiter Block mit H2 statt H1 (Text gleich), damit die Seite genau eine H1 hat.
+// 09.11.2026 (Jamil, Talk qh87y3sj #5181–#5187; Sicherung Branch vor-kundenreise-20261109): nach dem Hero die Kundenreise als
+//   Journey-Map (#kundenreise), danach „So arbeiten wir.“ (#arbeitsweise). Entfernt: „Einzelne Lösungen funktionieren.“
+//   (Bausteine) und „Ein Kunde interessiert sich nicht für Ihre Systeme.“ (#loesungen); BAUSTEINE/BEREICHE/BAUKASTEN-Daten
+//   sind aus startseite.ts entfernt (Baukasten-Daten liegen bei der archivierten Komponente unter archiv/baukasten-20261108/).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Check from '../components/start/Check.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
@@ -34,10 +38,10 @@ import { href } from '../lib/paths';
 import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, HERO_KNOPF, ZUSAMMENSPIEL, VERGLEICH } from '../config/variante';
+import { B2B_HINWEIS, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
+import { V_HERO, HERO_KNOPF, KUNDENREISE, ARBEITSWEISE, VERGLEICH } from '../config/variante';
 import Icon from '../components/Icon.astro';
-import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
+import { ANLIEGEN, VERSTEHEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 
@@ -54,29 +58,22 @@ const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen 
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
 // FAQPage-JSON-LD der Startseite entfällt: die Fragen stehen seit #5136–#5138 auf /fragen/ (dort mit JSON-LD)
 
-// Abschnitt 2 (Jamil #4986, 08.11.2026: Puzzle „zu verspielt“, „seriöser und animiert, damit der Painpoint klar wird“):
-// vier ruhige Module, die nicht verbunden sind. Eine Anfrage wandert von der Website los und bleibt in der Lücke hängen,
-// dann wird derselbe Eintrag zweimal von Hand gepflegt, am Ende bleibt offen, wie alles zusammenhängt.
-// Reihenfolge = BAUSTEINE.werkzeuge (Website, Kundenverwaltung, Social Media, Prozesse). Icons 24er-Raster, nur Linien.
-const MODUL_ICON = [
-  '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 8.5h18"/><path d="M6.5 12h7M6.5 15.5h10" stroke="#00a6a1"/>',
-  '<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10.6" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4"/><path d="M14.5 10h3.5M14.5 13.5h3.5" stroke="#00a6a1"/>',
-  '<circle cx="17" cy="6" r="2.5"/><circle cx="7" cy="12" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M9.2 10.8l5.6-3.4M9.2 13.2l5.6 3.4" stroke="#00a6a1"/>',
-  '<rect x="3" y="3.5" width="7.5" height="6" rx="1.5"/><rect x="13.5" y="14.5" width="7.5" height="6" rx="1.5"/><path d="M6.75 9.5v4a2 2 0 0 0 2 2h4.75" stroke="#00a6a1"/><path d="M11.5 13.5l2 2-2 2" stroke="#00a6a1"/>',
-];
-// Lange Wörter dürfen nur an der Silbengrenze umbrechen (Jamils Text bleibt unverändert, nur ein weiches Trennzeichen)
-const modulName = (w: string) => w.replace(/\.$/, '').replace('Kundenverwaltung', 'Kunden\u00ADverwaltung');
-// Verbindungen: h = nach rechts zum Nachbarn, v = nach unten
-const MODUL_VERB: string[][] = [['h', 'v'], ['v'], ['h'], []];
-
-// Abschnitt 4: kleine Zeichnungen je Bereich (dieselben Motive wie in der Hero-Geschichte)
-const BEREICH_ICON = [
-  '<rect x="13" y="6" width="22" height="36" rx="5" fill="#004f4c"/><rect x="16" y="11" width="16" height="24" rx="2" fill="#f7f5f0"/><circle cx="35" cy="8" r="6" fill="#00a6a1"/>',
-  '<rect x="6" y="12" width="36" height="25" rx="4" fill="#fff" stroke="#004f4c" stroke-width="2.4"/><path d="M6 14 L24 28 L42 14" fill="none" stroke="#004f4c" stroke-width="2.4" stroke-linejoin="round"/><circle cx="40" cy="12" r="5" fill="#00a6a1"/>',
-  '<circle cx="19" cy="20" r="10" fill="none" stroke="#004f4c" stroke-width="5" stroke-dasharray="3.6 2.7"/><circle cx="19" cy="20" r="7" fill="#004f4c"/><circle cx="19" cy="20" r="2.8" fill="#f7f5f0"/><circle cx="34" cy="33" r="7" fill="none" stroke="#7fd0cc" stroke-width="4" stroke-dasharray="2.8 2.1"/><circle cx="34" cy="33" r="5" fill="#7fd0cc"/><circle cx="34" cy="33" r="2" fill="#f7f5f0"/>',
-  '<path d="M24 40 c-2 -2 -16 -10 -16 -20 c0 -6 5 -10 10 -10 c3 0 5 2 6 4 c1 -2 3 -4 6 -4 c5 0 10 4 10 10 c0 10 -14 18 -16 20 Z" fill="#00a6a1"/>',
-];
-
+// Kundenreise (Journey-Map, Jamil #5184/#5185/#5187): weich steigende Kurve über den fünf Stationen, Koordinaten im Raster
+// 1000 × 160 (SVG mit preserveAspectRatio="none", Strich bleibt durch vector-effect gleich dick). Die Kurve läuft genau durch
+// die Mitte jeder Spalte (x = 100, 300, …, 900), dort sitzen die Punkte (--y = Höhe als Anteil von 160); Ende rechts oben
+// = „zufriedener Kunde“. Catmull-Rom → kubische Bézier, damit die Kurve ohne Knick durch alle Punkte geht.
+const KR_PUNKTE: [number, number][] = [[0, 150], [100, 145], [300, 132], [500, 111], [700, 82], [900, 50], [1000, 36]];
+const krPfad = (() => {
+  const p = KR_PUNKTE, r = (n: number) => Math.round(n * 10) / 10;
+  let d = `M${p[0][0]} ${p[0][1]}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[Math.max(0, i - 1)], b = p[i], c = p[i + 1], e = p[Math.min(p.length - 1, i + 2)];
+    d += `C${r(b[0] + (c[0] - a[0]) / 6)} ${r(b[1] + (c[1] - a[1]) / 6)} ${r(c[0] - (e[0] - b[0]) / 6)} ${r(c[1] - (e[1] - b[1]) / 6)} ${c[0]} ${c[1]}`;
+  }
+  return d;
+})();
+const krFlaeche = `${krPfad}L1000 160L0 160Z`;
+const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
 // Abschnitt 3: ruhige Zeichen für die drei Prinzipien statt Nummern (Rethinking 08.11.): Gespräch = Verstehen,
 // Wegweiser = Empfehlen, Haken = Umsetzen. Stil wie die Hero-Geschichte (Dunkeltürkis, Türkis, Hell-Türkis, runde Enden).
 const PRINZIP_ICON = [
@@ -95,9 +92,6 @@ const MOTIV: Record<string, string> = {
   film: '<rect x="0" y="14" width="62" height="46" rx="8" fill="#004f4c"/><path d="M62 30 L88 16 V58 L62 44 Z" fill="#7fd0cc"/><circle cx="22" cy="37" r="9" fill="#00a6a1"/>',
   wissen: '<circle cx="44" cy="28" r="22" fill="#00a6a1"/><rect x="34" y="50" width="20" height="12" rx="3" fill="#004f4c"/><path d="M36 28 l6 6 l10 -12" fill="none" stroke="#004f4c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
 };
-// Abschnitt 4: Paket-Hinweis je Leistung (Jamil #5056), Namen aus pakete-abo.ts
-const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
-  pk === 'anfrage' ? 'Auf Anfrage, eigenes Angebot' : pk === 'basis' ? 'In allen Paketen enthalten' : pk === 'komplett' ? `Im Paket ${paketById('komplett').name} enthalten` : `Ab Paket ${paketById(pk).name} enthalten`;
 ---
 
 <BaseLayout
@@ -110,8 +104,8 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
-  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Zusammenspiel; nur darin
-       bleibt der Hero stehen (sticky), das Zusammenspiel gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
+  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Kundenreise; nur darin
+       bleibt der Hero stehen (sticky), die Kundenreise gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
   <div class="stapel-paar">
   <section class="v-hero"><!-- ohne aria-labelledby: gleicher Satz wie die alte H2 weiter unten (axe landmark-unique) -->
     <div class="v-mesh" aria-hidden="true"><span class="v-blob v-blob--1"></span><span class="v-blob v-blob--2"></span><span class="v-blob v-blob--3"></span><span class="v-blob v-blob--4"></span></div>
@@ -130,30 +124,69 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
     <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
-  <!-- Zusammenspiel (Jamil, Talk qh87y3sj #5176/#5178/#5179, 09.11.2026; ersetzt den Kontrastsatz, Sicherung vor-zusammenspiel-20261109):
-       sieben Bausteine als Kacheln, eine feine Linie verbindet sie und läuft weiter in den Weg Aufmerksamkeit → zufriedener Kunde.
-       Bewegung in src/scripts/zusammenspiel.ts (nur beim ersten Sichtkontakt); ohne JS oder bei reduzierter Bewegung steht alles fertig da. -->
-  <section class="section vzusammen" aria-labelledby="kontrast-h">
-    <div class="wrap zs">
-      <h2 id="kontrast-h" class="zs-titel">{ZUSAMMENSPIEL.titel}</h2>
-      <p class="lead zs-unter">{ZUSAMMENSPIEL.unter}</p>
-      <div class="zs-figur" data-zusammenspiel>
-        <svg class="zs-linie" aria-hidden="true" focusable="false"><path pathLength="1" /></svg>
-        <ul class="zs-kacheln" aria-label="Bausteine">
-          {ZUSAMMENSPIEL.bausteine.map((b, i) => (
-            <li class="zs-kachel" style={`--i:${i}`}><span class="zs-symbol"><Icon name={b.icon} /></span><span class="zs-name">{b.name}</span></li>
-          ))}
-        </ul>
-        <ol class="zs-weg" aria-hidden="true">
-          {ZUSAMMENSPIEL.weg.map((w) => <li class="zs-station"><span class="zs-punkt"></span><span class="zs-wort">{w}</span></li>)}
-        </ol>
+  <!-- Kundenreise als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
+       Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
+       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“. Jede Station ist ein Knopf
+       (aria-expanded) für ihre Leistungen: PC beim Darüberfahren oder Tastatur-Fokus, Handy beim Antippen; Klick hält sie offen.
+       Aufbau beim ersten Sichtkontakt und Knöpfe in src/scripts/kundenreise.ts; ohne JS oder bei reduzierter Bewegung steht alles offen da.
+       Bleibt der Abschnitt, der über den stehenden Hero gleitet (.stapel-paar, H2-id kontrast-h unverändert). -->
+  <section class="section vreise" id="kundenreise" aria-labelledby="kontrast-h">
+    <div class="wrap kr">
+      <h2 id="kontrast-h" class="kr-titel">{KUNDENREISE.titel}</h2>
+      <p class="lead kr-intro">{KUNDENREISE.intro}</p>
+      <div class="kr-karte" data-kundenreise>
+        <div class="kr-weg" style={`--kr-ende:${krY(5)}`}>
+          <svg class="kr-kurve" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="kr-flaeche-verlauf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00807b" stop-opacity="0.16" /><stop offset="1" stop-color="#00807b" stop-opacity="0" /></linearGradient>
+              <linearGradient id="kr-linie-verlauf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fb8b4" /><stop offset="1" stop-color="#006b68" /></linearGradient>
+            </defs>
+            <path class="kr-flaeche" d={krFlaeche} fill="url(#kr-flaeche-verlauf)" />
+            <path class="kr-linie" d={krPfad} stroke="url(#kr-linie-verlauf)" vector-effect="non-scaling-stroke" />
+          </svg>
+          <ol class="kr-stationen">
+            {KUNDENREISE.stationen.map((st, i) => (
+              <li class="kr-station" style={`--i:${i};--y:${krY(i)}`}>
+                <span class="kr-punkt" aria-hidden="true"></span>
+                <div class="kr-kopf">
+                  <h3 class="kr-name"><button type="button" class="kr-knopf" id={`kr-k-${i}`} aria-expanded="true" aria-controls={`kr-l-${i}`} aria-describedby={`kr-f-${i}`}>{st.name}</button></h3>
+                  <p class="kr-frage" id={`kr-f-${i}`}>{st.frage}</p>
+                  <span class="kr-zeichen" aria-hidden="true">Leistungen<span class="kr-plus"></span></span>
+                </div>
+                <div class="kr-mehr">
+                  <ul class="kr-leistungen" id={`kr-l-${i}`} aria-labelledby={`kr-k-${i}`}>
+                    {st.leistungen.map((l, j) => <li style={`--j:${j}`}>{l}</li>)}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p class="kr-ende"><span class="kr-ende__punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
+        </div>
       </div>
-      <p class="zs-wirkung">{ZUSAMMENSPIEL.wirkung}</p>
-      <p class="zs-saetze">{ZUSAMMENSPIEL.saetze.map((t, i) => <>{i > 0 && ' '}<span>{t}</span></>)}</p>
-      <p class="zs-schluss">{ZUSAMMENSPIEL.schluss}</p>
+      <p class="kr-schluss">{KUNDENREISE.schluss}</p>
     </div>
   </section>
   </div>
+
+  <!-- So arbeiten wir (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026): drei Grundsätze, ruhig, eigener Abschnitt nach der
+       Kundenreise (nicht Teil des Stapels). Sanftes Einblenden beim ersten Sichtkontakt ([data-zeichne] → .ist-los, startseite.ts). -->
+  <section class="section vprinzip" id="arbeitsweise" aria-labelledby="arbeiten-h">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2 id="arbeiten-h" class="rule">{ARBEITSWEISE.titel}</h2>
+      </div>
+      <ul class="sa-liste" data-zeichne>
+        {ARBEITSWEISE.prinzipien.map((p, i) => (
+          <li class="sa-karte" style={`--i:${i}`}>
+            <span class="sa-zeichen" aria-hidden="true"><Icon name={p.icon} size={26} /></span>
+            <h3 class="sa-wort">{p.wort}</h3>
+            <p class="sa-text">{p.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
   <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
        Anker #pakete und #baukasten (alte Links aus Check und Hero) zeigen hierher. -->
@@ -208,45 +241,14 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   <!-- ============ DARUNTER: bisherige Abschnitte. Gelber Trenner „Bisherige Startseite, zum Aussortieren“ und der alte
        Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
-  <!-- 2 · Die meisten Unternehmen optimieren einzelne Werkzeuge (Jamil 4786/4787): vier getrennte Module, eine Anfrage geht
-       in der Lücke verloren (Jamil #4986). Die Verlust-Zeilen links leuchten synchron zur Animation auf. -->
-  <section class="bs bs--alt" aria-labelledby="bs-bausteine">
-    <div class="wrap bs-zwei bs-zwei--mitte">
-      <div class="bs-kopf">
-        <h2 id="bs-bausteine">{BAUSTEINE.titel}</h2>
-        <p class="bs-unter">{BAUSTEINE.unter}</p>
-        <ul class="werkzeuge">{BAUSTEINE.werkzeuge.map((w) => <li>{w}</li>)}</ul>
-        <p class="bs-lead"><strong>{BAUSTEINE.text[0]}</strong></p>
-        <p class="bs-lead">{BAUSTEINE.text[1]}</p>
-        <ul class="verluste">{BAUSTEINE.verluste.map((v) => <li>{v}</li>)}</ul>
-      </div>
-      <figure class="bstn" data-zeichne data-schleife data-mit=".verluste" aria-hidden="true">
-        <div class="bstn__raster">
-          {BAUSTEINE.werkzeuge.map((w, i) => (
-            <div class={`bstn__karte bstn__karte--${i}`}>
-              <span class="bstn__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#004f4c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false" set:html={MODUL_ICON[i]} /></span>
-              <span class="bstn__name">{modulName(w)}</span>
-              <span class="bstn__zeilen"><i></i><i></i>{(i === 1 || i === 3) && <i class={`bstn__eintrag bstn__eintrag--${i}`}></i>}</span>
-              {MODUL_VERB[i].map((r) => <span class={`bstn__verb bstn__verb--${r}`}><i></i></span>)}
-              {i === 0 && (
-                <span class="bstn__brief">
-                  <svg viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fff" stroke="#004f4c" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#004f4c" stroke-width="1.6" stroke-linejoin="round"/><circle cx="21" cy="2.5" r="3.2" fill="#00a6a1"/></svg>
-                  <svg class="bstn__brief-rot" viewBox="0 0 24 18" width="24" height="18" focusable="false"><rect x="1" y="1" width="22" height="16" rx="2.5" fill="#fbf1ee" stroke="#b8695c" stroke-width="1.6"/><path d="M2.5 2.5 L12 10 L21.5 2.5" fill="none" stroke="#b8695c" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                </span>
-              )}
-            </div>
-          ))}
-          <span class="bstn__frage"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#9a4a3f" stroke-width="2" stroke-linecap="round" focusable="false"><path d="M9.2 9.2a2.9 2.9 0 1 1 4 2.7c-.8.35-1.2.95-1.2 1.8v.6"/><circle cx="12" cy="17.6" r="1.1" fill="#9a4a3f" stroke="none"/></svg></span>
-        </div>
-      </figure>
-    </div>
-  </section>
-
+  <!-- Hintergründe nach dem Entfernen von „Einzelne Lösungen funktionieren.“ und „Ein Kunde interessiert sich nicht für Ihre Systeme.“
+       (Jamil #5187, 09.11.2026) wieder im Wechsel hell/sand: #denkweise sand, #team hell, #referenzen sand (nur wenn Team/Stimmen
+       als Platzhalter zu sehen sind, sonst hell), #stimmen hell, #check sand. -->
   <!-- 3 · Verstehen. Empfehlen. Umsetzen. (Jamil 4788) zusammengelegt mit „Woran wir glauben“ (4795/4796, Jamil 4809):
        große Karten mit dem passenden Wert, darunter dezent „Was Sie von uns nicht erwarten müssen“.
        08.11.2026 (Jamil #4988/#4989): mit „So läuft die Erstberatung“ kombiniert (Verstehen = das kurze Gespräch) und um
        „Verbessern“ ergänzt, vier Schritte an einer türkisen Linie; CTA Erstberatung darunter. Anker #erstberatung = Karte 1. -->
-  <section class="bs" id="denkweise" aria-labelledby="bs-verstehen">
+  <section class="bs bs--alt" id="denkweise" aria-labelledby="bs-verstehen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-verstehen">{VERSTEHEN.titel}</h2>
@@ -276,7 +278,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026): direkt nach den Prinzipien. NUR PLATZHALTER (rot
        gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
   {PLATZHALTER && (
-    <section class="bs bs--alt" id="team" aria-labelledby="bs-team">
+    <section class="bs" id="team" aria-labelledby="bs-team">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte">
           <h2 id="bs-team">{TEAM.titel}</h2>
@@ -304,51 +306,11 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 
   <!-- „Darauf können Sie sich verlassen“ entfernt (Jamil #5136–#5138) -->
 
-  <!-- 4 · Ein Kunde interessiert sich nicht für Ihre Systeme (Jamil 4811 + 4871–4876 + 4879): jede Leistung genau EIN Mal an
-       ihrer Station (Liste weiter aus BAUKASTEN in startseite.ts erzeugt, OHNE Preise), darunter „Was dazugehört“
-       (dazu, Jamil 4909). Der Abo-Baukasten selbst ist seit 08.11.2026 (Jamil #5056) durch die drei Pakete ersetzt
-       (Abschnitt #pakete darunter); Komponente archiviert unter archiv/baukasten-20261108/. -->
-  <section class="bs bs--alt bs--voll" id="loesungen" aria-labelledby="bs-bereiche">
-    <div class="wrap">
-      <div class="bs-kopf bs-kopf--mitte">
-        <h2 id="bs-bereiche">{BEREICHE.titel}</h2>
-        <p class="bs-unter bs-unter--mitte">{BEREICHE.unter}</p>
-        <p class="bs-lead">{BEREICHE.einleitung}</p>
-        <p class="bs-hinweis">{BEREICHE.hinweis}</p>
-      </div>
-      <ol class="reise4">
-        {BEREICHE.stationen.map((st, i) => (
-          <li class="station4 reveal" style={`transition-delay:${i * 80}ms`}>
-            <div class="station4__kopf">
-              <svg class="station4__icon" viewBox="0 0 48 48" width="40" height="40" aria-hidden="true" set:html={BEREICH_ICON[i]} />
-              <div><h3>{st.titel}</h3><p class="station4__ziel">{st.ziel}</p></div>
-            </div>
-            <ul class="station4__liste">
-              {[...BAUKASTEN.basis.teile.map((t) => ({ name: t.text, station: t.station, dazu: t.dazu, pk: 'basis' as const })),
-                ...BAUKASTEN.bausteine.filter((b) => !b.zu).map((b) => {
-                  const pk = PAKET_JE_LEISTUNG[b.id] ?? 'anfrage';
-                  // Ergänzungen (zu) anhängen; steckt die Ergänzung in einem anderen Paket, steht es dahinter
-                  const extra = BAUKASTEN.bausteine.filter((o) => o.zu === b.id).flatMap((o) => o.dazu.map((d) => (PAKET_JE_LEISTUNG[o.id] && PAKET_JE_LEISTUNG[o.id] !== pk && PAKET_JE_LEISTUNG[o.id] !== 'anfrage' ? `${d} (ab Paket ${paketById(PAKET_JE_LEISTUNG[o.id] as 'plus').name})` : d)));
-                  return { ...b, pk, dazu: [...b.dazu, ...extra] };
-                })]
-                .filter((l) => l.station === st.id).map((l) => (
-                <li><details class="station4__mehr">
-                  <summary><span class="station4__text">{l.name}<span class:list={['station4__paket', { 'station4__paket--anfrage': l.pk === 'anfrage' }]}>{paketLabel(l.pk)}</span></span><span class="station4__plus" aria-hidden="true"></span></summary>
-                  <ul class="station4__dazu">{l.dazu.map((d) => <li>{d}</li>)}</ul>
-                </details></li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
   <!-- Preisteil unten (#pakete-alt) entfernt (Jamil #5136–#5138); Pakete stehen oben in #pakete -->
 
   <!-- Referenzen (Jamil 4876; seit 08.11.2026 mit Namen, Jamil #4932): Bild der Kunden-Website oben, darunter Name,
        Branche · Ort, Ausgangslage/Umsetzung/Ergebnis. Link nur bei Live-Seiten, sonst nur das Etikett „Vorschau“. -->
-  <section class="bs" id="referenzen" aria-labelledby="bs-referenzen">
+  <section class:list={['bs', { 'bs--alt': PLATZHALTER }]} id="referenzen" aria-labelledby="bs-referenzen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-referenzen">{REFERENZEN.titel}</h2>
@@ -394,7 +356,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 
   <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne. Nur in der Vorschau. -->
   {PLATZHALTER && (
-    <section class="bs bs--alt" id="stimmen" aria-labelledby="bs-stimmen">
+    <section class="bs" id="stimmen" aria-labelledby="bs-stimmen">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte"><h2 id="bs-stimmen">{STIMMEN.titel}</h2></div>
         <ul class="stimmen4">
@@ -430,5 +392,5 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 <script>
   import '../scripts/startseite.ts';
   import '../scripts/stapel.ts';
-  import '../scripts/zusammenspiel.ts';
+  import '../scripts/kundenreise.ts';
 </script>
