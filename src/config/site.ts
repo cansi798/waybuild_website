@@ -150,22 +150,6 @@ export type IconName =
   // Prozess-Story „So arbeiten wir“ (aus der Hauptseite übernommen, 03.11.2026)
   | 'idee' | 'frage' | 'stern' | 'warnung' | 'ablauf' | 'impuls';
 
-/** Was in „Website as a Service“ enthalten ist (Reihenfolge wie in der Vision). */
-export const INKLUSIVE: { icon: IconName; title: string }[] = [
-  { icon: 'layout', title: 'Professionelle Website' },
-  { icon: 'server', title: 'Hosting' },
-  { icon: 'globe', title: 'Domainverwaltung' },
-  { icon: 'lock', title: 'SSL-Zertifikat' },
-  { icon: 'tools', title: 'Wartung' },
-  { icon: 'database', title: 'Backups' },
-  { icon: 'user', title: 'Laufende Betreuung' },
-  { icon: 'spark', title: 'KI-gestützte Erstellung' },
-  { icon: 'mic', title: 'Sprachgesteuerte Änderungen' },
-  { icon: 'mail', title: 'Bis zu 20 E-Mail-Postfächer' },
-  { icon: 'search', title: 'SEO und KI-Suche' },
-  { icon: 'layers', title: 'Keine Seitenbegrenzung' },
-];
-
 /** Geschäftsmodell in Stichpunkten (Langfassung als Siegel: config/versprechen.ts). */
 export const MODELL = [
   'Keine Einrichtungskosten',

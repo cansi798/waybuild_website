@@ -89,7 +89,7 @@ const manual: Todo[] = [
   {
     title: 'Leistungsversprechen absichern',
     detail: '„Live in 14 Tagen“, „Sprachgesteuerte Änderungen“, „KI-gestützte Erstellung“, die Service-Versprechen (u. a. „kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr)“, „Antwort in der Regel am nächsten Werktag“) und die selbstoptimierende „Intelligente Website“ stehen auf der Website. Für die Auswertung von Besucherdaten Datenschutzerklärung/Einwilligung prüfen. Prozesse und Werkzeuge so aufsetzen, dass das eingehalten wird.',
-    where: 'src/config/site.ts → INKLUSIVE, faqs',
+    where: 'src/config/site.ts → faqs',
     done: false,
     priority: 'wichtig',
   },

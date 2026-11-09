@@ -1,14 +1,13 @@
 ---
 // Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die drei Pakete Basis · Plus · Komplett sind die richtige
 // Website. Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
-// Inhalt: Karten mit Jahreskosten · „Einmalig dazubuchen“ · In allen Paketen ·
+// Inhalt: „Einmalig dazubuchen“ (Leiste) · Karten mit Jahreskosten ·
 // Vergleichstabelle · So starten Sie · Ausbaustufen · B2B-Hinweis (Fragen seit 08.11. auf /fragen/).
 // Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
 // Vorher (Fundament/Wegweiser/Wahrzeichen aus site.ts PAKETE): Sicherung Branch vor-pakete-live-20261108.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHead from '../components/SectionHead.astro';
-import Inklusive from '../components/Inklusive.astro';
 import Icon from '../components/Icon.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
@@ -58,23 +57,19 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     <div class="wrap">
       <h2 class="sr-only" id="pakete-h">Die drei Pakete</h2>
       <span id="preise" class="anker" aria-hidden="true"></span>
+      <span id="websites" class="anker" aria-hidden="true"></span>
       <EinmaligDazu />
       <PaketKarten />
       <p class="netto">{B2B_HINWEIS}</p>
     </div>
   </section>
 
-  <section class="section" id="websites" aria-labelledby="inkl-h">
-    <div class="wrap">
-      <SectionHead center eyebrow="In allen Paketen enthalten" pre="Alles in " accent="einem Preis." text="Website, Technik, Pflege und Ihr Ansprechpartner stecken im festen Monatspreis." id="inkl-h" />
-      <Inklusive />
-    </div>
-  </section>
+  <!-- Abschnitt „In allen Paketen enthalten – Alles in einem Preis.“ (12 Kacheln) entfernt (Jamil #5356); Sprungmarke #websites sitzt jetzt bei den Paketen -->
 
   <!-- Abschnitt „Fair für alle / Sie brauchen etwas aus dem Paket nicht?“ entfernt (Jamil #5133/#5134); FAQ-Frage dazu bleibt -->
 
-  <!-- Hintergründe wechseln wieder hell/sand, seit der Abschnitt „Fair für alle“ entfernt ist (#5133/#5134) -->
-  <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
+  <!-- Hintergründe wechseln hell/sand: Pakete sand → Vergleich hell → Start sand → Ausbaustufen hell → Abschluss sand (#5356) -->
+  <section class="section" id="vergleich" aria-labelledby="vgl-h">
     <div class="wrap">
       <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei." id="vgl-h" />
       <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
@@ -98,7 +93,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     </div>
   </section>
 
-  <section class="section" id="start" aria-labelledby="start-h">
+  <section class="section section--alt" id="start" aria-labelledby="start-h">
     <div class="wrap">
       <SectionHead center eyebrow="So starten Sie" pre="In drei Schritten " accent="online." id="start-h" />
       <ol class="start">
@@ -109,7 +104,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     </div>
   </section>
 
-  <section class="section section--sand" id="stundensaetze" aria-labelledby="ausbau-h">
+  <section class="section" id="stundensaetze" aria-labelledby="ausbau-h">
     <div class="wrap">
       <SectionHead eyebrow="Mehr als eine Website?" pre="Ausbaustufen auf " accent="Anfrage" text={`Die Website ist der erste Schritt. Für größere Vorhaben, zum Beispiel ${AUF_ANFRAGE.slice(0, 2).join(' oder ')}, erstellen wir ein individuelles Angebot.`} id="ausbau-h" />
       <ul class="ausbau">
@@ -139,7 +134,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
 
   <!-- Paket-FAQ entfernt: alle Fragen auf /fragen/ (Jamil #5140–#5142) -->
 
-  <section class="section cta-pk" aria-labelledby="cta-h">
+  <section class="section section--alt cta-pk" aria-labelledby="cta-h">
     <div class="wrap">
       <h2 id="cta-h">Unsicher, welches Paket passt?</h2>
       <p class="lead">Im kostenlosen Erstgespräch empfehlen wir Ihnen das passende Paket, auch wenn es das kleinere ist.</p>
