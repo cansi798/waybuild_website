@@ -6,7 +6,7 @@
 //   · Check (Konzept 4768; am 09.11. entfernt, #5211–#5213) · Abschluss (4792) · Claim (4793)
 // Frühere Stände: „Unternehmensauftritt“ (4768, nach Website Rethinking, NC Rethinking_Unternehmensauftritt_2026-11-06),
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
-// Die alte Startseite (vor dem 05.11.) steht unverändert unter /hauptseite-alt/.
+// Die alte Startseite (vor dem 05.11., /hauptseite-alt/) ist gelöscht (Jamil, Talk qh87y3sj #5322); Sicherung Branch vor-aufraeumen-20261109.
 
 /** Früherer Text-Name der Startseite. Seit Logo C (Jamil, Talk qh87y3sj #5226/#5227 „überall“) nicht mehr angezeigt:
  *  Kopfzeile, Fußzeile und Claim zeigen das Logo (src/components/Logo.astro). Bleibt nur als Notiz stehen. */

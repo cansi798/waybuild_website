@@ -1,0 +1,44 @@
+---
+// Kleine Weiterleitungsseite für gelöschte Adressen (Jamil, Talk qh87y3sj #5322, Q6/Q7, 09.11.2026):
+// alte Leistungsseiten und Branchenseiten führen auf die passende neue Seite, damit Links von außen nicht ins Leere zeigen.
+// Eigene Seite statt Astro-redirects, weil diese den Base-Pfad der Vorschau nicht setzen. Ohne Kopf und Fuß,
+// noindex, canonical auf das Ziel, nicht in der Sitemap (Filter in astro.config.mjs).
+import { href, absolute } from '../lib/paths';
+
+interface Props {
+  /** Ziel als Pfad, z. B. '/leistungen/website/' */
+  ziel: string;
+  /** Linktext des Ziels, z. B. 'Website' */
+  name: string;
+}
+const { ziel, name } = Astro.props;
+const zielHref = href(ziel);
+const zielAbsolut = absolute(ziel, Astro.site);
+const ogImage = absolute('/og-image.png?v=20261109', Astro.site);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Diese Seite ist umgezogen | waybuild</title>
+    <meta name="description" content={`Diese Adresse gibt es nicht mehr. Den Inhalt finden Sie jetzt auf der Seite ${name}.`} />
+    <meta name="robots" content="noindex, follow" />
+    <meta property="og:image" content={ogImage} />
+    <link rel="canonical" href={zielAbsolut} />
+    <meta http-equiv="refresh" content={`0; url=${zielHref}`} />
+    <style>
+      body { margin: 0; padding: 48px 16px; font: 18px/1.6 system-ui, sans-serif; color: #10302f; background: #fff; }
+      main { max-width: 640px; margin: 0 auto; }
+      a { color: #006b68; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Diese Seite ist umgezogen</h1>
+      <p>Sie finden den Inhalt jetzt hier: <a href={zielHref}>{name}</a>.</p>
+    </main>
+    <script is:inline define:vars={{ zielHref }}>location.replace(zielHref);</script>
+  </body>
+</html>

@@ -119,7 +119,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
             <h3>{s.title}</h3>
             <p>{s.claim}</p>
             <ul class="ausbau__links">
-              {/* Altbestand: Titel ohne Link, die alten Seiten stehen seit 09.11.2026 auf noindex (Jamil #5274/#5276) */}
+              {/* Titel ohne Link: die alten Leistungsseiten sind gelöscht (Jamil, Talk qh87y3sj #5322) */}
               {leistungenNach(s.id).filter((l) => l.slug !== 'abo-wartung').map((l) => <li>{l.title}</li>)}
             </ul>
             <span class="ausbau__tag">Individuelles Angebot</span>

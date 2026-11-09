@@ -1,23 +1,21 @@
 ---
-// /leistungen/<slug>/ – seit 09.11.2026 zwei Quellen (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“):
-// 1. NEU: die 13 Leistungen aus src/content/leistungen/ (4 Gruppen, Seite: components/leistungen/LeistungSeite.astro).
-// 2. ALTBESTAND aus src/config/leistungen.ts (components/leistungen/AltLeistung.astro): bleibt erreichbar, aber unverlinkt,
-//    noindex und nicht in der Sitemap. Gleicher Slug wie eine neue Leistung → die neue Seite gewinnt.
+// /leistungen/<slug>/: die 13 Leistungen aus src/content/leistungen/ (4 Gruppen, Seite: components/leistungen/LeistungSeite.astro;
+// Jamil, Talk qh87y3sj #5274/#5276). Die alten Leistungsseiten sind gelöscht (Jamil, Talk qh87y3sj #5322, Q6); ihre Adressen
+// sind kleine Weiterleitungsseiten auf die passende neue Seite (ALT_WEITERLEITUNGEN in src/config/leistungen-neu.ts).
 import LeistungSeite from '../../components/leistungen/LeistungSeite.astro';
-import AltLeistung from '../../components/leistungen/AltLeistung.astro';
-import { leistungen as altBestand, type Leistung } from '../../config/leistungen';
-import { leistungenNeu, type LeistungNeu } from '../../config/leistungen-neu';
+import Weiterleitung from '../../components/Weiterleitung.astro';
+import { leistungenNeu, ALT_WEITERLEITUNGEN, type LeistungNeu } from '../../config/leistungen-neu';
 
 export async function getStaticPaths() {
   const neu = await leistungenNeu();
   const neueSlugs = new Set(neu.map((l) => l.id));
   return [
     ...neu.map((eintrag) => ({ params: { slug: eintrag.id }, props: { eintrag } })),
-    ...altBestand.filter((l) => !neueSlugs.has(l.slug)).map((l) => ({ params: { slug: l.slug }, props: { alt: l } })),
+    ...Object.entries(ALT_WEITERLEITUNGEN).filter(([slug]) => !neueSlugs.has(slug)).map(([slug, weiter]) => ({ params: { slug }, props: { weiter } })),
   ];
 }
 
-const { eintrag, alt } = Astro.props as { eintrag?: LeistungNeu; alt?: Leistung };
+const { eintrag, weiter } = Astro.props as { eintrag?: LeistungNeu; weiter?: { ziel: string; name: string } };
 ---
 
-{eintrag ? <LeistungSeite eintrag={eintrag} /> : alt && <AltLeistung l={alt} />}
+{eintrag ? <LeistungSeite eintrag={eintrag} /> : weiter && <Weiterleitung ziel={weiter.ziel} name={weiter.name} />}

@@ -1,7 +1,7 @@
 // Leistungen NEU (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): vier Gruppen entlang der Kundenreise,
 // je Leistung eine eigene Seite (Inhalte: src/content/leistungen/<slug>.md). Nur aus der Startseite abgeleitet.
-// Der Altbestand (src/config/leistungen.ts) ist seitdem aus Menü, Footer und Übersicht entfernt; die alten Seiten bleiben
-// erreichbar, stehen aber auf noindex und fehlen in der Sitemap (Liste: ALT_SLUGS_NOINDEX unten, Jamil entscheidet später).
+// Die alten Leistungsseiten (früher aus src/config/leistungen.ts) sind gelöscht (Jamil, Talk qh87y3sj #5322, Q6); ihre
+// Adressen leiten auf die passende neue Seite weiter (ALT_WEITERLEITUNGEN unten).
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { IconName } from './site';
 
@@ -37,12 +37,21 @@ export const ICONS: Record<string, IconName> = {
 /** Menü: Paket-Hinweis nur bei den Stationen 1 und 2 (Gefunden werden, Vertrauen gewinnen), wie im Vorschlag #5274 */
 export const PAKET_IM_MENUE: GruppeId[] = ['gefunden', 'vertrauen'];
 
-/** Alte Leistungsseiten (src/config/leistungen.ts), die seit 09.11.2026 unverlinkt und auf noindex stehen.
- *  Muss mit dem Sitemap-Filter in astro.config.mjs übereinstimmen. Löschen/Weiterleiten entscheidet Jamil. */
-export const ALT_SLUGS_NOINDEX = [
-  'business-website', 'online-shop', 'landingpage', 'website-relaunch', 'betreuung-pflege',
-  'individuelle-software', 'software-webentwicklung', 'nextcloud', 'cloud-it', 'wettbewerbsanalyse', 'abo-wartung',
-];
+/** Gelöschte alte Leistungsseiten (Jamil, Talk qh87y3sj #5322, Q6): alte Adresse /leistungen/<slug>/ → neue Seite.
+ *  Muss mit dem Sitemap-Filter in astro.config.mjs übereinstimmen (Weiterleitungen nie in die Sitemap). */
+export const ALT_WEITERLEITUNGEN: Record<string, { ziel: string; name: string }> = {
+  'business-website': { ziel: '/leistungen/website/', name: 'Website' },
+  'online-shop': { ziel: '/leistungen/website/', name: 'Website' },
+  landingpage: { ziel: '/leistungen/website/', name: 'Website' },
+  'website-relaunch': { ziel: '/leistungen/website/', name: 'Website' },
+  'betreuung-pflege': { ziel: '/leistungen/betreuung/', name: 'Betreuung' },
+  'abo-wartung': { ziel: '/leistungen/betreuung/', name: 'Betreuung' },
+  'individuelle-software': { ziel: '/leistungen/', name: 'Leistungen' },
+  'software-webentwicklung': { ziel: '/leistungen/', name: 'Leistungen' },
+  nextcloud: { ziel: '/leistungen/', name: 'Leistungen' },
+  'cloud-it': { ziel: '/leistungen/', name: 'Leistungen' },
+  wettbewerbsanalyse: { ziel: '/leistungen/', name: 'Leistungen' },
+};
 
 export const gruppeById = (id: GruppeId) => GRUPPEN.find((g) => g.id === id)!;
 

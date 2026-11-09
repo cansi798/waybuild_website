@@ -1,0 +1,12 @@
+---
+// Die Branchenseiten /website-fuer/ sind gelöscht (Jamil, Talk qh87y3sj #5322, Q7). Ihre alten Adressen (Übersicht und
+// sechs Branchen) sind kleine Weiterleitungsseiten auf /leistungen/, damit Links von außen nicht ins Leere zeigen.
+import Weiterleitung from '../../components/Weiterleitung.astro';
+
+export function getStaticPaths() {
+  const alteBranchen = ['handwerker', 'arztpraxen', 'gastronomie', 'kanzleien', 'immobilienmakler', 'friseure-kosmetik'];
+  return [{ params: { pfad: undefined } }, ...alteBranchen.map((pfad) => ({ params: { pfad } }))];
+}
+---
+
+<Weiterleitung ziel="/leistungen/" name="Leistungen" />

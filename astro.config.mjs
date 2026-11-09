@@ -17,8 +17,8 @@ const blogEntwuerfe = existsSync(blogDir)
 const site = process.env.SITE ?? 'https://waybuild.de';
 const base = process.env.BASE ?? '/';
 
-// Alte Leistungsseiten (Altbestand src/config/leistungen.ts): seit 09.11.2026 unverlinkt und noindex, daher nicht in die
-// Sitemap (Jamil, Talk qh87y3sj #5274/#5276; gleiche Liste wie ALT_SLUGS_NOINDEX in src/config/leistungen-neu.ts)
+// Weiterleitungsseiten gelöschter Adressen nie in die Sitemap (Jamil, Talk qh87y3sj #5322, Q6/Q7): alte Leistungsseiten
+// (gleiche Liste wie ALT_WEITERLEITUNGEN in src/config/leistungen-neu.ts) und alle Adressen unter /website-fuer/.
 const altLeistungen = ['business-website', 'online-shop', 'landingpage', 'website-relaunch', 'betreuung-pflege',
   'individuelle-software', 'software-webentwicklung', 'nextcloud', 'cloud-it', 'wettbewerbsanalyse', 'abo-wartung'];
 
@@ -30,9 +30,8 @@ export default defineConfig({
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
-      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|hauptseite-alt|referenzen)\/?$/.test(page)
-        // Frühere Variante /variante/ (Jamil #5016) ist seit 08.11.2026 (#5056) die richtige /preise/-Seite; unter /variante/ stehen nur noch Weiterleitungsseiten (src/pages/variante/[...pfad].astro), nie in die Sitemap
-        && !/\/variante\//.test(page)
+      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen)\/?$/.test(page)
+        && !/\/website-fuer\//.test(page)
         && !blogEntwuerfe.some((id) => page.replace(/\/$/, '').endsWith(`/blog/${id}`))
         && !altLeistungen.some((slug) => page.replace(/\/$/, '').endsWith(`/leistungen/${slug}`)),
     }),

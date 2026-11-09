@@ -1,5 +1,5 @@
 // Navigation mit Dropdown-Gruppen (Bauwelt-Muster): Desktop Dropdown, mobil aufklappbare Gruppen.
-// „Branchen“ entfernt (Jamil, Talk qh87y3sj #5261, 09.11.2026); die Seiten /website-fuer/ bleiben erreichbar, aber unverlinkt.
+// „Branchen“ entfernt (Jamil, Talk qh87y3sj #5261, 09.11.2026); die Seiten /website-fuer/ sind gelöscht und leiten auf /leistungen/ weiter (#5322).
 // „Leistungen“ (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): die vier Gruppen der Kundenreise mit den
 // 13 neuen Leistungsseiten (menuTitel + kurz aus src/content/leistungen/), auf dem Desktop als Mega-Panel in vier Spalten.
 // Bei „Gefunden werden“ und „Vertrauen gewinnen“ steht zusätzlich der Paket-Hinweis (tag), keine Preise.

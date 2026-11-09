@@ -134,7 +134,6 @@ export const formatEuro = (n: number) =>
 
 /** Preis-Zeilen für alle Seiten (aus PAKETE). */
 export const preisKurz = () => `ab ${formatEuro(preisAb())} / Monat`;
-export const preisLang = () => `ab ${formatEuro(preisAb())} im Monat, zzgl. MwSt.`;
 export const preiseAlle = () => PAKETE.map((p) => `${p.name}: ${formatEuro(p.preis)} / Monat`).join(' · ') + ' (netto, zzgl. MwSt.)';
 /** Hinweis unter den Paketpreisen. */
 export const PREIS_HINWEIS = 'Alle Preise netto zzgl. gesetzlicher MwSt.; das Angebot richtet sich an Unternehmen und Selbstständige.';

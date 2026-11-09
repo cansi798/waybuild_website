@@ -34,7 +34,6 @@ export const TAGESSATZ = 760;
 /** Zusatzstunden für Kunden mit Pflege-/Betreuungsvertrag */
 export const STUNDENSATZ_VERTRAG = 85;
 
-export const NETTO_HINWEIS = 'Alle Preise netto zzgl. 19 % USt. Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.';
 export const REAKTION_HINWEIS = 'Antwortzeiten gelten werktags (Mo–Fr, 9 bis 17 Uhr) und beschreiben, wann wir mit der Bearbeitung beginnen – nicht die Lösungszeit.';
 
 const eur = (n: number, ab = false) =>
@@ -216,7 +215,6 @@ export const SAEULEN: { id: Saeule; title: string; claim: string; icon: IconName
   { id: 'beratung', title: 'Beratung', icon: 'compass', head: ['Entscheidungen auf ', 'fundierter Basis'], claim: 'Wettbewerbsanalyse: Wo stehen Sie im Markt, und wo haben Sie einen Vorsprung?', ab: 'Ausbaustufe · auf Anfrage' },
 ];
 
-export const saeuleById = (id: Saeule) => SAEULEN.find((s) => s.id === id)!;
 
 /* ───────────── Positionierung (nur Anbieter-TYPEN, keine echten Wettbewerber) ───────────── */
 

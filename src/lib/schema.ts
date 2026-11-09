@@ -1,19 +1,7 @@
 // JSON-LD für strukturierte Daten (Rich Results bei Google)
-import { faqs, company, WAAS, PAKETE, brutto } from '../config/site';
+import { company, WAAS, PAKETE, brutto } from '../config/site';
 import { EINMALIG_DAZU } from '../config/pakete-abo';
 import { absolute } from './paths';
-
-export function faqSchema() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
-}
 
 const eurText = (n: number) => n.toFixed(2).replace('.', ',');
 

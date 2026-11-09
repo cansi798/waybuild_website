@@ -3,54 +3,15 @@
 // Ausrichtung B2B: kleine und mittlere Unternehmen.
 import type { IconName } from './site';
 
-export const HERO = {
-  eyebrow: 'Website as a Service für Unternehmen',
-  /** Überschrift: positiv, Nutzen zuerst (Wunsch Jamil 19.10.2026: kein durchgestrichener Text) */
-  vor: 'Ihre Website, professionell und ',
-  akzent: 'komplett betreut.',
-  claim: ['Menschliche Beratung.', 'KI-gestützte Umsetzung.', 'Kontinuierliche Verbesserung.'],
-  unterzeile: 'Für kleine und mittlere Unternehmen. Änderungen schicken Sie per Sprachnachricht, die Technik ist inklusive, und Sie haben einen festen Ansprechpartner.',
-};
-
-/** Schmerzpunkte bei der Website-Erstellung (Jamil, 19.10.2026) → unsere Antwort. */
-export const SCHMERZPUNKTE: { icon: IconName; title: string; text: string }[] = [
-  { icon: 'layout', title: 'Wie soll das aussehen?', text: 'Ohne Erfahrung weiß man bei Design, Aufbau und Farben nicht, wo man anfangen soll.' },
-  { icon: 'spark', title: 'Keine Inspiration', text: 'Die Ideen fehlen, und die Seiten der anderen sehen alle gleich aus.' },
-  { icon: 'pen', title: 'Texte ständig anpassen', text: 'Jede Änderung kostet Zeit, und am Ende bleibt die Website doch veraltet.' },
-  { icon: 'eye', title: 'Screenshots und lange Erklärungen', text: 'Wer Änderungen beauftragt, macht Screenshots, schreibt E-Mails und wartet.' },
-];
-
-export const LOESUNG = {
-  title: 'Bei uns: eine Sprachnachricht genügt.',
-  text: 'Sagen Sie uns einfach, was sich ändern soll. Wir kümmern uns um Design, Inhalte und Technik. Kleine Anpassungen sind oft in wenigen Minuten online.',
-  punkte: ['Design und Ideen kommen von uns', 'Änderungen per Sprachnachricht', 'Ohne Screenshots und Fachchinesisch'],
-};
-
-/** Zielgruppe (Vision: KMU). Link nur, wo es eine passende Branchenseite gibt. */
-export const ZIELGRUPPEN: { icon: IconName; title: string; path?: string }[] = [
-  { icon: 'tools', title: 'Handwerksbetriebe', path: '/website-fuer/handwerker/' },
+/** Zielgruppe (Vision: KMU), für llms.txt. Branchenseiten-Links entfernt (Branchenseiten gelöscht, Jamil, Talk qh87y3sj #5322). */
+export const ZIELGRUPPEN: { icon: IconName; title: string }[] = [
+  { icon: 'tools', title: 'Handwerksbetriebe' },
   { icon: 'user', title: 'Dienstleister' },
   { icon: 'compass', title: 'Beratungsunternehmen' },
   { icon: 'cpu', title: 'IT-Unternehmen' },
-  { icon: 'home', title: 'Immobilienunternehmen', path: '/website-fuer/immobilienmakler/' },
-  { icon: 'pin', title: 'Lokale Betriebe', path: '/website-fuer/' },
+  { icon: 'home', title: 'Immobilienunternehmen' },
+  { icon: 'pin', title: 'Lokale Betriebe' },
 ];
-
-/** „Die intelligente Website“ (Variante 2, Preis in PAKETE) – Datenquellen + Solarteur-Beispiel. */
-export const VISION = {
-  datenquellen: [
-    'Besucherstatistiken', 'Kontaktanfragen', 'Suchbegriffe', 'Google Search Console',
-    'Bewertungen', 'Referenzen', 'Conversion-Daten',
-  ],
-  /** Beispiel-Szenario aus der Vision (Solarteur, 6 Monate) – als Beispiel gekennzeichnet */
-  erkennt: [
-    { wert: 70, text: 'der Anfragen kommen über Photovoltaik' },
-    { text: 'Gewerbekunden konvertieren besser als Privatkunden' },
-    { text: 'Bestimmte Referenzen schaffen mehr Vertrauen' },
-    { text: 'Ein Kalkulator erhöht die Anfragequote deutlich' },
-  ] as { wert?: number; text: string }[],
-  reagiert: ['Erfolgreiche Leistungen sichtbarer', 'Neue Landingpages', 'Referenzen automatisch hervorheben', 'Customer Journey optimieren'],
-};
 
 /** „Die Website ist nur der erste Schritt“ – Bausteine des digitalen Betriebssystems für KMU. */
 export const PLATTFORM: { icon: IconName; title: string; heute?: boolean }[] = [
