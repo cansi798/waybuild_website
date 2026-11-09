@@ -11,6 +11,7 @@ import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
+import PremiumKarte from '../components/pakete/PremiumKarte.astro';
 import { SHOW_HINTS } from '../config/site';
 import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
@@ -60,6 +61,7 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
       <span id="websites" class="anker" aria-hidden="true"></span>
       <EinmaligDazu />
       <PaketKarten />
+      <PremiumKarte />
       <p class="netto">{B2B_HINWEIS}</p>
     </div>
   </section>

@@ -123,6 +123,43 @@ export const vergleichsZeilen = () => {
   }));
 };
 
+/** Premium „Komplett + Auftragsverwaltung“ (Jamil, Talk qh87y3sj #5346, #5352, 10.11.2026): breite Karte unter den drei Paketen.
+ *  `preis` = Monatspreis NETTO; null zeigt „Preis auf Anfrage“. 599 € auf Wunsch von Jamil (#5351) in der Vorschau,
+ *  Abstimmung mit Can läuft. Gebucht wird (noch) nicht direkt, sondern über die kostenlose Erstberatung. */
+export const PREMIUM = {
+  label: 'Premium',
+  titel: 'Komplett + Auftragsverwaltung',
+  preis: 599 as number | null,
+  baut: 'komplett' as AboPaket['id'],
+  text: 'Alles aus „Komplett“, dazu eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet.',
+  /** Ablauf-Grafik */
+  ablauf: [
+    { icon: 'mail', text: 'Anfrage' },
+    { icon: 'doc', text: 'Angebot' },
+    { icon: 'tools', text: 'Auftrag' },
+    { icon: 'euro', text: 'Rechnung' },
+    { icon: 'book', text: 'Buchhaltung' },
+  ] as const,
+  /** Vorteile (#5346, bewusst vorsichtig formuliert) */
+  vorteile: [
+    { icon: 'check', text: 'Keine doppelte Eingabe, alles wird einmal erfasst' },
+    { icon: 'eye', text: 'Überblick, welche Aufträge offen sind' },
+    { icon: 'book', text: 'Rechnungen können direkt an die Buchhaltung übergeben werden' },
+  ] as const,
+  /** Auftragsverwaltung (#5352 wörtlich, dazu Schnittstelle und Automatik aus #5346) */
+  software: [
+    'Individuell für Ihren Betrieb entwickelt, statt Software von der Stange',
+    'Auf Ihre Abläufe abgestimmt, von der Anfrage bis zur Rechnung',
+    'Wächst mit, wenn neue Schritte oder Mitarbeitende dazukommen',
+    'Sie arbeiten in Ihren gewohnten Begriffen, nicht in denen eines fremden Programms',
+    'Schnittstelle zu Lexware Office und sevDesk möglich',
+    'Wiederkehrende Schritte laufen automatisch',
+  ],
+  knopf: 'Kostenlose Erstberatung',
+  /** Wert für ?paket= im Kontaktformular */
+  kontaktPaket: 'Premium (Komplett + Auftragsverwaltung)',
+};
+
 /** Einmalige Leistungen (Extras), Festpreis NETTO. Preise neu von Jamil (Talk qh87y3sj #5085–#5089, 08.11.2026):
  *  Logo 349 · Geschäftspapiere 129 · Visitenkarten 59 · E-Mail-Signatur 39 € (einzeln zusammen 576 €),
  *  dazu das Gesamtpaket „Alle vier Extras“ für 499 €. Vorher (#5056): 590 / 190 / 89 / 49 €. */
