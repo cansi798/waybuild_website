@@ -158,8 +158,8 @@ const manual: Todo[] = [
   },
   {
     title: 'Finales Logo (optional)',
-    detail: 'Das waybuild-IT-Logo ist eingebaut (Header, Footer, Icons, Vorschaubild). Für noch schärfere Darstellung später eine SVG-Fassung vom Designer einsetzen.',
-    where: 'public/logo-waybuild-it.png, src/components/Logo.astro',
+    detail: 'Logo-Entwurf C „Reine Wortmarke“ als SVG eingebaut (Jamil, Talk qh87y3sj #5226/#5227): Header, Footer (Negativ), Favicon, App-Icons, Vorschaubild.',
+    where: 'src/components/Logo.astro, public/logo-waybuild.svg, public/logo-waybuild-negativ.svg',
     done: true,
     priority: 'später',
   },

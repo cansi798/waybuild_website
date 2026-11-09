@@ -1,15 +1,25 @@
 ---
-// waybuild-IT-Logo (WB-Marke + Schriftzug), Quelle: public/logo-waybuild-it.png (Wunsch 10.10.2026).
-// Auf dunklem Grund (Footer) liegt es auf einer weißen Kachel – nicht umfärben.
-import { href } from '../lib/paths';
+// waybuild-Wortmarke Entwurf C „Reine Wortmarke“ (Jamil, Talk qh87y3sj #5226 „logo c“, #5227 „Ja logo c auf der seite überall“):
+// Montserrat SemiBold 600 als Pfade, „way“ Türkis + „build“ Dunkelgrün. Gleiche Pfade wie public/logo-waybuild(-negativ).svg.
+// Inline-SVG: keine Extra-Anfrage, feste Höhe + Seitenverhältnis = kein Layout-Sprung.
+// variante 'positiv' (heller Grund): way #00807B, build #006B68 · 'negativ' (auf #006B68): way #A8EAE4 (4,71 : 1), build Weiß (6,36 : 1).
+// Höhe über --logo-h (Standard 28 px, ab 720 px 32 px), Breite folgt dem Seitenverhältnis 4579 : 1053.
+interface Props { variante?: 'positiv' | 'negativ' }
+const negativ = Astro.props.variante === 'negativ';
+const way = negativ ? '#A8EAE4' : '#00807B';
+const build = negativ ? '#FFFFFF' : '#006B68';
 ---
 
 <span class="logo">
-  <img src={href('/logo-waybuild-it.png')} alt="waybuild IT" width="233" height="120" decoding="async" />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-36.0 -812.0 4579.0 1053.0" width="139" height="32" role="img" aria-label="waybuild" focusable="false">
+    <title>waybuild</title>
+    <path fill={way} d="M200 0 4 -534H122L290 -63H234L410 -534H515L686 -63H631L804 -534H915L718 0H598L442 -417H479L320 0ZM1305 0V-108L1298 -131V-320Q1298 -375 1265.0 -405.5Q1232 -436 1165 -436Q1120 -436 1076.5 -422.0Q1033 -408 1003 -383L954 -474Q997 -507 1056.5 -523.5Q1116 -540 1180 -540Q1296 -540 1359.5 -484.5Q1423 -429 1423 -313V0ZM1137 7Q1077 7 1032.0 -13.5Q987 -34 962.5 -70.5Q938 -107 938 -153Q938 -198 959.5 -234.0Q981 -270 1030.0 -291.0Q1079 -312 1160 -312H1315V-229H1169Q1105 -229 1083.0 -208.5Q1061 -188 1061 -158Q1061 -124 1088.0 -104.0Q1115 -84 1163 -84Q1209 -84 1245.5 -105.0Q1282 -126 1298 -167L1319 -92Q1301 -45 1254.5 -19.0Q1208 7 1137 7ZM1598 201Q1559 201 1520.0 188.0Q1481 175 1455 152L1505 60Q1524 77 1548.0 87.0Q1572 97 1597 97Q1631 97 1652.0 80.0Q1673 63 1691 23L1722 -47L1732 -62L1934 -534H2054L1804 43Q1779 103 1748.5 138.0Q1718 173 1680.5 187.0Q1643 201 1598 201ZM1708 19 1467 -534H1597L1793 -73Z" />
+    <path fill={build} d="M2408 7Q2340 7 2287.0 -23.0Q2234 -53 2203.5 -113.5Q2173 -174 2173 -267Q2173 -361 2204.5 -421.0Q2236 -481 2289.5 -510.5Q2343 -540 2408 -540Q2487 -540 2547.5 -506.0Q2608 -472 2643.5 -411.0Q2679 -350 2679 -267Q2679 -184 2643.5 -123.0Q2608 -62 2547.5 -27.5Q2487 7 2408 7ZM2112 0V-742H2237V-410L2227 -268L2231 -126V0ZM2394 -100Q2439 -100 2474.5 -120.0Q2510 -140 2531.0 -178.0Q2552 -216 2552 -267Q2552 -319 2531.0 -356.5Q2510 -394 2474.5 -414.0Q2439 -434 2394 -434Q2349 -434 2313.0 -414.0Q2277 -394 2256.0 -356.5Q2235 -319 2235 -267Q2235 -216 2256.0 -178.0Q2277 -140 2313.0 -120.0Q2349 -100 2394 -100ZM3008 7Q2940 7 2888.0 -18.5Q2836 -44 2807.0 -96.5Q2778 -149 2778 -229V-534H2903V-246Q2903 -174 2935.5 -138.5Q2968 -103 3028 -103Q3072 -103 3104.5 -121.0Q3137 -139 3155.5 -175.0Q3174 -211 3174 -264V-534H3299V0H3180V-144L3201 -100Q3174 -48 3122.0 -20.5Q3070 7 3008 7ZM3443 0V-534H3568V0ZM3506 -622Q3471 -622 3448.5 -644.0Q3426 -666 3426 -697Q3426 -729 3448.5 -750.5Q3471 -772 3506 -772Q3541 -772 3563.5 -751.5Q3586 -731 3586 -700Q3586 -667 3564.0 -644.5Q3542 -622 3506 -622ZM3712 0V-742H3837V0ZM4207 7Q4130 7 4068.5 -27.5Q4007 -62 3972.0 -123.0Q3937 -184 3937 -267Q3937 -350 3972.0 -411.0Q4007 -472 4068.5 -506.0Q4130 -540 4207 -540Q4274 -540 4327.0 -510.5Q4380 -481 4411.0 -421.0Q4442 -361 4442 -267Q4442 -174 4412.0 -113.5Q4382 -53 4329.0 -23.0Q4276 7 4207 7ZM4222 -100Q4267 -100 4302.5 -120.0Q4338 -140 4359.5 -178.0Q4381 -216 4381 -267Q4381 -319 4359.5 -356.5Q4338 -394 4302.5 -414.0Q4267 -434 4222 -434Q4177 -434 4141.5 -414.0Q4106 -394 4084.5 -356.5Q4063 -319 4063 -267Q4063 -216 4084.5 -178.0Q4106 -140 4141.5 -120.0Q4177 -100 4222 -100ZM4384 0V-126L4389 -268L4379 -410V-742H4503V0Z" />
+  </svg>
 </span>
 
 <style>
   .logo { display: inline-flex; align-items: center; }
-  .logo img { display: block; height: 32px; width: auto; }
-  @media (min-width: 720px) { .logo img { height: 40px; } }
+  .logo svg { display: block; height: var(--logo-h, 28px); width: auto; aspect-ratio: 4579 / 1053; }
+  @media (min-width: 720px) { .logo svg { height: var(--logo-h, 32px); } }
 </style>

@@ -5,7 +5,7 @@
  * Sicherung Branch vor-tuerkis-20261108. Kontrast (WCAG AA): Türkis #00a6a1 NUR für Flächen, Linien und Zeichen (auf
  * Weiß 3,0 : 1); Schrift und Links auf Hell in #006b68 (6,4 : 1) bzw. #004f4c; auf Türkis-Flächen Schrift #0b2a29
  * (5,1 : 1); auf Dunkel Türkis-Hell #5fe0da (5,9 : 1). Bezeichnungen der Hauptseite: --accent-mid / --accent-light / --on-accent.
- * html[data-thema='besucherreise'] steuert nur noch Inhalte von Kopf, Fuß und Leiste (Marke als Text, kein Logo).
+ * html[data-thema='besucherreise'] steuert nur noch Inhalte von Kopf, Fuß und Leiste (Logo C wie auf allen Seiten, Jamil #5226/#5227).
  * Bewegung: src/scripts/startseite.ts am 09.11.2026 entfernt (keine Nutzer mehr: [data-p], [data-fokus], [data-zeichne]).
  * Kundenreise und „So gehen wir vor“ haben eigene Skripte (kundenreise.ts, vorgehen.ts). */
 
@@ -65,7 +65,8 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 
 /* ── Claim unter dem Abschluss ── */
 .claim { display: grid; gap: 6px; margin: clamp(48px, 7vw, 80px) 0 0; padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--line); width: 100%; max-width: 640px; font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 650; color: var(--dark); }
-.claim__marke { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-ink); }
+/* Marke über dem Claim: Logo C statt Text „rethink.website“ (Jamil, Talk qh87y3sj #5226/#5227 „überall“) */
+.claim__marke { justify-self: center; --logo-h: 24px; }
 
 /* ── A9 · Abschluss: viel Weißraum, keine Animation ── */
 .abschluss { padding-block: clamp(96px, 14vw, 180px); }

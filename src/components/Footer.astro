@@ -6,7 +6,8 @@ import { branchen } from '../config/branchen';
 import { leistungen } from '../config/leistungen';
 import FooterKontakt from './FooterKontakt.astro';
 
-// thema 'besucherreise' (neue Startseite): ohne waybuild-Logo und ohne Kontaktkopf (der Abschluss der Seite ist der CTA)
+// thema 'besucherreise' (neue Startseite): ohne Kontaktkopf (der Abschluss der Seite ist der CTA).
+// Logo C (Negativ) auf allen Seiten, auch auf der Startseite (Jamil, Talk qh87y3sj #5226/#5227 „überall“).
 interface Props { thema?: 'besucherreise' }
 const reise = Astro.props.thema === 'besucherreise';
 
@@ -17,7 +18,7 @@ const year = new Date().getFullYear();
   {!reise && <FooterKontakt />}
   <div class:list={['wrap footer__grid', { 'footer__grid--ohne-kopf': reise }]}>
     <div>
-      {!reise && <Logo />}
+      <Logo variante="negativ" />
       <p class="footer__claim">{company.slogan}</p>
     </div>
     <nav aria-label="Footer">
@@ -73,8 +74,8 @@ const year = new Date().getFullYear();
     .footer__h { margin-bottom: 4px; }
   }
   @media (max-width: 599px) { .footer li a { padding: 6px 0; font-size: 0.92rem; } .footer__claim { margin-top: 10px; } .footer__bottom { margin-top: 28px; } }
-  /* Logo auf dunklem Grund: weiße Kachel, Logo selbst bleibt original */
-  .footer :global(.logo) { background: var(--white); border-radius: 12px; padding: 8px 12px; }
+  /* Logo auf dunklem Grund: Negativ-Fassung von Entwurf C („way“ #A8EAE4 4,71 : 1, „build“ Weiß 6,36 : 1),
+   * keine weiße Kachel mehr (die war nur für das alte PNG nötig; Jamil, Talk qh87y3sj #5226/#5227) */
   .footer__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
   .footer__grid > :first-child { grid-column: 1 / -1; }
   @media (min-width: 720px) { .footer__grid { gap: 36px; } }

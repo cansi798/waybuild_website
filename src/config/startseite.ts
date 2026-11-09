@@ -8,7 +8,8 @@
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
 // Die alte Startseite (vor dem 05.11.) steht unverändert unter /hauptseite-alt/.
 
-/** Name oben in der Kopfzeile der Startseite. An einer Stelle änderbar. */
+/** Früherer Text-Name der Startseite. Seit Logo C (Jamil, Talk qh87y3sj #5226/#5227 „überall“) nicht mehr angezeigt:
+ *  Kopfzeile, Fußzeile und Claim zeigen das Logo (src/components/Logo.astro). Bleibt nur als Notiz stehen. */
 export const MARKE = 'rethink.website';
 
 /** Kontaktseite mit vorbelegtem Anliegen (Feld „paket“ geht in den Betreff der Anfrage, Interesse = Website, max. 60 Zeichen). */

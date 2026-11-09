@@ -6,10 +6,11 @@ import { NAV } from '../config/nav';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import MobileMenu from './MobileMenu.astro';
-import { MARKE, ANLIEGEN } from '../config/startseite';
+import { ANLIEGEN } from '../config/startseite';
 
-// thema 'besucherreise' (neue Startseite, Jamil Talk 4753): waybuild-Logo vorerst entfernt, Name als Text,
-// Knopf mit Jamils Wortlaut „Kostenlose Erstberatung“. Alle anderen Seiten bleiben unverändert.
+// thema 'besucherreise' (neue Startseite, Jamil Talk 4753): Knopf mit Jamils Wortlaut „Kostenlose Erstberatung“.
+// Logo C auf allen Seiten, auch auf der Startseite statt der Text-Marke „rethink.website“
+// (Jamil, Talk qh87y3sj #5226/#5227 „Ja logo c auf der seite überall“).
 interface Props { thema?: 'besucherreise' }
 const { thema } = Astro.props;
 const reise = thema === 'besucherreise';
@@ -22,9 +23,7 @@ const isCurrent = (path?: string) => path && current === href(path);
 
 <header class="hdr" id="siteHeader">
   <div class="wrap hdr__inner">
-    {reise
-      ? <a href={href('/')} class="hdr__logo hdr__marke" aria-label={`${MARKE}, zur Startseite`}>{MARKE}</a>
-      : <a href={href('/')} class="hdr__logo" aria-label="waybuild, zur Startseite"><Logo /></a>}
+    <a href={href('/')} class="hdr__logo" aria-label="waybuild, zur Startseite"><Logo /></a>
 
     <nav class="hdr__nav" aria-label="Hauptnavigation">
       <ul>
@@ -111,7 +110,6 @@ const isCurrent = (path?: string) => path && current === href(path);
   .hdr.is-scrolled { box-shadow: var(--shadow); }
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
-  .hdr__marke { font-family: var(--font-head); font-weight: 700; font-size: 1.12rem; letter-spacing: -0.01em; color: var(--dark); }
 
   .hdr__nav { display: none; flex: 1; justify-content: center; }
   .hdr__nav > ul { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
