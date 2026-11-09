@@ -25,14 +25,16 @@ export const KUNDENREISE = {
   titel: 'Ein guter erster Eindruck allein reicht nicht aus.',
   intro: 'Das Problem ist nicht das einzelne Werkzeug, sondern das Zusammenspiel. Deshalb betrachten wir nicht nur Ihre Website, sondern den gesamten Weg Ihrer Kunden.',
   stationen: [
-    { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', leistungen: ['Website', 'Google', 'Bewertungen', 'Social Media'] },
-    { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', leistungen: ['klare Inhalte', 'Referenzen', 'Kundenstimmen'] },
+    { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', leistungen: ['Website', 'Google', 'Social Media'] },
+    { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', leistungen: ['Klare Inhalte', 'Bewertungen', 'Referenzen', 'Kundenstimmen'] },
     { name: 'Anfrage', frage: 'Wie einfach wird aus Interesse ein Kontakt?', leistungen: ['Formulare', 'Terminbuchung', 'CRM'] },
     { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', leistungen: ['Prozesse', 'Automatisierung', 'Systeme'] },
     { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', leistungen: ['Nachfassen', 'Bewertungsanfragen', 'Auswertung'] },
   ],
   ziel: 'zufriedener Kunde',
-  schluss: 'Von Anfang bis Ende. Alles aufeinander abgestimmt.',
+  schluss: 'Wo Ihre Kunden heute hängen bleiben, zeigt der Kundenreise-Check.',
+  /** Link im Schlusssatz auf den Kundenreise-Check (#check, Jamil Talk qh87y3sj #5204) */
+  schlussLink: { text: 'Kundenreise-Check', ziel: '#check' },
 };
 
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */

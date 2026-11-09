@@ -47,7 +47,7 @@ export const references: { name: string; branche: string; url?: string; text: st
 export const VAT_RATE = MWST_SATZ;
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * DAS ANGEBOT „Website as a Service“ in drei festen Monatspaketen ohne Einmalkosten
+ * DAS ANGEBOT „Website as a Service“ in drei festen Monatspaketen ohne Einrichtungskosten (Extras einmalig dazubuchbar)
  * (Jamil, Talk qh87y3sj #5056, 08.11.2026): Basis · Plus · Komplett.
  * EINZIGE Datenquelle für Namen, Preise und Inhalte: config/pakete-abo.ts (ABO_PAKETE, EINMALIG_DAZU).
  * PAKETE hier ist nur die daraus abgeleitete Kurzform für ältere Komponenten, FAQ, JSON-LD und llms.txt.

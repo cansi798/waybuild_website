@@ -161,7 +161,7 @@ const MOTIV: Record<string, string> = {
           <p class="kr-ende"><span class="kr-ende__punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
         </div>
       </div>
-      <p class="kr-schluss">{KUNDENREISE.schluss}</p>
+      <p class="kr-schluss">{KUNDENREISE.schluss.split(KUNDENREISE.schlussLink.text)[0]}<a href={KUNDENREISE.schlussLink.ziel}>{KUNDENREISE.schlussLink.text}</a>{KUNDENREISE.schluss.split(KUNDENREISE.schlussLink.text)[1]}</p>
     </div>
   </section>
   </div>
@@ -184,7 +184,7 @@ const MOTIV: Record<string, string> = {
       <div class="section-head center">
         <span class="eyebrow">Pakete</span>
         <h2 id="pakete-h" class="rule">Drei Pakete. Feste Monatspreise.</h2>
-        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Rechnung am Anfang.</p>
+        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr.</p>
       </div>
       <PaketKarten details={false} />
       <EinmaligDazu id="einmalig" />
@@ -197,7 +197,7 @@ const MOTIV: Record<string, string> = {
       <div class="section-head">
         <span class="eyebrow">Im Vergleich</span>
         <h2 id="vgl-h" class="rule">Selbst machen, Baukasten, Agentur oder waybuild?</h2>
-        <p class="lead">Fünf Fragen, die sich fast jeder Betrieb stellt.</p>
+        <p class="lead">Fünf Fragen, die bei der Wahl helfen.</p>
       </div>
       <div class="vvgl__scroll" role="region" aria-label="Vergleich nach Anbieter-Art" tabindex="0">
         <table class="vvgl">

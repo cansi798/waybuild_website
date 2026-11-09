@@ -9,7 +9,7 @@ import MobileMenu from './MobileMenu.astro';
 import { MARKE, ANLIEGEN } from '../config/startseite';
 
 // thema 'besucherreise' (neue Startseite, Jamil Talk 4753): waybuild-Logo vorerst entfernt, Name als Text,
-// Knopf mit Jamils Wortlaut „Kostenfreie Erstberatung“. Alle anderen Seiten bleiben unverändert.
+// Knopf mit Jamils Wortlaut „Kostenlose Erstberatung“. Alle anderen Seiten bleiben unverändert.
 interface Props { thema?: 'besucherreise' }
 const { thema } = Astro.props;
 const reise = thema === 'besucherreise';
@@ -98,7 +98,7 @@ const isCurrent = (path?: string) => path && current === href(path);
 <style>
   /* Kopfzeile auf ALLEN Seiten gleich (Jamil, Talk qh87y3sj #5072 + Korrektur #5085–#5089, 08.11.2026):
    * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #3a3a3a, 10,4 : 1),
-   * Hover/aktuelle Seite --paper-2 mit #006b68; Fokusrahmen #006b68. Knopf „Kostenfreie Erstberatung“ dunkles
+   * Hover/aktuelle Seite --paper-2 mit #006b68; Fokusrahmen #006b68. Knopf „Kostenlose Erstberatung“ dunkles
    * Logo-Türkis #006b68 mit Weiß (6,36 : 1), Hover #004f4c (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
   .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
   .hdr::before {

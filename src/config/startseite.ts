@@ -13,7 +13,7 @@ export const MARKE = 'rethink.website';
 
 /** Kontaktseite mit vorbelegtem Anliegen (Feld „paket“ geht in den Betreff der Anfrage, Interesse = Website, max. 60 Zeichen). */
 export const ANLIEGEN = {
-  erstberatung: { label: 'Kostenfreie Erstberatung', paket: 'Kostenfreie Erstberatung' },
+  erstberatung: { label: 'Kostenlose Erstberatung', paket: 'Kostenlose Erstberatung' },
   analyse: { label: 'Kostenlose Analyse anfordern', paket: 'Kostenlose Analyse' },
   bewerten: { label: 'Unternehmensauftritt bewerten lassen', paket: 'Unternehmensauftritt bewerten lassen' },
 };
@@ -29,7 +29,7 @@ export const HERO = {
   cta: 'Unternehmensauftritt bewerten',
   cta2: 'Unsere Denkweise kennenlernen',
   /** Hero-Animation (Jamil 4784): kleine Geschichte eines Kunden in fünf Stationen, keine Linie, kein Prozessbild */
-  stationen: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'Bearbeitung', 'Zufriedener Kunde'],
+  stationen: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'Bearbeitung', 'Betreuung'],
 };
 
 /* Abschnitt 3 „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (VERSTEHEN, Jamil 4788/4795/4796, #4988/#4989) am 09.11.2026 entfernt:
@@ -59,7 +59,7 @@ export const REFERENZEN = {
       url: 'https://www.bauwelt-handwerk.de/', urlText: 'bauwelt-handwerk.de',
       ausgang: 'Gesucht war ein Auftritt, der Leistungen, Preise und Ablauf einer Badsanierung verständlich zeigt.',
       gemacht: 'Website mit Kostenrechner, Anfrage für den Vor-Ort-Termin und Leistungsseiten, online unter eigener Domain.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 93, Barrierefreiheit 100 von 100.' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 93, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung).' },
     { name: 'Destar Lackdoktor', branche: 'Autolackiererei, Meisterbetrieb', ort: 'Norderstedt', status: 'vorschau', motiv: 'lack', bild: 'referenzen/destar',
       ausgang: 'Die bisherige Website sollte modernisiert werden, mit den vorhandenen Inhalten.',
       gemacht: 'Neue Website mit „Schaden melden“ in drei Schritten, per WhatsApp oder E-Mail.',
@@ -67,15 +67,15 @@ export const REFERENZEN = {
     { name: 'Kerim Tanrikulu', branche: 'Dolmetscher und Übersetzer für Türkisch', ort: 'Hamburg', status: 'vorschau', motiv: 'sprache', bild: 'referenzen/kerim',
       ausgang: 'Die bisherige Baukasten-Website sollte durch einen eigenen Auftritt ersetzt werden.',
       gemacht: 'Zweisprachige Website (Deutsch und Türkisch) mit Einsatzgebiet, Ablauf und Antworten auf häufige Fragen.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 95, Barrierefreiheit 100 von 100 (Vorschau).' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 95, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung) (Vorschau).' },
     { name: 'Funkelfilm', branche: 'Unternehmensfilme, Videograf', ort: 'Hamburg', status: 'vorschau', motiv: 'film', bild: 'referenzen/funkelfilm',
       ausgang: 'Die alte Website war schwer und langsam: fast 48 MB Daten schon beim Öffnen der Startseite.',
       gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 40 (alte Website) und 84 (Vorschau). Datenmenge 47,8 MB statt jetzt 1,0 MB.' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 40 (alte Website) und 84 (Vorschau). Datenmenge jetzt 1,0 MB statt 47,8 MB.' },
     { name: 'ilm me up', branche: 'Unabhängige Medienplattform für Wissen', status: 'vorschau', motiv: 'wissen', bild: 'referenzen/ilmmeup',
       ausgang: 'Ein neues Projekt brauchte einen ersten Auftritt.',
       gemacht: 'Website mit Team, Videos und häufigen Fragen, so aufbereitet, dass Google und KI-Assistenten sie gut verstehen.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 89, Barrierefreiheit 100 von 100 (Vorschau).' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 89, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung) (Vorschau).' },
   ] as Referenz[],
 };
 
@@ -139,7 +139,7 @@ export const CHECK = {
       antworten: [['Am selben Tag', 'g'], ['Am nächsten Werktag', 'g'], ['Innerhalb einer Woche', 'y'], ['Später oder ganz unterschiedlich', 'r']] },
     { id: 'bearbeitung', schritt: 'Bearbeitung', frage: 'Wo stehen Ihre Anfragen und Kundendaten?',
       antworten: [['An einem Ort, zum Beispiel in einem Programm', 'g'], ['Verteilt auf E-Mail, Handy und Zettel', 'y'], ['Vor allem im Kopf', 'r']] },
-    { id: 'zufrieden', schritt: 'Zufriedener Kunde', frage: 'Bitten Sie zufriedene Kunden nach dem Auftrag um eine Bewertung oder Empfehlung?',
+    { id: 'zufrieden', schritt: 'Betreuung', frage: 'Bitten Sie zufriedene Kunden nach dem Auftrag um eine Bewertung oder Empfehlung?',
       antworten: [['Ja, immer, mit festem Ablauf', 'g'], ['Manchmal', 'y'], ['Nie', 'r']] },
   ] as { id: string; schritt: string; frage: string; hinweis?: string; antworten: [string, Ampel | null][] }[],
   ampel: { g: 'Läuft gut', y: 'Ausbaufähig', r: 'Hier geht etwas verloren' } as Record<Ampel, string>,
@@ -174,17 +174,17 @@ export const CHECK = {
 /** Abschluss (4792) mit CTA, darunter der Claim (4793) */
 export const ABSCHLUSS = {
   titel: 'Wir übernehmen die Komplexität. Sie behalten den Fokus.',
-  text: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden entwickeln wir Lösungen, die zusammenarbeiten und Unternehmen nachhaltig unterstützen.',
+  text: 'Sie konzentrieren sich auf Ihre Arbeit. Wir sorgen dafür, dass Website, Anfrage und Betreuung zusammenpassen.',
   cta: 'Unternehmensauftritt bewerten lassen',
   unterCta: 'Kurzes Gespräch. Klare Einschätzung. Konkrete Empfehlungen.',
 };
 
 /** Claim (4793): unter dem Abschluss, als Slogan in JSON-LD und im Title */
-export const CLAIM = 'Alles aus einer Hand. Von Anfang bis Wachstum.';
+export const CLAIM = 'Von Anfang bis Wachstum.';
 
 /** Für Meta-Description, JSON-LD und llms.txt */
 export const BOTSCHAFT = {
   titel: CLAIM,
-  description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung aus einer Hand. Für kleine und mittlere Unternehmen.',
-  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden, aus einer Hand: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe, Social Media und Video auf Anfrage.',
+  description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung, aufeinander abgestimmt. Für kleine und mittlere Unternehmen.',
+  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe, Social Media und Video auf Anfrage.',
 };
