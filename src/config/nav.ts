@@ -1,7 +1,7 @@
 // Navigation mit Dropdown-Gruppen (Bauwelt-Muster): Desktop Dropdown, mobil aufklappbare Gruppen.
+// „Branchen“ entfernt (Jamil, Talk qh87y3sj #5261, 09.11.2026); die Seiten /website-fuer/ bleiben erreichbar, aber unverlinkt.
 // „Leistungen“ ist nach Säulen gruppiert (group) und wird auf dem Desktop als mehrspaltiges Panel gezeigt.
 import { leistungen, leistungAb } from './leistungen';
-import { branchen } from './branchen';
 import { SAEULEN } from './angebot';
 import type { IconName } from './site';
 
@@ -18,13 +18,6 @@ export const NAV: NavItem[] = [
           .map((l) => ({ label: l.title, path: `/leistungen/${l.slug}/`, icon: l.icon, desc: leistungAb(l), group: s.title })),
       ),
       { label: 'Alle Leistungen im Überblick', path: '/leistungen/' },
-    ],
-  },
-  {
-    label: 'Branchen',
-    children: [
-      ...branchen.map((b) => ({ label: b.name, path: `/website-fuer/${b.slug}/`, icon: 'globe' as IconName, desc: b.claim })),
-      { label: 'Alle Branchen', path: '/website-fuer/' },
     ],
   },
   { label: 'Preise', path: '/preise/' },
