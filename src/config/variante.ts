@@ -9,9 +9,9 @@
 export const V_HERO = {
   /** H1 im Hero, Variante E von Jamil (Talk qh87y3sj #5129). Title und Meta-Description bleiben eigenständig (index.astro). */
   titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
-  /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5163, 09.11.2026; nur „Wir entwickelt“ → „Wir entwickeln“). Ersetzt seit #5165 die
-   *  frühere Zeile „Für Gründer und Unternehmen, die neu durchstarten wollen.“ Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Website, Online-Anfrage und Auftragsverwaltungssoftware: Wir entwickeln alles individuell nach Ihren Prozessen und verknüpfen es, damit Anfragen zukünftig nicht verloren gehen.',
+  /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5174, 09.11.2026, „direkt umsetzen“). Ersetzt den Satz „Website, Online-Anfrage und
+   *  Auftragsverwaltungssoftware: …“ (#5163). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
+  unter: 'Von der digitalen Sichtbarkeit über die Anfrage bis zur Bearbeitung und Betreuung sorgen wir dafür, dass alle Bausteine nahtlos zusammenspielen.',
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
