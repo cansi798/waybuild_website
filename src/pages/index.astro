@@ -125,10 +125,12 @@ const MOTIV: Record<string, string> = {
 
   <!-- Kundenreise als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
        Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
-       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“. Qualitätsprüfung (Jamil #5204):
-       am PC (ab 1000 px) stehen die Leistungen immer offen da, Fragen gleich hoch (Subgrid); unter 1000 px setzt das Skript in jede
-       Überschrift einen Knopf (aria-expanded) zum Aufklappen per Antippen. Aufbau beim ersten Sichtkontakt und Knöpfe in
-       src/scripts/kundenreise.ts; ohne JS oder bei reduzierter Bewegung steht alles offen da (Überschriften ohne Knopf).
+       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“; Fragen am PC gleich hoch (Subgrid).
+       Seit #5275 (09.11.2026, Sicherung vor-kundenreise-antworten-20261109): keine Leistungen mehr, die Fragen stellt sich der
+       Besucher; unter jeder Frage ein kleines Symbol (Glühbirne, button aria-expanded/aria-controls, im HTML hidden), das die
+       Antwort im besten Fall aufklappt (eine zur Zeit, Punkt auf der Kurve hebt sich hervor). Das Skript src/scripts/kundenreise.ts
+       zeigt die Symbole und klappt die Antworten zu; ohne JS oder bei reduzierter Bewegung stehen alle Antworten offen da.
+       Am Ende „Wir sind dafür der richtige Ansprechpartner.“ + „Jetzt starten“ (Erstberatung, gleiches Ziel wie der Hero-Knopf).
        Bleibt der Abschnitt, der über den stehenden Hero gleitet (.stapel-paar, H2-id kontrast-h unverändert). -->
   <section class="section vreise" id="kundenreise" aria-labelledby="kontrast-h">
     <div class="wrap kr">
@@ -151,12 +153,20 @@ const MOTIV: Record<string, string> = {
                 <div class="kr-kopf">
                   <h3 class="kr-name" id={`kr-k-${i}`}>{st.name}</h3>
                   <p class="kr-frage" id={`kr-f-${i}`}>{st.frage}</p>
-                  <span class="kr-zeichen" aria-hidden="true">Leistungen<span class="kr-plus"></span></span>
                 </div>
                 <div class="kr-mehr">
-                  <ul class="kr-leistungen" id={`kr-l-${i}`} aria-labelledby={`kr-k-${i}`}>
-                    {st.leistungen.map((l, j) => <li style={`--j:${j}`}>{l}</li>)}
-                  </ul>
+                  <button type="button" class="kr-symbol" aria-expanded="true" aria-controls={`kr-a-${i}`} aria-describedby={`kr-f-${i}`} hidden>
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+                    <span class="sr-only">{KUNDENREISE.antwortTitel}: {st.name}</span>
+                  </button>
+                  <div class="kr-antwort" id={`kr-a-${i}`}>
+                    <div class="kr-antwort__innen">
+                      <div class="kr-antwort__kasten">
+                        <p class="kr-antwort__titel">{KUNDENREISE.antwortTitel}</p>
+                        <p class="kr-antwort__text">{st.antwort}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </li>
             ))}
@@ -164,9 +174,13 @@ const MOTIV: Record<string, string> = {
           <p class="kr-ende"><span class="kr-ende__punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
         </div>
       </div>
-      <!-- Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz mit Check-Link der Knopf aus dem Hero -->
-      <div class="v-knopfe kr-cta">
-        <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
+      <!-- Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5275, 09.11.2026): Satz + Knopf „Jetzt starten“ (Erstberatung, wie der Hero-Knopf);
+           ersetzt den Hero-Knopf an dieser Stelle (#5211–#5213) -->
+      <div class="kr-schluss">
+        <p class="kr-schluss__satz">{KUNDENREISE.schluss}</p>
+        <div class="v-knopfe kr-cta">
+          <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{KUNDENREISE.knopf}</a>
+        </div>
       </div>
     </div>
   </section>

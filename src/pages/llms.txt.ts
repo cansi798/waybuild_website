@@ -27,7 +27,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Startseite: ${V_HERO.titel.replace(/\.$/, '')}`,
     `${V_HERO.titel} ${V_HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} ${st.leistungen.join(', ')})`).join('; ')}.`,
+    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Im besten Fall: ${st.antwort})`).join('; ')}. ${KUNDENREISE.schluss}`,
     `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} ${VORGEHEN.ueberleitung} ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.wort}: ${s.text}${s.betont ? ` ${s.betont}` : ''}${s.hinweis ? ` ${s.hinweis}` : ''}`).join(' ')}`,
     `- ${PRINZIPIEN.titel} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
     `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,

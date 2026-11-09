@@ -20,14 +20,16 @@
  * Kurve (SVG 1000 × 160, preserveAspectRatio none, Strich per vector-effect gleich dick, darunter eine zarte Fläche); die Punkte
  * sitzen genau auf der Kurve (--y aus index.astro), rechts oben endet sie bei „zufriedener Kunde“. Unter 1000 px untereinander,
  * links eine senkrechte Linie (hell → dunkel), Punkte daran.
- * Qualitätsprüfung (Jamil, Talk qh87y3sj #5204, 09.11.2026): am PC stehen die Leistungen immer offen da (kein „Leistungen +“,
- * kein Knopf), Name, Frage und Leistungen liegen per Subgrid in drei gemeinsamen Zeilen über alle fünf Stationen, damit die Fragen
- * gleich hoch sind (ohne Subgrid: Frage mindestens drei Zeilen); beliebig viele Leistungen je Station.
- * Unter 1000 px mit JS (.kr-js, src/scripts/kundenreise.ts) zu, bis die Station aufgeht (.ist-offen: Antippen, mit Maus auch
- * Darüberfahren oder Tastatur-Fokus; Knopf mit aria-expanded), dann klappen sie auf. Ohne JS und bei reduzierter Bewegung offen.
+ * Name, Frage und Antwort-Bereich liegen am PC per Subgrid in drei gemeinsamen Zeilen über alle fünf Stationen, damit die Fragen
+ * gleich hoch sind (ohne Subgrid: Frage mindestens drei Zeilen; Qualitätsprüfung Jamil #5204).
+ * Antworten statt Leistungen (Jamil, Talk qh87y3sj #5275, 09.11.2026; Sicherung vor-kundenreise-antworten-20261109): unter jeder
+ * Frage ein rundes Symbol (Glühbirne, 40 px, .kr-symbol), das die Antwort im besten Fall aufklappt. Mit JS und ohne reduzierte
+ * Bewegung (.kr-klapp vom Skript) sind alle Antworten zu, je eine geht per Klick/Antippen/Enter auf (.ist-offen, aria-expanded),
+ * der Punkt dieser Station auf der Kurve wird gefüllt und größer. Ohne JS oder bei reduzierter Bewegung: kein Symbol, alle
+ * Antworten offen (Kasten mit kleiner Überschrift).
  * Aufbau beim ersten Sichtkontakt (.kr-bereit vom Skript, dann .ist-los): Kurve bzw. Linie zeichnet sich von links bzw. oben
- * (linear, --kr-zug), jede Station blendet ein, wenn die Linie sie erreicht (--kr-t); am Handy ohne Vorlauf und schneller, damit
- * die Karte beim Hereinscrollen nie leer ist. Endzustand = Zustand ohne JS.
+ * (linear, --kr-zug), jede Station blendet ein, wenn die Linie sie erreicht (--kr-t); danach pulsiert ihr Symbol dreimal sanft
+ * (nicht dauernd). Am Handy ohne Vorlauf und schneller, damit die Karte beim Hereinscrollen nie leer ist.
  * Farben wie der Hero: Linie #00807b → #006b68; Schrift #006b68 (6,4 : 1 auf Weiß), Fragen --ink-soft (7,5 : 1). */
 .section.vreise { padding-block: clamp(40px, 7vh, 88px); }
 .kr { text-align: center; }
@@ -48,32 +50,44 @@
 .kr-station + .kr-station::before { content: ''; position: absolute; left: 0; top: calc(var(--kr-band) * -1); bottom: 0; border-left: 1px dashed #cfe2e0; }
 .kr-punkt { position: absolute; z-index: 1; left: 50%; top: calc(var(--kr-band) * (var(--y) - 1)); width: 18px; height: 18px; margin: -9px 0 0 -9px;
   border-radius: 50%; background: var(--white); border: 3px solid var(--kr-linie); box-shadow: 0 0 0 5px rgb(0 128 123 / 12%); transition: background-color 0.3s ease; }
-.kr-station.ist-offen .kr-punkt { background: var(--kr-linie); }
+.kr-punkt { transition: background-color 0.3s ease, scale 0.3s ease, box-shadow 0.3s ease; }
+.kr-station.ist-offen .kr-punkt { background: var(--kr-linie); scale: 1.3; box-shadow: 0 0 0 7px rgb(0 128 123 / 22%); }
 .kr-kopf { position: relative; display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 8px; justify-items: center; width: 100%; }
 .kr-name { margin: 0; font-size: clamp(1.08rem, 1.4vw, 1.28rem) !important; line-height: 1.25; letter-spacing: -0.01em; hyphens: manual; }
-.kr-knopf { margin: 0; padding: 0; border: 0; background: none; font: inherit; letter-spacing: inherit; color: var(--accent-ink); text-align: inherit; cursor: pointer; }
-.kr-knopf::after { content: ''; position: absolute; inset: -8px -6px; border-radius: 14px; }
-.kr-knopf:focus-visible { outline: none; }
-.kr-knopf:focus-visible::after { outline: 3px solid var(--accent-ink); outline-offset: 0; }
 .kr-frage { margin: 0; max-width: 28ch; font-size: 0.98rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 @supports not (grid-template-rows: subgrid) { .kr-frage { min-height: 4.8em; } }
-.kr-zeichen { display: none; }
-.kr-plus { position: relative; flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #9fcfcc; background: var(--white); transition: background-color 0.3s ease, border-color 0.3s ease; }
-.kr-plus::before, .kr-plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 2px; margin: -1px 0 0 -5px; border-radius: 1px; background: var(--accent-ink); transition: transform 0.3s ease, background-color 0.3s ease; }
-.kr-plus::after { transform: rotate(90deg); }
-.ist-offen .kr-plus { background: var(--kr-linie); border-color: var(--kr-linie); }
-.ist-offen .kr-plus::before, .ist-offen .kr-plus::after { background: var(--white); }
-.ist-offen .kr-plus::after { transform: rotate(0deg); }
-.kr-mehr { display: grid; grid-template-rows: 1fr; align-self: start; width: 100%; margin-top: 14px; }
-.kr-leistungen { min-height: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 6px; }
-.kr-leistungen li { padding: 5px 12px; border-radius: 999px; background: #eaf5f4; border: 1px solid #cfe5e3; font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: var(--ink); }
+.kr-mehr { display: flex; flex-direction: column; align-items: center; gap: 10px; align-self: start; width: 100%; margin-top: 14px; }
+/* Symbol: Glühbirne in einem Kreis; zu = weiß mit Türkis (#006b68, 6,4 : 1), offen = Türkis #00807b mit Weiß (4,8 : 1) */
+.kr-symbol { display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; margin: 0; padding: 0; border-radius: 50%;
+  border: 1.5px solid #8fc7c3; background: var(--white); color: var(--accent-ink); cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease; }
+.kr-symbol[hidden] { display: none; }
+.kr-symbol svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.kr-symbol:hover { border-color: var(--kr-linie); transform: translateY(-1px); }
+.kr-symbol:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
+.kr-symbol[aria-expanded="true"] { background: var(--kr-linie); border-color: var(--kr-linie); color: var(--white); }
+.kr-antwort { width: 100%; }
+.kr-antwort__kasten { padding: 12px 14px; border-radius: 14px; background: #f1f8f7; border: 1px solid #d5e8e6; text-align: left; }
+.kr-antwort__titel { margin: 0 0 4px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4; color: var(--accent-ink); }
+.kr-antwort__text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: var(--ink); text-wrap: pretty; }
+/* Mit Symbol (.kr-klapp): Antworten zu, die offene klappt weich auf (Zeilenhöhe 0fr → 1fr, Inhalt blendet ein) */
+.kr-klapp .kr-mehr { gap: 0; }
+.kr-klapp .kr-antwort { display: grid; grid-template-rows: 0fr; visibility: hidden;
+  transition: grid-template-rows 0.4s ease, margin-top 0.4s ease, visibility 0s linear 0.4s; }
+.kr-klapp .kr-antwort__innen { min-height: 0; overflow: hidden; opacity: 0; transform: translateY(-4px); transition: opacity 0.35s ease, transform 0.35s ease; }
+.kr-klapp .ist-offen .kr-antwort { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.kr-klapp .ist-offen .kr-antwort__innen { opacity: 1; transform: none; transition-delay: 0.08s; }
+.kr-klapp .ist-offen .kr-antwort { margin-top: 10px; }
 .kr-ende { position: absolute; top: 0; right: 0; margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; line-height: 1.3; color: var(--accent-ink); text-align: right; }
 .kr-ende__punkt { position: absolute; right: -9px; top: calc(var(--kr-band) * var(--kr-ende) - 9px); width: 18px; height: 18px; border-radius: 50%;
   background: #006b68; box-shadow: 0 0 0 6px rgb(0 107 104 / 14%); }
 /* Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz der Knopf aus dem Hero
  * (HERO_KNOPF, gleiches Ziel), gleiche Form, Größe und Takt (v-glow/v-glanz), nur für den hellen Grund umgekehrt: Türkis #006b68,
  * Schrift weiß (6,36 : 1), Lichtring in Türkis, Glanz weiß 12 % (Schrift darunter ≥ 4,5 : 1). Reduzierte Bewegung: ruhig. */
-.kr-cta { justify-content: center; margin-top: clamp(4px, 1vw, 12px); }
+/* Schlusszeile davor (#5275): „Wir sind dafür der richtige Ansprechpartner.“ in der Überschriften-Schrift, dann „Jetzt starten“ */
+.kr-schluss { margin-top: clamp(4px, 1vw, 12px); }
+.kr-schluss__satz { max-width: 30ch; margin: 0 auto 18px; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.18rem, 2vw, 1.45rem); line-height: 1.4; color: var(--ink); text-wrap: balance; }
+.kr-cta { justify-content: center; }
 .kr-cta .kr-leucht { position: relative; isolation: isolate; overflow: hidden; flex: 0 0 auto; max-width: none; white-space: nowrap; min-height: 60px;
   padding: 1em 2.3em; font-size: clamp(1.08rem, 1.6vw, 1.2rem); background: var(--accent-ink); color: var(--white);
   box-shadow: 0 12px 30px -14px rgb(0 40 38 / 55%); animation: kr-glow 3s ease-out 1s infinite; }
@@ -102,16 +116,7 @@
   .kr-punkt { left: 11px; top: 12px; }
   .kr-kopf { grid-row: auto; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
   .kr-frage { max-width: none; }
-  .kr-leistungen { justify-content: flex-start; }
-  /* Handy: Knopf (vom Skript) mit „Leistungen +“, Leistungen klappen beim Antippen auf */
-  .kr-js .kr-zeichen { display: inline-flex; align-items: center; gap: 8px; margin-top: 2px; font-size: 0.82rem; font-weight: 650; letter-spacing: 0.02em; color: var(--accent-ink); }
-  .kr-js .kr-leistungen { visibility: hidden; transition: visibility 0s linear 0.45s; }
-  .kr-js .ist-offen .kr-leistungen { visibility: visible; transition-delay: 0s; }
-  .kr-js .kr-leistungen li { opacity: 0; filter: blur(6px); transform: translateY(6px); transition: opacity 0.45s ease, filter 0.45s ease, transform 0.45s ease; }
-  .kr-js .ist-offen .kr-leistungen li { opacity: 1; filter: blur(0); transform: none; transition-delay: calc(var(--j) * 70ms); }
-  .kr-js .kr-mehr { grid-template-rows: 0fr; margin-top: 0; transition: grid-template-rows 0.4s ease, margin-top 0.4s ease; }
-  .kr-js .ist-offen .kr-mehr { grid-template-rows: 1fr; margin-top: 12px; }
-  .kr-js .kr-leistungen { overflow: hidden; }
+  .kr-mehr { align-items: flex-start; margin-top: 10px; }
   .kr-ende { position: relative; margin-top: 20px; padding-left: 36px; text-align: left; }
   .kr-ende__punkt { right: auto; left: 2px; top: 50%; }
 }
@@ -124,6 +129,9 @@
 .kr-bereit.ist-los .kr-weg::before { transform: none; transition: transform var(--kr-zug) linear var(--kr-start); }
 .kr-bereit.ist-los .kr-kopf { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--kr-t) both; }
 .kr-bereit.ist-los .kr-mehr { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--kr-t) + 180ms) both; }
+.kr-bereit.ist-los .kr-symbol { animation: kr-puls 1.5s ease-out calc(var(--kr-t) + 950ms) 3; }
+.kr-bereit.ist-los.kr-gesehen .kr-symbol { animation: none; } /* nach dem ersten Öffnen kein Pulsieren mehr */
+@keyframes kr-puls { 0% { box-shadow: 0 0 0 0 rgb(0 128 123 / 45%); } 70%, 100% { box-shadow: 0 0 0 12px rgb(0 128 123 / 0%); } }
 .kr-bereit.ist-los .kr-punkt { animation: kr-punkt 650ms cubic-bezier(0.3, 1.4, 0.5, 1) calc(var(--kr-t) - 150ms) both; }
 .kr-bereit.ist-los .kr-ende { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--kr-start) + var(--kr-zug)) both; }
 @keyframes kr-punkt { from { transform: scale(0); } to { transform: scale(1); } }

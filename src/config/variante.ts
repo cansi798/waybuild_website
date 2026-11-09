@@ -19,21 +19,27 @@ export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
 
 /** Abschnitt direkt nach dem Hero „Kundenreise“ als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182: „wirkt wie ein Arbeitsprozess,
  *  muss eine Customer Journey sein“, Variante B #5184, Text #5185, Plan „ok“ #5187, 09.11.2026). Ersetzt das „Zusammenspiel“ mit
- *  sieben Kacheln (#5176–#5179; Sicherung davor: Branch vor-kundenreise-20261109). Überschrift bleibt, Fragen und Leistungen
- *  wörtlich von Jamil. ziel = kleine Beschriftung am Ende der Kurve. Nie „aus einer Hand“. */
+ *  sieben Kacheln (#5176–#5179; Sicherung davor: Branch vor-kundenreise-20261109). Überschrift bleibt, Fragen wörtlich von Jamil.
+ *  Seit #5275 (09.11.2026, „ohne ok“; Sicherung vor-kundenreise-antworten-20261109): keine Leistungen mehr unter den Fragen, die
+ *  Fragen stellt sich der Besucher; je Station ein kleines Symbol, das die „perfekte Antwort“ (antwort = Optimalzustand, Sie-Form)
+ *  aufklappt; am Ende schluss + knopf. ziel = kleine Beschriftung am Ende der Kurve. Nie „aus einer Hand“. */
 export const KUNDENREISE = {
   titel: 'Ein guter erster Eindruck allein reicht nicht aus.',
   intro: 'Das Problem ist nicht das einzelne Werkzeug, sondern das Zusammenspiel. Deshalb betrachten wir nicht nur Ihre Website, sondern den gesamten Weg Ihrer Kunden.',
   stationen: [
-    { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', leistungen: ['Website', 'Google', 'Social Media'] },
-    { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', leistungen: ['Klare Inhalte', 'Bewertungen', 'Referenzen', 'Kundenstimmen'] },
-    { name: 'Anfrage', frage: 'Wie einfach wird aus Interesse ein Kontakt?', leistungen: ['Formulare', 'Terminbuchung', 'CRM'] },
-    { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', leistungen: ['Prozesse', 'Automatisierung', 'Systeme'] },
-    { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', leistungen: ['Nachfassen', 'Bewertungsanfragen', 'Auswertung'] },
+    { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', antwort: 'Wer nach Ihrer Leistung sucht, findet Sie bei Google, auf Karten und in sozialen Medien – und landet auf einer Website, die überzeugt.' },
+    { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', antwort: 'Klare Inhalte, echte Bewertungen und Beispiele Ihrer Arbeit zeigen auf einen Blick, warum man bei Ihnen richtig ist.' },
+    { name: 'Anfrage', frage: 'Wie einfach wird aus Interesse ein Kontakt?', antwort: 'Kontakt aufnehmen dauert nur einen Moment: per Formular, Terminbuchung oder Anruf – und jede Anfrage kommt bei der richtigen Person an.' },
+    { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', antwort: 'Anfragen werden zügig und verlässlich beantwortet, wiederkehrende Schritte laufen automatisch.' },
+    { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', antwort: 'Nach dem Auftrag bleiben Sie in Kontakt, bitten zur passenden Zeit um eine Bewertung und sehen, was funktioniert.' },
   ],
+  /** Beschriftung des Symbols (Screenreader) und kleine Überschrift über jeder Antwort */
+  antwortTitel: 'So sieht es im besten Fall aus',
   ziel: 'zufriedener Kunde',
-  /* Schlusssatz mit Link auf den Kundenreise-Check (#5204) am 09.11.2026 entfernt, ohne Ersatztext; dort steht jetzt der Knopf
-   * HERO_KNOPF zur Erstberatung (Jamil, Talk qh87y3sj #5211–#5213, Check gelöscht). */
+  /** Abschluss (#5275): Satz + Knopf zur Erstberatung (gleiches Ziel wie der Hero-Knopf). Ersetzt den Hero-Knopf an dieser Stelle
+   *  (#5211–#5213; davor Schlusssatz mit Link auf den gelöschten Kundenreise-Check #5204). */
+  schluss: 'Wir sind dafür der richtige Ansprechpartner.',
+  knopf: 'Jetzt starten',
 };
 
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */
