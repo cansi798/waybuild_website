@@ -11,6 +11,9 @@ export const V_HERO = {
   titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
   /** Unterzeile im Hero, Wortlaut von Jamil (Talk qh87y3sj #5099–#5101, neu #5121–#5124). Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
   unter: 'Für Gründer und Unternehmen, die neu durchstarten wollen.',
+  /** Zweite Zeile unter der Unterzeile: was wir technisch übernehmen. Wortlaut von Jamil (Talk qh87y3sj #5163, 09.11.2026, Variante „2“ = zusätzlich
+   *  unter der alten Zeile; nur „Wir entwickelt“ → „Wir entwickeln“ korrigiert). */
+  leistung: 'Website, Online-Anfrage und Auftragsverwaltungssoftware: Wir entwickeln alles individuell nach Ihren Prozessen und verknüpfen es, damit Anfragen zukünftig nicht verloren gehen.',
 };
 
 /** Vier Vorteile unten im ersten Bildschirm (Jamil, Talk qh87y3sj #5097, gekürzt #5121–#5124): je EINE Zeile, kleines
