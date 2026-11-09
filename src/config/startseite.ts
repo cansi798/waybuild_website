@@ -120,16 +120,15 @@ export const VERLASSEN = {
 /* Kundenreise-Check (CHECK, Typ Ampel; Jamil 4835) am 09.11.2026 von der Startseite entfernt (Jamil, Talk qh87y3sj #5211–#5213),
  * samt Komponente start/Check.astro und ANLIEGEN.analyse (nur dort genutzt). Sicherung: Branch vor-runde2-20261109. */
 
-/** Abschluss (4792) mit CTA, darunter der Claim (4793) */
+/** Claim (4793): seit 09.11.2026 große Überschrift des Abschlusses (Jamil, Talk qh87y3sj #5290), als Slogan in JSON-LD und im Title */
+export const CLAIM = 'Von Anfang bis Wachstum.';
+
+/** Abschluss (4792): Überschrift = Claim, darunter CTA. Alte Überschrift + Absatz entfernt (Jamil #5290). */
 export const ABSCHLUSS = {
-  titel: 'Wir übernehmen die Komplexität. Sie behalten den Fokus.',
-  text: 'Sie konzentrieren sich auf Ihre Arbeit. Wir sorgen dafür, dass Website, Anfrage und Betreuung zusammenpassen.',
+  titel: CLAIM,
   cta: 'Unternehmensauftritt bewerten lassen',
   unterCta: 'Kurzes Gespräch. Klare Einschätzung. Konkrete Empfehlungen.',
 };
-
-/** Claim (4793): unter dem Abschluss, als Slogan in JSON-LD und im Title */
-export const CLAIM = 'Von Anfang bis Wachstum.';
 
 /** Für Meta-Description, JSON-LD und llms.txt */
 export const BOTSCHAFT = {

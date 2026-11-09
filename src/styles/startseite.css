@@ -63,15 +63,10 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 .verlassen__liste li { font-family: var(--font-head); font-size: clamp(1.6rem, 4.6vw, 3rem); font-weight: 650; line-height: 1.15; letter-spacing: -0.02em; color: var(--white); }
 .verlassen__liste li.ist-letzt { color: var(--accent-light); }
 
-/* ── Claim unter dem Abschluss ── */
-.claim { display: grid; gap: 6px; margin: clamp(48px, 7vw, 80px) 0 0; padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--line); width: 100%; max-width: 640px; font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.45rem); font-weight: 650; color: var(--dark); }
-/* Marke über dem Claim: Logo C statt Text „rethink.website“ (Jamil, Talk qh87y3sj #5226/#5227 „überall“) */
-.claim__marke { justify-self: center; --logo-h: 24px; }
-
 /* ── A9 · Abschluss: viel Weißraum, keine Animation ── */
 .abschluss { padding-block: clamp(96px, 14vw, 180px); }
 .abschluss__innen { display: grid; justify-items: center; text-align: center; max-width: 820px; }
-.abschluss__titel { font-size: clamp(1.9rem, 4.6vw, 3.2rem) !important; line-height: 1.14 !important; letter-spacing: -0.025em; margin-bottom: 0.8em !important; }
+.abschluss__titel { font-size: clamp(1.9rem, 4.6vw, 3.2rem) !important; line-height: 1.14 !important; letter-spacing: -0.025em; margin-bottom: 1.1em !important; }
 .abschluss__text { margin: 0 0 0.4em; font-size: clamp(1.05rem, 1.8vw, 1.2rem); line-height: 1.7; color: var(--ink-soft); }
 .abschluss__text--stark { margin-bottom: 1.8em; font-weight: 650; color: var(--dark); }
 .abschluss__unter { margin: 18px 0 0; font-family: var(--font-head); font-weight: 600; color: var(--accent-ink); }
@@ -80,7 +75,6 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 }
 .bs-gross-unter { font-family: var(--font-head); font-size: clamp(1.2rem, 2.6vw, 1.75rem); font-weight: 600; line-height: 1.35; color: var(--accent-ink); margin: 0 0 1em; }
 .bs--dunkel .bs-gross-unter { color: var(--accent-light); }
-.abschluss__text--ruhig { max-width: 46ch; margin-bottom: 1.8em; }
 
 /* ── Referenzen (08.11.2026 mit Namen, Jamil #4932): Karte mit Bild der Kunden-Website oben, Etikett Online/Vorschau ── */
 .refs4 { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 20px; }

@@ -47,8 +47,7 @@ import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
 import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
-import { ANLIEGEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM } from '../config/startseite';
-import Logo from '../components/Logo.astro';
+import { ANLIEGEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 
@@ -331,14 +330,12 @@ const MOTIV: Record<string, string> = {
 
   <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 auf Schritt 1 von „So gehen wir vor“ (Jamil #5188/#5190) -->
 
-  <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
+  <!-- Abschluss (Jamil 4792): Claim „Von Anfang bis Wachstum.“ als Überschrift oben, alte Überschrift, Absatz, Linie, Logo und Schlusszeile entfernt (Jamil, Talk qh87y3sj #5290) -->
   <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">
     <div class="wrap abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
-      <p class="abschluss__text abschluss__text--ruhig">{ABSCHLUSS.text}</p>
       <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>
       <p class="abschluss__unter">{ABSCHLUSS.unterCta}</p>
-      <p class="claim"><span class="claim__marke"><Logo /></span>{CLAIM}</p>
     </div>
   </section>
 </BaseLayout>

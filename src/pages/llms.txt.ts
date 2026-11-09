@@ -8,7 +8,7 @@ import { leistungenNach } from '../config/leistungen';
 import { SAEULEN, NETTO_HINWEIS } from '../config/angebot';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { ABSCHLUSS, CLAIM, BOTSCHAFT } from '../config/startseite';
+import { CLAIM, BOTSCHAFT } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH, ZEITLEISTE } from '../config/variante';
 import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
 
@@ -32,7 +32,6 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${PRINZIPIEN.titel} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
     `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
-    `- ${ABSCHLUSS.titel} ${ABSCHLUSS.text}`,
     `- Leitsatz: ${CLAIM}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
