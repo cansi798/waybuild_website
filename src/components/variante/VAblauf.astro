@@ -3,9 +3,10 @@
 // Aus archiv/variante-firma-20261108/components/VAblauf.astro zurückgeholt (Jamil #5061/#5062, 08.11.2026), Teil der
 // Startseite oben. „Was Sie beitragen“ (#beitrag, BEITRAG) samt Rechtshinweis am 09.11.2026 entfernt (Jamil, Talk qh87y3sj
 // #5211–#5213); der Rechtshinweis RECHT (pakete-abo.ts) steht weiter auf /preise/ unter den Paketen.
-// Kartenstapel (Jamil, Talk qh87y3sj #5214, 09.11.2026): jeder Schritt eine Karte; beim Scrollen gleitet die nächste über die
-// vorige (nur CSS position: sticky mit kleinem Versatz je Karte, kein Einrasten, kein Scroll-Kapern). Ohne JS (html.js fehlt)
-// oder bei reduzierter Bewegung: normale Liste untereinander.
+// Kartenstapel (Jamil, Talk qh87y3sj #5214, 09.11.2026), echter Stapel seit #5287 (09.11.2026, Sicherung
+// vor-ablauf-stapel2-20261109): zuerst ist nur Tag 1 zu sehen; beim Scrollen schiebt sich Tag 2 genau darüber und deckt Tag 1
+// ganz zu, dann Tag 3 und so weiter. Alle Karten stehen an derselben Stelle (position: sticky, gleiches top, gleiche Höhe,
+// deckend weiß), kein Einrasten, kein Scroll-Kapern. Ohne JS (html.js fehlt) oder bei reduzierter Bewegung: normale Liste.
 import { ZEITLEISTE, ZEITLEISTE_UNTERTITEL } from '../../config/variante';
 ---
 
@@ -40,24 +41,52 @@ import { ZEITLEISTE, ZEITLEISTE_UNTERTITEL } from '../../config/variante';
   .vzeit h3 { margin: 0 0 4px; font-size: 1.15rem; }
   .vzeit p { margin: 0; line-height: 1.7; color: var(--ink-soft); }
 
-  /* Stapel (nur mit JS und ohne reduzierte Bewegung): jede Karte bleibt unter der Kopfzeile stehen, je Schritt 12 px tiefer,
-     die nächste gleitet darüber. Gleich hohe Karten (min-height), damit keine frühere Karte unten hervorschaut. Abstand über
-     jeder Karte (margin-top, nicht unten: ein unterer Rand würde die Karten zu früh lösen) = Scrollweg je Schritt; der leere
-     Block am Listenende hält den fertigen Stapel kurz stehen. Auf breiten Bildschirmen bleibt die Überschrift links stehen. */
+  /* Stapel (nur mit JS und ohne reduzierte Bewegung, Jamil #5287):
+     - Alle Karten gleich hoch (--karte-h misst das Skript unten: höchste Karte, mindestens 40 % des sichtbaren Bereichs
+       zwischen Kopfzeile und Handy-Leiste --stapel-unten, damit nie zwei Karten ganz zu sehen sind) und mit demselben top,
+       etwas über der Mitte des sichtbaren Bereichs.
+       Die nächste Karte (höherer z-index, deckend weiß) liegt damit genau auf der vorigen: von Tag 1 bleibt nichts sichtbar.
+     - Scrollweg je Karte = Kartenhöhe + Abstand darüber (margin-top, nicht unten: ein unterer Rand würde die Karten zu früh
+       lösen) = rund 78 % der Bildschirmhöhe. Der leere Block am Listenende hält die letzte Karte kurz stehen.
+     - Breite Bildschirme: Überschrift links bleibt auf Höhe der Karte stehen. Handy: Überschrift oben, Stapel darunter. */
   @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .vzeit-raster {
+      --sichtbar: calc(100svh - var(--kopf-gesamt, 73px) - var(--stapel-unten, 0px));
+      --karte-min: max(11rem, calc(var(--sichtbar) * 0.4));
+      --karte-oben: calc(var(--kopf-gesamt, 73px) + max(16px, (var(--sichtbar) - var(--karte-h, var(--karte-min))) * 0.42));
+    }
     :global(html.js) .vzeit { gap: 0; }
-    :global(html.js) .vzeit::after { content: ''; display: block; height: clamp(40px, 10vh, 100px); }
+    :global(html.js) .vzeit::after { content: ''; display: block; height: clamp(60px, 22svh, 220px); }
     :global(html.js) .vzeit__karte {
-      position: sticky; top: calc(var(--kopf-gesamt, 73px) + 16px + var(--i) * 12px);
-      min-height: 10.5rem; align-content: center; margin-top: clamp(48px, 16vh, 150px);
-      box-shadow: 0 -10px 30px -14px rgb(0 47 45 / 30%), 0 1px 2px rgb(0 47 45 / 6%);
+      position: sticky; top: var(--karte-oben); z-index: calc(var(--i) + 1);
+      box-sizing: border-box; min-height: var(--karte-h, var(--karte-min)); align-content: center;
+      grid-template-columns: 48px 1fr; column-gap: clamp(16px, 2.4vw, 26px); padding: clamp(22px, 3.4vw, 40px);
+      margin-top: max(48px, calc(78svh - var(--karte-h, var(--karte-min))));
+      box-shadow: 0 16px 36px -26px rgb(0 47 45 / 22%), 0 1px 2px rgb(0 47 45 / 4%);
     }
     :global(html.js) .vzeit__karte:first-child { margin-top: 0; }
-    @media (max-width: 719px) { :global(html.js) .vzeit__karte { min-height: 11.25rem; } }
-    @media (max-width: 359px) { :global(html.js) .vzeit__karte { min-height: 13rem; } }
+    :global(html.js) .vzeit__nr { width: 48px; height: 48px; font-size: 1.2rem; }
+    :global(html.js) .vzeit h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); margin-bottom: 6px; }
+    :global(html.js) .vzeit p { font-size: clamp(1rem, 1.3vw, 1.1rem); }
     @media (min-width: 960px) {
       :global(html.js) .vzeit-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 5vw, 80px); align-items: start; }
-      :global(html.js) .vzeit-kopf { position: sticky; top: calc(var(--kopf-gesamt, 73px) + 24px); margin-bottom: 0; }
+      :global(html.js) .vzeit-kopf { position: sticky; top: var(--karte-oben); margin-bottom: 0; }
     }
   }
 </style>
+
+<script>
+  // Gleiche Höhe für alle Karten (höchste Karte zählt), damit keine frühere Karte unten hervorschaut. Bei Größenänderung und nach dem Laden der Schriften neu gemessen.
+  const messen = () => {
+    document.querySelectorAll<HTMLElement>('.vzeit-raster').forEach((raster) => {
+      raster.style.removeProperty('--karte-h');
+      const karten = Array.from(raster.querySelectorAll<HTMLElement>('.vzeit__karte'));
+      const h = Math.ceil(Math.max(0, ...karten.map((k) => k.getBoundingClientRect().height)));
+      if (h > 0) raster.style.setProperty('--karte-h', `${h}px`);
+    });
+  };
+  messen();
+  let wartet = false;
+  window.addEventListener('resize', () => { if (!wartet) { wartet = true; requestAnimationFrame(() => { wartet = false; messen(); }); } }, { passive: true });
+  document.fonts?.ready.then(messen);
+</script>
