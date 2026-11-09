@@ -15,6 +15,9 @@ const ICONS: IconName[] = ['pen', 'search', 'shield', 'phone', 'euro'];
 const icon = (i: number): IconName => ICONS[i] ?? 'check';
 const WIR = VERGLEICH.spalten.length - 1;
 const n = VERGLEICH.zeilen.length;
+// Anzahl im Wisch-Hinweis als Wort (Stil: „alle vier“)
+const ZAHLWORT = ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn'];
+const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalten.length);
 ---
 
 <div class="vk__scroll" role="region" aria-label="Vergleich nach Anbieter-Art" tabindex="0">
@@ -50,7 +53,7 @@ const n = VERGLEICH.zeilen.length;
     </ul>
   </div>
 </div>
-<p class="vk__wischen" aria-hidden="true">Seitlich wischen, um alle {VERGLEICH.spalten.length} zu sehen</p>
+<p class="vk__wischen" aria-hidden="true">Seitlich wischen, um alle {spaltenWort} zu sehen</p>
 
 <style>
   .vk__scroll { --vk-tuerkis: #00807b; --vk-hell: #e9f6f5; position: relative; }

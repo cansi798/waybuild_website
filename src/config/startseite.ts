@@ -67,7 +67,7 @@ export const REFERENZEN = {
     { name: 'Kerim Tanrikulu', branche: 'Dolmetscher und Übersetzer für Türkisch', ort: 'Hamburg', status: 'vorschau', motiv: 'sprache', bild: 'referenzen/kerim',
       ausgang: 'Die bisherige Baukasten-Website sollte durch einen eigenen Auftritt ersetzt werden.',
       gemacht: 'Zweisprachige Website (Deutsch und Türkisch) mit Einsatzgebiet, Ablauf und Antworten auf häufige Fragen.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 95, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung) (Vorschau).' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 95, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung, Vorschau).' },
     { name: 'Funkelfilm', branche: 'Unternehmensfilme, Videograf', ort: 'Hamburg', status: 'vorschau', motiv: 'film', bild: 'referenzen/funkelfilm',
       ausgang: 'Die alte Website war schwer und langsam: fast 48 MB Daten schon beim Öffnen der Startseite.',
       gemacht: 'Neue Website mit Film im ersten Bildschirm, Projekten, Ablauf und Einsatzgebiet.',
@@ -75,7 +75,7 @@ export const REFERENZEN = {
     { name: 'ilm me up', branche: 'Unabhängige Medienplattform für Wissen', status: 'vorschau', motiv: 'wissen', bild: 'referenzen/ilmmeup',
       ausgang: 'Ein neues Projekt brauchte einen ersten Auftritt.',
       gemacht: 'Website mit Team, Videos und häufigen Fragen, so aufbereitet, dass Google und KI-Assistenten sie gut verstehen.',
-      ergebnis: 'Google Lighthouse am Handy: Leistung 89, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung) (Vorschau).' },
+      ergebnis: 'Google Lighthouse am Handy: Leistung 89, Lighthouse-Wert Barrierefreiheit 100 von 100 (automatische Prüfung, Vorschau).' },
   ] as Referenz[],
 };
 
