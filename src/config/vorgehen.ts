@@ -1,6 +1,7 @@
 // Startseite, zwei Abschnitte nach der Kundenreise (09.11.2026). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj), nicht umformulieren.
 // Komponenten: src/components/start/SoGehenWirVor.astro und src/components/start/Prinzipien.astro, Stil src/styles/vorgehen.css,
-// Einblenden (nur „So gehen wir vor“) src/scripts/vorgehen.ts. Nie „aus einer Hand“.
+// Einblenden (beide Abschnitte) src/scripts/vorgehen.ts. Nie „aus einer Hand“.
+import type { IconName } from './site';
 
 /** „So gehen wir vor“ (Jamil #5188, freigegeben „ok 2b 3 ja“ #5190; Schritt-Texte allgemeiner für alle Pakete #5279). 2b: Jamils sechs Fragen werden NICHT gezeigt.
  *  Ersetzt den Abschnitt „Verstehen. Empfehlen. Umsetzen. Verbessern.“; Anker #denkweise (Abschnitt) und #erstberatung
@@ -29,51 +30,17 @@ export const VORGEHEN = {
   ] as { wort: string; text: string; hinweis?: string; betont?: string; anker?: string }[],
 };
 
-/** „So arbeiten wir.“ (Jamil #5192, „ok“ #5194): drei Prinzipien, keine Animation. leit = Jamils Zusammenfassung je Prinzip,
- *  zeilen = sein Text mit seinen Zeilenumbrüchen (je Zeile ein kurzer Absatz), schluss = hervorgehobener Schlusssatz.
- *  Ersetzt den kurzen Abschnitt „So arbeiten wir.“ vom Vormittag (ARBEITSWEISE in variante.ts, #5187).
- *  Wiederholungen gestrichen (Jamil, Talk qh87y3sj #5322 Q13): Leitsatz Verantwortung ohne „und übernehmen Verantwortung für das
- *  Ergebnis“ (steht im Schlusssatz), Einfachheit-Text ohne „und halten den Aufwand für Sie so gering wie möglich“ (steht im Leitsatz),
- *  Verlässlichkeit-Text ohne „Anfragen dürfen nicht verloren gehen.“ (steht im Leitsatz). */
-export const PRINZIPIEN = {
-  titel: 'So arbeiten wir.',
+/** „Wir versprechen Ihnen“ (Jamil, Talk qh87y3sj #5336: „drastisch kürzen … unsere Versprechen aufzählen“): fünf kurze Versprechen,
+ *  je ein Satz mit eigenem Linien-Icon (src/components/Icon.astro). Ersetzt „So arbeiten wir.“ mit den drei langen Prinzipien
+ *  Verantwortung, Einfachheit, Verlässlichkeit (#5192/#5194; Sicherung Branch vor-versprechen-20261109). Jamils „jederzeit“ beim
+ *  vierten Versprechen bewusst weggelassen (kein absolutes Versprechen). */
+export const PRINZIPIEN: { titel: string; liste: { icon: IconName; text: string }[] } = {
+  titel: 'Wir versprechen Ihnen',
   liste: [
-    {
-      wort: 'Verantwortung',
-      leit: 'Wir denken mit.',
-      zeilen: [
-        'Wir setzen nicht einfach um.',
-        'Wenn wir einen besseren Weg sehen, sprechen wir ihn an.',
-        'Wenn wir Risiken erkennen, weisen wir darauf hin.',
-        'Und wenn wir glauben, dass eine andere Lösung besser zu Ihrem Unternehmen passt, empfehlen wir diese.',
-        'Auch dann, wenn sie für uns nicht die einfachste oder lukrativste Wahl ist.',
-      ],
-      schluss: ['Wir übernehmen Verantwortung für das Ergebnis, nicht nur für die Umsetzung.'],
-    },
-    {
-      wort: 'Einfachheit',
-      leit: 'Wir übernehmen die Komplexität und halten den Aufwand gering.',
-      zeilen: [
-        'Unsere Kunden sollen sich nicht mit Werkzeugen, Prozessen oder Zuständigkeiten beschäftigen müssen.',
-        'Sie beschreiben, was sie erreichen möchten.',
-        'Wir kümmern uns um den Weg dorthin.',
-        'Wir übernehmen Abstimmungen und koordinieren Beteiligte.',
-      ],
-      schluss: ['Denn gute Lösungen erkennt man nicht daran, wie komplex sie sind.', 'Sondern daran, wie einfach sie sich anfühlen.'],
-    },
-    {
-      wort: 'Verlässlichkeit',
-      leit: 'Wir sorgen dafür, dass Anfragen nicht untergehen und Sie wissen, woran Sie sind.',
-      zeilen: [
-        'Wir glauben, dass gute Zusammenarbeit planbar sein sollte.',
-        'Offene Punkte dürfen nicht liegen bleiben.',
-        'Und Kunden sollten nie rätseln müssen, was gerade passiert.',
-        'Deshalb schaffen wir klare Zuständigkeiten, transparente Abläufe und nachvollziehbare Kommunikation.',
-        'Wenn etwas erledigt wird, wird es erledigt.',
-        'Wenn etwas Zeit benötigt, kommunizieren wir das frühzeitig.',
-        'Und wenn es ein Problem gibt, suchen wir nach einer Lösung.',
-      ],
-      schluss: ['Denn Verlässlichkeit entsteht nicht durch Versprechen.', 'Sondern dadurch, dass man sich aufeinander verlassen kann.'],
-    },
+    { icon: 'idee', text: 'Wir denken mit und sagen offen, wenn es einen besseren Weg gibt.' },
+    { icon: 'target', text: 'Wir empfehlen, was zu Ihnen passt, auch wenn es für uns nicht die lukrativste Wahl ist.' },
+    { icon: 'ablauf', text: 'Sie beschreiben das Ziel, wir kümmern uns um den Weg dorthin.' },
+    { icon: 'eye', text: 'Sie wissen, woran Sie sind.' },
+    { icon: 'impuls', text: 'Offene Punkte gehen wir zügig an, statt sie liegen zu lassen.' },
   ],
 };

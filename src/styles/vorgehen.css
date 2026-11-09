@@ -1,5 +1,5 @@
-/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190) und „So arbeiten wir.“ (.pz-*, #5192/#5194), 09.11.2026.
- * Reihenfolge der Hintergründe: Kundenreise (Papier, weiße Karte) → So gehen wir vor (Weiß) → So arbeiten wir. (zartes Türkis
+/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190) und „Wir versprechen Ihnen“ (.pz-*, #5336), 09.11.2026.
+ * Reihenfolge der Hintergründe: Kundenreise (Papier, weiße Karte) → So gehen wir vor (Weiß) → Wir versprechen Ihnen (zartes Türkis
  * #eaf5f4) → Pakete (hell, seit #5204; Vergleich Sand). Kontrast (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4), Fließtext
  * --ink-soft (7,5 : 1), Hervorhebungen #004f4c; Linien #00807b (4,8 : 1 auf Weiß). Beide Abschnitte mindestens eine Bildschirmseite. */
 
@@ -57,20 +57,34 @@
   .vg-bereit .vg-schritt::after { transform: none; }
 }
 
-/* ── So arbeiten wir. (keine Animation) ── */
+/* ── Wir versprechen Ihnen (#5336): fünf kurze Karten mit Icon. PC 3 + 2 mittig, Tablet 2 Spalten (letzte mittig), Handy untereinander.
+ * Wörter nie mitten im Wort trennen: keine Silbentrennung, kein break-word; Kartenbreite reicht ab 320 px für das längste Wort. */
 .section.pz { background: #eaf5f4; }
-.pz-liste { list-style: none; width: 100%; max-width: 1180px; margin: clamp(8px, 2vh, 20px) auto 0; padding: 0; display: grid; gap: 22px; }
-@media (min-width: 960px) { .pz-liste { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
-@media (max-width: 959px) { .pz-liste { max-width: 640px; } }
-.pz-karte { display: flex; flex-direction: column; min-width: 0; padding: clamp(26px, 3vw, 38px) clamp(22px, 2.6vw, 34px); border-radius: 18px;
-  background: var(--white); border: 1px solid #d5e8e6; box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 14px 36px -26px rgb(0 79 76 / 40%); }
-.pz-wort { margin: 0 0 14px; font-size: clamp(1.75rem, 2.6vw, 2.3rem) !important; font-weight: 700; line-height: 1.1; letter-spacing: -0.025em;
-  color: var(--accent-ink); hyphens: manual; overflow-wrap: break-word; }
-.pz-wort::before { content: ''; display: block; width: 40px; height: 3px; margin-bottom: 18px; border-radius: 2px; background: var(--accent); }
-.pz-leit { margin: 0 0 20px; padding-bottom: 20px; border-bottom: 1px solid #d5e8e6; font-family: var(--font-head); font-size: clamp(1.06rem, 1.4vw, 1.15rem);
-  font-weight: 600; line-height: 1.5; color: var(--dark); text-wrap: pretty; }
-.pz-text { flex: 1; }
-.pz-text p { margin: 0 0 0.45em; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
-.pz-text p:last-child { margin-bottom: 0; }
-.pz-schluss { margin: 22px 0 0; padding: 14px 16px; border-left: 3px solid #00807b; border-radius: 0 12px 12px 0; background: #eaf5f4;
-  font-family: var(--font-head); font-size: 1.02rem; font-weight: 650; line-height: 1.6; color: var(--dark); text-wrap: pretty; }
+.pz-liste { --pz-abstand: 22px; list-style: none; width: 100%; max-width: 1080px; margin: clamp(4px, 1.5vh, 16px) auto 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--pz-abstand); }
+.pz-karte { flex: 0 1 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; min-width: 0;
+  padding: clamp(22px, 2.4vw, 30px) clamp(20px, 2.2vw, 28px); border-radius: 18px; background: var(--white); border: 1px solid #d5e8e6;
+  box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 14px 36px -26px rgb(0 79 76 / 40%); }
+.pz-zeichen { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 14px; background: #eaf5f4;
+  border: 1px solid #cfe5e3; color: var(--accent-ink); }
+.pz-satz { margin: 0; font-family: var(--font-head); font-size: clamp(1.06rem, 1.35vw, 1.16rem); font-weight: 600; line-height: 1.55;
+  color: var(--dark); hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: pretty; }
+@media (min-width: 600px) { .pz-karte { flex-basis: calc((100% - var(--pz-abstand)) / 2); } }
+@media (min-width: 600px) and (max-width: 959px) { .pz-liste { max-width: 720px; } }
+@media (min-width: 960px) { .pz-liste { --pz-abstand: 24px; } .pz-karte { flex-basis: calc((100% - 2 * var(--pz-abstand)) / 3); } }
+@media (max-width: 599px) {
+  .pz-liste { --pz-abstand: 14px; max-width: 520px; }
+  .pz-karte { flex-direction: row; align-items: center; gap: 16px; padding: 18px 18px; }
+  .pz-zeichen { width: 46px; height: 46px; border-radius: 12px; }
+}
+
+/* Einblenden (nur mit .pz-bereit vom Skript; Endzustand = Zustand ohne JS): kurz nacheinander, einmalig */
+.pz-bereit .pz-karte { opacity: 0; transform: translateY(16px); }
+.pz-bereit .pz-zeichen { transform: scale(0.7); }
+.pz-bereit.ist-los .pz-karte { opacity: 1; transform: none;
+  transition: opacity 0.55s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1); transition-delay: calc(var(--i) * 110ms); }
+.pz-bereit.ist-los .pz-zeichen { transform: none; transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.5, 1); transition-delay: calc(150ms + var(--i) * 110ms); }
+@media (prefers-reduced-motion: reduce) {
+  .pz-liste *, .pz-liste { transition: none !important; }
+  .pz-bereit .pz-karte, .pz-bereit .pz-zeichen { opacity: 1; transform: none; }
+}

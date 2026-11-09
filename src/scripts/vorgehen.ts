@@ -1,5 +1,7 @@
 // „So gehen wir vor“ (Jamil #5188/#5190): Schritte erscheinen beim ersten Sichtkontakt nacheinander, die Linie zeichnet sich.
-// Nur mit IntersectionObserver und ohne reduzierte Bewegung; sonst (und ohne JS) bleibt alles sichtbar. Einmalig, kein Scroll-Handler.
+// „Wir versprechen Ihnen“ (#5336): die fünf Karten erscheinen kurz nacheinander. data-vorgehen nennt die Vorbereitungs-Klasse
+// (leer = vg-bereit). Nur mit IntersectionObserver und ohne reduzierte Bewegung; sonst (und ohne JS) bleibt alles sichtbar.
+// Einmalig, kein Scroll-Handler.
 const listen = document.querySelectorAll<HTMLElement>('[data-vorgehen]');
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -16,7 +18,7 @@ if (!ruhig && 'IntersectionObserver' in window && listen.length) {
     // Schon sichtbar (z. B. Sprung auf #erstberatung): nicht erst verstecken
     const r = el.getBoundingClientRect();
     if (r.top < innerHeight && r.bottom > 0) return;
-    el.classList.add('vg-bereit');
+    el.classList.add(el.dataset.vorgehen || 'vg-bereit');
     io.observe(el);
   });
 }
