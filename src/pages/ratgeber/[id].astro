@@ -31,7 +31,7 @@ const schema = [
     dateModified: entry.data.datum.toISOString(),
     inLanguage: 'de-DE',
     mainEntityOfPage: absolute(`/ratgeber/${entry.id}/`, Astro.site),
-    image: absolute('/og-image.png', Astro.site),
+    image: absolute('/og-image.png?v=20261109', Astro.site),
     author: { '@type': 'Organization', name: company.legalName, url: absolute('/', Astro.site) },
     publisher: { '@id': `${absolute('/', Astro.site)}#organization` },
   },

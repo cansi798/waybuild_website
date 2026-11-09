@@ -28,7 +28,8 @@ interface Props {
 const { title, description, schema = [], noindex = false, breadcrumb, hideMobileCta = false, thema } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const siteRoot = absolute('/', Astro.site);
-const ogImage = absolute('/og-image.png', Astro.site);
+// ?v= erzwingt neues Vorschaubild bei WhatsApp/LinkedIn & Co. nach Bildwechsel (09.11.2026: „ab 79,99 €“, Jamil #5251)
+const ogImage = absolute('/og-image.png?v=20261109', Astro.site);
 const fullTitle = title.includes(company.name) ? title : `${title} | ${company.name}`;
 
 const hasAddress = ![company.street, company.zip, company.city].some(isMissing);
