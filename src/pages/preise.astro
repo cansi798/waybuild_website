@@ -58,9 +58,9 @@ const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', '
     <div class="wrap">
       <h2 class="sr-only" id="pakete-h">Die drei Pakete</h2>
       <span id="preise" class="anker" aria-hidden="true"></span>
+      <EinmaligDazu />
       <PaketKarten />
       <p class="netto">{B2B_HINWEIS}</p>
-      <EinmaligDazu />
     </div>
   </section>
 

@@ -1,96 +1,86 @@
 ---
-// Block „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5; präsenter gemacht #5283, 09.11.2026):
-// eigener ruhiger Kasten (zartes Türkis) mit Überschrift „Neu starten oder neu aufstellen?“ für Neugründer und Unternehmen,
-// die sich neu erfinden wollen. Gesamtpaket „Alle vier Extras“ als große Hauptkarte (türkiser Rand), die vier Einzelleistungen
-// daneben (PC) bzw. darunter (Handy). Preise und Preistexte unverändert aus EINMALIG_DAZU in src/config/pakete-abo.ts.
+// Leiste „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5; #5283; schlank und dezent über den Paketen #5343, 10.11.2026):
+// eine ruhige Zeile (zartes Türkis, dünner Rand, kleines Icon) mit „Neu starten oder neu aufstellen?“, dem Gesamtpreis
+// und einem kompakten „Direkt buchen“. Die vier Einzelleistungen klein darunter, aufklappbar über ein natives
+// <details> („Einzeln ansehen“, per Tastatur bedienbar). Preise und Texte unverändert aus EINMALIG_DAZU in src/config/pakete-abo.ts.
 // „Direkt buchen“ führt wie auf den Paketkarten zum Kontaktformular mit Vorauswahl (?dazu=alle bzw. ?dazu=<id>, &buchen=1).
-// Wird in einen bestehenden Abschnitt eingebettet: der Abschnitts-Hintergrund (Wechsel hell/sand) bleibt unverändert.
+// Steht im Paket-Abschnitt über den Karten: der Abschnitts-Hintergrund (Wechsel hell/sand) bleibt unverändert.
 import Icon from '../Icon.astro';
 import type { IconName } from '../../config/site';
 import { href } from '../../lib/paths';
 import { EINMALIG_DAZU as E, BUCHEN, euro, einmalSumme } from '../../config/pakete-abo';
-interface Props { id?: string; kompakt?: boolean }
-const { id = 'einmalig', kompakt = false } = Astro.props;
+interface Props { id?: string }
+const { id = 'einmalig' } = Astro.props;
 
 const ICONS: Record<string, IconName> = { logo: 'pen', papiere: 'doc', visitenkarten: 'user', signatur: 'mail' };
 const buchen = (dazu: string) => `${href('/kontakt/')}?dazu=${encodeURIComponent(dazu)}&buchen=1`;
+const inhalt = E.gesamt.text.replace(/[.\s]+$/, '');
 ---
 
-<div class:list={['ed', { 'ed--kompakt': kompakt }]} id={id} role="region" aria-labelledby={`${id}-h`}>
-  <div class="ed__kopf">
-    <span class="eyebrow ed__eyebrow">{E.titel}</span>
-    <h3 id={`${id}-h`} class="ed__titel">Neu starten oder neu aufstellen?</h3>
-    <p class="ed__lead">Für Neugründer und Unternehmen, die sich neu erfinden wollen.</p>
+<div class="ed" id={id} role="region" aria-labelledby={`${id}-h`}>
+  <div class="ed__zeile">
+    <span class="ed__ico" aria-hidden="true"><Icon name="layers" size={20} /></span>
+    <div class="ed__satz">
+      <h3 id={`${id}-h`} class="ed__titel">Neu starten oder neu aufstellen?</h3>
+      <p class="ed__text">{inhalt} für <b>{euro(E.gesamt.preis)}</b> statt {euro(einmalSumme())} (einmalig, netto)</p>
+    </div>
+    <a class="btn ed__btn" href={buchen(E.gesamt.id)}>{BUCHEN.knopf}<span class="sr-only">: {E.gesamt.name}</span></a>
   </div>
 
-  <div class="ed__raster">
-    <article class="ed__haupt" aria-labelledby={`${id}-gesamt`}>
-      <p class="ed__marke">Alle vier zusammen</p>
-      <span class="ed__ico ed__ico--gross" aria-hidden="true"><Icon name="layers" size={30} /></span>
-      <h4 id={`${id}-gesamt`} class="ed__name ed__name--gross">{E.gesamt.name}</h4>
-      <p class="ed__text">{E.gesamt.text}</p>
-      <ul class="ed__inhalt">
-        {E.liste.map((e) => <li><Icon name="check" size={18} /> {e.name}</li>)}
+  <div class="ed__unten">
+    <details class="ed__mehr">
+      <summary>Einzeln ansehen <Icon name="chevron" size={16} /></summary>
+      <ul class="ed__liste">
+        {E.liste.map((e) => (
+          <li class="ed__k">
+            <span class="ed__kico" aria-hidden="true"><Icon name={ICONS[e.id] ?? 'spark'} size={16} /></span>
+            <span class="ed__kname">{e.name}</span>
+            <span class="ed__kpreis"><b>{euro(e.preis)}</b> einmalig, netto</span>
+            <a class="ed__einzeln" href={buchen(e.id)}>Einzeln buchen<span class="sr-only">: {e.name}</span> <Icon name="arrow" size={14} /></a>
+          </li>
+        ))}
       </ul>
-      <p class="ed__preis ed__preis--gross"><b>{euro(E.gesamt.preis)}</b> <span>statt {euro(einmalSumme())} einmalig, netto</span></p>
-      <a class="btn btn--lg ed__btn" href={buchen(E.gesamt.id)}>{BUCHEN.knopf}<span class="sr-only">: {E.gesamt.name}</span></a>
-    </article>
-
-    <ul class="ed__liste">
-      {E.liste.map((e) => (
-        <li class="ed__k">
-          <span class="ed__ico" aria-hidden="true"><Icon name={ICONS[e.id] ?? 'spark'} size={24} /></span>
-          <p class="ed__name">{e.name}</p>
-          {!kompakt && <p class="ed__text">{e.text}</p>}
-          <p class="ed__preis"><b>{euro(e.preis)}</b> einmalig, netto</p>
-          <a class="ed__einzeln" href={buchen(e.id)}>Einzeln buchen<span class="sr-only">: {e.name}</span> <Icon name="arrow" size={16} /></a>
-        </li>
-      ))}
-    </ul>
+    </details>
+    <p class="ed__hinweis">Festpreis, netto zzgl. MwSt.</p>
   </div>
-
-  <p class="ed__hinweis">{E.hinweis}</p>
 </div>
 
 <style>
-  /* Ruhiger eigener Grund: zartes Türkis #eaf5f4 (wie „So arbeiten wir.“), Texte darauf: --ink 10,4 : 1, --ink-soft 6,9 : 1,
-     --accent-ink 5,9 : 1. Knopf wie „Direkt buchen“ auf den Paketkarten: #00807b mit Weiß (4,8 : 1), Hover #006b68. */
-  .ed { margin-top: clamp(40px, 6vw, 72px); padding: clamp(22px, 4.5vw, 52px) clamp(16px, 4vw, 52px); border: 1px solid #cfe6e3; border-radius: 24px; background: #eaf5f4; scroll-margin-top: 120px; }
-  .ed p, .ed h3, .ed h4 { margin: 0; }
-  .ed__kopf { display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 720px; margin: 0 auto clamp(22px, 4vw, 36px); }
-  .ed__eyebrow { color: var(--accent-ink); }
-  .ed__titel { font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 700; line-height: 1.2; color: var(--ink); }
-  .ed__lead { font-size: clamp(1.05rem, 2vw, 1.2rem); line-height: 1.7; color: var(--ink-soft); }
+  /* Zartes Türkis #eaf5f4 mit dünnem Rand #cfe6e3. Texte darauf: --ink 10,4 : 1, --ink-soft 6,9 : 1, --accent-ink 5,9 : 1.
+     Knopf wie „Direkt buchen“ auf den Paketkarten: #00807b mit Weiß (4,8 : 1), Hover #006b68. */
+  .ed { margin: 0 0 clamp(22px, 3.5vw, 36px); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid #cfe6e3; border-radius: 16px; background: #eaf5f4; scroll-margin-top: 120px; }
+  .ed p, .ed h3 { margin: 0; }
 
-  .ed__raster { display: grid; gap: 18px; }
-  @media (min-width: 960px) { .ed__raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 22px; align-items: stretch; } }
-
-  .ed__haupt { position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: clamp(22px, 3.5vw, 34px); background: var(--white); border: 3px solid var(--accent); border-radius: 20px; box-shadow: 0 18px 40px -24px rgb(0 79 76 / 45%); }
-  .ed__marke { align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: var(--accent-ink); color: var(--white); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em; }
-  .ed__ico { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; background: #eaf5f4; color: var(--accent-ink); }
-  .ed__ico--gross { width: 56px; height: 56px; border-radius: 14px; }
-  .ed__name { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; line-height: 1.35; color: var(--ink); overflow-wrap: anywhere; hyphens: auto; }
-  .ed__name--gross { font-size: clamp(1.3rem, 2.6vw, 1.6rem); }
-  .ed__text { line-height: 1.7; color: var(--ink-soft); font-size: 0.97rem; }
-  .ed__inhalt { list-style: none; margin: 2px 0 0; padding: 0; display: grid; gap: 8px; }
-  .ed__inhalt li { display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; color: var(--ink); }
-  .ed__inhalt :global(.icon), .ed__inhalt svg { flex: none; margin-top: 2px; color: var(--accent-ink); }
-  .ed__preis { color: var(--ink); font-size: 0.95rem; line-height: 1.5; }
-  .ed__preis b { font-family: var(--font-head); font-size: 1.25rem; }
-  .ed__preis--gross { margin-top: auto !important; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
-  .ed__preis--gross b { font-size: clamp(2rem, 4.4vw, 2.6rem); line-height: 1.1; color: var(--accent-ink); }
-  .ed__preis--gross span { color: var(--ink-soft); }
-  .ed__btn { width: 100%; margin-top: 4px; background: #00807b; color: var(--white); border-color: transparent; }
+  .ed__zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .ed__ico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: var(--white); color: var(--accent-ink); }
+  .ed__satz { flex: 1 1 260px; min-width: 0; line-height: 1.55; color: var(--ink-soft); font-size: 0.97rem; }
+  .ed__titel, .ed__text { display: inline; }
+  .ed__titel { margin-right: 0.35em !important; font-family: var(--font-head); font-size: 1rem; font-weight: 700; line-height: inherit; color: var(--ink); }
+  .ed__text b { color: var(--accent-ink); }
+  .ed__btn { flex: none; min-height: 44px; padding: 0.45em 1.15em; font-size: 0.95rem; background: #00807b; color: var(--white); border-color: transparent; }
   .ed__btn:hover { background: var(--accent-ink); color: var(--white); }
+  @media (max-width: 559px) { .ed__btn { flex: 1 1 100%; } .ed__ico { display: none; } .ed__satz { flex-basis: 100%; font-size: 0.94rem; } }
 
-  .ed__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; min-width: 0; }
+  .ed__unten { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0 12px; margin-top: 6px; border-top: 1px solid #cfe6e3; }
+  .ed__mehr { flex: 1 1 auto; min-width: 0; }
+  .ed__mehr summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; list-style: none; color: var(--accent-ink); font-weight: 650; font-size: 0.92rem; }
+  .ed__mehr summary::-webkit-details-marker { display: none; }
+  .ed__mehr summary :global(svg) { transition: transform 0.15s ease; }
+  .ed__mehr[open] summary :global(svg) { transform: rotate(180deg); }
+  .ed__mehr summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .ed__hinweis { padding: 12px 0 0; font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); }
+
+  .ed__liste { list-style: none; margin: 2px 0 10px; padding: 0; display: grid; gap: 8px; }
   @media (min-width: 560px) { .ed__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .ed__k { display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 20px; background: var(--white); border: 1px solid #cfe6e3; border-radius: 18px; }
-  .ed__k .ed__preis { margin-top: auto; padding-top: 4px; }
-  .ed__einzeln { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 44px; color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
+  @media (min-width: 1000px) { .ed__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .ed__k { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 8px; align-items: center; min-width: 0; padding: 10px 12px 4px; background: var(--white); border: 1px solid #cfe6e3; border-radius: 12px; font-size: 0.9rem; line-height: 1.45; }
+  .ed__kico { display: inline-flex; color: var(--accent-ink); }
+  .ed__kname { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; hyphens: auto; }
+  .ed__kpreis, .ed__einzeln { grid-column: 2; }
+  .ed__kpreis { color: var(--ink-soft); }
+  .ed__kpreis b { color: var(--ink); }
+  .ed__einzeln { display: inline-flex; align-items: center; gap: 5px; justify-self: start; min-height: 36px; color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
   .ed__einzeln:hover { text-decoration-thickness: 2px; }
-  .ed a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
-
-  .ed__hinweis { margin-top: 18px !important; text-align: center; font-size: 0.9rem; line-height: 1.7; color: var(--ink-soft); }
-  @media (prefers-reduced-motion: reduce) { .ed__btn { transition: none; transform: none !important; } }
+  .ed a:focus-visible, .ed__mehr summary:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; border-radius: 6px; }
+  @media (prefers-reduced-motion: reduce) { .ed__btn { transition: none; transform: none !important; } .ed__mehr summary :global(svg) { transition: none; } }
 </style>
