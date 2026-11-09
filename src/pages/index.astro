@@ -67,22 +67,6 @@ const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen 
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
 // FAQPage-JSON-LD der Startseite entfällt: die Fragen stehen seit #5136–#5138 auf /fragen/ (dort mit JSON-LD)
 
-// Kundenreise (Journey-Map, Jamil #5184/#5185/#5187): weich steigende Kurve über den fünf Stationen, Koordinaten im Raster
-// 1000 × 160 (SVG mit preserveAspectRatio="none", Strich bleibt durch vector-effect gleich dick). Die Kurve läuft genau durch
-// die Mitte jeder Spalte (x = 100, 300, …, 900), dort sitzen die Punkte (--y = Höhe als Anteil von 160); Ende rechts oben
-// = „zufriedener Kunde“. Catmull-Rom → kubische Bézier, damit die Kurve ohne Knick durch alle Punkte geht.
-const KR_PUNKTE: [number, number][] = [[0, 150], [100, 145], [300, 132], [500, 111], [700, 82], [900, 50], [1000, 36]];
-const krPfad = (() => {
-  const p = KR_PUNKTE, r = (n: number) => Math.round(n * 10) / 10;
-  let d = `M${p[0][0]} ${p[0][1]}`;
-  for (let i = 0; i < p.length - 1; i++) {
-    const a = p[Math.max(0, i - 1)], b = p[i], c = p[i + 1], e = p[Math.min(p.length - 1, i + 2)];
-    d += `C${r(b[0] + (c[0] - a[0]) / 6)} ${r(b[1] + (c[1] - a[1]) / 6)} ${r(c[0] - (e[0] - b[0]) / 6)} ${r(c[1] - (e[1] - b[1]) / 6)} ${c[0]} ${c[1]}`;
-  }
-  return d;
-})();
-const krFlaeche = `${krPfad}L1000 160L0 160Z`;
-const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
 
 ---
 
@@ -118,10 +102,13 @@ const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
 
   <!-- Kundenreise als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
        Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
-       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“; Fragen am PC gleich hoch (Subgrid).
+       Fünf Stationen mit Jamils Fragen; Fragen am PC gleich hoch (Subgrid).
+       Seit #5334 (09.11.2026, Sicherung vor-kundenreise-pfad-20261109; „dieses Diagramm passt nicht“): statt der steigenden Kurve
+       mit Fläche (wirkte wie ein Wachstums-Diagramm) ein ruhiger Weg wie bei „So gehen wir vor“: fünf nummerierte Kreise an einer
+       feinen geraden Linie (PC waagerecht, Handy senkrecht links), am Ende ein kleiner Zielpunkt mit Fahne „zufriedener Kunde“.
        Seit #5275 (09.11.2026, Sicherung vor-kundenreise-antworten-20261109): keine Leistungen mehr, die Fragen stellt sich der
        Besucher; unter jeder Frage ein kleines Symbol (Glühbirne, button aria-expanded/aria-controls, im HTML hidden), das die
-       Antwort im besten Fall aufklappt (eine zur Zeit, Punkt auf der Kurve hebt sich hervor). Das Skript src/scripts/kundenreise.ts
+       Antwort im besten Fall aufklappt (eine zur Zeit, der Kreis der Station hebt sich hervor). Das Skript src/scripts/kundenreise.ts
        zeigt die Symbole und klappt die Antworten zu; ohne JS oder bei reduzierter Bewegung stehen alle Antworten offen da.
        Am Ende „Wir sind dafür der richtige Ansprechpartner.“ + „Jetzt starten“ (Erstberatung, gleiches Ziel wie der Hero-Knopf).
        Bleibt der Abschnitt, der über den stehenden Hero gleitet (.stapel-paar, H2-id kontrast-h unverändert). -->
@@ -130,19 +117,12 @@ const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
       <h2 id="kontrast-h" class="kr-titel">{KUNDENREISE.titel}</h2>
       <p class="lead kr-intro">{KUNDENREISE.intro}</p>
       <div class="kr-karte" data-kundenreise>
-        <div class="kr-weg" style={`--kr-ende:${krY(5)}`}>
-          <svg class="kr-kurve" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="kr-flaeche-verlauf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00807b" stop-opacity="0.16" /><stop offset="1" stop-color="#00807b" stop-opacity="0" /></linearGradient>
-              <linearGradient id="kr-linie-verlauf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fb8b4" /><stop offset="1" stop-color="#006b68" /></linearGradient>
-            </defs>
-            <path class="kr-flaeche" d={krFlaeche} fill="url(#kr-flaeche-verlauf)" />
-            <path class="kr-linie" d={krPfad} stroke="url(#kr-linie-verlauf)" vector-effect="non-scaling-stroke" />
-          </svg>
+        <div class="kr-weg">
+          <span class="kr-pfad" aria-hidden="true"></span>
           <ol class="kr-stationen">
             {KUNDENREISE.stationen.map((st, i) => (
-              <li class="kr-station" style={`--i:${i};--y:${krY(i)}`}>
-                <span class="kr-punkt" aria-hidden="true"></span>
+              <li class="kr-station" style={`--i:${i}`}>
+                <span class="kr-nr" aria-hidden="true">{i + 1}</span>
                 <div class="kr-kopf">
                   <h3 class="kr-name" id={`kr-k-${i}`}>{st.name}</h3>
                   <p class="kr-frage" id={`kr-f-${i}`}>{st.frage}</p>
@@ -164,7 +144,10 @@ const krY = (i: number) => (KR_PUNKTE[i + 1][1] / 160).toFixed(4);
               </li>
             ))}
           </ol>
-          <p class="kr-ende"><span class="kr-ende__punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
+          <p class="kr-ende">
+            <span class="kr-ende__punkt" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path d="M6 21V4" /><path d="M6 4h11l-2.5 4L17 12H6" /></svg></span>
+            <span class="kr-ende__text">{KUNDENREISE.ziel}</span>
+          </p>
         </div>
       </div>
       <!-- Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5275, 09.11.2026): Satz + Knopf „Jetzt starten“ (Erstberatung, wie der Hero-Knopf);

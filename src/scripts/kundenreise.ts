@@ -6,8 +6,9 @@
 //   und am Handy. Nach dem ersten Öffnen hört das Pulsieren der Symbole auf (.kr-gesehen).
 // - Ohne JS oder bei reduzierter Bewegung bleiben die Knöpfe versteckt und alle Antworten offen (statisch).
 // - Aufbau nur ohne reduzierte Bewegung und mit IntersectionObserver: .kr-bereit (vorher verstecken), sobald die Karte ins Bild
-//   kommt (threshold 0, unten 15 % Rand, damit sie beim Hereinscrollen nie leer ist) einmal .ist-los (Kurve bzw. Linie zeichnet
-//   sich, Stationen blenden nacheinander ein, Symbole pulsieren dreimal; Zeiten in CSS).
+//   kommt (threshold 0, unten 15 % Rand, damit sie beim Hereinscrollen nie leer ist) einmal .ist-los (die gerade Linie zeichnet
+//   sich, die nummerierten Stationen erscheinen nacheinander, Symbole pulsieren dreimal; Zeiten in CSS). Seit #5334 keine Kurve
+//   mehr, sondern ein ruhiger Weg wie „So gehen wir vor“; die offene Station hebt ihren Kreis hervor (.ist-offen, nur CSS).
 const karte = document.querySelector<HTMLElement>('[data-kundenreise]');
 
 if (karte) {
