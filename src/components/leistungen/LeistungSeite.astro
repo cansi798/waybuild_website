@@ -11,6 +11,8 @@ import Icon from '../Icon.astro';
 import ReferenzKarten from '../referenzen/ReferenzKarten.astro';
 import Foto from '../Foto.astro';
 import { LEISTUNG_FOTO } from '../../config/bilder';
+import Sichtbarkeit from '../sichtbarkeit/Sichtbarkeit.astro';
+import { LEISTUNG_PANELS } from '../../config/sichtbarkeit';
 import { gruppeById, STATIONEN, ICONS, leistungenNeu, paketAnzeige, type LeistungNeu } from '../../config/leistungen-neu';
 import { ANLIEGEN, REFERENZEN } from '../../config/startseite';
 import { href, absolute } from '../../lib/paths';
@@ -29,6 +31,8 @@ const pfad = `/leistungen/${eintrag.id}/`;
 const url = absolute(pfad, Astro.site);
 // Stockfoto im Kopf (Jamil, Talk qh87y3sj #5362): PC rechts neben dem Text, Handy unter dem Text; im ersten Bildschirm, daher eager
 const foto = LEISTUNG_FOTO[eintrag.id];
+// Beispiel-Ansichten aus „Was wir für Ihre Sichtbarkeit tun.“ (Jamil, Talk qh87y3sj #5363) auf passenden Seiten, zwischen Text und Fragen
+const panels = LEISTUNG_PANELS[eintrag.id];
 
 const schema = [
   {
@@ -85,6 +89,8 @@ const schema = [
       <div class="ltext"><Content /></div>
     </div>
   </section>
+
+  {panels && <Sichtbarkeit arten={panels} variante="leistung" />}
 
   {eintrag.id === 'website' && (
     <section class="section section--sand" id="referenzen" aria-labelledby="lref-h">

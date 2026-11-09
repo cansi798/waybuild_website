@@ -1,0 +1,111 @@
+---
+// Ein Feld „Wir analysieren.“ / „Wir optimieren für Google.“ / „Wir optimieren für KI-Suche.“ (Jamil, Talk qh87y3sj #5363, 10.11.2026).
+// Oben eine gezeichnete Beispiel-Ansicht (nur HTML/CSS/SVG, klein beschriftet „Beispielhafte Darstellung“; für Screenreader ein Bild
+// mit Beschreibung), darunter Überschrift, ein bis zwei Sätze, Paket-Etikett und auf Wunsch ein Link zur Leistungsseite.
+// Bewegung (einmal beim ersten Sichtkontakt): Balken wachsen, Linie zeichnet sich, Markierung fällt, Antwort erscheint Wort für Wort.
+// Nur mit JS (src/scripts/sichtbarkeit.ts setzt .sb-bereit und dann .ist-los) und ohne reduzierte Bewegung; sonst steht alles fertig da.
+// Texte: src/config/sichtbarkeit.ts. Stil: src/styles/sichtbarkeit.css.
+import { PANELS, MOCK, SICHTBARKEIT, type PanelArt } from '../../config/sichtbarkeit';
+import { href } from '../../lib/paths';
+
+interface Props { art: PanelArt; mitLink?: boolean }
+const { art, mitLink = false } = Astro.props;
+const p = PANELS[art];
+// je Seite steht jedes Feld höchstens einmal, daher reicht die Art als eindeutige id
+const tid = `sb-t-${art}`;
+
+// Anfragen: sechs Monate als Balken, ansteigend (bewusst ohne Zahlen und ohne Achse, reines Beispiel)
+const balken = [34, 46, 41, 58, 66, 82];
+// Besucher: Verlauf als Linie (SVG 200 × 56)
+const linie = '4,46 36,40 68,42 100,30 132,32 164,20 196,12';
+// KI-Antwort Wort für Wort; der Beispielname wird hervorgehoben
+const woerter = MOCK.ki.antwort.split(/\s+/).filter(Boolean);
+const NAME = new Set(['Muster', 'Malerbetrieb']);
+---
+
+<article class:list={['sb-panel', `sb-panel--${art}`]} data-sicht aria-labelledby={tid}>
+  <div class="sb-buehne">
+    <p class="sb-etikett">{SICHTBARKEIT.etikett}</p>
+    <div class="sb-mock" role="img" aria-label={p.bild}>
+      <div class="sb-mock__innen" aria-hidden="true">
+        {art === 'analyse' && (
+          <>
+            <div class="sb-fkopf"><span class="sb-punkte"><i></i><i></i><i></i></span><span class="sb-fkopf__titel">{MOCK.analyse.kopf}</span></div>
+            <div class="sb-dash">
+              <div class="sb-kachel sb-kachel--breit">
+                <span class="sb-klabel">{MOCK.analyse.besucher}</span>
+                <svg class="sb-verlauf" viewBox="0 0 200 56" preserveAspectRatio="none" focusable="false">
+                  <polygon class="sb-flaeche" points={`${linie} 196,56 4,56`} />
+                  <polyline class="sb-linie" points={linie} pathLength="1" />
+                </svg>
+              </div>
+              <div class="sb-kachel">
+                <span class="sb-klabel">{MOCK.analyse.anfragen}</span>
+                <span class="sb-balken-reihe">
+                  {balken.map((h, i) => <span class="sb-balken" style={`--h:${h}%;--i:${i}`}></span>)}
+                </span>
+              </div>
+              <div class="sb-kachel">
+                <span class="sb-klabel">{MOCK.analyse.ladezeit}</span>
+                <span class="sb-tacho"><span class="sb-tacho__fuell"></span></span>
+                <span class="sb-kwert">{MOCK.analyse.schnell}</span>
+              </div>
+            </div>
+          </>
+        )}
+
+        {art === 'google' && (
+          <>
+            <div class="sb-suche">
+              <svg viewBox="0 0 24 24" width="16" height="16" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" /></svg>
+              <span>{MOCK.google.suche}</span>
+            </div>
+            <div class="sb-karte">
+              <svg class="sb-karte__bild" viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="300" height="120" fill="#eef1ea" />
+                <path d="M0 92 C60 84 90 104 150 96 S250 80 300 88 V120 H0 Z" fill="#d6e9ef" />
+                <rect x="196" y="10" width="70" height="42" rx="10" fill="#dcebd6" />
+                <path d="M0 40 H300 M118 0 V120 M0 70 L300 58 M232 0 L214 120" stroke="#ffffff" stroke-width="9" fill="none" />
+                <path d="M0 40 H300 M118 0 V120 M0 70 L300 58 M232 0 L214 120" stroke="#dcdcd2" stroke-width="1" fill="none" />
+                <path d="M30 0 V40 M60 40 V68 M160 0 V40 M260 60 V120" stroke="#ffffff" stroke-width="4" fill="none" />
+              </svg>
+              <span class="sb-pin-schatten"></span>
+              <span class="sb-pin">
+                <svg viewBox="0 0 24 32" width="26" height="34" focusable="false"><path d="M12 31s10-11.2 10-19A10 10 0 0 0 2 12c0 7.8 10 19 10 19Z" /><circle cx="12" cy="12" r="4" fill="#ffffff" /></svg>
+              </span>
+            </div>
+            <div class="sb-eintrag">
+              <strong class="sb-eintrag__name">{MOCK.google.name}</strong>
+              <span class="sb-eintrag__art">{MOCK.google.art}</span>
+              <span class="sb-eintrag__offen">{MOCK.google.offen}</span>
+              <span class="sb-knoepfe">{MOCK.google.knoepfe.map((k) => <span>{k}</span>)}</span>
+            </div>
+          </>
+        )}
+
+        {art === 'ki' && (
+          <>
+            <div class="sb-fkopf">
+              <span class="sb-funke"><svg viewBox="0 0 24 24" width="14" height="14" focusable="false"><path d="M12 2c.6 4.8 2.6 7.4 8 8-5.4.6-7.4 3.2-8 8-.6-4.8-2.6-7.4-8-8 5.4-.6 7.4-3.2 8-8Z" /></svg></span>
+              <span class="sb-fkopf__titel">{MOCK.ki.kopf}</span>
+            </div>
+            <div class="sb-chat">
+              <p class="sb-blase sb-blase--frage">{MOCK.ki.frage}</p>
+              <div class="sb-blase sb-blase--antwort" style={`--n:${woerter.length}`}>
+                <span class="sb-tippen"><i></i><i></i><i></i></span>
+                <p class="sb-antwort">{woerter.map((w, i) => <><span class:list={['sb-w', { 'sb-w--name': NAME.has(w) }]} style={`--i:${i}`}>{w}</span>{' '}</>)}</p>
+                <span class="sb-quelle">{MOCK.ki.quelle}</span>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+  <div class="sb-text">
+    <h3 class="sb-titel" id={tid}>{p.titel}</h3>
+    <p class="sb-satz">{p.text}</p>
+    <p class="sb-paket">{p.paket}</p>
+    {mitLink && <a class="sb-link" href={href(p.link.href)}>{p.link.text}</a>}
+  </div>
+</article>

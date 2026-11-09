@@ -1,0 +1,30 @@
+---
+// Abschnitt „Was wir für Ihre Sichtbarkeit tun.“ (Jamil, Talk qh87y3sj #5363, 10.11.2026) mit wiederverwendbaren Feldern (SichtPanel.astro).
+// variante="start": Startseite nach „So gehen wir vor“, alle drei Felder mit Link zur Leistungsseite, Hintergrund Sand (#sichtbarkeit).
+// variante="leistung": auf /leistungen/<slug>/ die passenden Felder (LEISTUNG_PANELS) ohne Links, Hintergrund Weiß.
+import SichtPanel from './SichtPanel.astro';
+import { SICHTBARKEIT, type PanelArt } from '../../config/sichtbarkeit';
+import '../../styles/sichtbarkeit.css';
+
+interface Props { arten?: PanelArt[]; variante?: 'start' | 'leistung' }
+const { arten = ['analyse', 'google', 'ki'], variante = 'start' } = Astro.props;
+const start = variante === 'start';
+const hid = start ? 'sb-h' : 'sb-h-leistung';
+---
+
+<section class:list={['section', 'sb', `sb--${variante}`]} id={start ? 'sichtbarkeit' : undefined} aria-labelledby={hid}>
+  <div class="wrap">
+    <div class="section-head center sb-kopf">
+      {start && <span class="eyebrow">{SICHTBARKEIT.eyebrow}</span>}
+      <h2 id={hid} class="rule">{start ? SICHTBARKEIT.titel : SICHTBARKEIT.leistungTitel}</h2>
+      <p class="lead">{start ? SICHTBARKEIT.intro : SICHTBARKEIT.leistungIntro}</p>
+    </div>
+    <div class:list={['sb-liste', `sb-liste--${arten.length}`]}>
+      {arten.map((a) => <SichtPanel art={a} mitLink={start} />)}
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/sichtbarkeit.ts';
+</script>

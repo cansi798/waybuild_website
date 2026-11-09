@@ -10,6 +10,7 @@ import { getCollection } from 'astro:content';
 import { CLAIM, BOTSCHAFT } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
+import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
@@ -30,6 +31,8 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${BOTSCHAFT.service}`,
     `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Im besten Fall: ${st.antwort})`).join('; ')}. ${KUNDENREISE.schluss}`,
     `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Drei Phasen: ${VORGEHEN.phasen.map((p) => `${p.wort}: ${p.text}${p.betont ? ` ${p.betont}` : ''}`).join(' ')} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${VORGEHEN.phasen[s.phase].wort}, ${s.wann}): ${s.text}`).join(' ')}`,
+    // Arbeitsweise Sichtbarkeit (Jamil, Talk qh87y3sj #5363): nur Vorgehen, keine Platzierungsversprechen
+    `- ${SICHTBARKEIT.titel} ${Object.values(PANELS).map((p) => `${p.titel} ${p.text} (${p.paket})`).join(' ')}`,
     `- ${PRINZIPIEN.titel} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
     `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,

@@ -36,6 +36,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
 import Prinzipien from '../components/start/Prinzipien.astro';
+import Sichtbarkeit from '../components/sichtbarkeit/Sichtbarkeit.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import PremiumKarte from '../components/pakete/PremiumKarte.astro';
@@ -167,6 +168,12 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        bis online“ (Sicherung vor-vorgehen-ablauf-20261109): links Kopf und drei Phasen, rechts sechs Schritte als Kartenstapel.
        Anker #denkweise (Abschnitt), #ablauf (Beginn des Stapels), #erstberatung (Karte Erstgespräch). -->
   <SoGehenWirVor />
+
+  <!-- Was wir für Ihre Sichtbarkeit tun. (Jamil, Talk qh87y3sj #5363, 10.11.2026; Sicherung Branch vor-arbeitsweise-panels-20261109):
+       drei Felder Wir analysieren / Wir optimieren für Google / Wir optimieren für KI-Suche mit gezeichneten Beispiel-Ansichten
+       („Beispielhafte Darstellung“, keine echten Daten, keine Logos), Hintergrund Sand. Komponenten components/sichtbarkeit/, Texte
+       config/sichtbarkeit.ts; dieselben Felder stehen auf /leistungen/suchmaschinen-optimierung/, /google-profil/ und /auswertung/. -->
+  <Sichtbarkeit />
 
   <!-- So arbeiten wir. (Jamil, Talk qh87y3sj #5192, „ok“ #5194, 09.11.2026; Sicherung vor-prinzipien-volltext-20261109): Verantwortung,
        Einfachheit, Verlässlichkeit mit Jamils vollem Text, ohne Animation. PC drei Spalten, Handy untereinander. Ersetzt die kurze
