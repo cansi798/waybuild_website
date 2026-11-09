@@ -14,6 +14,8 @@ import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
+  // Blog (Jamil #5264): nur freigegebene Beiträge, Entwürfe (draft: true) bleiben draußen
+  const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
   const lines = [
     `# ${company.legalName}`,
@@ -68,12 +70,14 @@ export const GET: APIRoute = async ({ site }) => {
     `- [Leistungen](${url('/leistungen/')}): Website as a Service und Ausbaustufen`,
     `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt.`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen Baukasten, Freelancer, Agentur und waybuild`,
+    `- [Blog](${url('/blog/')}): Beiträge zu Websites, Sichtbarkeit bei Google und KI-Suche`,
     `- [Über uns](${url('/ueber-uns/')})`,
     `- [Kontakt](${url('/kontakt/')}): kostenloses Erstgespräch`,
     '',
     '## Ratgeber',
     ...artikel.map((a) => `- [${a.data.title}](${url(`/ratgeber/${a.id}/`)}): ${a.data.kurz.join(' ')}`),
     '',
+    ...(blog.length ? ['## Blog', ...blog.map((b) => `- [${b.data.title}](${url(`/blog/${b.id}/`)}): ${b.data.description}`), ''] : []),
     '## Kontakt',
     `- E-Mail: ${company.email}`,
     ...(isMissing(company.phone) || PHONE_IS_PLACEHOLDER ? [] : [`- Telefon: ${company.phone}`]),

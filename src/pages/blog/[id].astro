@@ -1,0 +1,96 @@
+---
+// Blog-Beitrag (Jamil, Talk qh87y3sj #5264). Aufbau und Stil wie die Ratgeber-Artikel (src/pages/ratgeber/[id].astro).
+// draft: true → sichtbarer Hinweis „Entwurf – wird noch geprüft“ und noindex, bis Jamil den Text freigibt.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
+import { href, absolute } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const all = await getCollection('blog');
+  return all.map((entry) => ({ params: { id: entry.id }, props: { entry, all } }));
+}
+
+const { entry, all } = Astro.props as { entry: CollectionEntry<'blog'>; all: CollectionEntry<'blog'>[] };
+const { Content } = await render(entry);
+const entwurf = entry.data.draft === true;
+const more = all.filter((a) => a.id !== entry.id).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const datum = entry.data.date.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: entry.data.title,
+    description: entry.data.description,
+    datePublished: entry.data.date.toISOString(),
+    dateModified: entry.data.date.toISOString(),
+    inLanguage: 'de-DE',
+    mainEntityOfPage: absolute(`/blog/${entry.id}/`, Astro.site),
+    image: absolute('/og-image.png?v=20261109', Astro.site),
+    ...(entry.data.tags?.length ? { keywords: entry.data.tags.join(', ') } : {}),
+    author: { '@type': 'Organization', name: company.legalName, url: absolute('/', Astro.site) },
+    publisher: { '@id': `${absolute('/', Astro.site)}#organization` },
+  },
+];
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  schema={schema}
+  noindex={entwurf}
+  breadcrumb={[{ name: 'Blog', path: '/blog/' }, { name: entry.data.title, path: `/blog/${entry.id}/` }]}
+>
+  <article class="section post">
+    <div class="wrap post__wrap">
+      <header>
+        <span class="eyebrow">Blog · <time datetime={entry.data.date.toISOString()}>{datum}</time></span>
+        <h1>{entry.data.title}</h1>
+        {entwurf && <p class="post__draft" role="note">Entwurf – wird noch geprüft</p>}
+      </header>
+
+      <div class="prose post__body">
+        <Content />
+      </div>
+
+      <aside class="post__cta" aria-labelledby="post-cta-h">
+        <div>
+          <p class="post__cta-label">Passend zum Thema</p>
+          <h2 id="post-cta-h">{WAAS.name}</h2>
+          <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Keine Seitenbegrenzung</p>
+        </div>
+        <div class="post__cta-btns">
+          <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenloses Erstgespräch</a>
+          <a class="btn btn--ghost" href={href('/preise/')}>Preis & Details</a>
+        </div>
+      </aside>
+
+      <nav class="post__more" aria-label="Weitere Beiträge">
+        <p>Weiterlesen</p>
+        <ul>
+          {more.map((m) => <li><a href={href(`/blog/${m.id}/`)}>{m.data.title}</a></li>)}
+          <li><a href={href('/blog/')}>Alle Blog-Beiträge</a></li>
+        </ul>
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post__wrap { max-width: 760px; }
+  .post h1 { font-size: clamp(2rem, 5vw, 3rem); }
+  .post__draft { display: inline-block; margin: 4px 0 28px; padding: 6px 14px; border-radius: 999px; background: var(--white); border: 1px dashed var(--accent-ink); color: var(--accent-ink); font-weight: 650; font-size: 0.9rem; }
+  .post__body { margin-top: 12px; }
+  .post__body :global(h2) { margin-top: 1.8em; }
+  .post__body :global(li) { margin-bottom: 0.4em; }
+  .post__cta { margin: 48px 0 32px; padding: clamp(22px, 4vw, 32px); border-radius: 22px; background: var(--dark); color: var(--paper); display: grid; gap: 20px; }
+  .post__cta h2 { font-size: 1.5rem; margin: 4px 0 6px; }
+  .post__cta p { margin: 0; color: var(--dark-soft); font-size: 0.92rem; }
+  .post__cta-label { color: var(--accent-light) !important; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.78rem !important; }
+  .post__cta-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .post__cta .btn--ghost { color: var(--paper); }
+  @media (max-width: 480px) { .post__cta-btns .btn { flex: 1 1 100%; } }
+  .post__more p { font-weight: 700; margin-bottom: 8px; }
+  .post__more ul { margin: 0; padding-left: 1.2em; }
+</style>
