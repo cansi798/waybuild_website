@@ -123,9 +123,10 @@ const MOTIV: Record<string, string> = {
 
   <!-- Kundenreise als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
        Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
-       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“. Jede Station ist ein Knopf
-       (aria-expanded) für ihre Leistungen: PC beim Darüberfahren oder Tastatur-Fokus, Handy beim Antippen; Klick hält sie offen.
-       Aufbau beim ersten Sichtkontakt und Knöpfe in src/scripts/kundenreise.ts; ohne JS oder bei reduzierter Bewegung steht alles offen da.
+       Fünf Stationen mit Jamils Fragen, darüber eine weich steigende Kurve bis „zufriedener Kunde“. Qualitätsprüfung (Jamil #5204):
+       am PC (ab 1000 px) stehen die Leistungen immer offen da, Fragen gleich hoch (Subgrid); unter 1000 px setzt das Skript in jede
+       Überschrift einen Knopf (aria-expanded) zum Aufklappen per Antippen. Aufbau beim ersten Sichtkontakt und Knöpfe in
+       src/scripts/kundenreise.ts; ohne JS oder bei reduzierter Bewegung steht alles offen da (Überschriften ohne Knopf).
        Bleibt der Abschnitt, der über den stehenden Hero gleitet (.stapel-paar, H2-id kontrast-h unverändert). -->
   <section class="section vreise" id="kundenreise" aria-labelledby="kontrast-h">
     <div class="wrap kr">
@@ -146,7 +147,7 @@ const MOTIV: Record<string, string> = {
               <li class="kr-station" style={`--i:${i};--y:${krY(i)}`}>
                 <span class="kr-punkt" aria-hidden="true"></span>
                 <div class="kr-kopf">
-                  <h3 class="kr-name"><button type="button" class="kr-knopf" id={`kr-k-${i}`} aria-expanded="true" aria-controls={`kr-l-${i}`} aria-describedby={`kr-f-${i}`}>{st.name}</button></h3>
+                  <h3 class="kr-name" id={`kr-k-${i}`}>{st.name}</h3>
                   <p class="kr-frage" id={`kr-f-${i}`}>{st.frage}</p>
                   <span class="kr-zeichen" aria-hidden="true">Leistungen<span class="kr-plus"></span></span>
                 </div>
