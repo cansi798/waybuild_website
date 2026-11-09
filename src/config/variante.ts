@@ -17,10 +17,25 @@ export const V_HERO = {
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
 export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
 
-/** Kontrastsatz (firma.de-Vergleich Punkt 9). */
-export const KONTRAST = {
-  satz: 'Eine Website ist schnell gebaut. Dass sie auch in zwei Jahren noch Anfragen bringt, ist die eigentliche Arbeit.',
-  text: 'Darum zahlen Sie bei uns keinen großen Betrag am Anfang, sondern einen festen Monatspreis. Darin steckt alles: Aufbau, Technik, Pflege und Ihr Ansprechpartner.',
+/** Abschnitt direkt nach dem Hero „Zusammenspiel“: Wortlaut von Jamil (Talk qh87y3sj #5176, Vorschlag 2 #5178, „Ok“ #5179, 09.11.2026).
+ *  Ersetzt den Kontrastsatz „Eine Website ist schnell gebaut …“ samt Monatspreis-Satz (Sicherung davor: Branch vor-zusammenspiel-20261109).
+ *  Bausteine in Jamils Reihenfolge, in den Kacheln ohne Schlusspunkt; Weg = die vier Stationen der Animation. Nie „aus einer Hand“. */
+export const ZUSAMMENSPIEL = {
+  titel: 'Ein guter erster Eindruck allein reicht nicht aus.',
+  unter: 'Entscheidend ist das Zusammenspiel aller Berührungspunkte.',
+  bausteine: [
+    { name: 'Website', icon: 'layout' },
+    { name: 'Google', icon: 'search' },
+    { name: 'Bewertungen', icon: 'stern' },
+    { name: 'Social Media', icon: 'users' },
+    { name: 'Kommunikation', icon: 'chat' },
+    { name: 'Prozesse', icon: 'ablauf' },
+    { name: 'CRM', icon: 'database' },
+  ] as const,
+  wirkung: 'Jeder dieser Bausteine beeinflusst, wie Ihr Unternehmen wahrgenommen wird.',
+  weg: ['Aufmerksamkeit', 'Vertrauen', 'Anfrage', 'zufriedener Kunde'],
+  saetze: ['Wir sorgen dafür, dass aus Aufmerksamkeit Vertrauen wird.', 'Aus Vertrauen eine Anfrage.', 'Und aus einer Anfrage ein zufriedener Kunde.'],
+  schluss: 'Von Anfang bis Ende. Alles aufeinander abgestimmt.',
 };
 
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */

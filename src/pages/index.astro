@@ -35,7 +35,8 @@ import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, paketById, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, HERO_KNOPF, KONTRAST, VERGLEICH } from '../config/variante';
+import { V_HERO, HERO_KNOPF, ZUSAMMENSPIEL, VERGLEICH } from '../config/variante';
+import Icon from '../components/Icon.astro';
 import { ANLIEGEN, BAUSTEINE, VERSTEHEN, BEREICHE, PAKET_JE_LEISTUNG, BAUKASTEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
@@ -109,8 +110,8 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
-  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Kontrastsatz; nur darin
-       bleibt der Hero stehen (sticky), der Kontrastsatz gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
+  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Zusammenspiel; nur darin
+       bleibt der Hero stehen (sticky), das Zusammenspiel gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
   <div class="stapel-paar">
   <section class="v-hero"><!-- ohne aria-labelledby: gleicher Satz wie die alte H2 weiter unten (axe landmark-unique) -->
     <div class="v-mesh" aria-hidden="true"><span class="v-blob v-blob--1"></span><span class="v-blob v-blob--2"></span><span class="v-blob v-blob--3"></span><span class="v-blob v-blob--4"></span></div>
@@ -129,10 +130,27 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
     <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
-  <section class="section vkontrast" aria-labelledby="kontrast-h">
-    <div class="wrap v-text">
-      <h2 id="kontrast-h">{KONTRAST.satz}</h2>
-      <p class="lead">{KONTRAST.text}</p>
+  <!-- Zusammenspiel (Jamil, Talk qh87y3sj #5176/#5178/#5179, 09.11.2026; ersetzt den Kontrastsatz, Sicherung vor-zusammenspiel-20261109):
+       sieben Bausteine als Kacheln, eine feine Linie verbindet sie und läuft weiter in den Weg Aufmerksamkeit → zufriedener Kunde.
+       Bewegung in src/scripts/zusammenspiel.ts (nur beim ersten Sichtkontakt); ohne JS oder bei reduzierter Bewegung steht alles fertig da. -->
+  <section class="section vzusammen" aria-labelledby="kontrast-h">
+    <div class="wrap zs">
+      <h2 id="kontrast-h" class="zs-titel">{ZUSAMMENSPIEL.titel}</h2>
+      <p class="lead zs-unter">{ZUSAMMENSPIEL.unter}</p>
+      <div class="zs-figur" data-zusammenspiel>
+        <svg class="zs-linie" aria-hidden="true" focusable="false"><path pathLength="1" /></svg>
+        <ul class="zs-kacheln" aria-label="Bausteine">
+          {ZUSAMMENSPIEL.bausteine.map((b, i) => (
+            <li class="zs-kachel" style={`--i:${i}`}><span class="zs-symbol"><Icon name={b.icon} /></span><span class="zs-name">{b.name}</span></li>
+          ))}
+        </ul>
+        <ol class="zs-weg" aria-hidden="true">
+          {ZUSAMMENSPIEL.weg.map((w) => <li class="zs-station"><span class="zs-punkt"></span><span class="zs-wort">{w}</span></li>)}
+        </ol>
+      </div>
+      <p class="zs-wirkung">{ZUSAMMENSPIEL.wirkung}</p>
+      <p class="zs-saetze">{ZUSAMMENSPIEL.saetze.map((t, i) => <>{i > 0 && ' '}<span>{t}</span></>)}</p>
+      <p class="zs-schluss">{ZUSAMMENSPIEL.schluss}</p>
     </div>
   </section>
   </div>
@@ -412,4 +430,5 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 <script>
   import '../scripts/startseite.ts';
   import '../scripts/stapel.ts';
+  import '../scripts/zusammenspiel.ts';
 </script>

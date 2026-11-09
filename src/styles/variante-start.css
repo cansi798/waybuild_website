@@ -15,7 +15,74 @@
 .v-cta { text-align: center; }
 .v-cta .v-knopfe { justify-content: center; }
 
-.vkontrast h2 { max-width: 26ch; }
+/* ZUSAMMENSPIEL (Jamil, Talk qh87y3sj #5176/#5178/#5179, 09.11.2026; ersetzt den Kontrastsatz, Sicherung vor-zusammenspiel-20261109).
+ * Sieben Bausteine als kleine Kacheln mit Linien-Icon, darunter der Weg Aufmerksamkeit → Vertrauen → Anfrage → zufriedener Kunde.
+ * PC: Kacheln und Weg nebeneinander in je einer Reihe; die Linie läuft durch die Kacheln, an „CRM“ in einer ruhigen Schleife zurück
+ * nach links und durch den Weg. Unter 900 px alles untereinander, die Linie läuft senkrecht. Die Linie (SVG) zeichnet src/scripts/zusammenspiel.ts;
+ * ohne JS stehen zwei einfache CSS-Linien da (::before), alles sichtbar. Bewegung nur mit .zs-bereit (setzt das Skript, nicht bei
+ * reduzierter Bewegung) und erst mit .ist-los (erster Sichtkontakt): Kacheln wie die Hero-Wörter (Deckkraft, Unschärfe → scharf,
+ * Abstand 140 ms), dann zeichnet sich die Linie (stroke-dashoffset, linear) und jede Kachel bzw. Station leuchtet kurz auf, wenn die
+ * Linie sie erreicht (--t vom Skript). Endzustand = Zustand ohne JS. Schrift ≥ 4,5 : 1 auf --paper. */
+.section.vzusammen { padding-block: clamp(40px, 7vh, 88px); }
+.zs { text-align: center; }
+.zs-titel { max-width: 26ch; margin-inline: auto; }
+.zs-unter { margin: 0 auto; text-wrap: balance; }
+.zs-figur { --zs-linie: #00807b; position: relative; max-width: 1040px; margin: clamp(28px, 5vh, 52px) auto clamp(24px, 4.5vh, 44px); }
+.zs-linie { display: none; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.zs-figur.zs-js .zs-linie { display: block; }
+.zs-linie path { fill: none; stroke: var(--zs-linie); stroke-width: 1.5; stroke-linejoin: round; }
+.zs-kacheln, .zs-weg { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; }
+.zs-kacheln { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.zs-kachel { display: flex; flex-direction: column; align-items: center; gap: 12px; min-width: 0; }
+.zs-symbol { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--white);
+  border: 1px solid #cfe4e2; color: var(--accent-ink); box-shadow: 0 10px 24px -16px rgb(0 79 76 / 55%); }
+.zs-name { font-family: var(--font-head); font-weight: 650; font-size: 0.95rem; line-height: 1.3; color: var(--ink); overflow-wrap: anywhere; }
+.zs-weg { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(64px, 9vh, 96px); }
+.zs-station { --zs-ende: var(--paper); display: flex; flex-direction: column; align-items: center; gap: 12px; min-width: 0; }
+.zs-station:last-child { --zs-ende: var(--zs-linie); }
+.zs-punkt { flex: none; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--zs-linie); background: var(--zs-ende); }
+.zs-wort { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.3; color: var(--accent-ink); }
+/* ohne JS: gerade Linien durch Kacheln und Stationen */
+.zs-figur:not(.zs-js) .zs-kacheln::before, .zs-figur:not(.zs-js) .zs-weg::before { content: ''; position: absolute; z-index: -1;
+  border-top: 1.5px solid var(--zs-linie); left: calc(100% / 14); right: calc(100% / 14); top: 27px; }
+.zs-figur:not(.zs-js) .zs-weg::before { left: calc(100% / 8); right: calc(100% / 8); top: 8px; }
+.zs-wirkung, .zs-saetze { max-width: 62ch; margin: 0 auto 16px; font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.7; }
+.zs-wirkung { color: var(--ink); }
+.zs-saetze { color: var(--ink-soft); }
+.zs-schluss { margin: 0 auto; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.4; color: var(--accent-ink); text-wrap: balance; }
+@media (max-width: 899px) {
+  .zs-figur { width: fit-content; max-width: 100%; }
+  .zs-kacheln { grid-template-columns: 1fr; gap: 10px; }
+  .zs-kachel { flex-direction: row; gap: 14px; }
+  .zs-symbol { width: 42px; height: 42px; border-radius: 13px; }
+  .zs-symbol .icon { width: 22px; height: 22px; }
+  .zs-name { font-size: 1rem; text-align: left; }
+  .zs-weg { grid-template-columns: 1fr; gap: 20px; margin-top: 34px; }
+  .zs-station { flex-direction: row; gap: 26px; padding-left: 12px; } /* Punkt-Mitte = Kachel-Mitte (21 px) */
+  .zs-wort { text-align: left; }
+  .zs-figur:not(.zs-js) .zs-kacheln::before, .zs-figur:not(.zs-js) .zs-weg::before {
+    border-top: 0; border-left: 1.5px solid var(--zs-linie); left: 20px; right: auto; top: 21px; bottom: 21px; }
+  .zs-figur:not(.zs-js) .zs-weg::before { top: 9px; bottom: 9px; }
+  .zs-saetze span { display: block; }
+}
+/* Bewegung (nur mit .zs-bereit vom Skript) */
+.zs-figur.zs-bereit .zs-kachel { opacity: 0; }
+.zs-figur.zs-bereit .zs-station { opacity: 0.35; }
+.zs-figur.zs-bereit .zs-linie path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.zs-figur.zs-bereit.ist-los .zs-kachel { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--i) * 140ms); }
+.zs-figur.zs-bereit.ist-los .zs-linie path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--zug, 3400ms) linear var(--start, 1100ms); }
+.zs-figur.zs-bereit.ist-los .zs-symbol { animation: zs-treffer 1000ms ease-out var(--t, 0ms) both; }
+.zs-figur.zs-bereit.ist-los .zs-station { animation: zs-an 600ms ease-out var(--t, 0ms) both; }
+.zs-figur.zs-bereit.ist-los .zs-punkt { animation: zs-puls 1100ms ease-out var(--t, 0ms) both; }
+@keyframes zs-treffer {
+  0%, 100% { border-color: #cfe4e2; box-shadow: 0 10px 24px -16px rgb(0 79 76 / 55%), 0 0 0 0 rgb(0 166 161 / 0%); }
+  35% { border-color: var(--zs-linie); box-shadow: 0 10px 24px -16px rgb(0 79 76 / 55%), 0 0 0 7px rgb(0 166 161 / 18%); } }
+@keyframes zs-an { from { opacity: 0.35; } to { opacity: 1; } }
+@keyframes zs-puls {
+  0% { background: var(--paper); transform: none; box-shadow: 0 0 0 0 rgb(0 166 161 / 0%); }
+  30% { background: var(--zs-linie); transform: scale(1.3); box-shadow: 0 0 0 9px rgb(0 166 161 / 22%); }
+  100% { background: var(--zs-ende); transform: none; box-shadow: 0 0 0 0 rgb(0 166 161 / 0%); } }
+@media (prefers-reduced-motion: reduce) { .zs-figur *, .zs-figur *::before { animation: none !important; transition: none !important; } }
 
 /* Vergleich nach Anbieter-Art */
 .vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
@@ -105,12 +172,12 @@
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
- * nur der neue obere Teil der Startseite: Einstieg (oben), Kontrastsatz, Pakete, Vergleich, Ablauf, Was Sie beitragen,
+ * nur der neue obere Teil der Startseite: Einstieg (oben), Zusammenspiel, Pakete, Vergleich, Ablauf, Was Sie beitragen,
  * Abschluss (Fragen seit #5136–#5138 auf /fragen/). Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
  * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
  * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
 :root { --kopf-gesamt: calc(var(--header-h) + 1px); }
-.vkontrast, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
+.vzusammen, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
   min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
   display: flex; flex-direction: column; justify-content: center;
 }
