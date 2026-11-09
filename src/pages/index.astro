@@ -11,7 +11,7 @@
 //   Bausteine als vier getrennte Module mit verlorener Anfrage (statt Puzzle), Erstberatung in #denkweise integriert
 //   (vier Schritte Verstehen/Empfehlen/Umsetzen/Verbessern), eigener Abschnitt „So läuft die Erstberatung“ entfernt.
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
-// Texte in src/config/startseite.ts, Stil in src/styles/startseite.css, Bewegung in src/scripts/startseite.ts
+// Texte in src/config/startseite.ts, Stil in src/styles/startseite.css (Bewegung: kundenreise.ts, vorgehen.ts, stapel.ts; startseite.ts am 09.11. entfernt)
 // (nur transform/opacity/stroke-dashoffset). Farben seit 08.11.2026 (Jamil #5008) wieder CI-Türkis wie alle Seiten; thema="besucherreise" steuert nur noch Kopf/Fuß-Inhalte.
 // Die alte Startseite steht unverändert unter /hauptseite-alt/.
 //
@@ -31,9 +31,12 @@
 // 09.11.2026 (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190; Sicherung Branch vor-so-gehen-wir-vor-20261109): nach der Kundenreise
 //   „So gehen wir vor“ (Verstehen, Verbinden, Verbessern; Komponente start/SoGehenWirVor.astro, Texte config/vorgehen.ts). Er trägt
 //   jetzt die Anker #denkweise und #erstberatung; der alte Abschnitt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (VERSTEHEN) ist entfernt.
+// 09.11.2026 (Jamil, Talk qh87y3sj #5192, „ok“ #5194; Sicherung Branch vor-prinzipien-volltext-20261109): „So arbeiten wir.“ (#arbeitsweise)
+//   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Check from '../components/start/Check.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
+import Prinzipien from '../components/start/Prinzipien.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import VAblauf from '../components/variante/VAblauf.astro';
@@ -43,8 +46,7 @@ import Bild from '../components/Bild.astro';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, HERO_KNOPF, KUNDENREISE, ARBEITSWEISE, VERGLEICH } from '../config/variante';
-import Icon from '../components/Icon.astro';
+import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { ANLIEGEN, REFERENZEN, TEAM, STIMMEN, ABSCHLUSS, CLAIM, MARKE } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
@@ -169,24 +171,10 @@ const MOTIV: Record<string, string> = {
        #erstberatung (Schritt 1, Erstgespräch). Ersetzt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ weiter unten. -->
   <SoGehenWirVor />
 
-  <!-- So arbeiten wir (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026): drei Grundsätze, ruhig, eigener Abschnitt nach der
-       Kundenreise (nicht Teil des Stapels). Sanftes Einblenden beim ersten Sichtkontakt ([data-zeichne] → .ist-los, startseite.ts). -->
-  <section class="section vprinzip" id="arbeitsweise" aria-labelledby="arbeiten-h">
-    <div class="wrap">
-      <div class="section-head center">
-        <h2 id="arbeiten-h" class="rule">{ARBEITSWEISE.titel}</h2>
-      </div>
-      <ul class="sa-liste" data-zeichne>
-        {ARBEITSWEISE.prinzipien.map((p, i) => (
-          <li class="sa-karte" style={`--i:${i}`}>
-            <span class="sa-zeichen" aria-hidden="true"><Icon name={p.icon} size={26} /></span>
-            <h3 class="sa-wort">{p.wort}</h3>
-            <p class="sa-text">{p.text}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <!-- So arbeiten wir. (Jamil, Talk qh87y3sj #5192, „ok“ #5194, 09.11.2026; Sicherung vor-prinzipien-volltext-20261109): Verantwortung,
+       Einfachheit, Verlässlichkeit mit Jamils vollem Text, ohne Animation. PC drei Spalten, Handy untereinander. Ersetzt die kurze
+       Fassung vom Vormittag (#5187). Direkt vor den Preisen. -->
+  <Prinzipien />
 
   <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
        Anker #pakete und #baukasten (alte Links aus Check und Hero) zeigen hierher. -->
@@ -361,7 +349,6 @@ const MOTIV: Record<string, string> = {
 </BaseLayout>
 
 <script>
-  import '../scripts/startseite.ts';
   import '../scripts/stapel.ts';
   import '../scripts/kundenreise.ts';
 </script>

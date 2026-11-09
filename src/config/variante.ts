@@ -35,16 +35,6 @@ export const KUNDENREISE = {
   schluss: 'Von Anfang bis Ende. Alles aufeinander abgestimmt.',
 };
 
-/** Abschnitt direkt nach der Kundenreise „So arbeiten wir.“ (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026). Wortlaut aus dem Plan. */
-export const ARBEITSWEISE = {
-  titel: 'So arbeiten wir.',
-  prinzipien: [
-    { wort: 'Verantwortung', text: 'Wir kümmern uns, bis es läuft, und sagen offen, wenn sich etwas nicht lohnt.', icon: 'shield' },
-    { wort: 'Einfachheit', text: 'Klare Sprache, feste Monatspreise, Änderungen per Chat oder Sprachnachricht.', icon: 'chat' },
-    { wort: 'Verlässlichkeit', text: 'Antwort innerhalb eines Werktags. Verzögert sich etwas, hören Sie es zuerst von uns.', icon: 'clock' },
-  ] as const,
-};
-
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */
 export const VERGLEICH = {
   spalten: ['Selbst machen', 'Baukasten', 'Agentur', 'waybuild'],

@@ -1,10 +1,10 @@
-/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190), 09.11.2026.
+/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190) und „So arbeiten wir.“ (.pz-*, #5192/#5194), 09.11.2026.
  * Reihenfolge der Hintergründe: Kundenreise (Papier, weiße Karte) → So gehen wir vor (Weiß) → So arbeiten wir. (zartes Türkis
  * #eaf5f4) → Pakete (Sand). Kontrast (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4), Fließtext
- * --ink-soft (7,5 : 1), Hervorhebungen #004f4c; Linien #00807b (4,8 : 1 auf Weiß). Mindestens eine Bildschirmseite. */
+ * --ink-soft (7,5 : 1), Hervorhebungen #004f4c; Linien #00807b (4,8 : 1 auf Weiß). Beide Abschnitte mindestens eine Bildschirmseite. */
 
 /* ── So gehen wir vor ── */
-.section.vg { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
+.section.vg, .section.pz { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
   display: flex; flex-direction: column; justify-content: center; }
 .section.vg { background: var(--white); }
 .vg-kopf { max-width: 760px; }
@@ -56,3 +56,21 @@
   .vg-bereit .vg-nr, .vg-bereit .vg-inhalt { opacity: 1; transform: none; filter: none; }
   .vg-bereit .vg-schritt::after { transform: none; }
 }
+
+/* ── So arbeiten wir. (keine Animation) ── */
+.section.pz { background: #eaf5f4; }
+.pz-liste { list-style: none; width: 100%; max-width: 1180px; margin: clamp(8px, 2vh, 20px) auto 0; padding: 0; display: grid; gap: 22px; }
+@media (min-width: 960px) { .pz-liste { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
+@media (max-width: 959px) { .pz-liste { max-width: 640px; } }
+.pz-karte { display: flex; flex-direction: column; min-width: 0; padding: clamp(26px, 3vw, 38px) clamp(22px, 2.6vw, 34px); border-radius: 18px;
+  background: var(--white); border: 1px solid #d5e8e6; box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 14px 36px -26px rgb(0 79 76 / 40%); }
+.pz-wort { margin: 0 0 14px; font-size: clamp(1.75rem, 2.6vw, 2.3rem) !important; font-weight: 700; line-height: 1.1; letter-spacing: -0.025em;
+  color: var(--accent-ink); hyphens: manual; overflow-wrap: break-word; }
+.pz-wort::before { content: ''; display: block; width: 40px; height: 3px; margin-bottom: 18px; border-radius: 2px; background: var(--accent); }
+.pz-leit { margin: 0 0 20px; padding-bottom: 20px; border-bottom: 1px solid #d5e8e6; font-family: var(--font-head); font-size: clamp(1.06rem, 1.4vw, 1.15rem);
+  font-weight: 600; line-height: 1.5; color: var(--dark); text-wrap: pretty; }
+.pz-text { flex: 1; }
+.pz-text p { margin: 0 0 0.45em; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.pz-text p:last-child { margin-bottom: 0; }
+.pz-schluss { margin: 22px 0 0; padding: 14px 16px; border-left: 3px solid #00807b; border-radius: 0 12px 12px 0; background: #eaf5f4;
+  font-family: var(--font-head); font-size: 1.02rem; font-weight: 650; line-height: 1.6; color: var(--dark); text-wrap: pretty; }

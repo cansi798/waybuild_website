@@ -6,8 +6,8 @@
  * Weiß 3,0 : 1); Schrift und Links auf Hell in #006b68 (6,4 : 1) bzw. #004f4c; auf Türkis-Flächen Schrift #0b2a29
  * (5,1 : 1); auf Dunkel Türkis-Hell #5fe0da (5,9 : 1). Bezeichnungen der Hauptseite: --accent-mid / --accent-light / --on-accent.
  * html[data-thema='besucherreise'] steuert nur noch Inhalte von Kopf, Fuß und Leiste (Marke als Text, kein Logo).
- * Bewegung nur über transform, opacity und stroke-dashoffset (--p aus src/scripts/startseite.ts). Ohne JS bzw. bei
- * reduzierter Bewegung steht alles fertig da ([data-p] → --p: 1). */
+ * Bewegung: src/scripts/startseite.ts am 09.11.2026 entfernt (keine Nutzer mehr: [data-p], [data-fokus], [data-zeichne]).
+ * Kundenreise und „So gehen wir vor“ haben eigene Skripte (kundenreise.ts, vorgehen.ts). */
 
 html[data-thema='besucherreise'] {
   /* Rollen der früheren Sonder-Palette, jetzt auf die CI gelegt */
@@ -32,10 +32,6 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
  * (#5011, Commit 725904a) ist entfernt; Sicherungen vor-header-dunkel-20261108 und vor-direkt-buchen-20261108. */
 .bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 
-/* Fortschritt: Standard ohne JS / reduzierte Bewegung = fertig */
-[data-p] { --p: 1; }
-html.js [data-p] { --p: 0; }
-@media (prefers-reduced-motion: reduce) { html.js [data-p] { --p: 1 !important; } }
 
 /* ── Abschnitte ── */
 .bs { padding-block: clamp(56px, 8vw, 112px); background: var(--paper); }

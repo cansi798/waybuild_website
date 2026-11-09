@@ -106,26 +106,6 @@
 @keyframes kr-punkt { from { transform: scale(0); } to { transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .kr-karte *, .kr-karte *::before, .kr-karte *::after { animation: none !important; transition: none !important; } }
 
-/* SO ARBEITEN WIR (Jamil, Plan „ok“ Talk qh87y3sj #5187, 09.11.2026): drei Grundsätze als ruhige Karten im Stil von
- * „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (Zeichen auf der Oberkante), auf zartem Türkis zwischen der weißen Kundenreise
- * und den Paketen (Sand). Einblenden beim ersten Sichtkontakt ([data-zeichne] → .ist-los, startseite.ts), nur ohne reduzierte Bewegung. */
-.section.vprinzip { background: #eaf5f4; }
-.sa-liste { list-style: none; width: 100%; max-width: 1180px; margin: clamp(44px, 6vh, 68px) auto 0; padding: 0; display: grid; gap: 52px 22px; }
-@media (min-width: 900px) { .sa-liste { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 899px) { .sa-liste { max-width: 560px; } }
-.sa-karte { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
-  padding: 52px clamp(22px, 3vw, 34px) clamp(26px, 3vw, 34px); border-radius: var(--radius); background: var(--white); border: 1px solid #d5e8e6;
-  box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 10px 30px rgb(0 79 76 / 6%); }
-.sa-zeichen { position: absolute; top: 0; left: 50%; display: grid; place-items: center; width: 64px; height: 64px; margin: -32px 0 0 -32px;
-  border-radius: 50%; background: var(--white); border: 1.5px solid #cfe5e3; color: var(--accent-ink); box-shadow: 0 8px 20px -14px rgb(0 79 76 / 50%); }
-.sa-wort { margin: 0 0 12px; font-size: clamp(1.5rem, 2.2vw, 1.9rem) !important; line-height: 1.15; letter-spacing: -0.02em; }
-.sa-text { margin: 0; max-width: 34ch; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); }
-@media (prefers-reduced-motion: no-preference) {
-  html.js .sa-liste:not(.ist-los) .sa-karte { opacity: 0; transform: translateY(16px); filter: blur(8px); }
-  .sa-liste.ist-los .sa-karte { transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
-    transition-delay: calc(var(--i) * 160ms); }
-}
-
 /* Vergleich nach Anbieter-Art */
 .vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
 .vvgl { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
@@ -214,12 +194,12 @@
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
- * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, So arbeiten wir, Pakete, Vergleich, Ablauf, Was Sie beitragen,
- * Abschluss (Fragen seit #5136–#5138 auf /fragen/). Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
+ * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, Pakete, Vergleich, Ablauf, Was Sie beitragen,
+ * Abschluss (Fragen seit #5136–#5138 auf /fragen/); „So gehen wir vor“ und „So arbeiten wir.“ in vorgehen.css. Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
  * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
  * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
 :root { --kopf-gesamt: calc(var(--header-h) + 1px); }
-.vreise, .vprinzip, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
+.vreise, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
   min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
   display: flex; flex-direction: column; justify-content: center;
 }
