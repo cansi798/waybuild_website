@@ -4,6 +4,7 @@
 // WICHTIG (UWG): Das sind EIGENE Zusagen, keine fremden Prüfzeichen – kein „Testsieger“, „zertifiziert von“ o. ä.
 // UWG (Jamil, Talk qh87y3sj #5204/#5215, 09.11.2026): keine absoluten Zeitzusagen, Zeiten immer mit „in der Regel“;
 // „kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr)“ wie in der Zeitleiste (variante.ts).
+// Jamil, Talk qh87y3sj #5223: Ansprechpartner-Versprechen jetzt „Bei uns antwortet ein Mensch, keine Maschine.“, Siegel „Ein Mensch antwortet“.
 import { WAAS, type IconName } from './site';
 export type Versprechen = {
   id: string;
@@ -19,8 +20,8 @@ export const VERSPRECHEN: Versprechen[] = [
   {
     id: 'ansprechpartner',
     icon: 'user',
-    title: 'Sie erreichen immer einen Menschen',
-    zeilen: ['Immer ein', 'Mensch'],
+    title: 'Bei uns antwortet ein Mensch, keine Maschine',
+    zeilen: ['Ein Mensch', 'antwortet'],
     short: 'Ein fester Ansprechpartner.',
     long: 'Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt. Sie landen weder in einem Callcenter noch in einem Ticketsystem.',
   },

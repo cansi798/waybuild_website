@@ -44,7 +44,7 @@ export const GET: APIRoute = async ({ site }) => {
     '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
     `- Ablauf: ${steps.map((s, i) => `${i + 1}. ${s.title}`).join(', ')}. Online in der Regel innerhalb von 14 Tagen, nachdem die Inhalte vorliegen.`,
-    '- Service-Versprechen: immer ein Mensch als fester Ansprechpartner, Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
+    '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
     `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
     '',

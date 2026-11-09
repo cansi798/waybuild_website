@@ -60,7 +60,7 @@ export const PRINZIPIEN = {
     },
     {
       wort: 'Verlässlichkeit',
-      leit: 'Wir sorgen dafür, dass nichts verloren geht und Sie wissen, woran Sie sind.',
+      leit: 'Wir sorgen dafür, dass Anfragen nicht untergehen und Sie wissen, woran Sie sind.',
       zeilen: [
         'Wir glauben, dass gute Zusammenarbeit planbar sein sollte.',
         'Anfragen dürfen nicht verloren gehen.',
