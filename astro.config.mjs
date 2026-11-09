@@ -30,7 +30,7 @@ export default defineConfig({
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
-      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|hauptseite-alt)\/?$/.test(page)
+      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|hauptseite-alt|referenzen)\/?$/.test(page)
         // Frühere Variante /variante/ (Jamil #5016) ist seit 08.11.2026 (#5056) die richtige /preise/-Seite; unter /variante/ stehen nur noch Weiterleitungsseiten (src/pages/variante/[...pfad].astro), nie in die Sitemap
         && !/\/variante\//.test(page)
         && !blogEntwuerfe.some((id) => page.replace(/\/$/, '').endsWith(`/blog/${id}`))

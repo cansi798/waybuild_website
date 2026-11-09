@@ -2,8 +2,7 @@
 title: 'KI-Suche: Was sich für kleine Unternehmen ändert'
 description: 'ChatGPT, Google mit KI-Übersichten und Co.: was die KI-Suche für kleine Unternehmen bedeutet und welche Grundlagen Ihre Website dafür braucht.'
 date: 2026-11-09
-# ENTWURF für Jamil zum Gegenlesen (Talk qh87y3sj #5264). Bewusst allgemein und vorsichtig formuliert, ohne Zahlen und ohne Ranking-Versprechen.
-draft: true
+# Freigegeben von Jamil (Talk qh87y3sj #5322, „gut“). Bewusst allgemein und vorsichtig formuliert, ohne Zahlen und ohne Ranking-Versprechen.
 tags: ['KI-Suche', 'Sichtbarkeit']
 ---
 

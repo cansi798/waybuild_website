@@ -1,6 +1,6 @@
 ---
 // Feste Leiste unten (mobil + Tablet), dauerhaft sichtbar (Bauwelt-Muster):
-// Erstgespräch (Haupt-CTA) + WhatsApp. Doppelte Buttons im Inhalt sind mobil ausgeblendet (.nur-desktop).
+// „Kostenlose Erstberatung“ (Haupt-CTA, überall gleich, Jamil #5322 Q2) + WhatsApp. Doppelte Buttons im Inhalt sind mobil ausgeblendet (.nur-desktop).
 // Startseite (nachHero, Jamil, Talk qh87y3sj #5204, 09.11.2026): die Leiste erscheint erst, wenn der Hero-Knopf
 // („.v-hero .v-knopfe“) aus dem Blick ist (oben hinausgescrollt oder von der darübergleitenden Kundenreise verdeckt), und
 // verschwindet wieder, sobald er zurück im Blick ist. Weiches Ein-/Ausgleiten (nur transform/opacity, kein Layoutsprung),
@@ -15,7 +15,7 @@ const reise = Astro.props.thema === 'besucherreise';
 ---
 
 <aside class="sticky-bar" aria-label="Schnellkontakt" data-nach-hero={Astro.props.nachHero ? '' : undefined}>
-  <a class="btn btn--primary btn--sm sticky-bar__btn" href={reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/')}>{reise ? ANLIEGEN.erstberatung.label : 'Kostenloses Erstgespräch'}</a>
+  <a class="btn btn--primary btn--sm sticky-bar__btn" href={reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/')}>{ANLIEGEN.erstberatung.label}</a>
   <a class="btn btn--ghost btn--sm sticky-bar__btn sticky-bar__wa" href={whatsappLink()} target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben">
     <Icon name="whatsapp" size={18} /> WhatsApp
   </a>

@@ -2,9 +2,8 @@
 title: 'Warum wir Websites im Abo anbieten'
 description: 'Website im Abo statt Einmalprojekt: drei feste Monatspakete ohne Einrichtungskosten, Technik und Änderungen inklusive. Was das für Sie bedeutet.'
 date: 2026-11-09
-# ENTWURF für Jamil zum Gegenlesen (Talk qh87y3sj #5264). Preise und Zeiten Stand 09.11.2026 aus src/config/pakete-abo.ts
+# Freigegeben von Jamil (Talk qh87y3sj #5322, „gut“). Preise und Zeiten Stand 09.11.2026 aus src/config/pakete-abo.ts
 # und src/config/variante.ts. Ändern sich dort Preise, diesen Text bitte mit anpassen.
-draft: true
 tags: ['Website as a Service', 'Preise']
 ---
 

@@ -27,15 +27,15 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 ---
 
 <BaseLayout
-  title="Kontakt & kostenloses Erstgespräch"
-  description="Kostenloses Erstgespräch zu Website as a Service anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
+  title="Kontakt & kostenlose Erstberatung"
+  description="Kostenlose Erstberatung zu Website as a Service anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
 >
   <PageHeader
     eyebrow="Kontakt"
     title="Lassen Sie uns sprechen."
-    lead="Antwort in der Regel am nächsten Werktag. Erstgespräch kostenlos."
+    lead="Antwort in der Regel am nächsten Werktag. Erstberatung kostenlos."
   />
 
   <section class="section">
@@ -84,11 +84,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
           <input type="checkbox" name="datenschutz" required />
           <span>Ich habe die <a href={href('/datenschutz/')}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span>
         </label>
-        <button class="btn btn--primary" type="submit">Kostenloses Erstgespräch anfragen</button>
+        <button class="btn btn--primary" type="submit">Kostenlose Erstberatung anfragen</button>
         <ol class="after" aria-label="So geht es weiter">
           <li><strong>Heute</strong> Anfrage senden</li>
           <li><strong>1 Werktag</strong> In der Regel melden wir uns</li>
-          <li><strong>20 Min.</strong> Erstgespräch</li>
+          <li><strong>20 Min.</strong> Erstberatung</li>
         </ol>
         {!endpoint && (
           <Hint label="Formular-Versand (Web3Forms-Key)" where="GitHub → Settings → Secrets and variables → Actions → Variables → WEB3FORMS_KEY">
@@ -111,7 +111,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
         </div>
         <ul class="promise">
           <li><strong>Antwort in der Regel am nächsten Werktag</strong>Persönlich, nicht automatisiert.</li>
-          <li><strong>Kostenlos & unverbindlich</strong>Das Erstgespräch kostet nichts.</li>
+          <li><strong>Kostenlos & unverbindlich</strong>Die Erstberatung kostet nichts.</li>
           <li><strong>Ehrliche Beratung</strong>Wir empfehlen, was Sie wirklich brauchen.</li>
         </ul>
       </aside>

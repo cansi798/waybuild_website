@@ -30,7 +30,7 @@ Wir erarbeiten die Inhalte Ihrer Website gemeinsam mit Ihnen:
 - Texte, die Ihr Angebot in der Sprache Ihrer Kunden erklären
 - ein Seitenaufbau, der die wichtigsten Fragen beantwortet: Leistungen, Ablauf, Einsatzgebiet und Kontakt
 - Antworten auf häufige Fragen Ihrer Kunden
-- Referenzen und Arbeitsbeispiele, verständlich aufbereitet, wenn Sie echte Projekte zeigen möchten
+- Beispiele aus Ihrer Arbeit, verständlich aufbereitet, wenn Sie echte Projekte zeigen möchten
 - Ihre vorhandenen Fotos und Unterlagen, sinnvoll eingebunden
 
 Dabei gilt: Wir schreiben nur, was stimmt. Erfundene Beispiele oder Kundenstimmen gibt es bei uns nicht. Wie Sie echte Stimmen Ihrer Kunden sammeln und zeigen, lesen Sie unter [Bewertungen](/leistungen/bewertungen/).

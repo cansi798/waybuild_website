@@ -143,7 +143,7 @@
 /* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
  * ganz in Türkis bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
  * Überschrift, Unterzeile und Knöpfe mittig, keine Preise. Schrift Weiß.
- * Ein Knopf „Jetzt kostenlos beraten lassen“ (weiß, #006b68, Lichtschein, #5121–#5124); der zweite Knopf ist entfallen.
+ * Ein Knopf „Kostenlose Erstberatung“ (seit #5322 Q2; vorher „Jetzt kostenlos beraten lassen“; weiß, #006b68, Lichtschein, #5121–#5124); der zweite Knopf ist entfallen.
  * HINTERGRUND (#5114, wie firma.de): weicher Mesh-Verlauf aus 4 großen, weichen Farbflächen (.v-blob, radial-gradient)
  * in #00a6a1, #5fe0da (Hauch), #006b68 und #00807b auf Grund #00807b; jede bewegt sich SEHR langsam (26–38 s, nur
  * transform, GPU-freundlich). Darüber (::after) eine weiche Abdunklung in #006b68 hinter Unterzeile und Knöpfen und ein

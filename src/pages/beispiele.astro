@@ -1,0 +1,66 @@
+---
+// Beispiele (früher „Referenzen“, Jamil, Talk qh87y3sj #5288, 09.11.2026): echte Projekte nach Bereichen, zuerst „Websites“.
+// Seit #5322 (Q5) heißt die Seite „Beispiele“ unter /beispiele/; /referenzen/ ist nur noch eine Weiterleitung (src/pages/referenzen.astro).
+// Bereiche in src/config/referenzen.ts (später z. B. „Software“), Karten = gemeinsame Komponente ReferenzKarten
+// (gleiche Karten wie Startseite und /leistungen/website/). Die früheren MUSTER-Beispiele (config/home.ts) sind
+// seitdem nicht mehr zu sehen, weil echte, freigegebene Projekte da sind (Jamil #4932).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Siegel from '../components/Siegel.astro';
+import ReferenzKarten from '../components/referenzen/ReferenzKarten.astro';
+import { REFERENZ_BEREICHE } from '../config/referenzen';
+import { ANLIEGEN } from '../config/startseite';
+import { href } from '../lib/paths';
+
+const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<BaseLayout
+  title="Beispiele aus unserer Arbeit"
+  description="Echte Projekte von waybuild: Websites für Unternehmen aus Norderstedt und Hamburg, mit Ausgangslage, Umsetzung und gemessenem Ergebnis."
+  breadcrumb={[{ name: 'Beispiele', path: '/beispiele/' }]}
+>
+  <PageHeader eyebrow="Beispiele" title="Beispiele aus unserer Arbeit." lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
+    {REFERENZ_BEREICHE.length > 1 && (
+      <nav class="rbereiche" aria-label="Bereiche">
+        <ul>{REFERENZ_BEREICHE.map((b) => <li><a href={`#${b.id}`}>{b.titel}</a></li>)}</ul>
+      </nav>
+    )}
+  </PageHeader>
+
+  {REFERENZ_BEREICHE.map((b, i) => (
+    <section class:list={['section rbereich', { 'section--sand': i % 2 === 1 }]} id={b.id} aria-labelledby={`${b.id}-h`}>
+      <div class="wrap">
+        <div class="rbereich__kopf">
+          <span class="eyebrow">Bereich</span>
+          <h2 id={`${b.id}-h`}>{b.titel}</h2>
+          <p class="lead">{b.text}</p>
+        </div>
+        <ReferenzKarten liste={b.liste} />
+        {b.id === 'websites' && <p class="rmehr"><a href={href('/leistungen/website/')}>Mehr zur Leistung Website</a></p>}
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <p class="next"><a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a></p>
+    </div>
+  </section>
+
+  <Siegel fakten={['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Ladezeiten', 'Hosting in Deutschland']} />
+</BaseLayout>
+
+<style>
+  .rbereiche ul { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .rbereiche a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 16px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 650; color: var(--ink); text-decoration: none; }
+  .rbereich { scroll-margin-top: calc(var(--header-h) + 8px); }
+  .rbereich__kopf { max-width: 720px; }
+  .rbereich__kopf h2 { margin: 0 0 0.4em; }
+  .rbereich__kopf .lead { margin: 0; }
+  .rmehr { margin: 24px 0 0; text-align: center; }
+  .rmehr a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
+  .section--tight { padding-block: 0 clamp(36px, 6vw, 64px); }
+  .next { margin: 0; text-align: center; }
+  @media (max-width: 599px) { .next .btn { width: 100%; } }
+</style>

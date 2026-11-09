@@ -35,7 +35,7 @@ export const TAGESSATZ = 760;
 export const STUNDENSATZ_VERTRAG = 85;
 
 export const NETTO_HINWEIS = 'Alle Preise netto zzgl. 19 % USt. Unser Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.';
-export const REAKTION_HINWEIS = 'Antwortzeiten gelten werktags (Mo–Fr, 9–18 Uhr) und beschreiben, wann wir mit der Bearbeitung beginnen – nicht die Lösungszeit.';
+export const REAKTION_HINWEIS = 'Antwortzeiten gelten werktags (Mo–Fr, 9 bis 17 Uhr) und beschreiben, wann wir mit der Bearbeitung beginnen – nicht die Lösungszeit.';
 
 const eur = (n: number, ab = false) =>
   `${ab ? 'ab ' : ''}${new Intl.NumberFormat('de-DE', { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 }).format(n)} €`;

@@ -15,7 +15,7 @@ export const V_HERO = {
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
-export const HERO_KNOPF = 'Jetzt kostenlos beraten lassen';
+export const HERO_KNOPF = 'Kostenlose Erstberatung'; // überall gleicher Haupt-CTA (Jamil, Talk qh87y3sj #5322 Q2)
 
 /** Abschnitt direkt nach dem Hero „Kundenreise“ als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182: „wirkt wie ein Arbeitsprozess,
  *  muss eine Customer Journey sein“, Variante B #5184, Text #5185, Plan „ok“ #5187, 09.11.2026). Ersetzt das „Zusammenspiel“ mit

@@ -68,7 +68,7 @@ const schema = [
             <p>{leistungPreis ? `${leistungPreis} · netto · ` : ''}{leistung.teaser}</p>
           </div>
           <div class="art__cta-btns">
-            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=${leistung.slug}`}>Kostenloses Erstgespräch</a>
+            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=${leistung.slug}`}>Kostenlose Erstberatung</a>
             {/* Alte Leistungsseiten sind seit 09.11.2026 unverlinkt (noindex); stattdessen die neue Übersicht (Jamil #5274/#5276) */}
             <a class="btn btn--ghost" href={href('/leistungen/')}>Alle Leistungen</a>
           </div>
@@ -81,7 +81,7 @@ const schema = [
             <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Keine Seitenbegrenzung</p>
           </div>
           <div class="art__cta-btns">
-            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenloses Erstgespräch</a>
+            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenlose Erstberatung</a>
             <a class="btn btn--ghost" href={href('/preise/')}>Preis & Details</a>
           </div>
         </aside>

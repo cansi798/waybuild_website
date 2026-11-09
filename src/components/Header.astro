@@ -1,5 +1,5 @@
 ---
-// Site-Header nach Bauwelt-Muster: Desktop-Dropdown-Navigation + CTA „Erstgespräch buchen“,
+// Site-Header nach Bauwelt-Muster: Desktop-Dropdown-Navigation + CTA „Kostenlose Erstberatung“ (überall gleich, Jamil #5322 Q2),
 // mobil Telefon-/WhatsApp-Icons + Burger → Vollbild-Menü (MobileMenu).
 import { href } from '../lib/paths';
 import { NAV } from '../config/nav';
@@ -15,7 +15,7 @@ interface Props { thema?: 'besucherreise' }
 const { thema } = Astro.props;
 const reise = thema === 'besucherreise';
 const ctaHref = reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/');
-const ctaText = reise ? ANLIEGEN.erstberatung.label : 'Erstgespräch buchen';
+const ctaText = ANLIEGEN.erstberatung.label;
 
 const current = Astro.url.pathname;
 const isCurrent = (path?: string) => path && current === href(path);

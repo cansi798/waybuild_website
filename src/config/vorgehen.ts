@@ -31,13 +31,16 @@ export const VORGEHEN = {
 
 /** „So arbeiten wir.“ (Jamil #5192, „ok“ #5194): drei Prinzipien, keine Animation. leit = Jamils Zusammenfassung je Prinzip,
  *  zeilen = sein Text mit seinen Zeilenumbrüchen (je Zeile ein kurzer Absatz), schluss = hervorgehobener Schlusssatz.
- *  Ersetzt den kurzen Abschnitt „So arbeiten wir.“ vom Vormittag (ARBEITSWEISE in variante.ts, #5187). */
+ *  Ersetzt den kurzen Abschnitt „So arbeiten wir.“ vom Vormittag (ARBEITSWEISE in variante.ts, #5187).
+ *  Wiederholungen gestrichen (Jamil, Talk qh87y3sj #5322 Q13): Leitsatz Verantwortung ohne „und übernehmen Verantwortung für das
+ *  Ergebnis“ (steht im Schlusssatz), Einfachheit-Text ohne „und halten den Aufwand für Sie so gering wie möglich“ (steht im Leitsatz),
+ *  Verlässlichkeit-Text ohne „Anfragen dürfen nicht verloren gehen.“ (steht im Leitsatz). */
 export const PRINZIPIEN = {
   titel: 'So arbeiten wir.',
   liste: [
     {
       wort: 'Verantwortung',
-      leit: 'Wir denken mit und übernehmen Verantwortung für das Ergebnis.',
+      leit: 'Wir denken mit.',
       zeilen: [
         'Wir setzen nicht einfach um.',
         'Wenn wir einen besseren Weg sehen, sprechen wir ihn an.',
@@ -54,7 +57,7 @@ export const PRINZIPIEN = {
         'Unsere Kunden sollen sich nicht mit Werkzeugen, Prozessen oder Zuständigkeiten beschäftigen müssen.',
         'Sie beschreiben, was sie erreichen möchten.',
         'Wir kümmern uns um den Weg dorthin.',
-        'Wir übernehmen Abstimmungen, koordinieren Beteiligte und halten den Aufwand für Sie so gering wie möglich.',
+        'Wir übernehmen Abstimmungen und koordinieren Beteiligte.',
       ],
       schluss: ['Denn gute Lösungen erkennt man nicht daran, wie komplex sie sind.', 'Sondern daran, wie einfach sie sich anfühlen.'],
     },
@@ -63,7 +66,6 @@ export const PRINZIPIEN = {
       leit: 'Wir sorgen dafür, dass Anfragen nicht untergehen und Sie wissen, woran Sie sind.',
       zeilen: [
         'Wir glauben, dass gute Zusammenarbeit planbar sein sollte.',
-        'Anfragen dürfen nicht verloren gehen.',
         'Offene Punkte dürfen nicht liegen bleiben.',
         'Und Kunden sollten nie rätseln müssen, was gerade passiert.',
         'Deshalb schaffen wir klare Zuständigkeiten, transparente Abläufe und nachvollziehbare Kommunikation.',

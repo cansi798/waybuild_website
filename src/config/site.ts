@@ -37,8 +37,8 @@ export const PHONE_IS_PLACEHOLDER = true;
 export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/^0/, '');
 export const whatsappLink = (text = 'Hallo waybuild, ich interessiere mich für Website as a Service.') =>
   `https://wa.me/${phoneTel().replace('+', '')}?text=${encodeURIComponent(text)}`;
-/** Erreichbarkeit (Footer-Kopf, Kontakt). */
-export const HOURS = 'Montag bis Freitag, 9 bis 18 Uhr';
+/** Erreichbarkeit (Footer-Kopf, Kontakt, Menü, llms.txt). 9 bis 17 Uhr: Jamil, Talk qh87y3sj #5322 (Q4). */
+export const HOURS = 'Montag bis Freitag, 9 bis 17 Uhr';
 
 /** Referenzprojekte – leer lassen, bis echte Kundenprojekte (mit Freigabe) vorliegen. */
 // Beispiel: { name: 'Tischlerei Muster', branche: 'Handwerk', url: 'https://…', text: 'Neue Website, 3× mehr Anfragen', bild: 'referenzen/projekt-1' }

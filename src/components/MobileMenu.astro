@@ -3,6 +3,7 @@
 import { href } from '../lib/paths';
 import { company, phoneTel, whatsappLink, HOURS } from '../config/site';
 import { NAV } from '../config/nav';
+import { ANLIEGEN } from '../config/startseite';
 import Icon from './Icon.astro';
 ---
 
@@ -32,7 +33,7 @@ import Icon from './Icon.astro';
   </nav>
 
   <div class="mm__footer">
-    <a class="btn btn--primary btn--lg mm__cta" href={href('/kontakt/')}>Kostenloses Erstgespräch</a>
+    <a class="btn btn--primary btn--lg mm__cta" href={href('/kontakt/')}>{ANLIEGEN.erstberatung.label}</a>
     <div class="mm__contact">
       <a class="btn btn--ghost" href={`tel:${phoneTel()}`}><Icon name="phone" size={20} /> {company.phone}</a>
       <a class="btn btn--ghost" href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp</a>
