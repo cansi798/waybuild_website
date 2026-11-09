@@ -14,7 +14,7 @@ fragen:
   - frage: "Was davon ist in den Paketen enthalten?"
     antwort: "E-Mail-Postfächer mit Signatur sind im Paket Basis enthalten, die Organisation mit Ordnern und Regeln ab Paket Plus. Eine Kundenverwaltung bieten wir auf Anfrage an."
   - frage: "Was ist, wenn Besucher die Anfrage abbrechen?"
-    antwort: "Dann suchen wir die Stelle, an der sie abspringen, und verbessern sie. Das gehört zur Auswertung, die ab Paket Plus enthalten ist."
+    antwort: "Dann suchen wir die Stelle, an der sie abspringen, und verbessern sie. Das gehört zur laufenden Verbesserung im Paket Komplett."
 ---
 
 ## Worum es geht
@@ -34,7 +34,7 @@ Wenn Ihre Kunden lieber direkt einen Termin wählen, lesen Sie weiter unter [Ter
 
 - **Verstehen:** Im kostenlosen Erstgespräch, rund 20 Minuten, schauen wir uns an, wie Interessenten heute Kontakt zu Ihnen aufnehmen und wo es hakt.
 - **Verbinden:** Wir sorgen dafür, dass Website, Formular und Postfach zusammenarbeiten und jede Anfrage dort ankommt, wo sie bearbeitet wird.
-- **Verbessern:** Ab Paket Plus prüfen wir jeden Monat, wo Besucher abspringen, und verbessern den Weg bis zur Anfrage. Mehr dazu unter [Auswertung](/leistungen/auswertung/).
+- **Verbessern:** Im Paket Komplett prüfen wir jeden Monat, wo Besucher abspringen, und setzen nach Absprache Verbesserungen um. Mehr dazu unter [Auswertung](/leistungen/auswertung/).
 
 ## Passt das zu Ihnen?
 

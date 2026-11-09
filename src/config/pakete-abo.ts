@@ -71,8 +71,6 @@ export const ABO_PAKETE: AboPaket[] = [
         detail: 'Besucher, Anfragen, Suchbegriffe, kurz und verständlich.' },
       { id: 'ki-check', text: 'Monatlicher KI-Check',
         detail: 'Jeden Monat prüfen wir, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben.' },
-      { id: 'weg', text: 'Den Weg bis zur Anfrage verbessern', zeile: 'Weg bis zur Anfrage verbessern', wert: '1 Verbesserung im Monat',
-        detail: 'Jeden Monat prüfen wir, wo Besucher abspringen, und setzen eine Verbesserung am Weg bis zur Anfrage um.' },
     ],
   },
   {
@@ -89,8 +87,8 @@ export const ABO_PAKETE: AboPaket[] = [
         detail: 'Ihre Profile, zum Beispiel bei Instagram, Facebook oder LinkedIn, eingerichtet und passend zur Website gestaltet.' },
       { id: 'sprache', text: 'Website in einer zweiten Sprache',
         detail: 'Ihre Website zusätzlich in einer zweiten Sprache, zum Beispiel Englisch.' },
-      { id: 'optimierung', text: 'Laufende Verbesserung', zeile: 'Weg bis zur Anfrage verbessern', wert: '2 bis 3 Verbesserungen im Monat, Strategiegespräch alle drei Monate',
-        detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache statt einer, dazu alle drei Monate ein Strategiegespräch mit Ihnen.' },
+      { id: 'optimierung', text: 'Laufende Verbesserung', wert: '2 bis 3 Verbesserungen im Monat, Strategiegespräch alle drei Monate',
+        detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache, dazu alle drei Monate ein Strategiegespräch mit Ihnen.' },
       { id: 'vorrang', text: 'Bevorzugte Bearbeitung',
         detail: 'Ihre Änderungswünsche kommen bei uns zuerst dran.' },
     ],
@@ -197,6 +195,6 @@ export const FAQ_PAKETE: PaketFrage[] = [
 /** Kurzfassung für den Preisteil der Startseite: diese Leistungen je Paket (Rest auf /preise/). */
 export const KOMPAKT: Record<AboPaket['id'], string[]> = {
   basis: ['website', 'seo', 'email', 'ki'],
-  plus: ['google-profil', 'seo', 'bericht', 'weg'],
+  plus: ['google-profil', 'seo', 'bericht', 'ki-check'],
   komplett: ['logo', 'termin', 'optimierung', 'vorrang'],
 };

@@ -25,7 +25,7 @@ Im Abo kümmern wir uns darum. Hosting in Deutschland, Updates und Sicherungen s
 
 ## Wir haben ein eigenes Interesse daran, dass es läuft
 
-Bei einem Einmalprojekt endet die Zusammenarbeit oft mit der Rechnung. Im Abo ist es umgekehrt: Wir möchten, dass Sie lange zufrieden bleiben. Deshalb lohnt es sich für uns, Ihre Website nicht nur zu bauen, sondern sie Schritt für Schritt besser zu machen. In den Paketen Plus und Komplett prüfen wir zum Beispiel jeden Monat, wo Besucher abspringen, und verbessern den Weg bis zur Anfrage.
+Bei einem Einmalprojekt endet die Zusammenarbeit oft mit der Rechnung. Im Abo ist es umgekehrt: Wir möchten, dass Sie lange zufrieden bleiben. Deshalb lohnt es sich für uns, Ihre Website nicht nur zu bauen, sondern sie Schritt für Schritt besser zu machen. Im Paket Komplett prüfen wir zum Beispiel jeden Monat, wo Besucher abspringen, und setzen Verbesserungen um.
 
 ## Wie schnell geht es los?
 

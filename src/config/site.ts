@@ -193,7 +193,7 @@ export const faqs = [
   },
   {
     q: 'Was ist der Unterschied zwischen den drei Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und eine Aufbereitung für KI-Assistenten. ${PAKETE[1].name} richtet zusätzlich Ihr Google-Profil ein und pflegt es, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht, prüft monatlich, wie KI-Assistenten Sie beschreiben, und verbessert jeden Monat eine Stelle am Weg bis zur Anfrage. ${PAKETE[2].name} enthält außerdem Logo und Geschäftspapiere, E-Mail-Vorlagen, Online-Terminbuchung, eingerichtete Social-Media-Profile, eine zweite Sprache, 2 bis 3 Verbesserungen im Monat mit Strategiegespräch alle drei Monate und bevorzugte Bearbeitung.`,
+    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und eine Aufbereitung für KI-Assistenten. ${PAKETE[1].name} richtet zusätzlich Ihr Google-Profil ein und pflegt es, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. ${PAKETE[2].name} enthält außerdem Logo und Geschäftspapiere, E-Mail-Vorlagen, Online-Terminbuchung, eingerichtete Social-Media-Profile, eine zweite Sprache, 2 bis 3 Verbesserungen im Monat mit Strategiegespräch alle drei Monate und bevorzugte Bearbeitung.`,
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
