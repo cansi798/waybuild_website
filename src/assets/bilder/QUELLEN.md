@@ -24,7 +24,6 @@ Heruntergeladen am **10.11.2026** über die normale öffentliche Bildadresse von
 | Datei | Szene | Fotograf / Fotografin | Unsplash-Seite | Foto-ID (images.unsplash.com) |
 |---|---|---|---|---|
 | `stock/beratung-laptop.jpg` | Zwei Personen im Büro schauen auf einen Laptop | Vitaly Gariev (https://unsplash.com/@silverkblack) | https://unsplash.com/photos/two-people-collaborating-at-a-desk-with-a-laptop-FXVt6t0tkmI | photo-1758873268394-443e1ac80032 |
-| `stock/besprechung-laptop.jpg` | Hände bei einer Besprechung neben einem Laptop | Headway (https://unsplash.com/@headwayio) | https://unsplash.com/photos/5QgIuuBxKwM | photo-1517245386807-bb43f82c33c4 |
 | `stock/empfang-tablet.jpg` | Frau am Empfangstresen mit Tablet | Bluestonex (https://unsplash.com/@bluestonex_apphaus) | https://unsplash.com/photos/Li6MH3rfyPo | photo-1759143545924-beb85b33c0f1 |
 | `stock/gaertnerei-beratung.jpg` | Beratung in einer Gärtnerei | Vitaly Gariev (https://unsplash.com/@silverkblack) | https://unsplash.com/photos/JtzfzdoHzo4 | photo-1758524055384-6b54143f32ed |
 | `stock/imbiss-handy.jpg` | Mann am Imbissstand mit Handy | Ali Mkumbwa (https://unsplash.com/@mkumbwajr) | https://unsplash.com/photos/uk3ey_vhDKA | photo-1687422808248-f807f4ea2a2e |

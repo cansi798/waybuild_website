@@ -38,6 +38,7 @@ const finalWidths = img ? (usable.length ? usable : [img.width]) : [];
     sizes={sizes}
     class={cls}
     loading={loading}
+    fetchpriority={loading === 'eager' ? 'high' : undefined}
     decoding="async"
   />
 ) : (

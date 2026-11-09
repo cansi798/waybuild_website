@@ -6,7 +6,6 @@
 
 export type FotoId =
   | 'beratung-laptop'
-  | 'besprechung-laptop'
   | 'empfang-tablet'
   | 'gaertnerei-beratung'
   | 'imbiss-handy'
@@ -20,7 +19,6 @@ export type FotoId =
 /** Alt-Text (neutral beschrieben) und Bildausschnitt (object-position) je Foto */
 export const FOTOS: Record<FotoId, { alt: string; pos?: string }> = {
   'beratung-laptop': { alt: 'Symbolfoto: Ein Mann und eine Frau sitzen in einem hellen Büro und schauen gemeinsam auf einen Laptop', pos: '45% 50%' },
-  'besprechung-laptop': { alt: 'Symbolfoto: Hände einer Person, die bei einer Besprechung am Tisch neben einem aufgeklappten Laptop etwas erklärt', pos: '60% 50%' },
   'empfang-tablet': { alt: 'Symbolfoto: Eine Frau steht an einem Empfangstresen und tippt auf ein Tablet, dahinter ein Wartebereich', pos: '50% 60%' },
   'gaertnerei-beratung': { alt: 'Symbolfoto: Eine Mitarbeiterin mit Schürze berät in einer Gärtnerei einen Kunden, der einen Blumentopf hält', pos: '62% 45%' },
   'imbiss-handy': { alt: 'Symbolfoto: Ein Mann mit Schürze schaut an seinem Imbissstand lächelnd auf sein Handy', pos: '35% 50%' },
@@ -53,7 +51,7 @@ export const LEISTUNG_FOTO: Record<string, FotoId> = {
 export const SEITEN_FOTO = {
   wissen: 'tablet-tisch',
   blog: 'laden-laptop',
-  beispiele: 'besprechung-laptop',
+  // Beispiele: bewusst kein Foto – neben „Echte Projekte unserer Kunden“ könnte ein Symbolfoto wie Kunden wirken (UWG, 10.11.2026)
   startVergleich: 'werkstatt-tablet',
   // Abschluss: bewusst kein Büro-/Beratungsbild, weil in der Vorschau direkt darüber „Wer hinter waybuild steht“ steht (UWG)
   startAbschluss: 'gaertnerei-beratung',
