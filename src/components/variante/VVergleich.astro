@@ -18,8 +18,9 @@ import Icon from '../Icon.astro';
 import type { IconName } from '../../config/site';
 import { VERGLEICH } from '../../config/variante';
 
-// Linien-Icon je Frage (Reihenfolge wie VERGLEICH.zeilen: Texte, Google, Updates/Sicherungen, Ansprechpartner, Kosten)
-const ICONS: IconName[] = ['pen', 'search', 'shield', 'phone', 'euro'];
+// Linien-Icon je Frage (Reihenfolge wie VERGLEICH.zeilen, Jamil #5349: Umsetzung, Passgenauigkeit, Mitwachsen,
+// Updates/Sicherungen, Ansprechpartner, Kosten)
+const ICONS: IconName[] = ['tools', 'target', 'layers', 'shield', 'phone', 'euro'];
 const icon = (i: number): IconName => ICONS[i] ?? 'check';
 const WIR = VERGLEICH.spalten.length - 1;
 const n = VERGLEICH.zeilen.length;
@@ -139,7 +140,7 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
     color: var(--white); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
   }
   .vk__wischen { display: none; }
-  /* schmaler Desktop (900–1199 px): etwas enger, damit lange Wörter wie „Einrichtungskosten“ in die Karte passen */
+  /* schmaler Desktop (900–1199 px): etwas enger, damit lange Wörter wie „Softwarehaus“ oder „Einmalkosten“ in die Karte passen */
   @media (min-width: 900px) and (max-width: 1199px) {
     .vk { grid-template-columns: minmax(150px, 0.9fr) repeat(4, minmax(0, 1fr)); column-gap: 10px; }
     .vk__karte { padding-inline: 14px; }

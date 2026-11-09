@@ -42,15 +42,19 @@ export const KUNDENREISE = {
   knopf: 'Jetzt starten',
 };
 
-/** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */
+/** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Ursprünglich aus angebot.ts ANBIETER_VERGLEICH abgeleitet.
+ *  Seit Jamil, Talk qh87y3sj #5349 (10.11.2026) auf alle Produkte abgestimmt, auch individuelle Software: Spalte „Agentur oder
+ *  Softwarehaus“, sechs Fragen, Zeile „Wer kümmert sich um Google?“ entfernt (Sicherung: Branch vor-vergleich-produkte-20261109).
+ *  Letzte Spalte = waybuild (VVergleich.astro und llms.txt lesen werte[3]). Icons je Zeile: VVergleich.astro ICONS. */
 export const VERGLEICH = {
-  spalten: ['Selbst machen', 'Baukasten', 'Agentur', 'waybuild'],
+  spalten: ['Selbst machen', 'Baukasten', 'Agentur oder Softwarehaus', 'waybuild'],
   zeilen: [
-    { frage: 'Wer schreibt die Texte?', werte: ['Sie selbst', 'Sie selbst, mit Vorlagen', 'Meist gegen Aufpreis', 'Wir, gemeinsam mit Ihnen'] },
-    { frage: 'Wer kümmert sich um Google?', werte: ['Sie selbst', 'Sie selbst', 'Meist eigenes Angebot', 'Im Paket Plus und Komplett inklusive'] },
+    { frage: 'Wer setzt um?', werte: ['Sie selbst', 'Sie selbst, mit Vorlagen', 'Das Projektteam', 'Wir, gemeinsam mit Ihnen'] },
+    { frage: 'Wie gut passt die Lösung zu Ihrem Betrieb?', werte: ['So gut, wie Ihre Zeit es erlaubt', 'Im Rahmen der Vorlagen', 'Individuell, meist gegen Aufpreis', 'Abgestimmt auf Ihre Abläufe'] },
+    { frage: 'Wächst die Lösung mit?', werte: ['Nur mit viel Eigenarbeit', 'Bis an die Grenzen des Baukastens', 'Meist als neues Projekt', 'Schritt für Schritt, von der Website bis zur Software'] },
     { frage: 'Wer macht Updates und Sicherungen?', werte: ['Sie selbst', 'Der Anbieter, für die Technik', 'Mit Wartungsvertrag', 'Wir, im Monatspreis'] },
     { frage: 'Wen rufe ich an?', werte: ['Niemanden', 'Den allgemeinen Support', 'Je nach Vertrag', 'Ihren festen Ansprechpartner'] },
-    { frage: 'Wie planbar sind die Kosten?', werte: ['Geringe Kosten, aber viel Eigenarbeit', 'Monatlich, Inhalte selbst', 'Projektpreis, Pflege extra', 'Fester Monatspreis, keine Einrichtungskosten'] },
+    { frage: 'Wie planbar sind die Kosten?', werte: ['Geringe Kosten, aber viel Eigenarbeit', 'Monatlich, Inhalte selbst', 'Projektpreis, Pflege extra', 'Fester Monatspreis statt hoher Einmalkosten'] },
   ],
   hinweis: 'Allgemeine Einordnung nach Anbieter-Art aus unserer Erfahrung. Einzelne Anbieter können anders arbeiten.',
 };
