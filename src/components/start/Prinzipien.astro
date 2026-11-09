@@ -1,10 +1,8 @@
 ---
-// „Wir versprechen Ihnen“ (Jamil, Talk qh87y3sj #5336, 09.11.2026): fünf kurze Versprechen statt der drei langen Prinzipien-Karten.
-// Je Versprechen eine Karte im Kartenstil der Startseite mit eigenem Linien-Icon und einem Satz. PC 3 + 2 mittig, Tablet zwei Spalten,
-// Handy untereinander. Einmaliges kurzes Einblenden nacheinander beim ersten Sichtkontakt (src/scripts/vorgehen.ts setzt
-// .pz-bereit, dann .ist-los); ohne JS und bei reduzierter Bewegung steht alles fertig da. Anker #arbeitsweise bleibt.
+// „So arbeiten wir.“ (Jamil, Talk qh87y3sj #5192, „ok“ #5194, 09.11.2026): Verantwortung, Einfachheit, Verlässlichkeit.
+// Keine Animation („keine Animation notwendig, schön dargestellt passend zum Stil“). PC drei Spalten, Handy untereinander.
+// Je Prinzip: Wort groß in Türkis, darunter Jamils Leitsatz, dann sein Text mit seinen Zeilenumbrüchen, Schlusssatz hervorgehoben.
 // Texte: src/config/vorgehen.ts (PRINZIPIEN), Stil: src/styles/vorgehen.css (.pz-*).
-import Icon from '../Icon.astro';
 import { PRINZIPIEN } from '../../config/vorgehen';
 import '../../styles/vorgehen.css';
 ---
@@ -14,17 +12,17 @@ import '../../styles/vorgehen.css';
     <div class="section-head center">
       <h2 id="pz-h" class="rule">{PRINZIPIEN.titel}</h2>
     </div>
-    <ul class="pz-liste" data-vorgehen="pz-bereit">
-      {PRINZIPIEN.liste.map((p, i) => (
-        <li class="pz-karte" style={`--i:${i}`}>
-          <span class="pz-zeichen"><Icon name={p.icon} size={26} /></span>
-          <p class="pz-satz">{p.text}</p>
+    <ul class="pz-liste">
+      {PRINZIPIEN.liste.map((p) => (
+        <li class="pz-karte">
+          <h3 class="pz-wort">{p.wort}</h3>
+          <p class="pz-leit">{p.leit}</p>
+          <div class="pz-text">
+            {p.zeilen.map((z) => <p>{z}</p>)}
+          </div>
+          <p class="pz-schluss">{p.schluss.map((s, i) => <>{i > 0 && <br />}{s}</>)}</p>
         </li>
       ))}
     </ul>
   </div>
 </section>
-
-<script>
-  import '../../scripts/vorgehen.ts';
-</script>
