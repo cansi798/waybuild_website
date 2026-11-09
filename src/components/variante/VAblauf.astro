@@ -3,30 +3,61 @@
 // Aus archiv/variante-firma-20261108/components/VAblauf.astro zurückgeholt (Jamil #5061/#5062, 08.11.2026), Teil der
 // Startseite oben. „Was Sie beitragen“ (#beitrag, BEITRAG) samt Rechtshinweis am 09.11.2026 entfernt (Jamil, Talk qh87y3sj
 // #5211–#5213); der Rechtshinweis RECHT (pakete-abo.ts) steht weiter auf /preise/ unter den Paketen.
-import { ZEITLEISTE } from '../../config/variante';
+// Kartenstapel (Jamil, Talk qh87y3sj #5214, 09.11.2026): jeder Schritt eine Karte; beim Scrollen gleitet die nächste über die
+// vorige (nur CSS position: sticky mit kleinem Versatz je Karte, kein Einrasten, kein Scroll-Kapern). Ohne JS (html.js fehlt)
+// oder bei reduzierter Bewegung: normale Liste untereinander.
+import { ZEITLEISTE, ZEITLEISTE_UNTERTITEL } from '../../config/variante';
 ---
 
 <section class="section" id="ablauf" aria-labelledby="ablauf-h">
-  <div class="wrap">
-    <div class="section-head">
+  <div class="wrap vzeit-raster">
+    <div class="section-head vzeit-kopf">
       <span class="eyebrow">Ablauf</span>
       <h2 id="ablauf-h" class="rule">Von der Anfrage bis online</h2>
-      <p class="lead">So läuft es in der Regel ab. Sie wissen bei jedem Schritt, was als Nächstes passiert.</p>
+      <p class="lead">{ZEITLEISTE_UNTERTITEL}</p>
     </div>
     <ol class="vzeit">
-      {ZEITLEISTE.map((z) => (
-        <li><span class="vzeit__wann">{z.wann}</span><h3>{z.titel}</h3><p>{z.text}</p></li>
+      {ZEITLEISTE.map((z, i) => (
+        <li class="vzeit__karte" style={`--i: ${i}`}>
+          <span class="vzeit__nr" aria-hidden="true">{i + 1}</span>
+          <div class="vzeit__inhalt"><span class="vzeit__wann">{z.wann}</span><h3>{z.titel}</h3><p>{z.text}</p></div>
+        </li>
       ))}
     </ol>
   </div>
 </section>
 
 <style>
-  .vzeit { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; max-width: 820px; }
-  .vzeit li { position: relative; padding: 0 0 28px 34px; border-left: 3px solid var(--accent); margin-left: 9px; }
-  .vzeit li:last-child { padding-bottom: 0; border-left-color: transparent; }
-  .vzeit li::before { content: ''; position: absolute; left: -11px; top: 2px; width: 19px; height: 19px; border-radius: 50%; background: var(--white); border: 3px solid var(--accent-ink); }
+  /* Grundform (ohne JS, reduzierte Bewegung): Karten untereinander, normale Liste. */
+  .vzeit { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 760px; }
+  .vzeit__karte {
+    display: grid; grid-template-columns: 40px 1fr; column-gap: 18px; align-items: start;
+    background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: clamp(18px, 2.6vw, 28px);
+  }
+  .vzeit__nr { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--dark); color: var(--white);
+    font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; }
   .vzeit__wann { display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 4px; }
   .vzeit h3 { margin: 0 0 4px; font-size: 1.15rem; }
   .vzeit p { margin: 0; line-height: 1.7; color: var(--ink-soft); }
+
+  /* Stapel (nur mit JS und ohne reduzierte Bewegung): jede Karte bleibt unter der Kopfzeile stehen, je Schritt 12 px tiefer,
+     die nächste gleitet darüber. Gleich hohe Karten (min-height), damit keine frühere Karte unten hervorschaut. Abstand über
+     jeder Karte (margin-top, nicht unten: ein unterer Rand würde die Karten zu früh lösen) = Scrollweg je Schritt; der leere
+     Block am Listenende hält den fertigen Stapel kurz stehen. Auf breiten Bildschirmen bleibt die Überschrift links stehen. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js) .vzeit { gap: 0; }
+    :global(html.js) .vzeit::after { content: ''; display: block; height: clamp(40px, 10vh, 100px); }
+    :global(html.js) .vzeit__karte {
+      position: sticky; top: calc(var(--kopf-gesamt, 73px) + 16px + var(--i) * 12px);
+      min-height: 10.5rem; align-content: center; margin-top: clamp(48px, 16vh, 150px);
+      box-shadow: 0 -10px 30px -14px rgb(0 47 45 / 30%), 0 1px 2px rgb(0 47 45 / 6%);
+    }
+    :global(html.js) .vzeit__karte:first-child { margin-top: 0; }
+    @media (max-width: 719px) { :global(html.js) .vzeit__karte { min-height: 11.25rem; } }
+    @media (max-width: 359px) { :global(html.js) .vzeit__karte { min-height: 13rem; } }
+    @media (min-width: 960px) {
+      :global(html.js) .vzeit-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 5vw, 80px); align-items: start; }
+      :global(html.js) .vzeit-kopf { position: sticky; top: calc(var(--kopf-gesamt, 73px) + 24px); margin-bottom: 0; }
+    }
+  }
 </style>

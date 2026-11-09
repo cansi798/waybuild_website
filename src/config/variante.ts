@@ -49,14 +49,16 @@ export const VERGLEICH = {
   hinweis: 'Allgemeine Einordnung nach Anbieter-Art aus unserer Erfahrung. Einzelne Anbieter können anders arbeiten.',
 };
 
-/** Ablauf als Zeitleiste (firma.de Punkt 8). Nur Werte, die die Website schon nennt; alles „in der Regel“. */
+/** Ablauf als Kartenstapel (firma.de Punkt 8; gekürzt und übereinandergelegt: Jamil, Talk qh87y3sj #5214, 09.11.2026).
+ *  Nur Werte, die die Website schon nennt; alles „in der Regel“. */
+export const ZEITLEISTE_UNTERTITEL = 'So läuft es in der Regel ab.';
 export const ZEITLEISTE = [
-  { wann: 'Tag 1', titel: 'Anfrage', text: 'Sie schreiben uns über das Formular, per E-Mail oder WhatsApp.' },
+  { wann: 'Tag 1', titel: 'Anfrage', text: 'Per Formular, E-Mail oder WhatsApp.' },
   { wann: 'In der Regel nach 1 Werktag', titel: 'Rückmeldung', text: 'Wir melden uns persönlich und vereinbaren einen Termin.' },
-  { wann: 'Rund 20 Minuten', titel: 'Erstgespräch', text: 'Kostenlos und unverbindlich. Wir lernen Ihr Unternehmen kennen und empfehlen das passende Paket.' },
-  { wann: 'Danach', titel: 'Entwurf und Freigabe', text: 'Wir schreiben die Texte mit Ihnen und setzen die Website um. Sie prüfen und geben frei.' },
-  { wann: 'In der Regel 14 Tage nach Ihren Inhalten', titel: 'Online', text: 'Ihre Website geht unter Ihrer Adresse online, E-Mail-Postfächer sind eingerichtet.' },
-  { wann: 'Laufend', titel: 'Betreuung', text: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr). Sie schicken einfach eine Nachricht.' },
+  { wann: 'Rund 20 Minuten', titel: 'Erstgespräch', text: 'Kostenlos und unverbindlich. Wir empfehlen das passende Paket.' },
+  { wann: 'Danach', titel: 'Entwurf und Freigabe', text: 'Wir schreiben die Texte mit Ihnen und setzen um. Sie geben frei.' },
+  { wann: 'In der Regel 14 Tage nach Ihren Inhalten', titel: 'Online', text: 'Website und E-Mail-Postfächer sind eingerichtet.' },
+  { wann: 'Laufend', titel: 'Betreuung', text: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr).' },
 ];
 
 /* „Was Sie beitragen“ (BEITRAG, firma.de Punkt 12) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5211–#5213). */
