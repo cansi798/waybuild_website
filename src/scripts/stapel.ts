@@ -126,6 +126,9 @@ if (main && !ruhig && 'ResizeObserver' in window) {
     for (let i = 1; i < karten.length; i++) { const ziel = oben0[i] - kopfH; const d = Math.abs(ziel - Y); if (d > 2 && d <= grenze && (bestes === null || d < Math.abs(bestes - Y))) bestes = ziel; }
     if (bestes !== null) { eigen = true; window.scrollTo({ top: bestes, behavior: 'smooth' }); }
   };
-  if ('onscrollend' in window) window.addEventListener('scrollend', einrasten, { passive: true });
+  const fenster: Window = window; // eigene Variable, damit TypeScript „window“ im else-Zweig nicht auf never verengt
+  if ('onscrollend' in fenster) window.addEventListener('scrollend', einrasten, { passive: true });
   else window.addEventListener('scroll', () => { clearTimeout(ruheTimer); ruheTimer = window.setTimeout(einrasten, 180); }, { passive: true });
 }
+
+export {}; // Modul (eigener Gültigkeitsbereich, kein Namenskonflikt mit startseite.ts)
