@@ -3,6 +3,7 @@
 // Entwürfe (draft: true) erscheinen mit Hinweis „Entwurf“, damit nichts endgültig wirkt.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import { SEITEN_FOTO } from '../../config/bilder';
 import { getCollection } from 'astro:content';
 import { href } from '../../lib/paths';
 
@@ -15,7 +16,7 @@ const datum = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month
   description="Der waybuild-Blog: Gedanken und Einordnungen rund um Websites, Sichtbarkeit bei Google und in der KI-Suche für kleine und mittlere Unternehmen."
   breadcrumb={[{ name: 'Blog', path: '/blog/' }]}
 >
-  <PageHeader eyebrow="Blog" title="Gedanken aus der Praxis." lead="Wie wir arbeiten, was sich gerade ändert und was das für Ihr Unternehmen bedeutet." />
+  <PageHeader eyebrow="Blog" title="Gedanken aus der Praxis." foto={SEITEN_FOTO.blog} lead="Wie wir arbeiten, was sich gerade ändert und was das für Ihr Unternehmen bedeutet." />
   <section class="section">
     <div class="wrap">
       <ul class="bl">

@@ -1,0 +1,14 @@
+/* Stockfotos an ruhigen Stellen der Startseite (Jamil, Talk qh87y3sj #5362, 10.11.2026). Fotos: src/config/bilder.ts.
+   Nicht im Hero, nicht in Kundenreise/Vorgehen/Paketen und nie neben „Team“ (UWG). PC zwei Spalten, Handy untereinander. */
+.sf-kopf { display: grid; gap: 24px; margin-bottom: clamp(22px, 5vw, 56px); }
+.sf-kopf .section-head { margin-bottom: 0; }
+@media (min-width: 900px) {
+  .sf-kopf { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 72px); }
+}
+@media (max-width: 899px) { .sf-kopf__foto { max-height: 260px; aspect-ratio: auto !important; height: 56vw; } }
+
+.sf-abschluss { display: grid; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.sf-abschluss .abschluss__innen { margin-inline: auto; }
+@media (min-width: 900px) {
+  .sf-abschluss { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}

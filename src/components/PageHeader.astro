@@ -1,18 +1,27 @@
 ---
+// Seitenkopf der Unterseiten. Optional ein Stockfoto (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts;
+// Handy Foto unter dem Text. Ohne `foto` bleibt der Kopf wie bisher.
+import Foto from './Foto.astro';
+import type { FotoId } from '../config/bilder';
+
 interface Props {
   eyebrow: string;
   title: string;
   lead?: string;
+  foto?: FotoId;
 }
-const { eyebrow, title, lead } = Astro.props;
+const { eyebrow, title, lead, foto } = Astro.props;
 ---
 
 <section class="ph">
-  <div class="wrap">
-    <span class="eyebrow">{eyebrow}</span>
-    <h1>{title}</h1>
-    {lead && <p class="lead">{lead}</p>}
-    <slot />
+  <div class:list={['wrap', { 'ph__raster': foto }]}>
+    <div class="ph__text">
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{title}</h1>
+      {lead && <p class="lead">{lead}</p>}
+      <slot />
+    </div>
+    {foto && <Foto id={foto} loading="eager" sizes="(min-width: 1200px) 460px, (min-width: 900px) 38vw, calc(100vw - 32px)" class="ph__foto" />}
   </div>
 </section>
 
@@ -30,4 +39,7 @@ const { eyebrow, title, lead } = Astro.props;
   }
   .ph .wrap { position: relative; }
   .ph h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); max-width: 18ch; }
+  .ph__text { min-width: 0; }
+  .ph__raster { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  @media (min-width: 900px) { .ph__raster { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
 </style>

@@ -40,6 +40,8 @@ import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import PremiumKarte from '../components/pakete/PremiumKarte.astro';
 import VVergleich from '../components/variante/VVergleich.astro';
+import Foto from '../components/Foto.astro';
+import { SEITEN_FOTO } from '../config/bilder';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { IS_PREVIEW } from '../lib/env';
@@ -49,6 +51,7 @@ import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { ANLIEGEN, TEAM, STIMMEN, ABSCHLUSS } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
+import '../styles/fotos-start.css';
 
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
 // Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
@@ -191,10 +194,14 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
 
   <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
     <div class="wrap">
+      <!-- Stockfoto neben der Überschrift (Jamil, Talk qh87y3sj #5362): PC rechts, Handy darunter; lazy, keine Bildunterschrift -->
+      <div class="sf-kopf">
       <div class="section-head">
         <span class="eyebrow">Im Vergleich</span>
         <h2 id="vgl-h" class="rule">Selbst machen, Baukasten, Agentur oder waybuild?</h2>
         <p class="lead">Sechs Fragen, die bei der Wahl helfen.</p>
+      </div>
+      <Foto id={SEITEN_FOTO.startVergleich} sizes="(min-width: 1200px) 420px, (min-width: 900px) 36vw, calc(100vw - 32px)" class="sf-kopf__foto" />
       </div>
       <!-- Vier Karten statt Tabelle (Jamil, Talk qh87y3sj #5210): components/variante/VVergleich.astro -->
       <VVergleich />
@@ -278,10 +285,14 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
 
   <!-- Abschluss (Jamil 4792): Claim „Von Anfang bis Wachstum.“ als Überschrift oben, alte Überschrift, Absatz, Linie, Logo und Schlusszeile entfernt (Jamil, Talk qh87y3sj #5290) -->
   <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">
-    <div class="wrap abschluss__innen">
+    <!-- Stockfoto im Abschluss (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts; Handy Foto unter dem Text -->
+    <div class="wrap sf-abschluss">
+    <div class="abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
       <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>
       <p class="abschluss__unter">{ABSCHLUSS.unterCta}</p>
+    </div>
+    <Foto id={SEITEN_FOTO.startAbschluss} sizes="(min-width: 1200px) 520px, (min-width: 900px) 44vw, calc(100vw - 32px)" class="sf-abschluss__foto" />
     </div>
   </section>
 </BaseLayout>

@@ -14,11 +14,13 @@ Hier einfach Bilder ablegen – die Website erzeugt daraus beim Build **automati
 | `team/gruender.jpg` | Über uns – Foto der Geschäftsführung | quadratisch, mind. 1200 × 1200 px |
 | `referenzen/projekt-1.jpg` … | Referenzen (Name in `src/config/site.ts → references[].bild`) | 4:3, mind. 1600 × 1200 px |
 | `allgemein/…` | frei für weitere Bilder | – |
+| `stock/…` | Stockfotos (Unsplash) auf Leistungsseiten, Wissen, Blog, Beispiele und Startseite; Zuordnung in `src/config/bilder.ts` | Quellen und Lizenz: [`QUELLEN.md`](QUELLEN.md) |
 
 ## Tipps
 
 - **Originale** ablegen (groß ist gut) – verkleinert wird automatisch.
 - Dateinamen: nur Kleinbuchstaben, Bindestriche, keine Umlaute/Leerzeichen.
 - Nur Bilder verwenden, an denen ihr die Rechte habt. Keine Stockfotos mit Personen, die als „Team“ ausgegeben werden.
+- Jedes Stockfoto in [`QUELLEN.md`](QUELLEN.md) eintragen (Quelle, Fotograf, Lizenz, Datum). Keine Bildunterschriften, die Stockfotos als Kunden oder Team ausgeben.
 - Bilder im Stil des CI-Handbuchs: echte Menschen, natürliches Licht, warme Farbstimmung.
 - KI-Prompts für passende Bilder: siehe [`KI-PROMPTS.md`](KI-PROMPTS.md).

@@ -6,6 +6,7 @@
 // seitdem nicht mehr zu sehen, weil echte, freigegebene Projekte da sind (Jamil #4932).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { SEITEN_FOTO } from '../config/bilder';
 import Siegel from '../components/Siegel.astro';
 import ReferenzKarten from '../components/referenzen/ReferenzKarten.astro';
 import { REFERENZ_BEREICHE } from '../config/referenzen';
@@ -20,7 +21,7 @@ const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstber
   description="Echte Projekte von waybuild: Websites für Unternehmen aus Norderstedt und Hamburg, mit Ausgangslage, Umsetzung und gemessenem Ergebnis."
   breadcrumb={[{ name: 'Beispiele', path: '/beispiele/' }]}
 >
-  <PageHeader eyebrow="Beispiele" title="Beispiele aus unserer Arbeit." lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
+  <PageHeader eyebrow="Beispiele" title="Beispiele aus unserer Arbeit." foto={SEITEN_FOTO.beispiele} lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
     {REFERENZ_BEREICHE.length > 1 && (
       <nav class="rbereiche" aria-label="Bereiche">
         <ul>{REFERENZ_BEREICHE.map((b) => <li><a href={`#${b.id}`}>{b.titel}</a></li>)}</ul>

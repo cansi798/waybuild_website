@@ -9,6 +9,8 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../Icon.astro';
 import ReferenzKarten from '../referenzen/ReferenzKarten.astro';
+import Foto from '../Foto.astro';
+import { LEISTUNG_FOTO } from '../../config/bilder';
 import { gruppeById, STATIONEN, ICONS, leistungenNeu, paketAnzeige, type LeistungNeu } from '../../config/leistungen-neu';
 import { ANLIEGEN, REFERENZEN } from '../../config/startseite';
 import { href, absolute } from '../../lib/paths';
@@ -25,6 +27,8 @@ const andere = (await leistungenNeu()).filter((l) => l.data.gruppe === d.gruppe 
 const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 const pfad = `/leistungen/${eintrag.id}/`;
 const url = absolute(pfad, Astro.site);
+// Stockfoto im Kopf (Jamil, Talk qh87y3sj #5362): PC rechts neben dem Text, Handy unter dem Text; im ersten Bildschirm, daher eager
+const foto = LEISTUNG_FOTO[eintrag.id];
 
 const schema = [
   {
@@ -53,7 +57,8 @@ const schema = [
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }, { name: d.menuTitel, path: pfad }]}
 >
   <section class="lkopf">
-    <div class="wrap lkopf__inner">
+    <div class:list={['wrap', 'lkopf__raster', { 'lkopf__raster--foto': foto }]}>
+    <div class="lkopf__inner">
       <p class="lkopf__meta">
         <a class="lkopf__gruppe" href={href(`/leistungen/#${gruppe.id}`)}>{gruppe.titel}</a>
         <a class="lkopf__station" href={href('/#kundenreise')}>
@@ -70,6 +75,8 @@ const schema = [
       <div class="lkopf__knopf">
         <a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a>
       </div>
+    </div>
+    {foto && <Foto id={foto} loading="eager" sizes="(min-width: 1200px) 480px, (min-width: 900px) 40vw, calc(100vw - 32px)" class="lkopf__foto" />}
     </div>
   </section>
 
@@ -134,7 +141,10 @@ const schema = [
 <style>
   /* Kopf: ruhig, hell, wie die übrigen Unterseiten; alles 320 px tauglich (lange Wörter dürfen umbrechen) */
   .lkopf { padding-block: clamp(32px, 6vw, 72px) clamp(32px, 5vw, 56px); border-bottom: 1px solid var(--line); }
-  .lkopf__inner { display: grid; gap: 14px; justify-items: start; max-width: 760px; }
+  .lkopf__inner { display: grid; gap: 14px; justify-items: start; max-width: 760px; min-width: 0; }
+  /* Mit Foto (#5362): PC zwei Spalten, Text links, Foto rechts; Handy Foto unter dem Text */
+  .lkopf__raster--foto { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  @media (min-width: 900px) { .lkopf__raster--foto { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
   .lkopf h1 { margin: 0; font-size: clamp(1.9rem, 5vw, 3.4rem); hyphens: auto; overflow-wrap: break-word; }
   .lkopf__lead { margin: 0; }
   .lkopf__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0; }

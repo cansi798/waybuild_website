@@ -4,6 +4,7 @@
 // Je Bereich die neuesten zwei bis drei Einträge, Daten aus den Sammlungen ratgeber/blog und aus src/config/fragen.ts.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { SEITEN_FOTO } from '../config/bilder';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { href } from '../lib/paths';
@@ -45,7 +46,7 @@ const BEREICHE: { icon: IconName; titel: string; text: string; path: string; all
   description="Wissen von waybuild an einem Ort: Ratgeber zu Website, Software und Cloud, häufige Fragen zu Paketen und Ablauf sowie Beiträge im Blog."
   breadcrumb={[{ name: 'Wissen', path: '/wissen/' }]}
 >
-  <PageHeader eyebrow="Ratgeber, Fragen und Blog" title="Wissen" lead="Hier finden Sie unsere Ratgeber, die häufigsten Fragen und den Blog an einem Ort. Kurz erklärt, rund um Website, Software und Cloud für Unternehmen." />
+  <PageHeader eyebrow="Ratgeber, Fragen und Blog" title="Wissen" foto={SEITEN_FOTO.wissen} lead="Hier finden Sie unsere Ratgeber, die häufigsten Fragen und den Blog an einem Ort. Kurz erklärt, rund um Website, Software und Cloud für Unternehmen." />
 
   <section class="section">
     <div class="wrap">

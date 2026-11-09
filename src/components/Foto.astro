@@ -1,0 +1,29 @@
+---
+// Stockfoto aus src/config/bilder.ts (Jamil, Talk qh87y3sj #5362). Alt-Text und Ausschnitt kommen aus der Konfiguration,
+// Optimierung (AVIF + WebP, Breiten, width/height gegen Layout-Verschiebung) übernimmt Bild.astro.
+// Keine Bildunterschrift (UWG: die Fotos zeigen weder Team noch Kunden).
+import Bild from './Bild.astro';
+import { FOTOS, type FotoId } from '../config/bilder';
+
+interface Props {
+  id: FotoId;
+  sizes: string;
+  widths?: number[];
+  class?: string;
+  /** "eager" nur, wenn das Foto im ersten Bildschirm steht */
+  loading?: 'lazy' | 'eager';
+}
+const { id, sizes, widths = [480, 800, 1100], class: cls, loading = 'lazy' } = Astro.props;
+const foto = FOTOS[id];
+---
+
+<div class:list={['foto', cls]} style={foto.pos ? `--foto-pos: ${foto.pos}` : undefined}>
+  <Bild name={`stock/${id}`} alt={foto.alt} widths={widths} sizes={sizes} loading={loading} class="foto__img" />
+</div>
+
+<style>
+  .foto { border-radius: 18px; overflow: hidden; background: var(--paper-2); aspect-ratio: 4 / 3; }
+  .foto :global(picture) { display: block; height: 100%; }
+  .foto :global(.foto__img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: var(--foto-pos, 50% 50%); }
+  @media (max-width: 899px) { .foto { aspect-ratio: 16 / 10; } }
+</style>
