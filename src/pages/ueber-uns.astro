@@ -95,7 +95,12 @@ const values = [
   .founder__photo span { margin-top: 55%; }
   .founder__name { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; margin: 0; }
   .founder__role { color: var(--accent-ink); font-weight: 600; margin: 0 0 8px; }
-  .values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  @media (min-width: 900px) { .values { grid-template-columns: repeat(4, 1fr); } }
+  /* minmax(0, 1fr) + min-width: 0: lange Wörter („Menschlich“, „Transparent“) sprengen das Raster nicht mehr;
+     unter 390 px eine Spalte statt Querscrollen (Jamil #5215). Ab 390 px unverändert. */
+  .values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 389px) { .values { grid-template-columns: minmax(0, 1fr); } }
+  @media (min-width: 900px) { .values { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .values > .card { min-width: 0; }
+  .values h3, .values p { overflow-wrap: break-word; }
   .values p { color: var(--ink-soft); margin: 0; }
 </style>

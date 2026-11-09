@@ -242,4 +242,6 @@ const passtNicht = [
   .cta { background: var(--dark); color: var(--paper); border-radius: 18px; padding: clamp(28px, 5vw, 56px); text-align: center; }
   .cta h2 { color: var(--white); }
   .cta p { color: var(--dark-lead); max-width: 52ch; margin: 0 auto 24px; }
+  /* „Digitalisierungspartner“ passt unter 390 px nicht in die Zeile: etwas kleiner statt Querscrollen (Jamil #5215) */
+  @media (max-width: 389px) { :global(#unterschied-h) { font-size: 1.5rem; overflow-wrap: break-word; } }
 </style>

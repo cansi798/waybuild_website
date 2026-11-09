@@ -143,7 +143,7 @@ const schema = [
   </section>
 
   {l.faq.length > 0 && (
-    <section class="section section--sand">
+    <section class="section section--sand faq-sec">
       <div class="wrap">
         <SectionHead center eyebrow="Häufige Fragen" pre={`${l.title}: Gut zu `} accent="wissen" />
         <div class="faq">
@@ -233,4 +233,6 @@ const schema = [
   .others { margin: 0; text-align: center; font-size: 0.92rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
   .others a { font-weight: 650; color: var(--accent-ink); }
   .others--ratgeber { margin-bottom: 14px; }
+  /* Lange Komposita in der FAQ-Überschrift („Wettbewerbsanalyse:“) passen unter 390 px nicht: etwas kleiner statt Querscrollen (Jamil #5215) */
+  @media (max-width: 389px) { .faq-sec :global(.section-head h2) { font-size: 1.5rem; overflow-wrap: break-word; } }
 </style>
