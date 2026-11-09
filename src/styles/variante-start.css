@@ -178,15 +178,15 @@
 /* H1 deutlich größer, Wörter brechen nie in sich (inline-block, keine Silbentrennung) */
 .v-hero .v-titel { max-width: 13.5em; margin: 0 auto 0.5em; line-height: 1.02;
   /* wie bisher clamp(2.6rem, 6.8vw, 92px), aber nie breiter als das längste Wort „Aufmerksamkeit“ (≈ 8,1 × Schriftgröße) bei 20 px Rand je Seite (Jamil #5129) */
-  font-size: min(92px, max(2.6rem, 6.8vw), calc((100vw - 40px) / 8.4));
+  font-size: min(92px, max(41.6px, 6.8vw), calc((100vw - 40px) / 8.4)); /* px: Hero bleibt bei größerer Grundschrift gleich (#5292) */
   letter-spacing: -0.035em; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
-.v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
+.v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 23.2px); line-height: 1.5; } /* höchstens 23,2 px wie bisher: Maßstab, die übrige Schrift bleibt darunter (#5292) */
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
 /* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #006b68 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring, seit #5204 nur drei Mal
  * (box-shadow, weiß → durchsichtig) und einmal pro Takt ein heller Türkis-Glanz über den Knopf (Schrift darunter ≥ 5 : 1).
  * Startet nach dem Einblenden. Hover/Fokus: stärkerer, ruhender Schein. Reduzierte Bewegung: nur leichter Schatten. */
-.v-hero .v-leucht { position: relative; isolation: isolate; overflow: hidden; min-height: 60px; padding: 1em 2.3em; font-size: clamp(1.08rem, 1.6vw, 1.2rem);
+.v-hero .v-leucht { position: relative; isolation: isolate; overflow: hidden; min-height: 60px; padding: 1em 2.3em; font-size: clamp(17.28px, 1.6vw, 19.2px); /* px wie bisher (#5292) */
   background: var(--white); color: var(--accent-ink); box-shadow: 0 12px 30px -12px rgb(0 40 38 / 55%);
   animation: v-glow 3s ease-out 1.9s 3; } /* drei Mal, dann Ruhe (Jamil #5204); Ende = Ruhezustand (gleicher Schatten) */
 .v-hero .v-leucht::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
