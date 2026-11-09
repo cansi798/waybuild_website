@@ -99,7 +99,8 @@ export const TEAM = {
 };
 
 /** Kundenstimmen (Jamil #4934 Punkt 3). BEWUSST NUR PLATZHALTER: keine erfundenen Zitate, keine Kundennamen, keine Sterne
- *  (erfundene Bewertungen wären irreführend, UWG). Nur in der Vorschau sichtbar, rot gestrichelt; offen in der Checkliste. */
+ *  (erfundene Bewertungen wären irreführend, UWG). Seit Jamil #5289 nicht mehr angezeigt (index.astro: STIMMEN_ZEIGEN = false);
+ *  bleibt für spätere echte, freigegebene Kundenstimmen. Offen in der Checkliste. */
 export const STIMMEN = {
   titel: 'Was unsere Kunden sagen',
   platzhalter: 'Platzhalter',

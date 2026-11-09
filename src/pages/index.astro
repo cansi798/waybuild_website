@@ -55,6 +55,8 @@ import '../styles/variante-start.css';
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
 // Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
 const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
+// „Was unsere Kunden sagen“ (#stimmen) ausgeblendet, Jamil #5289; erst mit echten, freigegebenen Zitaten wieder einschalten
+const STIMMEN_ZEIGEN = false;
 
 // Neuer Teil oben (Variante-Startseite, Jamil #5061/#5062)
 const ab = aboPreisAb();
@@ -222,8 +224,8 @@ const MOTIV: Record<string, string> = {
        Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
   <!-- Hintergründe unten im Wechsel (09.11.2026, nach dem Entfernen von „Was Sie beitragen“, „Welches Paket passt zu Ihnen?“ und
-       Kundenreise-Check, Jamil #5211–#5213): nach #ablauf (hell) in der Vorschau #team sand, #referenzen hell, #stimmen sand,
-       Abschluss hell; ohne Platzhalter (live) #referenzen sand, Abschluss hell. -->
+       Kundenreise-Check, Jamil #5211–#5213; #stimmen ausgeblendet, Jamil #5289): nach #ablauf (hell) in der Vorschau #team sand,
+       #referenzen hell, Abschluss sand; ohne Platzhalter (live) #referenzen sand, Abschluss hell. -->
   <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
 
   <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026). NUR PLATZHALTER (rot
@@ -305,8 +307,10 @@ const MOTIV: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne. Nur in der Vorschau. -->
-  {PLATZHALTER && (
+  <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne.
+       Ausgeblendet (Jamil, Talk qh87y3sj #5289 „entfernen“): Markup und STIMMEN bleiben für spätere echte, freigegebene
+       Kundenstimmen; dann STIMMEN_ZEIGEN auf true setzen und den Hintergrund-Wechsel (Abschluss) prüfen. -->
+  {STIMMEN_ZEIGEN && PLATZHALTER && (
     <section class="bs bs--alt" id="stimmen" aria-labelledby="bs-stimmen">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte"><h2 id="bs-stimmen">{STIMMEN.titel}</h2></div>
@@ -328,7 +332,7 @@ const MOTIV: Record<string, string> = {
   <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 auf Schritt 1 von „So gehen wir vor“ (Jamil #5188/#5190) -->
 
   <!-- Abschluss (Jamil 4792) + Claim (4793): viel Weißraum, keine Animation -->
-  <section class="bs abschluss" aria-labelledby="bs-abschluss">
+  <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">
     <div class="wrap abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
       <p class="abschluss__text abschluss__text--ruhig">{ABSCHLUSS.text}</p>

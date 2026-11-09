@@ -123,8 +123,8 @@ const manual: Todo[] = [
   },
   {
     title: 'Startseite: echte Kundenstimmen',
-    detail: 'Abschnitt „Was unsere Kunden sagen“ zeigt noch rot gestrichelte Platzhalter. Nur echte Zitate mit Zustimmung der Kunden eintragen, keine erfundenen Bewertungen oder Sterne.',
-    where: 'src/config/startseite.ts → STIMMEN, src/pages/index.astro (#stimmen)',
+    detail: 'Abschnitt „Was unsere Kunden sagen“ ist ausgeblendet (Jamil #5289). Erst mit echten Zitaten und Zustimmung der Kunden wieder einschalten, keine erfundenen Bewertungen oder Sterne.',
+    where: 'src/config/startseite.ts → STIMMEN, src/pages/index.astro (#stimmen, STIMMEN_ZEIGEN)',
     done: false,
     priority: 'wichtig',
   },
