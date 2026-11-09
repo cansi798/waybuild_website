@@ -122,33 +122,35 @@
   display: flex; flex-direction: column; justify-content: center;
 }
 
-/* STAPEL-EFFEKT (Jamil, Talk qh87y3sj #5146, 08.11.2026; Sicherung vor-stapel-20261108; Vorbild Funkelfilm 4a874f7):
- * „Seiten übereinander statt untereinander“. Nur mit JS (src/scripts/stapel.ts setzt html.stapeln, je Abschnitt --h und --deckt)
- * und nur ohne reduzierte Bewegung; sonst normales Scrollen.
- * - Jeder Abschnitt der Startseite mindestens eine Bildschirmseite (100svh minus Kopfzeile), Inhalt senkrecht mittig.
- * - position: sticky; top = min(Kopfzeile, 100svh − Handy-Leiste − Höhe): kurze Abschnitte bleiben unter der Kopfzeile stehen,
- *   hohe (Handy) erst, wenn ihr Ende erreicht ist, damit alles gelesen wird. Keine inneren Scrollbereiche.
- * - Der nächste Abschnitt gleitet mit weicher, leicht gerundeter Oberkante und weichem Schatten darüber; der verdeckte dunkelt
- *   bis 15 % ab (.stapel-schatten, nur opacity) und tritt auf 0,97 zurück (transform). z-index 0 = eigener Stapelkontext je Abschnitt.
- * - Sanftes Einrasten per JS (stapel.ts, nur nahe an einem Abschnittsanfang); CSS scroll-snap verworfen, es klemmte bei 1920 px.
- * - content-visibility hier aus, damit Höhen und Lagen stimmen. Kopfzeile (z-index 50) bleibt immer oben. */
-main[data-stapel] > section { min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
-  display: flex; flex-direction: column; justify-content: center; }
-main[data-stapel] > section.v-hero { justify-content: flex-start; }
+/* STAPEL NUR AM HERO (Jamil, Talk qh87y3sj #5146, eingeschränkt #5152–#5155, 09.11.2026; Sicherungen vor-stapel-20261108,
+ * vor-nur-hero-stapel-20261109). Nur mit JS (src/scripts/stapel.ts setzt html.stapeln, am Hero --h und --deckt) und nur ohne
+ * reduzierte Bewegung; sonst normales Scrollen.
+ * - Jeder Abschnitt der Startseite bleibt mindestens eine Bildschirmseite (100svh minus Kopfzeile), Inhalt senkrecht mittig.
+ * - Nur der Hero ist sticky, und nur innerhalb von .stapel-paar (Hero + nächster Abschnitt): top = min(Kopfzeile,
+ *   100svh − Handy-Leiste − Höhe), ein hoher Hero (Handy) bleibt also erst stehen, wenn sein Ende sichtbar ist.
+ * - Der nächste Abschnitt gleitet mit leicht gerundeter Oberkante und weichem Schatten darüber; der Hero dunkelt dabei bis 15 %
+ *   ab (.stapel-schatten, nur opacity) und tritt auf 0,97 zurück (transform).
+ * - Danach scrollt die Seite ganz normal: kein weiterer Abschnitt bleibt stehen, kein Einrasten, Sprungmarken wie gewohnt.
+ *   Kopfzeile (z-index 50) bleibt immer oben.
+ * - content-visibility hier aus (auch ohne JS): sonst ändern sich Höhen beim Scrollen und Sprungmarken landen daneben. */
+main[data-stapel] > section, main[data-stapel] > .stapel-paar > section {
+  min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
+  display: flex; flex-direction: column; justify-content: center; content-visibility: visible; }
+main[data-stapel] > .stapel-paar > section.v-hero { justify-content: flex-start; }
 :root { --stapel-unten: 0px; }
 @media (max-width: 959px) { :root { --stapel-unten: calc(var(--stickybar-h) + env(safe-area-inset-bottom)); } }
 html.stapeln[data-thema] { scroll-padding-top: var(--kopf-gesamt); }
-html.stapeln main[data-stapel] > section {
-  position: sticky; z-index: 0; content-visibility: visible;
+html.stapeln .stapel-paar > .v-hero {
+  position: sticky; z-index: 0;
   top: min(var(--kopf-gesamt), calc(100svh - var(--stapel-unten) - var(--h, 0px)));
   transform-origin: 50% 0; transform: scale(calc(1 - var(--deckt, 0) * 0.03));
 }
-:where(html.stapeln main[data-stapel] > section) { background-color: var(--paper); }
-html.stapeln main[data-stapel] > section:not(:first-of-type) {
+html.stapeln .stapel-paar > .v-hero + section {
+  position: relative; z-index: 1;
   border-radius: 28px 28px 0 0; box-shadow: 0 -22px 44px -24px rgb(0 47 45 / 42%);
 }
-@media (max-width: 719px) { html.stapeln main[data-stapel] > section:not(:first-of-type) { border-radius: 20px 20px 0 0; } }
-html.stapeln .stapel-schatten { position: absolute; inset: 0; z-index: 20; pointer-events: none; border-radius: inherit;
-  background: #0b2a29; opacity: calc(var(--deckt, 0) * 0.15); }
+:where(html.stapeln .stapel-paar > .v-hero + section) { background-color: var(--paper); }
+@media (max-width: 719px) { html.stapeln .stapel-paar > .v-hero + section { border-radius: 20px 20px 0 0; } }
 .stapel-schatten { display: none; }
-html.stapeln .stapel-schatten { display: block; }
+html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-index: 20; pointer-events: none;
+  background: #0b2a29; opacity: calc(var(--deckt, 0) * 0.15); }

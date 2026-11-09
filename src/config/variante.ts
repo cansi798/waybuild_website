@@ -18,7 +18,7 @@ export const V_HERO = {
 export const VERSPRECHEN = [
   { icon: 'zap', text: 'Erster Entwurf meist in 3 Stunden' },
   { icon: 'code', text: 'Individuell statt Baukasten' },
-  { icon: 'stern', text: 'Fast jeder Wunsch umsetzbar' },
+  { icon: 'stern', text: 'Nahezu jeder Wunsch umsetzbar' },
   { icon: 'chat', text: 'Änderungen per Chat oder Sprachnachricht' },
 ] as const;
 

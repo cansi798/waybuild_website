@@ -110,6 +110,9 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
+  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Kontrastsatz; nur darin
+       bleibt der Hero stehen (sticky), der Kontrastsatz gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
+  <div class="stapel-paar">
   <section class="v-hero"><!-- ohne aria-labelledby: gleicher Satz wie die alte H2 weiter unten (axe landmark-unique) -->
     <div class="v-mesh" aria-hidden="true"><span class="v-blob v-blob--1"></span><span class="v-blob v-blob--2"></span><span class="v-blob v-blob--3"></span><span class="v-blob v-blob--4"></span></div>
     <div class="wrap v-hero__mitte">
@@ -135,6 +138,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
       <p class="lead">{KONTRAST.text}</p>
     </div>
   </section>
+  </div>
 
   <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
        Anker #pakete und #baukasten (alte Links aus Check und Hero) zeigen hierher. -->
