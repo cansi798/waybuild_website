@@ -1,40 +1,96 @@
 ---
-// Kasten „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5): Einzelpreise einmalig, netto.
-// Daten: EINMALIG_DAZU in src/config/pakete-abo.ts. Wird in einen bestehenden Abschnitt eingebettet (gleicher Hintergrund).
-import { EINMALIG_DAZU as E, euro, einmalSumme } from '../../config/pakete-abo';
+// Block „Einmalig dazubuchen“ (Jamil, Talk qh87y3sj #5056 Punkt 5; präsenter gemacht #5283, 09.11.2026):
+// eigener ruhiger Kasten (zartes Türkis) mit Überschrift „Neu starten oder neu aufstellen?“ für Neugründer und Unternehmen,
+// die sich neu erfinden wollen. Gesamtpaket „Alle vier Extras“ als große Hauptkarte (türkiser Rand), die vier Einzelleistungen
+// daneben (PC) bzw. darunter (Handy). Preise und Preistexte unverändert aus EINMALIG_DAZU in src/config/pakete-abo.ts.
+// „Direkt buchen“ führt wie auf den Paketkarten zum Kontaktformular mit Vorauswahl (?dazu=alle bzw. ?dazu=<id>, &buchen=1).
+// Wird in einen bestehenden Abschnitt eingebettet: der Abschnitts-Hintergrund (Wechsel hell/sand) bleibt unverändert.
+import Icon from '../Icon.astro';
+import type { IconName } from '../../config/site';
+import { href } from '../../lib/paths';
+import { EINMALIG_DAZU as E, BUCHEN, euro, einmalSumme } from '../../config/pakete-abo';
 interface Props { id?: string; kompakt?: boolean }
 const { id = 'einmalig', kompakt = false } = Astro.props;
+
+const ICONS: Record<string, IconName> = { logo: 'pen', papiere: 'doc', visitenkarten: 'user', signatur: 'mail' };
+const buchen = (dazu: string) => `${href('/kontakt/')}?dazu=${encodeURIComponent(dazu)}&buchen=1`;
 ---
 
 <div class:list={['ed', { 'ed--kompakt': kompakt }]} id={id} role="region" aria-labelledby={`${id}-h`}>
-  <h3 id={`${id}-h`} class="ed__titel">{E.titel}</h3>
-  <ul class="ed__liste">
-    {E.liste.map((e) => (
-      <li class="ed__k">
-        <p class="ed__name">{e.name}</p>
-        {!kompakt && <p class="ed__text">{e.text}</p>}
-        <p class="ed__preis"><b>{euro(e.preis)}</b> einmalig, netto</p>
-      </li>
-    ))}
-  </ul>
-  <p class="ed__gesamt"><b>{E.gesamt.name} als Gesamtpaket: {euro(E.gesamt.preis)}</b> statt {euro(einmalSumme())} einmalig, netto. <span>{E.gesamt.text}</span></p>
+  <div class="ed__kopf">
+    <span class="eyebrow ed__eyebrow">{E.titel}</span>
+    <h3 id={`${id}-h`} class="ed__titel">Neu starten oder neu aufstellen?</h3>
+    <p class="ed__lead">Für Neugründer und Unternehmen, die sich neu erfinden wollen.</p>
+  </div>
+
+  <div class="ed__raster">
+    <article class="ed__haupt" aria-labelledby={`${id}-gesamt`}>
+      <p class="ed__marke">Alle vier zusammen</p>
+      <span class="ed__ico ed__ico--gross" aria-hidden="true"><Icon name="layers" size={30} /></span>
+      <h4 id={`${id}-gesamt`} class="ed__name ed__name--gross">{E.gesamt.name}</h4>
+      <p class="ed__text">{E.gesamt.text}</p>
+      <ul class="ed__inhalt">
+        {E.liste.map((e) => <li><Icon name="check" size={18} /> {e.name}</li>)}
+      </ul>
+      <p class="ed__preis ed__preis--gross"><b>{euro(E.gesamt.preis)}</b> <span>statt {euro(einmalSumme())} einmalig, netto</span></p>
+      <a class="btn btn--lg ed__btn" href={buchen(E.gesamt.id)}>{BUCHEN.knopf}<span class="sr-only">: {E.gesamt.name}</span></a>
+    </article>
+
+    <ul class="ed__liste">
+      {E.liste.map((e) => (
+        <li class="ed__k">
+          <span class="ed__ico" aria-hidden="true"><Icon name={ICONS[e.id] ?? 'spark'} size={24} /></span>
+          <p class="ed__name">{e.name}</p>
+          {!kompakt && <p class="ed__text">{e.text}</p>}
+          <p class="ed__preis"><b>{euro(e.preis)}</b> einmalig, netto</p>
+          <a class="ed__einzeln" href={buchen(e.id)}>Einzeln buchen<span class="sr-only">: {e.name}</span> <Icon name="arrow" size={16} /></a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
   <p class="ed__hinweis">{E.hinweis}</p>
 </div>
 
 <style>
-  .ed { margin-top: clamp(40px, 6vw, 64px); scroll-margin-top: 120px; }
-  .ed__titel { margin: 0 0 16px; font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
-  .ed__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  @media (min-width: 640px) { .ed__liste { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1100px) { .ed__liste { grid-template-columns: repeat(4, 1fr); } }
-  .ed__k { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; background: var(--white); border: 1px solid var(--line); border-radius: 16px; }
-  .ed__k p { margin: 0; }
-  .ed__name { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
-  .ed__text { line-height: 1.7; color: var(--ink-soft); font-size: 0.95rem; }
-  .ed__preis { margin-top: auto !important; padding-top: 6px; color: var(--ink); font-size: 0.92rem; }
-  .ed__preis b { font-family: var(--font-head); font-size: 1.2rem; }
-  .ed__gesamt { margin: 14px 0 0; padding: 14px 18px; border: 2px solid var(--accent); border-radius: 16px; background: #e9f6f5; line-height: 1.6; color: var(--ink); }
-  .ed__gesamt b { font-family: var(--font-head); color: var(--accent-ink); }
-  .ed__gesamt span { color: var(--ink-soft); }
-  .ed__hinweis { margin: 16px 0 0; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
+  /* Ruhiger eigener Grund: zartes Türkis #eaf5f4 (wie „So arbeiten wir.“), Texte darauf: --ink 10,4 : 1, --ink-soft 6,9 : 1,
+     --accent-ink 5,9 : 1. Knopf wie „Direkt buchen“ auf den Paketkarten: #00807b mit Weiß (4,8 : 1), Hover #006b68. */
+  .ed { margin-top: clamp(40px, 6vw, 72px); padding: clamp(22px, 4.5vw, 52px) clamp(16px, 4vw, 52px); border: 1px solid #cfe6e3; border-radius: 24px; background: #eaf5f4; scroll-margin-top: 120px; }
+  .ed p, .ed h3, .ed h4 { margin: 0; }
+  .ed__kopf { display: grid; gap: 10px; justify-items: center; text-align: center; max-width: 720px; margin: 0 auto clamp(22px, 4vw, 36px); }
+  .ed__eyebrow { color: var(--accent-ink); }
+  .ed__titel { font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 700; line-height: 1.2; color: var(--ink); }
+  .ed__lead { font-size: clamp(1.05rem, 2vw, 1.2rem); line-height: 1.7; color: var(--ink-soft); }
+
+  .ed__raster { display: grid; gap: 18px; }
+  @media (min-width: 960px) { .ed__raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 22px; align-items: stretch; } }
+
+  .ed__haupt { position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: clamp(22px, 3.5vw, 34px); background: var(--white); border: 3px solid var(--accent); border-radius: 20px; box-shadow: 0 18px 40px -24px rgb(0 79 76 / 45%); }
+  .ed__marke { align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: var(--accent-ink); color: var(--white); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em; }
+  .ed__ico { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; background: #eaf5f4; color: var(--accent-ink); }
+  .ed__ico--gross { width: 56px; height: 56px; border-radius: 14px; }
+  .ed__name { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; line-height: 1.35; color: var(--ink); overflow-wrap: anywhere; hyphens: auto; }
+  .ed__name--gross { font-size: clamp(1.3rem, 2.6vw, 1.6rem); }
+  .ed__text { line-height: 1.7; color: var(--ink-soft); font-size: 0.97rem; }
+  .ed__inhalt { list-style: none; margin: 2px 0 0; padding: 0; display: grid; gap: 8px; }
+  .ed__inhalt li { display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; color: var(--ink); }
+  .ed__inhalt :global(.icon), .ed__inhalt svg { flex: none; margin-top: 2px; color: var(--accent-ink); }
+  .ed__preis { color: var(--ink); font-size: 0.95rem; line-height: 1.5; }
+  .ed__preis b { font-family: var(--font-head); font-size: 1.25rem; }
+  .ed__preis--gross { margin-top: auto !important; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+  .ed__preis--gross b { font-size: clamp(2rem, 4.4vw, 2.6rem); line-height: 1.1; color: var(--accent-ink); }
+  .ed__preis--gross span { color: var(--ink-soft); }
+  .ed__btn { width: 100%; margin-top: 4px; background: #00807b; color: var(--white); border-color: transparent; }
+  .ed__btn:hover { background: var(--accent-ink); color: var(--white); }
+
+  .ed__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; min-width: 0; }
+  @media (min-width: 560px) { .ed__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ed__k { display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 20px; background: var(--white); border: 1px solid #cfe6e3; border-radius: 18px; }
+  .ed__k .ed__preis { margin-top: auto; padding-top: 4px; }
+  .ed__einzeln { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; min-height: 44px; color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
+  .ed__einzeln:hover { text-decoration-thickness: 2px; }
+  .ed a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
+
+  .ed__hinweis { margin-top: 18px !important; text-align: center; font-size: 0.9rem; line-height: 1.7; color: var(--ink-soft); }
+  @media (prefers-reduced-motion: reduce) { .ed__btn { transition: none; transform: none !important; } }
 </style>

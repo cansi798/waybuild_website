@@ -132,7 +132,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const interesse = form.elements.namedItem('interesse') as HTMLSelectElement;
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
-    if (websiteSlugs.includes(leistung) || tarif || params.get('paket')) interesse.value = 'website';
+    // ?dazu=… allein (Block „Neu starten oder neu aufstellen?“, Jamil #5283) zeigt ebenfalls die Paket- und Extras-Wahl
+    if (websiteSlugs.includes(leistung) || tarif || params.get('paket') || params.get('dazu')) interesse.value = 'website';
     else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
     // Paketwahl: sichtbar, sobald es um Website as a Service geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
