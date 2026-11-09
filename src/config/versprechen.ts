@@ -2,6 +2,8 @@
 // (Wunsch Jamil 19.10.2026: „so formuliert, dass jeder User das versteht, egal aus welcher Branche“).
 // ERSTER VORSCHLAG – Jamil passt die Formulierungen ggf. an.
 // WICHTIG (UWG): Das sind EIGENE Zusagen, keine fremden Prüfzeichen – kein „Testsieger“, „zertifiziert von“ o. ä.
+// UWG (Jamil, Talk qh87y3sj #5204/#5215, 09.11.2026): keine absoluten Zeitzusagen, Zeiten immer mit „in der Regel“;
+// „kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr)“ wie in der Zeitleiste (variante.ts).
 import { WAAS, type IconName } from './site';
 export type Versprechen = {
   id: string;
@@ -33,18 +35,18 @@ export const VERSPRECHEN: Versprechen[] = [
   {
     id: 'minuten',
     icon: 'zap',
-    title: 'Kleine Änderungen sind oft in Minuten online',
-    zeilen: ['Änderungen', 'in Minuten'],
-    short: 'Neuer Text, neues Bild, neue Öffnungszeiten.',
-    long: 'Kleine Anpassungen wie ein neuer Text, ein Bild oder geänderte Öffnungszeiten sind oft schon nach wenigen Minuten online. Bei größeren Wünschen sagen wir Ihnen vorher, wann sie fertig sind.',
+    title: 'Kleine Änderungen in der Regel in 1 Stunde',
+    zeilen: ['Änderungen', 'meist in 1 Std.'],
+    short: 'Werktags 9 bis 17 Uhr.',
+    long: 'Kleine Änderungen wie ein neuer Text, ein Bild oder geänderte Öffnungszeiten sind in der Regel innerhalb von 1 Stunde online (werktags 9 bis 17 Uhr). Bei größeren Wünschen sagen wir Ihnen vorher, wann sie fertig sind.',
   },
   {
     id: 'antwort',
     icon: 'clock',
-    title: 'Antwort spätestens am nächsten Werktag',
+    title: 'Antwort in der Regel am nächsten Werktag',
     zeilen: ['Schnelle', 'Antwort'],
-    short: 'Spätestens am nächsten Werktag.',
-    long: 'Auf jede Nachricht bekommen Sie spätestens am nächsten Werktag eine persönliche Antwort, meistens deutlich früher.',
+    short: 'In der Regel am nächsten Werktag.',
+    long: 'Auf jede Nachricht bekommen Sie in der Regel am nächsten Werktag eine persönliche Antwort, oft schon früher.',
   },
   {
     id: 'technik',
