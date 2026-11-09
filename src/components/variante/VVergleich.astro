@@ -5,7 +5,10 @@
 // Auswahlknöpfe und sind entfernt. Dort steht die Antwort jetzt als ruhiger Text ohne Zeichen (--ink-soft, 7,5 : 1 auf Weiß);
 // nur die waybuild-Karte hat die türkisen Häkchen.
 // Beim Hereinscrollen (einmal, IntersectionObserver): Fragen-Spalte und Karten blenden nacheinander ein, danach zeichnen sich
-// die waybuild-Häkchen nacheinander (eigener Beobachter an der waybuild-Karte, damit es am Handy erst beim Hinwischen passiert).
+// die waybuild-Häkchen nacheinander (eigener Beobachter an der waybuild-Karte).
+// Jamil, Talk qh87y3sj #5326: am Handy (wischbare Karten unter 900 px) steht die waybuild-Karte ZUERST. Dafür steht sie auch
+// im Quelltext zuerst (Screenreader-/Lese-Reihenfolge = sichtbare Reihenfolge am Handy); am Desktop schiebt CSS `order` sie
+// wie bisher in die rechte Spalte. Die Häkchen starten damit beim Hereinscrollen des Vergleichs, nicht erst beim Wischen.
 // Ohne JS, ohne IntersectionObserver oder bei reduzierter Bewegung: alles sofort sichtbar, nichts bewegt sich.
 // Aufbau für Screenreader: Liste mit einer Karte je Anbieter-Art (h3) und darin <dl> Frage → Antwort.
 // Die Fragen-Spalte links (nur Desktop) ist reine Optik und deshalb aria-hidden.
@@ -20,9 +23,8 @@ const ICONS: IconName[] = ['pen', 'search', 'shield', 'phone', 'euro'];
 const icon = (i: number): IconName => ICONS[i] ?? 'check';
 const WIR = VERGLEICH.spalten.length - 1;
 const n = VERGLEICH.zeilen.length;
-// Anzahl im Wisch-Hinweis als Wort (Stil: „alle vier“)
-const ZAHLWORT = ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn'];
-const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalten.length);
+// Quelltext-Reihenfolge: waybuild zuerst, dann die anderen in ihrer Reihenfolge (#5326)
+const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WIR)];
 ---
 
 <div class="vk__scroll" role="region" aria-label="Vergleich nach Anbieter-Art" tabindex="0">
@@ -34,11 +36,11 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
       ))}
     </div>
     <ul class="vk__karten" role="list">
-      {VERGLEICH.spalten.map((sp, s) => (
-        <li class:list={['vk__karte', { 'vk__karte--wir': s === WIR }]} style={`--s:${s + 1}`}>
+      {REIHE.map((s, pos) => (
+        <li class:list={['vk__karte', { 'vk__karte--wir': s === WIR }]} style={`--s:${s + 1};--sm:${pos + 1}`}>
           <div class="vk__kopf">
             {s === WIR && <span class="vk__etikett">Unser Weg</span>}
-            <h3 class="vk__name">{sp}</h3>
+            <h3 class="vk__name">{VERGLEICH.spalten[s]}</h3>
           </div>
           <dl class="vk__liste">
             {VERGLEICH.zeilen.map((z, i) => (
@@ -56,7 +58,7 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
     </ul>
   </div>
 </div>
-<p class="vk__wischen" aria-hidden="true">Seitlich wischen, um alle {spaltenWort} zu sehen</p>
+<p class="vk__wischen" aria-hidden="true">Seitlich wischen für den Vergleich</p>
 
 <script>
   // Einmaliger Aufbau beim Hereinscrollen (Jamil, Talk qh87y3sj #5285). .vk--bereit versteckt erst, wenn Bewegung erlaubt ist.
@@ -71,7 +73,7 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
       io.observe(el);
     };
     einmal(box, 'vk--an', { threshold: 0, rootMargin: '0px 0px -15% 0px' });
-    einmal(wir, 'vk--haken', { threshold: 0.35 }); // am Handy erst, wenn die waybuild-Karte ins Bild gewischt ist
+    einmal(wir, 'vk--haken', { threshold: 0.35 }); // waybuild-Karte im Bild (am Handy die erste Karte, #5326)
   }
 </script>
 
@@ -124,9 +126,9 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
     border-radius: 50%; background: var(--vk-tuerkis); color: var(--white);
   }
 
-  /* waybuild-Karte hervorgehoben: leicht angehoben, Rand #00807B */
+  /* waybuild-Karte hervorgehoben: leicht angehoben, Rand #00807B. Desktop: per order in die rechte Spalte (#5326). */
   .vk__karte--wir {
-    position: relative; z-index: 1; transform: translateY(-10px);
+    order: 1; position: relative; z-index: 1; transform: translateY(-10px);
     border: 2px solid var(--vk-tuerkis); box-shadow: 0 2px 4px rgb(0 79 76 / 8%), 0 18px 40px rgb(0 79 76 / 14%);
   }
   .vk__karte--wir .vk__name { color: var(--vk-tuerkis); font-size: 1.25rem; }
@@ -157,7 +159,7 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
     .vk__karte {
       display: block; width: min(80vw, 330px); scroll-snap-align: start; padding: 0 18px 10px;
     }
-    .vk__karte--wir { transform: none; }
+    .vk__karte--wir { transform: none; order: 0; } /* Handy: waybuild zuerst wie im Quelltext (#5326) */
     .vk__karten::after { content: ''; flex: none; width: 2px; } /* rechter Rand nach der letzten Karte */
     .vk__liste { display: block; }
     .vk__zeile { display: block; padding: 12px 0; }
@@ -198,6 +200,8 @@ const spaltenWort = ZAHLWORT[VERGLEICH.spalten.length] ?? String(VERGLEICH.spalt
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
     .vk__karte--wir { --vk-y: 0px; }
-    .vk__scroll { --vk-basis: 0.35s; } /* am Handy kommt die waybuild-Karte erst beim Wischen ins Bild */
+    /* Handy: Karten blenden in ihrer sichtbaren Reihenfolge ein (waybuild zuerst), Häkchen danach (#5326) */
+    .vk--an .vk__karte { transition-delay: calc(var(--sm, 1) * 0.13s); }
+    .vk__scroll { --vk-basis: 0.6s; }
   }
 </style>
