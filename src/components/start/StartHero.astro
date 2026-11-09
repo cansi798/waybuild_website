@@ -1,15 +1,17 @@
 ---
 // Hero der Startseite (Texte Jamil, Talk qh87y3sj 4771 + 4783). Text steht beim Laden sofort (kein Einblenden, gut für
 // LCP). Rechts bzw. darunter die kleine Kundengeschichte in fünf Stationen (Jamil 4784, KundenGeschichte.astro).
-// Knöpfe springen zum Check (#check) und zum Abschnitt Verständnis (#denkweise).
+// Knöpfe: Kontakt „Unternehmensauftritt bewerten lassen“ (früher Sprung zum Check #check, der am 09.11.2026 entfernt wurde,
+// Jamil #5211–#5213) und Abschnitt Verständnis (#denkweise). Komponente wird derzeit nicht eingebunden.
 // 08.11.2026 (Jamil 4927/4929, Rethinking „einladender“): der Claim (Jamil 4793) steht als Botschaftszeile über der
 // Überschrift (vorher nur ganz unten), die Zielgruppe rückt unter die Knöpfe. Knöpfe am PC nebeneinander.
 // 08.11.2026 (Jamil #4934 Punkt 4): Preis früh nennen, Zeile unter den Knöpfen; Betrag seit #5056 aus pakete-abo.ts (ab-Preis).
 // 08.11.2026 (Jamil #4983–#4985): Botschaftszeile (Claim) über der H1 und Zielgruppenzeile unter den Knöpfen ENTFERNT
 // („zu ähnlich wie die Headline“, „Alles aus einer Hand stimmt inhaltlich nicht“, „entfernen … im Hero-Bereich“).
 // Sicherung des Stands davor: Branch vor-hero-bausteine-20261108.
-import { HERO as H, PREIS_FRUEH as P } from '../../config/startseite';
+import { HERO as H, PREIS_FRUEH as P, ANLIEGEN } from '../../config/startseite';
 import { aboPreisAb, euro } from '../../config/pakete-abo';
+import { href } from '../../lib/paths';
 import KundenGeschichte from './KundenGeschichte.astro';
 // 08.11.2026 (Jamil #5061/#5062): Seit oben die Variante-Startseite steht, ist dieser Hero ein zweiter Block weiter unten.
 // `ebene="h2"` macht aus der H1 eine H2 (Text und Aussehen gleich), damit die Seite genau EINE H1 hat.
@@ -23,7 +25,7 @@ const Titel = ebene;
       <Titel id="sh-titel" class="sh__titel">{H.titel}</Titel>
       {H.unter.map((u) => <p class="sh__unter">{u}</p>)}
       <div class="sh__knoepfe">
-        <a class="btn btn--marke btn--lg" href="#check">{H.cta}</a>
+        <a class="btn btn--marke btn--lg" href={href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.bewerten.paket)}`)}>{H.cta}</a>
         <a class="btn btn--umriss btn--lg" href="#denkweise">{H.cta2}</a>
       </div>
       <p class="sh__preis">{P.vor} <strong>{euro(aboPreisAb())}</strong> {P.nach} <span class="sh__preis-zeile"><span class="sh__preis-zusatz">{P.zusatz}</span> <a href="#pakete">{P.link}</a></span></p>

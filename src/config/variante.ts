@@ -32,9 +32,8 @@ export const KUNDENREISE = {
     { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', leistungen: ['Nachfassen', 'Bewertungsanfragen', 'Auswertung'] },
   ],
   ziel: 'zufriedener Kunde',
-  schluss: 'Wo Ihre Kunden heute hängen bleiben, zeigt der Kundenreise-Check.',
-  /** Link im Schlusssatz auf den Kundenreise-Check (#check, Jamil Talk qh87y3sj #5204) */
-  schlussLink: { text: 'Kundenreise-Check', ziel: '#check' },
+  /* Schlusssatz mit Link auf den Kundenreise-Check (#5204) am 09.11.2026 entfernt, ohne Ersatztext; dort steht jetzt der Knopf
+   * HERO_KNOPF zur Erstberatung (Jamil, Talk qh87y3sj #5211–#5213, Check gelöscht). */
 };
 
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Aus angebot.ts ANBIETER_VERGLEICH abgeleitet. */
@@ -60,11 +59,4 @@ export const ZEITLEISTE = [
   { wann: 'Laufend', titel: 'Betreuung', text: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr). Sie schicken einfach eine Nachricht.' },
 ];
 
-/** Was Sie beitragen (firma.de Punkt 12). Abgeleitet aus Ablauf und Paketinhalten; von Can/Jamil zu bestätigen. */
-export const BEITRAG = [
-  { titel: 'Ein Gespräch', text: 'Rund 20 Minuten, in denen Sie uns von Ihrem Unternehmen erzählen.' },
-  { titel: 'Ihre Inhalte', text: 'Fotos, Leistungen, Öffnungszeiten. Texte erarbeiten wir mit Ihnen.' },
-  { titel: 'Ihre Freigabe', text: 'Sie prüfen den Entwurf und sagen uns, was noch fehlt.' },
-  { titel: 'Kurze Bestätigungen', text: 'Zum Beispiel, wenn Google beim Einrichten Ihres Profils eine Bestätigung von Ihnen verlangt.' },
-];
-
+/* „Was Sie beitragen“ (BEITRAG, firma.de Punkt 12) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5211–#5213). */

@@ -165,7 +165,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     zeigeWahl();
     interesse.addEventListener('change', zeigeWahl);
 
-    // Kundenreise-Check (Startseite): nur nach aktiver Wahl („Ergebnis mitschicken“). Sichtbar und abwählbar,
+    // Kundenreise-Check (Startseite, am 09.11.2026 entfernt, Jamil #5211–#5213; wird wie der Baukasten nur noch gelesen,
+    // falls ein alter Tab offen ist): nur nach aktiver Wahl („Ergebnis mitschicken“). Sichtbar und abwählbar,
     // übertragen erst beim Absenden zusammen mit der Anfrage (sessionStorage, endet mit dem Tab).
     // 'wb-abo-baukasten' = Zusammenstellung vom früheren Startseiten-Stand (bis 08.11.2026); wird weiter gelesen,
     // falls ein alter Tab noch offen ist (JSON v2 oder reiner Text).

@@ -3,7 +3,7 @@
 //   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
 //   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
 //   · 3 Verstehen. Empfehlen. Umsetzen. (4788) + Woran wir glauben (4795/4796) in einem Abschnitt (4809, #denkweise) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (entfernt 08.11., #5136–#5138) · Check (#check, Vorschlag aus 4768) · Abschluss (4792) · Claim (4793)
+//   · 5 Darauf können Sie sich verlassen (entfernt 08.11., #5136–#5138) · Check (#check, Vorschlag aus 4768; entfernt 09.11., #5211–#5213) · Abschluss (4792) · Claim (4793)
 // 08.11.2026 „einladender“ (Jamil 4927/4929, Rethinking NC Rethinking_Startseite-einladend_2026-11-08; Sicherung Branch
 //   vor-einladend-20261108): Claim oben im Hero, Prinzipien mit Zeichen + Linie, „Verlassen“ hinter die Prinzipien,
 //   Leistungsdetails zum Aufklappen. Texte unverändert.
@@ -17,12 +17,12 @@
 //
 // 08.11.2026 19:23 (Jamil, Talk qh87y3sj #5061/#5062 „Go“/„Ok“; Sicherung Branch vor-variante-start-20261108 = 80ba83c):
 //   OBEN steht jetzt die KOMPLETTE Startseite der Variante „an firma.de orientiert“ (Einstieg, Vertrauensleiste, Kontrastsatz,
-//   Pakete, Vergleich, Zeitleiste, Was Sie beitragen, Fragen und Antworten, Abschluss; Code aus archiv/variante-firma-20261108,
+//   Pakete, Vergleich, Zeitleiste, Was Sie beitragen (entfernt 09.11., #5211–#5213), Fragen und Antworten, Abschluss; Code aus archiv/variante-firma-20261108,
 //   Texte src/config/variante.ts, Pakete/Preise/FAQ aus src/config/pakete-abo.ts). Ohne Banner und Navigation der Variante,
 //   ohne Gründungspaket, Links auf /variante/… → /preise/.
 //   DARUNTER alle bisherigen Abschnitte unverändert, getrennt durch „Bisherige Startseite, zum Aussortieren“ (nur Vorschau).
 //   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt samt #baukasten-alt am 08.11. entfernt, #5136–#5138);
-//   #pakete und #baukasten zeigen auf den neuen Teil, #check auf den bisherigen Check (die Variante hat keinen).
+//   #pakete und #baukasten zeigen auf den neuen Teil; #check (Kundenreise-Check) seit 09.11. entfernt (#5211–#5213).
 //   Der bisherige Hero ist ein zweiter Block mit H2 statt H1 (Text gleich), damit die Seite genau eine H1 hat.
 // 09.11.2026 (Jamil, Talk qh87y3sj #5181–#5187; Sicherung Branch vor-kundenreise-20261109): nach dem Hero die Kundenreise als
 //   Journey-Map (#kundenreise), danach „So arbeiten wir.“ (#arbeitsweise). Entfernt: „Einzelne Lösungen funktionieren.“
@@ -34,7 +34,6 @@
 // 09.11.2026 (Jamil, Talk qh87y3sj #5192, „ok“ #5194; Sicherung Branch vor-prinzipien-volltext-20261109): „So arbeiten wir.“ (#arbeitsweise)
 //   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Check from '../components/start/Check.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
 import Prinzipien from '../components/start/Prinzipien.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
@@ -162,7 +161,10 @@ const MOTIV: Record<string, string> = {
           <p class="kr-ende"><span class="kr-ende__punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
         </div>
       </div>
-      <p class="kr-schluss">{KUNDENREISE.schluss.split(KUNDENREISE.schlussLink.text)[0]}<a href={KUNDENREISE.schlussLink.ziel}>{KUNDENREISE.schlussLink.text}</a>{KUNDENREISE.schluss.split(KUNDENREISE.schlussLink.text)[1]}</p>
+      <!-- Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz mit Check-Link der Knopf aus dem Hero -->
+      <div class="v-knopfe kr-cta">
+        <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
+      </div>
     </div>
   </section>
   </div>
@@ -178,7 +180,7 @@ const MOTIV: Record<string, string> = {
   <Prinzipien />
 
   <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
-       Anker #pakete und #baukasten (alte Links aus Check und Hero) zeigen hierher. -->
+       Anker #pakete und #baukasten (alte Links) zeigen hierher. -->
   <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
     <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
     <div class="wrap">
@@ -216,29 +218,20 @@ const MOTIV: Record<string, string> = {
 
   <!-- Fragen und Antworten (#fragen) entfernt: eigene Seite /fragen/ (Jamil #5136–#5138) -->
 
-  <section class="section v-cta" aria-labelledby="cta-h">
-    <div class="wrap">
-      <h2 id="cta-h">Welches Paket passt zu Ihnen?</h2>
-      <p class="lead" style="margin-inline:auto">Im kostenlosen Erstgespräch, rund 20 Minuten, empfehlen wir Ihnen das passende Paket. Ehrlich, auch wenn es das kleinere ist.</p>
-      <div class="v-knopfe">
-        <a class="btn btn--primary btn--lg" href={kontakt(ANLIEGEN.erstberatung.paket)}>Erstgespräch vereinbaren</a>
-        <a class="btn btn--umriss btn--lg" href={href('/preise/')}>Pakete vergleichen</a>
-      </div>
-    </div>
-  </section>
+  <!-- „Welches Paket passt zu Ihnen?“ (.v-cta, zwei Knöpfe) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
 
   <!-- ============ DARUNTER: bisherige Abschnitte. Gelber Trenner „Bisherige Startseite, zum Aussortieren“ und der alte
        Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
-  <!-- Hintergründe unten im Wechsel (nach dem Entfernen von „Verstehen. Empfehlen. Umsetzen. Verbessern.“, Jamil #5188/#5190,
-       09.11.2026): #beitrag sand, CTA weiß, #team hell, #referenzen sand (nur wenn Team/Stimmen als Platzhalter zu sehen sind,
-       sonst hell), #stimmen hell, #check sand, Abschluss hell. -->
+  <!-- Hintergründe unten im Wechsel (09.11.2026, nach dem Entfernen von „Was Sie beitragen“, „Welches Paket passt zu Ihnen?“ und
+       Kundenreise-Check, Jamil #5211–#5213): nach #ablauf (hell) in der Vorschau #team sand, #referenzen hell, #stimmen sand,
+       Abschluss hell; ohne Platzhalter (live) #referenzen sand, Abschluss hell. -->
   <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
 
   <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026). NUR PLATZHALTER (rot
        gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
   {PLATZHALTER && (
-    <section class="bs" id="team" aria-labelledby="bs-team">
+    <section class="bs bs--alt" id="team" aria-labelledby="bs-team">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte">
           <h2 id="bs-team">{TEAM.titel}</h2>
@@ -270,7 +263,7 @@ const MOTIV: Record<string, string> = {
 
   <!-- Referenzen (Jamil 4876; seit 08.11.2026 mit Namen, Jamil #4932): Bild der Kunden-Website oben, darunter Name,
        Branche · Ort, Ausgangslage/Umsetzung/Ergebnis. Link nur bei Live-Seiten, sonst nur das Etikett „Vorschau“. -->
-  <section class:list={['bs', { 'bs--alt': PLATZHALTER }]} id="referenzen" aria-labelledby="bs-referenzen">
+  <section class:list={['bs', { 'bs--alt': !PLATZHALTER }]} id="referenzen" aria-labelledby="bs-referenzen">
     <div class="wrap">
       <div class="bs-kopf bs-kopf--mitte">
         <h2 id="bs-referenzen">{REFERENZEN.titel}</h2>
@@ -316,7 +309,7 @@ const MOTIV: Record<string, string> = {
 
   <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne. Nur in der Vorschau. -->
   {PLATZHALTER && (
-    <section class="bs" id="stimmen" aria-labelledby="bs-stimmen">
+    <section class="bs bs--alt" id="stimmen" aria-labelledby="bs-stimmen">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte"><h2 id="bs-stimmen">{STIMMEN.titel}</h2></div>
         <ul class="stimmen4">
@@ -332,8 +325,7 @@ const MOTIV: Record<string, string> = {
     </section>
   )}
 
-  <!-- Kundenreise-Check: seit 08.11. (Jamil #4934 Punkt 6) weiter unten, hinter Referenzen und Kundenstimmen -->
-  <Check />
+  <!-- Kundenreise-Check (#check) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
 
   <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 auf Schritt 1 von „So gehen wir vor“ (Jamil #5188/#5190) -->
 

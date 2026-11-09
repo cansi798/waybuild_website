@@ -12,10 +12,7 @@
 .v-hinweis a { color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
 .v-platzhalter { position: relative; border: 2px dashed #b3261e !important; background: #fffafa !important; }
 .v-platzhalter__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
-.v-cta { text-align: center; }
-/* CTA weiß (09.11.2026): hält den Wechsel der Hintergründe nach dem Entfernen von #denkweise (#beitrag sand → CTA weiß → #team/#referenzen hell) */
-.section.v-cta { background: var(--white); }
-.v-cta .v-knopfe { justify-content: center; }
+/* „Welches Paket passt zu Ihnen?“ (.v-cta) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5211–#5213) */
 
 /* KUNDENREISE als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
  * Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
@@ -73,7 +70,25 @@
 .kr-ende { position: absolute; top: 0; right: 0; margin: 0; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; line-height: 1.3; color: var(--accent-ink); text-align: right; }
 .kr-ende__punkt { position: absolute; right: -9px; top: calc(var(--kr-band) * var(--kr-ende) - 9px); width: 18px; height: 18px; border-radius: 50%;
   background: #006b68; box-shadow: 0 0 0 6px rgb(0 107 104 / 14%); }
-.kr-schluss { margin: 0 auto; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.4; color: var(--accent-ink); text-wrap: balance; }
+/* Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz der Knopf aus dem Hero
+ * (HERO_KNOPF, gleiches Ziel), gleiche Form, Größe und Takt (v-glow/v-glanz), nur für den hellen Grund umgekehrt: Türkis #006b68,
+ * Schrift weiß (6,36 : 1), Lichtring in Türkis, Glanz weiß 12 % (Schrift darunter ≥ 4,5 : 1). Reduzierte Bewegung: ruhig. */
+.kr-cta { justify-content: center; margin-top: clamp(4px, 1vw, 12px); }
+.kr-cta .kr-leucht { position: relative; isolation: isolate; overflow: hidden; flex: 0 0 auto; max-width: none; white-space: nowrap; min-height: 60px;
+  padding: 1em 2.3em; font-size: clamp(1.08rem, 1.6vw, 1.2rem); background: var(--accent-ink); color: var(--white);
+  box-shadow: 0 12px 30px -14px rgb(0 40 38 / 55%); animation: kr-glow 3s ease-out 1s infinite; }
+.kr-cta .kr-leucht::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 12%) 50%, transparent 70%); transform: translateX(-120%);
+  animation: v-glanz 3s ease-in-out 1s infinite; }
+.kr-cta .kr-leucht:hover, .kr-cta .kr-leucht:focus-visible { animation: none; background: var(--accent-ink); color: var(--white);
+  box-shadow: 0 0 0 6px rgb(0 128 123 / 18%), 0 0 36px 6px rgb(0 166 161 / 28%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
+.kr-cta .kr-leucht:focus-visible { border-radius: 999px; outline-offset: 4px; }
+@keyframes kr-glow {
+  0% { box-shadow: 0 0 0 0 rgb(0 128 123 / 35%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
+  35% { box-shadow: 0 0 0 10px rgb(0 128 123 / 10%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
+  70%, 100% { box-shadow: 0 0 0 18px rgb(0 128 123 / 0%), 0 12px 30px -14px rgb(0 40 38 / 55%); } }
+@media (max-width: 599px) { .kr-cta .kr-leucht { flex: 1 1 100%; width: 100%; white-space: normal; padding-inline: 1.2em; } }
+@media (prefers-reduced-motion: reduce) { .kr-cta .kr-leucht, .kr-cta .kr-leucht::after { animation: none !important; } }
 @media (max-width: 999px) {
   .kr-karte { --kr-band: 0px; max-width: 560px; padding: 22px 18px 20px 16px; border-radius: 20px; }
   .kr-kurve { display: none; }
@@ -202,12 +217,12 @@
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
- * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, Pakete, Vergleich, Ablauf, Was Sie beitragen,
+ * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, Pakete, Vergleich, Ablauf,
  * Abschluss (Fragen seit #5136–#5138 auf /fragen/); „So gehen wir vor“ und „So arbeiten wir.“ in vorgehen.css. Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
  * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
  * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
 :root { --kopf-gesamt: calc(var(--header-h) + 1px); }
-.vreise, #pakete, #vergleich, #ablauf, #beitrag, .v-cta {
+.vreise, #pakete, #vergleich, #ablauf {
   min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
   display: flex; flex-direction: column; justify-content: center;
 }
