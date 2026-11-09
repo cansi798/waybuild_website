@@ -21,13 +21,22 @@ export const NAV: NavItem[] = [
     ],
   },
   { label: 'Preise', path: '/preise/' },
+  // „Wissen“ bündelt Ratgeber, Häufige Fragen und Blog (Jamil, Talk qh87y3sj #5264, 09.11.2026); Übersicht /wissen/
+  {
+    label: 'Wissen',
+    children: [
+      { label: 'Ratgeber', path: '/ratgeber/', icon: 'book', desc: 'Website, Software und Cloud kurz erklärt' },
+      { label: 'Häufige Fragen', path: '/fragen/', icon: 'frage', desc: 'Antworten zu Paketen, Ablauf und Vertrag' },
+      { label: 'Blog', path: '/blog/', icon: 'pen', desc: 'Beiträge und Einblicke aus unserer Arbeit' },
+      { label: 'Alles im Überblick', path: '/wissen/' },
+    ],
+  },
   {
     label: 'Unternehmen',
     children: [
       { label: 'Warum waybuild', path: '/warum-waybuild/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' },
       { label: 'Über uns', path: '/ueber-uns/', icon: 'user', desc: 'Wer hinter waybuild steht' },
       { label: 'Referenzen', path: '/referenzen/', icon: 'eye', desc: 'Muster-Beispiele unserer Arbeit' },
-      { label: 'Ratgeber', path: '/ratgeber/', icon: 'doc', desc: 'Wissen zu Website, Software & Cloud' },
       { label: 'Kontakt', path: '/kontakt/', icon: 'chat', desc: 'Erstgespräch, Telefon, WhatsApp' },
     ],
   },

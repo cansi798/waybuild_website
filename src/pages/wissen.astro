@@ -1,0 +1,98 @@
+---
+// Übersicht „Wissen“ (Jamil, Talk qh87y3sj #5264, 09.11.2026): Ratgeber, Häufige Fragen und Blog an einem Ort.
+// In der Navigation als Menüpunkt „Wissen“ (src/config/nav.ts), Eintrag „Alles im Überblick“. In der Sitemap (Standard).
+// Je Bereich die neuesten zwei bis drei Einträge, Daten aus den Sammlungen ratgeber/blog und aus src/config/fragen.ts.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { href } from '../lib/paths';
+import type { IconName } from '../config/site';
+import { FRAGEN_TITEL, fragenNachThema } from '../config/fragen';
+
+const datumText = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+
+// Ratgeber: die drei neuesten Artikel
+const ratgeber = (await getCollection('ratgeber'))
+  .sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime())
+  .slice(0, 3)
+  .map((a) => ({ titel: a.data.title, path: `/ratgeber/${a.id}/`, info: datumText(a.data.datum) }));
+
+// Häufige Fragen: drei Kernfragen (Preis, Tempo, Vertrag), Sprung zum Thema auf /fragen/; Platzhalter nie
+const TOP = ['Was kostet eine Website bei waybuild?', 'Wie schnell ist meine Website online?', 'Wie lange läuft der Vertrag?'];
+const gruppen = fragenNachThema();
+const mitThema = gruppen.flatMap((g) => g.fragen.filter((f) => !f.platzhalter).map((f) => ({ f, id: g.id })));
+const fragen = [
+  ...TOP.map((q) => mitThema.find((x) => x.f.q === q)).filter((x): x is (typeof mitThema)[number] => !!x),
+  ...mitThema.filter((x) => !TOP.includes(x.f.q)),
+].slice(0, 3).map((x) => ({ titel: x.f.q, path: `/fragen/#${x.id}`, info: '' }));
+
+// Blog: die neuesten Beiträge (Entwürfe nur mit Hinweis „Entwurf“, wie auf /blog/)
+const blog = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3)
+  .map((b) => ({ titel: b.data.title, path: `/blog/${b.id}/`, info: datumText(b.data.date), entwurf: !!b.data.draft }));
+
+const BEREICHE: { icon: IconName; titel: string; text: string; path: string; alle: string; eintraege: { titel: string; path: string; info: string; entwurf?: boolean }[] }[] = [
+  { icon: 'book', titel: 'Ratgeber', text: 'Kurz erklärt: was eine Website kostet, mieten oder kaufen, Software, Cloud und IT.', path: '/ratgeber/', alle: 'Alle Ratgeber', eintraege: ratgeber },
+  { icon: 'frage', titel: FRAGEN_TITEL, text: 'Antworten zu Paketen und Preisen, Ablauf, Technik und Vertrag.', path: '/fragen/', alle: 'Alle Fragen', eintraege: fragen },
+  { icon: 'pen', titel: 'Blog', text: 'Einordnungen zu Websites, Sichtbarkeit bei Google und in der KI-Suche für kleine und mittlere Unternehmen.', path: '/blog/', alle: 'Zum Blog', eintraege: blog },
+];
+---
+
+<BaseLayout
+  title="Wissen: Ratgeber, Fragen und Blog"
+  description="Wissen von waybuild an einem Ort: Ratgeber zu Website, Software und Cloud, häufige Fragen zu Paketen und Ablauf sowie Beiträge im Blog."
+  breadcrumb={[{ name: 'Wissen', path: '/wissen/' }]}
+>
+  <PageHeader eyebrow="Ratgeber, Fragen und Blog" title="Wissen" lead="Hier finden Sie unsere Ratgeber, die häufigsten Fragen und den Blog an einem Ort. Kurz erklärt, rund um Website, Software und Cloud für Unternehmen." />
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="wi">
+        {BEREICHE.map((b) => (
+          <li class="wi__karte card">
+            <span class="wi__icon"><Icon name={b.icon} size={26} /></span>
+            <h2><a href={href(b.path)}>{b.titel}</a></h2>
+            <p class="wi__text">{b.text}</p>
+            {b.eintraege.length > 0 && (
+              <ul class="wi__liste">
+                {b.eintraege.map((e) => (
+                  <li>
+                    <a href={href(e.path)}>
+                      <span class="wi__titel">{e.titel}</span>
+                      {(e.entwurf || e.info) && (
+                        <small>{e.entwurf && <span class="wi__entwurf">Entwurf</span>}{e.info}</small>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <a class="wi__alle" href={href(b.path)}>{b.alle} <Icon name="arrow" size={18} /></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .wi { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  @media (min-width: 1000px) { .wi { grid-template-columns: repeat(3, 1fr); } }
+  .wi__karte { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .wi__icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: var(--paper-2); color: var(--accent-ink); }
+  .wi__karte h2 { font-size: 1.45rem; margin: 4px 0 0; overflow-wrap: break-word; hyphens: auto; }
+  .wi__karte h2 a { text-decoration: none; color: inherit; }
+  .wi__karte h2 a:hover { color: var(--accent-ink); }
+  .wi__text { color: var(--ink-soft); margin: 0; }
+  .wi__liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
+  .wi__liste li { border-bottom: 1px solid var(--line); }
+  .wi__liste a { display: grid; gap: 3px; padding: 12px 0; text-decoration: none; color: var(--ink); min-height: 44px; }
+  .wi__liste a:hover .wi__titel { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+  .wi__titel { font-weight: 600; line-height: 1.4; overflow-wrap: break-word; hyphens: auto; }
+  .wi__liste small { color: var(--ink-soft); font-size: 0.85rem; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .wi__entwurf { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--paper-2); color: var(--accent-ink); font-weight: 650; font-size: 0.78rem; }
+  .wi__alle { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 6px; font-weight: 650; color: var(--accent-ink); text-decoration: none; min-height: 44px; }
+  .wi__alle:hover { text-decoration: underline; text-underline-offset: 4px; }
+</style>

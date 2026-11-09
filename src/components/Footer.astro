@@ -34,9 +34,16 @@ const year = new Date().getFullYear();
         <li><a href={href('/ueber-uns/')}>Über uns</a></li>
         <li><a href={href('/referenzen/')}>Referenzen</a></li>
         <li><a href={href('/warum-waybuild/')}>Warum waybuild</a></li>
+        <li><a href={href('/kontakt/')}>Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__h">Wissen</h2>
+      <ul>
         <li><a href={href('/ratgeber/')}>Ratgeber</a></li>
         <li><a href={href('/fragen/')}>Häufige Fragen</a></li>
-        <li><a href={href('/kontakt/')}>Kontakt</a></li>
+        <li><a href={href('/blog/')}>Blog</a></li>
+        <li><a href={href('/wissen/')}>Alles im Überblick</a></li>
       </ul>
     </div>
     <div>
@@ -71,12 +78,11 @@ const year = new Date().getFullYear();
    * keine weiße Kachel mehr (die war nur für das alte PNG nötig; Jamil, Talk qh87y3sj #5226/#5227) */
   .footer__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
   .footer__grid > :first-child { grid-column: 1 / -1; }
-  /* Spalte „Branchen“ entfernt (Jamil, Talk qh87y3sj #5261): Logo oben, darunter drei Link-Blöcke.
-   * Schmal 2 Spalten (Rechtliches über die ganze Breite), ab 720 px drei Spalten, ab 1100 px vier Spuren
-   * (Spaltenbreite wie bisher, die Blöcke stehen links bündig). */
-  .footer__grid > :last-child { grid-column: 1 / -1; }
-  @media (min-width: 720px) { .footer__grid { gap: 36px; grid-template-columns: repeat(3, 1fr); } .footer__grid > :last-child { grid-column: auto; } }
-  @media (min-width: 1100px) { .footer__grid { grid-template-columns: repeat(4, 1fr); } }
+  /* Spalte „Branchen“ entfernt (Jamil, Talk qh87y3sj #5261); Logo oben über die ganze Breite.
+   * Spalte „Wissen“ (Ratgeber, Häufige Fragen, Blog, Übersicht; Jamil, Talk qh87y3sj #5264) an der Stelle der
+   * früheren Spalte „Branchen“: vier Link-Blöcke, schmal 2 × 2, ab 900 px vier Spalten nebeneinander. */
+  @media (min-width: 720px) { .footer__grid { gap: 36px; } }
+  @media (min-width: 900px) { .footer__grid { grid-template-columns: repeat(4, 1fr); } }
   .footer__claim { color: var(--on-dark-soft); margin-top: 16px; max-width: 32ch; }
   .footer__h { font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--on-dark-soft); margin-bottom: 12px; }
   .footer ul { list-style: none; margin: 0; padding: 0; }
