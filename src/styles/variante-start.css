@@ -129,14 +129,7 @@
 @keyframes kr-punkt { from { transform: scale(0); } to { transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .kr-karte *, .kr-karte *::before, .kr-karte *::after { animation: none !important; transition: none !important; } }
 
-/* Vergleich nach Anbieter-Art */
-.vvgl__scroll { position: relative; overflow-x: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
-.vvgl { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
-.vvgl th, .vvgl td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-.vvgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); }
-.vvgl tbody th { font-weight: 650; }
-.vvgl__wir { background: #e9f6f5; font-weight: 650; color: var(--ink); }
-.vvgl tbody tr:last-child th, .vvgl tbody tr:last-child td { border-bottom: 0; }
+/* Vergleich nach Anbieter-Art: Stile jetzt in components/variante/VVergleich.astro (Karten, Jamil #5210) */
 
 
 /* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
