@@ -229,12 +229,12 @@
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),
- * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, Pakete, Vergleich, Ablauf,
+ * nur der neue obere Teil der Startseite: Einstieg (oben), Kundenreise, Pakete, Vergleich (Ablauf seit #5337 in „So gehen wir vor“),
  * Abschluss (Fragen seit #5136–#5138 auf /fragen/); „So gehen wir vor“ und „So arbeiten wir.“ in vorgehen.css. Mindesthöhe = sichtbare Höhe (svh, am Handy ohne Adressleiste) minus Kopfzeile (--kopf-gesamt =
  * --header-h + 1 px Rand); Inhalt senkrecht mittig. Längerer Inhalt (Pakete, Fragen am Handy) wächst einfach mit,
  * nichts wird abgeschnitten, keine inneren Scrollbereiche, kein Scroll-Snap. „Bisherige Startseite“ bleibt unverändert. */
 :root { --kopf-gesamt: calc(var(--header-h) + 1px); }
-.vreise, #pakete, #vergleich, #ablauf {
+.vreise, #pakete, #vergleich {
   min-height: calc(100vh - var(--kopf-gesamt)); min-height: calc(100svh - var(--kopf-gesamt));
   display: flex; flex-direction: column; justify-content: center;
 }

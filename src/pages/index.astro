@@ -11,7 +11,7 @@
 //   Bausteine als vier getrennte Module mit verlorener Anfrage (statt Puzzle), Erstberatung in #denkweise integriert
 //   (vier Schritte Verstehen/Empfehlen/Umsetzen/Verbessern), eigener Abschnitt „So läuft die Erstberatung“ entfernt.
 // Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
-// Texte in src/config/startseite.ts, Stil in src/styles/startseite.css (Bewegung: kundenreise.ts, vorgehen.ts, stapel.ts; startseite.ts am 09.11. entfernt)
+// Texte in src/config/startseite.ts, Stil in src/styles/startseite.css (Bewegung: kundenreise.ts, stapel.ts; startseite.ts und vorgehen.ts am 09.11. entfernt)
 // (nur transform/opacity/stroke-dashoffset). Farben seit 08.11.2026 (Jamil #5008) wieder CI-Türkis wie alle Seiten; thema="besucherreise" steuert nur noch Kopf/Fuß-Inhalte.
 // Die alte Startseite (/hauptseite-alt/) ist gelöscht (Jamil, Talk qh87y3sj #5322, Q8); Sicherung Branch vor-aufraeumen-20261109.
 //
@@ -39,7 +39,6 @@ import Prinzipien from '../components/start/Prinzipien.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import PremiumKarte from '../components/pakete/PremiumKarte.astro';
-import VAblauf from '../components/variante/VAblauf.astro';
 import VVergleich from '../components/variante/VVergleich.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
@@ -161,9 +160,9 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   </section>
   </div>
 
-  <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026): drei Schritte an einer feinen türkisen Linie,
-       ruhiges Einblenden beim ersten Sichtkontakt; ohne JS und bei reduzierter Bewegung steht alles da. Anker #denkweise und
-       #erstberatung (Schritt 1, Erstgespräch). Ersetzt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ weiter unten. -->
+  <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026), seit #5337 zusammengeführt mit „Von der Anfrage
+       bis online“ (Sicherung vor-vorgehen-ablauf-20261109): links Kopf und drei Phasen, rechts sechs Schritte als Kartenstapel.
+       Anker #denkweise (Abschnitt), #ablauf (Beginn des Stapels), #erstberatung (Karte Erstgespräch). -->
   <SoGehenWirVor />
 
   <!-- So arbeiten wir. (Jamil, Talk qh87y3sj #5192, „ok“ #5194, 09.11.2026; Sicherung vor-prinzipien-volltext-20261109): Verantwortung,
@@ -173,8 +172,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
 
   <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
        Anker #pakete und #baukasten (alte Links) zeigen hierher. -->
-  <!-- Hintergründe (Jamil, Talk qh87y3sj #5204, 09.11.2026): #vergleich und #ablauf lagen beide hell nebeneinander. Jetzt
-       So arbeiten wir. (zartes Türkis) → #pakete hell → #vergleich Sand → #ablauf hell → darunter unverändert im Wechsel. -->
+  <!-- Hintergründe (Jamil, Talk qh87y3sj #5204, 09.11.2026; #ablauf seit #5337 in „So gehen wir vor“): So gehen wir vor (Weiß)
+       → So arbeiten wir. (zartes Türkis) → #pakete hell → #vergleich Sand → darunter im Wechsel. -->
   <section class="section" id="pakete" aria-labelledby="pakete-h">
     <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
     <div class="wrap">
@@ -203,7 +202,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     </div>
   </section>
 
-  <VAblauf />
+  <!-- „Von der Anfrage bis online“ (#ablauf) in „So gehen wir vor“ aufgegangen (Jamil, Talk qh87y3sj #5337) -->
 
   <!-- Fragen und Antworten (#fragen) entfernt: eigene Seite /fragen/ (Jamil #5136–#5138) -->
 
@@ -213,14 +212,14 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
 
   <!-- Hintergründe unten im Wechsel (09.11.2026, nach dem Entfernen von „Was Sie beitragen“, „Welches Paket passt zu Ihnen?“ und
-       Kundenreise-Check, Jamil #5211–#5213; #stimmen ausgeblendet, Jamil #5289): nach #ablauf (hell) in der Vorschau #team sand,
-       Abschluss hell; ohne Platzhalter (live) Abschluss sand (#referenzen entfernt, Jamil #5322 Q9). -->
+       Kundenreise-Check, Jamil #5211–#5213; #stimmen ausgeblendet, Jamil #5289; #ablauf in „So gehen wir vor“, #5337): nach
+       #vergleich (Sand) in der Vorschau #team hell, Abschluss Sand; ohne Platzhalter (live) Abschluss hell (#referenzen entfernt, Jamil #5322 Q9). -->
   <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
 
   <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026). NUR PLATZHALTER (rot
        gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
   {PLATZHALTER && (
-    <section class="bs bs--alt" id="team" aria-labelledby="bs-team">
+    <section class="bs" id="team" aria-labelledby="bs-team">
       <div class="wrap">
         <div class="bs-kopf bs-kopf--mitte">
           <h2 id="bs-team">{TEAM.titel}</h2>
@@ -275,10 +274,10 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
 
   <!-- Kundenreise-Check (#check) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
 
-  <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 auf Schritt 1 von „So gehen wir vor“ (Jamil #5188/#5190) -->
+  <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 in „So gehen wir vor“, seit #5337 auf der Karte Erstgespräch -->
 
   <!-- Abschluss (Jamil 4792): Claim „Von Anfang bis Wachstum.“ als Überschrift oben, alte Überschrift, Absatz, Linie, Logo und Schlusszeile entfernt (Jamil, Talk qh87y3sj #5290) -->
-  <section class:list={['bs', 'abschluss', { 'bs--alt': !PLATZHALTER }]} aria-labelledby="bs-abschluss">
+  <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">
     <div class="wrap abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
       <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>

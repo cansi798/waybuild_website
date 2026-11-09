@@ -59,16 +59,5 @@ export const VERGLEICH = {
   hinweis: 'Allgemeine Einordnung nach Anbieter-Art aus unserer Erfahrung. Einzelne Anbieter können anders arbeiten.',
 };
 
-/** Ablauf als Kartenstapel (firma.de Punkt 8; gekürzt und übereinandergelegt: Jamil, Talk qh87y3sj #5214, 09.11.2026).
- *  Nur Werte, die die Website schon nennt; alles „in der Regel“. */
-export const ZEITLEISTE_UNTERTITEL = 'So läuft es in der Regel ab.';
-export const ZEITLEISTE = [
-  { wann: 'Tag 1', titel: 'Anfrage', text: 'Per Formular, E-Mail oder WhatsApp.' },
-  { wann: 'In der Regel nach 1 Werktag', titel: 'Rückmeldung', text: 'Wir melden uns persönlich und vereinbaren einen Termin.' },
-  { wann: 'Rund 20 Minuten', titel: 'Erstgespräch', text: 'Kostenlos und unverbindlich. Wir empfehlen das passende Paket.' },
-  { wann: 'Danach', titel: 'Entwurf und Freigabe', text: 'Wir schreiben die Texte mit Ihnen und setzen um. Sie geben frei.' },
-  { wann: 'In der Regel 14 Tage nach Ihren Inhalten', titel: 'Online', text: 'Website und E-Mail-Postfächer sind eingerichtet.' },
-  { wann: 'Laufend', titel: 'Betreuung', text: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr).' },
-];
-
+/* Ablauf „Von der Anfrage bis online“ (ZEITLEISTE) am 09.11.2026 in „So gehen wir vor“ aufgegangen (Jamil, Talk qh87y3sj #5337; config/vorgehen.ts). */
 /* „Was Sie beitragen“ (BEITRAG, firma.de Punkt 12) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5211–#5213). */

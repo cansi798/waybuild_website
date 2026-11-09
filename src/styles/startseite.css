@@ -7,7 +7,7 @@
  * (5,1 : 1); auf Dunkel Türkis-Hell #5fe0da (5,9 : 1). Bezeichnungen der Hauptseite: --accent-mid / --accent-light / --on-accent.
  * html[data-thema='besucherreise'] steuert nur noch Inhalte von Kopf, Fuß und Leiste (Logo C wie auf allen Seiten, Jamil #5226/#5227).
  * Bewegung: src/scripts/startseite.ts am 09.11.2026 entfernt (keine Nutzer mehr: [data-p], [data-fokus], [data-zeichne]).
- * Kundenreise und „So gehen wir vor“ haben eigene Skripte (kundenreise.ts, vorgehen.ts). */
+ * Kundenreise hat ein eigenes Skript (kundenreise.ts), „So gehen wir vor“ misst seinen Kartenstapel selbst (SoGehenWirVor.astro). */
 
 html[data-thema='besucherreise'] {
   /* Rollen der früheren Sonder-Palette, jetzt auf die CI gelegt */

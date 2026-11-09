@@ -8,7 +8,7 @@ import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
 import { CLAIM, BOTSCHAFT } from '../config/startseite';
-import { V_HERO, KUNDENREISE, VERGLEICH, ZEITLEISTE } from '../config/variante';
+import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -29,7 +29,7 @@ export const GET: APIRoute = async ({ site }) => {
     `${V_HERO.titel} ${V_HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
     `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Im besten Fall: ${st.antwort})`).join('; ')}. ${KUNDENREISE.schluss}`,
-    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} ${VORGEHEN.ueberleitung} ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.wort}: ${s.text}${s.betont ? ` ${s.betont}` : ''}${s.hinweis ? ` ${s.hinweis}` : ''}`).join(' ')}`,
+    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Drei Phasen: ${VORGEHEN.phasen.map((p) => `${p.wort}: ${p.text}${p.betont ? ` ${p.betont}` : ''}`).join(' ')} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${VORGEHEN.phasen[s.phase].wort}, ${s.wann}): ${s.text}`).join(' ')}`,
     `- ${PRINZIPIEN.titel} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
     `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
@@ -43,7 +43,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
     '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
-    `- Ablauf: ${ZEITLEISTE.map((s, i) => `${i + 1}. ${s.titel}`).join(', ')}. Online in der Regel innerhalb von 14 Tagen, nachdem die Inhalte vorliegen.`,
+    `- Ablauf: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel}`).join(', ')} (siehe „${VORGEHEN.titel}“). Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
     `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,

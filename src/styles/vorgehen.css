@@ -7,54 +7,68 @@
 .section.vg, .section.pz { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
   display: flex; flex-direction: column; justify-content: center; }
 .section.vg { background: var(--white); }
-.vg-kopf { max-width: 760px; }
-.vg-unter { margin: 0 auto 18px; max-width: 34ch; font-family: var(--font-head); font-size: clamp(1.2rem, 2.3vw, 1.55rem); font-weight: 600;
+/* Zusammengeführt mit „Von der Anfrage bis online“ (Jamil, Talk qh87y3sj #5337, 09.11.2026): links Kopf mit den drei Phasen,
+ * rechts sechs Schritte als Kartenstapel (aus VAblauf, Jamil #5214/#5287). Karten deckend in zartem Türkis auf Weiß;
+ * Phase #006b68 auf #e3f1f0 (5,5 : 1), Zeit #006b68 auf #f4f9f9 (6,1 : 1), Text --ink-soft (7,1 : 1). */
+.vg-kopf { max-width: 720px; }
+.vg-unter { margin: 0 0 16px; max-width: 34ch; font-family: var(--font-head); font-size: clamp(1.2rem, 2.3vw, 1.55rem); font-weight: 600;
   line-height: 1.4; color: var(--accent-ink); text-wrap: balance; }
-.vg-intro { margin: 0 auto 16px; line-height: 1.7; text-wrap: pretty; }
-.vg-ueber { margin: 0 auto; max-width: 56ch; font-size: 1.06rem; line-height: 1.7; font-weight: 600; color: var(--dark); text-wrap: balance; }
+.vg-intro { margin: 0 0 20px; line-height: 1.65; text-wrap: pretty; }
+.vg-phasen { list-style: none; margin: 0; padding: 0 0 0 18px; display: grid; gap: 12px; border-left: 2px solid #b9dcd9; }
+.vg-phase { display: grid; gap: 2px; }
+.vg-phase__wort { font-family: var(--font-head); font-size: 1.08rem; font-weight: 700; line-height: 1.3; color: var(--accent-ink); }
+.vg-phase__text { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.vg-phase__betont { justify-self: start; margin-top: 4px; padding: 3px 12px; border-radius: 10px; background: #eaf5f4; font-family: var(--font-head);
+  font-size: 0.96rem; font-weight: 650; line-height: 1.5; color: var(--dark); }
+.vg-anker { display: block; height: 0; }
 
-.vg-schritte { --vg-nr: 56px; --vg-abstand: 40px; --vg-linie: #00807b; position: relative; list-style: none; width: 100%; max-width: 1120px;
-  margin: clamp(8px, 2vh, 24px) auto 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--vg-abstand); }
-.vg-schritt { position: relative; display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
-.vg-nr { position: relative; z-index: 1; display: grid; place-items: center; flex: none; width: var(--vg-nr); height: var(--vg-nr); margin-bottom: 22px;
-  border-radius: 50%; background: var(--white); border: 2px solid var(--vg-linie); box-shadow: 0 0 0 6px rgb(0 128 123 / 10%);
-  font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; line-height: 1; color: var(--accent-ink); }
-/* feine Linie von einem Schritt zum nächsten (zwischen den Kreisen, mit kleinem Abstand) */
-.vg-schritt:not(:last-child)::after { content: ''; position: absolute; top: calc(var(--vg-nr) / 2 - 1px); left: calc(50% + var(--vg-nr) / 2 + 10px);
-  width: calc(100% + var(--vg-abstand) - var(--vg-nr) - 20px); height: 2px; border-radius: 2px; background: var(--vg-linie); transform-origin: left; }
-.vg-inhalt { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 34ch; }
-.vg-wort { margin: 0; font-size: clamp(1.5rem, 2.2vw, 1.85rem) !important; line-height: 1.15; letter-spacing: -0.02em; color: var(--accent-ink); }
-.vg-text { margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
-.vg-betont { margin: 4px 0 0; padding: 10px 16px; border-radius: 12px; background: #eaf5f4; font-family: var(--font-head); font-size: 1.02rem;
-  font-weight: 650; line-height: 1.5; color: var(--dark); text-wrap: balance; }
-.vg-hinweis { margin: 4px 0 0; padding: 6px 14px; border-radius: 14px; border: 1px solid #cfe5e3; font-size: 0.9rem; font-weight: 600; line-height: 1.5; color: var(--accent-ink); text-wrap: balance; }
-@media (min-width: 1100px) { .vg-inhalt { max-width: 36ch; } .vg-hinweis { white-space: nowrap; } }
-
-@media (max-width: 899px) {
-  .vg-schritte { --vg-nr: 48px; --vg-abstand: 34px; grid-template-columns: 1fr; max-width: 560px; }
-  .vg-schritt { display: grid; grid-template-columns: var(--vg-nr) minmax(0, 1fr); column-gap: 18px; align-items: start; text-align: left; }
-  .vg-nr { margin-bottom: 0; font-size: 1.15rem; }
-  .vg-schritt:not(:last-child)::after { top: calc(var(--vg-nr) + 8px); left: calc(var(--vg-nr) / 2 - 1px); bottom: calc(var(--vg-abstand) * -1 + 8px);
-    width: 2px; height: auto; transform-origin: top; }
-  .vg-inhalt { align-items: flex-start; gap: 10px; max-width: none; padding-top: 8px; }
-  .vg-betont, .vg-hinweis { text-wrap: pretty; }
+/* Grundform (ohne JS, reduzierte Bewegung): Karten untereinander, normale Liste. */
+.vg-karten { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 760px; }
+.vg-karte { display: grid; grid-template-columns: 40px 1fr; column-gap: 18px; align-items: start;
+  background: #f4f9f9; border: 1px solid #d5e8e6; border-radius: 18px; padding: clamp(18px, 2.6vw, 28px); }
+.vg-nr { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--dark); color: var(--white);
+  font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; }
+.vg-marke { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 6px; font-size: 0.82rem; font-weight: 700; line-height: 1.4; color: var(--accent-ink); }
+.vg-marke__phase { padding: 2px 10px; border-radius: 999px; background: #e3f1f0; letter-spacing: 0.06em; text-transform: uppercase; }
+.vg-karte h3 { margin: 0 0 4px; font-size: 1.15rem; }
+.vg-karte__text { margin: 0; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 960px) {
+  .vg-raster { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .vg-kopf { margin-bottom: 0; }
+  .vg-unter { max-width: none; font-size: clamp(1.2rem, 1.8vw, 1.45rem); }
 }
 
-/* Einblenden (nur mit .vg-bereit vom Skript; Endzustand = Zustand ohne JS) */
-.vg-bereit .vg-nr { opacity: 0; transform: scale(0.6); }
-.vg-bereit .vg-inhalt { opacity: 0; transform: translateY(14px); filter: blur(8px); }
-.vg-bereit .vg-schritt::after { transform: scaleX(0); }
-@media (max-width: 899px) { .vg-bereit .vg-schritt::after { transform: scaleY(0); } }
-.vg-bereit.ist-los .vg-nr { opacity: 1; transform: none;
-  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1); transition-delay: calc(150ms + var(--i) * 750ms); }
-.vg-bereit.ist-los .vg-inhalt { opacity: 1; transform: none; filter: blur(0);
-  transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
-  transition-delay: calc(250ms + var(--i) * 750ms); }
-.vg-bereit.ist-los .vg-schritt::after { transform: none; transition: transform 0.65s cubic-bezier(0.45, 0, 0.3, 1); transition-delay: calc(600ms + var(--i) * 750ms); }
-@media (prefers-reduced-motion: reduce) {
-  .vg-schritte *, .vg-schritte *::after { transition: none !important; }
-  .vg-bereit .vg-nr, .vg-bereit .vg-inhalt { opacity: 1; transform: none; filter: none; }
-  .vg-bereit .vg-schritt::after { transform: none; }
+/* Stapel (nur mit JS und ohne reduzierte Bewegung, Jamil #5287, unverändert aus „Von der Anfrage bis online“):
+   - Alle Karten gleich hoch (--karte-h misst das Skript in SoGehenWirVor.astro: höchste Karte, mindestens 40 % des sichtbaren
+     Bereichs zwischen Kopfzeile und Handy-Leiste --stapel-unten, damit nie zwei Karten ganz zu sehen sind) und mit demselben top,
+     etwas über der Mitte des sichtbaren Bereichs. Die nächste Karte (höherer z-index, deckend) liegt genau auf der vorigen.
+   - Scrollweg je Karte = Kartenhöhe + Abstand darüber (margin-top, nicht unten: ein unterer Rand würde die Karten zu früh
+     lösen) = rund 78 % der Bildschirmhöhe. Der leere Block am Listenende hält die letzte Karte kurz stehen.
+   - PC: linke Spalte bleibt auf Höhe der Karte stehen, höchstens so tief, dass sie ganz im Bild bleibt (--kopf-h gemessen).
+     Handy: Kopf oben, Stapel darunter. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .vg-raster {
+    --sichtbar: calc(100svh - var(--kopf-gesamt, 73px) - var(--stapel-unten, 0px));
+    --karte-min: max(11rem, calc(var(--sichtbar) * 0.4));
+    --karte-oben: calc(var(--kopf-gesamt, 73px) + max(16px, (var(--sichtbar) - var(--karte-h, var(--karte-min))) * 0.42));
+  }
+  html.js .vg-karten { gap: 0; }
+  html.js .vg-karten::after { content: ''; display: block; height: clamp(60px, 22svh, 220px); }
+  html.js .vg-karte {
+    position: sticky; top: var(--karte-oben); z-index: calc(var(--i) + 1);
+    box-sizing: border-box; min-height: var(--karte-h, var(--karte-min)); align-content: center;
+    grid-template-columns: 48px 1fr; column-gap: clamp(16px, 2.4vw, 26px); padding: clamp(22px, 3.4vw, 40px);
+    margin-top: max(48px, calc(78svh - var(--karte-h, var(--karte-min))));
+    box-shadow: 0 16px 36px -26px rgb(0 47 45 / 22%), 0 1px 2px rgb(0 47 45 / 4%);
+  }
+  html.js .vg-karte:first-child { margin-top: 0; }
+  html.js .vg-nr { width: 48px; height: 48px; font-size: 1.2rem; }
+  html.js .vg-karte h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); margin-bottom: 6px; }
+  html.js .vg-karte__text { font-size: clamp(1rem, 1.3vw, 1.1rem); }
+  @media (min-width: 960px) {
+    html.js .vg-kopf { position: sticky;
+      top: max(calc(var(--kopf-gesamt, 73px) + 16px), min(var(--karte-oben), calc(100svh - var(--kopf-h, 0px) - 16px))); }
+  }
 }
 
 /* ── So arbeiten wir. (keine Animation) ── */

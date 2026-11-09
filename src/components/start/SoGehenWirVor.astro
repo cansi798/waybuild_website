@@ -1,37 +1,110 @@
 ---
 // „So gehen wir vor“ (Jamil, Talk qh87y3sj #5188, freigegeben „ok 2b 3 ja“ #5190, 09.11.2026). Texte: src/config/vorgehen.ts.
-// Drei Schritte Verstehen → Verbinden → Verbessern, verbunden durch eine feine türkise Linie (PC waagerecht, Handy senkrecht).
-// Ruhiges Einblenden beim ersten Sichtkontakt: Schritte nacheinander, die Linie zeichnet sich zum nächsten Schritt
-// (src/scripts/vorgehen.ts setzt .vg-bereit, dann einmal .ist-los). Ohne JS und bei reduzierter Bewegung steht alles fertig da.
-// Anker: #denkweise = Abschnitt, #erstberatung = Schritt 1 (alte Links treffen weiter).
+// Seit #5337 (09.11.2026, Sicherung vor-vorgehen-ablauf-20261109) zusammengeführt mit „Von der Anfrage bis online“ („ist beides
+// das gleiche“), dessen Kartenstapel bleibt (Jamil #5214/#5287): links Überschrift, Unterzeile, Einleitung und die drei Phasen
+// (am PC sticky), rechts die sechs Schritte als Stapel. Zuerst ist nur Schritt 1 zu sehen; beim Scrollen schiebt sich der nächste
+// genau darüber und deckt den vorigen ganz zu. Alle Karten position: sticky, gleiches top, gleiche Höhe, deckend; kein Einrasten,
+// kein Scroll-Kapern. Ohne JS (html.js fehlt) oder bei reduzierter Bewegung: normale Liste. Stil: src/styles/vorgehen.css (.vg-*).
+// Anker: #denkweise = Abschnitt, #ablauf = Beginn des Stapels, #erstberatung = Karte Erstgespräch (alte Links treffen weiter).
 import { VORGEHEN } from '../../config/vorgehen';
 import '../../styles/vorgehen.css';
 ---
 
 <section class="section vg" id="denkweise" aria-labelledby="vg-h">
-  <div class="wrap">
-    <div class="section-head center vg-kopf">
+  <div class="wrap vg-raster">
+    <div class="section-head vg-kopf">
       <h2 id="vg-h" class="rule">{VORGEHEN.titel}</h2>
       <p class="vg-unter">{VORGEHEN.unter}</p>
       <p class="lead vg-intro">{VORGEHEN.intro}</p>
-      <p class="vg-ueber">{VORGEHEN.ueberleitung}</p>
+      <ul class="vg-phasen">
+        {VORGEHEN.phasen.map((p) => (
+          <li class="vg-phase">
+            <span class="vg-phase__wort">{p.wort}</span>
+            <span class="vg-phase__text">{p.text}</span>
+            {p.betont && <span class="vg-phase__betont">{p.betont}</span>}
+          </li>
+        ))}
+      </ul>
     </div>
-    <ol class="vg-schritte" data-vorgehen>
-      {VORGEHEN.schritte.map((s, i) => (
-        <li class="vg-schritt" id={s.anker} style={`--i:${i}`}>
-          <span class="vg-nr" aria-hidden="true">{i + 1}</span>
-          <div class="vg-inhalt">
-            <h3 class="vg-wort">{s.wort}</h3>
-            <p class="vg-text">{s.text}</p>
-            {s.betont && <p class="vg-betont">{s.betont}</p>}
-            {s.hinweis && <p class="vg-hinweis">{s.hinweis}</p>}
-          </div>
-        </li>
-      ))}
-    </ol>
+    <div class="vg-stapel">
+      <span id="ablauf" class="vg-anker" aria-hidden="true"></span>
+      <ol class="vg-karten">
+        {VORGEHEN.schritte.map((s, i) => (
+          <li class="vg-karte" id={s.anker} style={`--i: ${i}`}>
+            <span class="vg-nr" aria-hidden="true">{i + 1}</span>
+            <div class="vg-karte__inhalt">
+              <p class="vg-marke"><span class="vg-marke__phase">{VORGEHEN.phasen[s.phase].wort}</span><span class="vg-marke__wann">{s.wann}</span></p>
+              <h3>{s.titel}</h3>
+              <p class="vg-karte__text">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <script>
-  import '../../scripts/vorgehen.ts';
+  // Gleiche Höhe für alle Karten (höchste Karte zählt), damit keine frühere Karte unten hervorschaut; dazu die Höhe der linken
+  // Spalte (--kopf-h), damit sie am PC ganz im Bild stehen bleibt. Bei Größenänderung und nach dem Laden der Schriften neu gemessen.
+  const messen = () => {
+    document.querySelectorAll<HTMLElement>('.vg-raster').forEach((raster) => {
+      raster.style.removeProperty('--karte-h');
+      const karten = Array.from(raster.querySelectorAll<HTMLElement>('.vg-karte'));
+      const h = Math.ceil(Math.max(0, ...karten.map((k) => k.getBoundingClientRect().height)));
+      if (h > 0) raster.style.setProperty('--karte-h', `${h}px`);
+      const kopf = raster.querySelector<HTMLElement>('.vg-kopf');
+      if (kopf) raster.style.setProperty('--kopf-h', `${Math.ceil(kopf.getBoundingClientRect().height)}px`);
+    });
+  };
+  messen();
+  let wartet = false;
+  window.addEventListener('resize', () => { if (!wartet) { wartet = true; requestAnimationFrame(() => { wartet = false; messen(); }); } }, { passive: true });
+
+  // Sprung auf eine Karte im Stapel (#erstberatung): Browser rechnen bei position: sticky mit der gerade gestapelten Lage und
+  // landen daneben. Darum hier die natürliche Lage der Karte (Listenanfang + Abstände + Höhen der Karten davor) so scrollen,
+  // dass sie genau an ihrem Platz oben im Stapel liegt und die vorigen ganz verdeckt. Nur im Stapel (sticky); sonst Browser.
+  const imStapel = (k: HTMLElement) => getComputedStyle(k).position === 'sticky';
+  const zielY = (karte: HTMLElement) => {
+    const liste = karte.parentElement as HTMLElement;
+    let y = liste.getBoundingClientRect().top + window.scrollY;
+    for (const k of Array.from(liste.children) as HTMLElement[]) {
+      y += parseFloat(getComputedStyle(k).marginTop) || 0;
+      if (k === karte) break;
+      y += k.offsetHeight;
+    }
+    return Math.max(0, Math.round(y - (parseFloat(getComputedStyle(karte).top) || 0)));
+  };
+  const karteZuHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = id ? document.getElementById(id) : null;
+    return el?.classList.contains('vg-karte') && imStapel(el) ? el : null;
+  };
+  const hinspringen = (sanft: boolean) => {
+    const k = karteZuHash();
+    if (k) window.scrollTo({ top: zielY(k), behavior: sanft ? 'smooth' : 'instant' });
+  };
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element | null)?.closest?.('a[href*="#"]') as HTMLAnchorElement | null;
+    if (!a || a.origin !== location.origin || a.pathname !== location.pathname || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const el = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+    if (!el?.classList.contains('vg-karte') || !imStapel(el)) return;
+    e.preventDefault();
+    if (location.hash !== a.hash) history.pushState(null, '', a.hash);
+    hinspringen(!matchMedia('(prefers-reduced-motion: reduce)').matches);
+  });
+  window.addEventListener('hashchange', () => hinspringen(false));
+  // Beim Laden mit #erstberatung scrollt der Browser selbst (teils sanft und erst nach dem Skript) und landet im Stapel daneben.
+  // Darum nach dem Laden einige Male nachführen, aber nur solange niemand selbst scrollt (Rad, Finger, Taste, Klick).
+  let selbst = false;
+  const stopp = () => { selbst = true; };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => window.addEventListener(t, stopp, { once: true, passive: true }));
+  const nachfuehren = () => { if (!selbst && karteZuHash()) hinspringen(false); };
+  if (karteZuHash()) {
+    requestAnimationFrame(nachfuehren);
+    const beimLaden = () => { nachfuehren(); [150, 500, 1000].forEach((ms) => setTimeout(nachfuehren, ms)); };
+    if (document.readyState === 'complete') beimLaden(); else window.addEventListener('load', beimLaden, { once: true });
+  }
+  // nach dem Laden der Schriften neu messen (Kartenhöhe) und einen Sprung beim Laden nachführen
+  document.fonts?.ready.then(() => { messen(); nachfuehren(); });
 </script>
