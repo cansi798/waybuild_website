@@ -105,6 +105,7 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
   description={V_DESCRIPTION}
   schema={[serviceSchema(Astro.site, V_SERVICE)]}
   thema="besucherreise"
+  stapel
 >
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
@@ -409,4 +410,5 @@ const paketLabel = (pk: 'basis' | 'plus' | 'komplett' | 'anfrage') =>
 
 <script>
   import '../scripts/startseite.ts';
+  import '../scripts/stapel.ts';
 </script>
