@@ -141,7 +141,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
       <slot />
     </main>
     <Footer thema={thema} />
-    {!hideMobileCta && <StickyBar thema={thema} />}
+    {!hideMobileCta && <StickyBar thema={thema} nachHero={!!Astro.props.stapel} />}{/* nachHero: nur Startseite, Leiste erst nach dem Hero-Knopf (#5204) */}
     {SHOW_HINTS && IS_PREVIEW && openTodos > 0 && (
       <a class="todo-badge" href={href('/checkliste/')}>
         <span aria-hidden="true">!</span> {openTodos}<em> Punkte offen bis zum Start</em>

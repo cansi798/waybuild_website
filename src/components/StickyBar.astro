@@ -1,20 +1,25 @@
 ---
 // Feste Leiste unten (mobil + Tablet), dauerhaft sichtbar (Bauwelt-Muster):
 // Erstgespräch (Haupt-CTA) + WhatsApp. Doppelte Buttons im Inhalt sind mobil ausgeblendet (.nur-desktop).
+// Startseite (nachHero, Jamil, Talk qh87y3sj #5204, 09.11.2026): die Leiste erscheint erst, wenn der Hero-Knopf
+// („.v-hero .v-knopfe“) aus dem Blick ist (oben hinausgescrollt oder von der darübergleitenden Kundenreise verdeckt), und
+// verschwindet wieder, sobald er zurück im Blick ist. Weiches Ein-/Ausgleiten (nur transform/opacity, kein Layoutsprung),
+// bei reduzierter Bewegung ohne Animation. Ohne JS steht die Leiste wie überall da (der Hero hält dann unten ihre Höhe frei,
+// variante-start.css). Als <aside aria-label="Schnellkontakt"> (Landmark, axe „region“).
 import { href } from '../lib/paths';
 import { whatsappLink } from '../config/site';
 import Icon from './Icon.astro';
 import { ANLIEGEN } from '../config/startseite';
-interface Props { thema?: 'besucherreise' }
+interface Props { thema?: 'besucherreise'; nachHero?: boolean }
 const reise = Astro.props.thema === 'besucherreise';
 ---
 
-<div class="sticky-bar">
+<aside class="sticky-bar" aria-label="Schnellkontakt" data-nach-hero={Astro.props.nachHero ? '' : undefined}>
   <a class="btn btn--primary btn--sm sticky-bar__btn" href={reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/')}>{reise ? ANLIEGEN.erstberatung.label : 'Kostenloses Erstgespräch'}</a>
   <a class="btn btn--ghost btn--sm sticky-bar__btn sticky-bar__wa" href={whatsappLink()} target="_blank" rel="noopener" aria-label="Per WhatsApp schreiben">
     <Icon name="whatsapp" size={18} /> WhatsApp
   </a>
-</div>
+</aside>
 
 <style>
   .sticky-bar {
@@ -27,5 +32,65 @@ const reise = Astro.props.thema === 'besucherreise';
   }
   .sticky-bar__btn { flex: 1 1 0; min-width: 0; padding: 9px 10px; font-size: 0.88rem; line-height: 1.15; text-align: center; white-space: normal; }
   .sticky-bar__wa { flex: 0 0 auto; border-color: var(--line); }
+  /* Startseite mit JS: zu, bis das Skript .ist-da setzt (visibility: nicht fokussierbar, solange unsichtbar) */
+  .sticky-bar[data-nach-hero] { transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.35s ease, visibility 0s linear 0s; }
+  :global(html.js) .sticky-bar[data-nach-hero]:not(.ist-da) {
+    transform: translateY(calc(100% + 16px)); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s ease, visibility 0s linear 0.35s;
+  }
+  @media (prefers-reduced-motion: reduce) { .sticky-bar[data-nach-hero], :global(html.js) .sticky-bar[data-nach-hero]:not(.ist-da) { transition: none; } }
   @media (min-width: 960px) { .sticky-bar { display: none; } }
 </style>
+
+<script>
+  // Startseite: Leiste erst zeigen, wenn der Hero-Knopf aus dem Blick ist; wieder weg, sobald er zurück ist.
+  //  - vorbei: der Knopf ist oben unter der Kopfzeile hinaus (IntersectionObserver am Knopf, Wurzel = Bildschirm minus Kopfzeile);
+  //  - verdeckt: der Hero steht (stapel.ts, position: sticky) und der nächste Abschnitt ist schon über die Oberkante des Knopfs
+  //    geglitten. Überdecken sieht ein IntersectionObserver nicht (der stehende Knopf bleibt „im Bild“), darum vergleicht ein
+  //    passiver Scroll-Listener die Oberkanten von Knopf und nächstem Abschnitt, und zwar nur, solange der Knopf im Bild ist
+  //    (zwei Lageabfragen, kein Schreiben; misst die sichtbare Lage samt Einblenden und Zurücktreten des Heros).
+  // Ohne IntersectionObserver: Leiste sofort da.
+  const leiste = document.querySelector<HTMLElement>('.sticky-bar[data-nach-hero]');
+  const knopf = document.querySelector<HTMLElement>('.v-hero .v-knopfe');
+  const hero = knopf?.closest<HTMLElement>('.v-hero');
+
+  if (leiste && (!knopf || !hero || !('IntersectionObserver' in window))) leiste.classList.add('ist-da');
+  else if (leiste && knopf && hero) {
+    const kopf = document.getElementById('siteHeader');
+    const naechster = hero.nextElementSibling;
+    let imBild = true;
+    let vorbei = false;
+    let verdeckt = false;
+    let beobachter: IntersectionObserver | null = null;
+    const zeigen = () => leiste.classList.toggle('ist-da', vorbei || verdeckt);
+
+    const decke = () => {
+      const v = imBild && !!naechster && naechster.getBoundingClientRect().top <= knopf.getBoundingClientRect().top;
+      if (v !== verdeckt) { verdeckt = v; zeigen(); }
+    };
+    const einrichten = () => {
+      beobachter?.disconnect();
+      const oben = kopf ? kopf.offsetHeight : 0;
+      beobachter = new IntersectionObserver(([e]) => {
+        imBild = e.isIntersecting;
+        vorbei = !e.isIntersecting && e.boundingClientRect.bottom <= oben + 1;
+        decke();
+        zeigen();
+      }, { rootMargin: `-${oben}px 0px 0px 0px` });
+      beobachter.observe(knopf);
+    };
+
+    let wartet = 0;
+    einrichten();
+    // je Bild höchstens einmal, nach dem Scrollen (WebKit setzt die Lage des stehenden Heros erst danach), dazu ein Nachzügler
+    let geplant = false;
+    let nachher = 0;
+    window.addEventListener('scroll', () => {
+      if (!imBild) return;
+      if (!geplant) { geplant = true; requestAnimationFrame(() => { geplant = false; decke(); }); }
+      window.clearTimeout(nachher); nachher = window.setTimeout(decke, 120);
+    }, { passive: true });
+    window.addEventListener('resize', () => { window.clearTimeout(wartet); wartet = window.setTimeout(() => { einrichten(); decke(); }, 150); }, { passive: true });
+    window.addEventListener('load', decke, { once: true });
+  }
+</script>

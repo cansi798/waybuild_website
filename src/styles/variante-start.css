@@ -142,7 +142,7 @@
  * feines Korn (SVG-Rauschen, < 3 % Weiß, 0,4 KB). Kontrast per Pixelmessung bei 320–1920 px und mehreren Zeitpunkten der
  * Bewegung: hinter Unterzeile und Knöpfen ≥ 4,5 : 1, H1 ≥ 3 : 1 (siehe Talk/Memory). Bei reduzierter Bewegung steht er still.
  * EINBLENDEN (#5114, wie firma.de): H1 Wort für Wort (.v-wort mit --i): Deckkraft, 0,25 em von unten, Unschärfe 10 px → scharf,
- * je 850 ms, Abstand 100 ms; erstes Wort startet sofort (H1-Wörter ab Deckkraft 0,01, zählt als LCP). Dann die Unterzeile
+ * je 550 ms, Abstand 60 ms (seit #5204, vorher 850/100); erstes Wort startet sofort (H1-Wörter ab Deckkraft 0,01, zählt als LCP). Dann die Unterzeile
  * genauso, dann Knöpfe weich, dann die Versprechen. Nur CSS. Bei reduzierter Bewegung alles sofort sichtbar.
  * Der alte Einstieg weiter unten (Bisherige Startseite) bleibt unverändert. */
 .v-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column;
@@ -175,15 +175,15 @@
 .v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 1.45rem); line-height: 1.5; }
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
-/* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #006b68 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring
+/* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #006b68 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring, seit #5204 nur drei Mal
  * (box-shadow, weiß → durchsichtig) und einmal pro Takt ein heller Türkis-Glanz über den Knopf (Schrift darunter ≥ 5 : 1).
  * Startet nach dem Einblenden. Hover/Fokus: stärkerer, ruhender Schein. Reduzierte Bewegung: nur leichter Schatten. */
 .v-hero .v-leucht { position: relative; isolation: isolate; overflow: hidden; min-height: 60px; padding: 1em 2.3em; font-size: clamp(1.08rem, 1.6vw, 1.2rem);
   background: var(--white); color: var(--accent-ink); box-shadow: 0 12px 30px -12px rgb(0 40 38 / 55%);
-  animation: v-glow 3s ease-out 2.6s infinite; }
+  animation: v-glow 3s ease-out 1.9s 3; } /* drei Mal, dann Ruhe (Jamil #5204); Ende = Ruhezustand (gleicher Schatten) */
 .v-hero .v-leucht::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: linear-gradient(110deg, transparent 30%, rgb(95 224 218 / 32%) 50%, transparent 70%); transform: translateX(-120%);
-  animation: v-glanz 3s ease-in-out 2.6s infinite; }
+  animation: v-glanz 3s ease-in-out 1.9s 3; }
 .v-hero .v-leucht:hover, .v-hero .v-leucht:focus-visible { animation: none; background: var(--white);
   box-shadow: 0 0 0 6px rgb(255 255 255 / 30%), 0 0 42px 8px rgb(95 224 218 / 45%), 0 12px 30px -12px rgb(0 40 38 / 55%); }
 @keyframes v-glow {
@@ -194,18 +194,25 @@
 .v-hero .v-knopfe .v-leucht { flex: 0 0 auto; max-width: none; white-space: nowrap; }
 .v-hero .v-leucht:focus-visible { border-radius: 999px; outline-offset: 4px; } /* globale Fokusregel setzt sonst 4 px Ecken */
 @media (max-width: 599px) { .v-hero .v-knopfe .v-leucht { flex: 1 1 100%; width: 100%; white-space: normal; padding-inline: 1.2em; } }
+/* Ohne JS steht die Handy-Leiste (StickyBar) von Anfang an da: der Hero hält unten ihre Höhe frei, damit der Knopf nie darunter liegt.
+ * Mit JS erscheint sie auf der Startseite erst nach dem Hero-Knopf (StickyBar.astro, Jamil #5204). */
+@media (max-width: 959px) { html:not(.js) .v-hero { padding-bottom: calc(var(--stickybar-h) + env(safe-area-inset-bottom)); } }
 @media (max-width: 719px) {
   .v-hero { --v-ruhe-x: 96%; --v-ruhe-y: 46%; --v-ruhe-mitte: 50%; --v-unten: 190px; }
 }
 /* Wort für Wort */
+/* Tempo (Jamil, Talk qh87y3sj #5204, 09.11.2026): je Wort 550 ms, Abstand 60 ms (vorher 850/100), Unschärfe 8 px (vorher 10);
+ * H1 mit 8 Wörtern fertig nach ≈ 1 s, Unterzeile ab 0,8 s, Knopf ab 1,05 s, Lichtschein ab 1,9 s (drei Mal). */
 .v-wort { display: inline-block; animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--i) * 100ms); }
+.v-titel .v-wort { animation-duration: 550ms; animation-delay: calc(var(--i) * 60ms); }
 .v-titel .v-wort { animation-name: v-wort-h1; }
 @keyframes v-wort { from { opacity: 0; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
-@keyframes v-wort-h1 { from { opacity: 0.01; transform: translateY(0.25em); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes v-wort-h1 { from { opacity: 0.01; transform: translateY(0.25em); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes v-ein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .v-ein { animation: v-ein 1000ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-.v-ein--2 { animation-delay: 1200ms; }
-.v-ein--3 { animation-delay: 1500ms; }
+.v-hero .v-ein { animation-duration: 800ms; }
+.v-ein--2 { animation-delay: 800ms; }
+.v-ein--3 { animation-delay: 1050ms; }
 .v-ein--4 { animation-delay: 1900ms; }
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
