@@ -166,6 +166,21 @@ const isCurrent = (path?: string) => path && current === href(path);
     .hdr__nav { display: flex; }
     .hdr__cta { display: inline-flex; margin-left: 8px; }
     .hdr__burger { display: none; }
+    /* Desktop (Jamil, Talk qh87y3sj #5271): Logo ganz links, Knopf ganz rechts, Menü genau mittig im Fenster.
+     * Volle Breite statt mittiger .wrap-Box; Raster 1fr auto 1fr hält das Menü unabhängig von Logo- und Knopfbreite
+     * in der Mitte. Das Leistungen-Panel richtet sich weiter an .hdr__inner aus (also ebenfalls fenstermittig). */
+    .hdr__inner {
+      width: 100%; max-width: none; padding-inline: clamp(20px, 2.6vw, 40px);
+      display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px;
+    }
+    .hdr__logo { justify-self: start; }
+    .hdr__nav { flex: none; justify-self: center; }
+    .hdr__actions { justify-self: end; margin-left: 0; }
+    .hdr__cta { margin-left: 0; }
+  }
+  /* 960–1179 px: etwas engere Menüpunkte, damit Logo, Menü und Knopf nicht aneinanderstoßen */
+  @media (min-width: 960px) and (max-width: 1179px) {
+    .hdr__link { padding-inline: 10px; font-size: 0.92rem; }
   }
 </style>
 
