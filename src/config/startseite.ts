@@ -8,6 +8,8 @@
 // „Besucherreise“ (05.11.). Preise/Pakete NICHT hier, sondern immer aus PAKETE in site.ts (Verknüpfung in index.astro).
 // Die alte Startseite (vor dem 05.11., /hauptseite-alt/) ist gelöscht (Jamil, Talk qh87y3sj #5322); Sicherung Branch vor-aufraeumen-20261109.
 
+import type { IconName } from './site';
+
 /** Früherer Text-Name der Startseite. Seit Logo C (Jamil, Talk qh87y3sj #5226/#5227 „überall“) nicht mehr angezeigt:
  *  Kopfzeile, Fußzeile und Claim zeigen das Logo (src/components/Logo.astro). Bleibt nur als Notiz stehen. */
 export const MARKE = 'rethink.website';
@@ -123,9 +125,35 @@ export const VERLASSEN = {
 /** Claim (4793): seit 09.11.2026 große Überschrift des Abschlusses (Jamil, Talk qh87y3sj #5290), als Slogan in JSON-LD und im Title */
 export const CLAIM = 'Von Anfang bis Wachstum.';
 
-/** Abschluss (4792): Überschrift = Claim, darunter CTA. Alte Überschrift + Absatz entfernt (Jamil #5290). */
+/** „Was Sie davon haben.“ (#vorteile, Jamil, Talk qh87y3sj #5381, 10.11.2026: „Warum sollte der Websitebesucher unser Kunde werden?“).
+ *  Sechs Vorteile aus Sicht des Besuchers, direkt nach der Kundenreise. NUR Belegtes von der Website: Pakete/Preise aus pakete-abo.ts
+ *  (keine Einrichtungsgebühr, Monatsbericht ab Plus, Ordner ab Plus, Vorlagen + Terminbuchung in Komplett), 14 Tage aus vorgehen.ts,
+ *  fester Ansprechpartner aus dem Vergleich. Keine Zahlen zu Platzierungen, keine absoluten Versprechen (UWG).
+ *  icon = Name aus Icon.astro, paket = kleines Etikett (nur wenn nicht in allen Paketen enthalten). */
+export const VORTEILE = {
+  eyebrow: 'Ihre Vorteile',
+  titel: 'Was Sie davon haben.',
+  intro: 'Sie kümmern sich um Ihre Kunden. Wir sorgen dafür, dass Ihr Auftritt Sie dabei unterstützt.',
+  liste: [
+    { icon: 'search', titel: 'Besser gefunden werden', text: 'Ihre Website ist von Anfang an so aufgebaut, dass Google und KI-Assistenten wie ChatGPT Ihr Angebot gut verstehen. Das erhöht die Chance, dass Kunden Sie finden, wenn sie nach Ihrer Leistung suchen.' },
+    { icon: 'mail', titel: 'Weniger Arbeit mit Anfragen und Angeboten', text: 'Anfragen kommen geordnet bei Ihnen an und gehen nicht im Posteingang unter. Ordner im Postfach, Vorlagen für Angebote und eine Online-Terminbuchung sparen Ihnen wiederkehrende Handgriffe.', paket: 'Je nach Paket' },
+    { icon: 'euro', titel: 'Feste Monatspreise', text: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten, ohne Einrichtungsgebühr. Sie wissen vorher, was Sie jeden Monat zahlen.' },
+    { icon: 'user', titel: 'Ein fester Ansprechpartner', text: 'Statt einer Hotline haben Sie einen festen Ansprechpartner, der Ihr Projekt kennt. Änderungen schicken Sie einfach per Nachricht, auch als Sprachnachricht.' },
+    { icon: 'rocket', titel: 'Schnell online', text: 'Bei Websites in der Regel 14 Tage, nachdem Ihre Inhalte vorliegen. Die Technik richten wir ein, Sie geben frei.' },
+    { icon: 'chart', titel: 'Sehen, was Ihre Website bringt', text: 'Jeden Monat ein kurzer Bericht mit Besuchern, Anfragen und Suchbegriffen, verständlich erklärt. So sehen Sie, was funktioniert.', paket: 'Ab Paket Plus' },
+  ] as { icon: IconName; titel: string; text: string; paket?: string }[],
+};
+
+/** Abschluss (4792): Überschrift = Claim, darunter CTA. Alte Überschrift + Absatz entfernt (Jamil #5290).
+ *  Seit Jamil, Talk qh87y3sj #5381 (10.11.2026): über dem Knopf eine kurze Antwort „Warum waybuild?“ in drei Sätzen. */
 export const ABSCHLUSS = {
   titel: CLAIM,
+  warumTitel: 'Warum waybuild?',
+  warum: [
+    'Wir betrachten nicht nur Ihre Website, sondern den ganzen Weg Ihrer Kunden, von der ersten Suche bis zur Betreuung nach dem Auftrag.',
+    'Sie zahlen einen festen Monatspreis ohne Einrichtungsgebühr und haben einen festen Ansprechpartner.',
+    'Ihr Auftritt wächst mit Ihrem Unternehmen, Schritt für Schritt von der Website bis zur Software.',
+  ],
   cta: 'Unternehmensauftritt bewerten lassen',
   unterCta: 'Kurzes Gespräch. Klare Einschätzung. Konkrete Empfehlungen.',
 };

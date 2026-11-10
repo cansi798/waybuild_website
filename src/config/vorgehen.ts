@@ -38,6 +38,8 @@ export const VORGEHEN = {
  *  Verlässlichkeit-Text ohne „Anfragen dürfen nicht verloren gehen.“ (steht im Leitsatz). */
 export const PRINZIPIEN = {
   titel: 'So arbeiten wir.',
+  /** Unterzeile aus Kundensicht (Jamil, Talk qh87y3sj #5381, 10.11.2026); Jamils Texte der drei Prinzipien bleiben unverändert */
+  unter: 'Drei Grundsätze, auf die Sie sich bei uns verlassen können.',
   liste: [
     {
       wort: 'Verantwortung',

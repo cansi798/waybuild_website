@@ -35,6 +35,7 @@
 //   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
+import Vorteile from '../components/start/Vorteile.astro';
 import Prinzipien from '../components/start/Prinzipien.astro';
 import Sichtbarkeit from '../components/sichtbarkeit/Sichtbarkeit.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
@@ -164,6 +165,11 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   </section>
   </div>
 
+  <!-- Was Sie davon haben. (#vorteile, Jamil, Talk qh87y3sj #5381 „Warum sollte der Websitebesucher unser Kunde werden?“, 10.11.2026;
+       Sicherung Branch vor-vorteile-20261110): sechs Vorteile aus Kundensicht mit Linien-Icons, zartes Türkis zwischen Kundenreise
+       (Papier) und „So gehen wir vor“ (Weiß). Komponente start/Vorteile.astro, Texte VORTEILE in config/startseite.ts. -->
+  <Vorteile />
+
   <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026), seit #5337 zusammengeführt mit „Von der Anfrage
        bis online“ (Sicherung vor-vorgehen-ablauf-20261109): links Kopf und drei Phasen, rechts sechs Schritte als Kartenstapel.
        Anker #denkweise (Abschnitt), #ablauf (Beginn des Stapels), #erstberatung (Karte Erstgespräch). -->
@@ -190,7 +196,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
       <div class="section-head center">
         <span class="eyebrow">Pakete</span>
         <h2 id="pakete-h" class="rule">Drei Pakete. Feste Monatspreise.</h2>
-        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr.</p>
+        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.</p>
       </div>
       <EinmaligDazu id="einmalig" />
       <PaketKarten details={false} />
@@ -206,7 +212,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
       <div class="section-head">
         <span class="eyebrow">Im Vergleich</span>
         <h2 id="vgl-h" class="rule">Selbst machen, Baukasten, Agentur oder waybuild?</h2>
-        <p class="lead">Sechs Fragen, die bei der Wahl helfen.</p>
+        <p class="lead">Sechs Fragen, die Ihnen bei der Wahl helfen.</p>
       </div>
       <Foto id={SEITEN_FOTO.startVergleich} sizes="(min-width: 1200px) 420px, (min-width: 900px) 36vw, calc(100vw - 32px)" class="sf-kopf__foto" />
       </div>
@@ -296,6 +302,11 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     <div class="wrap sf-abschluss">
     <div class="abschluss__innen">
       <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
+      <!-- „Warum waybuild?“ in drei Sätzen über dem Knopf (Jamil, Talk qh87y3sj #5381) -->
+      <div class="abschluss__warum">
+        <p class="abschluss__frage">{ABSCHLUSS.warumTitel}</p>
+        {ABSCHLUSS.warum.map((satz) => <p class="abschluss__text">{satz}</p>)}
+      </div>
       <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>
       <p class="abschluss__unter">{ABSCHLUSS.unterCta}</p>
     </div>
