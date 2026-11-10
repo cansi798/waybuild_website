@@ -4,24 +4,20 @@
 // Jamil, Talk qh87y3sj #5285: die leeren grauen Kreise bei den anderen Anbieter-Arten wirkten wie fehlende Werte bzw.
 // Auswahlknöpfe und sind entfernt. Dort steht die Antwort jetzt als ruhiger Text ohne Zeichen (--ink-soft, 7,5 : 1 auf Weiß);
 // nur die waybuild-Karte hat die türkisen Häkchen.
-// Beim Hereinscrollen (einmal, IntersectionObserver): Fragen-Spalte und Karten blenden nacheinander ein, danach zeichnen sich
-// die waybuild-Häkchen nacheinander (eigener Beobachter an der waybuild-Karte).
+// Beim Hereinscrollen (einmal, IntersectionObserver): Fragen-Spalte und Karten blenden nacheinander ein.
 // Jamil, Talk qh87y3sj #5326: am Handy (wischbare Karten unter 900 px) steht die waybuild-Karte ZUERST. Dafür steht sie auch
 // im Quelltext zuerst (Screenreader-/Lese-Reihenfolge = sichtbare Reihenfolge am Handy); am Desktop schiebt CSS `order` sie
-// wie bisher in die rechte Spalte. Die Häkchen starten damit beim Hereinscrollen des Vergleichs, nicht erst beim Wischen.
+// wie bisher in die rechte Spalte.
+// Jamil, Talk qh87y3sj #5447 (10.11.2026): keine Zeilen-Icons vor den Fragen, keine Häkchen vor den waybuild-Antworten (nur Text),
+// die ganze Tabelle steht auf einer weißen Fläche mit hellem Rand (hebt sich vom Sand-Abschnitt ab), die waybuild-Spalte hat
+// einen eigenen hellen Türkis-Ton (#e9f6f5, Text --ink 10 : 1, Name --accent-ink 5,8 : 1). Gilt auch am Handy.
 // Ohne JS, ohne IntersectionObserver oder bei reduzierter Bewegung: alles sofort sichtbar, nichts bewegt sich.
 // Aufbau für Screenreader: Liste mit einer Karte je Anbieter-Art (h3) und darin <dl> Frage → Antwort.
 // Die Fragen-Spalte links (nur Desktop) ist reine Optik und deshalb aria-hidden.
 // Desktop: CSS-Subgrid, damit die Zeilen aller Karten auf einer Höhe liegen. Handy: Karten wischbar innerhalb des
 // Abschnitts (scroll-snap), per Tastatur scrollbar (tabindex=0), nie Querscrollen der Seite.
-import Icon from '../Icon.astro';
-import type { IconName } from '../../config/site';
 import { VERGLEICH } from '../../config/variante';
 
-// Linien-Icon je Frage (Reihenfolge wie VERGLEICH.zeilen, Jamil #5349: Umsetzung, Passgenauigkeit, Mitwachsen,
-// Updates/Sicherungen, Ansprechpartner, Kosten)
-const ICONS: IconName[] = ['tools', 'target', 'layers', 'shield', 'phone', 'euro'];
-const icon = (i: number): IconName => ICONS[i] ?? 'check';
 const WIR = VERGLEICH.spalten.length - 1;
 const n = VERGLEICH.zeilen.length;
 // Quelltext-Reihenfolge: waybuild zuerst, dann die anderen in ihrer Reihenfolge (#5326)
@@ -32,8 +28,8 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
   <div class="vk" style={`--vk-zeilen:${n}`}>
     <div class="vk__fragen" aria-hidden="true" style="--s:0">
       <span class="vk__ecke"></span>
-      {VERGLEICH.zeilen.map((z, i) => (
-        <span class="vk__frage"><span class="vk__ic"><Icon name={icon(i)} size={20} /></span>{z.frage}</span>
+      {VERGLEICH.zeilen.map((z) => (
+        <span class="vk__frage">{z.frage}</span>
       ))}
     </div>
     <ul class="vk__karten" role="list">
@@ -44,13 +40,10 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
             <h3 class="vk__name">{VERGLEICH.spalten[s]}</h3>
           </div>
           <dl class="vk__liste">
-            {VERGLEICH.zeilen.map((z, i) => (
+            {VERGLEICH.zeilen.map((z) => (
               <div class="vk__zeile">
-                <dt class="vk__dt"><span class="vk__ic"><Icon name={icon(i)} size={18} /></span>{z.frage}</dt>
-                <dd class="vk__dd">
-                  {s === WIR && <span class="vk__zeichen" aria-hidden="true" style={`--r:${i}`}><Icon name="check" size={16} /></span>}
-                  <span class="vk__wert">{z.werte[s]}</span>
-                </dd>
+                <dt class="vk__dt">{z.frage}</dt>
+                <dd class="vk__dd">{z.werte[s]}</dd>
               </div>
             ))}
           </dl>
@@ -64,8 +57,7 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
 <script>
   // Einmaliger Aufbau beim Hereinscrollen (Jamil, Talk qh87y3sj #5285). .vk--bereit versteckt erst, wenn Bewegung erlaubt ist.
   const box = document.querySelector<HTMLElement>('.vk__scroll');
-  const wir = box?.querySelector<HTMLElement>('.vk__karte--wir');
-  if (box && wir && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (box && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     box.classList.add('vk--bereit');
     const einmal = (el: Element, klasse: string, opt: IntersectionObserverInit) => {
       const io = new IntersectionObserver((es) => {
@@ -74,13 +66,17 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
       io.observe(el);
     };
     einmal(box, 'vk--an', { threshold: 0, rootMargin: '0px 0px -15% 0px' });
-    einmal(wir, 'vk--haken', { threshold: 0.35 }); // waybuild-Karte im Bild (am Handy die erste Karte, #5326)
   }
 </script>
 
 <style>
-  .vk__scroll { --vk-tuerkis: #00807b; --vk-hell: #e9f6f5; position: relative; }
-  .vk__scroll:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 4px; border-radius: 18px; }
+  /* Weiße Tabellenfläche mit hellem Rand auf dem Sand-Abschnitt (#5447) */
+  .vk__scroll {
+    --vk-tuerkis: #00807b; --vk-hell: #e9f6f5; position: relative;
+    padding: 10px 20px 20px; background: var(--white); border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: 0 1px 2px rgb(58 58 58 / 4%), 0 10px 28px -14px rgb(58 58 58 / 16%);
+  }
+  .vk__scroll:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 4px; }
 
   /* ---------- Desktop: Fragen-Spalte + vier Karten, Zeilen per Subgrid ausgerichtet ---------- */
   .vk {
@@ -105,36 +101,28 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
   .vk__name { margin: 0; font-family: var(--font-head); font-size: 1.12rem; line-height: 1.3; color: var(--ink); }
   .vk__ecke { display: block; }
   .vk__frage {
-    display: flex; align-items: flex-start; gap: 10px; padding: 14px 4px 14px 0;
+    display: block; padding: 14px 4px 14px 0;
     border-top: 1px solid var(--line); font-weight: 650; line-height: 1.45; color: var(--ink);
   }
   .vk__ecke + .vk__frage { border-top: 0; }
-  .vk__ic {
-    flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
-    background: var(--vk-hell); color: var(--accent-ink);
-  }
   /* Desktop: Frage steht sichtbar in der linken Spalte, in jeder Karte nur für Screenreader */
   .vk__dt {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
     overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
-  .vk__dd { display: flex; align-items: flex-start; gap: 10px; margin: 0; font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
-  .vk__dd > span:last-child, .vk__frage { min-width: 0; hyphens: auto; overflow-wrap: anywhere; }
+  .vk__dd { margin: 0; font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
+  .vk__dd, .vk__frage { min-width: 0; hyphens: auto; overflow-wrap: anywhere; }
+  /* Alle Antworten nur als Text, ohne Zeichen (#5285, #5447) */
 
-  /* Andere Anbieter-Arten: nur ruhiger Text, kein Zeichen (#5285). waybuild: Häkchen im Türkis-Kreis. */
-  .vk__zeichen {
-    flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; margin-top: 1px;
-    border-radius: 50%; background: var(--vk-tuerkis); color: var(--white);
-  }
-
-  /* waybuild-Karte hervorgehoben: leicht angehoben, Rand #00807B. Desktop: per order in die rechte Spalte (#5326). */
+  /* waybuild-Karte hervorgehoben: eigener heller Türkis-Ton (#5447), leicht angehoben, Rand #00807B.
+     Desktop: per order in die rechte Spalte (#5326). */
   .vk__karte--wir {
     order: 1; position: relative; z-index: 1; transform: translateY(-10px);
-    border: 2px solid var(--vk-tuerkis); box-shadow: 0 2px 4px rgb(0 79 76 / 8%), 0 18px 40px rgb(0 79 76 / 14%);
+    background: var(--vk-hell); border: 2px solid var(--vk-tuerkis); box-shadow: 0 2px 4px rgb(0 79 76 / 8%), 0 18px 40px rgb(0 79 76 / 14%);
   }
-  .vk__karte--wir .vk__name { color: var(--vk-tuerkis); font-size: 1.25rem; }
+  .vk__karte--wir .vk__name { color: var(--accent-ink); font-size: 1.25rem; } /* #006b68 auf #e9f6f5: 5,8 : 1 */
   .vk__karte--wir .vk__dd { color: var(--ink); font-weight: 600; }
-  .vk__karte--wir .vk__zeile { border-top-color: #cfe7e5; }
+  .vk__karte--wir .vk__zeile { border-top-color: #c3e1de; }
   .vk__etikett {
     align-self: flex-start; padding: 2px 10px; border-radius: 999px; background: var(--vk-tuerkis);
     color: var(--white); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
@@ -143,8 +131,9 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
   /* schmaler Desktop (900–1199 px): etwas enger, damit lange Wörter wie „Softwarehaus“ oder „Einmalkosten“ in die Karte passen */
   @media (min-width: 900px) and (max-width: 1199px) {
     .vk { grid-template-columns: minmax(150px, 0.9fr) repeat(4, minmax(0, 1fr)); column-gap: 10px; }
+    .vk__scroll { padding-inline: 14px; }
     .vk__karte { padding-inline: 14px; }
-    .vk__dd { gap: 8px; font-size: 0.92rem; }
+    .vk__dd { font-size: 0.92rem; }
     .vk__karte--wir .vk__name { font-size: 1.15rem; }
   }
 
@@ -152,13 +141,13 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
   @media (max-width: 899px) {
     .vk__scroll {
       overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
-      scroll-padding-inline: 16px; margin-inline: -16px; padding: 0 16px 6px; scrollbar-width: thin;
+      scroll-padding-inline: 12px; padding: 0 12px 12px; border-radius: 18px; scrollbar-width: thin;
     }
     .vk { display: block; padding-top: 12px; }
     .vk__fragen { display: none; }
     .vk__karten { display: flex; gap: 14px; width: max-content; }
     .vk__karte {
-      display: block; width: min(80vw, 330px); scroll-snap-align: start; padding: 0 18px 10px;
+      display: block; width: min(78vw, 330px); scroll-snap-align: start; padding: 0 18px 10px;
     }
     .vk__karte--wir { transform: none; order: 0; } /* Handy: waybuild zuerst wie im Quelltext (#5326) */
     .vk__karten::after { content: ''; flex: none; width: 2px; } /* rechter Rand nach der letzten Karte */
@@ -167,10 +156,9 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
     .vk__kopf { padding: 18px 0 12px; }
     .vk__dt {
       position: static; width: auto; height: auto; margin: 0 0 6px; overflow: visible; clip: auto; white-space: normal;
-      display: flex; align-items: center; gap: 8px;
+      display: block;
       font-size: 0.84rem; font-weight: 650; line-height: 1.4; color: var(--ink);
     }
-    .vk__dt .vk__ic { width: 28px; height: 28px; border-radius: 8px; }
     .vk__dd { font-size: 0.95rem; }
     .vk__wischen { display: block; margin: 10px 0 0; text-align: center; font-size: 0.85rem; color: var(--ink-soft); }
   }
@@ -178,31 +166,19 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
     .vk__scroll { scroll-behavior: smooth; }
 
     /* ---------- Aufbau beim Hereinscrollen (#5285): nur mit .vk--bereit (JS, Bewegung erlaubt) ---------- */
-    .vk__scroll { --vk-y: 0px; --vk-basis: 0.95s; }
+    .vk__scroll { --vk-y: 0px; }
     .vk__karte--wir { --vk-y: -10px; }
-    /* Versteckt wird ohne Übergang; die Übergänge hängen nur am Zielzustand (.vk--an / .vk--haken). */
+    /* Versteckt wird ohne Übergang; die Übergänge hängen nur am Zielzustand (.vk--an). */
     .vk--bereit .vk__fragen, .vk--bereit .vk__karte { opacity: 0; transform: translateY(calc(var(--vk-y) + 26px)); }
     .vk--an .vk__fragen, .vk--an .vk__karte {
       opacity: 1; transform: translateY(var(--vk-y));
       transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
       transition-delay: calc(var(--s, 0) * 0.13s);
     }
-    .vk--bereit .vk__zeichen { transform: scale(0.4); opacity: 0; }
-    .vk--bereit .vk__zeichen :global(path) { stroke-dasharray: 24; stroke-dashoffset: 24; }
-    .vk--an.vk--haken .vk__zeichen {
-      transform: none; opacity: 1;
-      transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1), opacity 0.2s ease;
-      transition-delay: calc(var(--vk-basis) + var(--r, 0) * 0.22s);
-    }
-    .vk--an.vk--haken .vk__zeichen :global(path) {
-      stroke-dashoffset: 0; transition: stroke-dashoffset 0.4s ease-out;
-      transition-delay: calc(var(--vk-basis) + var(--r, 0) * 0.22s + 0.12s);
-    }
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 899px) {
     .vk__karte--wir { --vk-y: 0px; }
-    /* Handy: Karten blenden in ihrer sichtbaren Reihenfolge ein (waybuild zuerst), Häkchen danach (#5326) */
+    /* Handy: Karten blenden in ihrer sichtbaren Reihenfolge ein (waybuild zuerst, #5326) */
     .vk--an .vk__karte { transition-delay: calc(var(--sm, 1) * 0.13s); }
-    .vk__scroll { --vk-basis: 0.6s; }
   }
 </style>

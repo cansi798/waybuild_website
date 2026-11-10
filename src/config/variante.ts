@@ -45,7 +45,7 @@ export const KUNDENREISE = {
 /** Kurzer Vergleich nach Anbieter-Arten (UWG § 6: keine Namen, sachlich). Ursprünglich aus angebot.ts ANBIETER_VERGLEICH abgeleitet.
  *  Seit Jamil, Talk qh87y3sj #5349 (10.11.2026) auf alle Produkte abgestimmt, auch individuelle Software: Spalte „Agentur oder
  *  Softwarehaus“, sechs Fragen, Zeile „Wer kümmert sich um Google?“ entfernt (Sicherung: Branch vor-vergleich-produkte-20261109).
- *  Letzte Spalte = waybuild (VVergleich.astro und llms.txt lesen werte[3]). Icons je Zeile: VVergleich.astro ICONS.
+ *  Letzte Spalte = waybuild (VVergleich.astro und llms.txt lesen werte[3]). Seit #5447 ohne Zeilen-Icons und ohne Häkchen.
  *  Einzige Quelle für beide Vergleiche: Startseite (VVergleich.astro) und /warum-waybuild/ (Tabelle/Karten) (Jamil, Talk qh87y3sj #5369). */
 export const VERGLEICH = {
   spalten: ['Selbst machen', 'Baukasten', 'Agentur oder Softwarehaus', 'waybuild'],
