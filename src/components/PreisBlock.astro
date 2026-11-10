@@ -1,9 +1,9 @@
 ---
 // PreisBlock für Leistungs-, Branchen- und Ratgeberseiten (Jamil, Talk qh87y3sj #5056, 08.11.2026):
-// zeigt die drei festen Monatspakete Basis · Plus · Komplett, ab welchem Paket die Leistung enthalten ist,
+// zeigt die festen Monatspakete Basis · Plus (optional dazu das Komplettpaket, #5450–#5464), ab welchem Paket die Leistung enthalten ist,
 // einzelne Merkmale mit „ab Paket …“ (Leistungs-ids aus config/pakete-abo.ts), die Einmal-Leistungen und den Link zu /preise/.
 // Alle Namen, Preise und Texte kommen aus config/pakete-abo.ts – hier steht kein Preis fest im Text.
-import { ABO_PAKETE, EINMALIG_DAZU, LAUFZEIT_HINWEIS, B2B_HINWEIS, aboPreisAb, bruttoVon, euro, type AboPaket } from '../config/pakete-abo';
+import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, LAUFZEIT_HINWEIS, B2B_HINWEIS, aboPreisAb, bruttoVon, euro, komplettZeile, type AboPaket } from '../config/pakete-abo';
 import { href } from '../lib/paths';
 import Icon from './Icon.astro';
 
@@ -43,11 +43,11 @@ const hid = `${id}-h`;
   <div class="wrap">
     <div class="pb__kopf">
       <span class="eyebrow">Preis · Website as a Service</span>
-      <h2 id={hid}>{abPaket ? <>{thema ? `${thema}: ab Paket ` : 'Enthalten ab Paket '}<span class="accent">{abPaket.name}</span></> : <>Drei feste <span class="accent">Monatspakete</span></>}</h2>
+      <h2 id={hid}>{abPaket ? <>{thema ? `${thema}: ab Paket ` : 'Enthalten ab Paket '}<span class="accent">{abPaket.name}</span></> : <>Feste <span class="accent">Monatspakete</span></>}</h2>
       <p class="pb__lead">Ab {euro(aboPreisAb())} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung.{hinweis ? ` ${hinweis}` : ''}</p>
     </div>
 
-    <ul class="pb__pakete" role="list">
+    <ul class="pb__pakete" role="list" style={`--pb-n: ${ABO_PAKETE.length}`}>
       {ABO_PAKETE.map((p, i) => {
         const drin = abIndex >= 0 && i >= abIndex;
         return (
@@ -78,6 +78,8 @@ const hid = `${id}-h`;
       </div>
     )}
 
+    <p class="pb__komplett"><b>Optional dazu:</b> {komplettZeile()}. {KOMPLETTPAKET.kurz}. <a href={`${href('/preise/')}#komplettpaket`}>Mehr zum {KOMPLETTPAKET.name}</a></p>
+
     <div class="pb__einmal">
       <p class="pb__einmal-kopf">{EINMALIG_DAZU.titel}</p>
       <ul class="pb__einmal-liste" role="list">
@@ -101,7 +103,7 @@ const hid = `${id}-h`;
   .pb__kopf h2 { margin: 6px 0 10px; }
   .pb__lead { margin: 0; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.7; }
   .pb__pakete { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  @media (min-width: 820px) { .pb__pakete { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+  @media (min-width: 820px) { .pb__pakete { grid-template-columns: repeat(var(--pb-n, 2), 1fr); gap: 18px; } }
   .pb__paket { display: grid; gap: 4px; align-content: start; background: var(--white); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 20px; }
   .pb__paket--drin { border-color: var(--accent); }
   .pb__paket--top { box-shadow: 0 14px 30px -18px rgb(0 79 76 / 45%); }
@@ -121,6 +123,8 @@ const hid = `${id}-h`;
   .pb__merk-text { display: inline-flex; gap: 8px; align-items: baseline; min-width: 0; }
   .pb__merk-text :global(.icon) { flex: none; color: var(--accent-ink); position: relative; top: 3px; }
   .pb__ab { justify-self: end; white-space: nowrap; flex: none; font-size: 0.82rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: rgb(0 166 161 / 14%); color: var(--accent-ink); }
+  .pb__komplett { margin: 18px 0 0; padding: 14px 18px; border: 1.5px solid #cfe6e3; border-radius: 16px; background: #eaf5f4; line-height: 1.6; color: var(--ink); }
+  .pb__komplett a { font-weight: 650; color: var(--accent-ink); }
   .pb__einmal { margin-top: 18px; padding: 18px 20px; border: 1.5px dashed var(--line); border-radius: 16px; }
   .pb__einmal-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px 24px; }
   @media (min-width: 720px) { .pb__einmal-liste { grid-template-columns: 1fr 1fr; } }

@@ -17,7 +17,7 @@ export const FRAGEN_TITEL = 'Häufige Fragen';
 const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
   { id: 'pakete', titel: 'Pakete und Preise', fragen: [
     'Was kostet eine Website bei waybuild?',
-    'Was ist der Unterschied zwischen den drei Paketen?',
+    'Was ist der Unterschied zwischen den Paketen?',
     'Gibt es Einrichtungskosten?',
     'Was kostet ein Paket im Jahr?',
     'Was kann ich einmalig dazubuchen?',

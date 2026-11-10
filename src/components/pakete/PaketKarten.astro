@@ -1,5 +1,6 @@
 ---
-// Die drei Pakete Basis · Plus · Komplett (Jamil, Talk qh87y3sj #5056, 08.11.2026). Daten: src/config/pakete-abo.ts.
+// Die Pakete Basis · Plus (Jamil, Talk qh87y3sj #5056, 08.11.2026; seit #5450–#5459 ohne drittes Paket, das Komplettpaket
+// ist optional dazubuchbar: KomplettKarte.astro). Daten: src/config/pakete-abo.ts.
 // Genutzt auf /preise/ (voll, mit Erklärung je Leistung) und im Preisteil der Startseite (kompakt, Auswahl KOMPAKT).
 // Punkt 1: Kosten PRO JAHR statt „über 24 Monate“, Laufzeit als kleiner Hinweis.
 // Punkt 2: Preise auf einer Höhe (Desktop): „Empfehlung“-Etikett sitzt ÜBER der Karte (nimmt keine Zeile ein),
@@ -21,7 +22,7 @@ const weitere = (p: AboPaket) => p.leistungen.length - liste(p).length;
 const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponent(p.name)}&buchen=1`;
 ---
 
-<div class:list={['pk-grid', { 'pk-grid--kompakt': kompakt }]}>
+<div class:list={['pk-grid', { 'pk-grid--kompakt': kompakt }]} style={`--pk-n: ${ABO_PAKETE.length}`}>
   {ABO_PAKETE.map((p) => (
     <article class:list={['pk', { 'pk--top': p.empfohlen }]} aria-labelledby={`pk-${p.id}${idSuffix}`}>
       {p.empfohlen && <p class="pk__badge">Empfehlung</p>}
@@ -56,8 +57,8 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
   .pk { position: relative; display: flex; flex-direction: column; gap: 14px; background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: clamp(22px, 3vw, 30px); }
   .pk > * , .pk p { margin: 0; }
   @media (min-width: 960px) {
-    .pk-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    /* Zeilen: Kopf · Preis · Jahr · (Für wen) · Liste · Fuß – in allen drei Karten auf gleicher Höhe */
+    .pk-grid { grid-template-columns: repeat(var(--pk-n, 2), 1fr); gap: 22px; }
+    /* Zeilen: Kopf · Preis · Jahr · (Für wen) · Liste · Fuß – in allen Karten auf gleicher Höhe */
     .pk { display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 14px; }
     .pk-grid--kompakt .pk { grid-row: span 5; }
   }
@@ -83,7 +84,7 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
   .pk__mehr { padding-left: 28px; color: var(--ink-soft); font-size: 0.9rem !important; }
   .pk__fuss { display: grid; gap: 10px; align-content: end; }
   .pk__btn { width: 100%; }
-  /* „Direkt buchen“ auf allen drei Karten gleich (Jamil #5133/#5134): Türkis #00807b mit Weiß (4,8 : 1), Hover #006b68 (6,36 : 1) */
+  /* „Direkt buchen“ auf allen Karten gleich (Jamil #5133/#5134): Türkis #00807b mit Weiß (4,8 : 1), Hover #006b68 (6,36 : 1) */
   .pk .pk__btn { background: #00807b; color: var(--white); border-color: transparent; }
   .pk .pk__btn:hover { background: var(--accent-ink); color: var(--white); }
   .pk__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); text-align: center; }

@@ -74,14 +74,14 @@ const manual: Todo[] = [
   },
   {
     title: 'Monatspreise für Website as a Service festlegen',
-    detail: 'Festgelegt (Jamil, Talk qh87y3sj #5056, 08.11.2026): Basis 79,99 €, Plus 149,99 €, Komplett 299,99 € im Monat, netto zzgl. MwSt., ohne Einmalkosten; einmalig dazubuchbar Logo 349 €, Geschäftspapiere 129 €, Visitenkarten 59 €, E-Mail-Signatur 39 € oder alle vier als Gesamtpaket 499 € (Jamil #5085–#5089); 24 Monate Mindestlaufzeit.',
-    where: 'src/config/pakete-abo.ts → ABO_PAKETE, EINMALIG_DAZU',
+    detail: 'Festgelegt (Jamil, Talk qh87y3sj #5056, 08.11.2026; #5450–#5464, 10.11.2026): Basis 79,99 €, Plus 149,99 € im Monat, netto zzgl. MwSt., ohne Einmalkosten; optional zusätzlich Komplettpaket (Auftragsverwaltung) ab 369,99 € im Monat netto, Kombipreise Basis + Komplettpaket ab 419,99 € (statt 449,98 €), Plus + Komplettpaket ab 489,99 € (statt 519,98 €), nicht zusammen mit dem Gesamtpaket der Extras; das frühere Paket Komplett (299,99 €) und die Premium-Karte (599 €) sind entfallen; einmalig dazubuchbar Logo 349 €, Geschäftspapiere 129 €, Visitenkarten 59 €, E-Mail-Signatur 39 € oder alle vier als Gesamtpaket 499 € (Jamil #5085–#5089); 24 Monate Mindestlaufzeit.',
+    where: 'src/config/pakete-abo.ts → ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU',
     done: true,
     priority: 'pflicht',
   },
   {
     title: 'AGB an Website as a Service anpassen',
-    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website (08.11.2026, Jamil #5056): drei Pakete Basis / Plus / Komplett (79,99 / 149,99 / 299,99 € netto), keine Einrichtungskosten, einmalig dazubuchbar Logo / Geschäftspapiere / Visitenkarten / E-Mail-Signatur (349 / 129 / 59 / 39 € netto, alle vier 499 €), 24 Monate Mindestlaufzeit (§ 5 schon angepasst), keine Eigentumsaussage zu Website/Code/Domain (Mietmodell offen), bis zu 20 E-Mail-Postfächer, Logo und Geschäftspapiere im Paket Komplett, Nutzungsrechte am Logo – § 2, § 4, § 6 und Fair-Use-Regel anwaltlich angleichen lassen.',
+    detail: 'Die AGB beschreiben noch das alte Modell: Tarife Start/Business/Premium (§ 2), Einrichtungsgebühr (§ 4), 12 Monate Mindestlaufzeit (§ 5) und Website-/Code-Übernahme erst nach der Laufzeit gegen Gebühr (§ 6). Neu laut Website (08.11.2026, Jamil #5056; 10.11.2026, #5450–#5464): zwei Pakete Basis / Plus (79,99 / 149,99 € netto), optional zusätzlich Komplettpaket mit Auftragsverwaltung ab 369,99 € netto (Kombipreise ab 419,99 / ab 489,99 €, nicht mit dem Gesamtpaket der Extras), keine Einrichtungskosten, einmalig dazubuchbar Logo / Geschäftspapiere / Visitenkarten / E-Mail-Signatur (349 / 129 / 59 / 39 € netto, alle vier 499 €), 24 Monate Mindestlaufzeit (§ 5 schon angepasst), keine Eigentumsaussage zu Website/Code/Domain (Mietmodell offen), bis zu 20 E-Mail-Postfächer, Nutzungsrechte am Logo – § 2, § 4, § 6 und Fair-Use-Regel anwaltlich angleichen lassen.',
     where: 'src/pages/agb.astro',
     done: false,
     priority: 'pflicht',

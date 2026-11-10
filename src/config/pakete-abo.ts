@@ -1,5 +1,8 @@
-// ZENTRALE PAKET-DATENQUELLE (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): Die drei festen Monatspakete
-// Basis · Plus · Komplett sind die RICHTIGE Website (/preise/, Preisteil der Startseite und alle anderen Seiten).
+// ZENTRALE PAKET-DATENQUELLE (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die festen Monatspakete Basis · Plus
+// sind die RICHTIGE Website (/preise/, Preisteil der Startseite und alle anderen Seiten).
+// Seit 10.11.2026 (Jamil #5450–#5459): Kunden wählen Basis ODER Plus und buchen optional das Komplettpaket dazu
+// (KOMPLETTPAKET unten, nur Auftragsverwaltung). Das frühere dritte Paket „Komplett“ (299,99 €) und die Premium-Karte
+// „Komplett + Auftragsverwaltung“ (599 €) sind entfallen (Sicherung: Branch vor-komplettpaket-20261110).
 // Herkunft: Variante /variante/pakete/ (Jamil #5028–#5042), Preise von Jamil gesetzt. Gründungspaket entfällt (#5056 Punkt 7).
 //
 // Diese Datei importiert BEWUSST nichts (auch nicht site.ts), damit site.ts, schema.ts, llms.txt usw. sie ohne
@@ -18,6 +21,8 @@ export const jahresBrutto = (monatNetto: number) => Math.round(bruttoVon(monatNe
 /** Euro-Format: ganze Beträge ohne Cent (590 €), sonst mit Cent (79,99 €). */
 export const euro = (n: number) =>
   new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
+/** Euro-Format mit „ab“ davor, wenn der Preis ein Ab-Preis ist (z. B. Komplettpaket: „ab 369,99 €“). */
+export const euroAb = (n: number, ab = false) => `${ab ? 'ab ' : ''}${euro(n)}`;
 
 /** Ein Paketinhalt. `text` = Kurztext für Karten (ohne „inklusive“), `detail` = ein Satz Erklärung.
  *  Vergleichstabelle: `zeile` (Zeilenname, sonst `text`) und `wert` (Text statt Haken). Gleiche `zeile`
@@ -25,7 +30,7 @@ export const euro = (n: number) =>
 export type Leistung = { id: string; text: string; detail: string; zeile?: string; wert?: string };
 
 export type AboPaket = {
-  id: 'basis' | 'plus' | 'komplett';
+  id: 'basis' | 'plus';
   name: string;
   /** Unterzeile unter dem Namen */
   kurz: string;
@@ -73,26 +78,6 @@ export const ABO_PAKETE: AboPaket[] = [
         detail: 'Jeden Monat prüfen wir, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben.' },
     ],
   },
-  {
-    id: 'komplett', name: 'Komplett', kurz: 'Ein einheitlicher Auftritt, laufend verbessert', preis: 299.99, baut: 'plus',
-    fuer: 'Für Unternehmen, die einen eigenen Auftritt von der Website bis zum Brief wollen, mehr Kunden gewinnen möchten und sich darauf verlassen wollen, dass wir uns aktiv kümmern.',
-    leistungen: [
-      { id: 'logo', text: 'Logo und Geschäftspapiere',
-        detail: 'Logo mit 3 Entwürfen und 2 Korrekturrunden, Briefbogen, Angebot und Rechnung im gleichen Stil.' },
-      { id: 'mail-vorlagen', text: 'E-Mail-Vorlagen im gleichen Stil',
-        detail: 'Vorlagen für Angebote und Antworten, passend zu Logo und Geschäftspapieren.' },
-      { id: 'termin', text: 'Online-Terminbuchung',
-        detail: 'Kunden buchen direkt auf Ihrer Website. Bestätigung und Erinnerung kommen automatisch.' },
-      { id: 'social', text: 'Social-Media-Profile eingerichtet',
-        detail: 'Ihre Profile, zum Beispiel bei Instagram, Facebook oder LinkedIn, eingerichtet und passend zur Website gestaltet.' },
-      { id: 'sprache', text: 'Website in einer zweiten Sprache',
-        detail: 'Ihre Website zusätzlich in einer zweiten Sprache, zum Beispiel Englisch.' },
-      { id: 'optimierung', text: 'Laufende Verbesserung', wert: '2 bis 3 Verbesserungen im Monat, Strategiegespräch alle drei Monate',
-        detail: 'Jeden Monat 2 bis 3 Verbesserungen nach Absprache, dazu alle drei Monate ein Strategiegespräch mit Ihnen.' },
-      { id: 'vorrang', text: 'Bevorzugte Bearbeitung',
-        detail: 'Ihre Änderungswünsche kommen bei uns zuerst dran.' },
-    ],
-  },
 ];
 
 export const paketById = (id: AboPaket['id']) => ABO_PAKETE.find((p) => p.id === id)!;
@@ -123,15 +108,29 @@ export const vergleichsZeilen = () => {
   }));
 };
 
-/** Premium „Komplett + Auftragsverwaltung“ (Jamil, Talk qh87y3sj #5346, #5352, 10.11.2026): breite Karte unter den drei Paketen.
- *  `preis` = Monatspreis NETTO; null zeigt „Preis auf Anfrage“. 599 € auf Wunsch von Jamil (#5351) in der Vorschau,
- *  Abstimmung mit Can läuft. Gebucht wird (noch) nicht direkt, sondern über die kostenlose Erstberatung. */
-export const PREMIUM = {
-  label: 'Premium',
-  titel: 'Komplett + Auftragsverwaltung',
-  preis: 599 as number | null,
-  baut: 'komplett' as AboPaket['id'],
-  text: 'Alles aus „Komplett“, dazu eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet.',
+/** Komplettpaket (Jamil, Talk qh87y3sj #5450–#5459, 10.11.2026): OPTIONAL ZUSÄTZLICH zu Basis oder Plus buchbar, kein
+ *  eigenes drittes Paket. Inhalt NUR die Auftragsverwaltung (#5459 B, Texte aus der früheren Premium-Karte #5346/#5352),
+ *  keine Website-Leistungen. Preis NETTO pro Monat, mit „ab“ (#5450). Kein Jahrespreis-Kasten (wie bei den Extras).
+ *  - `preisArt`: 'zusaetzlich' = kommt zum Monatspreis von Basis oder Plus dazu (#5459 A); 'gesamt' = Gesamtpreis ab …
+ *  - `kombiPreis`: Kombipreis NETTO pro Monat für Grundpaket + Komplettpaket zusammen; null = kein Kombipreis, dann gilt
+ *    die Summe der Einzelpreise. Basis + Komplettpaket 419,99 € statt 449,98 € (Jamil #5461), Plus + Komplettpaket 489,99 € statt 519,98 € (#5462).
+ *    Gilt nur für die Monatspreise. KEIN Kombipreis, wenn das Gründerpaket (Gesamtpaket „Alle vier Extras“) mitgebucht
+ *    wird (Jamil #5464 „kein rabatt mit gründerpaket“): dann gelten die Einzelpreise (`kombiMitGruenderpaket`).
+ *  - `kombiAb`: „ab“ vor den Kombipreisen (der Komplettpaket-Anteil ist ein Ab-Preis).
+ *    Gezeigt als Paketpreis gegenüber der Summe der Einzelpreise („zusammen … statt einzeln …“), nicht als Streichpreis. */
+export type PreisArt = 'zusaetzlich' | 'gesamt';
+export const KOMPLETTPAKET = {
+  id: 'komplett' as const,
+  label: 'Optional dazu',
+  name: 'Komplettpaket',
+  kurz: 'Auftragsverwaltung, individuell an Ihre Abläufe angepasst',
+  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Zusätzlich zu Basis oder Plus buchbar.',
+  preis: 369.99,
+  ab: true,
+  kombiAb: true,
+  preisArt: 'zusaetzlich' as PreisArt,
+  kombiPreis: { basis: 419.99, plus: 489.99 } as Record<AboPaket['id'], number | null>,
+  kombiMitGruenderpaket: false,
   /** Ablauf-Grafik */
   ablauf: [
     { icon: 'mail', text: 'Anfrage' },
@@ -155,10 +154,30 @@ export const PREMIUM = {
     'Schnittstelle zu Lexware Office und sevDesk möglich',
     'Wiederkehrende Schritte laufen automatisch',
   ],
-  knopf: 'Kostenlose Erstberatung',
-  /** Wert für ?paket= im Kontaktformular */
-  kontaktPaket: 'Premium (Komplett + Auftragsverwaltung)',
 };
+const K = KOMPLETTPAKET;
+/** „zusätzlich ab 369,99 €“ bzw. „ab 369,99 €“ (Gesamtpreis) */
+export const komplettPreis = (n: number = K.preis) => `${K.preisArt === 'zusaetzlich' ? 'zusätzlich ' : ''}${euroAb(n, K.ab)}`;
+/** Erklärung zum Preis, z. B. unter dem Betrag */
+export const komplettPreisArt = () => (K.preisArt === 'zusaetzlich' ? 'zusätzlich zum Monatspreis von Basis oder Plus' : 'Gesamtpreis, Basis oder Plus inklusive');
+/** Eine Zeile für Texte: „Komplettpaket zusätzlich ab 369,99 € im Monat netto (ab 440,29 € inkl. MwSt.)“ */
+export const komplettZeile = () => `${K.name} ${komplettPreis()} im Monat netto (${euroAb(bruttoVon(K.preis), K.ab)} inkl. MwSt.)`;
+/** Summe der Einzelpreise NETTO pro Monat: Grundpaket + Komplettpaket (Ab-Preis). */
+export const einzelnMitKomplett = (paketId: AboPaket['id']) =>
+  Math.round(((K.preisArt === 'zusaetzlich' ? paketById(paketId).preis : 0) + K.preis) * 100) / 100;
+/** Monatspreis NETTO für Grundpaket + Komplettpaket: Kombipreis, sonst Summe der Einzelpreise.
+ *  `gruenderpaket` = Gesamtpaket „Alle vier Extras“ mitgebucht: dann kein Kombipreis (#5464). */
+export const monatMitKomplett = (paketId: AboPaket['id'], gruenderpaket = false) =>
+  (gruenderpaket && !K.kombiMitGruenderpaket ? null : K.kombiPreis[paketId]) ?? einzelnMitKomplett(paketId);
+/** Alle gesetzten Kombipreise, z. B. für die Karte: [{ paket, preis, einzeln }] */
+export const kombiPreise = () =>
+  ABO_PAKETE.flatMap((p) => {
+    const preis = K.kombiPreis[p.id];
+    return preis == null ? [] : [{ paket: p, preis, einzeln: einzelnMitKomplett(p.id) }];
+  });
+/** „Basis + Komplettpaket zusammen ab 419,99 € statt einzeln ab 449,98 € im Monat netto“ */
+export const kombiZeile = (k: ReturnType<typeof kombiPreise>[number]) =>
+  `${k.paket.name} + ${K.name} zusammen ${euroAb(k.preis, K.kombiAb)} statt einzeln ${euroAb(k.einzeln, K.kombiAb)} im Monat netto`;
 
 /** Einmalige Leistungen (Extras), Festpreis NETTO. Preise neu von Jamil (Talk qh87y3sj #5085–#5089, 08.11.2026):
  *  Logo 349 · Geschäftspapiere 129 · Visitenkarten 59 · E-Mail-Signatur 39 € (einzeln zusammen 576 €),
@@ -208,13 +227,13 @@ export const NICHT_ENTHALTEN = ['Fotograf oder Videodreh vor Ort', 'Gekaufte Bil
 export type PaketFrage = { q: string; a: string; platzhalter?: boolean };
 export const FAQ_PAKETE: PaketFrage[] = [
   { q: 'Ich brauche kein Logo. Muss ich das mitbezahlen?',
-    a: 'Nein, Sie müssen nichts bezahlen, was Sie nicht nutzen. Haben Sie schon ein Logo, tauschen wir es gegen eine gleichwertige Leistung, zum Beispiel weitere Seiten für Ihre Orte und Leistungen. Alternativ passt vielleicht das kleinere Paket: Plus enthält kein Logo. Den Preis einzelner Pakete senken wir dafür nicht, damit die Preise für alle gleich und nachvollziehbar bleiben.' },
+    a: 'Nein. Ein Logo ist in keinem Monatspaket enthalten. Wenn Sie eines brauchen, buchen Sie es einmalig zum Festpreis dazu.' },
   { q: 'Kann ich über den Preis verhandeln?',
-    a: 'Bei den drei Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
+    a: 'Bei den Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
   { q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website, das Google-Profil im Paket Plus oder Logo und Geschäftspapiere im Paket Komplett sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo zum Paket Basis.' },
+    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder das Google-Profil im Paket Plus sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' },
   { q: 'Was kostet ein Paket im Jahr?',
-    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Abgerechnet wird monatlich.` },
+    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Das ${K.name} kostet ${komplettPreis(jahresPreis(K.preis))} netto im Jahr. Abgerechnet wird monatlich.` },
   { q: 'Wie lange läuft der Vertrag?',
     a: `Die Mindestlaufzeit beträgt ${LAUFZEIT_MONATE} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
   { q: 'Was passiert nach 24 Monaten?', platzhalter: true,
@@ -233,5 +252,4 @@ export const FAQ_PAKETE: PaketFrage[] = [
 export const KOMPAKT: Record<AboPaket['id'], string[]> = {
   basis: ['website', 'seo', 'email', 'ki'],
   plus: ['google-profil', 'seo', 'bericht', 'ki-check'],
-  komplett: ['logo', 'termin', 'optimierung', 'vorrang'],
 };

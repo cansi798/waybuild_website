@@ -2,7 +2,7 @@
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
 import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, PREIS_HINWEIS, formatEuro, brutto, HOURS, einmaligZeile } from '../config/site';
-import { EINMALIG_DAZU, AUF_ANFRAGE, aboPreisAb } from '../config/pakete-abo';
+import { EINMALIG_DAZU, AUF_ANFRAGE, aboPreisAb, KOMPLETTPAKET, komplettZeile, kombiPreise, kombiZeile } from '../config/pakete-abo';
 import { absolute } from '../lib/paths';
 import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
@@ -19,10 +19,12 @@ export const GET: APIRoute = async ({ site }) => {
   // Blog (Jamil #5264): nur freigegebene Beiträge, Entwürfe (draft: true) bleiben draußen
   const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
+  // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, Kombipreise nicht mit dem Gesamtpaket der Extras
+  const komplett = `Optional zusätzlich zu Basis oder Plus: ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Zusätzlich zu Basis oder Plus buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
   const lines = [
     `# ${company.legalName}`,
     '',
-    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in drei festen Monatspaketen (${PAKETE.map((p) => p.name).join(', ')}) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in zwei festen Monatspaketen (${PAKETE.map((p) => p.name).join(', ')}, optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     PREIS_HINWEIS,
     '',
@@ -36,18 +38,19 @@ export const GET: APIRoute = async ({ site }) => {
     // Arbeitsweise Sichtbarkeit (Jamil, Talk qh87y3sj #5363): nur Vorgehen, keine Platzierungsversprechen
     `- ${SICHTBARKEIT.titel} ${Object.values(PANELS).map((p) => `${p.titel} ${p.text} (${p.paket})`).join(' ')}`,
     `- ${PRINZIPIEN.titel} ${PRINZIPIEN.unter} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
-    `- Drei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
+    `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
     `- ${ABSCHLUSS.warumTitel} ${ABSCHLUSS.warum.join(' ')}`,
     `- Leitsatz: ${CLAIM}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
-    `${WAAS.claim} Drei feste Monatspakete ohne Einrichtungskosten; Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind einmalig dazubuchbar. ${OFFER}`,
+    `${WAAS.claim} Zwei feste Monatspakete ohne Einrichtungskosten, optional dazu das ${KOMPLETTPAKET.name}; Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind einmalig dazubuchbar. ${OFFER}`,
     `- In allen Paketen: ${IN_ALLEN.join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
     ...PAKETE.map((p) => `- Paket ${p.name}: ${formatEuro(p.preis)} pro Monat netto zzgl. MwSt. (${formatEuro(brutto(p.preis))} inkl. MwSt.). ${p.kurz}. ${p.features.join(', ')}.`),
+    `- ${KOMPLETTPAKET.name}: ${komplett} Inhalt: ${KOMPLETTPAKET.software.join(', ')}. Ablauf: ${KOMPLETTPAKET.ablauf.map((a) => a.text).join(' → ')}.`,
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
-    '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
+    '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit Paketwahl, Komplettpaket und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
     `- Ablauf: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel}`).join(', ')} (siehe „${VORGEHEN.titel}“). Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
@@ -71,7 +74,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- [Startseite](${url('/')})`,
     `- [Leistungen](${url('/leistungen/')}): alle Leistungen in vier Gruppen (${gruppen.map((g) => g.titel).join(', ')})`,
     `- [Beispiele](${url('/beispiele/')}): echte Projekte unserer Kunden, Bereich Websites`,
-    `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt.`,
+    `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt., optional ${komplettZeile()}`,
     `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH.spalten.join(', ')}`,
     `- [Wissen](${url('/wissen/')}): Übersicht über Ratgeber, Häufige Fragen und Blog`,
     `- [Häufige Fragen](${url('/fragen/')}): Pakete und Preise, Ablauf, Technik und Vertrag`,

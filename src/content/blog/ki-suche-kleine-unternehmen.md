@@ -36,4 +36,4 @@ Daraus ergibt sich oft schon eine kleine Liste mit Verbesserungen. Viele davon h
 
 ## Wie wir damit umgehen
 
-Wir richten Websites von Anfang an so ein, dass Suchmaschinen und KI-Assistenten sie gut verstehen können. In den Paketen Plus und Komplett prüfen wir zusätzlich jeden Monat, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben. Eine bestimmte Platzierung kann dabei niemand zusagen, auch wir nicht. Was wir tun: die Grundlagen sorgfältig umsetzen und Ihnen in leichter Sprache erklären, wie das funktioniert.
+Wir richten Websites von Anfang an so ein, dass Suchmaschinen und KI-Assistenten sie gut verstehen können. Im Paket Plus prüfen wir zusätzlich jeden Monat, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben. Eine bestimmte Platzierung kann dabei niemand zusagen, auch wir nicht. Was wir tun: die Grundlagen sorgfältig umsetzen und Ihnen in leichter Sprache erklären, wie das funktioniert.

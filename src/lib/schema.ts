@@ -1,11 +1,12 @@
 // JSON-LD für strukturierte Daten (Rich Results bei Google)
 import { company, WAAS, PAKETE, brutto } from '../config/site';
-import { EINMALIG_DAZU } from '../config/pakete-abo';
+import { EINMALIG_DAZU, KOMPLETTPAKET as K, kombiPreise } from '../config/pakete-abo';
 import { absolute } from './paths';
 
 const eurText = (n: number) => n.toFixed(2).replace('.', ',');
 
-/** Die drei Monatspakete (Basis, Plus, Komplett) als schema.org-Offers (netto zzgl. MwSt., pro Monat), dazu die
+/** Die Monatspakete (Basis, Plus) als schema.org-Offers (netto zzgl. MwSt., pro Monat), das optional zusätzlich buchbare
+ *  Komplettpaket als Ab-Preis (priceSpecification.minPrice), die Kombipreise Basis/Plus + Komplettpaket (Ab-Preise), dazu die
  *  einmalig dazubuchbaren Leistungen (Festpreis netto). Daten aus config/pakete-abo.ts (über PAKETE in site.ts). */
 export function waasOffers(site: URL | undefined, path = '/preise/') {
   const url = absolute(path, site);
@@ -26,6 +27,31 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
       referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
     },
   }));
+  /** Ab-Preis pro Monat: price = Mindestpreis, dazu minPrice in der priceSpecification */
+  const abAngebot = (name: string, preis: number, description: string) => ({
+    '@type': 'Offer',
+    name,
+    url,
+    priceCurrency: 'EUR',
+    price: preis,
+    description,
+    eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: preis,
+      minPrice: preis,
+      priceCurrency: 'EUR',
+      valueAddedTaxIncluded: false,
+      unitCode: 'MON',
+      referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MON' },
+    },
+  });
+  const komplett = [
+    abAngebot(`${K.name}: Auftragsverwaltung (zusätzlich zu Basis oder Plus)`, K.preis,
+      `${K.kurz}. ${K.text} Ab ${eurText(K.preis)} € pro Monat netto zzgl. 19 % MwSt. (ab ${eurText(brutto(K.preis))} € inkl. MwSt.), ${WAAS.laufzeit}.`),
+    ...kombiPreise().map((k) => abAngebot(`${WAAS.name}: Paket ${k.paket.name} + ${K.name} (Kombipreis)`, k.preis,
+      `Paket ${k.paket.name} zusammen mit dem ${K.name} ab ${eurText(k.preis)} € pro Monat netto zzgl. 19 % MwSt. (ab ${eurText(brutto(k.preis))} € inkl. MwSt.), statt einzeln ab ${eurText(k.einzeln)} €. Nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.`)),
+  ];
   const einmalig = [...EINMALIG_DAZU.liste, EINMALIG_DAZU.gesamt].map((e) => ({
     '@type': 'Offer',
     name: `${e.name} (einmalig dazubuchbar)`,
@@ -36,7 +62,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
     eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
     priceSpecification: { '@type': 'PriceSpecification', price: e.preis, priceCurrency: 'EUR', valueAddedTaxIncluded: false },
   }));
-  return [...monatlich, ...einmalig];
+  return [...monatlich, ...komplett, ...einmalig];
 }
 
 export function serviceSchema(site: URL | undefined, beschreibung?: string) {

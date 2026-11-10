@@ -1,6 +1,6 @@
 ---
 title: 'Warum wir Websites im Abo anbieten'
-description: 'Website im Abo statt Einmalprojekt: drei feste Monatspakete ohne Einrichtungskosten, Technik und Änderungen inklusive. Was das für Sie bedeutet.'
+description: 'Website im Abo statt Einmalprojekt: feste Monatspakete ohne Einrichtungskosten, Technik und Änderungen inklusive. Was das für Sie bedeutet.'
 date: 2026-11-09
 # Freigegeben von Jamil (Talk qh87y3sj #5322, „gut“). Preise und Zeiten Stand 09.11.2026 aus src/config/pakete-abo.ts
 # und src/config/variante.ts. Ändern sich dort Preise, diesen Text bitte mit anpassen.
@@ -11,9 +11,9 @@ Eine Website wird oft wie ein Möbelstück gekauft: einmal bezahlen, aufstellen,
 
 ## Ein fester Monatspreis statt einer großen Rechnung
 
-Bei uns gibt es drei feste Monatspakete: **Basis für 79,99 €**, **Plus für 149,99 €** und **Komplett für 299,99 €**, jeweils netto zzgl. MwSt. im Monat. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
+Bei uns gibt es zwei feste Monatspakete: **Basis für 79,99 €** und **Plus für 149,99 €**, jeweils netto zzgl. MwSt. im Monat. Wer zusätzlich eine Auftragsverwaltung möchte, bucht optional das **Komplettpaket ab 369,99 €** im Monat netto dazu. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
 
-Für Sie heißt das: Sie müssen zum Start kein großes Budget freimachen und wissen jeden Monat, was die Website kostet. Wer etwas zusätzlich möchte, etwa ein Logo zum Paket Basis, bucht das einmalig zum Festpreis dazu. Monatliche Kosten entstehen dadurch nicht.
+Für Sie heißt das: Sie müssen zum Start kein großes Budget freimachen und wissen jeden Monat, was die Website kostet. Wer etwas zusätzlich möchte, etwa ein Logo, bucht das einmalig zum Festpreis dazu. Monatliche Kosten entstehen dadurch nicht.
 
 Damit Sie das ganze Bild haben: Die Mindestlaufzeit beträgt 24 Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.
 
@@ -25,7 +25,7 @@ Im Abo kümmern wir uns darum. Hosting in Deutschland, Updates und Sicherungen s
 
 ## Wir haben ein eigenes Interesse daran, dass es läuft
 
-Bei einem Einmalprojekt endet die Zusammenarbeit oft mit der Rechnung. Im Abo ist es umgekehrt: Wir möchten, dass Sie lange zufrieden bleiben. Deshalb lohnt es sich für uns, Ihre Website nicht nur zu bauen, sondern sie Schritt für Schritt besser zu machen. Im Paket Komplett prüfen wir zum Beispiel jeden Monat, wo Besucher abspringen, und setzen Verbesserungen um.
+Bei einem Einmalprojekt endet die Zusammenarbeit oft mit der Rechnung. Im Abo ist es umgekehrt: Wir möchten, dass Sie lange zufrieden bleiben. Deshalb lohnt es sich für uns, Ihre Website nicht nur zu bauen, sondern sie Schritt für Schritt besser zu machen.
 
 ## Wie schnell geht es los?
 

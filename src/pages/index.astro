@@ -40,7 +40,7 @@ import Prinzipien from '../components/start/Prinzipien.astro';
 import Sichtbarkeit from '../components/sichtbarkeit/Sichtbarkeit.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
-import PremiumKarte from '../components/pakete/PremiumKarte.astro';
+import KomplettKarte from '../components/pakete/KomplettKarte.astro';
 import VVergleich from '../components/variante/VVergleich.astro';
 import Foto from '../components/Foto.astro';
 import { SEITEN_FOTO } from '../config/bilder';
@@ -48,7 +48,7 @@ import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS, ABO_PAKETE, aboPreisAb, euro, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
+import { B2B_HINWEIS, ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
 import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { ANLIEGEN, TEAM, STIMMEN, ABSCHLUSS } from '../config/startseite';
 import '../styles/startseite.css';
@@ -66,8 +66,8 @@ const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
-const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
-const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
+const V_DESCRIPTION = `Website, E-Mail und Google-Profil in zwei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
+const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Zwei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung (${komplettPreis()} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
 // FAQPage-JSON-LD der Startseite entfällt: die Fragen stehen seit #5136–#5138 auf /fragen/ (dort mit JSON-LD)
 
 
@@ -195,12 +195,12 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     <div class="wrap">
       <div class="section-head center">
         <span class="eyebrow">Pakete</span>
-        <h2 id="pakete-h" class="rule">Drei Pakete. Feste Monatspreise.</h2>
+        <h2 id="pakete-h" class="rule">Zwei Pakete. Feste Monatspreise.</h2>
         <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.</p>
       </div>
       <EinmaligDazu id="einmalig" />
       <PaketKarten details={false} />
-      <PremiumKarte />
+      <KomplettKarte />
       <p class="v-hinweis"><a href={href('/preise/')}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
     </div>
   </section>

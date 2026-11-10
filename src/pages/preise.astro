@@ -1,6 +1,6 @@
 ---
-// Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die drei Pakete Basis · Plus · Komplett sind die richtige
-// Website. Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
+// Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die Pakete Basis · Plus sind die richtige Website,
+// optional dazu das Komplettpaket (Auftragsverwaltung, #5450–#5464). Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
 // Inhalt: „Einmalig dazubuchen“ (Leiste) · Karten mit Jahreskosten ·
 // Vergleichstabelle · So starten Sie · Ausbaustufen · B2B-Hinweis (Fragen seit 08.11. auf /fragen/).
 // Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
@@ -11,7 +11,7 @@ import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
-import PremiumKarte from '../components/pakete/PremiumKarte.astro';
+import KomplettKarte from '../components/pakete/KomplettKarte.astro';
 import { SHOW_HINTS } from '../config/site';
 import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
@@ -19,7 +19,7 @@ import { leistungenNach } from '../config/leistungen';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import {
-  ABO_PAKETE, euro, jahresPreis, jahresBrutto, aboPreisAb, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
+  ABO_PAKETE, KOMPLETTPAKET, euro, jahresPreis, jahresBrutto, aboPreisAb, komplettPreis, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
   AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
 } from '../config/pakete-abo';
 
@@ -27,7 +27,7 @@ const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
 const zeilen = vergleichsZeilen();
 const hinweise = SHOW_HINTS && IS_PREVIEW;
 
-/** Für alle drei Pakete gleich (aus der Leistung „Website“ und den bisherigen Paketinhalten). */
+/** Für beide Pakete gleich (aus der Leistung „Website“ und den bisherigen Paketinhalten). */
 const GLEICH: { t: string; w: string | true }[] = [
   { t: 'Einrichtung', w: '0 €' },
   { t: 'Mobilfreundlich für Handy, Tablet und PC', w: true },
@@ -44,24 +44,25 @@ const START = [
 ];
 
 const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
+const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Auftragsverwaltung, ${komplettPreis()}.`;
 ---
 
 <BaseLayout
   title={`Preise: Website-Abo ab ${euro(aboPreisAb())} im Monat`}
-  description={`${preiseText} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung, E-Mail-Postfächer inklusive.`}
+  description={`${preiseText} im Monat netto, keine Einrichtungskosten, keine Seitenbegrenzung. Optional dazu: ${KOMPLETTPAKET.name} ${komplettPreis()}.`}
   schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
-  <PageHeader eyebrow="Preise" title="Drei Pakete. Fester Monatspreis." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten.`} />
+  <PageHeader eyebrow="Preise" title="Zwei Pakete. Fester Monatspreis." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten. ${komplettText}`} />
 
   <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
     <div class="wrap">
-      <h2 class="sr-only" id="pakete-h">Die drei Pakete</h2>
+      <h2 class="sr-only" id="pakete-h">Die Pakete</h2>
       <span id="preise" class="anker" aria-hidden="true"></span>
       <span id="websites" class="anker" aria-hidden="true"></span>
       <EinmaligDazu />
       <PaketKarten />
-      <PremiumKarte />
+      <KomplettKarte />
       <p class="netto">{B2B_HINWEIS}</p>
     </div>
   </section>

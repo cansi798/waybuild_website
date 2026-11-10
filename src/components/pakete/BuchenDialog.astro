@@ -3,33 +3,53 @@
 // jeder Knopf mit data-buchen="<paket-id>" öffnet es. Ohne JavaScript führt der Knopf direkt zu /kontakt/?paket=…&buchen=1.
 // Native <dialog> mit showModal(): Escape schließt, Rest der Seite ist inert; zusätzlich Fokusfalle für Tab/Umschalt+Tab,
 // Fokus geht beim Schließen zurück auf den Knopf. Am Handy Vollbild-Blatt.
+// Paket: Basis ODER Plus (umstellbar, vorgewählt nach dem geklickten Knopf). Optional das Komplettpaket dazu
+// (Jamil #5450–#5462): Monatssumme zeigt dann den Kombipreis aus KOMPLETTPAKET.kombiPreis (Paketpreis statt Summe der
+// Einzelpreise), sonst die Summe. data-komplett="1" am Knopf hakt das Komplettpaket an (Knopf auf der Komplettpaket-Karte).
 // Extras: vier einzeln ankreuzbar ODER „Alle vier als Gesamtpaket“ (wird automatisch gewählt, wenn alle vier angekreuzt sind).
-// Im Paket Komplett sind Logo und Geschäftspapiere schon enthalten: dort nicht wählbar, Gesamtpaket ebenfalls nicht.
+// Kombipreise gelten nur für die Monatspreise und NICHT, wenn das Gründerpaket (Gesamtpaket „Alle vier Extras“) gewählt
+// ist (Jamil #5464): dann Summe der Einzelpreise.
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
-import { ABO_PAKETE, EINMALIG_DAZU as E, BUCHEN, euro, gesamtZeile } from '../../config/pakete-abo';
+import { ABO_PAKETE, KOMPLETTPAKET as K, EINMALIG_DAZU as E, BUCHEN, euro, komplettPreis, einzelnMitKomplett, monatMitKomplett, gesamtZeile } from '../../config/pakete-abo';
 
-const pakete = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, { name: p.name, preis: p.preis }]));
-/** Im Paket Komplett schon enthalten (pakete-abo.ts: Leistung „logo“ = Logo und Geschäftspapiere) */
-const inKomplett = ['logo', 'papiere'];
+const pakete = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, {
+  name: p.name, preis: p.preis,
+  mitKomplett: monatMitKomplett(p.id), einzeln: einzelnMitKomplett(p.id), kombi: K.kombiPreis[p.id] != null,
+}]));
 ---
 
 <dialog class="bd" id="buchen-dialog" aria-modal="true" aria-labelledby="bd-titel" aria-describedby="bd-hinweis"
-  data-kontakt={href('/kontakt/')} data-pakete={JSON.stringify(pakete)} data-inkomplett={inKomplett.join(',')} data-gesamt={E.gesamt.preis}>
+  data-kontakt={href('/kontakt/')} data-pakete={JSON.stringify(pakete)} data-gesamt={E.gesamt.preis} data-ab={K.kombiAb ? '1' : ''} data-komplett-name={K.name} data-kombi-gruender={K.kombiMitGruenderpaket ? '1' : ''}>
   <div class="bd__innen">
     <div class="bd__kopf">
       <h2 id="bd-titel">{BUCHEN.titel}</h2>
       <button type="button" class="bd__zu" data-bd-zu aria-label="Fenster schließen"><Icon name="close" size={24} /></button>
     </div>
 
-    <p class="bd__paket">Ihr Paket: <b id="bd-paket-name"></b> <span><b id="bd-paket-preis"></b> netto im Monat</span></p>
+    <fieldset class="bd__paket">
+      <legend>Ihr Paket</legend>
+      <div class="bd__paket-wahl">
+        {ABO_PAKETE.map((p) => (
+          <label class="bd__radio"><input type="radio" name="bd_paket" value={p.id} /> <span><b>{p.name}</b> {euro(p.preis)} netto im Monat</span></label>
+        ))}
+      </div>
+    </fieldset>
+
+    <label class="bd__opt bd__opt--komplett">
+      <input type="checkbox" name="bd_komplett" value={K.id} />
+      <span class="bd__name">{K.name} dazu<small>{K.kurz}</small></span>
+      <b>{komplettPreis()}</b>
+    </label>
+
+    <p class="bd__summe bd__summe--monat" aria-live="polite">Monatlich: <b id="bd-monat"></b> netto<span id="bd-monat-statt" class="bd__statt"></span></p>
 
     <fieldset class="bd__extras">
       <legend>{E.titel} <small>(optional, einmalig, netto)</small></legend>
       {E.liste.map((e) => (
         <label class="bd__opt">
           <input type="checkbox" name="bd_extra" value={e.id} data-preis={e.preis} />
-          <span class="bd__name">{e.name}<small class="bd__inkl" hidden>Im Paket Komplett schon enthalten</small></span>
+          <span class="bd__name">{e.name}</span>
           <b>{euro(e.preis)}</b>
         </label>
       ))}
@@ -59,8 +79,19 @@ const inKomplett = ['logo', 'papiere'];
   .bd__zu:hover { background: var(--paper-2); }
   .bd :focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
   .bd p { margin: 0; }
-  .bd__paket { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 14px; padding: 14px 16px; border-radius: 14px; background: #e9f6f5; line-height: 1.5; }
-  .bd__paket b { font-family: var(--font-head); }
+  .bd__paket { margin: 0; padding: 12px 16px 14px; border: 0; border-radius: 14px; background: #e9f6f5; line-height: 1.5; min-width: 0; }
+  .bd__paket legend { float: left; width: 100%; padding: 0; margin-bottom: 6px; font-weight: 650; }
+  .bd__paket-wahl { clear: both; display: grid; gap: 4px 18px; }
+  @media (min-width: 600px) { .bd__paket-wahl { grid-template-columns: 1fr 1fr; } }
+  .bd__radio { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+  .bd__radio input { width: 20px; height: 20px; flex: none; accent-color: var(--accent-ink); }
+  .bd__radio b { font-family: var(--font-head); }
+  .bd__opt--komplett { flex-wrap: wrap; padding: 10px 12px; border: 1.5px solid #cfe6e3; border-radius: 14px; }
+  .bd__opt--komplett .bd__name { min-width: 0; }
+  .bd__opt--komplett > b { font-size: 0.95rem; white-space: normal; }
+  @media (max-width: 599px) { .bd__opt--komplett > b { flex-basis: 100%; padding-left: 41px; } }
+  .bd__statt { display: block; font-size: 0.88rem; color: var(--ink-soft); }
+  .bd__statt:empty { display: none; }
   .bd__extras { margin: 0; padding: 0; border: 0; display: grid; gap: 2px; min-width: 0; }
   .bd__extras legend { padding: 0; margin-bottom: 6px; font-weight: 650; }
   .bd__extras legend small { font-weight: 400; color: var(--ink-soft); }
@@ -92,48 +123,54 @@ const inKomplett = ['logo', 'papiere'];
 <script>
   const dlg = document.getElementById('buchen-dialog') as HTMLDialogElement | null;
   if (dlg && typeof dlg.showModal === 'function') {
-    const pakete = JSON.parse(dlg.dataset.pakete ?? '{}') as Record<string, { name: string; preis: number }>;
-    const inKomplett = (dlg.dataset.inkomplett ?? '').split(',');
+    const pakete = JSON.parse(dlg.dataset.pakete ?? '{}') as Record<string, { name: string; preis: number; mitKomplett: number; einzeln: number; kombi: boolean }>;
     const gesamtPreis = Number(dlg.dataset.gesamt);
+    const ab = dlg.dataset.ab ? 'ab ' : '';
     const eur = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
     const extras = [...dlg.querySelectorAll<HTMLInputElement>('input[name="bd_extra"]')];
     const alle = dlg.querySelector<HTMLInputElement>('input[name="bd_alle"]')!;
     const summe = dlg.querySelector<HTMLElement>('#bd-summe')!;
     const weiter = dlg.querySelector<HTMLAnchorElement>('#bd-weiter')!;
     const ohne = dlg.querySelector<HTMLAnchorElement>('#bd-ohne')!;
+    const radios = [...dlg.querySelectorAll<HTMLInputElement>('input[name="bd_paket"]')];
+    const komplett = dlg.querySelector<HTMLInputElement>('input[name="bd_komplett"]')!;
+    const monat = dlg.querySelector<HTMLElement>('#bd-monat')!;
+    const monatStatt = dlg.querySelector<HTMLElement>('#bd-monat-statt')!;
     let paketId = 'basis';
     let opener: HTMLElement | null = null;
 
     const link = (dazu: string) => {
       const q = new URLSearchParams({ paket: pakete[paketId]?.name ?? '', buchen: '1' });
+      if (komplett.checked) q.set('komplett', '1');
       if (dazu) q.set('dazu', dazu);
       return `${dlg.dataset.kontakt}?${q.toString().replace(/%2C/g, ',')}`;
     };
     const aktualisieren = () => {
-      const frei = extras.filter((c) => !c.disabled);
-      if (frei.length === extras.length && extras.every((c) => c.checked)) alle.checked = true;
-      const gewaehlt = extras.filter((c) => c.checked && !c.disabled);
+      if (extras.every((c) => c.checked)) alle.checked = true;
+      // Monatlich: Paketpreis; mit Komplettpaket der Kombipreis (Paketpreis gegenüber der Summe der Einzelpreise),
+      // aber nicht zusammen mit dem Gründerpaket (Gesamtpaket „Alle vier Extras“, #5464): dann Einzelpreise.
+      const p = pakete[paketId];
+      const kombi = komplett.checked && p.kombi && (!alle.checked || !!dlg.dataset.kombiGruender);
+      monat.textContent = !komplett.checked ? eur(p.preis) : `${ab}${eur(kombi ? p.mitKomplett : p.einzeln)}`;
+      monatStatt.textContent = kombi
+        ? `Kombipreis ${p.name} + ${dlg.dataset.komplettName}, statt einzeln ${ab}${eur(p.einzeln)}`
+        : komplett.checked && p.kombi && alle.checked ? `Mit dem Gesamtpaket der Extras gilt kein Kombipreis, es gelten die Einzelpreise.` : '';
+      const gewaehlt = extras.filter((c) => c.checked);
       const betrag = alle.checked ? gesamtPreis : gewaehlt.reduce((s, c) => s + Number(c.dataset.preis), 0);
       summe.textContent = eur(betrag);
       weiter.href = link(alle.checked ? 'alle' : gewaehlt.map((c) => c.value).join(','));
       ohne.href = link('');
     };
     extras.forEach((c) => c.addEventListener('change', () => { if (!c.checked) alle.checked = false; aktualisieren(); }));
-    alle.addEventListener('change', () => { extras.forEach((c) => { if (!c.disabled) c.checked = alle.checked; }); aktualisieren(); });
+    alle.addEventListener('change', () => { extras.forEach((c) => { c.checked = alle.checked; }); aktualisieren(); });
+    radios.forEach((r) => r.addEventListener('change', () => { if (r.checked) { paketId = r.value; aktualisieren(); } }));
+    komplett.addEventListener('change', aktualisieren);
 
     const oeffnen = (id: string, von: HTMLElement) => {
       paketId = pakete[id] ? id : 'basis';
       opener = von;
-      dlg.querySelector('#bd-paket-name')!.textContent = pakete[paketId].name;
-      dlg.querySelector('#bd-paket-preis')!.textContent = eur(pakete[paketId].preis);
-      const komplett = paketId === 'komplett';
-      extras.forEach((c) => {
-        const drin = komplett && inKomplett.includes(c.value);
-        c.disabled = drin; if (drin) c.checked = false;
-        c.closest('label')!.querySelector<HTMLElement>('.bd__inkl')!.hidden = !drin;
-      });
-      alle.disabled = komplett; if (komplett) alle.checked = false;
-      alle.closest('label')!.hidden = komplett;
+      radios.forEach((r) => (r.checked = r.value === paketId));
+      komplett.checked = von.dataset.komplett === '1';
       aktualisieren();
       document.documentElement.style.overflow = 'hidden';
       dlg.showModal();

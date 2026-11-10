@@ -7,7 +7,7 @@ import Hint from '../components/Hint.astro';
 import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
 import { SAEULEN } from '../config/angebot';
-import { ABO_PAKETE, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile } from '../config/pakete-abo';
+import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile, komplettPreis, komplettZeile, monatMitKomplett, einzelnMitKomplett } from '../config/pakete-abo';
 
 const interessen = [
   { value: 'website', label: WAAS.name },
@@ -17,7 +17,12 @@ const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) =
 // Paketwahl (Jamil #5056): ?paket=Plus (auch „Paket Plus“ oder „Plus (149,99 € / Monat)“) wählt das Paket vor,
 // ?dazu=logo,papiere hakt Einmal-Leistungen an, ?dazu=alle (oder gesamtpaket) das Gesamtpaket „Alle vier Extras“
 // (Jamil #5085–#5089). ?buchen=1 kommt vom Fenster „Direkt buchen“: Knopf „Buchung anfragen“, Betreff „Buchung“.
+// Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, ?komplett=1 (oder ?paket=Komplettpaket) hakt
+// es an. Monatssumme mit Kombipreis, aber nicht zusammen mit dem Gesamtpaket „Alle vier Extras“ (Gründerpaket, #5464).
 // Beides sichtbar und änderbar, gesendet als Text.
+const kombiDaten = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, {
+  name: p.name, preis: p.preis, mit: monatMitKomplett(p.id), einzeln: einzelnMitKomplett(p.id), kombi: KOMPLETTPAKET.kombiPreis[p.id] != null,
+}]));
 const paketText = (p: (typeof ABO_PAKETE)[number]) => `${p.name} (${euro(p.preis)} / Monat netto)`;
 
 // Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
@@ -40,7 +45,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
   <section class="section">
     <div class="wrap contact">
-      <form class="form card" id="contact-form" data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+      <form class="form card" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
             <option value="">Noch unsicher – bitte beraten Sie mich</option>
@@ -53,6 +58,8 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
             <option value="">Noch offen, bitte beraten Sie mich</option>
             {ABO_PAKETE.map((p) => <option value={p.id} data-name={p.name} data-text={paketText(p)}>{p.name}: {euro(p.preis)} im Monat netto</option>)}
           </select>
+          <label class="wahl__opt wahl__opt--komplett"><input type="checkbox" name="komplett_wahl" value={KOMPLETTPAKET.id} data-text={komplettZeile()} /> <span>{KOMPLETTPAKET.name} dazu <b>{komplettPreis()}</b> im Monat netto <small>{KOMPLETTPAKET.kurz}</small></span></label>
+          <p class="wahl__summe" id="wahl-monat" aria-live="polite" hidden>Monatlich: <b id="wahl-monat-b"></b> netto <small id="wahl-monat-statt"></small></p>
           <p class="wahl__kopf">{EINMALIG_DAZU.titel} <small>(optional, Festpreis netto)</small></p>
           <div class="wahl__dazu">
             {EINMALIG_DAZU.liste.map((e) => (
@@ -141,8 +148,12 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const paket = (params.get('paket') ?? '').trim();
     const norm = (t: string) => t.toLowerCase().replace(/^paket\s+/, '');
     const treffer = wahlSelect ? [...wahlSelect.options].find((o) => o.dataset.name && norm(paket).startsWith(o.dataset.name.toLowerCase())) : undefined;
+    // ?paket=Komplettpaket (oder Komplett) bzw. ?komplett=1 hakt das Komplettpaket an, Grundpaket bleibt wählbar
+    const komplettBox = form.querySelector<HTMLInputElement>('input[name="komplett_wahl"]');
+    const komplettParam = params.get('komplett') === '1' || norm(paket).startsWith('komplett');
+    if (komplettBox && komplettParam) komplettBox.checked = true;
     if (treffer && wahlSelect) wahlSelect.value = treffer.value;
-    else if (paket) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
+    else if (paket && !norm(paket).startsWith('komplett')) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
     const dazu = (params.get('dazu') ?? '').split(',').map((d) => d.trim()).filter(Boolean);
     const extras = [...form.querySelectorAll<HTMLInputElement>('input[name="einmalig_wahl"]')];
     const alle = form.querySelector<HTMLInputElement>('input[name="einmalig_alle"]');
@@ -151,11 +162,34 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     // Gesamtpaket: wird gewählt, sobald alle vier angekreuzt sind; Abwählen eines Extras hebt es auf
     const summeEl = document.getElementById('wahl-summe');
     const eurS = (n: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(n);
+    // Monatlich (Paket + optional Komplettpaket): Kombipreis, außer zusammen mit dem Gesamtpaket der Extras (#5464)
+    const kombi = JSON.parse(form.dataset.kombi ?? '{}') as Record<string, { name: string; preis: number; mit: number; einzeln: number; kombi: boolean }>;
+    const abS = form.dataset.ab ? 'ab ' : '';
+    const monatEl = document.getElementById('wahl-monat');
+    let monatText = '';
+    const monatSumme = () => {
+      const p = kombi[wahlSelect?.value ?? ''];
+      monatText = '';
+      if (!monatEl) return;
+      monatEl.hidden = !p;
+      if (!p) return;
+      const mitK = !!komplettBox?.checked;
+      const gilt = mitK && p.kombi && (!alle?.checked || !!form.dataset.kombiGruender);
+      const betrag = !mitK ? eurS(p.preis) : `${abS}${eurS(gilt ? p.mit : p.einzeln)}`;
+      const statt = gilt ? `(Kombipreis ${p.name} + ${form.dataset.komplettName}, statt einzeln ${abS}${eurS(p.einzeln)})`
+        : mitK && p.kombi && alle?.checked ? '(Einzelpreise: mit dem Gesamtpaket der Extras gilt kein Kombipreis)' : '';
+      document.getElementById('wahl-monat-b')!.textContent = betrag;
+      document.getElementById('wahl-monat-statt')!.textContent = statt;
+      if (mitK) monatText = `${betrag} netto${statt ? ` ${statt}` : ''}`;
+    };
     const extrasSumme = () => {
       if (alle && extras.every((c) => c.checked)) alle.checked = true;
       const betrag = alle?.checked ? Number(alle.dataset.preis) : extras.filter((c) => c.checked).reduce((s, c) => s + Number(c.dataset.preis), 0);
       if (summeEl) summeEl.textContent = eurS(betrag);
+      monatSumme();
     };
+    wahlSelect?.addEventListener('change', monatSumme);
+    komplettBox?.addEventListener('change', monatSumme);
     extras.forEach((c) => c.addEventListener('change', () => { if (!c.checked && alle) alle.checked = false; extrasSumme(); }));
     alle?.addEventListener('change', () => { extras.forEach((c) => (c.checked = alle.checked)); extrasSumme(); });
     extrasSumme();
@@ -212,9 +246,14 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       delete data.website;
       data.nachricht = mitCheck(data.nachricht ?? '');
       // Paketwahl als lesbarer Text: gewähltes Paket vor einem evtl. Anliegen-Text (z. B. vom Check), Einmal-Leistungen als Liste
-      delete data.paket_wahl; delete data.einmalig_wahl; delete data.einmalig_alle;
+      delete data.paket_wahl; delete data.einmalig_wahl; delete data.einmalig_alle; delete data.komplett_wahl;
       const gewaehlt = interesse.value === 'website' ? wahlSelect?.selectedOptions[0]?.dataset.text ?? '' : '';
       if (gewaehlt) data.paket = data.paket ? `${gewaehlt}; ${data.paket}` : gewaehlt;
+      if (interesse.value === 'website' && komplettBox?.checked) {
+        data.komplettpaket = komplettBox.dataset.text ?? 'Komplettpaket';
+        if (monatText) data.monatlich = monatText;
+        data.paket = data.paket ? `${data.paket} + ${form.dataset.komplettName}` : `${form.dataset.komplettName} (Grundpaket noch offen)`;
+      }
       const einmalig = interesse.value !== 'website' ? [] : alle?.checked ? [alle.dataset.text ?? 'Alle vier Extras'] : extras.filter((c) => c.checked).map((c) => c.dataset.text ?? c.value);
       if (buchen) data.anliegen = 'Buchung über „Direkt buchen“ (Vertrag und Auftragsbestätigung per E-Mail)';
       if (einmalig.length) data.einmalig = einmalig.join(', ');
@@ -224,7 +263,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.einmalig ? `\nEinmalig dazu: ${data.einmalig}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.monatlich ? `\nMonatlich: ${data.monatlich}` : ''}${data.einmalig ? `\nEinmalig dazu: ${data.einmalig}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`${buchen ? 'Buchung' : 'Anfrage'}: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm hat sich geöffnet. Bitte senden Sie die Nachricht dort ab.';
         return;
@@ -290,7 +329,11 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   .wahl__opt input { width: 20px; min-height: 20px; height: 20px; flex: none; accent-color: var(--accent); }
   .wahl__opt b { font-weight: 650; white-space: nowrap; }
   .wahl__opt--alle { grid-column: 1 / -1; padding: 8px 12px; border: 2px solid var(--accent); border-radius: 12px; background: var(--white); font-weight: 650; color: var(--accent-ink); }
+  .wahl__opt--komplett { padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--white); }
+  .wahl__opt--komplett small { display: block; font-size: 0.85rem; color: var(--ink-soft); }
   .wahl__summe { margin: 0; font-size: 0.95rem; }
+  .wahl__summe small { display: block; font-size: 0.85rem; color: var(--ink-soft); }
+  .wahl__summe[hidden] { display: none; }
   .wahl__summe b { font-family: var(--font-head); }
   .wahl__hinweis { margin: 0; padding: 10px 12px; border-left: 4px solid var(--accent-ink); background: var(--white); font-size: 0.9rem; line-height: 1.6; }
   .check-mit { display: grid; gap: 8px; padding: 14px 16px; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--paper); }

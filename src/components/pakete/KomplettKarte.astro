@@ -1,36 +1,51 @@
 ---
-// Premium „Komplett + Auftragsverwaltung“ (Jamil, Talk qh87y3sj #5346, #5351, #5352, 10.11.2026): breite Karte unter den
-// drei Paketen (Startseite #pakete und /preise/). Daten aus PREMIUM in src/config/pakete-abo.ts; preis null = „Preis auf Anfrage“.
+// Komplettpaket (Jamil, Talk qh87y3sj #5450–#5462, 10.11.2026): breite Karte unter den Paketen Basis und Plus
+// (Startseite #pakete und /preise/), OPTIONAL ZUSÄTZLICH buchbar, kein drittes Paket. Inhalt nur die Auftragsverwaltung.
+// Ersetzt die frühere Premium-Karte „Komplett + Auftragsverwaltung“ (Gestaltung übernommen). Daten aus KOMPLETTPAKET in
+// src/config/pakete-abo.ts (Preis mit „ab“, Kombipreise Basis/Plus + Komplettpaket als Paketpreis gegenüber den Einzelpreisen).
 // Ablauf-Grafik Anfrage → Angebot → Auftrag → Rechnung → Buchhaltung im Linien-Icon-Stil der Seite: zeichnet sich beim
 // Hereinscrollen einmal ein (nur mit JS und ohne reduzierte Bewegung, sonst sofort vollständig sichtbar). Am Handy senkrecht.
-// Knopf „Kostenlose Erstberatung“ wie im Header, mit Paket-Vorauswahl ?paket=Premium (…); kein „Direkt buchen“.
+// „Direkt buchen“ öffnet das Buchungsfenster mit Komplettpaket angehakt (Plus vorgewählt, umstellbar); ohne JS Kontaktformular.
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
-import { PREMIUM as P, paketById, euro, bruttoVon, LAUFZEIT_HINWEIS } from '../../config/pakete-abo';
+import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, komplettPreisArt, LAUFZEIT_HINWEIS, BUCHEN } from '../../config/pakete-abo';
 
-const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.kontaktPaket)}`;
+const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.name)}&komplett=1&buchen=1`;
+const kombis = kombiPreise();
 ---
 
-<article class="pm" id="premium" aria-labelledby="pm-h">
+<article class="pm" id="komplettpaket" aria-labelledby="pm-h">
   <div class="pm__oben">
     <div class="pm__kopf">
       <p class="pm__label">{P.label}</p>
-      <h3 id="pm-h" class="pm__titel">{P.titel}</h3>
+      <h3 id="pm-h" class="pm__titel">{P.name}</h3>
+      <p class="pm__kurz">{P.kurz}</p>
       <p class="pm__text">{P.text}</p>
     </div>
     <div class="pm__preis">
-      {P.preis !== null ? (
-        <>
-          <p class="pm__betrag"><b>{euro(P.preis)}</b> <span>/ Monat, netto zzgl. MwSt.</span></p>
-          <p class="pm__brutto">{euro(bruttoVon(P.preis))} inkl. 19 % MwSt.</p>
-        </>
-      ) : (
-        <p class="pm__betrag pm__betrag--anfrage"><b>Preis auf Anfrage</b></p>
-      )}
-      <a class="btn btn--lg pm__btn" href={kontakt}>{P.knopf}<span class="sr-only">: Paket {P.label}</span></a>
-      {P.preis !== null && <p class="pm__laufzeit">{LAUFZEIT_HINWEIS}</p>}
+      {P.preisArt === 'zusaetzlich' && <p class="pm__zusatz">zusätzlich</p>}
+      <p class="pm__betrag"><b>{euroAb(P.preis, P.ab)}</b> <span>/ Monat, netto zzgl. MwSt.</span></p>
+      <p class="pm__brutto">{euroAb(bruttoVon(P.preis), P.ab)} inkl. 19 % MwSt., {komplettPreisArt()}</p>
+      <a class="btn btn--lg pm__btn" href={kontakt} data-buchen="plus" data-komplett="1">{BUCHEN.knopf}<span class="sr-only">: {P.name}</span></a>
+      <p class="pm__laufzeit">{LAUFZEIT_HINWEIS}</p>
     </div>
   </div>
+
+  {kombis.length > 0 && (
+    <div class="pm__kombi">
+      <h4 class="pm__h4">Kombipreise im Monat</h4>
+      <ul class="pm__kombi-liste">
+        {kombis.map((k) => (
+          <li>
+            <span class="pm__kombi-name">{k.paket.name} + {P.name}</span>
+            <span class="pm__kombi-preis"><b>{euroAb(k.preis, P.kombiAb)}</b> netto <small>statt einzeln {euroAb(k.einzeln, P.kombiAb)}</small></span>
+            <span class="pm__kombi-brutto">{euroAb(bruttoVon(k.preis), P.kombiAb)} inkl. 19 % MwSt.</span>
+          </li>
+        ))}
+      </ul>
+      {!P.kombiMitGruenderpaket && <p class="pm__kombi-hinweis">Kombipreise gelten nicht zusammen mit dem Gesamtpaket „{EINMALIG_DAZU.gesamt.name}“.</p>}
+    </div>
+  )}
 
   <div class="pm__band">
     <ol class="pm-fluss" aria-label="So hängt alles zusammen">
@@ -51,7 +66,6 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.kontaktPaket)
   <div class="pm__software">
     <h4 class="pm__h4">Ihre Auftragsverwaltung</h4>
     <ul class="pm__liste">
-      <li class="pm__alles"><Icon name="check" size={18} /> <span>Alles aus „{paketById(P.baut).name}“</span></li>
       {P.software.map((t) => <li><Icon name="check" size={18} /> <span>{t}</span></li>)}
     </ul>
   </div>
@@ -83,13 +97,14 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.kontaktPaket)
   .pm__kopf { display: grid; gap: 8px; min-width: 0; }
   .pm__label { justify-self: start; padding: 4px 12px; border-radius: 99px; background: var(--accent-ink); color: var(--white); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
   .pm__titel { font-size: clamp(1.4rem, 2.6vw, 1.75rem); line-height: 1.25; overflow-wrap: anywhere; hyphens: auto; }
+  .pm__kurz { font-weight: 600; color: var(--accent-ink); line-height: 1.45; }
   .pm__text { max-width: 62ch; line-height: 1.7; color: var(--ink-soft); }
+  .pm__zusatz { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-ink); }
 
   .pm__preis { display: grid; gap: 8px; min-width: 0; }
   .pm__betrag { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
   .pm__betrag b { font-family: var(--font-head); font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
   .pm__betrag span { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
-  .pm__betrag--anfrage b { font-size: clamp(1.4rem, 2.6vw, 1.7rem); }
   .pm__brutto { font-size: 0.85rem; color: var(--ink-soft); }
   .pm__btn { width: 100%; margin-top: 4px; background: #00807b; color: var(--white); border-color: transparent; }
   .pm__btn:hover { background: var(--accent-ink); color: var(--white); }
@@ -123,13 +138,23 @@ const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.kontaktPaket)
   .pm__vorteile li { display: flex; align-items: flex-start; gap: 10px; line-height: 1.55; color: var(--ink); font-weight: 600; font-size: 0.96rem; }
   .pm__vico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--white); color: var(--accent-ink); }
 
+  /* Kombipreise: Paketpreis gegenüber der Summe der Einzelpreise (kein Streichpreis) */
+  .pm__kombi { display: grid; gap: 10px; }
+  .pm__kombi-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  @media (min-width: 760px) { .pm__kombi-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
+  .pm__kombi-liste li { display: grid; gap: 2px; min-width: 0; padding: 12px 16px; border: 1.5px solid #cfe6e3; border-radius: 14px; line-height: 1.5; }
+  .pm__kombi-name { font-family: var(--font-head); font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+  .pm__kombi-preis { color: var(--ink); }
+  .pm__kombi-preis b { font-family: var(--font-head); font-size: 1.3rem; }
+  .pm__kombi-preis small { display: block; font-size: 0.86rem; color: var(--ink-soft); }
+  .pm__kombi-brutto, .pm__kombi-hinweis { font-size: 0.85rem; color: var(--ink-soft); }
+
   .pm__software { display: grid; gap: 12px; }
   .pm__h4 { font-size: 1.05rem; color: var(--ink); }
   .pm__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px 28px; }
   @media (min-width: 760px) { .pm__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .pm__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.96rem; line-height: 1.55; color: var(--ink); min-width: 0; }
   .pm__liste :global(svg) { flex: none; margin-top: 3px; color: var(--accent-ink); }
-  .pm__alles { font-weight: 650; }
   .pm a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .pm__btn { transition: none; transform: none !important; } }
 </style>
