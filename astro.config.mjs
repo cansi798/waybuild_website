@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 import { satteri } from '@astrojs/markdown-satteri';
 import { tabellenPlugin } from './src/lib/markdown-tabellen.mjs';
 import { basisLinksPlugin } from './src/lib/markdown-basislinks.mjs';
@@ -27,10 +28,13 @@ export default defineConfig({
   base,
   trailingSlash: 'always',
   integrations: [
+    // React nur für die 3D-Bühne der zweiten Startseite /neu/ (three.js); alle anderen Seiten bleiben ohne React
+    react({ include: ['**/components/neu/**'] }),
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
       filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen)\/?$/.test(page)
+        && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/neu/`) // zweite Startseite /neu/: nicht in die Sitemap
         && !/\/website-fuer\//.test(page)
         && !blogEntwuerfe.some((id) => page.replace(/\/$/, '').endsWith(`/blog/${id}`))
         && !altLeistungen.some((slug) => page.replace(/\/$/, '').endsWith(`/leistungen/${slug}`)),

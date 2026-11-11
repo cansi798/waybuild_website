@@ -1,0 +1,70 @@
+---
+// ZWEITE STARTSEITE unter /neu/ (Can, Sitzung 11.11.2026): nur Vorschau neben der heutigen Startseite, die unverändert bleibt.
+// noindex, nicht im Menü, nicht in der Sitemap (astro.config.mjs), nicht in llms.txt; im Live-Paket entfernt (scripts/postbuild.mjs).
+// Fundament: diese Seite, src/styles/neu.css, src/components/neu/Abschnitt.astro, src/components/neu/vertrag.ts.
+// Die Abschnitte liefern die Baupakete als src/components/neu/<paket>/<Name>.astro. Die Seite sucht sie über ihren Pfad:
+// Fehlt einer noch, bleibt ein Platzhalter stehen und die Seite baut trotzdem. Jeder Abschnitt bekommt genau `links`
+// (der Hero zusätzlich `dreiD`). Schlussmontage: Platz-Suche durch feste Importe ersetzen, Platzhalter und Ersatz-h1 entfernen.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { NeuLinks } from '../../components/neu/vertrag';
+import { href } from '../../lib/paths';
+import { aboPreisAb, euro } from '../../config/pakete-abo';
+import { ANLIEGEN } from '../../config/startseite';
+import { V_HERO } from '../../config/variante';
+import '../../styles/neu.css';
+
+// Titel und Beschreibung wörtlich wie auf der heutigen Startseite (dort nur lokale Konstanten in src/pages/index.astro)
+const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
+const V_DESCRIPTION = `Website, E-Mail und Google-Profil in zwei festen Paketen ab ${euro(aboPreisAb())} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
+
+// Schalter: 3D-Bühne, Beispiele und Fragen lassen sich mit einer Zeile abschalten
+const ZEIGE = { hero3d: true, beispiele: true, fragen: true };
+
+const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
+const links: NeuLinks = {
+  erstberatung: kontakt(ANLIEGEN.erstberatung.paket),
+  bewerten: kontakt(ANLIEGEN.bewerten.paket),
+  pakete: '#pakete',
+  preise: href('/preise/'),
+  beispiele: href('/beispiele/'),
+  fragen: href('/fragen/'),
+};
+
+// Platz-Suche: nur Dateien genau eine Ordnerebene unter src/components/neu/ (Abschnitt.astro liegt direkt darin und zählt nicht)
+const teile = import.meta.glob<{ default: any }>('../../components/neu/*/*.astro', { eager: true });
+const teil = (pfad: string) => teile[`../../components/neu/${pfad}.astro`]?.default;
+
+const Hero = teil('hero/NeuHero');
+// Reihenfolge der Seite; `zeige: false` lässt einen schaltbaren Abschnitt ganz weg
+const PLAETZE = [
+  { pfad: 'reise/NeuKundenreise', zeige: true },
+  { pfad: 'reise/NeuVorteile', zeige: true },
+  { pfad: 'reise/NeuVorgehen', zeige: true },
+  { pfad: 'angebot/NeuVergleich', zeige: true },
+  { pfad: 'angebot/NeuPakete', zeige: true },
+  { pfad: 'abschluss/NeuBeispiele', zeige: ZEIGE.beispiele },
+  { pfad: 'abschluss/NeuFragen', zeige: ZEIGE.fragen },
+  { pfad: 'abschluss/NeuAbschluss', zeige: true },
+]
+  .filter((p) => p.zeige)
+  .map((p) => ({ pfad: p.pfad, Teil: teil(p.pfad) }));
+---
+
+<BaseLayout title={V_TITEL} description={V_DESCRIPTION} noindex thema="besucherreise">
+  <div class="neu">
+    {Hero ? (
+      <Hero links={links} dreiD={ZEIGE.hero3d} />
+    ) : (
+      <>
+        {/* Ersatz, solange hero/NeuHero fehlt: die Seite braucht genau eine h1 (Seitenprüfung) */}
+        <div class="neu-abschnitt neu-abschnitt--dunkel">
+          <div class="wrap">
+            <h1 class="neu-h1">{V_HERO.titel}</h1>
+          </div>
+        </div>
+        <p data-neu-fehlt="hero/NeuHero">fehlt</p>
+      </>
+    )}
+    {PLAETZE.map(({ pfad, Teil }) => (Teil ? <Teil links={links} /> : <p data-neu-fehlt={pfad}>fehlt</p>))}
+  </div>
+</BaseLayout>

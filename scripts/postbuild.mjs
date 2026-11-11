@@ -7,5 +7,7 @@ if (process.env.PUBLIC_PREVIEW === 'true') {
   copyFileSync('server/.htaccess', 'dist/.htaccess');
   // Interne Launch-Checkliste gehört nicht auf die öffentliche Domain
   rmSync('dist/checkliste', { recursive: true, force: true });
+  // Zweite Startseite /neu/ ist nur Vorschau und gehört nicht ins Live-Paket
+  rmSync('dist/neu', { recursive: true, force: true });
   console.log('postbuild: dist/.htaccess hinzugefügt, interne Checkliste entfernt.');
 }

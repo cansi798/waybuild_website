@@ -1,0 +1,31 @@
+---
+// Abschnittshülle der zweiten Startseite /neu/ (Can, Sitzung 11.11.2026): Fläche, Sprungziel, Kopf (Eyebrow, h2, Lead) und der
+// Inhalt als Slot. Die h2 benennt den Abschnitt (aria-labelledby). Stil: src/styles/neu.css (dort stehen auch die Klassen
+// für die Baupakete). Die einzige h1 der Seite steht im Hero, deshalb beginnt jeder Abschnitt bei h2.
+import '../../styles/neu.css';
+
+interface Props {
+  /** wird Sprungziel; die Überschrift bekommt `${id}-h` */
+  id: string;
+  /** die h2 */
+  titel: string;
+  eyebrow?: string;
+  lead?: string;
+  /** Standard 'weiss' */
+  flaeche?: 'weiss' | 'sand' | 'dunkel';
+  /** Kopf mittig */
+  mitte?: boolean;
+}
+const { id, titel, eyebrow, lead, flaeche = 'weiss', mitte = false } = Astro.props;
+---
+
+<section id={id} class={`neu-abschnitt neu-abschnitt--${flaeche}`} aria-labelledby={`${id}-h`}>
+  <div class="wrap">
+    <div class:list={['neu-kopf', 'reveal', { 'neu-kopf--mitte': mitte }]}>
+      {eyebrow && <p class="neu-eyebrow">{eyebrow}</p>}
+      <h2 id={`${id}-h`} class="neu-h2">{titel}</h2>
+      {lead && <p class="neu-lead">{lead}</p>}
+    </div>
+    <slot />
+  </div>
+</section>

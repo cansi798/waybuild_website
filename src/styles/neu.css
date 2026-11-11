@@ -1,0 +1,274 @@
+/* ============================================================================================================
+ * Zweite Startseite /neu/ – Fundament (Can, Sitzung 11.11.2026). Nur Vorschau, noindex, nicht in Menü und Sitemap.
+ * Geladen von src/pages/neu/index.astro und src/components/neu/Abschnitt.astro. Die Stile der heutigen Startseite
+ * (startseite.css, variante-start.css, fotos-start.css, vorgehen.css) werden auf /neu/ NICHT geladen.
+ *
+ * FÜR DIE BAUPAKETE (Vorsilben: nh- Hero, nr- Reise, na- Angebot, nb- Beleg und Schluss; neu- gehört dem Fundament):
+ *
+ *   Hülle        .neu                      umschließt die ganze Seite und trägt alle Variablen (--neu-…, siehe unten).
+ *   Abschnitt    <Abschnitt id titel eyebrow? lead? flaeche? mitte?>   (src/components/neu/Abschnitt.astro)
+ *                .neu-abschnitt + .neu-abschnitt--weiss | --sand | --dunkel   (ohne die Komponente, z. B. im Hero)
+ *   Kopf         .neu-kopf (mittig: .neu-kopf--mitte) mit .neu-eyebrow, .neu-h2, .neu-lead; Hero-Überschrift: .neu-h1
+ *   Fließtext    .neu-text                 eigener Text: mind. 17 px, Zeilenhöhe 1,7, Absätze 20 px, höchstens rund 62 Zeichen
+ *   Leiser Link  a.neu-link                Textlink mit Pfeil (Sprung nach unten: .neu-link--ab), Trefferfläche 44 px
+ *   Karte        .neu-karte                weiß, Radius 20 px, feine Linie statt Schatten (auch auf Dunkel weiß)
+ *   Lichtmotiv   .neu-linie                Linie, zieht sich einmal von links (senkrecht: .neu-linie--senkrecht, von oben)
+ *                .neu-punkt                Punkt, erscheint einmal
+ *   Aufklapper   <details class="neu-mehr"><summary>…</summary><div class="neu-mehr__inhalt">…</div></details>
+ *   Knöpfe       die globalen .btn, .btn--primary, .btn--lg (global.css); je Abschnitt höchstens einer
+ *
+ * EINBLENDEN (.reveal / .is-visible): Die Mechanik liegt in global.css und BaseLayout und gilt damit auch auf /neu/.
+ *   - Im <head> setzt ein Skript html.js; erst dann ist .reveal unsichtbar (opacity 0, 24 px tiefer). Das Skript am Ende
+ *     von BaseLayout beobachtet alle .reveal (Schwelle 15 % sichtbar) und setzt EINMAL .is-visible. Ohne Skript und bei
+ *     „weniger Bewegung“ steht alles sofort da.
+ *   - .reveal auf einzelne Blöcke setzen (Kopf, Karte, Zeile), NICHT auf ganze Abschnitte: Ein sehr hohes Element erreicht
+ *     die 15 % am Telefon spät oder gar nicht und bliebe unsichtbar. Der Kopf aus <Abschnitt> hat .reveal schon.
+ *   - Reihenfolge in einer Gruppe: style="--neu-i: 1" (2, 3 …) verzögert um je 80 ms.
+ *   - .neu-linie und .neu-punkt starten, sobald sie selbst (mit .reveal) ODER ein Vorfahre .is-visible trägt.
+ *   - Elemente, die erst nach dem Laden ins Dokument kommen, sieht der Beobachter nicht: dort kein .reveal verwenden.
+ *
+ * REGELN: nichts hier darf von der Reihenfolge der Stylesheets abhängen (deshalb alles mit .neu davor und keine Regeln
+ *   für nackte Elemente wie h2 oder p; die eingebundenen Paket- und Beispielkarten behalten so ihr Aussehen). Farben und
+ *   Maße über die Variablen. Kein :has(), kein scroll-snap, kein content-visibility; Bewegung nur opacity und transform.
+ * ============================================================================================================ */
+
+.neu {
+  /* Farben: eine Akzentfarbe (Türkis), Flächen Weiß, Sand, Dunkel */
+  --neu-nacht: #002e2c;                 /* dunkles Ende des Dunkel-Verlaufs (von --dark #004f4c) */
+
+  /* Schrift (1rem = 16,5 px am Telefon … 18 px ab 1280 px, siehe global.css) */
+  /* h1 rund 36 … 72 px, aber nie breiter als das längste Wort der Überschrift: „Aufmerksamkeit“ misst 8,6 × Schriftgröße,
+   * bei 16 px Rand je Seite. Greift nur unter rund 350 px Breite (320 px: knapp 33 px), sonst bräche das Wort mittendrin. */
+  --neu-h1: min(clamp(2.18rem, 1.4rem + 3.75vw, 4rem), calc((100vw - 32px) / 8.8));
+  --neu-h2: clamp(1.7rem, 1.25rem + 2.083vw, 2.667rem);     /* rund 28 … 48 px */
+  --neu-h3: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);          /* rund 20 … 25 px */
+  --neu-lead: clamp(1.1rem, 1rem + 0.6vw, 1.25rem);         /* rund 18 … 22,5 px */
+  --neu-fliess: 1.0625rem;                                  /* 17,5 … 19 px, nie unter 17 px */
+  --neu-zeile: 1.7;
+  --neu-absatz: 20px;
+  --neu-mass: 62ch;                                         /* Zeilenlänge */
+
+  /* Raum */
+  --neu-abstand: clamp(64px, 38.9px + 7.86vw, 152px);       /* Abschnitt oben und unten: 64 px (320) … 152 px (1440) */
+  --neu-luecke: clamp(16px, 0.8rem + 1vw, 28px);            /* Abstand zwischen Karten */
+  --neu-innen: clamp(22px, 1rem + 1.6vw, 36px);             /* Innenabstand einer Karte */
+  --neu-breite: var(--wrap);                                /* Inhaltsbreite 1160 px (.wrap aus global.css) */
+  --neu-radius: 20px;
+
+  /* Bewegung: nur opacity und transform, einmalig */
+  --neu-dauer: 600ms;
+  --neu-kurve: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Rollen je Fläche (hier: hell). Dunkel und Karte setzen sie neu, alles darin folgt von selbst. */
+  --neu-text: var(--ink);
+  --neu-text-leise: var(--ink-soft);
+  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell immer das dunklere #006b68 */
+  --neu-licht: var(--accent);            /* Punkt und Linie */
+  --neu-rand: var(--line);               /* feine Linie */
+  --neu-fokus: var(--accent-ink);        /* Fokusrahmen */
+
+  background: var(--white);
+}
+
+/* ---------- Flächen ---------- */
+.neu .neu-abschnitt { padding-block: var(--neu-abstand); color: var(--neu-text); }
+.neu .neu-abschnitt--weiss { background: var(--white); }
+.neu .neu-abschnitt--sand { background: var(--paper); }
+/* Dunkel nur für Hero und Schluss: Verlauf von --dark nach --neu-nacht; Schrift und Fokusrahmen hell */
+.neu .neu-abschnitt--dunkel {
+  --neu-text: var(--white);              /* 9,6 : 1 auf #004f4c */
+  --neu-text-leise: var(--dark-lead);    /* 7,5 : 1 */
+  --neu-akzent-text: var(--accent-light); /* 5,9 : 1 */
+  --neu-licht: var(--accent-light);
+  --neu-rand: rgb(255 255 255 / 22%);
+  --neu-fokus: var(--white);
+  background: var(--neu-nacht) linear-gradient(180deg, var(--dark) 0%, var(--neu-nacht) 100%);
+}
+/* Zwei gleiche Flächen hintereinander (z. B. wenn ein schaltbarer Abschnitt aus ist): Abstand nicht doppelt */
+.neu .neu-abschnitt--weiss + .neu-abschnitt--weiss,
+.neu .neu-abschnitt--sand + .neu-abschnitt--sand { padding-top: 0; }
+
+/* ---------- Fokus: sichtbar, auf Dunkel hell (Farbe kommt aus der Fläche) ---------- */
+.neu :focus-visible { outline-color: var(--neu-fokus); }
+
+/* ---------- Kopf eines Abschnitts ---------- */
+.neu .neu-kopf { max-width: 46rem; margin: 0 0 clamp(28px, 1rem + 3.4vw, 64px); }
+.neu .neu-kopf:last-child { margin-bottom: 0; }
+.neu .neu-kopf--mitte { margin-inline: auto; text-align: center; }
+.neu .neu-kopf--mitte .neu-lead { margin-inline: auto; }
+
+.neu .neu-eyebrow {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neu-akzent-text);
+}
+.neu .neu-h1,
+.neu .neu-h2 {
+  margin: 0 0 0.5em;
+  font-family: var(--font-head);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--neu-text);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.neu .neu-h1 { font-size: var(--neu-h1); line-height: 1.08; }
+/* Lange Wörter in Abschnittsüberschriften trennt der Browser nach Silben (wie im Bestand), erst danach bricht er hart */
+.neu .neu-h2 { font-size: var(--neu-h2); line-height: 1.14; -webkit-hyphens: auto; hyphens: auto; }
+.neu .neu-lead {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: var(--neu-lead);
+  line-height: 1.6;
+  color: var(--neu-text-leise);
+}
+
+/* ---------- Eigener Fließtext ---------- */
+.neu .neu-text { max-width: var(--neu-mass); font-size: var(--neu-fliess); line-height: var(--neu-zeile); color: var(--neu-text); }
+.neu .neu-text p { margin: 0 0 var(--neu-absatz); }
+.neu .neu-text > :last-child { margin-bottom: 0; }
+
+/* ---------- Leiser Link mit Pfeil (alles neben dem einen Knopf eines Abschnitts) ---------- */
+.neu .neu-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  min-height: 44px;
+  padding-block: 8px;
+  font-size: var(--neu-fliess);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--neu-akzent-text);
+  text-decoration: none;
+}
+/* Pfeil als Maske (kein Textzeichen, wird nicht vorgelesen), Farbe = Schriftfarbe */
+.neu .neu-link::after {
+  content: '';
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 200ms ease;
+}
+.neu .neu-link:hover,
+.neu .neu-link:focus-visible { text-decoration: underline; text-decoration-thickness: 0.08em; text-underline-offset: 0.3em; }
+.neu .neu-link:hover::after { transform: translateX(4px); }
+.neu .neu-link--ab::after { transform: rotate(90deg); }
+.neu .neu-link--ab:hover::after { transform: rotate(90deg) translateX(4px); }
+
+/* ---------- Karte: weiß, Radius 20 px, feine Linie statt Schatten ---------- */
+.neu .neu-karte {
+  /* Rollen zurück auf Hell, damit Text, Links und Fokus auch in einer Karte auf Dunkel stimmen */
+  --neu-text: var(--ink);
+  --neu-text-leise: var(--ink-soft);
+  --neu-akzent-text: var(--accent-ink);
+  --neu-licht: var(--accent);
+  --neu-rand: var(--line);
+  --neu-fokus: var(--accent-ink);
+  padding: var(--neu-innen);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--neu-radius);
+  color: var(--neu-text);
+}
+
+/* ---------- Lichtmotiv: Linie und Punkt in Türkis ----------
+ * Die Linie selbst behält ihre Größe (wichtig für den Beobachter), gezeichnet wird ihr ::before per scaleX/scaleY.
+ * Ohne Skript (kein html.js) steht sie fertig da. */
+.neu .neu-linie { display: block; position: relative; width: 100%; height: 2px; border-radius: 2px; }
+.neu .neu-linie::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--neu-licht);
+  transform-origin: 0 50%;
+}
+.neu .neu-linie--senkrecht { width: 2px; height: 100%; }
+.neu .neu-linie--senkrecht::before { transform-origin: 50% 0; }
+.neu .neu-punkt { display: block; flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--neu-licht); }
+
+html.js .neu .neu-linie::before { transform: scaleX(0); transition: transform 700ms var(--neu-kurve); }
+html.js .neu .neu-linie--senkrecht::before { transform: scaleY(0); }
+html.js .neu .neu-punkt { opacity: 0; transform: scale(0.4); transition: opacity 500ms ease 300ms, transform 500ms var(--neu-kurve) 300ms; }
+/* Trägt die Linie selbst .reveal: die globale Verschiebung aufheben, nur das Ziehen bleibt */
+html.js .neu .neu-linie.reveal { opacity: 1; transform: none; transition: none; }
+html.js .neu .neu-linie.is-visible::before,
+html.js .neu .is-visible .neu-linie::before { transform: none; }
+html.js .neu .neu-punkt.is-visible,
+html.js .neu .is-visible .neu-punkt { opacity: 1; transform: none; }
+
+/* Reihenfolge beim Einblenden: style="--neu-i: 1" verzögert um 80 ms je Stufe */
+html.js .neu .reveal { transition-delay: calc(var(--neu-i, 0) * 80ms); }
+
+/* ---------- Aufklapper ohne Skript: <details class="neu-mehr"> ---------- */
+.neu .neu-mehr { border-block: 1px solid var(--neu-rand); color: var(--neu-text); }
+.neu .neu-mehr + .neu-mehr { border-top: 0; }
+.neu .neu-mehr > summary {
+  display: block;                      /* kein list-item: Standard-Dreieck weg (Firefox, Chromium) */
+  position: relative;
+  min-height: 48px;
+  padding: 14px 44px 14px 0;
+  font-size: var(--neu-fliess);
+  font-weight: 650;
+  line-height: 1.4;
+  cursor: pointer;
+  list-style: none;
+  border-radius: 6px;
+}
+.neu .neu-mehr > summary::-webkit-details-marker { display: none; } /* Safari */
+/* Zeichen rechts: Winkel nach unten, offen nach oben */
+.neu .neu-mehr > summary::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 24px;
+  width: 10px;
+  height: 10px;
+  margin-top: -8px;
+  border-right: 2px solid var(--neu-akzent-text);
+  border-bottom: 2px solid var(--neu-akzent-text);
+  transform: rotate(45deg);
+  transition: transform 200ms ease;
+}
+.neu .neu-mehr[open] > summary::after { transform: translateY(5px) rotate(225deg); }
+.neu .neu-mehr > summary:hover { color: var(--neu-akzent-text); }
+.neu .neu-mehr > summary:focus-visible { outline-offset: 2px; }
+.neu .neu-mehr__inhalt {
+  max-width: var(--neu-mass);
+  padding: 2px 0 var(--neu-absatz);
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+}
+.neu .neu-mehr__inhalt p { margin: 0 0 var(--neu-absatz); }
+.neu .neu-mehr__inhalt > :last-child { margin-bottom: 0; }
+
+/* ---------- Platzhalter, solange ein Baupaket fehlt (entfällt mit der Schlussmontage) ---------- */
+.neu [data-neu-fehlt] {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+  border-bottom: 1px dashed var(--line);
+}
+.neu [data-neu-fehlt]::after { content: ': ' attr(data-neu-fehlt); }
+
+/* ---------- Weniger Bewegung: alles steht fertig da (Übergänge schaltet global.css ab) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html.js .neu .neu-linie::before,
+  html.js .neu .neu-punkt,
+  .neu .neu-link:hover::after { transform: none; }
+  html.js .neu .neu-punkt { opacity: 1; }
+  .neu .neu-link--ab::after,
+  .neu .neu-link--ab:hover::after { transform: rotate(90deg); }
+}
