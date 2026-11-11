@@ -127,11 +127,12 @@ html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
   .neu .nr-station { display: block; padding-top: 36px; }
   .neu .nr-station__marke { left: 0; top: -5px; }
   .neu .nr-station__name { margin-bottom: 12px; }
-  .neu .nr-station__frage { -webkit-hyphens: auto; hyphens: auto; }
+  /* schmale Spalten: keine Silbentrennung (zerriss in Firefox Wörter), nur der Notanker gegen Überlauf */
+  .neu .nr-station__frage { overflow-wrap: break-word; }
   /* nur die Linie oben: offene Antworten sind verschieden lang, eine Linie darunter stünde je Spalte auf anderer Höhe */
   .neu .nr-reise .nr-station__mehr { margin-top: 20px; border-bottom: 0; }
   .neu .nr-reise .nr-station__mehr > summary { font-size: max(17px, 0.94rem); }
-  .neu .nr-reise .nr-station__mehr .neu-mehr__inhalt { -webkit-hyphens: auto; hyphens: auto; }
+  .neu .nr-reise .nr-station__mehr .neu-mehr__inhalt { overflow-wrap: break-word; }
 
   .neu .nr-reise .nr-reise__senk { display: none; }
   .neu .nr-reise .nr-reise__waag { display: block; position: absolute; left: 6px; right: 6px; top: var(--nr-oben); width: auto; }
@@ -217,6 +218,12 @@ html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
   margin: clamp(28px, 1rem + 2.6vw, 56px) 0 0;
   padding: 0;
   list-style: none;
+}
+/* Sehr schmal bricht der längste Link um: als Textblock gesetzt, damit der Pfeil hinter dem letzten Wort steht
+   statt abgesetzt am rechten Rand (wie im Fuß der Pakete) */
+@media (max-width: 419px) {
+  .neu .nr-vorteile__mehr .neu-link { display: inline-block; text-wrap: balance; }
+  .neu .nr-vorteile__mehr .neu-link::after { display: inline-block; margin-left: 0.4em; vertical-align: -0.16em; }
 }
 @media (min-width: 700px) {
   .neu .nr-vorteile { grid-template-columns: repeat(2, minmax(0, 1fr)); }

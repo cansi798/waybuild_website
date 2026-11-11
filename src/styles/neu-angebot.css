@@ -3,7 +3,7 @@
  * Geladen von NeuVergleich.astro und NeuPakete.astro (jede Komponente lädt die Datei selbst).
  * Alles steht unter .neu und trägt die Vorsilbe na-; nichts hängt von der Reihenfolge der Stylesheets ab.
  * Die eingebundenen Paket-Bausteine (PaketKarten, KomplettKarte, EinmaligDazu) behalten ihr Aussehen:
- * hier stehen nur Hüllen und Abstände, keine Regel greift in die Bausteine hinein.
+ * hier stehen nur Hüllen und Abstände. Einzige Regel in einem Baustein: die Trefferhöhe von „Einzeln buchen“ (44 px).
  * Hausregeln eingehalten; Bewegung nur über .reveal aus dem Fundament (opacity, transform).
  * ============================================================================================================ */
 
@@ -119,9 +119,8 @@
     text-align: left;
     vertical-align: top;
     font-weight: 400;
+    /* keine Silbentrennung (zerriss in Firefox Wörter); overflow-wrap ist nur der Notanker gegen Überlauf */
     overflow-wrap: break-word;
-    -webkit-hyphens: auto;
-    hyphens: auto;
     /* kurze Zellentexte: gleich lange Zeilen, kein einzelnes Wort in der letzten Zeile (auch im Safari-Kern) */
     text-wrap: balance;
   }
@@ -204,6 +203,8 @@
  * was sich durch die Reihenfolge auf /neu/ ändert (Extras stehen hier unter den Karten).
  * ============================================================================================================ */
 .neu .na-pakete__dazu { margin-top: clamp(28px, 4vw, 40px); }
+/* Trefferfläche: „Einzeln buchen“ ist im Baustein 36 px hoch, auf /neu/ gelten mindestens 44 px (Aussehen bleibt) */
+.neu .na-pakete__dazu .ed__einzeln { min-height: 44px; }
 
 /* Der Fuß behält den Abstand von .na-fuss (wie im Vergleich); der untere Außenabstand des Extras-Bausteins
    fällt mit ihm zusammen, zählt also nicht doppelt.

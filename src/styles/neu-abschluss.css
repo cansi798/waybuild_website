@@ -10,10 +10,12 @@
 .neu .nb-beispiele { display: grid; grid-template-columns: minmax(0, 1fr); }
 /* Der Kopf des Abschnitts bringt den Abstand schon mit: den eigenen Außenabstand der Kartenliste hier aufheben */
 .neu .nb-beispiele .refs4 { margin-top: 0; gap: var(--neu-luecke); }
-/* Messhinweis linksbündig am Raster statt mittig */
+/* Messhinweis linksbündig am Raster statt mittig; leise, aber wie das übrige Kleingedruckte der Seite nie unter 17 px */
 .neu .nb-beispiele .ref4__messung {
   max-width: var(--neu-mass);
   margin: clamp(24px, 1rem + 1.6vw, 36px) 0 0;
+  font-size: max(17px, 0.95rem);
+  line-height: var(--neu-zeile);
   text-align: left;
 }
 /* Saubere Umbrüche in Karten und Messhinweis: kein Trennpunkt am Zeilenende, kein einzelnes Wort in der letzten Zeile */

@@ -43,13 +43,16 @@
    text-wrap: balance) und kein Wort allein in der letzten Zeile landet. Gemessen in Schrifthöhen: „Aufmerksamkeit“ 8,5,
    „Aufmerksamkeit bis“ 10,1 bis 10,3, „Aufmerksamkeit bis zum“ 12,8, die ersten vier Wörter 16.
    Telefon: fünf kurze Zeilen (Zeilenbreite 8,7 bis 9,9 Schrifthöhen). Die Mindesthöhe hält den Platz der Zeilen frei,
-   solange die Hausschrift noch lädt: Darunter verschiebt sich nichts. */
+   solange die Hausschrift noch lädt: Darunter verschiebt sich nichts.
+   Die Größe fällt an keinem Umbruchpunkt unter die Abschnittsüberschriften: Die fünf Zeilen bleiben (bei 2,4rem gedeckelt,
+   höchstens 9,9 Schrifthöhen breit), bis drei Zeilen in derselben Größe passen (584 px). */
 .neu .nh-hero .nh-titel {
   margin: 0 0 clamp(16px, 2.4vw, 26px);
   min-height: 5.4em;
-  font-size: min(max(var(--neu-h1), calc((100vw - 32px) / 9.9)), calc((100vw - 48px) / 8.7));
+  max-width: 9.9em;
+  font-size: min(max(var(--neu-h1), calc((100vw - 32px) / 9.9)), calc((100vw - 48px) / 8.7), 2.4rem);
 }
-.neu .nh-hero .nh-unter { max-width: 34em; text-wrap: pretty; }
+.neu .nh-hero .nh-unter { max-width: var(--neu-mass); text-wrap: pretty; }
 
 /* Preiszeile: Betrag hell, Zusatz klein dahinter */
 .neu .nh-preis {
@@ -201,13 +204,16 @@ html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-fle
 .neu .nh-zeichnung .nh-lichtpunkt { transform-box: fill-box; transform-origin: center; }
 
 /* Fünf Stationen unter der Bühne; .ist-an hebt eine Station hervor (setzt später die 3D-Bühne im Takt) */
+/* Telefon: drei und zwei in einer Zeile. Die Breite in Schrifthöhen hält es bei drei je Zeile; bei stark vergrößerten
+   Textabständen (WCAG 1.4.12) brechen die Stationen weiter um, statt rechts aus dem Band zu laufen. */
 .neu .nh-stationen {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 6px 22px;
+  max-width: 21.5em;
   margin: calc(var(--nh-luft) - var(--nh-band)) 0 0;
   padding: 0 var(--nh-kante);
   list-style: none;
@@ -233,15 +239,16 @@ html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-fle
   .neu .nh-handlung .btn { width: 100%; }
 }
 
-/* ---------- Ab 480 px: Überschrift in drei Zeilen (Zeilenbreite mindestens 13 Schrifthöhen) ---------- */
-@media (min-width: 480px) {
-  .neu .nh-hero .nh-titel { min-height: 3.24em; font-size: min(var(--neu-h1), calc((100vw - 32px) / 13.6)); }
+/* ---------- Ab 584 px: Überschrift in drei Zeilen (Zeilenbreite 13 bis 15 Schrifthöhen; ab 16 fiele sie in zwei),
+   gedeckelt bei 3rem: so groß wird sie auch neben der Bühne (ab 1000 px) ---------- */
+@media (min-width: 584px) {
+  .neu .nh-hero .nh-titel { min-height: 3.24em; max-width: 15em; font-size: min(var(--neu-h1), calc((100vw - 32px) / 13.6), 3rem); }
 }
 
 /* ---------- Ab 560 px: Stationen in einer Zeile, rechts unter der Auftragsverwaltung ---------- */
 @media (min-width: 560px) {
   .neu .nh-zeichnung { --nh-strich: 2.2px; }
-  .neu .nh-stationen { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; }
+  .neu .nh-stationen { justify-content: flex-end; gap: 4px 20px; max-width: none; }
   /* Stationen stehen rechts: der Knopf wechselt an die linke Ecke */
   .neu .nh-knopf3d { right: auto; left: calc(var(--nh-kante) - 7px); }
 }
@@ -259,15 +266,19 @@ html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-fle
 /* ---------- Ab 1000 px: Text links, Bild rechts bis an den Fensterrand ---------- */
 @media (min-width: 1000px) {
   .neu .neu-abschnitt.nh-hero {
-    --nh-rand: clamp(28px, 6.4vh, 68px);
+    /* niedrige Fenster: Der Rand schrumpft unter 770 px Höhe schneller, damit das Band auf den ersten Bildschirm passt */
+    --nh-rand: clamp(28px, min(6vh, 37vh - 238px), 68px);
     --nh-kante: 4.5%;
     --nh-band: 6.67%;
     --nh-luft: 14px;
     --nh-inhalt: min(100% - 32px, var(--neu-breite));   /* Prozent: gilt erst in der Spaltenangabe des Rasters */
+    /* Anteil der Textspalte an der Inhaltsbreite: so breit, dass die Überschrift in drei Zeilen größer bleibt als die
+       Abschnittsüberschriften; die Bühne gewinnt ihre Breite über den Rand bis zur Fensterkante */
+    --nh-teil: 0.6;
     padding-block: var(--nh-rand);
   }
   .neu .nh-raster {
-    grid-template-columns: minmax(16px, 1fr) calc(var(--nh-inhalt) * 0.54) calc(var(--nh-inhalt) * 0.46) minmax(16px, 1fr);
+    grid-template-columns: minmax(16px, 1fr) calc(var(--nh-inhalt) * var(--nh-teil)) calc(var(--nh-inhalt) * (1 - var(--nh-teil))) minmax(16px, 1fr);
     gap: 0;
     align-items: center;
     width: auto;
@@ -275,7 +286,7 @@ html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-fle
   }
   .neu .nh-text { grid-column: 2; }
   /* Überschrift: drei Zeilen in der Textspalte; der Teiler lässt gut 2 % Luft, auch für die Breite einer Bildlaufleiste */
-  .neu .nh-hero .nh-titel { font-size: min(var(--neu-h1), calc(min(100vw - 32px, var(--neu-breite)) * 0.54 / 13.2)); }
+  .neu .nh-hero .nh-titel { font-size: min(var(--neu-h1), calc(min(100vw - 32px, var(--neu-breite)) * var(--nh-teil) / 13.2)); }
   /* Bild: füllt den Rest samt Rand; die Breite ist so gedeckelt, dass das Band unter der Kappe bleibt */
   .neu .nh-bild {
     grid-column: 3 / -1;
@@ -288,11 +299,11 @@ html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-fle
   .neu .nh-stationen { display: grid; grid-template-columns: repeat(3, auto); justify-content: end; gap: 6px 22px; }
 }
 /* Breite Bühne (ab rund 510 px): alle fünf Stationen in einer Zeile */
-@media (min-width: 1180px) and (min-height: 560px) {
+@media (min-width: 1300px) and (min-height: 560px) {
   .neu .nh-stationen { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; }
 }
-/* Bis 1279 px füllt die eine Zeile die Bühnenbreite fast ganz: der Knopf steht eine Zeile tiefer, unter der ersten Station */
-@media (min-width: 1180px) and (max-width: 1279px) and (min-height: 560px) {
+/* Bis 1419 px füllt die eine Zeile die Bühnenbreite fast ganz: der Knopf steht eine Zeile tiefer, unter der ersten Station */
+@media (min-width: 1300px) and (max-width: 1419px) and (min-height: 560px) {
   .neu .nh-knopf3d { bottom: auto; top: 100%; }
 }
 

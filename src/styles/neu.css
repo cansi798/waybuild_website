@@ -9,7 +9,7 @@
  *   Abschnitt    <Abschnitt id titel eyebrow? lead? flaeche? mitte?>   (src/components/neu/Abschnitt.astro)
  *                .neu-abschnitt + .neu-abschnitt--weiss | --sand | --dunkel   (ohne die Komponente, z. B. im Hero)
  *   Kopf         .neu-kopf (mittig: .neu-kopf--mitte) mit .neu-eyebrow, .neu-h2, .neu-lead; Hero-Überschrift: .neu-h1
- *   Fließtext    .neu-text                 eigener Text: mind. 17 px, Zeilenhöhe 1,7, Absätze 20 px, höchstens rund 62 Zeichen
+ *   Fließtext    .neu-text                 eigener Text: mind. 17 px, Zeilenhöhe 1,7, Absätze 20 px, höchstens rund 62 Zeichen (48ch)
  *   Leiser Link  a.neu-link                Textlink mit Pfeil (Sprung nach unten: .neu-link--ab), Trefferfläche 44 px
  *   Karte        .neu-karte                weiß, Radius 20 px, feine Linie statt Schatten (auch auf Dunkel weiß)
  *   Lichtmotiv   .neu-linie                Linie, zieht sich einmal von links (senkrecht: .neu-linie--senkrecht, von oben)
@@ -30,7 +30,13 @@
  * REGELN: nichts hier darf von der Reihenfolge der Stylesheets abhängen (deshalb alles mit .neu davor und keine Regeln
  *   für nackte Elemente wie h2 oder p; die eingebundenen Paket- und Beispielkarten behalten so ihr Aussehen). Farben und
  *   Maße über die Variablen. Kein :has(), kein scroll-snap, kein content-visibility; Bewegung nur opacity und transform.
+ *   Einzige Regel außerhalb von .neu: der Platzhalter der Telefon-Fußleiste am Seitenrahmen (gleich unten).
  * ============================================================================================================ */
+
+/* Seitenrahmen: /neu/ hat keine feste Telefon-Fußleiste (hideMobileCta). Ihr Platzhalter unter der Fußzeile (global.css,
+   unter 960 px) entfiele sonst nicht und stünde als leeres Band am Seitenende. Als Variable gesetzt, damit die Reihenfolge
+   der Stylesheets keine Rolle spielt. Diese Datei wird nur auf /neu/ geladen. */
+body { --stickybar-h: 0px; }
 
 .neu {
   /* Farben: eine Akzentfarbe (Türkis), Flächen Weiß, Sand, Dunkel */
@@ -46,7 +52,8 @@
   --neu-fliess: 1.0625rem;                                  /* 17,5 … 19 px, nie unter 17 px */
   --neu-zeile: 1.7;
   --neu-absatz: 20px;
-  --neu-mass: 62ch;                                         /* Zeilenlänge */
+  /* Zeilenlänge: 1ch ist die Breite der Null; im Fließtext kommen auf 1ch rund 1,3 Zeichen. 48ch sind im Mittel rund 61 Zeichen. */
+  --neu-mass: 48ch;
 
   /* Raum */
   --neu-abstand: clamp(64px, 38.9px + 7.86vw, 152px);       /* Abschnitt oben und unten: 64 px (320) … 152 px (1440) */
@@ -62,7 +69,7 @@
   /* Rollen je Fläche (hier: hell). Dunkel und Karte setzen sie neu, alles darin folgt von selbst. */
   --neu-text: var(--ink);
   --neu-text-leise: var(--ink-soft);
-  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell immer das dunklere #006b68 */
+  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell: nur das dunklere #006b68 */
   --neu-licht: var(--accent);            /* Punkt und Linie */
   --neu-rand: var(--line);               /* feine Linie */
   --neu-fokus: var(--accent-ink);        /* Fokusrahmen */
@@ -118,8 +125,9 @@
   overflow-wrap: break-word;
 }
 .neu .neu-h1 { font-size: var(--neu-h1); line-height: 1.08; }
-/* Lange Wörter in Abschnittsüberschriften trennt der Browser nach Silben (wie im Bestand), erst danach bricht er hart */
-.neu .neu-h2 { font-size: var(--neu-h2); line-height: 1.14; -webkit-hyphens: auto; hyphens: auto; }
+/* Keine Silbentrennung: Sie zerriss in Firefox kurze Wörter. Alle Überschriften passen ab 320 px wortweise in die Zeile;
+   overflow-wrap (oben) bleibt der Notanker für sehr große Textabstände. */
+.neu .neu-h2 { font-size: var(--neu-h2); line-height: 1.14; }
 .neu .neu-lead {
   max-width: var(--neu-mass);
   margin: 0;
@@ -207,6 +215,8 @@ html.js .neu .is-visible .neu-punkt { opacity: 1; transform: none; }
 
 /* Reihenfolge beim Einblenden: style="--neu-i: 1" verzögert um 80 ms je Stufe */
 html.js .neu .reveal { transition-delay: calc(var(--neu-i, 0) * 80ms); }
+/* Tastatur: Ein Block, in dem der Fokus steht, ist sofort ganz da (sonst säße der Fokusrahmen auf einem blassen Element) */
+html.js .neu .reveal:focus-within { opacity: 1; transform: none; transition-duration: 0s; transition-delay: 0s; }
 
 /* ---------- Aufklapper ohne Skript: <details class="neu-mehr"> ---------- */
 .neu .neu-mehr { border-block: 1px solid var(--neu-rand); color: var(--neu-text); }

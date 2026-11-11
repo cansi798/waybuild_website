@@ -25,6 +25,9 @@ import '../../styles/neu.css';
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
 const V_DESCRIPTION = `Website, E-Mail und Google-Profil in zwei festen Paketen ab ${euro(aboPreisAb())} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
 
+// hideMobileCta (unten am Seitenrahmen): Die feste Telefon-Fußleiste entfällt auf /neu/. Sie läge über dem Hauptknopf des Hero
+// und wäre ein zweiter Knopf mit demselben Ziel (Gestaltungsregel: eine Handlung je Bildschirm, keine klebenden Elemente).
+
 // Schalter: 3D-Bühne, Beispiele und Fragen lassen sich mit einer Zeile abschalten
 const ZEIGE = { hero3d: true, beispiele: true, fragen: true };
 
@@ -39,7 +42,7 @@ const links: NeuLinks = {
 };
 ---
 
-<BaseLayout title={V_TITEL} description={V_DESCRIPTION} noindex thema="besucherreise">
+<BaseLayout title={V_TITEL} description={V_DESCRIPTION} noindex thema="besucherreise" hideMobileCta>
   <div class="neu">
     <NeuHero links={links} dreiD={ZEIGE.hero3d} />
     <NeuKundenreise links={links} />
