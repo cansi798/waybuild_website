@@ -1,0 +1,29 @@
+---
+// Zweite Startseite /neu/, Kapitel „Pakete“ (Can, Sitzung 11.11.2026). Kopf und Schlusszeile lauten wie auf der heutigen
+// Startseite. Preise und Inhalte kommen ausschließlich aus den vorhandenen Bausteinen (unverändert eingebunden):
+// PaketKarten (bringt das Fenster „Direkt buchen“ genau einmal mit), KomplettKarte (#komplettpaket), EinmaligDazu (#einmalig).
+// Kein eigener Knopf: Die Handlung ist „Direkt buchen“ auf den Karten. Kopf linksbündig wie im Vergleich darüber.
+// Abstände nur über die Hülle und den Fuß in neu-angebot.css; die Bausteine selbst bleiben unberührt.
+import '../../../styles/neu-angebot.css';
+import Abschnitt from '../Abschnitt.astro';
+import type { NeuLinks } from '../vertrag';
+import PaketKarten from '../../pakete/PaketKarten.astro';
+import KomplettKarte from '../../pakete/KomplettKarte.astro';
+import EinmaligDazu from '../../pakete/EinmaligDazu.astro';
+import { LAUFZEIT_HINWEIS, B2B_HINWEIS } from '../../../config/pakete-abo';
+
+interface Props { links: NeuLinks }
+const { links } = Astro.props;
+---
+
+<Abschnitt id="pakete" flaeche="weiss" eyebrow="Pakete" titel="Zwei Pakete. Feste Monatspreise." lead="Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.">
+  <PaketKarten details={false} />
+  <KomplettKarte />
+  <div class="na-pakete__dazu">
+    <EinmaligDazu id="einmalig" />
+  </div>
+  <div class="na-fuss na-fuss--pakete reveal">
+    <a class="neu-link" href={links.preise}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a>
+    <p class="na-hinweis">{LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+  </div>
+</Abschnitt>

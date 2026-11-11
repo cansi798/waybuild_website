@@ -1,0 +1,224 @@
+/* ============================================================================================================
+ * Zweite Startseite /neu/ – Paket „Angebot“: Vergleich (#vergleich) und Pakete (#pakete). Can, Sitzung 11.11.2026.
+ * Geladen von NeuVergleich.astro und NeuPakete.astro (jede Komponente lädt die Datei selbst).
+ * Alles steht unter .neu und trägt die Vorsilbe na-; nichts hängt von der Reihenfolge der Stylesheets ab.
+ * Die eingebundenen Paket-Bausteine (PaketKarten, KomplettKarte, EinmaligDazu) behalten ihr Aussehen:
+ * hier stehen nur Hüllen und Abstände, keine Regel greift in die Bausteine hinein.
+ * Hausregeln eingehalten; Bewegung nur über .reveal aus dem Fundament (opacity, transform).
+ * ============================================================================================================ */
+
+/* ---------- Schluss beider Abschnitte: leiser Hinweis und ein leiser Link, am Raster ausgerichtet ---------- */
+/* Kleingedrucktes: leise, aber nie unter 17 px */
+.neu .na-hinweis {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: max(17px, 0.95rem);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text-leise);
+  text-wrap: pretty;
+}
+/* Telefon: untereinander, linksbündig. Breit: Hinweis links, Link an der rechten Kante des Rasters. */
+.neu .na-fuss {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  margin-top: clamp(28px, 1rem + 2.4vw, 48px);
+}
+@media (min-width: 900px) {
+  .neu .na-fuss--vergleich {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 48px;
+  }
+}
+
+/* ============================================================================================================
+ * Vergleich. Zwei Fassungen desselben Inhalts: unter 900 px vier Karten, ab 900 px eine Tabelle.
+ * Die jeweils andere steht auf display: none und ist damit auch für Vorleseprogramme nicht vorhanden.
+ * ============================================================================================================ */
+.neu .na-vgl__tafel { display: none; }
+
+/* ---------- Karten (Telefon und Tablet): eine je Anbieter-Art, „waybuild“ zuerst ---------- */
+.neu .na-vgl__karten {
+  display: grid;
+  gap: var(--neu-luecke);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.neu .na-vgl__karte {
+  margin: 0;
+  padding: var(--neu-innen);
+  background: var(--white);
+  border: 1px solid var(--neu-rand);
+  border-radius: var(--neu-radius);
+}
+/* Hervorhebung wie in der Tabelle: feine türkise Linie und türkiser Name, kein Schatten */
+.neu .na-vgl__karte--wir { border-color: var(--accent-mid); }
+.neu .na-vgl__name {
+  margin: 0;
+  padding-bottom: 18px;
+  font-family: var(--font-head);
+  font-size: var(--neu-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--neu-text);
+  border-bottom: 1px solid var(--neu-rand);
+  text-wrap: balance;
+}
+.neu .na-vgl__karte--wir .na-vgl__name { color: var(--neu-akzent-text); }
+.neu .na-vgl__liste { margin: 0; padding: 0; }
+.neu .na-vgl__paar { padding-block: 15px; border-bottom: 1px solid var(--neu-rand); }
+.neu .na-vgl__paar:last-child { padding-bottom: 0; border-bottom: 0; }
+/* Frage als leise Zeile über der Antwort, nie unter 17 px */
+.neu .na-vgl__paar dt {
+  margin: 0 0 3px;
+  font-size: max(17px, 0.95rem);
+  line-height: 1.5;
+  color: var(--neu-text-leise);
+  text-wrap: balance;
+}
+.neu .na-vgl__paar dd {
+  margin: 0;
+  font-size: var(--neu-fliess);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--neu-text);
+  text-wrap: balance;
+}
+
+/* Zwei nebeneinander: Name und jede Frage liegen in beiden Karten auf einer Höhe (Zeilenzahl kommt aus der Komponente) */
+@media (min-width: 640px) {
+  .neu .na-vgl__karten { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @supports (grid-template-rows: subgrid) {
+    .neu .na-vgl__karte { display: grid; grid-template-rows: subgrid; grid-row: span var(--na-karte-zeilen); row-gap: 0; }
+    .neu .na-vgl__liste { display: grid; grid-template-rows: subgrid; grid-row: span var(--na-liste-zeilen); row-gap: 0; }
+    .neu .na-vgl__name { display: flex; align-items: flex-end; }
+  }
+}
+
+/* ---------- Tabelle (ab 900 px): Fragen als Zeilenköpfe, „waybuild“ als weiße Spalte auf Sand ---------- */
+@media (min-width: 900px) {
+  .neu .na-vgl__karten { display: none; }
+  .neu .na-vgl__tafel { display: block; }
+
+  .neu .na-vgl__tabelle {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    /* bis 1099 px etwas kleinere Schrift (nie unter 17 px): fünf Spalten bleiben ruhig statt gedrängt */
+    font-size: max(17px, 0.95rem);
+    line-height: 1.5;
+    color: var(--neu-text);
+  }
+  .neu .na-vgl__tabelle th,
+  .neu .na-vgl__tabelle td {
+    padding: 22px 10px;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+    overflow-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    /* kurze Zellentexte: gleich lange Zeilen, kein einzelnes Wort in der letzten Zeile (auch im Safari-Kern) */
+    text-wrap: balance;
+  }
+  /* Spaltenbreiten bis 1023 px: Fragen und „waybuild“ fest so breit, dass die längste Frage (200 px) und die
+     längste zweizeilige „waybuild“-Antwort (181 px) in zwei Zeilen passen; die drei anderen teilen sich den Rest */
+  .neu .na-vgl__ecke { width: 12.2rem; }
+  .neu .na-vgl__tabelle thead th.na-vgl__wir { width: 11.7rem; }
+
+  .neu .na-vgl__tabelle thead th {
+    padding-block: 26px 20px;
+    vertical-align: bottom;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--neu-text);
+  }
+  /* feine Linie über jeder Zeile */
+  .neu .na-vgl__tabelle tbody th,
+  .neu .na-vgl__tabelle tbody td { border-top: 1px solid var(--neu-rand); }
+  /* Zeilenkopf bündig am Raster: gilt durch die höhere Gewichtung auch in den breiteren Stufen unten */
+  .neu .na-vgl__tabelle tbody th { padding-left: 0; font-weight: 650; color: var(--neu-text); }
+  .neu .na-vgl__tabelle tbody td { color: var(--neu-text-leise); }
+  .neu .na-vgl__tabelle tbody tr:last-child > * { padding-bottom: 28px; }
+
+  /* „waybuild“: weiße Spalte mit feiner türkiser Linie, oben und unten gerundet */
+  .neu .na-vgl__tabelle .na-vgl__wir {
+    background: var(--white);
+    border-inline: 1px solid var(--accent-mid);
+  }
+  .neu .na-vgl__tabelle thead .na-vgl__wir {
+    border-top: 1px solid var(--accent-mid);
+    border-radius: var(--neu-radius) var(--neu-radius) 0 0;
+    font-size: 1.12rem;
+    color: var(--neu-akzent-text);
+  }
+  .neu .na-vgl__tabelle tbody td.na-vgl__wir { font-weight: 600; color: var(--neu-text); }
+  .neu .na-vgl__tabelle tbody tr:last-child .na-vgl__wir {
+    border-bottom: 1px solid var(--accent-mid);
+    border-radius: 0 0 var(--neu-radius) var(--neu-radius);
+  }
+}
+
+/* Bis 1023 px ist die Spalte der drei anderen schmal: ihr Kopf nutzt die volle Spaltenbreite, damit auch der
+   längste einzeilig bleibt (die Nachbarspalte hält links selbst Abstand) */
+@media (min-width: 900px) and (max-width: 1023px) {
+  .neu .na-vgl__tabelle thead th:not(.na-vgl__wir) { padding-right: 0; }
+}
+/* Ab 1024 px (Tablet quer) feste Anteile (zusammen 100 %) und etwas größere Schrift: jede Frage und jede Antwort
+   der drei anderen Spalten passt in zwei Zeilen (gemessen bei 17,6 px: Frage 207 px, Antwort 154 px, „waybuild“ 187 px) */
+@media (min-width: 1024px) {
+  .neu .na-vgl__tabelle { font-size: 1rem; }
+  .neu .na-vgl__ecke { width: 22.5%; }
+  .neu .na-vgl__tabelle thead th { width: 18.4%; }
+  .neu .na-vgl__tabelle thead th.na-vgl__wir { width: 22.3%; }
+}
+/* Ab 1100 px die volle Schriftgröße und mehr Luft; auch die längste Frage (227 px) bleibt zweizeilig */
+@media (min-width: 1100px) {
+  .neu .na-vgl__tabelle { font-size: var(--neu-fliess); }
+  .neu .na-vgl__tabelle th,
+  .neu .na-vgl__tabelle td { padding-inline: 12px; }
+  .neu .na-vgl__ecke { width: 22.7%; }
+  .neu .na-vgl__tabelle thead th { width: 18.45%; }
+  .neu .na-vgl__tabelle thead th.na-vgl__wir { width: 21.95%; }
+}
+/* Ab 1200 px mehr Luft in den Zellen, Breiten entsprechend nachgezogen */
+@media (min-width: 1200px) {
+  .neu .na-vgl__tabelle th,
+  .neu .na-vgl__tabelle td { padding: 24px 20px; }
+  .neu .na-vgl__tabelle thead th { padding-block: 28px 22px; }
+  .neu .na-vgl__tabelle tbody tr:last-child > * { padding-bottom: 32px; }
+  .neu .na-vgl__ecke { width: 21.8%; }
+  .neu .na-vgl__tabelle thead th { width: 18.7%; }
+  .neu .na-vgl__tabelle thead th.na-vgl__wir { width: 22.1%; }
+}
+
+/* ============================================================================================================
+ * Pakete. Die Bausteine bringen Aussehen und eigene Abstände mit; die Hülle gleicht nur aus,
+ * was sich durch die Reihenfolge auf /neu/ ändert (Extras stehen hier unter den Karten).
+ * ============================================================================================================ */
+.neu .na-pakete__dazu { margin-top: clamp(28px, 4vw, 40px); }
+
+/* Der Fuß behält den Abstand von .na-fuss (wie im Vergleich); der untere Außenabstand des Extras-Bausteins
+   fällt mit ihm zusammen, zählt also nicht doppelt.
+   Im Quelltext steht der Link vor dem Hinweis. Breit rückt er nach rechts, der Hinweis bleibt links am Raster. */
+@media (min-width: 1100px) {
+  .neu .na-fuss--pakete {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 48px;
+  }
+  .neu .na-fuss--pakete .neu-link { order: 1; }
+}
+/* Schmal bricht der lange Link um: als Textblock gesetzt, damit der Pfeil hinter dem letzten Wort steht
+   statt am rechten Rand (drei Klassen, gilt unabhängig von der Reihenfolge der Stylesheets) */
+@media (max-width: 599px) {
+  .neu .na-fuss--pakete .neu-link { display: inline-block; text-wrap: balance; }
+  .neu .na-fuss--pakete .neu-link::after { display: inline-block; margin-left: 0.4em; vertical-align: -0.16em; }
+}

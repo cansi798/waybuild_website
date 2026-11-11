@@ -1,0 +1,20 @@
+---
+// /neu/ Kapitel 7 „Beispiele“ (Sprungziel #beispiele, Fläche Sand, auf der Seite schaltbar über ZEIGE.beispiele).
+// Drei Karten aus dem gemeinsamen Baustein ReferenzKarten (Status-Etikett und Messhinweis wie auf /beispiele/),
+// darunter ein leiser Link. Texte: REFERENZEN in src/config/startseite.ts; Linktext wörtlich wie im Bestand.
+import Abschnitt from '../Abschnitt.astro';
+import ReferenzKarten from '../../referenzen/ReferenzKarten.astro';
+import type { NeuLinks } from '../vertrag';
+import { REFERENZEN } from '../../../config/startseite';
+import '../../../styles/neu-abschluss.css';
+
+interface Props { links: NeuLinks }
+const { links } = Astro.props;
+---
+
+<Abschnitt id="beispiele" titel={REFERENZEN.titel} lead={REFERENZEN.einleitung} flaeche="sand">
+  <div class="nb-beispiele">
+    <ReferenzKarten liste={REFERENZEN.liste.slice(0, 3)} ebene="h3" />
+    <p class="nb-beispiele__weiter"><a class="neu-link" href={links.beispiele}>Alle Beispiele ansehen</a></p>
+  </div>
+</Abschnitt>

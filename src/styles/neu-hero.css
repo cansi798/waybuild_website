@@ -1,0 +1,335 @@
+/* ============================================================================================================
+ * Zweite Startseite /neu/ – Paket 1: Hero mit Bühne (Vorsilbe nh-). Geladen von NeuHero.astro und HeroPoster.astro.
+ *
+ * Aufbau: dunkles Band; ab 1000 px Text links, Bild rechts bis an den Fensterrand; darunter erst Text mit Knopf,
+ *   dann das Bild. Die Bühne hat bei jeder Breite 4:3, die 3D-Fläche (.nh-leinwand) liegt genau über dem Standbild (.nh-poster):
+ *   beim Wechsel verschiebt sich nichts. Sichtbar wird die 3D-Fläche erst mit .ist-3d an der Bühne (setzt der Nachlader).
+ * Ausrichtung: Die Zeichnung ist flacher als 4:3. Am Telefon füllt sie die Bühne in der Breite (bündig mit dem Text),
+ *   ab 1000 px hält sie links und rechts --nh-kante Abstand, weil die Bühne bis an den Fensterrand läuft. Über und unter
+ *   der Zeichnung bleibt ein freies Band (--nh-band); die Beschriftungen rücken dort hinein und stehen so bei jeder
+ *   Breite gleich nah am Rahmen. Die 3D-Bühne hält dieselben Bänder frei.
+ * Drei Stufen: 1 Standbild (steht in jedem Fall), 2 die Zeichnung zeichnet sich einmal selbst (nur CSS, nicht bei „weniger Bewegung“),
+ *   3 die 3D-Bühne (src/scripts/neu-hero3d.ts).
+ * Regeln wie im Fundament: alles unter .neu, nichts hängt von der Reihenfolge der Stylesheets ab (wo eine Fundament-Klasse
+ *   überstimmt wird, steht eine Klasse mehr davor). Hausregeln des Bestands gelten (siehe neu.css).
+ * ============================================================================================================ */
+
+/* ---------- Band ---------- */
+.neu .neu-abschnitt.nh-hero {
+  --nh-rand: clamp(28px, 7vw, 48px);          /* Abstand oben und unten */
+  --nh-kante: 0%;                             /* Rand der Zeichnung links und rechts in der Bühne */
+  --nh-band: 3.62%;                           /* freies Band über und unter der Zeichnung, Anteil der Bildbreite */
+  --nh-luft: 12px;                            /* Abstand der Beschriftungen zum Rahmen der Zeichnung */
+  /* Höchste Höhe des Bands: sichtbares Fenster ohne Kopfzeile und Vorschau-Leiste, gedeckelt bei 820 px */
+  --nh-kappe: min(100vh - var(--header-h) - var(--vorschau-h), 820px);
+  position: relative;
+  overflow: hidden;                           /* das Punktraster läuft über den Rand hinaus */
+  padding-block: var(--nh-rand) calc(var(--nh-rand) + 12px);
+}
+@supports (height: 100svh) {
+  .neu .neu-abschnitt.nh-hero { --nh-kappe: min(100svh - var(--header-h) - var(--vorschau-h), 820px); }
+}
+
+.neu .nh-raster {
+  display: grid;
+  gap: clamp(36px, 9vw, 60px);
+  width: min(100% - 32px, var(--neu-breite));
+  margin-inline: auto;
+}
+
+/* ---------- Text ---------- */
+.neu .nh-text { min-width: 0; }
+/* Überschrift: Die Schriftgröße hängt an der Zeilenbreite, damit der Umbruch in jedem Browser gleich fällt (auch ohne
+   text-wrap: balance) und kein Wort allein in der letzten Zeile landet. Gemessen in Schrifthöhen: „Aufmerksamkeit“ 8,5,
+   „Aufmerksamkeit bis“ 10,1 bis 10,3, „Aufmerksamkeit bis zum“ 12,8, die ersten vier Wörter 16.
+   Telefon: fünf kurze Zeilen (Zeilenbreite 8,7 bis 9,9 Schrifthöhen). Die Mindesthöhe hält den Platz der Zeilen frei,
+   solange die Hausschrift noch lädt: Darunter verschiebt sich nichts. */
+.neu .nh-hero .nh-titel {
+  margin: 0 0 clamp(16px, 2.4vw, 26px);
+  min-height: 5.4em;
+  font-size: min(max(var(--neu-h1), calc((100vw - 32px) / 9.9)), calc((100vw - 48px) / 8.7));
+}
+.neu .nh-hero .nh-unter { max-width: 34em; text-wrap: pretty; }
+
+/* Preiszeile: Betrag hell, Zusatz klein dahinter */
+.neu .nh-preis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 0.7em;
+  margin: clamp(20px, 3vw, 30px) 0 0;
+  font-size: var(--neu-fliess);
+  line-height: 1.5;
+  color: var(--neu-text-leise);
+}
+.neu .nh-preis strong { font-size: 1.24em; font-weight: 700; white-space: nowrap; color: var(--neu-text); }
+.neu .nh-preis small { font-size: 0.85rem; color: var(--dark-soft); }
+
+/* Ein Knopf, daneben der leise Link */
+.neu .nh-handlung {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 28px;
+  margin-top: clamp(16px, 2.2vw, 22px);
+}
+
+/* Drei Stichworte unter einer feinen Linie */
+.neu .nh-stichworte {
+  display: grid;
+  justify-items: start;
+  gap: 7px 26px;
+  margin: clamp(20px, 3vw, 32px) 0 0;
+  padding: clamp(16px, 2vw, 22px) 0 0;
+  border-top: 1px solid var(--neu-rand);
+  list-style: none;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--neu-text-leise);
+}
+.neu .nh-stichworte li { display: inline-flex; align-items: center; gap: 10px; }
+.neu .nh-stichworte li::before { content: ''; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--neu-licht); }
+
+/* ---------- Bild: Beschriftungen, Bühne, Stationen ---------- */
+.neu .nh-bild { position: relative; isolation: isolate; min-width: 0; width: 100%; }
+/* Zeichenfläche: feines Punktraster mit weichem Licht, läuft nach allen Seiten aus (reine Zierde) */
+.neu .nh-bild::before {
+  content: '';
+  position: absolute;
+  inset: -18% -60% -18% -14%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgb(95 224 218 / 9%), transparent) 38% 50% / 76% 100% no-repeat,
+    radial-gradient(rgb(255 255 255 / 13%) 1px, transparent 1.6px) 0 0 / 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 64% 62% at 40% 50%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 64% 62% at 40% 50%, #000 30%, transparent 100%);
+}
+
+.neu .nh-schilder {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  /* Beide Beschriftungen auf einer Grundlinie; bricht das Etikett um (unter 360 px), steht es allein unter der Auftragsverwaltung */
+  align-items: baseline;
+  gap: 6px 16px;
+  margin: 0 0 calc(var(--nh-luft) - var(--nh-band));
+  padding-inline: var(--nh-kante);
+}
+.neu .nh-schild {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--neu-text);
+}
+.neu .nh-schild--rechts { justify-content: flex-end; text-align: right; }
+/* Etikett an der Auftragsverwaltung: Zusatz, nicht im Preis „ab …“ enthalten */
+.neu .nh-etikett {
+  padding: 3px 10px 4px;
+  border: 1px solid var(--neu-akzent-text);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.3;
+  white-space: nowrap;
+  color: var(--neu-akzent-text);
+}
+
+/* Bühne: festes Seitenverhältnis, Standbild und 3D-Fläche deckungsgleich */
+.neu .nh-buehne { position: relative; width: 100%; aspect-ratio: 4 / 3; }
+@supports not (aspect-ratio: 1) {
+  .neu .nh-buehne::before { content: ''; display: block; padding-top: 75%; }
+}
+.neu .nh-poster,
+.neu .nh-leinwand { position: absolute; inset: 0; }
+.neu .nh-poster { inset: 0 var(--nh-kante); }
+.neu .nh-poster { transition: opacity 600ms ease; }
+.neu .nh-leinwand { opacity: 0; pointer-events: none; transition: opacity 450ms ease; }
+.neu .nh-leinwand canvas { display: block; }
+/* Die globale Einblend-Verschiebung gilt für das Standbild nicht: .reveal startet hier nur das Zeichnen (unten) */
+html.js .neu .nh-poster.reveal { opacity: 1; transform: none; transition: opacity 600ms ease; }
+/* Übergabe ohne Helligkeitsloch: erst blendet die 3D-Fläche über dem Standbild ein, dann geht das Standbild */
+html.js .neu .nh-buehne.ist-3d .nh-poster { opacity: 0; transition: opacity 250ms ease 450ms; }
+html.js .neu .nh-buehne.ist-3d .nh-leinwand { opacity: 1; pointer-events: auto; }
+
+/* Knopf Anhalten / Abspielen an der unteren Bühnenecke, auf Höhe der letzten Stationen-Zeile (dort ist Platz frei):
+   nur mit laufender 3D-Bühne, 44 px Trefferfläche, heller Fokusring */
+.neu .nh-knopf3d {
+  position: absolute; right: -7px; bottom: calc(0.595rem - 22px); z-index: 2;
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+  background: none; color: var(--neu-text-leise); cursor: pointer;
+  opacity: 0.75; transition: opacity 200ms ease;
+}
+.neu .nh-knopf3d::before {
+  content: ""; position: absolute; inset: 7px; border-radius: 50%;
+  border: 1px solid var(--neu-rand); background: rgb(0 46 44 / 55%);
+}
+.neu .nh-knopf3d svg { position: relative; fill: currentColor; }
+html.js .neu .nh-buehne.ist-3d ~ .nh-knopf3d:not([hidden]) { display: inline-flex; }
+.neu .nh-knopf3d:hover, .neu .nh-knopf3d:focus-visible { opacity: 1; color: var(--neu-text); }
+.neu .nh-knopf3d:focus-visible { outline: 2px solid var(--neu-fokus); outline-offset: -4px; }
+.neu .nh-knopf3d[data-stand="laeuft"] .nh-knopf3d-los,
+.neu .nh-knopf3d:not([data-stand="laeuft"]) .nh-knopf3d-halt { display: none; }
+/* Sehr schmal: die dritte Station der ersten Zeile reicht bis unter den Knopf, er rückt ein Stück tiefer */
+@media (max-width: 359px) {
+  .neu .nh-knopf3d { bottom: calc(0.595rem - 31px); }
+}
+
+/* Zeichnung: Strichstärke in Einheiten der Zeichnung (732 breit), am Telefon kräftiger, damit rund 1,5 px bleiben */
+.neu .nh-zeichnung {
+  --nh-strich: 3.2px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke-width: var(--nh-strich);
+}
+.neu .nh-zeichnung .nh-dick { stroke-width: calc(var(--nh-strich) * 2.4); }
+.neu .nh-zeichnung .nh-leise { stroke-opacity: 0.5; }
+.neu .nh-zeichnung .nh-punkt { fill: var(--accent-light); stroke: none; }
+.neu .nh-zeichnung .nh-punkt.nh-leise { fill-opacity: 0.5; }
+.neu .nh-zeichnung .nh-ring { fill: none; }
+.neu .nh-zeichnung .nh-glas { fill: var(--accent-light); fill-opacity: 0.045; }
+.neu .nh-zeichnung .nh-bahn { stroke: #c9fffb; }
+.neu .nh-zeichnung .nh-lichtpunkt { transform-box: fill-box; transform-origin: center; }
+
+/* Fünf Stationen unter der Bühne; .ist-an hebt eine Station hervor (setzt später die 3D-Bühne im Takt) */
+.neu .nh-stationen {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 6px 22px;
+  margin: calc(var(--nh-luft) - var(--nh-band)) 0 0;
+  padding: 0 var(--nh-kante);
+  list-style: none;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--neu-text-leise);
+}
+.neu .nh-stationen li { display: inline-flex; align-items: center; gap: 8px; }
+.neu .nh-stationen li::before {
+  content: '';
+  flex: none;
+  box-sizing: border-box;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--neu-licht);
+  border-radius: 50%;
+}
+.neu .nh-stationen li.ist-an { color: var(--neu-text); }
+.neu .nh-stationen li.ist-an::before { background: var(--neu-licht); }
+
+/* ---------- Telefon: Knopf über die ganze Breite ---------- */
+@media (max-width: 479px) {
+  .neu .nh-handlung .btn { width: 100%; }
+}
+
+/* ---------- Ab 480 px: Überschrift in drei Zeilen (Zeilenbreite mindestens 13 Schrifthöhen) ---------- */
+@media (min-width: 480px) {
+  .neu .nh-hero .nh-titel { min-height: 3.24em; font-size: min(var(--neu-h1), calc((100vw - 32px) / 13.6)); }
+}
+
+/* ---------- Ab 560 px: Stationen in einer Zeile, rechts unter der Auftragsverwaltung ---------- */
+@media (min-width: 560px) {
+  .neu .nh-zeichnung { --nh-strich: 2.2px; }
+  .neu .nh-stationen { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; }
+  /* Stationen stehen rechts: der Knopf wechselt an die linke Ecke */
+  .neu .nh-knopf3d { right: auto; left: calc(var(--nh-kante) - 7px); }
+}
+
+/* ---------- 700 bis 999 px: Stichworte in einer Zeile ---------- */
+@media (min-width: 700px) and (max-width: 999px) {
+  .neu .nh-stichworte { display: flex; flex-wrap: wrap; }
+}
+
+/* ---------- 760 bis 999 px: Bild mittig, nicht größer als nötig ---------- */
+@media (min-width: 760px) and (max-width: 999px) {
+  .neu .nh-bild { max-width: 640px; margin-inline: auto; }
+}
+
+/* ---------- Ab 1000 px: Text links, Bild rechts bis an den Fensterrand ---------- */
+@media (min-width: 1000px) {
+  .neu .neu-abschnitt.nh-hero {
+    --nh-rand: clamp(28px, 6.4vh, 68px);
+    --nh-kante: 4.5%;
+    --nh-band: 6.67%;
+    --nh-luft: 14px;
+    --nh-inhalt: min(100% - 32px, var(--neu-breite));   /* Prozent: gilt erst in der Spaltenangabe des Rasters */
+    padding-block: var(--nh-rand);
+  }
+  .neu .nh-raster {
+    grid-template-columns: minmax(16px, 1fr) calc(var(--nh-inhalt) * 0.54) calc(var(--nh-inhalt) * 0.46) minmax(16px, 1fr);
+    gap: 0;
+    align-items: center;
+    width: auto;
+    margin: 0;
+  }
+  .neu .nh-text { grid-column: 2; }
+  /* Überschrift: drei Zeilen in der Textspalte; der Teiler lässt gut 2 % Luft, auch für die Breite einer Bildlaufleiste */
+  .neu .nh-hero .nh-titel { font-size: min(var(--neu-h1), calc(min(100vw - 32px, var(--neu-breite)) * 0.54 / 13.2)); }
+  /* Bild: füllt den Rest samt Rand; die Breite ist so gedeckelt, dass das Band unter der Kappe bleibt */
+  .neu .nh-bild {
+    grid-column: 3 / -1;
+    width: auto;
+    margin-left: clamp(8px, 1.4vw, 20px);
+    max-width: max(440px, min(780px, calc((var(--nh-kappe) - 2 * var(--nh-rand) - 70px) * 1.62)));
+  }
+  .neu .nh-zeichnung { --nh-strich: 2px; }
+  /* Schmale Bühne: Stationen bewusst in zwei Zeilen (3 + 2), rechts unter der Tafel */
+  .neu .nh-stationen { display: grid; grid-template-columns: repeat(3, auto); justify-content: end; gap: 6px 22px; }
+}
+/* Breite Bühne (ab rund 510 px): alle fünf Stationen in einer Zeile */
+@media (min-width: 1180px) and (min-height: 560px) {
+  .neu .nh-stationen { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 20px; }
+}
+/* Bis 1279 px füllt die eine Zeile die Bühnenbreite fast ganz: der Knopf steht eine Zeile tiefer, unter der ersten Station */
+@media (min-width: 1180px) and (max-width: 1279px) and (min-height: 560px) {
+  .neu .nh-knopf3d { bottom: auto; top: 100%; }
+}
+
+/* ---------- Stufe 2: Die Zeichnung zeichnet sich einmal selbst (rund 1,8 s) ----------
+ * Jeder Strich hat pathLength="1": Strichmuster 1 und Versatz 1 → 0 zieht ihn. Punkte und Flächen blenden ein.
+ * Mit Skript wartet das Zeichnen, bis das Standbild zu sehen ist (.reveal / .is-visible aus dem Seitenrahmen);
+ * ohne Skript läuft es gleich beim Laden. Bei „weniger Bewegung“ gilt nichts davon: das Bild steht fertig da. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Beginn und Dauer je Gruppe als eigene Eigenschaften: Die Striche erben sie, keine Regel muss eine andere überstimmen */
+  .neu .nh-zeichnung .nh-z--2 { --nh-ab: 250ms; }
+  .neu .nh-zeichnung .nh-z--3 { --nh-ab: 800ms; }
+  .neu .nh-zeichnung .nh-z--4 { --nh-ab: 950ms; --nh-dauer: 550ms; }
+  .neu .nh-zeichnung .nh-z--5 { --nh-ab: 700ms; }
+  .neu .nh-zeichnung .nh-z--6 { --nh-ab: 1100ms; }
+  .neu .nh-zeichnung .nh-z--7 { --nh-ab: 1300ms; }
+
+  .neu .nh-zeichnung .nh-z > path {
+    stroke-dasharray: 1;
+    animation: nh-zeichnen var(--nh-dauer, 700ms) cubic-bezier(0.45, 0, 0.2, 1) var(--nh-ab, 0ms) both;
+  }
+  .neu .nh-zeichnung .nh-z > .nh-punkt,
+  .neu .nh-zeichnung .nh-z > .nh-ring,
+  .neu .nh-zeichnung .nh-z > .nh-flaeche { stroke-dasharray: none; animation: nh-auf 450ms ease var(--nh-ab, 0ms) both; }
+  .neu .nh-zeichnung .nh-z > .nh-lichtpunkt { animation: nh-licht 500ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--nh-ab, 0ms) both; }
+
+  html.js .neu .nh-poster.reveal:not(.is-visible) .nh-z > * { animation-play-state: paused; }
+}
+@keyframes nh-zeichnen {
+  from { stroke-dashoffset: 1; opacity: 0; }
+  8% { opacity: 1; }
+  to { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes nh-auf {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes nh-licht {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: none; }
+}

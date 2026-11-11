@@ -1,0 +1,29 @@
+---
+// /neu/ Kapitel 8, zweiter Teil „Schluss“ (Sprungziel #abschluss): dunkles Band wie der Hero, die Klammer der Seite.
+// Claim, „Warum waybuild?“ mit drei Sätzen, der eine Knopf und die Zeile darunter. Texte: ABSCHLUSS in
+// src/config/startseite.ts. Das Lichtmotiv endet hier: eine kurze Linie von oben, der Punkt steht über dem Claim.
+// Eigene Hülle statt Abschnitt.astro, weil Linie und Punkt vor der Überschrift stehen; Klassen und Sprungziel wie dort.
+import type { NeuLinks } from '../vertrag';
+import { ABSCHLUSS } from '../../../config/startseite';
+import '../../../styles/neu.css';
+import '../../../styles/neu-abschluss.css';
+
+interface Props { links: NeuLinks }
+const { links } = Astro.props;
+---
+
+<section id="abschluss" class="neu-abschnitt neu-abschnitt--dunkel nb-schluss" aria-labelledby="abschluss-h">
+  <div class="wrap">
+    <div class="nb-schluss__licht" aria-hidden="true">
+      <span class="neu-linie neu-linie--senkrecht reveal"></span>
+      <span class="neu-punkt reveal"></span>
+    </div>
+    <h2 id="abschluss-h" class="neu-h2 nb-schluss__claim reveal">{ABSCHLUSS.titel}</h2>
+    <h3 class="nb-schluss__warum reveal">{ABSCHLUSS.warumTitel}</h3>
+    <div class="nb-schluss__gruende">
+      {ABSCHLUSS.warum.map((satz, i) => <p class="nb-schluss__grund reveal" style={`--neu-i: ${i}`}>{satz}</p>)}
+    </div>
+    <p class="nb-schluss__ruf reveal"><a class="btn btn--primary btn--lg" href={links.bewerten}>{ABSCHLUSS.cta}</a></p>
+    <p class="nb-schluss__hinweis reveal">{ABSCHLUSS.unterCta}</p>
+  </div>
+</section>

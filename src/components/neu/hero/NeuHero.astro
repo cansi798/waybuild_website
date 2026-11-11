@@ -1,0 +1,73 @@
+---
+// Kapitel 1 der zweiten Startseite /neu/ (Paket 1): dunkles Band mit Text und Bühne.
+// Text: die eine h1 der Seite, Unterzeile, Preiszeile, ein Knopf, ein leiser Link, drei Stichworte.
+// Bühne: festes Seitenverhältnis; das Standbild (HeroPoster) steht in jedem Fall, die 3D-Fläche liegt deckungsgleich darüber und
+// wird erst vom Nachlader (src/scripts/neu-hero3d.ts) gefüllt. Ohne Skript und bei „weniger Bewegung“ bleibt das Standbild.
+// Alle Wörter an der Bühne sind normaler Text (lesbar für Vorleseprogramme und Suchmaschinen), nichts steht nur im Bild.
+// Wortlaut: ausschließlich aus src/config (variante, startseite, pakete-abo); der Preis kommt aus aboPreisAb().
+import type { NeuLinks } from '../vertrag';
+import HeroPoster from './HeroPoster.astro';
+import { V_HERO, HERO_KNOPF } from '../../../config/variante';
+import { PREIS_FRUEH, VORTEILE } from '../../../config/startseite';
+import { aboPreisAb, euro, KOMPLETTPAKET } from '../../../config/pakete-abo';
+import '../../../styles/neu.css';
+import '../../../styles/neu-hero.css';
+
+interface Props {
+  links: NeuLinks;
+  /** false: nur Standbild, der Nachlader fasst die Bühne nicht an */
+  dreiD?: boolean;
+}
+const { links, dreiD = true } = Astro.props;
+
+const STICHWORTE = ['Keine Einrichtungsgebühr', 'Hosting in Deutschland', VORTEILE.liste[3].titel];
+---
+
+<section class="neu-abschnitt neu-abschnitt--dunkel nh-hero" aria-labelledby="nh-titel">
+  <div class="nh-raster">
+    <div class="nh-text">
+      <h1 id="nh-titel" class="neu-h1 nh-titel">{V_HERO.titel}</h1>
+      <p class="neu-lead nh-unter">{V_HERO.unter}</p>
+      <p class="nh-preis">
+        <span>{PREIS_FRUEH.vor} <strong>{euro(aboPreisAb())}</strong> {PREIS_FRUEH.nach}</span>
+        <small>{PREIS_FRUEH.zusatz}</small>
+      </p>
+      <div class="nh-handlung">
+        <a class="btn btn--primary btn--lg" href={links.erstberatung}>{HERO_KNOPF}</a>
+        <a class="neu-link neu-link--ab" href={links.pakete}>{PREIS_FRUEH.link}</a>
+      </div>
+      <ul class="nh-stichworte">
+        {STICHWORTE.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+
+    <div class="nh-bild">
+      <div class="nh-schilder">
+        <p class="nh-schild">Website</p>
+        <p class="nh-schild nh-schild--rechts">
+          <span>Auftragsverwaltung</span>
+          <span class="nh-etikett">{KOMPLETTPAKET.label}</span>
+        </p>
+      </div>
+      <div class="nh-buehne" data-hero3d={dreiD ? '' : undefined}>
+        <div class="nh-poster reveal"><HeroPoster /></div>
+        <div class="nh-leinwand" data-hero3d-ziel aria-hidden="true"></div>
+      </div>
+      <ol class="nh-stationen">
+        {KOMPLETTPAKET.ablauf.map((s, i) => <li data-hero3d-station={i}>{s.text}</li>)}
+      </ol>
+      {/* Anhalten / Abspielen der 3D-Bühne: erst sichtbar, wenn sie läuft (start.tsx nimmt "hidden" weg); steht neben den Stationen */}
+      {dreiD && (
+        <button type="button" class="nh-knopf3d" data-hero3d-knopf data-stand="laeuft" hidden>
+          <span class="sr-only" data-hero3d-knopf-text>Animation anhalten</span>
+          <svg class="nh-knopf3d-halt" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"></path></svg>
+          <svg class="nh-knopf3d-los" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4.5 2.2 13 8l-8.5 5.8z"></path></svg>
+        </button>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../../scripts/neu-hero3d.ts';
+</script>

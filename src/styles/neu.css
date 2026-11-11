@@ -250,19 +250,6 @@ html.js .neu .reveal { transition-delay: calc(var(--neu-i, 0) * 80ms); }
 .neu .neu-mehr__inhalt p { margin: 0 0 var(--neu-absatz); }
 .neu .neu-mehr__inhalt > :last-child { margin-bottom: 0; }
 
-/* ---------- Platzhalter, solange ein Baupaket fehlt (entfällt mit der Schlussmontage) ---------- */
-.neu [data-neu-fehlt] {
-  margin: 0;
-  padding: 14px 16px;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  text-align: center;
-  color: var(--ink-soft);
-  background: var(--paper-2);
-  border-bottom: 1px dashed var(--line);
-}
-.neu [data-neu-fehlt]::after { content: ': ' attr(data-neu-fehlt); }
-
 /* ---------- Weniger Bewegung: alles steht fertig da (Übergänge schaltet global.css ab) ---------- */
 @media (prefers-reduced-motion: reduce) {
   html.js .neu .neu-linie::before,

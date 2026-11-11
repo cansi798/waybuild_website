@@ -1,0 +1,157 @@
+/* ============================================================================================================
+ * Zweite Startseite /neu/ – Paket „Beleg und Schluss“ (Vorsilbe nb-): Beispiele, Fragen, Schluss.
+ * Geladen von den drei Komponenten in src/components/neu/abschluss/. Baut auf src/styles/neu.css auf
+ * (Variablen --neu-…, Klassen neu-…). Alles hängt unter .neu und ist so genau gefasst, dass die Reihenfolge der
+ * Stylesheets keine Rolle spielt. Kein :has(), kein scroll-snap, kein content-visibility; Bewegung nur opacity
+ * und transform.
+ * ============================================================================================================ */
+
+/* ---------- Beispiele: drei Karten aus dem Baustein ReferenzKarten, darunter Messhinweis und leiser Link ---------- */
+.neu .nb-beispiele { display: grid; grid-template-columns: minmax(0, 1fr); }
+/* Der Kopf des Abschnitts bringt den Abstand schon mit: den eigenen Außenabstand der Kartenliste hier aufheben */
+.neu .nb-beispiele .refs4 { margin-top: 0; gap: var(--neu-luecke); }
+/* Messhinweis linksbündig am Raster statt mittig */
+.neu .nb-beispiele .ref4__messung {
+  max-width: var(--neu-mass);
+  margin: clamp(24px, 1rem + 1.6vw, 36px) 0 0;
+  text-align: left;
+}
+/* Saubere Umbrüche in Karten und Messhinweis: kein Trennpunkt am Zeilenende, kein einzelnes Wort in der letzten Zeile */
+.neu .nb-beispiele .ref4__branche,
+.neu .nb-beispiele .ref4__messung { text-wrap: balance; }
+.neu .nb-beispiele .ref4__fakten dd { text-wrap: pretty; }
+.neu .nb-beispiele__weiter { margin: 12px 0 0; }
+/* Einleitung in gleich langen Zeilen, damit kein kurzer Rest allein steht (#beispiele ist das Sprungziel dieses Pakets) */
+.neu #beispiele .neu-lead { text-wrap: balance; }
+
+@media (min-width: 700px) {
+  /* Fußzeile: Messhinweis links, Link rechts auf gleicher Höhe */
+  .neu .nb-beispiele { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--neu-luecke); align-items: start; }
+  .neu .nb-beispiele .refs4 { grid-column: 1 / -1; }
+  .neu .nb-beispiele__weiter { margin-top: clamp(14px, 1rem + 0.6vw, 26px); }
+}
+@media (min-width: 700px) and (max-width: 1099px) {
+  /* Zwei Spalten: die dritte Karte stünde allein. Sie geht über die ganze Breite, Bild links, Text rechts.
+     Das Bild steht senkrecht mittig in seiner Fläche und ist so breit wie die Karte darüber. */
+  .neu .nb-beispiele .ref4:nth-child(3):last-child { grid-column: 1 / -1; flex-direction: row; }
+  .neu .nb-beispiele .ref4:nth-child(3):last-child .ref4__bild {
+    flex: 0 0 calc(50% - var(--neu-luecke) / 2);
+    display: flex;
+    align-items: center;
+    padding: 14px;
+  }
+  .neu .nb-beispiele .ref4:nth-child(3):last-child .ref4__bild img { border-radius: 10px; }
+  /* Etikett bleibt unten links auf dem Bild: halbe Bildhöhe (Seitenverhältnis 16:10) aus der Breite der Fläche gerechnet */
+  .neu .nb-beispiele .ref4:nth-child(3):last-child .ref4__etikett {
+    top: 50%;
+    bottom: auto;
+    margin-top: calc((100% - 28px) * 0.3125 - 12px);
+    transform: translateY(-100%);
+  }
+}
+
+/* ---------- Fragen: Aufklapper ohne Skript; am Desktop Überschrift links, Liste rechts ---------- */
+.neu .nb-fragen__liste { max-width: 46rem; }
+/* Fragezeile etwas größer und luftiger als der Standard-Aufklapper */
+.neu .nb-fragen__liste .neu-mehr > summary {
+  min-height: 64px;
+  padding: 19px 48px 19px 0;
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.2rem);
+  line-height: 1.4;
+}
+/* Zweizeilige Fragen in gleich langen Zeilen, kein einzelnes Wort am Ende. Eigener Block, weil Safari den Umbruch
+   direkt in der Beschriftung des Aufklappers nicht ausgleicht. */
+.neu .nb-fragen__frage { display: block; text-wrap: balance; }
+.neu .nb-fragen__liste .neu-mehr > summary::after { top: 32px; right: 12px; }
+/* Antwort: am Telefon über die ganze Breite, ab 600 px mit Rand rechts unter dem Pfeil */
+.neu .nb-fragen__liste .neu-mehr__inhalt { padding: 0 0 26px; color: var(--neu-text); }
+@media (min-width: 600px) {
+  .neu .nb-fragen__liste .neu-mehr__inhalt { padding-right: 48px; }
+}
+.neu .nb-fragen__weiter { margin: clamp(16px, 1rem + 0.6vw, 28px) 0 0; }
+
+@media (min-width: 960px) {
+  /* Kopf und Liste liegen nebeneinander in der Hülle des Abschnitts (#fragen ist das Sprungziel dieses Pakets) */
+  .neu #fragen > .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: var(--neu-luecke);
+    align-items: start;
+  }
+  .neu #fragen > .wrap > .neu-kopf { margin-bottom: 0; }
+  .neu #fragen > .wrap > .nb-fragen { grid-column: 2; }
+  /* Erste Zeile der Liste auf Höhe der Überschrift: die obere Linie liegt an der Oberkante der Großbuchstaben */
+  .neu .nb-fragen__liste { max-width: none; margin-top: 0.35rem; }
+}
+
+/* ---------- Schluss: dunkles Band. Das Lichtmotiv endet hier: kurze Linie von oben, der Punkt steht über dem Claim ---------- */
+/* Die Linie beginnt an der Oberkante des Bandes, deshalb oben kein Innenabstand (Linie, Punkt und Lücke ersetzen ihn) */
+.neu .neu-abschnitt.nb-schluss { padding-top: 0; }
+.neu .nb-schluss__licht {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12px;                         /* Breite des Punkts: die Linie sitzt mittig darüber */
+  margin: 0 0 clamp(22px, 1rem + 1.4vw, 40px);
+}
+.neu .nb-schluss__licht .neu-linie { height: clamp(44px, 26px + 5.4vw, 104px); border-radius: 0 0 2px 2px; }
+/* Erst die Linie, dann der Punkt an ihrem Ende */
+html.js .neu .nb-schluss__licht .neu-punkt { transition-delay: 600ms; }
+
+.neu .nb-schluss .nb-schluss__claim {
+  margin: 0;
+  font-size: clamp(2rem, 1.15rem + 3.9vw, 3.9rem);   /* rund 33 … 70 px */
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+.neu .nb-schluss__warum {
+  margin: clamp(40px, 1.4rem + 4vw, 88px) 0 0;
+  font-family: var(--font-head);
+  font-size: var(--neu-h3);
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--neu-text);
+}
+/* Drei Sätze: je eine feine Linie darüber; am Telefon untereinander, am Desktop drei Spalten */
+.neu .nb-schluss__gruende { display: grid; grid-template-columns: minmax(0, 1fr); margin: clamp(18px, 1rem + 0.8vw, 28px) 0 0; text-align: left; }
+/* Die Linie läuft über die ganze Rasterbreite; nur der Text bleibt im Lesemaß (Innenabstand rechts) */
+.neu .nb-schluss__grund {
+  margin: 0;
+  padding: 18px max(0px, 100% - var(--neu-mass)) 20px 0;
+  border-top: 1px solid var(--neu-rand);
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text-leise);
+  text-wrap: pretty;
+}
+.neu .nb-schluss__ruf { margin: clamp(20px, 1rem + 1vw, 32px) 0 0; }
+/* Der eine Knopf des Kapitels. Am Telefon über die ganze Breite; langer Text darf zweizeilig werden. */
+.neu .nb-schluss__ruf .btn { width: 100%; padding-inline: 1.1em; text-align: center; text-wrap: balance; line-height: 1.3; }
+.neu .nb-schluss__ruf .btn:focus-visible { border-radius: 999px; outline-offset: 4px; }
+.neu .nb-schluss__hinweis {
+  max-width: var(--neu-mass);
+  margin: 16px 0 0;
+  font-size: var(--neu-fliess);
+  line-height: 1.6;
+  color: var(--neu-text-leise);
+  text-wrap: balance;
+}
+
+@media (min-width: 600px) {
+  .neu .nb-schluss__ruf .btn { width: auto; padding-inline: 1.8em; }
+}
+@media (min-width: 1000px) {
+  /* Desktop: mittig gesetzt, die Linie kommt in der Mitte von oben */
+  .neu .neu-abschnitt.nb-schluss { text-align: center; }
+  .neu .nb-schluss__licht { margin-inline: auto; }
+  .neu .nb-schluss__gruende {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(28px, 1rem + 2.2vw, 56px);
+  }
+  /* Drei Spalten auf der Mittelachse der Linie: Text mittig und in gleich langen Zeilen */
+  .neu .nb-schluss__gruende { text-align: center; }
+  .neu .nb-schluss__grund { padding: 22px 0 0; text-wrap: balance; }
+  .neu .nb-schluss__ruf { margin-top: clamp(44px, 1rem + 3.4vw, 72px); }
+  .neu .nb-schluss__hinweis { margin-inline: auto; }
+}
