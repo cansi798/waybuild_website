@@ -1,0 +1,93 @@
+/* KUNDENREISE ALS „BÜHNE“ (Jamil, Talk qh87y3sj #5596/#5598/#5599/#5601/#5602, Variante A, 12.11.2026; Sicherung Tag
+ * vor-kundenreise-buehne-20261112). Ersetzt die Journey-Map mit Kreisen an einer Linie und Glühbirnen-Knöpfen (seit 09.11.).
+ * Markup in src/pages/index.astro (#kundenreise), Bewegung in src/scripts/kundenreise.ts, Texte KUNDENREISE (config/variante.ts).
+ *
+ * Drei Zustände:
+ * 1. Grundform (ohne JS, reduzierte Bewegung): Karten ruhig untereinander, alles sichtbar, Ziel „zufriedener Kunde“ als Abschluss.
+ * 2. .krb--gleiten (Handy und kleine Fenster mit JS): dieselben Karten, jede gleitet einzeln sanft herein (IntersectionObserver).
+ * 3. .krb--buehne (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): der Bereich ist (n − 1) Scroll-Stücke höher als
+ *    der Bildschirm, die Bühne darin bleibt stehen (sticky). Je Stück steht ein Schritt groß in der Mitte (.ist-aktiv), der vorige
+ *    rückt klein und blass nach oben aus (.ist-vorbei), oben füllt sich eine Fortschrittsleiste (kein Verbindungsstrich).
+ *    Zum Schluss der Haken mit „zufriedener Kunde“.
+ * Bewegt werden nur transform und opacity; die Höhe des Bereichs steht von Anfang an fest (kein Layout-Ruckeln).
+ * Farben: Zahl #00807b (4,6 : 1 auf Papier), Schrift Türkis #006b68, Fragen --ink-soft, Ziel Weiß auf #006b68 (6,4 : 1). */
+
+.krb { --krb-n: 6; --krb-linie: #d5e8e6; position: relative; margin-block: clamp(24px, 4vh, 44px) clamp(22px, 4vh, 40px); text-align: left; }
+.krb-leiste { display: none; }
+
+/* ── 1. Grundform: Karten untereinander ── */
+.krb-flaeche { max-width: 760px; }
+.krb-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.krb-karte { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(14px, 3vw, 24px); align-items: start;
+  padding: clamp(20px, 3vw, 30px); border-radius: 20px; background: var(--white); border: 1px solid var(--krb-linie);
+  box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 18px 40px -30px rgb(0 79 76 / 35%); }
+.krb-marke { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.krb-zahl { font-family: var(--font-head); font-weight: 700; font-size: clamp(2.2rem, 7vw, 2.8rem); line-height: 1; letter-spacing: -0.04em;
+  color: #00807b; font-variant-numeric: tabular-nums; }
+.krb-symbol { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #e3f1f0; color: var(--accent-ink); }
+.krb-inhalt { min-width: 0; }
+.krb .krb-name { margin: 0 0 6px; font-size: clamp(1.3rem, 2.6vw, 1.6rem); line-height: 1.2; letter-spacing: -0.015em; color: var(--ink);
+  hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; }
+.krb-frage { margin: 0 0 14px; font-size: 1.04rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.krb-antwort { padding: 12px 14px; border-radius: 14px; background: #f1f8f7; border: 1px solid var(--krb-linie); }
+.krb-antwort__titel { display: flex; align-items: center; gap: 6px; margin: 0 0 4px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; line-height: 1.4; color: var(--accent-ink); }
+.krb-antwort__titel svg { flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.krb-antwort__text { margin: 0; font-size: 0.96rem; line-height: 1.7; color: var(--ink); text-wrap: pretty; }
+.krb-ziel { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 16px 0 0; padding: 18px 20px; border-radius: 20px;
+  background: var(--accent-ink); color: var(--white); font-family: var(--font-head); font-weight: 700; font-size: clamp(1.15rem, 3vw, 1.35rem); line-height: 1.3; }
+.krb-haken { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--white); color: var(--accent-ink); }
+.krb-haken svg { width: 26px; height: 26px; }
+
+/* schmale Handys: Zahl und Symbol nebeneinander über dem Text, damit der Text die ganze Breite hat */
+@media (max-width: 35.99rem) {
+  .krb-karte { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+  .krb-marke { flex-direction: row; gap: 14px; }
+  .krb-symbol { width: 42px; height: 42px; }
+}
+
+/* ── 2. Handy mit JS: jede Karte gleitet einzeln herein ── */
+.krb--gleiten .krb-schritt { opacity: 0; transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
+.krb--gleiten .krb-schritt.ist-da { opacity: 1; transform: none; }
+
+/* ── 3. Bühne am Rechner ── */
+.krb--buehne {
+  --krb-sicht: calc(100svh - var(--kopf-gesamt, 73px) - var(--stapel-unten, 0px));
+  --krb-weg: 62svh; /* Scroll-Stück je Schritt */
+  height: calc(var(--krb-sicht) + (var(--krb-n) - 1) * var(--krb-weg));
+  margin-block: clamp(8px, 2vh, 20px) clamp(8px, 2vh, 20px);
+}
+.krb--buehne .krb-buehne { position: sticky; top: var(--kopf-gesamt, 73px); height: var(--krb-sicht); display: flex; flex-direction: column; overflow: hidden; }
+.krb--buehne .krb-leiste { display: flex; gap: 6px; flex: none; width: min(100% - 32px, 520px); margin: clamp(12px, 3vh, 28px) auto 0; }
+.krb-segment { position: relative; flex: 1; height: 4px; border-radius: 2px; background: var(--krb-linie); overflow: hidden; }
+.krb-segment::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #00807b; transform-origin: left;
+  transform: scaleX(var(--f, 0)); }
+.krb--buehne .krb-flaeche { position: relative; flex: 1; min-height: 0; max-width: 940px; }
+.krb--buehne .krb-schritte { display: block; }
+.krb--buehne .krb-schritt { position: absolute; inset: 0; display: grid; place-items: center; place-content: center; margin: 0; opacity: 0; pointer-events: none;
+  transform: translateY(16%) scale(0.94);
+  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1); }
+.krb--buehne .krb-schritt.ist-aktiv { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.22s; }
+.krb--buehne .krb-schritt.ist-vorbei { opacity: 0; transform: translateY(-34%) scale(0.56); transition-duration: 0.5s, 0.8s; }
+.krb--buehne .krb-karte { grid-template-columns: minmax(0, 1fr); justify-items: center; row-gap: clamp(10px, 2.4vh, 24px); width: 100%; max-width: 46rem;
+  padding: 0 0 clamp(8px, 2vh, 20px); background: none; border: 0; border-radius: 0; box-shadow: none; text-align: center; }
+.krb--buehne .krb-marke { flex-direction: row; gap: clamp(14px, 2vw, 22px); }
+.krb--buehne .krb-zahl { font-size: clamp(4rem, 14vh, 8.5rem); letter-spacing: -0.05em; }
+.krb--buehne .krb-symbol { width: clamp(52px, 8vh, 68px); height: clamp(52px, 8vh, 68px); background: var(--white); border: 1px solid var(--krb-linie);
+  box-shadow: 0 10px 26px -18px rgb(0 79 76 / 45%); }
+.krb--buehne .krb-symbol svg { width: 46%; height: 46%; }
+.krb--buehne .krb-name { margin-bottom: 0.3em; font-size: clamp(2rem, 2.6vw + 1rem, 3.2rem); letter-spacing: -0.03em; color: var(--accent-ink); }
+.krb--buehne .krb-frage { max-width: 34ch; margin: 0 auto clamp(12px, 2.6vh, 26px); font-size: clamp(1.12rem, 0.6vw + 0.9rem, 1.4rem); text-wrap: balance; }
+.krb--buehne .krb-antwort { max-width: 40rem; margin-inline: auto; padding: clamp(14px, 2vh, 20px) clamp(16px, 2vw, 24px); background: var(--white); text-align: left;
+  box-shadow: 0 14px 34px -28px rgb(0 79 76 / 40%); }
+.krb--buehne .krb-antwort__text { font-size: clamp(1rem, 0.3vw + 0.92rem, 1.1rem); }
+/* Ziel: großer Haken, darunter „zufriedener Kunde“ */
+.krb--buehne .krb-ziel { flex-direction: column; gap: clamp(14px, 3vh, 26px); margin: 0; padding: 0; border-radius: 0; background: none; color: var(--accent-ink);
+  font-size: clamp(2rem, 2.6vw + 1rem, 3.2rem); letter-spacing: -0.025em; text-align: center; }
+.krb--buehne .krb-haken { width: clamp(96px, 18vh, 150px); height: clamp(96px, 18vh, 150px); background: var(--accent-ink); color: var(--white);
+  box-shadow: 0 0 0 clamp(10px, 2vh, 16px) rgb(0 107 104 / 12%); transform: scale(0.6); transition: transform 0.8s cubic-bezier(0.3, 1.4, 0.5, 1) 0.2s; }
+.krb--buehne .krb-haken svg { width: 50%; height: 50%; }
+.krb--buehne .krb-ziel.ist-aktiv .krb-haken { transform: none; }
+
+@media (prefers-reduced-motion: reduce) { .krb *, .krb *::after { transition: none !important; animation: none !important; } }

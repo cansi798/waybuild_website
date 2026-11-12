@@ -1,52 +1,94 @@
-// Kundenreise als Journey-Map direkt nach dem Hero (Jamil, Talk qh87y3sj #5184/#5185/#5187, 09.11.2026), Stil in variante-start.css (.kr-*).
-// Antworten statt Leistungen (Jamil, Talk qh87y3sj #5275, 09.11.2026; Sicherung vor-kundenreise-antworten-20261109):
-// - Unter jeder Frage steht im HTML ein Symbol-Knopf (.kr-symbol, hidden, aria-controls → .kr-antwort). Das Skript zeigt die
-//   Knöpfe, klappt alle Antworten zu (.kr-klapp) und öffnet per Klick/Antippen/Enter/Leertaste genau eine (.ist-offen an der
-//   Station, aria-expanded); ein zweiter Klick oder Escape schließt sie, eine andere zu öffnen schließt die vorige. Gleich am PC
-//   und am Handy. Nach dem ersten Öffnen hört das Pulsieren der Symbole auf (.kr-gesehen).
-// - Ohne JS oder bei reduzierter Bewegung bleiben die Knöpfe versteckt und alle Antworten offen (statisch).
-// - Aufbau nur ohne reduzierte Bewegung und mit IntersectionObserver: .kr-bereit (vorher verstecken), sobald die Karte ins Bild
-//   kommt (threshold 0, unten 15 % Rand, damit sie beim Hereinscrollen nie leer ist) einmal .ist-los (die gerade Linie zeichnet
-//   sich, die nummerierten Stationen erscheinen nacheinander, Symbole pulsieren dreimal; Zeiten in CSS). Seit #5334 keine Kurve
-//   mehr, sondern ein ruhiger Weg wie „So gehen wir vor“; die offene Station hebt ihren Kreis hervor (.ist-offen, nur CSS).
-const karte = document.querySelector<HTMLElement>('[data-kundenreise]');
+// Kundenreise als „Bühne“ (Jamil, Talk qh87y3sj #5596/#5598/#5599/#5601/#5602, Variante A, 12.11.2026; Sicherung Tag
+// vor-kundenreise-buehne-20261112). Stil: src/styles/kundenreise.css (.krb-*), Markup: src/pages/index.astro (#kundenreise).
+// Ersetzt die Journey-Map mit Glühbirnen-Knöpfen (die Antworten stehen jetzt immer sichtbar in jedem Schritt).
+// - Rechner (ab 48rem breit und 36rem hoch): .krb--buehne. Der Bereich bekommt per CSS seine feste Höhe (Bildschirm + je Schritt
+//   ein Scroll-Stück), die Bühne darin ist sticky. Hier nur: aus der Scroll-Lage den aktiven Schritt bestimmen (.ist-aktiv,
+//   frühere .ist-vorbei) und die Fortschrittsleiste füllen (--f je Segment). Einmal je Bild (requestAnimationFrame, passiv),
+//   Lagen nur bei Größenänderung gemessen. Bewegung macht CSS (nur transform/opacity).
+// - Handy und kleine Fenster: .krb--gleiten, jede Karte gleitet beim Hereinscrollen einmal herein (IntersectionObserver).
+// - Reduzierte Bewegung oder ohne JS: keine Klasse, alles sofort sichtbar untereinander.
+// Wechselt die Fenstergröße oder die Bewegungs-Einstellung, wird der Zustand neu gesetzt.
+const bereich = document.querySelector<HTMLElement>('[data-kundenreise]');
+const buehne = bereich?.querySelector<HTMLElement>('.krb-buehne');
 
-if (karte) {
-  const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  karte.classList.add('kr-js');
+if (bereich && buehne) {
+  const schritte = Array.from(bereich.querySelectorAll<HTMLElement>('[data-krb-schritt]'));
+  const segmente = Array.from(bereich.querySelectorAll<HTMLElement>('.krb-segment'));
+  const n = schritte.length;
+  bereich.style.setProperty('--krb-n', String(n));
+  const mqRuhig = matchMedia('(prefers-reduced-motion: reduce)');
+  const mqBuehne = matchMedia('(min-width: 48rem) and (min-height: 36rem)');
+  let modus = '';
+  let io: IntersectionObserver | null = null;
+  let oben = 0; // Oberkante des Bereichs (Dokument)
+  let weg = 1; // Scrollweg, auf dem die Bühne steht
+  let klebt = 0; // sticky top der Bühne
+  let aktiv = -1;
+  let geplant = false;
+  const fuellung: string[] = [];
 
-  if (!ruhig) {
-    type Paar = { station: HTMLElement; knopf: HTMLButtonElement };
-    const paare: Paar[] = [];
-    karte.querySelectorAll<HTMLElement>('.kr-station').forEach((station) => {
-      const knopf = station.querySelector<HTMLButtonElement>('.kr-symbol');
-      if (knopf) paare.push({ station, knopf });
-    });
-    const oeffnen = (offen: Paar | null) => {
-      paare.forEach((p) => {
-        const auf = p === offen;
-        p.knopf.setAttribute('aria-expanded', String(auf));
-        p.station.classList.toggle('ist-offen', auf);
+  const messen = () => {
+    oben = bereich.getBoundingClientRect().top + window.scrollY;
+    weg = Math.max(1, bereich.offsetHeight - buehne.offsetHeight);
+    klebt = parseFloat(getComputedStyle(buehne).top) || 0;
+  };
+  const zeigen = () => {
+    geplant = false;
+    if (modus !== 'buehne') return;
+    const p = Math.min(1, Math.max(0, (window.scrollY + klebt - oben) / weg));
+    const k = Math.min(n - 1, Math.floor(p * n));
+    if (k !== aktiv) {
+      aktiv = k;
+      schritte.forEach((s, i) => {
+        s.classList.toggle('ist-aktiv', i === k);
+        s.classList.toggle('ist-vorbei', i < k);
       });
-      if (offen) karte.classList.add('kr-gesehen');
-    };
-    paare.forEach((p) => {
-      p.knopf.hidden = false;
-      p.knopf.addEventListener('click', () => oeffnen(p.station.classList.contains('ist-offen') ? null : p));
-      p.knopf.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && p.station.classList.contains('ist-offen')) { e.preventDefault(); oeffnen(null); }
-      });
+    }
+    segmente.forEach((seg, i) => {
+      const f = Math.min(1, Math.max(0, p * n - i)).toFixed(3);
+      if (fuellung[i] !== f) { fuellung[i] = f; seg.style.setProperty('--f', f); }
     });
-    oeffnen(null);
-    karte.classList.add('kr-klapp');
-  }
+  };
+  const planen = () => {
+    if (geplant || modus !== 'buehne') return;
+    geplant = true;
+    requestAnimationFrame(zeigen);
+  };
 
-  if (!ruhig && 'IntersectionObserver' in window) {
-    karte.classList.add('kr-bereit');
-    const io = new IntersectionObserver((es) => {
-      if (es.some((e) => e.isIntersecting)) { karte.classList.add('ist-los'); io.disconnect(); }
-    }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
-    io.observe(karte);
+  const setzen = () => {
+    const neu = mqRuhig.matches ? 'ruhig' : mqBuehne.matches ? 'buehne' : 'IntersectionObserver' in window ? 'gleiten' : 'ruhig';
+    if (neu === modus) return;
+    modus = neu;
+    io?.disconnect();
+    io = null;
+    bereich.classList.toggle('krb--buehne', modus === 'buehne');
+    bereich.classList.toggle('krb--gleiten', modus === 'gleiten');
+    schritte.forEach((s) => s.classList.remove('ist-aktiv', 'ist-vorbei', 'ist-da'));
+    aktiv = -1;
+    fuellung.length = 0;
+    if (modus === 'buehne') {
+      messen();
+      zeigen();
+    } else if (modus === 'gleiten') {
+      io = new IntersectionObserver((eintraege) => {
+        eintraege.forEach((e) => {
+          // sichtbar oder schon oberhalb (Sprung tiefer in die Seite): zeigen und nicht weiter beobachten
+          if (e.isIntersecting || e.boundingClientRect.bottom < 0) { e.target.classList.add('ist-da'); io?.unobserve(e.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      schritte.forEach((s) => io?.observe(s));
+    }
+  };
+
+  setzen();
+  mqRuhig.addEventListener('change', setzen);
+  mqBuehne.addEventListener('change', setzen);
+  window.addEventListener('scroll', planen, { passive: true });
+  window.addEventListener('resize', () => { if (modus === 'buehne') { messen(); planen(); } }, { passive: true });
+  // Höhen darüber ändern sich noch (Schriften, Bilder): Lage neu messen
+  if ('ResizeObserver' in window) {
+    const inhalt = document.querySelector('main');
+    if (inhalt) new ResizeObserver(() => { if (modus === 'buehne') { messen(); planen(); } }).observe(inhalt);
   }
 }
 

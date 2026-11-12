@@ -1,6 +1,8 @@
 // Startseite, zwei Abschnitte nach der Kundenreise (09.11.2026). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj), nicht umformulieren.
 // Komponenten: src/components/start/SoGehenWirVor.astro und src/components/start/Prinzipien.astro, Stil src/styles/vorgehen.css,
 // Kartenstapel von „So gehen wir vor“: Höhen misst das Skript in SoGehenWirVor.astro. Nie „aus einer Hand“.
+// 12.11.2026 (Jamil, Talk qh87y3sj #5606/#5610): auf der Startseite stehen weder die Phasen noch „So arbeiten wir.“ (Prinzipien.astro
+// gelöscht). phasen und PRINZIPIEN bleiben hier nur für die Vorschau /neu/ (components/neu/reise/NeuVorgehen.astro).
 
 /** „So gehen wir vor“ (Jamil #5188, freigegeben „ok 2b 3 ja“ #5190; Phasen-Texte allgemeiner für alle Pakete #5279). 2b: Jamils sechs Fragen werden NICHT gezeigt.
  *  Seit #5337 (09.11.2026, Sicherung vor-vorgehen-ablauf-20261109) mit „Von der Anfrage bis online“ zusammengeführt: links

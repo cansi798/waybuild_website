@@ -181,23 +181,26 @@ export const kombiZeile = (k: ReturnType<typeof kombiPreise>[number]) =>
 
 /** Einmalige Leistungen (Extras), Festpreis NETTO. Preise neu von Jamil (Talk qh87y3sj #5085–#5089, 08.11.2026):
  *  Logo 349 · Geschäftspapiere 129 · Visitenkarten 59 · E-Mail-Signatur 39 € (einzeln zusammen 576 €),
- *  dazu das Gesamtpaket „Alle vier Extras“ für 499 €. Vorher (#5056): 590 / 190 / 89 / 49 €. */
+ *  dazu das Gesamtpaket „Alle vier Extras“ für 499 €. Vorher (#5056): 590 / 190 / 89 / 49 €.
+ *  Seit 12.11.2026 (Jamil, Talk qh87y3sj #5613/#5615; Sicherung Tag vor-kundenreise-buehne-20261112): Gründerpaket 599 €, Einzelpreise
+ *  entsprechend erhöht: Logo 419 · Geschäftspapiere 159 · Visitenkarten 69 · E-Mail-Signatur 49 € (einzeln zusammen 696 €, Ersparnis 97 €).
+ *  Brutto (19 %) rechnet bruttoVon(): 712,81 / 498,61 / 189,21 / 82,11 / 58,31 €. Kein Kombipreis zusammen mit dem Gründerpaket. */
 export type EinmalLeistung = { id: string; name: string; text: string; preis: number };
 export const EINMALIG_DAZU = {
   titel: 'Einmalig dazubuchen',
   hinweis: 'Einmaliger Festpreis, keine monatlichen Kosten. Alle Preise netto zzgl. MwSt.',
   liste: [
-    { id: 'logo', name: 'Logo', text: '3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck.', preis: 349 },
-    { id: 'papiere', name: 'Geschäftspapiere nach DIN 5008', text: 'Briefbogen, Angebot und Rechnung im gleichen Stil.', preis: 129 },
-    { id: 'visitenkarten', name: 'Visitenkarten', text: 'Gestaltung passend zu Ihrem Logo, als druckfertige Datei. Der Druck ist nicht enthalten.', preis: 59 },
-    { id: 'signatur', name: 'E-Mail-Signatur nach DIN 5008', text: 'Eine einheitliche Signatur für alle Ihre Postfächer.', preis: 39 },
+    { id: 'logo', name: 'Logo', text: '3 Entwürfe, 2 Korrekturrunden, Dateien für Web und Druck.', preis: 419 },
+    { id: 'papiere', name: 'Geschäftspapiere nach DIN 5008', text: 'Briefbogen, Angebot und Rechnung im gleichen Stil.', preis: 159 },
+    { id: 'visitenkarten', name: 'Visitenkarten', text: 'Gestaltung passend zu Ihrem Logo, als druckfertige Datei. Der Druck ist nicht enthalten.', preis: 69 },
+    { id: 'signatur', name: 'E-Mail-Signatur nach DIN 5008', text: 'Eine einheitliche Signatur für alle Ihre Postfächer.', preis: 49 },
   ] as EinmalLeistung[],
   /** Gesamtpaket: alle vier Extras zusammen (Parameter ?dazu=alle bzw. gesamtpaket) */
-  gesamt: { id: 'alle', name: 'Alle vier Extras', text: 'Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur zusammen.', preis: 499 } as EinmalLeistung,
+  gesamt: { id: 'alle', name: 'Alle vier Extras', text: 'Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur zusammen.', preis: 599 } as EinmalLeistung,
 };
-/** Summe der vier Extras einzeln (576 €). */
+/** Summe der vier Extras einzeln (696 €). */
 export const einmalSumme = () => EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0);
-/** Zeile „Alle vier als Gesamtpaket: 499 € statt 576 €“. */
+/** Zeile „Alle vier als Gesamtpaket: 599 € statt 696 €“. */
 export const gesamtZeile = () => `Alle vier als Gesamtpaket: ${euro(EINMALIG_DAZU.gesamt.preis)} statt ${euro(einmalSumme())}`;
 
 /** „Direkt buchen“ (Jamil #5085–#5089): Fenster auf den Paketkarten, Hinweis im Fenster und im Kontaktformular. */

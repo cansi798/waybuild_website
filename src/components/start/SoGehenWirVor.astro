@@ -5,6 +5,9 @@
 // (am PC sticky), rechts die sechs Schritte als Stapel. Zuerst ist nur Schritt 1 zu sehen; beim Scrollen schiebt sich der nächste
 // genau darüber und deckt den vorigen ganz zu. Alle Karten position: sticky, gleiches top, gleiche Höhe, deckend; kein Einrasten,
 // kein Scroll-Kapern. Ohne JS (html.js fehlt) oder bei reduzierter Bewegung: normale Liste. Stil: src/styles/vorgehen.css (.vg-*).
+// 12.11.2026 (Jamil, Talk qh87y3sj #5598/#5606/#5610; Sicherung Tag vor-kundenreise-buehne-20261112): links nur noch Überschrift,
+// Unterzeile und Einleitung (die drei Phasen sind entfernt), auf den Karten nur noch die Zeitangabe (Etikett der Phase entfernt).
+// VORGEHEN.phasen bleibt in config/vorgehen.ts (nutzt die Vorschau /neu/).
 // Anker: #denkweise = Abschnitt, #ablauf = Beginn des Stapels, #erstberatung = Karte Erstgespräch (alte Links treffen weiter).
 import { VORGEHEN } from '../../config/vorgehen';
 import '../../styles/vorgehen.css';
@@ -16,15 +19,7 @@ import '../../styles/vorgehen.css';
       <h2 id="vg-h" class="rule">{VORGEHEN.titel}</h2>
       <p class="vg-unter">{VORGEHEN.unter}</p>
       <p class="lead vg-intro">{VORGEHEN.intro}</p>
-      <ul class="vg-phasen">
-        {VORGEHEN.phasen.map((p) => (
-          <li class="vg-phase">
-            <span class="vg-phase__wort">{p.wort}</span>
-            <span class="vg-phase__text">{p.text}</span>
-            {p.betont && <span class="vg-phase__betont">{p.betont}</span>}
-          </li>
-        ))}
-      </ul>
+      {/* drei Phasen (Verstehen, Verbinden, Verbessern) hier entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026) */}
     </div>
     <div class="vg-stapel">
       <span id="ablauf" class="vg-anker" aria-hidden="true"></span>
@@ -33,7 +28,7 @@ import '../../styles/vorgehen.css';
           <li class="vg-karte" id={s.anker} style={`--i: ${i}`}>
             <span class="vg-nr" aria-hidden="true">{i + 1}</span>
             <div class="vg-karte__inhalt">
-              <p class="vg-marke"><span class="vg-marke__phase">{VORGEHEN.phasen[s.phase].wort}</span><span class="vg-marke__wann">{s.wann}</span></p>
+              <p class="vg-marke"><span class="vg-marke__wann">{s.wann}</span></p>
               <h3>{s.titel}</h3>
               <p class="vg-karte__text">{s.text}</p>
             </div>

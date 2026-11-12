@@ -14,81 +14,13 @@
 .v-platzhalter__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
 /* „Welches Paket passt zu Ihnen?“ (.v-cta) am 09.11.2026 entfernt (Jamil, Talk qh87y3sj #5211–#5213) */
 
-/* KUNDENREISE als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182 „muss eine Customer Journey sein“, Variante B #5184, Text #5185,
- * Plan „ok“ #5187, 09.11.2026; ersetzt das „Zusammenspiel“ mit sieben Kacheln, Sicherung vor-kundenreise-20261109).
- * Ruhiger Weg statt Kurve (Jamil, Talk qh87y3sj #5334 „dieses Diagramm passt nicht“, 09.11.2026; Sicherung
- * vor-kundenreise-pfad-20261109): die steigende Kurve mit Fläche wirkte wie ein Wachstums-Diagramm. Jetzt in der Bildsprache von
- * „So gehen wir vor“ (vorgehen.css): fünf nummerierte Kreise (--kr-nr) an einer feinen geraden Linie (.kr-pfad, 2 px #00807b,
- * hinter den Kreisen), am Ende ein kleiner Zielpunkt mit Fahne und „zufriedener Kunde“. PC ab 1000 px: weiße Karte, fünf Spalten
- * nebeneinander plus schmale Zielspalte (--kr-zb), Linie waagerecht von Kreis 1 bis zum Ziel. Unter 1000 px: Weg von oben nach
- * unten, Linie links, Kreise darauf, Inhalt rechts daneben, Ziel unten.
- * Name, Frage und Antwort-Bereich liegen am PC per Subgrid in drei gemeinsamen Zeilen über alle fünf Stationen, damit die Fragen
- * gleich hoch sind (ohne Subgrid: Frage mindestens drei Zeilen; Qualitätsprüfung Jamil #5204).
- * Antworten statt Leistungen (Jamil, Talk qh87y3sj #5275, 09.11.2026; Sicherung vor-kundenreise-antworten-20261109): unter jeder
- * Frage ein rundes Symbol (Glühbirne, 40 px, .kr-symbol), das die Antwort im besten Fall aufklappt. Mit JS und ohne reduzierte
- * Bewegung (.kr-klapp vom Skript) sind alle Antworten zu, je eine geht per Klick/Antippen/Enter auf (.ist-offen, aria-expanded),
- * der Kreis dieser Station wird gefüllt (Türkis, Ziffer weiß) und etwas größer. Ohne JS oder bei reduzierter Bewegung: kein Symbol, alle
- * Antworten offen (Kasten mit kleiner Überschrift).
- * Aufbau beim ersten Sichtkontakt (.kr-bereit vom Skript, dann .ist-los): die Linie zeichnet sich von links bzw. oben
- * (linear, --kr-zug), jede Station erscheint, wenn die Linie sie erreicht (--kr-t); danach pulsiert ihr Symbol dreimal sanft
- * (nicht dauernd). Am Handy ohne Vorlauf und schneller, damit die Karte beim Hereinscrollen nie leer ist.
- * Farben wie „So gehen wir vor“: Linie und Kreisrand #00807b; Ziffern und Ziel #006b68 (6,4 : 1 auf Weiß), offen Weiß auf #006b68,
- * Fragen --ink-soft (7,5 : 1). */
+/* KUNDENREISE (#kundenreise): seit 12.11.2026 „Bühne“ (Jamil, Talk qh87y3sj #5596–#5602, Variante A; Sicherung Tag
+ * vor-kundenreise-buehne-20261112) statt Journey-Map mit Linie und Glühbirnen-Knöpfen. Stil der Bühne: src/styles/kundenreise.css.
+ * Hier nur Abschnitt, Überschrift, Einleitung und Schluss mit Knopf. */
 .section.vreise { padding-block: clamp(40px, 7vh, 88px); }
 .kr { text-align: center; }
 .kr-titel { max-width: 26ch; margin-inline: auto; }
 .kr-intro { margin: 0 auto; max-width: 62ch; text-wrap: pretty; }
-.kr-karte { --kr-nr: 48px; --kr-zb: 124px; --kr-linie: #00807b; --kr-start: 250ms; --kr-zug: 2400ms; --kr-schritt: 0.21; position: relative; max-width: 1180px;
-  margin: clamp(26px, 4.5vh, 48px) auto clamp(22px, 4vh, 40px); padding: clamp(20px, 2.6vw, 30px) clamp(14px, 2vw, 30px) clamp(20px, 2.6vw, 30px);
-  border-radius: 24px; background: var(--white); border: 1px solid #d5e8e6; text-align: left;
-  box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 18px 44px -28px rgb(0 79 76 / 35%); }
-.kr-weg { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) var(--kr-zb); align-items: start; }
-/* feine gerade Linie von der Mitte von Kreis 1 bis zur Mitte des Ziels (Spalte 1 = 5 Stationen, Kreis 1 bei 1/10 ihrer Breite) */
-.kr-pfad { position: absolute; z-index: 0; top: calc(var(--kr-nr) / 2 - 1px); left: calc((100% - var(--kr-zb)) / 10); right: calc(var(--kr-zb) / 2);
-  height: 2px; border-radius: 2px; background: var(--kr-linie); transform-origin: left; pointer-events: none; }
-.kr-stationen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: auto auto 1fr; }
-/* PC: drei gemeinsame Zeilen (Name, Frage, Antwort) über alle Stationen; der Kreis sitzt oben auf der Linie */
-.kr-station { --kr-t: calc(var(--kr-start) + var(--kr-zug) * var(--kr-schritt) * var(--i)); position: relative; display: grid; grid-row: span 3;
-  grid-template-rows: subgrid; row-gap: 0; justify-items: center; align-content: start; min-width: 0;
-  padding: calc(var(--kr-nr) + 20px) clamp(8px, 1.1vw, 16px) 4px; text-align: center; }
-.kr-nr { position: absolute; z-index: 1; left: 50%; top: 0; display: grid; place-items: center; width: var(--kr-nr); height: var(--kr-nr);
-  margin-left: calc(var(--kr-nr) / -2); border-radius: 50%; background: var(--white); border: 2px solid var(--kr-linie);
-  box-shadow: 0 0 0 6px rgb(0 128 123 / 10%); font-family: var(--font-head); font-size: 1.15rem; font-weight: 700; line-height: 1; color: var(--accent-ink);
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, scale 0.3s ease, box-shadow 0.3s ease; }
-.kr-station.ist-offen .kr-nr { background: var(--accent-ink); border-color: var(--accent-ink); color: var(--white); scale: 1.12; box-shadow: 0 0 0 8px rgb(0 128 123 / 20%); }
-.kr-kopf { position: relative; display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 8px; justify-items: center; width: 100%; }
-.kr-name { margin: 0; font-size: clamp(1.08rem, 1.4vw, 1.28rem) !important; line-height: 1.25; letter-spacing: -0.01em; hyphens: manual; }
-.kr-frage { margin: 0; max-width: 28ch; font-size: 0.98rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
-@supports not (grid-template-rows: subgrid) { .kr-frage { min-height: 4.8em; } }
-.kr-mehr { display: flex; flex-direction: column; align-items: center; gap: 10px; align-self: start; width: 100%; margin-top: 14px; }
-/* Symbol: Glühbirne in einem Kreis; zu = weiß mit Türkis (#006b68, 6,4 : 1), offen = Türkis #00807b mit Weiß (4,8 : 1) */
-.kr-symbol { display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; margin: 0; padding: 0; border-radius: 50%;
-  border: 1.5px solid #8fc7c3; background: var(--white); color: var(--accent-ink); cursor: pointer;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease; }
-.kr-symbol[hidden] { display: none; }
-.kr-symbol svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.kr-symbol:hover { border-color: var(--kr-linie); transform: translateY(-1px); }
-.kr-symbol:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
-.kr-symbol[aria-expanded="true"] { background: var(--kr-linie); border-color: var(--kr-linie); color: var(--white); }
-.kr-antwort { width: 100%; }
-.kr-antwort__kasten { padding: 12px 14px; border-radius: 14px; background: #f1f8f7; border: 1px solid #d5e8e6; text-align: left; }
-.kr-antwort__titel { margin: 0 0 4px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4; color: var(--accent-ink); }
-.kr-antwort__text { margin: 0; font-size: 0.94rem; line-height: 1.7; color: var(--ink); text-wrap: pretty; }
-/* Mit Symbol (.kr-klapp): Antworten zu, die offene klappt weich auf (Zeilenhöhe 0fr → 1fr, Inhalt blendet ein) */
-.kr-klapp .kr-mehr { gap: 0; }
-.kr-klapp .kr-antwort { display: grid; grid-template-rows: 0fr; visibility: hidden;
-  transition: grid-template-rows 0.4s ease, margin-top 0.4s ease, visibility 0s linear 0.4s; }
-.kr-klapp .kr-antwort__innen { min-height: 0; overflow: hidden; opacity: 0; transform: translateY(-4px); transition: opacity 0.35s ease, transform 0.35s ease; }
-.kr-klapp .ist-offen .kr-antwort { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
-.kr-klapp .ist-offen .kr-antwort__innen { opacity: 1; transform: none; transition-delay: 0.08s; }
-.kr-klapp .ist-offen .kr-antwort { margin-top: 10px; }
-/* Ziel: kleiner Punkt mit Fahne auf der Linie, darunter „zufriedener Kunde“ */
-.kr-ende { position: relative; z-index: 1; grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 0;
-  padding-top: calc((var(--kr-nr) - 36px) / 2); font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; line-height: 1.3; color: var(--accent-ink); text-align: center; }
-.kr-ende__punkt { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-ink); color: var(--white);
-  box-shadow: 0 0 0 6px rgb(0 107 104 / 14%); }
-.kr-ende__punkt svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.kr-ende__punkt svg path:last-child { fill: currentColor; }
 /* Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz der Knopf aus dem Hero
  * (HERO_KNOPF, gleiches Ziel), gleiche Form, Größe und Takt (v-glow/v-glanz), nur für den hellen Grund umgekehrt: Türkis #006b68,
  * Schrift weiß (6,36 : 1), Lichtring in Türkis, Glanz weiß 12 % (Schrift darunter ≥ 4,5 : 1). Reduzierte Bewegung: ruhig. */
@@ -111,35 +43,6 @@
   70%, 100% { box-shadow: 0 0 0 18px rgb(0 128 123 / 0%), 0 12px 30px -14px rgb(0 40 38 / 55%); } }
 @media (max-width: 599px) { .kr-cta .kr-leucht { flex: 1 1 100%; width: 100%; white-space: normal; padding-inline: 1.2em; } }
 @media (prefers-reduced-motion: reduce) { .kr-cta .kr-leucht, .kr-cta .kr-leucht::after { animation: none !important; } }
-/* Handy/Tablet: Weg von oben nach unten, Linie links durch die Kreismitten bis zum Ziel, Inhalt rechts daneben */
-@media (max-width: 999px) {
-  .kr-karte { --kr-nr: 40px; --kr-start: 0ms; --kr-zug: 1800ms; --kr-schritt: 0.2; max-width: 560px; padding: 22px 16px 20px 14px; border-radius: 20px; }
-  .kr-weg { display: block; }
-  .kr-pfad { top: calc(var(--kr-nr) / 2); bottom: 18px; left: calc(var(--kr-nr) / 2 - 1px); right: auto; width: 2px; height: auto; transform-origin: top; }
-  .kr-stationen { grid-template-columns: 1fr; grid-template-rows: none; gap: 24px; }
-  .kr-station { grid-row: auto; display: flex; flex-direction: column; align-items: flex-start; min-height: var(--kr-nr);
-    padding: 8px 0 0 calc(var(--kr-nr) + 16px); text-align: left; }
-  .kr-nr { left: 0; margin-left: 0; font-size: 1.02rem; box-shadow: 0 0 0 5px rgb(0 128 123 / 10%); }
-  .kr-kopf { grid-row: auto; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-  .kr-frage { max-width: none; }
-  .kr-mehr { align-items: flex-start; margin-top: 10px; }
-  .kr-ende { flex-direction: row; align-items: center; gap: 18px; min-height: 36px; margin-top: 24px; padding: 0 0 0 calc((var(--kr-nr) - 36px) / 2); text-align: left; }
-}
-/* Aufbau (nur mit .kr-bereit vom Skript): Linie zeichnet sich, Kreise und Inhalte erscheinen nacheinander */
-.kr-bereit .kr-kopf, .kr-bereit .kr-mehr, .kr-bereit .kr-ende { opacity: 0; }
-.kr-bereit .kr-nr { transform: scale(0); }
-.kr-bereit .kr-pfad { transform: scaleX(0); }
-@media (max-width: 999px) { .kr-bereit .kr-pfad { transform: scaleY(0); } }
-.kr-bereit.ist-los .kr-pfad { transform: none; transition: transform var(--kr-zug) linear var(--kr-start); }
-.kr-bereit.ist-los .kr-kopf { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--kr-t) both; }
-.kr-bereit.ist-los .kr-mehr { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--kr-t) + 180ms) both; }
-.kr-bereit.ist-los .kr-symbol { animation: kr-puls 1.5s ease-out calc(var(--kr-t) + 950ms) 3; }
-.kr-bereit.ist-los.kr-gesehen .kr-symbol { animation: none; } /* nach dem ersten Öffnen kein Pulsieren mehr */
-@keyframes kr-puls { 0% { box-shadow: 0 0 0 0 rgb(0 128 123 / 45%); } 70%, 100% { box-shadow: 0 0 0 12px rgb(0 128 123 / 0%); } }
-.kr-bereit.ist-los .kr-nr { animation: kr-nr 650ms cubic-bezier(0.3, 1.4, 0.5, 1) var(--kr-t) both; }
-.kr-bereit.ist-los .kr-ende { animation: v-wort 850ms cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--kr-start) + var(--kr-zug)) both; }
-@keyframes kr-nr { from { transform: scale(0); } to { transform: scale(1); } }
-@media (prefers-reduced-motion: reduce) { .kr-karte *, .kr-karte *::before, .kr-karte *::after { animation: none !important; transition: none !important; } }
 
 /* Vergleich nach Anbieter-Art: Stile jetzt in components/variante/VVergleich.astro (Karten, Jamil #5210) */
 
@@ -226,6 +129,8 @@
 .v-ein--2 { animation-delay: 800ms; }
 .v-ein--3 { animation-delay: 1050ms; }
 .v-ein--4 { animation-delay: 1900ms; }
+/* Hero ganz von der Kundenreise verdeckt (stapel.ts, 12.11.2026): Verlauf anhalten */
+.v-hero.ist-verdeckt .v-blob { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .v-wort, .v-ein, .v-blob, .v-hero .v-leucht, .v-hero .v-leucht::after { animation: none !important; } }
 
 /* JEDER ABSCHNITT EINE BILDSCHIRMSEITE (Jamil #5108 „ok bildschirm“, 08.11.2026; Sicherung vor-bildschirm-20261108),

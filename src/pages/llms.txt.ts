@@ -9,7 +9,7 @@ import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
 import { CLAIM, BOTSCHAFT, VORTEILE, ABSCHLUSS } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
-import { VORGEHEN, PRINZIPIEN } from '../config/vorgehen';
+import { VORGEHEN } from '../config/vorgehen';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -34,11 +34,11 @@ export const GET: APIRoute = async ({ site }) => {
     `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Im besten Fall: ${st.antwort})`).join('; ')}. ${KUNDENREISE.schluss}`,
     // Vorteile aus Kundensicht (Jamil, Talk qh87y3sj #5381)
     `- ${VORTEILE.titel} ${VORTEILE.intro} ${VORTEILE.liste.map((v) => `${v.titel}: ${v.text}${v.paket ? ` (${v.paket})` : ''}`).join(' ')}`,
-    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Drei Phasen: ${VORGEHEN.phasen.map((p) => `${p.wort}: ${p.text}${p.betont ? ` ${p.betont}` : ''}`).join(' ')} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${VORGEHEN.phasen[s.phase].wort}, ${s.wann}): ${s.text}`).join(' ')}`,
     // Arbeitsweise Sichtbarkeit (Jamil, Talk qh87y3sj #5363): nur Vorgehen, keine Platzierungsversprechen
     `- ${SICHTBARKEIT.titel} ${Object.values(PANELS).map((p) => `${p.titel} ${p.text} (${p.paket})`).join(' ')}`,
-    `- ${PRINZIPIEN.titel} ${PRINZIPIEN.unter} ${PRINZIPIEN.liste.map((p) => `${p.wort}: ${p.leit} ${p.zeilen.join(' ')} ${p.schluss.join(' ')}`).join(' ')}`,
     `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
+    // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen
+    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.wann}): ${s.text}`).join(' ')}`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
     `- ${ABSCHLUSS.warumTitel} ${ABSCHLUSS.warum.join(' ')}`,
     `- Leitsatz: ${CLAIM}`,

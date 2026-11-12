@@ -1,10 +1,11 @@
-/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190) und „So arbeiten wir.“ (.pz-*, #5192/#5194), 09.11.2026.
+/* Startseite: „So gehen wir vor“ (.vg-*, Jamil, Talk qh87y3sj #5188/#5190), 09.11.2026; „So arbeiten wir.“ (.pz-*) und die drei
+ * Phasen links (.vg-phase*) am 12.11.2026 entfernt (Jamil #5606/#5610), Phasen-Etikett auf den Karten ebenso (#5598).
  * Reihenfolge der Hintergründe: Kundenreise (Papier, weiße Karte) → So gehen wir vor (Weiß) → So arbeiten wir. (zartes Türkis
  * #eaf5f4) → Pakete (hell, seit #5204; Vergleich Sand). Kontrast (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4), Fließtext
  * --ink-soft (7,5 : 1), Hervorhebungen #004f4c; Linien #00807b (4,8 : 1 auf Weiß). Beide Abschnitte mindestens eine Bildschirmseite. */
 
 /* ── So gehen wir vor ── */
-.section.vg, .section.pz { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
+.section.vg { min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
   display: flex; flex-direction: column; justify-content: center; }
 .section.vg { background: var(--white); }
 /* Zusammengeführt mit „Von der Anfrage bis online“ (Jamil, Talk qh87y3sj #5337, 09.11.2026): links Kopf mit den drei Phasen,
@@ -14,12 +15,6 @@
 .vg-unter { margin: 0 0 16px; max-width: 34ch; font-family: var(--font-head); font-size: clamp(1.2rem, 2.3vw, 1.55rem); font-weight: 600;
   line-height: 1.4; color: var(--accent-ink); text-wrap: balance; }
 .vg-intro { margin: 0 0 20px; line-height: 1.65; text-wrap: pretty; }
-.vg-phasen { list-style: none; margin: 0; padding: 0 0 0 18px; display: grid; gap: 12px; border-left: 2px solid #b9dcd9; }
-.vg-phase { display: grid; gap: 2px; }
-.vg-phase__wort { font-family: var(--font-head); font-size: 1.08rem; font-weight: 700; line-height: 1.3; color: var(--accent-ink); }
-.vg-phase__text { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
-.vg-phase__betont { justify-self: start; margin-top: 4px; padding: 3px 12px; border-radius: 10px; background: #eaf5f4; font-family: var(--font-head);
-  font-size: 0.96rem; font-weight: 650; line-height: 1.5; color: var(--dark); }
 .vg-anker { display: block; height: 0; }
 
 /* Grundform (ohne JS, reduzierte Bewegung): Karten untereinander, normale Liste. */
@@ -29,7 +24,6 @@
 .vg-nr { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--dark); color: var(--white);
   font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; }
 .vg-marke { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 6px; font-size: 0.82rem; font-weight: 700; line-height: 1.4; color: var(--accent-ink); }
-.vg-marke__phase { padding: 2px 10px; border-radius: 999px; background: #e3f1f0; letter-spacing: 0.06em; text-transform: uppercase; }
 .vg-karte h3 { margin: 0 0 4px; font-size: 1.15rem; }
 .vg-karte__text { margin: 0; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 960px) {
@@ -71,20 +65,4 @@
   }
 }
 
-/* ── So arbeiten wir. (keine Animation) ── */
-.section.pz { background: #eaf5f4; }
-.pz-liste { list-style: none; width: 100%; max-width: 1180px; margin: clamp(8px, 2vh, 20px) auto 0; padding: 0; display: grid; gap: 22px; }
-@media (min-width: 960px) { .pz-liste { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
-@media (max-width: 959px) { .pz-liste { max-width: 640px; } }
-.pz-karte { display: flex; flex-direction: column; min-width: 0; padding: clamp(26px, 3vw, 38px) clamp(22px, 2.6vw, 34px); border-radius: 18px;
-  background: var(--white); border: 1px solid #d5e8e6; box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 14px 36px -26px rgb(0 79 76 / 40%); }
-.pz-wort { margin: 0 0 14px; font-size: clamp(1.75rem, 2.6vw, 2.3rem) !important; font-weight: 700; line-height: 1.1; letter-spacing: -0.025em;
-  color: var(--accent-ink); hyphens: manual; overflow-wrap: break-word; }
-.pz-wort::before { content: ''; display: block; width: 40px; height: 3px; margin-bottom: 18px; border-radius: 2px; background: var(--accent); }
-.pz-leit { margin: 0 0 20px; padding-bottom: 20px; border-bottom: 1px solid #d5e8e6; font-family: var(--font-head); font-size: clamp(1.06rem, 1.4vw, 1.15rem);
-  font-weight: 600; line-height: 1.5; color: var(--dark); text-wrap: pretty; }
-.pz-text { flex: 1; }
-.pz-text p { margin: 0 0 0.45em; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
-.pz-text p:last-child { margin-bottom: 0; }
-.pz-schluss { margin: 22px 0 0; padding: 14px 16px; border-left: 3px solid #00807b; border-radius: 0 12px 12px 0; background: #eaf5f4;
-  font-family: var(--font-head); font-size: 1.02rem; font-weight: 650; line-height: 1.6; color: var(--dark); text-wrap: pretty; }
+/* „So arbeiten wir.“ (.pz-*) von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026). */

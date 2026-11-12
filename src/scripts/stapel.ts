@@ -33,6 +33,8 @@ if (paar && hero && hero.nextElementSibling && !ruhig && 'ResizeObserver' in win
     const vh = window.innerHeight;
     const p = Math.min(1, Math.max(0, (vh - (naechsterOben - window.scrollY)) / Math.max(1, vh - kopfH)));
     if (Math.abs(zuletzt - p) > 0.004 || (p === 0) !== (zuletzt === 0)) { zuletzt = p; hero.style.setProperty('--deckt', p.toFixed(3)); }
+    // ganz verdeckt (seit der Kundenreise-Bühne, 12.11.2026, ein langer Weg): bewegten Verlauf anhalten, spart Rechenzeit
+    hero.classList.toggle('ist-verdeckt', p >= 1);
   };
   const planen = (alles = false) => {
     if (geplant) return;
