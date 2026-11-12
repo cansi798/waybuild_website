@@ -7,7 +7,7 @@ import { absolute } from '../lib/paths';
 import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { CLAIM, BOTSCHAFT, ABSCHLUSS } from '../config/startseite';
+import { CLAIM, BOTSCHAFT, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { VORGEHEN } from '../config/vorgehen';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
@@ -32,6 +32,8 @@ export const GET: APIRoute = async ({ site }) => {
     `${V_HERO.titel} ${V_HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
     `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Bestenfalls: ${st.antwort})`).join('; ')}. Ziel: ${KUNDENREISE.ziel} – ${KUNDENREISE.zielUnter} ${KUNDENREISE.schluss}`,
+    // Zwei Abschnitte nach der Kundenreise (Jamil #5664–#5672)
+    ...[UMSETZUNG, ENTSPANNT].map((a) => `- ${a.titel} ${a.intro} ${a.karten.map((k) => `${k.titel}: ${k.text}`).join(' ')}`),
     // „Was Sie davon haben.“ von der Startseite entfernt (Jamil #5633); „Was wir für Ihre Sichtbarkeit tun.“ jetzt bei den Leistungen (#5634)
     `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen

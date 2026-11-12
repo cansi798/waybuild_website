@@ -167,3 +167,34 @@ export const BOTSCHAFT = {
   description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung, aufeinander abgestimmt. Für kleine und mittlere Unternehmen.',
   service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe und Video auf Anfrage.' /* Social Media entfernt, Jamil #5630 */,
 };
+
+/** Zwei Abschnitte zwischen Kundenreise und Preisen (Jamil, Talk qh87y3sj #5664/#5665/#5666, „ok“ #5670/#5672, 12.11.2026;
+ *  Sicherung Tag vor-umsetzung-entspannt-20261112). Texte WÖRTLICH von Jamil. Komponente src/components/start/KartenAbschnitt.astro,
+ *  Stil src/styles/karten-abschnitt.css. Karten mit großem Symbol (Stil der Kundenreise, ohne Kreis), keine Paket-Etiketten.
+ *  Hinweis: „Alles aus einer Hand“ ist Jamils ausdrücklicher Wortlaut in #5666 (frühere Regel „nie ‚aus einer Hand‘“ damit überholt). */
+export type KartenAbschnitt = { id: string; kennzeile: string; titel: string; intro: string; karten: { icon: IconName; titel: string; text: string }[] };
+export const UMSETZUNG: KartenAbschnitt = {
+  id: 'umsetzung',
+  kennzeile: 'So setzen wir es um',
+  titel: 'So machen wir aus Besuchern Kunden.',
+  intro: 'Versprechen sind schnell gemacht. Hier sehen Sie, womit wir sie halten.',
+  karten: [
+    { icon: 'layout', titel: 'Eine Website, die begeistert', text: 'Modern, hochwertig und so gebaut, dass Ihre Kunden sofort finden, was sie suchen. Für Google und KI-Assistenten wie ChatGPT optimiert, damit man Sie auch findet.' },
+    { icon: 'pin', titel: 'Ihr Google-Profil', text: 'Wer Sie sucht, sieht sofort Öffnungszeiten, Fotos und begeisterte Bewertungen. Wir richten alles ein und halten es aktuell.' },
+    { icon: 'stern', titel: 'Bewertungen dort, wo Ihre Kunden suchen', text: 'Ob Google oder die wichtigste Plattform Ihrer Branche, zufriedene Kunden bewerten Sie dort, wo neue Kunden nachschauen.' },
+    { icon: 'portal', titel: 'Ihre eigene Web-App für Anfragen', text: 'Eine einfache Anwendung im Browser, ohne Installation. Alle Anfragen an einem Ort, auf einen Blick, was offen ist, und Antworten, Angebote und Termine mit wenigen Klicks. So wird aus einer Anfrage schneller ein Auftrag.' },
+    { icon: 'chart', titel: 'Messen, was wirkt', text: 'Jeden Monat schauen wir auf Besucher, Anfragen und Bewertungen. Was funktioniert, bauen wir aus. Was nicht wirkt, verbessern wir.' },
+  ],
+};
+export const ENTSPANNT: KartenAbschnitt = {
+  id: 'entspannt',
+  kennzeile: 'Warum waybuild',
+  titel: 'Ganz entspannt. Das ist unser Motto.',
+  intro: 'Sie haben eine Idee oder wollen etwas ändern? Sagen Sie es uns einfach. Den Rest erledigen wir.',
+  karten: [
+    { icon: 'mic', titel: 'Einfach per Sprachnachricht', text: 'Neues Foto, andere Öffnungszeiten, eine Idee für Ihre Software. Schicken Sie uns eine Sprachnachricht oder ein paar Zeilen. Kein Formular, kein Ticket, kein Fachchinesisch.' },
+    { icon: 'spark', titel: 'Auch das Ungewöhnliche', text: 'Auch sehr individuelle Wünsche nehmen wir ernst. Es gibt fast keine Grenzen. Was möglich ist, setzen wir um.' },
+    { icon: 'zap', titel: 'Schnell erledigt', text: 'Kleine Änderungen sind meist in kürzester Zeit online. Bei größeren sagen wir Ihnen vorher, wie lange es dauert.' },
+    { icon: 'user', titel: 'Alles aus einer Hand', text: 'Website, Google-Profil und Software bei einem Ansprechpartner. Sie müssen nichts koordinieren und niemandem hinterhertelefonieren.' },
+  ],
+};

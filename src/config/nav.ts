@@ -22,7 +22,7 @@ export const NAV: NavItem[] = [
         group: GRUPPEN.find((g) => g.id === l.gruppe)!.titel,
         tag: PAKET_IM_MENUE.includes(l.gruppe) ? paketAnzeige(l.paket) : undefined,
       })),
-      { label: 'Alle Leistungen im Überblick', path: '/leistungen/' },
+      // „Alle Leistungen im Überblick →“ entfernt (Jamil, Talk qh87y3sj #5674, 12.11.2026); /leistungen/ bleibt über den Footer erreichbar
     ],
   },
   { label: 'Preise', path: '/preise/' },
@@ -33,7 +33,7 @@ export const NAV: NavItem[] = [
       { label: 'Ratgeber', path: '/ratgeber/', icon: 'book', desc: 'Website, Software und Cloud kurz erklärt' },
       { label: 'Häufige Fragen', path: '/fragen/', icon: 'frage', desc: 'Antworten zu Paketen, Ablauf und Vertrag' },
       { label: 'Blog', path: '/blog/', icon: 'pen', desc: 'Beiträge und Einblicke aus unserer Arbeit' },
-      { label: 'Alles im Überblick', path: '/wissen/' },
+      // „Alles im Überblick“ entfernt (Jamil, Talk qh87y3sj #5675, 12.11.2026); /wissen/ bleibt über den Footer erreichbar
     ],
   },
   {

@@ -138,7 +138,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__text { display: grid; line-height: 1.35; }
   .dd__text strong { font-weight: 650; font-size: 0.95rem; }
   .dd__text small { color: var(--ink-soft); font-size: 0.8rem; }
-  .dd:not(.dd--mega) .dd__list li:last-child .dd__item { border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 6px; padding-top: 12px; color: var(--accent-ink); }
+  /* Fuß-Zeile für den letzten Eintrag („Alles im Überblick“) entfernt (Jamil #5675): sonst sähe jetzt „Blog“ bzw. „Kontakt“ wie ein Fuß aus */
   /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */
   .hdr__inner { position: relative; }
   .dd--mega { position: static; }

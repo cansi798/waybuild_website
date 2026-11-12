@@ -35,6 +35,7 @@
 //   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
+import KartenAbschnitt from '../components/start/KartenAbschnitt.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import KomplettKarte from '../components/pakete/KomplettKarte.astro';
@@ -50,7 +51,7 @@ import { IS_PREVIEW } from '../lib/env';
 import { SHOW_HINTS } from '../config/site';
 import { B2B_HINWEIS, ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
 import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
-import { ANLIEGEN, TEAM, STIMMEN, ABSCHLUSS } from '../config/startseite';
+import { ANLIEGEN, TEAM, STIMMEN, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 import '../styles/kundenreise.css';
@@ -165,6 +166,12 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     </div>
   </section>
   </div>
+
+  <!-- Zwei neue Abschnitte zwischen Kundenreise und Preisen (Jamil, Talk qh87y3sj #5664–#5666, „ok“ #5670/#5672, 12.11.2026;
+       Sicherung Tag vor-umsetzung-entspannt-20261112): „So machen wir aus Besuchern Kunden.“ (#umsetzung, Weiß) und
+       „Ganz entspannt. Das ist unser Motto.“ (#entspannt, zartes Türkis). Komponente start/KartenAbschnitt.astro. -->
+  <KartenAbschnitt daten={UMSETZUNG} flaeche="weiss" />
+  <KartenAbschnitt daten={ENTSPANNT} flaeche="tuerkis" />
 
   <!-- „Was Sie davon haben.“ (#vorteile, sechs Vorteil-Karten) entfernt (Jamil, Talk qh87y3sj #5633, 12.11.2026); Daten VORTEILE bleiben für /neu/ -->
 
