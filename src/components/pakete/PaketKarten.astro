@@ -36,13 +36,17 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
       </div>
       <p class="pk__jahr">Pro Jahr <strong>{euro(jahresPreis(p.preis))}</strong> netto <span>({euro(jahresBrutto(p.preis))} brutto)</span></p>
       {!kompakt && <p class="pk__fuer">{p.fuer}</p>}
-      <ul class="pk__liste">
-        {p.baut && <li class="pk__alles"><Icon name="check" size={18} /> <span>Alles aus „{paketById(p.baut).name}“</span></li>}
-        {liste(p).map((l) => (
-          <li><Icon name="check" size={18} /> <span><strong>{l.text}</strong>{!kompakt && details && <small>{l.detail}</small>}</span></li>
-        ))}
-        {kompakt && weitere(p) > 0 && <li class="pk__mehr"><span>und {weitere(p)} weitere {weitere(p) === 1 ? 'Leistung' : 'Leistungen'}</span></li>}
-      </ul>
+      {/* Listen (Jamil, Talk qh87y3sj #5669, 12.11.2026): Basis „Enthalten:“ als schlichte Liste ohne Haken; Plus „Alles aus Basis,
+           plus:“ und nur die zusätzlichen Leistungen mit Haken (Plus wiederholt die Basis-Punkte nicht). */}
+      <div class="pk__inhalt">
+        <p class="pk__listenkopf">{p.baut ? `Alles aus ${paketById(p.baut).name}, plus:` : 'Enthalten:'}</p>
+        <ul class:list={['pk__liste', { 'pk__liste--schlicht': !p.baut }]}>
+          {liste(p).map((l) => (
+            <li>{p.baut ? <Icon name="check" size={18} /> : <span class="pk__punkt" aria-hidden="true"></span>} <span><strong>{l.text}</strong>{!kompakt && details && <small>{l.detail}</small>}</span></li>
+          ))}
+          {kompakt && weitere(p) > 0 && <li class="pk__mehr"><span>und {weitere(p)} weitere {weitere(p) === 1 ? 'Leistung' : 'Leistungen'}</span></li>}
+        </ul>
+      </div>
       <div class="pk__fuss">
         <a class:list={['btn btn--lg pk__btn', p.empfohlen ? 'btn--primary' : 'btn--dark']} href={kontakt(p)} data-buchen={p.id}>{BUCHEN.knopf}<span class="sr-only">: Paket {p.name}</span></a>
         <p class="pk__laufzeit">{LAUFZEIT_HINWEIS}</p>
@@ -74,13 +78,16 @@ const kontakt = (p: AboPaket) => `${href('/kontakt/')}?paket=${encodeURIComponen
   .pk__jahr strong { font-family: var(--font-head); }
   .pk__jahr span { display: block; color: var(--ink-soft); }
   .pk__fuer { font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); }
-  .pk__liste { list-style: none; margin: 0; padding: 14px 0 4px; display: grid; gap: 12px; align-content: start; border-top: 1px solid var(--line); }
+  .pk__inhalt { display: grid; gap: 10px; align-content: start; padding: 14px 0 4px; border-top: 1px solid var(--line); }
+  .pk__listenkopf { font-family: var(--font-head); font-size: 0.98rem; font-weight: 700; color: var(--ink); }
+  .pk__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
+  /* Basis: schlichte Liste, kleiner Punkt statt Haken */
+  .pk__punkt { flex: none; width: 6px; height: 6px; margin: 0.6em 6px 0; border-radius: 50%; background: #00807b; }
   .pk__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.96rem; line-height: 1.5; }
   .pk__liste li > span { display: grid; gap: 2px; }
   .pk__liste strong { font-weight: 650; }
   .pk__liste small { font-size: 0.86rem; line-height: 1.6; color: var(--ink-soft); }
   .pk__liste :global(.icon) { flex: none; margin-top: 3px; color: var(--accent-ink); }
-  .pk__alles { font-weight: 600; }
   .pk__mehr { padding-left: 28px; color: var(--ink-soft); font-size: 0.9rem !important; }
   .pk__fuss { display: grid; gap: 10px; align-content: end; }
   .pk__btn { width: 100%; }
