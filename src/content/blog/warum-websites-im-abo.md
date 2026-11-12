@@ -11,7 +11,7 @@ Eine Website wird oft wie ein Möbelstück gekauft: einmal bezahlen, aufstellen,
 
 ## Ein fester Monatspreis statt einer großen Rechnung
 
-Bei uns gibt es zwei feste Monatspakete: **Basis für 79,99 €** und **Plus für 149,99 €**, jeweils netto zzgl. MwSt. im Monat. Wer zusätzlich eine Auftragsverwaltung möchte, bucht optional das **Komplettpaket ab 369,99 €** im Monat netto dazu. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
+Bei uns gibt es zwei feste Monatspakete: **Basis für 79,99 €** und **Plus für 149,99 €**, jeweils netto zzgl. MwSt. im Monat. Wer zusätzlich eine Auftragsverwaltung möchte, bucht das **Komplettpaket** dazu, nur in Kombination: mit Basis ab 419,99 €, mit Plus ab 489,99 € im Monat netto. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
 
 Für Sie heißt das: Sie müssen zum Start kein großes Budget freimachen und wissen jeden Monat, was die Website kostet. Wer etwas zusätzlich möchte, etwa ein Logo, bucht das einmalig zum Festpreis dazu. Monatliche Kosten entstehen dadurch nicht.
 

@@ -9,11 +9,13 @@
 // Kombipreis-Karte „Kombi buchen“ (öffnet das Buchungsfenster mit dem Grundpaket vorgewählt und dem Komplettpaket angehakt;
 // ohne JS Kontaktformular mit ?paket=…&komplett=1&buchen=1).
 import { href } from '../../lib/paths';
-import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, komplettPreisArt, LAUFZEIT_HINWEIS } from '../../config/pakete-abo';
+import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, LAUFZEIT_HINWEIS } from '../../config/pakete-abo';
 
 const kontakt = (paket: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(paket)}&komplett=1&buchen=1`;
 const kombis = kombiPreise();
 const KOMBI_KNOPF = 'Kombi buchen';
+// günstigste Kombination zuerst (Basis + Komplettpaket)
+const erste = [...kombis].sort((a, b) => a.preis - b.preis)[0];
 ---
 
 <article class="pm" id="komplettpaket" aria-labelledby="pm-h">
@@ -25,9 +27,13 @@ const KOMBI_KNOPF = 'Kombi buchen';
       <p class="pm__text">{P.text}</p>
     </div>
     <div class="pm__preis">
-      {P.preisArt === 'zusaetzlich' && <p class="pm__zusatz">zusätzlich</p>}
-      <p class="pm__betrag"><b>{euroAb(P.preis, P.ab)}</b> <span>/ Monat, netto zzgl. MwSt.</span></p>
-      <p class="pm__brutto">{euroAb(bruttoVon(P.preis), P.ab)} inkl. 19 % MwSt., {komplettPreisArt()}</p>
+      {/* Nur Kombipreise, kein Einzelpreis (Jamil, Talk qh87y3sj #5659/#5660, 12.11.2026): groß der günstigste Kombipreis */}
+      {erste && (<>
+        <p class="pm__zusatz">In Kombination</p>
+        <p class="pm__betrag"><b>{euroAb(erste.preis, P.kombiAb)}</b> <span>/ Monat, netto zzgl. MwSt.</span></p>
+        <p class="pm__brutto">mit {erste.paket.name} · {euroAb(bruttoVon(erste.preis), P.kombiAb)} inkl. 19 % MwSt.</p>
+        {kombis.slice(1).map((k) => <p class="pm__brutto pm__brutto--weitere">mit {k.paket.name} {euroAb(k.preis, P.kombiAb)} netto</p>)}
+      </>)}
       <p class="pm__laufzeit">{LAUFZEIT_HINWEIS}</p>
     </div>
   </div>
@@ -73,6 +79,7 @@ const KOMBI_KNOPF = 'Kombi buchen';
   .pm__betrag b { font-family: var(--font-head); font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
   .pm__betrag span { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
   .pm__brutto { font-size: 0.85rem; color: var(--ink-soft); }
+  .pm__brutto--weitere { margin-top: -4px; font-weight: 600; color: var(--ink); }
   .pm__btn { justify-self: start; min-height: 44px; margin-top: 10px; background: #00807b; color: var(--white); border-color: transparent; }
   .pm__btn:hover { background: var(--accent-ink); color: var(--white); }
   .pm__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); }

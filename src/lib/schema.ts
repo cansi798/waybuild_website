@@ -47,8 +47,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
     },
   });
   const komplett = [
-    abAngebot(`${K.name}: Auftragsverwaltung (nur zusammen mit Basis oder Plus buchbar)`, K.preis,
-      `${K.kurz}. ${K.text} Ab ${eurText(K.preis)} € pro Monat netto zzgl. 19 % MwSt. (ab ${eurText(brutto(K.preis))} € inkl. MwSt.), ${WAAS.laufzeit}.`),
+    // Kein Einzelangebot des Komplettpakets mehr (nur in Kombination buchbar, Jamil #5642/#5659/#5660), nur die Kombipreise
     ...kombiPreise().map((k) => abAngebot(`${WAAS.name}: Paket ${k.paket.name} + ${K.name} (Kombipreis)`, k.preis,
       `Paket ${k.paket.name} zusammen mit dem ${K.name} ab ${eurText(k.preis)} € pro Monat netto zzgl. 19 % MwSt. (ab ${eurText(brutto(k.preis))} € inkl. MwSt.), statt einzeln ab ${eurText(k.einzeln)} €. Nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.`)),
   ];

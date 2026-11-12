@@ -158,12 +158,16 @@ export const KOMPLETTPAKET = {
   ],
 };
 const K = KOMPLETTPAKET;
-/** „zusätzlich ab 369,99 €“ bzw. „ab 369,99 €“ (Gesamtpreis) */
-export const komplettPreis = (n: number = K.preis) => `${K.preisArt === 'zusaetzlich' ? 'zusätzlich ' : ''}${euroAb(n, K.ab)}`;
+/** Günstigster Kombipreis netto (Basis + Komplettpaket). Seit Jamil, Talk qh87y3sj #5659/#5660 (12.11.2026) wird das Komplettpaket
+ *  NUR noch mit Kombipreisen gezeigt, nie mit seinem Einzelpreis (K.preis bleibt intern für „statt einzeln …“). */
+export const kombiAbPreis = () => Math.min(...ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [K.kombiPreis[p.id] as number])));
+/** „in Kombination ab 419,99 €“ (vorher „zusätzlich ab 369,99 €“) */
+export const komplettPreis = () => `in Kombination ${euroAb(kombiAbPreis(), K.kombiAb)}`;
 /** Erklärung zum Preis, z. B. unter dem Betrag */
 export const komplettPreisArt = () => (K.preisArt === 'zusaetzlich' ? 'zusätzlich zum Monatspreis von Basis oder Plus' : 'Gesamtpreis, Basis oder Plus inklusive');
-/** Eine Zeile für Texte: „Komplettpaket zusätzlich ab 369,99 € im Monat netto (ab 440,29 € inkl. MwSt.)“ */
-export const komplettZeile = () => `${K.name} ${komplettPreis()} im Monat netto (${euroAb(bruttoVon(K.preis), K.ab)} inkl. MwSt.)`;
+/** Eine Zeile für Texte: „Komplettpaket nur in Kombination: mit Basis ab 419,99 € oder mit Plus ab 489,99 € im Monat netto zzgl. MwSt.“ */
+export const komplettZeile = () =>
+  `${K.name} nur in Kombination: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`mit ${p.name} ${euroAb(K.kombiPreis[p.id] as number, K.kombiAb)}`])).join(' oder ')} im Monat netto zzgl. MwSt.`;
 /** Summe der Einzelpreise NETTO pro Monat: Grundpaket + Komplettpaket (Ab-Preis). */
 export const einzelnMitKomplett = (paketId: AboPaket['id']) =>
   Math.round(((K.preisArt === 'zusaetzlich' ? paketById(paketId).preis : 0) + K.preis) * 100) / 100;
@@ -239,7 +243,7 @@ export const FAQ_PAKETE: PaketFrage[] = [
   { q: 'Gibt es Einrichtungskosten?',
     a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder Ihres Google-Profils sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' },
   { q: 'Was kostet ein Paket im Jahr?',
-    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Das ${K.name} kostet ${komplettPreis(jahresPreis(K.preis))} netto im Jahr. Abgerechnet wird monatlich.` },
+    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Mit dem ${K.name} zusammen: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`${p.name} + ${K.name} ${euroAb(jahresPreis(K.kombiPreis[p.id] as number), K.kombiAb)}`])).join(', ')} netto im Jahr. Abgerechnet wird monatlich.` },
   { q: 'Wie lange läuft der Vertrag?',
     a: `Die Mindestlaufzeit beträgt ${LAUFZEIT_MONATE} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
   { q: 'Was passiert nach 24 Monaten?', platzhalter: true,
