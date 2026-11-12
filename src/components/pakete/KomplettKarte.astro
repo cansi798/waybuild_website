@@ -3,19 +3,17 @@
 // (Startseite #pakete und /preise/), OPTIONAL ZUSÄTZLICH buchbar, kein drittes Paket. Inhalt nur die Auftragsverwaltung.
 // Ersetzt die frühere Premium-Karte „Komplett + Auftragsverwaltung“ (Gestaltung übernommen). Daten aus KOMPLETTPAKET in
 // src/config/pakete-abo.ts (Preis mit „ab“, Kombipreise Basis/Plus + Komplettpaket als Paketpreis gegenüber den Einzelpreisen).
-// Ablauf-Grafik Anfrage → Angebot → Auftrag → Rechnung → Buchhaltung im Linien-Icon-Stil der Seite: zeichnet sich beim
-// Hereinscrollen einmal ein (nur mit JS und ohne reduzierte Bewegung, sonst sofort vollständig sichtbar). Am Handy senkrecht.
-// „Direkt buchen“ öffnet das Buchungsfenster mit Komplettpaket angehakt (Plus vorgewählt, umstellbar); ohne JS Kontaktformular.
-import Icon from '../Icon.astro';
+// 12.11.2026 (Jamil, Talk qh87y3sj #5606/#5610, #5639, #5641, #5642; Sicherung Tag vor-bestenfalls-20261112), überall gleich
+// (Startseite, /preise/, /neu/): ohne Ablauf-Kette, ohne die drei Vorteile, ohne die Liste „Ihre Auftragsverwaltung“ (Daten bleiben
+// in pakete-abo.ts). Das Komplettpaket ist nur zusammen mit Basis oder Plus buchbar: kein eigener Knopf mehr, sondern je
+// Kombipreis-Karte „Kombi buchen“ (öffnet das Buchungsfenster mit dem Grundpaket vorgewählt und dem Komplettpaket angehakt;
+// ohne JS Kontaktformular mit ?paket=…&komplett=1&buchen=1).
 import { href } from '../../lib/paths';
-import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, komplettPreisArt, LAUFZEIT_HINWEIS, BUCHEN } from '../../config/pakete-abo';
+import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, komplettPreisArt, LAUFZEIT_HINWEIS } from '../../config/pakete-abo';
 
-// kette={false} (Startseite, Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026): ohne die Ablauf-Kette Anfrage → … → Buchhaltung, nur die
-// drei Vorteile bleiben. /preise/ und /neu/ zeigen die Kette weiter (Standard true).
-interface Props { kette?: boolean }
-const { kette = true } = Astro.props;
-const kontakt = `${href('/kontakt/')}?paket=${encodeURIComponent(P.name)}&komplett=1&buchen=1`;
+const kontakt = (paket: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(paket)}&komplett=1&buchen=1`;
 const kombis = kombiPreise();
+const KOMBI_KNOPF = 'Kombi buchen';
 ---
 
 <article class="pm" id="komplettpaket" aria-labelledby="pm-h">
@@ -30,7 +28,6 @@ const kombis = kombiPreise();
       {P.preisArt === 'zusaetzlich' && <p class="pm__zusatz">zusätzlich</p>}
       <p class="pm__betrag"><b>{euroAb(P.preis, P.ab)}</b> <span>/ Monat, netto zzgl. MwSt.</span></p>
       <p class="pm__brutto">{euroAb(bruttoVon(P.preis), P.ab)} inkl. 19 % MwSt., {komplettPreisArt()}</p>
-      <a class="btn btn--lg pm__btn" href={kontakt} data-buchen="plus" data-komplett="1">{BUCHEN.knopf}<span class="sr-only">: {P.name}</span></a>
       <p class="pm__laufzeit">{LAUFZEIT_HINWEIS}</p>
     </div>
   </div>
@@ -44,6 +41,7 @@ const kombis = kombiPreise();
             <span class="pm__kombi-name">{k.paket.name} + {P.name}</span>
             <span class="pm__kombi-preis"><b>{euroAb(k.preis, P.kombiAb)}</b> netto <small>statt einzeln {euroAb(k.einzeln, P.kombiAb)}</small></span>
             <span class="pm__kombi-brutto">{euroAb(bruttoVon(k.preis), P.kombiAb)} inkl. 19 % MwSt.</span>
+            <a class="btn pm__btn" href={kontakt(k.paket.name)} data-buchen={k.paket.id} data-komplett="1">{KOMBI_KNOPF}<span class="sr-only">: {k.paket.name} + {P.name}</span></a>
           </li>
         ))}
       </ul>
@@ -51,43 +49,8 @@ const kombis = kombiPreise();
     </div>
   )}
 
-  <div class="pm__band">
-    {kette && <ol class="pm-fluss" aria-label="So hängt alles zusammen">
-      {P.ablauf.map((s, i) => (
-        <li style={`--n: ${i}`}>
-          <span class="pm-fluss__kreis" aria-hidden="true"><Icon name={s.icon} size={22} /></span>
-          <span class="pm-fluss__t">{s.text}</span>
-        </li>
-      ))}
-    </ol>}
-    <ul class:list={['pm__vorteile', { 'pm__vorteile--allein': !kette }]}>
-      {P.vorteile.map((v) => (
-        <li><span class="pm__vico" aria-hidden="true"><Icon name={v.icon} size={18} /></span> <span>{v.text}</span></li>
-      ))}
-    </ul>
-  </div>
-
-  <div class="pm__software">
-    <h4 class="pm__h4">Ihre Auftragsverwaltung</h4>
-    <ul class="pm__liste">
-      {P.software.map((t) => <li><Icon name="check" size={18} /> <span>{t}</span></li>)}
-    </ul>
-  </div>
 </article>
 
-<script>
-  // Ablauf einmal einzeichnen, sobald er sichtbar wird. Ohne IntersectionObserver oder bei reduzierter Bewegung sofort fertig.
-  const fluss = document.querySelector<HTMLElement>('.pm-fluss');
-  if (fluss) {
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (still || !('IntersectionObserver' in window)) fluss.classList.add('ist-da');
-    else {
-      fluss.classList.add('pm-fluss--anim');
-      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { fluss.classList.add('ist-da'); io.disconnect(); } }), { threshold: 0.35 });
-      io.observe(fluss);
-    }
-  }
-</script>
 
 <style>
   /* Ruhig, aber eigen: weiße Karte, dünner Rand, oben ein schmaler türkiser Streifen. Band in zartem Türkis #eaf5f4.
@@ -110,38 +73,9 @@ const kombis = kombiPreise();
   .pm__betrag b { font-family: var(--font-head); font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
   .pm__betrag span { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
   .pm__brutto { font-size: 0.85rem; color: var(--ink-soft); }
-  .pm__btn { width: 100%; margin-top: 4px; background: #00807b; color: var(--white); border-color: transparent; }
+  .pm__btn { justify-self: start; min-height: 44px; margin-top: 10px; background: #00807b; color: var(--white); border-color: transparent; }
   .pm__btn:hover { background: var(--accent-ink); color: var(--white); }
-  .pm__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); text-align: center; }
-
-  /* Band: Ablauf + drei Vorteile */
-  .pm__band { display: grid; gap: 18px; padding: clamp(16px, 3vw, 26px); border-radius: 16px; background: #eaf5f4; }
-  .pm-fluss { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
-  .pm-fluss li { position: relative; display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .pm-fluss__kreis { position: relative; z-index: 1; flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--white); border: 2px solid var(--accent-ink); color: var(--accent-ink); }
-  .pm-fluss__t { font-family: var(--font-head); font-weight: 700; font-size: 0.98rem; color: var(--ink); overflow-wrap: anywhere; }
-  /* Verbindungslinie: Handy senkrecht unter dem Kreis, PC waagerecht zum nächsten Schritt */
-  .pm-fluss li:not(:last-child)::after { content: ''; position: absolute; left: 23px; top: 48px; width: 2px; height: 18px; background: var(--accent-ink); transform-origin: top; }
-  @media (min-width: 720px) {
-    .pm-fluss { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
-    .pm-fluss li { flex-direction: column; text-align: center; gap: 10px; }
-    .pm-fluss li:not(:last-child)::after { left: calc(50% + 30px); right: calc(-50% + 30px); top: 23px; width: auto; height: 2px; transform-origin: left; }
-  }
-  /* Einzeichnen (nur mit JS und ohne reduzierte Bewegung, Klasse setzt das Skript) */
-  .pm-fluss--anim li { opacity: 0; transform: translateY(6px); transition: opacity 0.45s ease, transform 0.45s ease; transition-delay: calc(var(--n) * 220ms); }
-  .pm-fluss--anim li:not(:last-child)::after { transform: scaleY(0); transition: transform 0.35s ease; transition-delay: calc(var(--n) * 220ms + 200ms); }
-  @media (min-width: 720px) { .pm-fluss--anim li:not(:last-child)::after { transform: scaleX(0); } }
-  .pm-fluss--anim.ist-da li { opacity: 1; transform: none; }
-  .pm-fluss--anim.ist-da li:not(:last-child)::after { transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .pm-fluss--anim li, .pm-fluss--anim li:not(:last-child)::after { opacity: 1; transform: none; transition: none; }
-  }
-
-  .pm__vorteile { list-style: none; margin: 0; padding: 16px 0 0; display: grid; gap: 10px; border-top: 1px solid #cfe6e3; }
-  .pm__vorteile--allein { padding-top: 0; border-top: 0; }
-  @media (min-width: 860px) { .pm__vorteile { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
-  .pm__vorteile li { display: flex; align-items: flex-start; gap: 10px; line-height: 1.55; color: var(--ink); font-weight: 600; font-size: 0.96rem; }
-  .pm__vico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--white); color: var(--accent-ink); }
+  .pm__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); }
 
   /* Kombipreise: Paketpreis gegenüber der Summe der Einzelpreise (kein Streichpreis) */
   .pm__kombi { display: grid; gap: 10px; }
@@ -154,12 +88,7 @@ const kombis = kombiPreise();
   .pm__kombi-preis small { display: block; font-size: 0.86rem; color: var(--ink-soft); }
   .pm__kombi-brutto, .pm__kombi-hinweis { font-size: 0.85rem; color: var(--ink-soft); }
 
-  .pm__software { display: grid; gap: 12px; }
   .pm__h4 { font-size: 1.05rem; color: var(--ink); }
-  .pm__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px 28px; }
-  @media (min-width: 760px) { .pm__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .pm__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.96rem; line-height: 1.55; color: var(--ink); min-width: 0; }
-  .pm__liste :global(svg) { flex: none; margin-top: 3px; color: var(--accent-ink); }
   .pm a:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .pm__btn { transition: none; transform: none !important; } }
 </style>

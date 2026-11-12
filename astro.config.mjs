@@ -21,7 +21,7 @@ const base = process.env.BASE ?? '/';
 // Weiterleitungsseiten gelöschter Adressen nie in die Sitemap (Jamil, Talk qh87y3sj #5322, Q6/Q7): alte Leistungsseiten
 // (gleiche Liste wie ALT_WEITERLEITUNGEN in src/config/leistungen-neu.ts) und alle Adressen unter /website-fuer/.
 const altLeistungen = ['business-website', 'online-shop', 'landingpage', 'website-relaunch', 'betreuung-pflege',
-  'individuelle-software', 'software-webentwicklung', 'nextcloud', 'cloud-it', 'wettbewerbsanalyse', 'abo-wartung'];
+  'individuelle-software', 'software-webentwicklung', 'nextcloud', 'cloud-it', 'wettbewerbsanalyse', 'abo-wartung', 'social-media'];
 
 export default defineConfig({
   site,

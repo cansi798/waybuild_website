@@ -90,7 +90,8 @@ const schema = [
     </div>
   </section>
 
-  {panels && <Sichtbarkeit arten={panels} variante="leistung" />}
+  {/* Suchmaschinen-Optimierung: der ganze Abschnitt „Was wir für Ihre Sichtbarkeit tun.“ von der Startseite (Jamil #5634) */}
+  {eintrag.id === 'suchmaschinen-optimierung' ? <Sichtbarkeit variante="seo" /> : panels && <Sichtbarkeit arten={panels} variante="leistung" />}
 
   {eintrag.id === 'website' && (
     <section class="section section--sand" id="referenzen" aria-labelledby="lref-h">

@@ -33,7 +33,7 @@ Im Paket Komplett gestalten wir Ihren Auftritt von der Website bis zum Brief:
 - eine einheitliche E-Mail-Signatur nach DIN 5008 für alle Ihre Postfächer
 - Visitenkarten passend zu Ihrem Logo, als druckfertige Datei
 
-Website und Profile in sozialen Netzwerken bauen auf demselben Stil auf, mehr dazu unter [Website](/leistungen/website/) und [Social Media](/leistungen/social-media/).
+Ihre Website baut auf demselben Stil auf, mehr dazu unter [Website](/leistungen/website/).
 
 Sie haben das Paket Basis oder Plus? Dann können Sie Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur einmalig zum Festpreis dazubuchen. Die Preise stehen unter [Preise](/preise/).
 

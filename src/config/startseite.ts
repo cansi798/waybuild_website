@@ -85,18 +85,21 @@ export const REFERENZEN = {
  *  aboPreisAb() in pakete-abo.ts (günstigstes Paket), Link zum Preisteil #pakete. */
 export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: 'netto zzgl. MwSt.', link: 'Pakete ansehen' };
 
-/** „Wer hinter waybuild steht“ (Jamil #4934 Punkt 2: „erstmal für die Testseite erfinden“). BEWUSST NUR PLATZHALTER:
- *  keine KI-Gesichter, keine erfundenen Selbstbeschreibungen. Echt sind nur Namen und Rollen (Can: Geschäftsführer laut
- *  Impressum/site.ts; Jamil: „Key Account & Process Manager“ laut seiner E-Mail-Signatur). Wird nur in der Vorschau
- *  gezeigt (SHOW_HINTS + PUBLIC_PREVIEW), rot gestrichelt; offen in der Checkliste (launch.ts). */
+/** „Wer hinter waybuild steht“ (Jamil #4934; Fotos + Zitate freigegeben für den Test: Talk qh87y3sj #5636/#5637, 12.11.2026).
+ *  Rollen: Can Geschäftsführer (Impressum/site.ts), Jamil „Chief Operating Officer“ (#5640; vorher „Key Account & Process Manager“).
+ *  Fotos: src/assets/bilder/team/<foto>.jpg (Freisteller; Cans Quelle hat nur 256 px, darum höchstens ~180 CSS-px groß, Jamil gleich).
+ *  Wird nur in der Vorschau gezeigt (SHOW_HINTS + PUBLIC_PREVIEW, index.astro), solange die Zitate Test-Zitate sind.
+ *  Die Zitate NICHT in strukturierte Daten übernehmen. */
 export const TEAM = {
   titel: 'Wer hinter waybuild steht',
   einleitung: 'Sie sprechen mit Menschen, nicht mit einer Hotline.',
-  platzhalter: 'Platzhalter',
-  fotoFolgt: 'Foto folgt',
   personen: [
-    { name: 'Can Siebert', rolle: 'Geschäftsführer', kuerzel: 'CS', text: 'Beispieltext: Hier stellt sich Can bald in ein bis zwei Sätzen selbst vor.' },
-    { name: 'Jamil Iqbal', rolle: 'Key Account & Process Manager', kuerzel: 'JI', text: 'Beispieltext: Hier stellt sich Jamil bald in ein bis zwei Sätzen selbst vor.' },
+    // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
+    { name: 'Can Siebert', rolle: 'Geschäftsführer', foto: 'team/can-siebert', alt: 'Can Siebert, Geschäftsführer von waybuild',
+      zitat: 'Unsere Kunden sollen sich um ihr Geschäft kümmern. Um alles, was dafür online laufen muss, kümmern wir uns.' },
+    // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
+    { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von waybuild',
+      zitat: 'Hinter jeder Anfrage steht ein Mensch, der Hilfe sucht. Deshalb sorgen wir dafür, dass keine verloren geht.' },
   ],
 };
 
@@ -162,5 +165,5 @@ export const ABSCHLUSS = {
 export const BOTSCHAFT = {
   titel: CLAIM,
   description: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: Website, Anfrage, Bearbeitung und Betreuung, aufeinander abgestimmt. Für kleine und mittlere Unternehmen.',
-  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe, Social Media und Video auf Anfrage.',
+  service: 'Digitale Unternehmensabläufe für kleine und mittlere Unternehmen, von der ersten Aufmerksamkeit bis zum zufriedenen Kunden: neue Website mit Analyse und Empfehlung, Änderungen per Text, Screenshot oder Sprachnachricht; zubuchbar Google-Profil, bei Google besser gefunden werden, in KI-Antworten auftauchen, E-Mail-Postfächer, Online-Terminbuchung, Logo und Geschäftspapiere, Monatsbericht und laufende Verbesserung; Kundenverwaltung, automatische Abläufe und Video auf Anfrage.' /* Social Media entfernt, Jamil #5630 */,
 };

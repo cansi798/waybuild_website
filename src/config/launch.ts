@@ -115,8 +115,8 @@ const manual: Todo[] = [
     priority: 'wichtig',
   },
   {
-    title: 'Startseite: Fotos und Kurzvorstellung von Can und Jamil',
-    detail: 'Abschnitt „Wer hinter waybuild steht“ zeigt noch rot gestrichelte Platzhalter („Foto folgt“, Beispieltext). Echte Fotos (keine KI-Bilder) und 1–2 Sätze je Person eintragen.',
+    title: 'Startseite: Test-Zitate von Can und Jamil bestätigen',
+    detail: 'Fotos sind drin (12.11.2026, Jamil #5636/#5637). Die beiden Zitate in „Wer hinter waybuild steht“ sind TEST-Zitate („erfinden, nur für den Test“) und müssen vor Livegang von Can und Jamil bestätigt oder ersetzt werden; bis dahin nur in der Vorschau. Cans Foto-Quelle hat nur 256 px (höchstens ~180 px zeigen).',
     where: 'src/config/startseite.ts → TEAM, src/pages/index.astro (#team)',
     done: false,
     priority: 'wichtig',

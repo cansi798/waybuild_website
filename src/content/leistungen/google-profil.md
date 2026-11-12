@@ -4,11 +4,11 @@ menuTitel: "Google-Profil"
 gruppe: gefunden
 station: aufmerksamkeit
 kurz: "Ihr Eintrag bei Google und Google Maps, eingerichtet und aktuell gehalten."
-description: "Wir richten Ihr Google-Profil für Google und Google Maps ein und halten Fotos, Leistungen und Öffnungszeiten aktuell. Mit Ihrer Website verknüpft, ab Plus."
-paket: "ab Plus"
+description: "Wir richten Ihr Google-Profil für Google und Google Maps ein und halten Fotos, Leistungen und Öffnungszeiten aktuell. Einrichtung in Basis, Pflege ab Plus."
+paket: "Basis, Pflege ab Plus"
 fragen:
   - frage: "Ist das Google-Profil im Basis-Paket enthalten?"
-    antwort: "Nein. Einrichtung und Pflege des Google-Profils gehören zu den Paketen Plus und Komplett."
+    antwort: "Ja, die Einrichtung ist schon im Paket Basis enthalten. Ab Plus halten wir Fotos, Leistungen und Öffnungszeiten zusätzlich laufend aktuell."
   - frage: "Kostet die Einrichtung extra?"
     antwort: "Nein. Die Einrichtung ist im Monatspreis des Pakets enthalten, es gibt keine Einrichtungskosten."
   - frage: "Ich habe schon einen Google-Eintrag. Was passiert damit?"

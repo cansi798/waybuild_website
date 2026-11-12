@@ -58,7 +58,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
             <option value="">Noch offen, bitte beraten Sie mich</option>
             {ABO_PAKETE.map((p) => <option value={p.id} data-name={p.name} data-text={paketText(p)}>{p.name}: {euro(p.preis)} im Monat netto</option>)}
           </select>
-          <label class="wahl__opt wahl__opt--komplett"><input type="checkbox" name="komplett_wahl" value={KOMPLETTPAKET.id} data-text={komplettZeile()} /> <span>{KOMPLETTPAKET.name} dazu <b>{komplettPreis()}</b> im Monat netto <small>{KOMPLETTPAKET.kurz}</small></span></label>
+          <label class="wahl__opt wahl__opt--komplett"><input type="checkbox" name="komplett_wahl" value={KOMPLETTPAKET.id} data-text={komplettZeile()} /> <span>{KOMPLETTPAKET.name} dazu <b>{komplettPreis()}</b> im Monat netto <small>{KOMPLETTPAKET.kurz}</small><small>Nur zusammen mit Basis oder Plus buchbar, bitte zuerst ein Paket wählen.</small></span></label>
           <p class="wahl__summe" id="wahl-monat" aria-live="polite" hidden>Monatlich: <b id="wahl-monat-b"></b> netto <small id="wahl-monat-statt"></small></p>
           <p class="wahl__kopf">{EINMALIG_DAZU.titel} <small>(optional, Festpreis netto)</small></p>
           <div class="wahl__dazu">
@@ -140,7 +140,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
     // ?dazu=… allein (Block „Neu starten oder neu aufstellen?“, Jamil #5283) zeigt ebenfalls die Paket- und Extras-Wahl
-    if (websiteSlugs.includes(leistung) || tarif || params.get('paket') || params.get('dazu')) interesse.value = 'website';
+    if (websiteSlugs.includes(leistung) || tarif || params.get('paket') || params.get('dazu') || params.get('komplett')) interesse.value = 'website';
     else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
     // Paketwahl: sichtbar, sobald es um Website as a Service geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
@@ -154,6 +154,18 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     if (komplettBox && komplettParam) komplettBox.checked = true;
     if (treffer && wahlSelect) wahlSelect.value = treffer.value;
     else if (paket && !norm(paket).startsWith('komplett')) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
+    // Komplettpaket nur zusammen mit Basis oder Plus (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
+    // nicht angehakt; ein Wunsch aus dem Link (?komplett=1) wird gemerkt und beim Wählen eines Pakets wieder angehakt.
+    let komplettWunsch = komplettParam;
+    const komplettPruefen = () => {
+      if (!komplettBox || !wahlSelect) return;
+      const ohnePaket = !wahlSelect.value;
+      komplettBox.disabled = ohnePaket;
+      komplettBox.checked = ohnePaket ? false : komplettBox.checked || komplettWunsch;
+    };
+    komplettBox?.addEventListener("change", () => { komplettWunsch = komplettBox!.checked; });
+    wahlSelect?.addEventListener('change', komplettPruefen);
+    komplettPruefen();
     const dazu = (params.get('dazu') ?? '').split(',').map((d) => d.trim()).filter(Boolean);
     const extras = [...form.querySelectorAll<HTMLInputElement>('input[name="einmalig_wahl"]')];
     const alle = form.querySelector<HTMLInputElement>('input[name="einmalig_alle"]');
@@ -252,7 +264,7 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
       if (interesse.value === 'website' && komplettBox?.checked) {
         data.komplettpaket = komplettBox.dataset.text ?? 'Komplettpaket';
         if (monatText) data.monatlich = monatText;
-        data.paket = data.paket ? `${data.paket} + ${form.dataset.komplettName}` : `${form.dataset.komplettName} (Grundpaket noch offen)`;
+        if (data.paket) data.paket = `${data.paket} + ${form.dataset.komplettName}`; // ohne Grundpaket nicht wählbar (#5642)
       }
       const einmalig = interesse.value !== 'website' ? [] : alle?.checked ? [alle.dataset.text ?? 'Alle vier Extras'] : extras.filter((c) => c.checked).map((c) => c.dataset.text ?? c.value);
       if (buchen) data.anliegen = 'Buchung über „Direkt buchen“ (Vertrag und Auftragsbestätigung per E-Mail)';

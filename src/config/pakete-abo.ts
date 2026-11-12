@@ -58,14 +58,15 @@ export const ABO_PAKETE: AboPaket[] = [
         detail: 'Bis zu 20 Postfächer mit Ihrer Adresse, einheitliche Signatur nach DIN 5008.' },
       { id: 'ki', text: 'Aufbereitung für KI-Assistenten',
         detail: 'So aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.' },
+      // Google-Profil einrichten seit 12.11.2026 schon in Basis (vorher erst ab Plus; Jamil, Talk qh87y3sj #5644)
+      { id: 'google-profil', text: 'Google-Profil einrichten',
+        detail: 'Ihr Eintrag bei Google und Google Maps, mit Fotos, Leistungen und Öffnungszeiten.' },
     ],
   },
   {
     id: 'plus', name: 'Plus', kurz: 'Gefunden werden und Anfragen gewinnen', preis: 149.99, empfohlen: true, baut: 'basis',
     fuer: 'Für Betriebe vor Ort, die über Google regelmäßig neue Kunden gewinnen wollen.',
     leistungen: [
-      { id: 'google-profil', text: 'Google-Profil einrichten',
-        detail: 'Ihr Eintrag bei Google und Google Maps, mit Fotos, Leistungen und Öffnungszeiten.' },
       { id: 'google-pflege', text: 'Google-Profil pflegen',
         detail: 'Fotos, Leistungen und Öffnungszeiten bleiben aktuell.' },
       { id: 'seo', text: 'Erweiterte Suchmaschinen-Optimierung', zeile: 'Suchmaschinen-Optimierung', wert: 'Erweiterte Optimierung',
@@ -124,14 +125,15 @@ export const KOMPLETTPAKET = {
   label: 'Optional dazu',
   name: 'Komplettpaket',
   kurz: 'Auftragsverwaltung, individuell an Ihre Abläufe angepasst',
-  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Zusätzlich zu Basis oder Plus buchbar.',
+  /** „Nur zusammen …“ statt „Zusätzlich zu Basis oder Plus buchbar.“ (Jamil, Talk qh87y3sj #5642, 12.11.2026): einzeln nicht buchbar */
+  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Nur zusammen mit Basis oder Plus buchbar.',
   preis: 369.99,
   ab: true,
   kombiAb: true,
   preisArt: 'zusaetzlich' as PreisArt,
   kombiPreis: { basis: 419.99, plus: 489.99 } as Record<AboPaket['id'], number | null>,
   kombiMitGruenderpaket: false,
-  /** Ablauf-Grafik */
+  /** Ablauf-Grafik (seit #5606/#5610 nicht mehr auf der Karte; nur noch Daten) */
   ablauf: [
     { icon: 'mail', text: 'Anfrage' },
     { icon: 'doc', text: 'Angebot' },
@@ -139,13 +141,13 @@ export const KOMPLETTPAKET = {
     { icon: 'euro', text: 'Rechnung' },
     { icon: 'book', text: 'Buchhaltung' },
   ] as const,
-  /** Vorteile (#5346, bewusst vorsichtig formuliert) */
+  /** Vorteile (#5346; seit #5639 nicht mehr auf der Karte, nur für /neu/-Daten) */
   vorteile: [
     { icon: 'check', text: 'Keine doppelte Eingabe, alles wird einmal erfasst' },
     { icon: 'eye', text: 'Überblick, welche Aufträge offen sind' },
     { icon: 'book', text: 'Rechnungen können direkt an die Buchhaltung übergeben werden' },
   ] as const,
-  /** Auftragsverwaltung (#5352 wörtlich, dazu Schnittstelle und Automatik aus #5346) */
+  /** Auftragsverwaltung (#5352; seit #5641 nicht mehr auf der Karte) */
   software: [
     'Individuell für Ihren Betrieb entwickelt, statt Software von der Stange',
     'Auf Ihre Abläufe abgestimmt, von der Anfrage bis zur Rechnung',
@@ -213,7 +215,8 @@ export const BUCHEN = {
 };
 
 /** Größere Vorhaben: eigenes Angebot. */
-export const AUF_ANFRAGE = ['Kundenverwaltung', 'Abläufe automatisieren', 'Social Media', 'Video', 'Software, Cloud und IT'];
+/** Social Media entfernt (Jamil, Talk qh87y3sj #5630, 12.11.2026) */
+export const AUF_ANFRAGE = ['Kundenverwaltung', 'Abläufe automatisieren', 'Video', 'Software, Cloud und IT'];
 
 /** B2B-Hinweis unter den Preisen. */
 export const B2B_HINWEIS = 'Alle Preise netto zzgl. gesetzlicher MwSt. Unser Angebot richtet sich an Unternehmen und Selbstständige.';
@@ -234,7 +237,7 @@ export const FAQ_PAKETE: PaketFrage[] = [
   { q: 'Kann ich über den Preis verhandeln?',
     a: 'Bei den Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
   { q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder das Google-Profil im Paket Plus sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' },
+    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder Ihres Google-Profils sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' },
   { q: 'Was kostet ein Paket im Jahr?',
     a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Das ${K.name} kostet ${komplettPreis(jahresPreis(K.preis))} netto im Jahr. Abgerechnet wird monatlich.` },
   { q: 'Wie lange läuft der Vertrag?',
@@ -253,6 +256,6 @@ export const FAQ_PAKETE: PaketFrage[] = [
 
 /** Kurzfassung für den Preisteil der Startseite: diese Leistungen je Paket (Rest auf /preise/). */
 export const KOMPAKT: Record<AboPaket['id'], string[]> = {
-  basis: ['website', 'seo', 'email', 'ki'],
-  plus: ['google-profil', 'seo', 'bericht', 'ki-check'],
+  basis: ['website', 'seo', 'email', 'ki', 'google-profil'], // Google-Profil einrichten seit #5644 in Basis
+  plus: ['google-pflege', 'seo', 'bericht', 'ki-check'],
 };

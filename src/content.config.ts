@@ -30,7 +30,7 @@ const blog = defineCollection({
   }),
 });
 
-// Leistungen NEU (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): 13 Seiten in 4 Gruppen, nur aus der
+// Leistungen NEU (Jamil, Talk qh87y3sj #5274 Vorschlag, #5276 „ok“, 09.11.2026): 12 Seiten in 4 Gruppen (seit #5630 ohne Social Media), nur aus der
 // Startseite abgeleitet. Seiten unter /leistungen/<slug>/ (src/pages/leistungen/[slug].astro), Gruppen/Reihenfolge in
 // src/config/leistungen-neu.ts. Links im Text als /leistungen/<slug>/ schreiben; den Basis-Pfad setzt
 // src/lib/markdown-basislinks.mjs beim Bauen davor. Keine Preise in diesen Dateien (Preise nur auf /preise/).

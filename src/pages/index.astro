@@ -35,13 +35,12 @@
 //   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
-import Vorteile from '../components/start/Vorteile.astro';
-import Sichtbarkeit from '../components/sichtbarkeit/Sichtbarkeit.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import KomplettKarte from '../components/pakete/KomplettKarte.astro';
 import VVergleich from '../components/variante/VVergleich.astro';
 import Foto from '../components/Foto.astro';
+import Bild from '../components/Bild.astro';
 import Icon from '../components/Icon.astro';
 import type { IconName } from '../config/site';
 import { SEITEN_FOTO } from '../config/bilder';
@@ -109,7 +108,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
 
   <!-- Kundenreise als „Bühne“ (Jamil, Talk qh87y3sj #5596/#5598/#5599/#5601/#5602, Variante A, 12.11.2026; Sicherung Tag
        vor-kundenreise-buehne-20261112). Vorher (seit 09.11., #5181–#5334): Journey-Map mit fünf Kreisen an einer Linie und je einem
-       Glühbirnen-Knopf, der die Antwort „So sieht es im besten Fall aus“ aufklappte. Kette und Linie sind entfernt; die Antworten
+       Glühbirnen-Knopf, der die Antwort (Etikett seit #5626 „Bestenfalls“) aufklappte. Kette und Linie sind entfernt; die Antworten
        stehen jetzt immer sichtbar in jedem Schritt (mit kleiner Glühbirne als Zeichen), damit kein Inhalt verloren geht.
        Am Rechner (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): die Bühne bleibt beim Scrollen stehen (sticky), je
        Scroll-Stück erscheint der nächste Schritt groß in der Mitte (großes Symbol statt Zahl seit #5620, Überschrift, Frage, Antwort), der vorige rückt
@@ -151,7 +150,10 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
                der Hero-Knopf). Auf der Bühne verwandelt sich beim letzten Scroll-Stück der Haken-Kreis in den Knopf (.ist-cta);
                Handy, reduzierte Bewegung, ohne JS: Knopf direkt unter „zufriedener Kunde“. Der frühere Knopf unter der Bühne entfällt. -->
           <div class="krb-schritt krb-ziel" data-krb-schritt>
-            <p class="krb-ziel__text">{KUNDENREISE.ziel}</p>
+            <div class="krb-ziel__kopf">
+              <p class="krb-ziel__text">{KUNDENREISE.ziel}</p>
+              <p class="krb-ziel__unter">{KUNDENREISE.zielUnter}</p>
+            </div>
             <p class="krb-ziel__satz">{KUNDENREISE.schluss}</p>
             <span class="krb-haken" aria-hidden="true"><Icon name="check" size={40} /></span>
             <div class="v-knopfe kr-cta krb-cta">
@@ -164,17 +166,10 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   </section>
   </div>
 
-  <!-- Was Sie davon haben. (#vorteile, Jamil, Talk qh87y3sj #5381 „Warum sollte der Websitebesucher unser Kunde werden?“, 10.11.2026;
-       Sicherung Branch vor-vorteile-20261110): sechs Vorteile aus Kundensicht mit Linien-Icons, zartes Türkis zwischen Kundenreise
-       (Papier) und „So gehen wir vor“ (Weiß). Komponente start/Vorteile.astro, Texte VORTEILE in config/startseite.ts. -->
-  <Vorteile />
+  <!-- „Was Sie davon haben.“ (#vorteile, sechs Vorteil-Karten) entfernt (Jamil, Talk qh87y3sj #5633, 12.11.2026); Daten VORTEILE bleiben für /neu/ -->
 
 
-  <!-- Was wir für Ihre Sichtbarkeit tun. (Jamil, Talk qh87y3sj #5363, 10.11.2026; Sicherung Branch vor-arbeitsweise-panels-20261109):
-       drei Felder Wir analysieren / Wir optimieren für Google / Wir optimieren für KI-Suche mit gezeichneten Beispiel-Ansichten
-       („Beispielhafte Darstellung“, keine echten Daten, keine Logos), Hintergrund Sand. Komponenten components/sichtbarkeit/, Texte
-       config/sichtbarkeit.ts; dieselben Felder stehen auf /leistungen/suchmaschinen-optimierung/, /google-profil/ und /auswertung/. -->
-  <Sichtbarkeit />
+  <!-- „Was wir für Ihre Sichtbarkeit tun.“ (#sichtbarkeit) steht seit 12.11.2026 auf /leistungen/suchmaschinen-optimierung/ (Jamil, Talk qh87y3sj #5634) -->
 
   <!-- „So arbeiten wir.“ (#arbeitsweise, Verantwortung/Einfachheit/Verlässlichkeit) entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026;
        Sicherung Tag vor-kundenreise-buehne-20261112). -->
@@ -237,8 +232,9 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        #vergleich (Sand) in der Vorschau #team hell, Abschluss Sand; ohne Platzhalter (live) Abschluss hell (#referenzen entfernt, Jamil #5322 Q9). -->
   <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
 
-  <!-- Wer hinter waybuild steht (Jamil #4934 Punkt 2, 08.11.2026). NUR PLATZHALTER (rot
-       gestrichelt, „Foto folgt“), keine KI-Gesichter, keine erfundenen Texte; echt sind nur Namen und Rollen. Nur in der Vorschau. -->
+  <!-- Wer hinter waybuild steht (Jamil #4934; Fotos und Test-Zitate #5636/#5637, 12.11.2026): zwei gleich hohe Karten mit rundem
+       Porträt (höchstens 180 px, Cans Quelle hat nur 256 px), Name, Rolle, Zitat. Nur in der Vorschau, solange die Zitate
+       Test-Zitate sind (vor Livegang von Can/Jamil bestätigen lassen). Keine strukturierten Daten mit den Zitaten. -->
   {PLATZHALTER && (
     <section class="bs" id="team" aria-labelledby="bs-team">
       <div class="wrap">
@@ -248,17 +244,11 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
         </div>
         <ul class="team4">
           {TEAM.personen.map((m) => (
-            <li class="team4__karte platzhalter">
-              <span class="platzhalter__etikett">{TEAM.platzhalter}</span>
-              <div class="team4__foto" role="img" aria-label={`${TEAM.fotoFolgt}: ${m.name}`}>
-                <span class="team4__kuerzel" aria-hidden="true">{m.kuerzel}</span>
-                <span class="team4__folgt" aria-hidden="true">{TEAM.fotoFolgt}</span>
-              </div>
-              <div>
-                <h3 class="team4__name">{m.name}</h3>
-                <p class="team4__rolle">{m.rolle}</p>
-                <p class="team4__text">{m.text}</p>
-              </div>
+            <li class="team4__karte">
+              <div class="team4__foto"><Bild name={m.foto} alt={m.alt} widths={[180, 360]} sizes="180px" class="team4__bild" /></div>
+              <h3 class="team4__name">{m.name}</h3>
+              <p class="team4__rolle">{m.rolle}</p>
+              <blockquote class="team4__zitat"><p>„{m.zitat}“</p></blockquote>
             </li>
           ))}
         </ul>

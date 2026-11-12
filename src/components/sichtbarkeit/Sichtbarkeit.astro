@@ -2,25 +2,31 @@
 // Abschnitt „Was wir für Ihre Sichtbarkeit tun.“ (Jamil, Talk qh87y3sj #5363, 10.11.2026) mit wiederverwendbaren Feldern (SichtPanel.astro).
 // variante="start": Startseite nach „So gehen wir vor“, alle drei Felder mit Link zur Leistungsseite, Hintergrund Sand (#sichtbarkeit).
 // variante="leistung": auf /leistungen/<slug>/ die passenden Felder (LEISTUNG_PANELS) ohne Links, Hintergrund Weiß.
+// variante="seo" (Jamil, Talk qh87y3sj #5634, 12.11.2026): der ganze Abschnitt der Startseite (Kennzeile, Überschrift, Einleitung,
+// alle drei Felder) auf /leistungen/suchmaschinen-optimierung/, Hintergrund Weiß wie die übrigen Leistungsabschnitte; Links nur zu
+// den anderen Leistungsseiten (nicht auf sich selbst).
 import SichtPanel from './SichtPanel.astro';
 import { SICHTBARKEIT, type PanelArt } from '../../config/sichtbarkeit';
 import '../../styles/sichtbarkeit.css';
 
-interface Props { arten?: PanelArt[]; variante?: 'start' | 'leistung' }
+interface Props { arten?: PanelArt[]; variante?: 'start' | 'leistung' | 'seo' }
 const { arten = ['analyse', 'google', 'ki'], variante = 'start' } = Astro.props;
 const start = variante === 'start';
-const hid = start ? 'sb-h' : 'sb-h-leistung';
+const voll = variante !== 'leistung'; // Texte des ganzen Abschnitts
+const hid = voll ? 'sb-h' : 'sb-h-leistung';
+const stil = variante === 'seo' ? 'leistung' : variante;
+const mitLink = (a: PanelArt) => start || (variante === 'seo' && a !== 'ki');
 ---
 
-<section class:list={['section', 'sb', `sb--${variante}`]} id={start ? 'sichtbarkeit' : undefined} aria-labelledby={hid}>
+<section class:list={['section', 'sb', `sb--${stil}`]} id={voll ? 'sichtbarkeit' : undefined} aria-labelledby={hid}>
   <div class="wrap">
     <div class="section-head center sb-kopf">
-      {start && <span class="eyebrow">{SICHTBARKEIT.eyebrow}</span>}
-      <h2 id={hid} class="rule">{start ? SICHTBARKEIT.titel : SICHTBARKEIT.leistungTitel}</h2>
-      <p class="lead">{start ? SICHTBARKEIT.intro : SICHTBARKEIT.leistungIntro}</p>
+      {voll && <span class="eyebrow">{SICHTBARKEIT.eyebrow}</span>}
+      <h2 id={hid} class="rule">{voll ? SICHTBARKEIT.titel : SICHTBARKEIT.leistungTitel}</h2>
+      <p class="lead">{voll ? SICHTBARKEIT.intro : SICHTBARKEIT.leistungIntro}</p>
     </div>
     <div class:list={['sb-liste', `sb-liste--${arten.length}`]}>
-      {arten.map((a) => <SichtPanel art={a} mitLink={start} />)}
+      {arten.map((a) => <SichtPanel art={a} mitLink={mitLink(a)} />)}
     </div>
   </div>
 </section>

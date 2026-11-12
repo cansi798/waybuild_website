@@ -7,20 +7,20 @@ import { absolute } from '../lib/paths';
 import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { CLAIM, BOTSCHAFT, VORTEILE, ABSCHLUSS } from '../config/startseite';
+import { CLAIM, BOTSCHAFT, ABSCHLUSS } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { VORGEHEN } from '../config/vorgehen';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
 
 export const GET: APIRoute = async ({ site }) => {
   const artikel = await getCollection('ratgeber');
-  // Leistungen NEU: 4 Gruppen / 13 Leistungen (Jamil, Talk qh87y3sj #5274/#5276); Altbestand nicht mehr aufgeführt
+  // Leistungen NEU: 4 Gruppen / 12 Leistungen (Jamil, Talk qh87y3sj #5274/#5276; Social Media entfernt #5630); Altbestand nicht mehr aufgeführt
   const gruppen = await gruppenMitLeistungen();
   // Blog (Jamil #5264): nur freigegebene Beiträge, Entwürfe (draft: true) bleiben draußen
   const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
   // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, Kombipreise nicht mit dem Gesamtpaket der Extras
-  const komplett = `Optional zusätzlich zu Basis oder Plus: ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Zusätzlich zu Basis oder Plus buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
+  const komplett = `Nur zusammen mit Basis oder Plus buchbar (einzeln nicht): ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Basis oder Plus buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
   const lines = [
     `# ${company.legalName}`,
     '',
@@ -31,11 +31,8 @@ export const GET: APIRoute = async ({ site }) => {
     `## Startseite: ${V_HERO.titel.replace(/\.$/, '')}`,
     `${V_HERO.titel} ${V_HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Im besten Fall: ${st.antwort})`).join('; ')}. ${KUNDENREISE.schluss}`,
-    // Vorteile aus Kundensicht (Jamil, Talk qh87y3sj #5381)
-    `- ${VORTEILE.titel} ${VORTEILE.intro} ${VORTEILE.liste.map((v) => `${v.titel}: ${v.text}${v.paket ? ` (${v.paket})` : ''}`).join(' ')}`,
-    // Arbeitsweise Sichtbarkeit (Jamil, Talk qh87y3sj #5363): nur Vorgehen, keine Platzierungsversprechen
-    `- ${SICHTBARKEIT.titel} ${Object.values(PANELS).map((p) => `${p.titel} ${p.text} (${p.paket})`).join(' ')}`,
+    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Bestenfalls: ${st.antwort})`).join('; ')}. Ziel: ${KUNDENREISE.ziel} – ${KUNDENREISE.zielUnter} ${KUNDENREISE.schluss}`,
+    // „Was Sie davon haben.“ von der Startseite entfernt (Jamil #5633); „Was wir für Ihre Sichtbarkeit tun.“ jetzt bei den Leistungen (#5634)
     `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen
     `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.wann}): ${s.text}`).join(' ')}`,
@@ -48,7 +45,8 @@ export const GET: APIRoute = async ({ site }) => {
     `- In allen Paketen: ${IN_ALLEN.join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
     ...PAKETE.map((p) => `- Paket ${p.name}: ${formatEuro(p.preis)} pro Monat netto zzgl. MwSt. (${formatEuro(brutto(p.preis))} inkl. MwSt.). ${p.kurz}. ${p.features.join(', ')}.`),
-    `- ${KOMPLETTPAKET.name}: ${komplett} Inhalt: ${KOMPLETTPAKET.software.join(', ')}. Ablauf: ${KOMPLETTPAKET.ablauf.map((a) => a.text).join(' → ')}.`,
+    // Auftragsverwaltungs-Liste und Ablauf stehen nicht mehr auf der Karte (Jamil #5606/#5610/#5641)
+    `- ${KOMPLETTPAKET.name}: ${komplett}`,
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
     '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit Paketwahl, Komplettpaket und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
@@ -58,6 +56,9 @@ export const GET: APIRoute = async ({ site }) => {
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
     '',
     '## Leistungen (entlang der Kundenreise, je Leistung eine eigene Seite)',
+    // Arbeitsweise Sichtbarkeit (Jamil #5363), seit #5634 auf der Seite Suchmaschinen-Optimierung
+    `Auf der Seite Suchmaschinen-Optimierung (${url('/leistungen/suchmaschinen-optimierung/')}): ${SICHTBARKEIT.titel} ${Object.values(PANELS).map((p) => `${p.titel} ${p.text} (${p.paket})`).join(' ')}`,
+    '',
     ...gruppen.flatMap((g) => [
       `### ${g.titel}`,
       g.text,

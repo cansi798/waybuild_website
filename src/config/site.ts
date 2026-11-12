@@ -173,11 +173,11 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei waybuild?',
-    a: `Es gibt zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Optional dazu: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    a: `Es gibt zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Basis oder Plus buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und eine Aufbereitung für KI-Assistenten. ${PAKETE[1].name} richtet zusätzlich Ihr Google-Profil ein und pflegt es, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie optional zusätzlich zu Basis oder Plus: ${KOMPLETTPAKET.text.replace(/ Zusätzlich zu Basis oder Plus buchbar\.$/, '')}`,
+    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Basis oder Plus, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Basis oder Plus buchbar\.$/, '')}`,
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
@@ -193,7 +193,7 @@ export const faqs = [
   },
   {
     q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder das Google-Profil im Paket Plus sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.',
+    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder Ihres Google-Profils sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.',
   },
   {
     q: 'Was kann ich einmalig dazubuchen?',
