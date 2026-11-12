@@ -3,8 +3,9 @@
 // Ersetzt die Journey-Map mit Glühbirnen-Knöpfen (die Antworten stehen jetzt immer sichtbar in jedem Schritt).
 // - Rechner (ab 48rem breit und 36rem hoch): .krb--buehne. Der Bereich bekommt per CSS seine feste Höhe (Bildschirm + je Schritt
 //   ein Scroll-Stück), die Bühne darin ist sticky. Hier nur: aus der Scroll-Lage den aktiven Schritt bestimmen (.ist-aktiv,
-//   frühere .ist-vorbei) und die Fortschrittsleiste füllen (--f je Segment). Einmal je Bild (requestAnimationFrame, passiv),
-//   Lagen nur bei Größenänderung gemessen. Bewegung macht CSS (nur transform/opacity).
+//   frühere .ist-vorbei) und die Fortschrittsleiste setzen (.ist-voll je erreichtem Schritt, Schritt für Schritt). Einmal je Bild (requestAnimationFrame, passiv),
+//   Lagen nur bei Größenänderung gemessen. Bewegung macht CSS (nur transform/opacity). Seit #5621 (12.11.2026) ein Stück mehr:
+//   darin bekommt das Ziel .ist-cta, der Haken verwandelt sich in den Knopf „Jetzt starten“.
 // - Handy und kleine Fenster: .krb--gleiten, jede Karte gleitet beim Hereinscrollen einmal herein (IntersectionObserver).
 // - Reduzierte Bewegung oder ohne JS: keine Klasse, alles sofort sichtbar untereinander.
 // Wechselt die Fenstergröße oder die Bewegungs-Einstellung, wird der Zustand neu gesetzt.
@@ -15,7 +16,11 @@ if (bereich && buehne) {
   const schritte = Array.from(bereich.querySelectorAll<HTMLElement>('[data-krb-schritt]'));
   const segmente = Array.from(bereich.querySelectorAll<HTMLElement>('.krb-segment'));
   const n = schritte.length;
-  bereich.style.setProperty('--krb-n', String(n));
+  const ziel = schritte[n - 1];
+  const zielLink = ziel?.querySelector<HTMLAnchorElement>('a');
+  // Scroll-Stücke: je Schritt eines, dazu das letzte, in dem der Haken zum Knopf „Jetzt starten“ wird (Jamil #5621)
+  const stuecke = n + 1;
+  bereich.style.setProperty('--krb-n', String(stuecke));
   const mqRuhig = matchMedia('(prefers-reduced-motion: reduce)');
   const mqBuehne = matchMedia('(min-width: 48rem) and (min-height: 36rem)');
   let modus = '';
@@ -36,7 +41,8 @@ if (bereich && buehne) {
     geplant = false;
     if (modus !== 'buehne') return;
     const p = Math.min(1, Math.max(0, (window.scrollY + klebt - oben) / weg));
-    const k = Math.min(n - 1, Math.floor(p * n));
+    const stueck = Math.min(stuecke - 1, Math.floor(p * stuecke));
+    const k = Math.min(n - 1, stueck);
     if (k !== aktiv) {
       aktiv = k;
       schritte.forEach((s, i) => {
@@ -44,9 +50,11 @@ if (bereich && buehne) {
         s.classList.toggle('ist-vorbei', i < k);
       });
     }
+    ziel?.classList.toggle('ist-cta', stueck === stuecke - 1);
+    // Leiste: ein Segment je Schritt (inkl. Ziel), voll erst wenn der Schritt erreicht ist, nie anteilig (Jamil #5624)
     segmente.forEach((seg, i) => {
-      const f = Math.min(1, Math.max(0, p * n - i)).toFixed(3);
-      if (fuellung[i] !== f) { fuellung[i] = f; seg.style.setProperty('--f', f); }
+      const voll = i <= k;
+      if (fuellung[i] !== String(voll)) { fuellung[i] = String(voll); seg.classList.toggle('ist-voll', voll); }
     });
   };
   const planen = () => {
@@ -63,7 +71,8 @@ if (bereich && buehne) {
     io = null;
     bereich.classList.toggle('krb--buehne', modus === 'buehne');
     bereich.classList.toggle('krb--gleiten', modus === 'gleiten');
-    schritte.forEach((s) => s.classList.remove('ist-aktiv', 'ist-vorbei', 'ist-da'));
+    schritte.forEach((s) => s.classList.remove('ist-aktiv', 'ist-vorbei', 'ist-da', 'ist-cta'));
+    segmente.forEach((seg) => seg.classList.remove('ist-voll'));
     aktiv = -1;
     fuellung.length = 0;
     if (modus === 'buehne') {
@@ -79,6 +88,15 @@ if (bereich && buehne) {
       schritte.forEach((s) => io?.observe(s));
     }
   };
+
+  // Tastatur: bekommt der Knopf auf der Bühne den Fokus, bevor er erschienen ist, zum letzten Scroll-Stück springen
+  zielLink?.addEventListener('focus', () => {
+    if (modus !== 'buehne' || !ziel || ziel.classList.contains('ist-cta')) return;
+    messen();
+    const y = oben - klebt + weg * (stuecke - 0.5) / stuecke;
+    window.scrollTo({ top: Math.round(y), behavior: 'instant' as ScrollBehavior });
+    zeigen();
+  });
 
   setzen();
   mqRuhig.addEventListener('change', setzen);

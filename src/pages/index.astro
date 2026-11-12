@@ -112,8 +112,9 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        Glühbirnen-Knopf, der die Antwort „So sieht es im besten Fall aus“ aufklappte. Kette und Linie sind entfernt; die Antworten
        stehen jetzt immer sichtbar in jedem Schritt (mit kleiner Glühbirne als Zeichen), damit kein Inhalt verloren geht.
        Am Rechner (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): die Bühne bleibt beim Scrollen stehen (sticky), je
-       Scroll-Stück erscheint der nächste Schritt groß in der Mitte (Zahl, Symbol, Überschrift, Frage, Antwort), der vorige rückt
-       klein und blass nach oben aus; oben eine Fortschrittsleiste; zum Schluss „zufriedener Kunde“ mit Haken. Am Handy Karten
+       Scroll-Stück erscheint der nächste Schritt groß in der Mitte (großes Symbol statt Zahl seit #5620, Überschrift, Frage, Antwort), der vorige rückt
+       klein und blass nach oben aus; oben eine Fortschrittsleiste; zum Schluss „zufriedener Kunde“ mit Haken, der sich beim letzten
+       Scroll-Stück in den Knopf „Jetzt starten“ verwandelt (#5621; Sicherung Tag vor-buehne-feinschliff-20261112). Am Handy Karten
        untereinander, die einzeln hereingleiten. Ohne JS oder bei reduzierter Bewegung: alles sofort sichtbar untereinander.
        Alle Schritte stehen immer im HTML (Screenreader lesen alle, h2 → h3). Texte wörtlich aus KUNDENREISE (config/variante.ts),
        Stil src/styles/kundenreise.css, Bewegung src/scripts/kundenreise.ts. Bleibt der Abschnitt, der über den stehenden Hero
@@ -133,12 +134,9 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
             {KUNDENREISE.stationen.map((st, i) => (
               <li class="krb-schritt" data-krb-schritt>
                 <div class="krb-karte">
-                  <div class="krb-marke" aria-hidden="true">
-                    <span class="krb-zahl">{i + 1}</span>
-                    <span class="krb-symbol"><Icon name={KR_SYMBOL[i] ?? 'check'} size={26} /></span>
-                  </div>
+                  <span class="krb-symbol" aria-hidden="true"><Icon name={KR_SYMBOL[i] ?? 'check'} size={48} /></span>
                   <div class="krb-inhalt">
-                    <h3 class="krb-name">{st.name}</h3>
+                    <h3 class="krb-name"><span class="sr-only">Schritt {i + 1} von {KUNDENREISE.stationen.length}: </span>{st.name}</h3>
                     <p class="krb-frage">{st.frage}</p>
                     <div class="krb-antwort">
                       <p class="krb-antwort__titel"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>{KUNDENREISE.antwortTitel}</p>
@@ -149,18 +147,18 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
               </li>
             ))}
           </ol>
-          <p class="krb-schritt krb-ziel" data-krb-schritt>
+          <!-- Ziel + Abschluss (#5619–#5621): „zufriedener Kunde“, Satz und Knopf „Jetzt starten“ (Erstberatung, gleiches Ziel wie
+               der Hero-Knopf). Auf der Bühne verwandelt sich beim letzten Scroll-Stück der Haken-Kreis in den Knopf (.ist-cta);
+               Handy, reduzierte Bewegung, ohne JS: Knopf direkt unter „zufriedener Kunde“. Der frühere Knopf unter der Bühne entfällt. -->
+          <div class="krb-schritt krb-ziel" data-krb-schritt>
+            <p class="krb-ziel__text">{KUNDENREISE.ziel}</p>
+            <p class="krb-ziel__satz">{KUNDENREISE.schluss}</p>
             <span class="krb-haken" aria-hidden="true"><Icon name="check" size={40} /></span>
-            <span class="krb-ziel__text">{KUNDENREISE.ziel}</span>
-          </p>
+            <div class="v-knopfe kr-cta krb-cta">
+              <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{KUNDENREISE.knopf}</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5275, 09.11.2026): Satz + Knopf „Jetzt starten“ (Erstberatung, wie der Hero-Knopf) -->
-    <div class="wrap kr kr-schluss">
-      <p class="kr-schluss__satz">{KUNDENREISE.schluss}</p>
-      <div class="v-knopfe kr-cta">
-        <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{KUNDENREISE.knopf}</a>
       </div>
     </div>
   </section>

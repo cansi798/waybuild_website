@@ -30,7 +30,7 @@ export const KUNDENREISE = {
     { name: 'Aufmerksamkeit', frage: 'Wie werden potenzielle Kunden auf Ihr Unternehmen aufmerksam?', antwort: 'Wer nach Ihrer Leistung sucht, findet Sie bei Google, auf Karten und in sozialen Medien – und landet auf einer Website, die überzeugt.' },
     { name: 'Vertrauen', frage: 'Warum sollten Interessenten sich für Sie entscheiden?', antwort: 'Klare Inhalte, echte Bewertungen und Beispiele Ihrer Arbeit zeigen auf einen Blick, warum man bei Ihnen richtig ist.' },
     { name: 'Anfrage', frage: 'Wie einfach wird aus Interesse ein Kontakt?', antwort: 'Kontakt aufnehmen dauert nur einen Moment: per Formular, Terminbuchung oder Anruf – und jede Anfrage kommt bei der richtigen Person an.' },
-    { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', antwort: 'Anfragen werden zügig und verlässlich beantwortet, wiederkehrende Schritte laufen automatisch.' },
+    { name: 'Bearbeitung', frage: 'Wie schnell und zuverlässig werden Anfragen bearbeitet?', antwort: 'Jede Anfrage wird zügig und verlässlich beantwortet – auch an vollen Tagen und auch dann, wenn gerade niemand Lust dazu hat. Wiederkehrende Schritte laufen automatisch.' }, // Jamil, Talk qh87y3sj #5619, 12.11.2026
     { name: 'Betreuung', frage: 'Wie wird aus einem Kunden ein zufriedener Kunde?', antwort: 'Nach dem Auftrag bleiben Sie in Kontakt, bitten zur passenden Zeit um eine Bewertung und sehen, was funktioniert.' },
   ],
   /** Beschriftung des Symbols (Screenreader) und kleine Überschrift über jeder Antwort */
