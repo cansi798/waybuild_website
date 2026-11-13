@@ -1,11 +1,220 @@
 ---
 // Szene 6 „Vor Ort“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
-// PLATZHALTER aus dem Grundgerüst: wird vom Szenen-Agenten durch das echte Mockup ersetzt (Drehbuch: BEISPIEL_SZENEN[5].bild
-// in src/config/beispiel.ts). Anleitung: docs/beispiel-szenen-anleitung.md, Referenz: Szene01.astro.
-import Platzhalter from '../Platzhalter.astro';
+// Drehbuch: Tablet mit individuellem Formular (Flächen, Farbe, Fotos), Unterschrift von Frau Weber, „Abschicken“.
+// Aufbau wie Szene01.astro (Referenz), Anleitung: docs/beispiel-szenen-anleitung.md.
+// Phasen (4):
+//   0  Ausgang: leeres Formular „Besichtigung · Frau Weber“ (Kästchen leer, keine Farbe, keine Fotos, Unterschriftsfeld leer)
+//   1  Flächen werden erfasst: Werte erscheinen nacheinander, Häkchen setzen sich
+//   2  Farbe „Salbei“ wird gewählt (Ring), drei Fotos kommen nacheinander dazu
+//   3  Frau Weber unterschreibt: die Unterschrift zeichnet sich von links nach rechts, der Stift fährt mit
+//   4  Finger tippt auf „Abschicken“, der Knopf wird grün „✓ Abgeschickt“
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 4.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Tablet from '../geraete/Tablet.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+
+const FLAECHEN = [
+  { name: 'Wände streichen', wert: '62 m²' },
+  { name: 'Decke streichen', wert: '25 m²' },
+  { name: 'Risse spachteln', wert: '2 Stellen' },
+];
+const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
 ---
 
-<Platzhalter nr={6} geraet="tablet" variante={variante} />
+<SzeneRahmen nr={6} phasen={4} takt={1600} format="quer" variante={variante}>
+  <Tablet>
+    <div class="sz06-app">
+      <!-- Kopf des Formulars -->
+      <div class="sz06-kopf">
+        <span class="sz06-marke">M</span>
+        <span class="sz06-kopf-text">
+          <span class="sz06-titel">Besichtigung · Frau Weber</span>
+          <span class="bm-klein">Wohnzimmer · Musterstadt</span>
+        </span>
+        <span class="bm-chip sz06-termin">Do · 10:00</span>
+      </div>
+
+      <div class="sz06-raster">
+        <div class="sz06-spalte">
+          <!-- Flächen -->
+          <div class="bm-karte sz06-block">
+            <span class="sz06-ueber">Flächen</span>
+            {FLAECHEN.map((f) => (
+              <span class="sz06-zeile">
+                <span class="sz06-box"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span>
+                <span class="sz06-name">{f.name}</span>
+                <span class="sz06-wert">{f.wert}</span>
+              </span>
+            ))}
+          </div>
+
+          <!-- Farbe -->
+          <div class="bm-karte sz06-block">
+            <span class="sz06-ueber">Farbe <span class="sz06-farbname">Wände: Salbei · Decke: Weiß</span></span>
+            <span class="sz06-farben">
+              {FARBEN.map((f) => (
+                <span class:list={['sz06-farbe', `sz06-farbe--${f}`]}>{f === 'salbei' && <span class="sz06-wahl"></span>}</span>
+              ))}
+            </span>
+          </div>
+
+          <!-- Fotos (gezeichnet) -->
+          <div class="bm-karte sz06-block">
+            <span class="sz06-ueber">Fotos <span class="sz06-anzahl">3</span></span>
+            <span class="sz06-fotos">
+              <span class="sz06-foto sz06-foto--1">
+                <svg viewBox="0 0 60 44" preserveAspectRatio="xMidYMid slice"><rect width="60" height="44" fill="#ece6da" /><rect y="34" width="60" height="10" fill="#d8cdb8" /><path d="M30 6l-3 8 4 5-3 7 2 6" stroke="#8d8270" stroke-width="1.4" fill="none" stroke-linecap="round" /></svg>
+              </span>
+              <span class="sz06-foto sz06-foto--2">
+                <svg viewBox="0 0 60 44" preserveAspectRatio="xMidYMid slice"><rect width="60" height="44" fill="#f3f0ea" /><path d="M0 14L30 22 60 12V0H0z" fill="#fbfaf6" /><path d="M0 14L30 22 60 12M30 22v22" stroke="#d5ccbd" stroke-width="1.2" fill="none" /><circle cx="44" cy="8" r="3" fill="#e4dccd" /></svg>
+              </span>
+              <span class="sz06-foto sz06-foto--3">
+                <svg viewBox="0 0 60 44" preserveAspectRatio="xMidYMid slice"><rect width="60" height="44" fill="#e9e3d7" /><rect x="16" y="7" width="28" height="28" rx="1.5" fill="#cfe6ee" stroke="#ffffff" stroke-width="3" /><path d="M30 7v28M16 21h28" stroke="#ffffff" stroke-width="2" /><rect x="12" y="35" width="36" height="3" fill="#d6ccba" /></svg>
+              </span>
+              <span class="sz06-foto sz06-foto--neu">+</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="sz06-spalte sz06-spalte--rechts">
+          <!-- Unterschrift -->
+          <div class="bm-karte sz06-block sz06-unterschrift">
+            <span class="sz06-ueber">Unterschrift Kundin</span>
+            <span class="sz06-feld">
+              <svg class="sz06-schrift" viewBox="0 0 240 90" preserveAspectRatio="xMidYMid meet">
+                <path d="M14 30c4 18 7 32 12 34 5 2 8-24 11-24s5 26 10 24 8-30 14-34M66 52c6 2 13-2 13-8s-9-4-10 3c-1 9 9 12 17 6M100 18c-2 18-3 34-1 42 2 6 12 4 14-4s-6-14-13-6M126 52c6 2 13-2 13-8s-9-4-10 3c-1 9 9 12 17 6M156 56c2-8 4-14 8-16s6 2 8 0M176 52c10 6 30 4 52-6" />
+              </svg>
+              <span class="sz06-decke"></span>
+              <span class="sz06-bahn"><span class="sz06-stift"></span></span>
+              <span class="sz06-linie"><span class="sz06-kreuz">✕</span></span>
+            </span>
+            <span class="bm-klein sz06-unter">Frau Weber · bestätigt die Aufnahme</span>
+          </div>
+
+          <!-- Abschicken -->
+          <span class="sz06-knopf">
+            <span class="bm-knopf sz06-knopf-los">Abschicken
+              <svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" /></svg>
+            </span>
+            <span class="bm-knopf sz06-knopf-ok"><span class="bm-ok"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span> Abgeschickt</span>
+            <span class="bm-tipp sz06-tipp"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </Tablet>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 06 „Vor Ort“ – alle Regeln mit .sz06 (global, aber eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 4). Vorzustände NUR unter .sz06[data-phase]:not([data-erreicht~="k"]).
+   * Bewegt: nur transform/opacity. Bildschirm Tablet quer = 640 × ca. 470 Mockup-Px. */
+  .sz06-app { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); padding: var(--bsp-a4) var(--bsp-a6) var(--bsp-a4); background: var(--bsp-papier); }
+
+  /* Kopf */
+  .sz06-kopf { flex: none; display: flex; align-items: center; gap: var(--bsp-a3); padding-bottom: var(--bsp-a3); border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .sz06-marke { flex: none; display: grid; place-items: center; width: calc(36 * var(--px)); height: calc(36 * var(--px)); border-radius: var(--bsp-r-m); background: var(--bsp-tinte);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; }
+  .sz06-kopf-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
+  .sz06-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; letter-spacing: -0.01em; color: var(--bsp-text); white-space: nowrap; }
+  .sz06-termin { font-size: var(--bsp-schrift-s); padding: calc(4 * var(--px)) var(--bsp-a3); }
+
+  /* Raster: links Formular, rechts Unterschrift + Abschicken */
+  .sz06-raster { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr); gap: var(--bsp-a4); }
+  .sz06-spalte { min-height: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); }
+  .sz06-spalte--rechts { justify-content: space-between; }
+  .sz06-block { display: flex; flex-direction: column; gap: var(--bsp-a2); padding: var(--bsp-a3) var(--bsp-a4); }
+  .sz06-ueber { display: flex; align-items: center; gap: var(--bsp-a2); font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bsp-tinte); }
+
+  /* Flächen */
+  .sz06-zeile { display: flex; align-items: center; gap: var(--bsp-a2); font-size: var(--bsp-schrift-m); }
+  .sz06-box { flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: calc(5 * var(--px));
+    border: calc(1.5 * var(--px)) solid var(--bsp-tuerkis-dunkel); background: var(--bsp-flaeche); }
+  .sz06-box svg { width: 80%; height: 80%; fill: none; stroke: var(--bsp-tinte); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+  .sz06-name { flex: 1; min-width: 0; color: var(--bsp-text); white-space: nowrap; }
+  .sz06-wert { flex: none; min-width: calc(74 * var(--px)); padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-papier);
+    border: calc(1 * var(--px)) solid var(--bsp-linie-grau); font-weight: 650; color: var(--bsp-text); text-align: right; white-space: nowrap; }
+
+  /* Farbe */
+  .sz06-farbname { margin-left: auto; font-size: var(--bsp-schrift-xs); font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--bsp-text-leise); white-space: nowrap; }
+  .sz06-farben { display: flex; gap: var(--bsp-a3); padding: calc(2 * var(--px)) 0; }
+  .sz06-farbe { position: relative; width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: 50%; box-shadow: inset 0 0 0 calc(1 * var(--px)) rgb(0 0 0 / 10%); }
+  .sz06-farbe--weiss { background: #f4f2ec; }
+  .sz06-farbe--salbei { background: #a9bba3; }
+  .sz06-farbe--sand { background: #d9c7a7; }
+  .sz06-farbe--taube { background: #9fb3c3; }
+  .sz06-farbe--anthrazit { background: #4a5150; }
+  .sz06-wahl { position: absolute; inset: calc(-5 * var(--px)); border-radius: 50%; border: calc(2.5 * var(--px)) solid var(--bsp-tuerkis); }
+
+  /* Fotos */
+  .sz06-anzahl { display: inline-grid; place-items: center; min-width: calc(16 * var(--px)); height: calc(16 * var(--px)); border-radius: 99px; background: var(--bsp-tinte); color: var(--bsp-weiss); letter-spacing: 0; }
+  .sz06-fotos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--bsp-a2); }
+  .sz06-foto { aspect-ratio: 60 / 44; border-radius: var(--bsp-r-s); overflow: hidden; box-shadow: 0 calc(1 * var(--px)) calc(3 * var(--px)) rgb(0 79 76 / 18%); }
+  .sz06-foto svg { display: block; width: 100%; height: 100%; }
+  .sz06-foto--neu { display: grid; place-items: center; box-shadow: none; border: calc(1.5 * var(--px)) dashed var(--bsp-linie); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xl); font-weight: 400; }
+
+  /* Unterschrift */
+  .sz06-unterschrift { flex: 1; min-height: 0; }
+  .sz06-feld { position: relative; flex: 1; min-height: calc(120 * var(--px)); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); overflow: hidden;
+    box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+  .sz06-schrift { position: absolute; left: 6%; top: 22%; width: 88%; height: 52%; fill: none; stroke: var(--bsp-nacht); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .sz06-linie { position: absolute; left: 7%; right: 7%; bottom: 22%; height: calc(1.5 * var(--px)); background: var(--bsp-linie-grau); }
+  .sz06-kreuz { position: absolute; left: 0; bottom: calc(4 * var(--px)); font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); line-height: 1; }
+  /* Abdeckung, die nach rechts wegschrumpft = Unterschrift „zeichnet sich“ (nur transform) */
+  .sz06-decke { position: absolute; top: 0; bottom: 26%; left: 4%; right: 4%; background: var(--bsp-weiss); transform-origin: 100% 50%; transform: scaleX(0); }
+  /* Stift: fährt mit der Abdeckungskante von links nach rechts */
+  .sz06-bahn { position: absolute; top: 0; bottom: 26%; left: 4%; right: 4%; pointer-events: none; }
+  .sz06-stift { position: absolute; left: 100%; top: 42%; width: calc(10 * var(--px)); height: calc(46 * var(--px)); margin: calc(-40 * var(--px)) 0 0 calc(-2 * var(--px));
+    border-radius: 99px 99px calc(2 * var(--px)) calc(2 * var(--px)); background: var(--bsp-nacht); transform-origin: 50% 100%; transform: rotate(24deg); opacity: 0; }
+  .sz06-unter { font-size: var(--bsp-schrift-xs); }
+
+  /* Abschicken */
+  .sz06-knopf { position: relative; flex: none; display: grid; }
+  .sz06-knopf > .bm-knopf { grid-area: 1 / 1; min-height: calc(44 * var(--px)); font-size: var(--bsp-schrift-m); }
+  .sz06-knopf-los svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sz06-knopf-ok { background: var(--bsp-ok); gap: var(--bsp-a2); }
+  .sz06-knopf-ok .bm-ok { width: calc(20 * var(--px)); height: calc(20 * var(--px)); background: var(--bsp-weiss); color: var(--bsp-ok); }
+  .sz06-tipp { left: 50%; top: 50%; }
+
+  /* Übergänge (gelten in beide Richtungen) */
+  .sz06-box svg, .sz06-wert, .sz06-farbname { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz06-zeile:nth-of-type(2) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
+  .sz06-zeile:nth-of-type(2) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 0.3s); }
+  .sz06-zeile:nth-of-type(3) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.45s); }
+  .sz06-zeile:nth-of-type(3) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 0.65s); }
+  .sz06-zeile:nth-of-type(4) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.8s); }
+  .sz06-zeile:nth-of-type(4) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 1s); }
+  .sz06-wahl { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.15s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.15s; }
+  .sz06-farbname { transition-delay: 0.3s; }
+  .sz06-foto, .sz06-anzahl { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz06-foto--1 { transition-delay: 0.45s; }
+  .sz06-foto--2 { transition-delay: 0.7s; }
+  .sz06-foto--3 { transition-delay: 0.95s; }
+  .sz06-anzahl { transition-delay: 1.05s; }
+  .sz06-decke, .sz06-bahn { transition: transform 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.2s; }
+  .sz06-stift { transition: opacity var(--bsp-dauer-kurz) ease; }
+  .sz06-knopf-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.55s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.55s; }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: keine Werte, Kästchen leer */
+  .sz06[data-phase]:not([data-erreicht~="1"]) .sz06-wert { opacity: 0; transform: translateX(calc(8 * var(--px))); }
+  .sz06[data-phase]:not([data-erreicht~="1"]) .sz06-box svg { opacity: 0; transform: scale(0.4); }
+  /* vor Phase 2: keine Farbe gewählt, keine Fotos */
+  .sz06[data-phase]:not([data-erreicht~="2"]) .sz06-wahl { opacity: 0; transform: scale(0.6); }
+  .sz06[data-phase]:not([data-erreicht~="2"]) .sz06-farbname { opacity: 0; }
+  .sz06[data-phase]:not([data-erreicht~="2"]) .sz06-foto:not(.sz06-foto--neu) { opacity: 0; transform: scale(0.6); }
+  .sz06[data-phase]:not([data-erreicht~="2"]) .sz06-anzahl { opacity: 0; transform: scale(0.4); }
+  /* vor Phase 3: Unterschriftsfeld leer (Abdeckung über der Schrift, Stift links) */
+  .sz06[data-phase]:not([data-erreicht~="3"]) .sz06-decke { transform: scaleX(1); }
+  .sz06[data-phase]:not([data-erreicht~="3"]) .sz06-bahn { transform: translateX(-100%); }
+  /* Phase 3: Stift sichtbar, solange gezeichnet wird; wackelt leicht mit der Schrift */
+  .sz06[data-phase="3"] .sz06-stift { opacity: 1; animation: sz06-schreiben 0.3s ease-in-out 0.2s 4 alternate both; }
+  /* vor Phase 4: noch nicht abgeschickt */
+  .sz06[data-phase]:not([data-erreicht~="4"]) .sz06-knopf-ok { opacity: 0; transform: scale(0.92); }
+  /* Phase 4: Finger tippt auf „Abschicken“ */
+  .sz06[data-phase="4"] .sz06-tipp { animation: bm-tippen 0.75s var(--bsp-ease) 0.05s both; }
+
+  @keyframes sz06-schreiben { from { transform: rotate(24deg) translateY(0); } to { transform: rotate(20deg) translateY(calc(-10 * var(--px))); } }
+</style>
