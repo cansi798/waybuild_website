@@ -1,0 +1,20 @@
+---
+// Testseite für die zwei Filme auf /geschichte/ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026). Nur zur Prüfung, noindex.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FilmWebsite from '../components/geschichte/filme/FilmWebsite.astro';
+import FilmBetriebstag from '../components/geschichte/filme/FilmBetriebstag.astro';
+---
+
+<BaseLayout title="Filmtest: Website und Betriebstag" description="Interne Testseite für die zwei animierten Filme „Ich brauche eine Website“ und „Ein Tag im Betrieb“ auf der Geschichte." noindex>
+  <section class="section">
+    <div class="wrap">
+      <h1>Filmtest</h1>
+      <h2 id="website">Ich brauche eine Website</h2>
+      <FilmWebsite />
+      <h2 id="tag">Ein Tag im Betrieb</h2>
+      <FilmBetriebstag />
+      <h2 id="zweimal">Zweite Instanz</h2>
+      <FilmWebsite />
+    </div>
+  </section>
+</BaseLayout>
