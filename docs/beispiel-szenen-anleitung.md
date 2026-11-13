@@ -119,6 +119,13 @@ const { variante = 'buehne' } = Astro.props;
 
 **Do**
 - Alle Klassen der Szene mit `szNN-` beginnen, alle Regeln mit `.szNN` (oder `.szNN-…`) – `<style is:global>`.
+- **Spezifität:** Die Bausteine `bm-*` und die Geräte-Klassen `gr-*` haben selbst eine Klasse Spezifität, und die
+  Reihenfolge der Stylesheets im Build ist nicht garantiert. Soll eine eigene Regel einen Baustein überschreiben (z. B.
+  `.bm-knopf` in einer anderen Farbe oder Größe, `--gr-hoehe` an einem Gerät), immer mit der Szenen-Wurzel davor
+  schreiben: `.sz07 .sz07-knopf { … }` statt nur `.sz07-knopf { … }`. Vorzustände (`.sz07[data-phase]:not(…) …`) sind
+  ohnehin stärker.
+- **Phasen:** höchstens 6 je Szene (bewährt: 3–4). Am Handy dauert eine Szene etwa `350 ms + (phasen − 1) × takt` plus die
+  letzte Bewegung – mehr als ca. 6 s wirkt zäh und die Karte ist dann oft schon wieder aus dem Bild gescrollt.
 - Nur `transform` und `opacity` animieren (keine Breite/Höhe/Position/Farbe/clip-path animieren).
 - Endzustand ohne Attribute vollständig und schön (das sehen Nutzer ohne JS, mit reduzierter Bewegung und im Teaser).
 - Mockup bildlich halten: kein Text, der gelesen werden muss. Der lesbare Inhalt ist Titel + Text der Szene (config).

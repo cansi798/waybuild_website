@@ -58,7 +58,7 @@ const { variante = 'buehne' } = Astro.props;
               <span>vielen Dank für den Termin. Hier ist Ihr Angebot:</span>
             </span>
             <span class="bm-karte bm-karte--marke sz09-angebot">
-              <span class="sz09-angebot-kopf"><span class="bm-klein">Angebot · Wohnzimmer</span><span class="bm-chip">PDF</span></span>
+              <span class="sz09-angebot-kopf"><span class="bm-klein">Angebot Nr. A-041 · Wohnzimmer</span><span class="bm-chip">PDF</span></span>
               <span class="sz09-angebot-was">Wände und Decke streichen</span>
               <span class="sz09-angebot-preis">1.404,20 €</span>
             </span>
@@ -69,7 +69,7 @@ const { variante = 'buehne' } = Astro.props;
             <span class="bm-klein sz09-hinweis">Dort sehen Sie alle Schritte und können das Angebot annehmen.</span>
             <span class="sz09-anhang">
               <span class="sz09-datei">PDF</span>
-              <span class="sz09-anhang-text"><b>Angebot-Wohnzimmer.pdf</b><span class="bm-klein">1 Seite</span></span>
+              <span class="sz09-anhang-text"><b>Angebot-A-041.pdf</b><span class="bm-klein">1 Seite</span></span>
             </span>
             <span class="sz09-gruss">Viele Grüße<br />Ihr Malerbetrieb Muster</span>
           </div>
@@ -94,7 +94,7 @@ const { variante = 'buehne' } = Astro.props;
    * Mitteilung nur unter .sz09[data-phase="1"]. Bewegt: nur transform/opacity. */
   .sz09-buehne { position: relative; width: 100%; height: 100%; container-type: size; display: grid; place-items: center; }
   .sz09-gruppe { position: relative; display: block; }
-  .sz09-handy { --gr-hoehe: min(94cqh, 58cqw * 2.1667); }
+  .sz09-handy { --gr-hoehe: min(100cqh, 58cqw * 2.1667); } /* gleiche Höhe wie die anderen Handy-Szenen (1–4, 11) */
 
   /* Sprechblase: rechts oben am Handy, Spitze zeigt nach links unten */
   .sz09-blase { position: absolute; z-index: 4; left: 62%; top: 5%; padding: 0.55em 0.95em; border-radius: 1.1em; background: var(--bsp-weiss); color: var(--bsp-tinte);

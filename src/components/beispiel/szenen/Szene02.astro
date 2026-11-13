@@ -15,9 +15,10 @@ import Handy from '../geraete/Handy.astro';
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
 
+// Preise passen zu Szene 7/8/12 (netto Wände 10 €/m², Decke 9 €/m²; inkl. MwSt. knapp unter 12 bzw. 11 €/m²) → „ab 11/10 €/m²“.
 const PREISE = [
-  { was: 'Wände streichen', preis: 'ab 12 €/m²' },
-  { was: 'Decke streichen', preis: 'ab 14 €/m²' },
+  { was: 'Wände streichen', preis: 'ab 11 €/m²' },
+  { was: 'Decke streichen', preis: 'ab 10 €/m²' },
   { was: 'Tapezieren', preis: 'ab 18 €/m²' },
 ];
 ---
@@ -131,7 +132,7 @@ const PREISE = [
           <div class="bm-karte sz02-preise">
             {PREISE.map((p) => <p class="sz02-preis"><span>{p.was}</span><strong>{p.preis}</strong></p>)}
           </div>
-          <p class="bm-klein sz02-hinweis">Beispielpreise inkl. Material</p>
+          <p class="bm-klein sz02-hinweis">Beispielpreise inkl. Material und MwSt.</p>
           <span class="bm-knopf sz02-rechnen">Preis berechnen</span>
         </div>
         <!-- Scroll-Leiste rechts -->
