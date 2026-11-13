@@ -1,0 +1,87 @@
+---
+// Film „Ein Tag im Betrieb“, Szene 4 · 13:00 „Material bestellt“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Handy: Material-Liste (Begriffe je Branche aus daten.ts, sonst neutral). Phasen (3): 1 Tipp auf „Bestellen“ · 2 „Bestellt,
+// Lieferung morgen 7:00“ · 3 Lagerbestand wächst, „Lager aktualisiert“. Endzustand = Phase 3. Präfix .gft4.
+import FilmRahmen from '../FilmRahmen.astro';
+import Handy from '../../../beispiel/geraete/Handy.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+const ZEILEN = [
+  { key: 'mat0', menge: '6', alt: '2', neu: '8', fuell: 0.8 },
+  { key: 'mat1', menge: '4', alt: '1', neu: '5', fuell: 0.6 },
+  { key: 'mat2', menge: '10', alt: '3', neu: '13', fuell: 0.9 },
+];
+---
+
+<FilmRahmen kennung="gft4">
+  <Handy zeit="13:00">
+    <div class="bm-app gft4-app">
+      <p class="gf-appkopf"><span class="gf-appkopf__titel">Material</span><span class="bm-chip">Lager</span></p>
+      <div class="gft4-liste">
+        {ZEILEN.map((z, i) => (
+          <div class={`bm-karte gft4-zeile gft4-zeile--${i}`}>
+            <p class="gft4-oben"><strong data-p={z.key}>{W[z.key]}</strong><span class="gft4-menge">+ {z.menge}</span></p>
+            <p class="gft4-lager">
+              <span class="gft4-balken"><i style={`--f:${z.fuell}`}></i></span>
+              <span class="gft4-zahl"><span class="gft4-zahl--alt">Lager {z.alt}</span><span class="gft4-zahl--neu">Lager {z.neu}</span></span>
+            </p>
+          </div>
+        ))}
+      </div>
+      <div class="gft4-lieferung">
+        <span class="gft4-wagen"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z" /><circle cx="7" cy="17.5" r="1.8" /><circle cx="17" cy="17.5" r="1.8" /></svg></span>
+        <span class="gft4-ltext"><small>Lieferung an</small><strong data-p="kundeProjekt">{W.kundeProjekt}</strong><small>Großhandel Muster · morgen 7:00</small></span>
+      </div>
+      <p class="gft4-knopf">
+        <span class="bm-knopf gft4-bestellen">Bestellen<span class="gf-tipp"></span></span>
+        <span class="gft4-bestellt"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span><span>Bestellt · Lieferung morgen 7:00</span></span>
+      </p>
+      <p class="gf-hinweis gft4-hinweis"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Lager aktualisiert, für alle im Team</p>
+    </div>
+  </Handy>
+</FilmRahmen>
+
+<style is:global>
+  .gft4-app { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
+  .gft4-liste { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .gft4-zeile { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .gft4-oben { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .gft4-oben strong { flex: 1; min-width: 0; font-size: var(--bsp-schrift-m); font-weight: 650; color: var(--bsp-text); line-height: 1.25; }
+  .gft4-menge { flex: none; padding: calc(3 * var(--px)) var(--bsp-a2); border-radius: 99px; background: var(--bsp-flaeche); color: var(--bsp-tinte); font-size: var(--bsp-schrift-s); font-weight: 700; }
+  .gft4-lager { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .gft4-balken { flex: 1; height: calc(6 * var(--px)); border-radius: 99px; background: var(--bsp-gerippe); overflow: hidden; }
+  .gft4-balken i { display: block; height: 100%; border-radius: inherit; background: var(--bsp-tuerkis-dunkel); transform-origin: left; transform: scaleX(var(--f)); }
+  .gft4-zahl { position: relative; display: grid; min-width: calc(58 * var(--px)); font-size: var(--bsp-schrift-xs); font-weight: 650; color: var(--bsp-text-leise); text-align: right; }
+  .gft4-zahl > span { grid-area: 1 / 1; }
+  .gft4-zahl--alt { opacity: 0; }
+  .gft4-zahl--neu { color: var(--bsp-tinte); }
+  .gft4-lieferung { display: flex; align-items: center; gap: var(--bsp-a3); padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-flaeche); }
+  .gft4-wagen { flex: none; display: grid; place-items: center; width: calc(36 * var(--px)); height: calc(36 * var(--px)); border-radius: calc(10 * var(--px)); background: var(--bsp-weiss); }
+  .gft4-wagen svg { width: 62%; height: 62%; fill: none; stroke: var(--bsp-tinte); stroke-width: 1.8; stroke-linejoin: round; }
+  .gft4-ltext { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+  .gft4-ltext small { font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); }
+  .gft4-ltext strong { font-size: var(--bsp-schrift-m); color: var(--bsp-text); }
+  .gft4-knopf { display: grid; }
+  .gft4-knopf > * { grid-area: 1 / 1; }
+  .gft4-bestellen { position: relative; min-height: calc(42 * var(--px)); opacity: 0; }
+  .gft4-bestellt { display: inline-flex; align-items: center; justify-content: center; gap: var(--bsp-a2); min-height: calc(42 * var(--px)); padding: 0 var(--bsp-a3); border-radius: 99px;
+    background: var(--bsp-ok-flaeche); color: var(--bsp-ok); font-size: var(--bsp-schrift-s); font-weight: 700; text-align: center; }
+
+  .gft4-balken i { transition: transform 0.9s var(--bsp-ease) 0.3s; }
+  .gft4-zeile--1 .gft4-balken i { transition-delay: 0.45s; } .gft4-zeile--2 .gft4-balken i { transition-delay: 0.6s; }
+  .gft4-zahl > span { transition: opacity var(--bsp-dauer-kurz) ease 0.6s; }
+  .gft4-bestellen, .gft4-bestellt { transition: opacity var(--bsp-dauer-kurz) ease 0.2s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.2s; }
+  .gft4-hinweis { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.9s, transform var(--bsp-dauer) var(--bsp-ease) 0.9s; }
+
+  .gft4[data-phase]:not([data-erreicht~="2"]) .gft4-bestellen { opacity: 1; transition-delay: 0s; }
+  .gft4[data-phase]:not([data-erreicht~="2"]) .gft4-bestellt { opacity: 0; transform: scale(0.9); transition-delay: 0s; }
+  .gft4[data-aktiv][data-phase="1"] .gft4-bestellen { animation: gf-druck 0.3s ease-in-out 1.1s both; }
+  .gft4[data-aktiv][data-phase="1"] .gft4-bestellen .gf-tipp { animation: gf-tippen 0.75s var(--bsp-ease) 1.1s both; }
+  .gft4[data-phase]:not([data-erreicht~="3"]) .gft4-balken i { transform: scaleX(calc(var(--f) * 0.28)); }
+  .gft4[data-phase]:not([data-erreicht~="3"]) .gft4-zahl--alt { opacity: 1; }
+  .gft4[data-phase]:not([data-erreicht~="3"]) .gft4-zahl--neu { opacity: 0; }
+  .gft4[data-phase]:not([data-erreicht~="3"]) .gft4-hinweis { opacity: 0; transform: translateY(calc(14 * var(--px))); }
+  .gft4[data-phase]:not([data-erreicht~="1"]) .gft4-menge { opacity: 0.4; }
+  .gft4-menge { transition: opacity var(--bsp-dauer) ease 0.3s; }
+</style>

@@ -1,0 +1,93 @@
+---
+// Film „Ein Tag im Betrieb“, Szene 5 · 15:00 „Geprüft und verschickt“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Laptop: Angebot (Posten aus branchen.ts) ist ein VORSCHLAG und wird VOR dem Versand geprüft. Phasen (3): 1 Entwurf mit
+// Hinweis „Vorschlag · wird vor dem Versand geprüft“ · 2 jede Zeile bekommt nacheinander einen Prüf-Haken, Status „Geprüft“ ·
+// 3 Tipp auf „Angebot versenden“ → „Verschickt an Frau Weber“. Endzustand = Phase 3. Präfix .gft5.
+import FilmRahmen from '../FilmRahmen.astro';
+import Laptop from '../../../beispiel/geraete/Laptop.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+const ZEILEN = [
+  { n: 'pName0', m: 'pMenge0', p: 'pPreis0' },
+  { n: 'pName1', m: 'pMenge1', p: 'pPreis1' },
+  { n: 'pName2', m: 'pMenge2', p: 'pPreis2' },
+  { n: 'anpName', m: 'anpMengeNeu', p: 'anpPreisNeu' },
+];
+const HAKEN = 'M5 12.5l4.5 4.5L19 7.5';
+---
+
+<FilmRahmen kennung="gft5" format="quer">
+  <Laptop>
+    <div class="gft5-app">
+      <div class="gft5-kopf">
+        <p class="gft5-titel"><small>Angebot · Frau Weber</small><strong data-p="angebotTitel">{W.angebotTitel}</strong></p>
+        <p class="gft5-status">
+          <span class="gft5-status--vorschlag">Vorschlag · wird vor dem Versand geprüft</span>
+          <span class="gft5-status--ok"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d={HAKEN} /></svg></span>Geprüft</span>
+        </p>
+      </div>
+      <div class="gft5-tabelle">
+        <p class="gft5-zeile gft5-zeile--kopf"><span>Posten</span><span>Menge</span><span>Preis</span><span>Prüfung</span></p>
+        {ZEILEN.map((z, i) => (
+          <p class={`gft5-zeile gft5-zeile--${i}`}>
+            <span data-p={z.n}>{W[z.n]}</span><span data-p={z.m}>{W[z.m]}</span><span class="gft5-preis" data-p={z.p}>{W[z.p]}</span>
+            <span class="gft5-pruef"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d={HAKEN} /></svg></span></span>
+          </p>
+        ))}
+        <p class="gft5-zeile gft5-summe"><span>Summe inkl. 19 % MwSt.</span><span></span><span data-p="summeNeu">{W.summeNeu}</span><span></span></p>
+      </div>
+      <div class="gft5-fuss">
+        <p class="bm-klein">Geprüft von: <span data-p="chef">{W.chef}</span></p>
+        <p class="gft5-knopf">
+          <span class="bm-knopf gft5-senden">Angebot versenden<span class="gf-tipp"></span></span>
+          <span class="gft5-verschickt"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d={HAKEN} /></svg></span>Verschickt an Frau Weber</span>
+        </p>
+      </div>
+    </div>
+  </Laptop>
+</FilmRahmen>
+
+<style is:global>
+  .gft5-app { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); padding: calc(20 * var(--px)) calc(26 * var(--px)); background: var(--bsp-papier); }
+  .gft5-kopf { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--bsp-a4); }
+  .gft5-titel { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+  .gft5-titel small { font-size: var(--bsp-schrift-xs); font-weight: 650; color: var(--bsp-text-leise); text-transform: uppercase; letter-spacing: 0.06em; }
+  .gft5-titel strong { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 750; letter-spacing: -0.02em; color: var(--bsp-text); }
+  .gft5-status { flex: none; display: grid; justify-items: end; }
+  .gft5-status > span { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: calc(6 * var(--px)); padding: calc(5 * var(--px)) var(--bsp-a3); border-radius: 99px;
+    font-size: var(--bsp-schrift-xs); font-weight: 700; white-space: nowrap; }
+  .gft5-status--vorschlag { background: #fdf3de; color: #8a5a00; opacity: 0; }
+  .gft5-status--ok { background: var(--bsp-ok-flaeche); color: var(--bsp-ok); }
+  .gft5-status .gf-haken { width: calc(16 * var(--px)); height: calc(16 * var(--px)); }
+  .gft5-tabelle { display: flex; flex-direction: column; border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); overflow: hidden; }
+  .gft5-zeile { display: grid; grid-template-columns: 2.2fr 1fr 1fr calc(56 * var(--px)); align-items: center; gap: var(--bsp-a3); min-height: calc(40 * var(--px)); padding: 0 var(--bsp-a4);
+    border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .gft5-zeile > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gft5-zeile--kopf { min-height: calc(28 * var(--px)); background: #f7f9f8; font-size: calc(9 * var(--px)); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bsp-text-leise); }
+  .gft5-preis { text-align: right; font-variant-numeric: tabular-nums; }
+  .gft5-zeile--kopf span:nth-child(3) { text-align: right; }
+  .gft5-pruef { display: grid; place-items: center; }
+  .gft5-summe { border-bottom: 0; background: var(--bsp-flaeche); font-weight: 750; }
+  .gft5-summe span:nth-child(3) { text-align: right; font-family: var(--font-head); font-size: var(--bsp-schrift-m); }
+  .gft5-fuss { display: flex; align-items: center; justify-content: space-between; gap: var(--bsp-a4); margin-top: auto; }
+  .gft5-knopf { display: grid; justify-items: end; }
+  .gft5-knopf > * { grid-area: 1 / 1; }
+  .gft5-senden { position: relative; opacity: 0; }
+  .gft5-verschickt { display: inline-flex; align-items: center; gap: var(--bsp-a2); min-height: calc(36 * var(--px)); padding: 0 var(--bsp-a4); border-radius: 99px; background: var(--bsp-ok-flaeche);
+    color: var(--bsp-ok); font-size: var(--bsp-schrift-m); font-weight: 700; white-space: nowrap; }
+
+  .gft5-status > span, .gft5-senden, .gft5-verschickt { transition: opacity var(--bsp-dauer-kurz) ease 0.9s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.9s; }
+  .gft5-pruef .gf-haken { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .gft5-zeile--0 .gf-haken { transition-delay: 0.25s; } .gft5-zeile--1 .gf-haken { transition-delay: 0.45s; }
+  .gft5-zeile--2 .gf-haken { transition-delay: 0.65s; } .gft5-zeile--3 .gf-haken { transition-delay: 0.85s; }
+  .gft5-zeile { transition: background-color 0.4s ease; }
+
+  .gft5[data-phase]:not([data-erreicht~="2"]) .gft5-status--vorschlag { opacity: 1; transition-delay: 0s; }
+  .gft5[data-phase]:not([data-erreicht~="2"]) .gft5-status--ok { opacity: 0; transform: scale(0.9); transition-delay: 0s; }
+  .gft5[data-phase]:not([data-erreicht~="2"]) .gft5-pruef .gf-haken { opacity: 0; transform: scale(0.4); }
+  .gft5[data-phase]:not([data-erreicht~="3"]) .gft5-senden { opacity: 1; transition-delay: 0s; }
+  .gft5[data-phase]:not([data-erreicht~="3"]) .gft5-verschickt { opacity: 0; transform: scale(0.9); transition-delay: 0s; }
+  .gft5[data-aktiv][data-phase="3"] .gft5-senden { animation: gf-druck 0.3s ease-in-out 0.5s both; }
+  .gft5[data-aktiv][data-phase="3"] .gft5-senden .gf-tipp { animation: gf-tippen 0.75s var(--bsp-ease) 0.5s both; }
+</style>

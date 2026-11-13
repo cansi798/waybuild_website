@@ -1,0 +1,16 @@
+---
+// Film „Ich brauche eine Website“ für den Startseiten-Entwurf /geschichte/ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Ohne Props, mehrfach pro Seite einsetzbar. 6 Szenen à ca. 5 s: Suche → Website am Handy → Leistungen/Referenzen/Bewertungen
+// → Tipp auf Anfrage/WhatsApp → „Neue Anfrage“ im Betrieb → Abschluss „Gefunden werden. Überzeugen. Anfragen bekommen.“
+// Personalisierung (sessionStorage + Event 'waybuild:personalisierung'): siehe Kopf von filmkern.ts. Texte: daten.ts.
+import FilmBuehne from './FilmBuehne.astro';
+import Website1 from './szenen/Website1.astro';
+import Website2 from './szenen/Website2.astro';
+import Website3 from './szenen/Website3.astro';
+import Website4 from './szenen/Website4.astro';
+import Website5 from './szenen/Website5.astro';
+import Website6 from './szenen/Website6.astro';
+import { FILM_WEBSITE } from './daten';
+---
+
+<FilmBuehne art="website" name={FILM_WEBSITE.name} szenen={FILM_WEBSITE.szenen} komponenten={[Website1, Website2, Website3, Website4, Website5, Website6]} />

@@ -1,0 +1,112 @@
+---
+// Film „Ich brauche eine Website“, Szene 1 „Gefunden“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Handy: Suche „{Leistung} in Musterstadt“, der Betrieb steht oben. Neutral gezeichnet: kein Suchmaschinen-Logo, übrige
+// Treffer namenlose Gerippe. Phasen (3): 1 Suche wird getippt · 2 Treffer gleiten herein · 3 Betrieb hervorgehoben, Tipp auf
+// „Website“. Endzustand (ohne JS, reduziert) = Phase 3. Alle Regeln beginnen mit .gfw1.
+import FilmRahmen from '../FilmRahmen.astro';
+import Handy from '../../../beispiel/geraete/Handy.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+const zeichen = [...W.suche].map((z) => (z === ' ' ? ' ' : z));
+---
+
+<FilmRahmen kennung="gfw1">
+  <Handy zeit="10:24">
+    <div class="bm-app gfw1-app">
+      <div class="gfw1-suche">
+        <svg class="gfw1-lupe" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg>
+        <span class="gfw1-feld">
+          <span class="gfw1-platz">Suchen</span>
+          <span class="gfw1-text" data-p-zeichen="suche">{zeichen.map((z, i) => <span class="gf-z" style={`--i:${i}`}>{z}</span>)}</span>
+          <span class="gfw1-marke"></span>
+        </span>
+        <span class="gfw1-los"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" /><path d="M15.5 15.5l4 4" /></svg></span>
+      </div>
+      <p class="gfw1-anzahl gfw1-rein">Ergebnisse in Ihrer Nähe</p>
+      <div class="gfw1-karte gfw1-rein">
+        <svg viewBox="0 0 268 100" preserveAspectRatio="xMidYMid slice">
+          <rect width="268" height="100" fill="#e6f0ee" />
+          <path d="M190 0h78v44c-28 6-54 2-78-10z" fill="#d8ece0" />
+          <path d="M-10 72C60 58 120 80 180 62s80-24 100-20" stroke="#fff" stroke-width="8" fill="none" />
+          <path d="M70 -10l26 120M186 -10l-22 120" stroke="#fff" stroke-width="5" fill="none" />
+        </svg>
+        <span class="gfw1-pin gfw1-pin--a"><i></i></span><span class="gfw1-pin gfw1-pin--b"><i></i></span>
+        <span class="gfw1-pin gfw1-pin--top"><i></i><b data-p="firma">{W.firma}</b></span>
+      </div>
+      <div class="gfw1-liste">
+        <div class="bm-karte gfw1-treffer gfw1-top gfw1-rein">
+          <span class="gfw1-ring"></span>
+          <p class="gfw1-kopf"><span class="gfw1-zeichen" data-p="kuerzel">{W.kuerzel}</span><span class="gfw1-name" data-p="firma">{W.firma}</span></p>
+          <p class="gfw1-wertung"><strong>4,9</strong> <span class="bm-sterne">★★★★★</span> <span class="bm-klein">(128)</span></p>
+          <p class="bm-klein"><span data-p="art">{W.art}</span> · Musterstadt · 1,2 km</p>
+          <p class="gfw1-zeile"><span class="bm-chip bm-chip--ok">Heute geöffnet</span><span class="bm-klein">bis 18 Uhr</span></p>
+          <p class="gfw1-knoepfe"><span class="bm-knopf bm-knopf--hell gfw1-k">Anrufen</span><span class="bm-knopf gfw1-k gfw1-website">Website<span class="gf-tipp"></span></span></p>
+        </div>
+        {[1, 2].map((k) => (
+          <div class={`bm-karte gfw1-treffer gfw1-rest gfw1-rein gfw1-rein--${k + 1}`}>
+            <span class="bm-balken bm-balken--mittel"></span><span class="gfw1-leer">★★★★</span><span class="bm-balken bm-balken--kurz"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Handy>
+</FilmRahmen>
+
+<style is:global>
+  .gfw1-app { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
+  .gfw1-suche { position: relative; flex: none; display: flex; align-items: center; gap: var(--bsp-a2); height: calc(46 * var(--px)); padding: 0 calc(6 * var(--px)) 0 var(--bsp-a3);
+    border-radius: 99px; background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-10 * var(--px)) rgb(0 79 76 / 30%); }
+  .gfw1-lupe { flex: none; width: calc(18 * var(--px)); height: calc(18 * var(--px)); fill: none; stroke: var(--bsp-text-leise); stroke-width: 2.2; stroke-linecap: round; }
+  .gfw1-feld { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; height: 100%; font-size: var(--bsp-schrift-m); white-space: nowrap; overflow: hidden; }
+  .gfw1-text { color: var(--bsp-text); font-weight: 500; }
+  .gfw1-platz { position: absolute; left: 0; color: var(--bsp-text-leise); opacity: 0; }
+  .gfw1-marke { width: calc(1.5 * var(--px)); height: 44%; margin-left: calc(1 * var(--px)); background: var(--bsp-tinte); opacity: 0; }
+  .gfw1-los { flex: none; display: grid; place-items: center; width: calc(34 * var(--px)); height: calc(34 * var(--px)); border-radius: 50%; background: var(--bsp-tinte); }
+  .gfw1-los svg { width: 56%; height: 56%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2.4; stroke-linecap: round; }
+  .gfw1-anzahl { font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text-leise); padding-left: calc(4 * var(--px)); }
+  .gfw1-karte { position: relative; flex: none; height: calc(108 * var(--px)); border-radius: var(--bsp-r-l); overflow: hidden; box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+  .gfw1-karte svg { display: block; width: 100%; height: 100%; }
+  .gfw1-pin { position: absolute; display: flex; align-items: center; gap: calc(5 * var(--px)); max-width: 62%; }
+  .gfw1-pin i { flex: none; display: block; width: calc(13 * var(--px)); height: calc(13 * var(--px)); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #9fb1ae; box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss); }
+  .gfw1-pin--a { left: 14%; top: 58%; } .gfw1-pin--b { left: 80%; top: 62%; }
+  .gfw1-pin--top { left: 34%; top: 30%; }
+  .gfw1-pin--top i { width: calc(20 * var(--px)); height: calc(20 * var(--px)); background: var(--bsp-tinte); }
+  .gfw1-pin--top b { padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-weiss); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgb(0 79 76 / 20%); }
+  .gfw1-liste { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .gfw1-treffer { display: flex; flex-direction: column; gap: calc(5 * var(--px)); }
+  .gfw1-top { gap: calc(4 * var(--px)); transform: scale(1.02); }
+  .gfw1-kopf { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .gfw1-zeichen { flex: none; display: grid; place-items: center; width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: calc(9 * var(--px)); background: var(--bsp-tinte);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 750; }
+  .gfw1-name { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; color: var(--bsp-text); }
+  .gfw1-wertung { display: flex; align-items: center; gap: calc(4 * var(--px)); font-size: var(--bsp-schrift-s); }
+  .gfw1-zeile { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .gfw1-knoepfe { display: flex; gap: var(--bsp-a2); margin-top: var(--bsp-a1) !important; }
+  .gfw1-k { position: relative; min-height: calc(30 * var(--px)); padding: 0 var(--bsp-a3); font-size: var(--bsp-schrift-s); }
+  .gfw1-ring { position: absolute; inset: calc(-1 * var(--px)); border-radius: inherit; pointer-events: none; border: calc(2 * var(--px)) solid var(--bsp-tuerkis);
+    box-shadow: 0 0 0 calc(4 * var(--px)) rgb(0 166 161 / 16%), 0 calc(14 * var(--px)) calc(26 * var(--px)) calc(-14 * var(--px)) rgb(0 79 76 / 45%); }
+  .gfw1-rest { opacity: 0.5; }
+  .gfw1-leer { font-size: var(--bsp-schrift-xs); color: #c9d2d0; letter-spacing: calc(1 * var(--px)); line-height: 1; }
+
+  .gfw1-platz { transition: opacity 0.1s linear; }
+  .gfw1-rein { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .gfw1-rein--2 { transition-delay: calc(1 * var(--bsp-versatz)); }
+  .gfw1-rein--3 { transition-delay: calc(2 * var(--bsp-versatz)); }
+  .gfw1-rein--4 { transition-delay: calc(3 * var(--bsp-versatz)); }
+  .gfw1-ring { transition: opacity var(--bsp-dauer) var(--bsp-ease); }
+
+  /* Vorzustände (nur mit Engine) */
+  .gfw1[data-phase]:not([data-erreicht~="1"]) .gf-z { opacity: 0; }
+  .gfw1[data-phase]:not([data-erreicht~="1"]) .gfw1-platz { opacity: 1; }
+  .gfw1[data-aktiv]:not([data-erreicht~="2"]) .gfw1-marke { animation: bm-blinken 1s steps(1) infinite; }
+  .gfw1[data-phase]:not([data-erreicht~="2"]) .gfw1-rein { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  .gfw1[data-phase]:not([data-erreicht~="3"]) .gfw1-ring { opacity: 0; }
+  .gfw1[data-erreicht~="2"]:not([data-erreicht~="3"]) .gfw1-top { transform: none; }
+  .gfw1[data-erreicht~="2"]:not([data-erreicht~="3"]) .gfw1-rest { opacity: 1; }
+  .gfw1[data-phase][data-erreicht~="3"] .gfw1-rest { transition: opacity var(--bsp-dauer) var(--bsp-ease); }
+  .gfw1[data-phase][data-erreicht~="3"] .gfw1-top { transition: transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .gfw1[data-aktiv][data-phase="3"] .gfw1-website { animation: gf-druck 0.3s ease-in-out 0.9s both; }
+  .gfw1[data-aktiv][data-phase="3"] .gfw1-website .gf-tipp { animation: gf-tippen 0.75s var(--bsp-ease) 0.9s both; }
+</style>

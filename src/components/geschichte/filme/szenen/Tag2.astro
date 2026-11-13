@@ -1,0 +1,91 @@
+---
+// Film „Ein Tag im Betrieb“, Szene 2 · 09:00 „Vor Ort erfasst“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Handy: Einsatz bei Frau Weber (Baustelle bzw. Termin, je Branche). Phasen (3): 1 Fotos werden aufgenommen (kurzer Blitz,
+// drei Bilder) · 2 Notiz wird getippt · 3 Arbeitszeit läuft und ist gespeichert. Endzustand = Phase 3. Präfix .gft2.
+import FilmRahmen from '../FilmRahmen.astro';
+import Handy from '../../../beispiel/geraete/Handy.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+const notiz = [...W.aText0].map((z) => (z === ' ' ? ' ' : z));
+---
+
+<FilmRahmen kennung="gft2">
+  <Handy zeit="9:00">
+    <div class="bm-app gft2-app">
+      <p class="gf-appkopf"><span class="gf-appkopf__titel" data-p="kundeProjekt">{W.kundeProjekt}</span><span class="bm-chip" data-p="ortWort">{W.ortWort}</span></p>
+      <div class="gft2-fotos">
+        <p class="gft2-ueber">Fotos <span class="bm-klein">3 neu</span></p>
+        <div class="gft2-raster">
+          {[0, 1, 2].map((i) => (
+            <span class={`gft2-foto gft2-foto--${i}`}>
+              <svg viewBox="0 0 90 90" preserveAspectRatio="xMidYMid slice">
+                <rect width="90" height="90" fill={['#dcebe8', '#eee3d2', '#e1e9ef'][i]} />
+                <rect y="62" width="90" height="28" fill={['#c8dcd7', '#e2d1b6', '#cbd8e2'][i]} />
+                <rect x={[16, 46, 26][i]} y="20" width="30" height="30" rx="3" fill="#ffffff" opacity="0.85" />
+              </svg>
+            </span>
+          ))}
+          <span class="gft2-kamera"><svg viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12" rx="2.5" /><circle cx="12" cy="13" r="3.2" /><path d="M9 7l1.5-2.5h3L15 7" /></svg></span>
+        </div>
+        <span class="gft2-blitz"></span>
+      </div>
+      <div class="gft2-notiz">
+        <p class="gft2-ueber">Notiz</p>
+        <p class="gft2-text"><span data-p-zeichen="aText0">{notiz.map((z, i) => <span class="gf-z" style={`--i:${i}`}>{z}</span>)}</span></p>
+      </div>
+      <div class="gft2-aufgaben">
+        <p class="gft2-ueber">Aufgaben heute</p>
+        {[0, 1, 2].map((i) => (
+          <p class={`gft2-aufgabe gft2-aufgabe--${i}`}><span class="gft2-kasten"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span><span data-p={`pName${i}`}>{W[`pName${i}`]}</span></p>
+        ))}
+      </div>
+      <div class="gft2-zeit">
+        <span class="gft2-punkt"></span>
+        <span class="gft2-zeit__text"><small>Arbeitszeit · seit 8:00</small><strong>1:00 Std.</strong></span>
+        <span class="gft2-gespeichert"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Gespeichert</span>
+      </div>
+    </div>
+  </Handy>
+</FilmRahmen>
+
+<style is:global>
+  .gft2-app { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
+  .gft2-app .gf-appkopf__titel { font-size: var(--bsp-schrift-m); }
+  .gft2-ueber { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--bsp-a2) !important; font-size: var(--bsp-schrift-s); font-weight: 700; color: var(--bsp-text); }
+  .gft2-fotos { position: relative; padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); overflow: hidden; }
+  .gft2-raster { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(6 * var(--px)); }
+  .gft2-foto, .gft2-kamera { aspect-ratio: 1; border-radius: var(--bsp-r-s); overflow: hidden; }
+  .gft2-foto svg { display: block; width: 100%; height: 100%; }
+  .gft2-kamera { display: grid; place-items: center; background: var(--bsp-flaeche); }
+  .gft2-kamera svg { width: 50%; height: 50%; fill: none; stroke: var(--bsp-tinte); stroke-width: 1.9; stroke-linejoin: round; }
+  .gft2-blitz { position: absolute; inset: 0; background: var(--bsp-weiss); opacity: 0; pointer-events: none; }
+  .gft2-notiz { padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .gft2-text { min-height: calc(22 * var(--px)); font-size: var(--bsp-schrift-m); line-height: 1.4; color: var(--bsp-text); }
+  .gft2-aufgaben { padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .gft2-aufgabe { display: flex; align-items: center; gap: var(--bsp-a2); padding: calc(5 * var(--px)) 0; font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .gft2-kasten { flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: calc(5 * var(--px)); border: calc(1.5 * var(--px)) solid var(--bsp-linie-grau); }
+  .gft2-kasten svg { width: 70%; height: 70%; fill: none; stroke: var(--bsp-weiss); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+  .gft2-aufgabe--0 .gft2-kasten { background: var(--bsp-ok); border-color: var(--bsp-ok); } .gft2-aufgabe--0 .gft2-kasten svg { opacity: 1; }
+  .gft2-aufgabe--0 span:last-child { color: var(--bsp-text-leise); text-decoration: line-through; }
+  .gft2-zeit { display: flex; align-items: center; gap: var(--bsp-a3); padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-nacht); color: var(--bsp-weiss); }
+  .gft2-punkt { flex: none; width: calc(10 * var(--px)); height: calc(10 * var(--px)); border-radius: 50%; background: #4fd1b4; box-shadow: 0 0 0 calc(4 * var(--px)) rgb(79 209 180 / 25%); }
+  .gft2-zeit__text { flex: 1; display: flex; flex-direction: column; line-height: 1.2; }
+  .gft2-zeit__text small { font-size: var(--bsp-schrift-xs); opacity: 0.8; }
+  .gft2-zeit__text strong { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .gft2-gespeichert { display: inline-flex; align-items: center; gap: calc(5 * var(--px)); font-size: var(--bsp-schrift-xs); font-weight: 650; }
+  .gft2-gespeichert .gf-haken { width: calc(16 * var(--px)); height: calc(16 * var(--px)); background: var(--bsp-tuerkis); }
+
+  .gft2-foto { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .gft2-foto--0 { transition-delay: 0.55s; } .gft2-foto--1 { transition-delay: 1.05s; } .gft2-foto--2 { transition-delay: 1.55s; }
+  .gft2-notiz, .gft2-gespeichert { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .gft2-gespeichert { transition-delay: 0.7s; }
+
+  .gft2[data-phase]:not([data-erreicht~="1"]) .gft2-foto { opacity: 0; transform: scale(0.7); }
+  .gft2[data-aktiv][data-phase="1"] .gft2-blitz { animation: gft2-blitz 1.5s linear 0.45s both; }
+  .gft2[data-phase]:not([data-erreicht~="2"]) .gft2-notiz { opacity: 0.4; }
+  .gft2[data-phase]:not([data-erreicht~="2"]) .gf-z { opacity: 0; }
+  .gft2[data-phase]:not([data-erreicht~="3"]) .gft2-gespeichert { opacity: 0; transform: translateX(calc(10 * var(--px))); }
+  .gft2[data-aktiv] .gft2-punkt { animation: bm-schimmern 1.4s ease-in-out infinite; }
+  @keyframes gft2-blitz { 0%, 4%, 33%, 37%, 66%, 70%, 100% { opacity: 0; } 1.5%, 34.5%, 67.5% { opacity: 0.85; } }
+</style>
