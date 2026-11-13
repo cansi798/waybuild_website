@@ -10,7 +10,7 @@ Szenen stehen dort wörtlich und werden **nicht** geändert.
 
 > **Stand 13.11.2026 (Jamil, Talk qh87y3sj #5683/#5709–#5715 + Änderung 08:57): Film statt Scroll-Bühne, personalisiert.**
 > - Die Seite läuft wie ein **Film ohne Scrollen**: ein Bildschirm (Bühne = sichtbare Höhe), die Szenen wechseln von selbst
->   (je 2–4 s: 3 Phasen 3,3 s, 4 Phasen 3,6 s, eigene Dauer per `SzeneRahmen dauer={…}`), Steuerleiste unten (Zurück,
+>   (je ca. 5 s: bis 3 Phasen 4,8 s, ab 4 Phasen 5,2 s, Branchen 5,0 s, eigene Dauer per `SzeneRahmen dauer={…}`), Steuerleiste unten (Zurück,
 >   Pause/Abspielen, Weiter, Segment je Szene, Branche ändern), Tastatur (Leertaste, Pfeile), Autoplay nur sichtbar/Tab
 >   sichtbar, reduzierte Bewegung = Endzustände ohne Autoplay. Ablauf: `src/scripts/beispiel.ts` (die Scroll-Engine
 >   `buehne-kern.ts` nutzt nur noch die Kundenreise).

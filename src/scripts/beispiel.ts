@@ -47,8 +47,8 @@ if (bereich && buehne) {
     const wurzel = li.querySelector<HTMLElement>(':scope > .bsp-szene__bild > .sz');
     const phasen = Math.max(1, Math.min(6, parseInt(wurzel?.dataset.phasen ?? '1', 10) || 1));
     const nr = art === 'szene' ? parseInt(li.id.replace('szene-', ''), 10) || 0 : 0;
-    const eigen = Math.max(2000, Math.min(4000, parseInt(wurzel?.dataset.dauer ?? '', 10) || 0));
-    const dauer = art === 'start' ? START_DAUER : art === 'schluss' ? 0 : wurzel?.dataset.dauer ? eigen : art === 'branchen' ? 3400 : phasen >= 4 ? 3600 : 3300;
+    const eigen = Math.max(4500, Math.min(5500, parseInt(wurzel?.dataset.dauer ?? '', 10) || 0));
+    const dauer = art === 'start' ? START_DAUER : art === 'schluss' ? 0 : wurzel?.dataset.dauer ? eigen : art === 'branchen' ? 5000 : phasen >= 4 ? 5200 : 4800;
     // Phase 1 kurz nach dem Auftritt, die letzte Phase steht noch gut 1 s, bevor die nächste Szene kommt
     const zeiten = art === 'szene' || art === 'branchen'
       ? Array.from({ length: phasen }, (_, k) => Math.round(120 + (phasen > 1 ? (k * (dauer - 1220)) / (phasen - 1) : 0)))
