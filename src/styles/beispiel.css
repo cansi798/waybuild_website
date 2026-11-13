@@ -1,0 +1,90 @@
+/* BÜHNE „SO KANN ES LAUFEN“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026). Markup: components/beispiel/BeispielBuehne.astro,
+ * Bewegung: scripts/beispiel.ts (Kern wie Kundenreise: scripts/buehne-kern.ts), Geräte/Tokens: styles/beispiel-mockup.css.
+ *
+ * Drei Zustände (wie die Kundenreise-Bühne, styles/kundenreise.css):
+ * 1. Grundform (ohne JS, reduzierte Bewegung): Szenen als Karten untereinander, jede im Endzustand, Schluss als letzte Karte.
+ * 2. .bsp--gleiten (Handy und kleine Fenster mit JS): dieselben Karten gleiten einzeln herein; die Engine spielt dabei die
+ *    Unter-Phasen der Szene einmal im Takt ab.
+ * 3. .bsp--buehne (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): Bereich = Bildschirm + 13 Scroll-Stücke, die
+ *    Bühne darin ist sticky. Je Stück eine Szene groß in der Mitte (Mockup), darunter Titel und Text; oben die
+ *    Fortschrittsleiste mit 13 Segmenten (voll erst, wenn die Szene erreicht ist, nie anteilig). Letztes Stück: Schluss.
+ * Bewegt werden nur transform und opacity; die Höhe des Bereichs steht von Anfang an fest. */
+
+.bsp { --bsp-n: 14; --bsp-kopf: var(--kopf-gesamt, calc(var(--header-h, 72px) + 1px)); --bsp-unten: 0px; --bsp-rand: #d5e8e6;
+  position: relative; margin-block: clamp(20px, 4vw, 40px) clamp(32px, 6vw, 72px); }
+@media (max-width: 959px) { .bsp { --bsp-unten: calc(var(--stickybar-h, 64px) + env(safe-area-inset-bottom)); } }
+.bsp-oben { display: none; }
+
+/* ── 1. Grundform: Karten untereinander ── */
+.bsp-flaeche { max-width: 1080px; }
+.bsp-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(18px, 4vw, 36px); }
+.bsp-schritt { margin: 0; }
+.bsp-szene { display: grid; gap: clamp(14px, 3vw, 28px); padding: clamp(12px, 2.6vw, 26px); border-radius: 24px; background: var(--white);
+  border: 1px solid var(--bsp-rand); box-shadow: 0 1px 2px rgb(0 79 76 / 4%), 0 18px 40px -30px rgb(0 79 76 / 35%); }
+/* Bildfläche = Größen-Container für die Geräte (container-type: size): feste Höhe, Gerät passt sich an */
+.bsp-szene__bild { position: relative; container-type: size; height: clamp(380px, 128vw, 560px); padding: clamp(16px, 4vw, 28px);
+  padding-top: 52px; border-radius: 18px; background: radial-gradient(120% 80% at 50% 42%, #e4f3f1 0%, #f2f8f7 46%, var(--bsp-creme) 100%); }
+.bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: clamp(230px, 72vw, 460px); }
+.bsp-szene__etikett { position: absolute; z-index: 5; left: 12px; top: 12px; }
+.bsp-szene__text { min-width: 0; padding: 0 4px 4px; }
+.bsp-szene__zaehler { margin: 0 0 6px; font-family: var(--font-head); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; color: var(--accent-ink); }
+.bsp-szene__zaehler span { color: var(--ink-soft); font-weight: 600; }
+.bsp .bsp-szene__titel { margin: 0 0 0.35em; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink);
+  hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; }
+.bsp-szene__satz { margin: 0; max-width: 40ch; font-size: clamp(1.06rem, 1rem + 0.4vw, 1.25rem); line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 48rem) {
+  .bsp-szene { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; }
+  .bsp-szene__bild { height: 540px; }
+  .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: 420px; }
+}
+/* Schluss: „So kann es bei Ihnen laufen. Wir bauen es für Sie.“ + „Jetzt starten“ */
+.bsp-schluss { padding: clamp(32px, 7vw, 72px) clamp(18px, 4vw, 48px); border-radius: 24px; background: #eaf5f4; border: 1px solid var(--bsp-rand); text-align: center; }
+.bsp-schluss__innen { max-width: 40rem; margin-inline: auto; }
+.bsp .bsp-schluss__titel { margin: 0 0 clamp(18px, 3vh, 28px); font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem); line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); }
+.bsp-schluss__unter { display: block; margin-top: 0.2em; color: var(--accent-ink); }
+.bsp-schluss__knopf { margin: 0 0 18px; }
+.bsp-schluss__etikett { margin: 0; }
+
+/* ── 2. Handy mit JS: jede Karte gleitet einzeln herein ── */
+.bsp--gleiten .bsp-schritt { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
+.bsp--gleiten .bsp-schritt.ist-da { opacity: 1; transform: none; }
+
+/* ── 3. Bühne am Rechner ── */
+.bsp--buehne {
+  --bsp-sicht: calc(100svh - var(--bsp-kopf) - var(--bsp-unten));
+  --bsp-weg: 80svh; /* Scroll-Stück je Szene */
+  height: calc(var(--bsp-sicht) + (var(--bsp-n) - 1) * var(--bsp-weg));
+  margin-block: 0 clamp(16px, 3vh, 32px);
+}
+.bsp--buehne .bsp-buehne { position: sticky; top: var(--bsp-kopf); height: var(--bsp-sicht); display: flex; flex-direction: column; overflow: hidden; }
+/* Kopfzeile der Bühne: Leiste mittig, rechts das Etikett „Beispielhafte Darstellung“ (steht, solange die Bühne steht) */
+.bsp--buehne .bsp-oben { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 640px) minmax(max-content, 1fr); align-items: center; gap: 16px;
+  flex: none; width: min(100% - 32px, var(--wrap)); margin: clamp(10px, 2.4vh, 22px) auto 0; }
+.bsp--buehne .bsp-leiste { grid-column: 2; display: flex; gap: 5px; }
+.bsp-buehne__etikett { grid-column: 3; justify-self: end; }
+.bsp-segment { position: relative; flex: 1; height: 4px; border-radius: 2px; background: var(--bsp-rand); overflow: hidden; }
+.bsp-segment::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #00807b; transform-origin: left; transform: scaleX(0); transition: transform 0.25s ease; }
+/* Segment voll erst, wenn seine Szene erreicht ist – nie anteilig (wie Kundenreise, Jamil #5624) */
+.bsp-segment.ist-voll::after { transform: none; }
+.bsp--buehne .bsp-flaeche { position: relative; flex: 1; min-height: 0; max-width: var(--wrap); }
+.bsp--buehne .bsp-schritte { display: block; height: 100%; }
+/* Unsichtbare Szenen nach dem Ausblenden zusätzlich visibility: hidden (spart Zeichenarbeit bei 14 Ebenen, nicht animiert) */
+.bsp--buehne .bsp-schritt { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(5%) scale(0.97);
+  transition: opacity 0.55s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0s linear 0.8s; }
+.bsp--buehne .bsp-schritt.ist-aktiv { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0.2s, 0.2s, 0s; }
+.bsp--buehne .bsp-schritt.ist-vorbei { opacity: 0; transform: translateY(-7%) scale(0.94); transition-duration: 0.45s, 0.8s, 0s; }
+/* Schluss bleibt per Tastatur erreichbar (Fokus auf „Jetzt starten“ springt zum Schluss, scripts/beispiel.ts) */
+.bsp--buehne .bsp-schluss { visibility: visible; }
+.bsp--buehne .bsp-szene { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; gap: clamp(8px, 2vh, 20px);
+  padding: clamp(8px, 2vh, 20px) 0 clamp(14px, 3.4vh, 36px); background: none; border: 0; border-radius: 0; box-shadow: none; }
+.bsp--buehne .bsp-szene__bild { height: auto; min-height: 0; padding: 0; border-radius: 0; background: radial-gradient(circle closest-side, rgb(0 166 161 / 12%), rgb(0 166 161 / 0%)); }
+.bsp--buehne .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: auto; }
+.bsp--buehne .bsp-szene__etikett { display: none; } /* auf der Bühne steht das Etikett einmal in der Kopfzeile */
+.bsp--buehne .bsp-szene__text { padding: 0; text-align: center; }
+.bsp--buehne .bsp-szene__zaehler { margin-bottom: 2px; }
+.bsp--buehne .bsp-szene__titel { margin-bottom: 0.2em; font-size: clamp(1.7rem, 1.1rem + 1.6vw, 2.6rem); color: var(--accent-ink); }
+.bsp--buehne .bsp-szene__satz { margin-inline: auto; max-width: 46ch; font-size: clamp(1.05rem, 0.85rem + 0.55vw, 1.3rem); text-wrap: balance; }
+.bsp--buehne .bsp-schluss { display: grid; place-items: center; padding: 0 16px; border: 0; border-radius: 0; background: none; }
+.bsp--buehne .bsp-schluss__titel { font-size: clamp(2.1rem, 1.2rem + 3vw, 3.6rem); }
+
+@media (prefers-reduced-motion: reduce) { .bsp *, .bsp *::after { transition: none !important; animation: none !important; } }

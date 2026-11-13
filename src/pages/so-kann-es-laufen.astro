@@ -1,0 +1,29 @@
+---
+// „So kann es laufen“ – animiertes Beispiel in 13 Szenen (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026; Drehbuch freigegeben).
+// Erfundener Betrieb „Malerbetrieb Muster“, Kundin Frau Weber. Nicht im Hauptmenü; erreichbar über den Teaser auf der
+// Startseite (#beispiel, nach #entspannt) und den Footer-Link „So kann es laufen“. Vorschau wie alle Seiten noindex (IS_PREVIEW).
+// Texte: src/config/beispiel.ts, Bühne: components/beispiel/BeispielBuehne.astro, Anleitung: docs/beispiel-szenen-anleitung.md.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import BeispielBuehne from '../components/beispiel/BeispielBuehne.astro';
+import { BEISPIEL_SEITE, BEISPIEL_ETIKETT, BEISPIEL_LINK } from '../config/beispiel';
+import '../styles/beispiel-mockup.css';
+---
+
+<BaseLayout
+  title={BEISPIEL_SEITE.titel}
+  description={BEISPIEL_SEITE.description}
+  breadcrumb={[{ name: BEISPIEL_LINK, path: '/so-kann-es-laufen/' }]}
+>
+  <PageHeader eyebrow={BEISPIEL_SEITE.kennzeile} title={BEISPIEL_SEITE.h1} lead={BEISPIEL_SEITE.intro}>
+    <p class="bsp-kopf-etikett"><span class="bsp-etikett">{BEISPIEL_ETIKETT}</span></p>
+  </PageHeader>
+
+  <section class="bsp-abschnitt" aria-label={BEISPIEL_SEITE.geschichte}>
+    <BeispielBuehne />
+  </section>
+</BaseLayout>
+
+<style>
+  .bsp-kopf-etikett { margin: 18px 0 0; }
+</style>

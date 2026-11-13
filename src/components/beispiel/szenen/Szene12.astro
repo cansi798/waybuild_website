@@ -1,0 +1,11 @@
+---
+// Szene 12 „Fertig“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// PLATZHALTER aus dem Grundgerüst: wird vom Szenen-Agenten durch das echte Mockup ersetzt (Drehbuch: BEISPIEL_SZENEN[11].bild
+// in src/config/beispiel.ts). Anleitung: docs/beispiel-szenen-anleitung.md, Referenz: Szene01.astro.
+import Platzhalter from '../Platzhalter.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+---
+
+<Platzhalter nr={12} geraet="handy" variante={variante} />

@@ -1,0 +1,38 @@
+---
+// Wurzel jeder Szene des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Jede szenen/SzeneNN.astro gibt GENAU EINEN SzeneRahmen aus; darin das Mockup (Gerät + Bildschirm-Inhalt).
+// Die Bühnen-Engine (src/scripts/beispiel.ts) setzt an diesem Element:
+//   data-phase="k"          aktuelle Unter-Phase 0 … phasen (0 = Ausgangszustand vor der Szene)
+//   data-erreicht="1 2 …"   alle erreichten Phasen (für Regeln „ab Phase k“: [data-erreicht~="k"])
+//   data-aktiv              solange die Szene gerade gezeigt wird (Bühne) bzw. erschienen ist (Handy-Karten)
+// Ohne JS, bei reduzierter Bewegung und in der Variante „mini“ setzt niemand etwas: dann muss das CSS den ENDZUSTAND zeigen.
+// Das Mockup ist immer aria-hidden (rein bildlich); der lesbare Inhalt ist Titel + Text der Szene aus config/beispiel.ts.
+// Anleitung: docs/beispiel-szenen-anleitung.md
+interface Props {
+  /** Szenennummer 1 … 13 (ergibt die Klasse .sz01 … .sz13) */
+  nr: number;
+  /** Anzahl Unter-Phasen (1 … 6). Bühne: über das Scroll-Stück der Szene verteilt; Handy: nacheinander im Takt */
+  phasen?: number;
+  /** Handy-Karten: Abstand der Phasen in Millisekunden */
+  takt?: number;
+  /** Bildformat der Szene: 'hoch' (Handy) oder 'quer' (Laptop, Tablet quer, mehrere Geräte nebeneinander) */
+  format?: 'hoch' | 'quer';
+  /** 'buehne' (Standard) oder 'mini' (ruhende Vorschau, z. B. Teaser Startseite, Szene 13): ohne Phasen, immer Endzustand */
+  variante?: 'buehne' | 'mini';
+  class?: string;
+}
+const { nr, phasen = 1, takt = 900, format = 'hoch', variante = 'buehne', class: cls } = Astro.props;
+const nn = String(nr).padStart(2, '0');
+const mini = variante === 'mini';
+---
+
+<div
+  class:list={['sz', `sz${nn}`, { 'sz--mini': mini }, cls]}
+  data-sz={nn}
+  data-phasen={mini ? undefined : phasen}
+  data-takt={mini ? undefined : takt}
+  data-format={format}
+  aria-hidden="true"
+>
+  <slot />
+</div>

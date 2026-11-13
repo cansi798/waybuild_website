@@ -1,0 +1,21 @@
+---
+// Tablet für das Beispiel „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Quer (4 : 3, Standard) oder hoch (3 : 4). Gleiche Kontur/Radien-Logik wie Handy und Laptop. Bildschirm = Slot.
+// Größe: so groß wie der umgebende Größen-Container erlaubt; eigene Höhe per --gr-hoehe.
+// Im Bildschirm gilt var(--px) = 1/640 (quer) bzw. 1/480 (hoch) der Bildschirmbreite.
+import '../../../styles/beispiel-mockup.css';
+
+interface Props {
+  ausrichtung?: 'quer' | 'hoch';
+  class?: string;
+}
+const { ausrichtung = 'quer', class: cls } = Astro.props;
+---
+
+<div class:list={['gr', 'gr-tablet', { 'gr-tablet--hoch': ausrichtung === 'hoch' }, cls]}>
+  <div class="gr-gehaeuse"></div>
+  <span class="gr-kamera"></span>
+  <div class="gr-schirm">
+    <div class="gr-inhalt"><slot /></div>
+  </div>
+</div>

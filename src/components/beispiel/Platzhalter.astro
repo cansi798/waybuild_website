@@ -1,0 +1,50 @@
+---
+// PLATZHALTER für noch nicht gebaute Szenen des Beispiels (Grundgerüst 13.11.2026). Zeigt das Gerät aus dem Drehbuch mit einem
+// schlichten Gerippe und dem Szenentitel, damit die Seite vollständig läuft. Wird von den Szenen-Agenten ERSETZT: die jeweilige
+// szenen/SzeneNN.astro baut dann ihr eigenes Mockup und nutzt diese Komponente nicht mehr.
+import SzeneRahmen from './SzeneRahmen.astro';
+import Handy from './geraete/Handy.astro';
+import Tablet from './geraete/Tablet.astro';
+import Laptop from './geraete/Laptop.astro';
+import { BEISPIEL_SZENEN } from '../../config/beispiel';
+
+interface Props {
+  nr: number;
+  geraet: 'handy' | 'tablet' | 'laptop' | 'handy+laptop';
+  variante?: 'buehne' | 'mini';
+}
+const { nr, geraet, variante = 'buehne' } = Astro.props;
+const titel = BEISPIEL_SZENEN.find((s) => s.nr === nr)?.titel ?? '';
+const quer = geraet !== 'handy';
+---
+
+<SzeneRahmen nr={nr} phasen={1} format={quer ? 'quer' : 'hoch'} variante={variante} class="sz-platzhalter">
+  {geraet === 'handy' && (
+    <Handy><div class="bm-app ph-gerippe"><p class="bm-klein">Szene {nr}</p><p class="bm-titel">{titel}</p><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--mittel"></span><span class="ph-flaeche"></span><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--kurz"></span></div></Handy>
+  )}
+  {geraet === 'tablet' && (
+    <Tablet><div class="bm-app ph-gerippe"><p class="bm-klein">Szene {nr}</p><p class="bm-titel">{titel}</p><span class="bm-balken bm-balken--lang"></span><span class="ph-flaeche"></span><span class="bm-balken bm-balken--mittel"></span></div></Tablet>
+  )}
+  {geraet === 'laptop' && (
+    <Laptop><div class="bm-app ph-gerippe"><p class="bm-klein">Szene {nr}</p><p class="bm-titel">{titel}</p><span class="bm-balken bm-balken--lang"></span><span class="ph-flaeche"></span><span class="bm-balken bm-balken--mittel"></span></div></Laptop>
+  )}
+  {geraet === 'handy+laptop' && (
+    <div class="ph-paar">
+      <Laptop><div class="bm-app ph-gerippe"><p class="bm-klein">Szene {nr}</p><p class="bm-titel">{titel}</p><span class="bm-balken bm-balken--lang"></span><span class="ph-flaeche"></span></div></Laptop>
+      <Handy class="ph-paar__handy"><div class="bm-app ph-gerippe"><span class="bm-balken bm-balken--mittel"></span><span class="ph-flaeche"></span></div></Handy>
+    </div>
+  )}
+</SzeneRahmen>
+
+<style is:global>
+  /* Gerippe: blasse Balken, Titel in Türkis, beim Erscheinen sanft eingeblendet (Phase 1) */
+  .sz-platzhalter .ph-gerippe { justify-content: flex-start; padding-top: var(--bsp-a6); }
+  .sz-platzhalter .bm-titel { color: var(--bsp-tinte); }
+  .sz-platzhalter .ph-flaeche { display: block; flex: 1; max-height: calc(220 * var(--px)); border-radius: var(--bsp-r-l); background: var(--bsp-gerippe); opacity: 0.7; }
+  .sz-platzhalter[data-phase]:not([data-erreicht~="1"]) .ph-gerippe > * { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  .sz-platzhalter .ph-gerippe > * { transition: opacity var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt), transform var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt); }
+  /* Handy + Laptop nebeneinander: Laptop 88 % der Breite, Handy vorne rechts unten */
+  .sz-platzhalter .ph-paar { position: relative; width: 100%; height: 100%; display: grid; place-items: center; container-type: size; }
+  .sz-platzhalter .ph-paar .gr-laptop { --gr-breite: min(88cqw, 100cqh * 1.42); }
+  .sz-platzhalter .ph-paar .ph-paar__handy { position: absolute; right: 2cqw; bottom: 0; --gr-hoehe: min(62cqh, 60cqw); }
+</style>

@@ -36,6 +36,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
 import KartenAbschnitt from '../components/start/KartenAbschnitt.astro';
+import BeispielTeaser from '../components/beispiel/BeispielTeaser.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
 import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
 import KomplettKarte from '../components/pakete/KomplettKarte.astro';
@@ -172,6 +173,11 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        „Ganz entspannt. Das ist unser Motto.“ (#entspannt, zartes Türkis). Komponente start/KartenAbschnitt.astro. -->
   <KartenAbschnitt daten={UMSETZUNG} flaeche="weiss" />
   <KartenAbschnitt daten={ENTSPANNT} flaeche="tuerkis" />
+
+  <!-- Teaser „So kann es bei Ihnen laufen.“ (#beispiel) direkt nach #entspannt (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026):
+       Kennzeile, Überschrift, Satz, Knopf „Beispiel ansehen“ → /so-kann-es-laufen/, Mini-Vorschau Szene 1 + 10.
+       Komponente components/beispiel/BeispielTeaser.astro, Texte config/beispiel.ts (BEISPIEL_TEASER). -->
+  <BeispielTeaser />
 
   <!-- „Was Sie davon haben.“ (#vorteile, sechs Vorteil-Karten) entfernt (Jamil, Talk qh87y3sj #5633, 12.11.2026); Daten VORTEILE bleiben für /neu/ -->
 
