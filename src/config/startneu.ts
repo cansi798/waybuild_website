@@ -13,7 +13,17 @@ export const PRODUKTE = {
   titel: 'Eine Website, die Kunden bringt. Und eine App, die Ihnen Arbeit abnimmt.',
   lead: 'Sie starten mit der Website. Die Betriebs-App kommt dazu, wenn Sie so weit sind.',
   website: { titel: 'Ihre Website', text: 'Von uns gebaut und danach betreut.', chat: 'Änderungen jederzeit per Chat oder Sprachnachricht.', link: 'Pakete ansehen' },
-  app: { titel: 'Ihre Betriebs-App', link: 'So kann es bei Ihnen laufen' },
+  // Jamil #5816/#5817 (13.11.2026): Änderungen per Chat/Sprachnachricht gelten auch für die App; erkennbar machen, dass mit der App
+  // „wirklich nahezu alles möglich ist“ – auch eigene Abläufe, Rechner und mehr. Beispiele = Bausteine, die wir schon zeigen (Beispiel-Film).
+  app: {
+    titel: 'Ihre Betriebs-App',
+    text: 'Eine Software, die genau zu Ihrem Betrieb passt: Anfrage, Angebot, Auftrag und Rechnung greifen ineinander. Dazu bauen wir, was Sie sonst brauchen.',
+    beispiele: ['Preisrechner', 'Terminbuchung', 'Kundenportal', 'Checklisten vor Ort', 'Zeiten und Material', 'Ihre eigenen Abläufe'],
+    beispieleTitel: 'Zum Beispiel',
+    moeglich: 'Fast alles ist möglich. Sagen Sie uns, wie Sie arbeiten.',
+    chat: 'Änderungen jederzeit per Chat oder Sprachnachricht.',
+    link: 'So kann es bei Ihnen laufen',
+  },
 };
 
 /** Abschnitt 2: Problem. Drei Schmerzpunkte mit den Strichgrafiken aus /geschichte/ (Texte wie bisher, #5787–#5791) */

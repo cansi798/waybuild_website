@@ -360,3 +360,10 @@ html.js .sn li.reveal:nth-child(4) { transition-delay: 270ms; }
 html.js .sn li.reveal:nth-child(5) { transition-delay: 360ms; }
 html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 @media (prefers-reduced-motion: reduce) { html.js .sn .reveal { transform: none; transition: none; } }
+
+/* Betriebs-App: Beispiele + „fast alles möglich“ + Chat-Hinweis (Jamil #5816/#5817, 13.11.2026) */
+.sn-produkt__bsp-titel { margin: 2px 0 -4px; font-weight: 600; font-size: 0.92rem; color: var(--sn-tinte) !important; }
+.sn-produkt__bsp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sn-produkt__bsp li { padding: 7px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--sn-linie-t); font-size: 0.94rem; line-height: 1.3; color: var(--ink); }
+.sn-produkt__moeglich { font-family: var(--font-head); font-weight: 600; color: var(--sn-tief) !important; }
+.sn-produkt--app .sn-produkt__chat .sn-ico { background: var(--white); }

@@ -8,7 +8,6 @@ import { ABO_PAKETE, KOMPLETTPAKET, euro, komplettPreis } from '../../config/pak
 import { PRODUKTE as T } from '../../config/startneu';
 import { href } from '../../lib/paths';
 
-const appText = KOMPLETTPAKET.text.replace(/\s*Nur zusammen mit Basis oder Plus buchbar\.$/, '');
 ---
 
 <section class="section sn sn-produkte" id="leistungen" aria-labelledby="sn-produkte-h">
@@ -42,7 +41,13 @@ const appText = KOMPLETTPAKET.text.replace(/\s*Nur zusammen mit Basis oder Plus 
         <div class="sn-produkt__bild"><StartGrafik name="app" /></div>
         <div class="sn-produkt__text">
           <h3 class="sn-h3">{T.app.titel}</h3>
-          <p>{appText}</p>
+          <p>{T.app.text}</p>
+          <p class="sn-produkt__bsp-titel">{T.app.beispieleTitel}</p>
+          <ul class="sn-produkt__bsp" aria-label={T.app.beispieleTitel}>
+            {T.app.beispiele.map((b) => <li>{b}</li>)}
+          </ul>
+          <p class="sn-produkt__moeglich">{T.app.moeglich}</p>
+          <p class="sn-produkt__chat"><span class="sn-ico" aria-hidden="true"><Icon name="mic" size={20} /></span>{T.app.chat}</p>
           <p class="sn-produkt__preis"><span>{KOMPLETTPAKET.name}, nur zusammen mit Basis oder Plus</span><b>{komplettPreis()} netto im Monat</b></p>
           <a class="sn-link" href={href('/so-kann-es-laufen/')}>{T.app.link} <Icon name="arrow" size={18} /></a>
         </div>
