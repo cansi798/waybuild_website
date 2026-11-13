@@ -49,6 +49,10 @@
 
 /* ── Geräte ── */
 .gr { position: relative; flex: none; container-type: size; max-width: 100%; max-height: 100%; }
+/* Breite IMMER ausdrücklich aus der Höhe rechnen (nicht nur per aspect-ratio): Safari/WebKit (Jamil #5683, 13.11.2026) gibt
+ * einem Element mit container-type: size keine Inhaltsbreite; steckt das Gerät in einem Eltern-Element, das so breit wie sein
+ * Inhalt ist (absolut positioniert wie in Szene 8, im Grid mittig wie in Szene 9), löste WebKit max-width: 100 % gegen 0 auf –
+ * das Handy fiel auf Breite 0 zusammen (nur ein senkrechter Strich). Mit fester Breite ist die Inhaltsbreite bekannt. */
 .gr-gehaeuse { position: absolute; inset: 0; background: var(--gr-gehaeuse); border: var(--gr-strich) solid var(--gr-kontur); box-shadow: var(--gr-schatten); }
 .gr-schirm { position: absolute; overflow: hidden; container-type: inline-size; background: var(--bsp-papier);
   box-shadow: inset 0 0 0 1px rgb(0 79 76 / 10%);
@@ -73,7 +77,7 @@
 .gr-inhalt { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
 
 /* Handy (hochkant, 9 : 19,5) */
-.gr-handy { height: var(--gr-hoehe, min(100cqh, 100cqw * 2.1667)); aspect-ratio: 9 / 19.5; }
+.gr-handy { --gr-h: var(--gr-hoehe, min(100cqh, 100cqw * 2.1667)); height: var(--gr-h); width: calc(var(--gr-h) * 9 / 19.5); aspect-ratio: 9 / 19.5; }
 .gr-handy .gr-gehaeuse { border-radius: 15cqw; }
 .gr-handy .gr-schirm { inset: 3.6cqw; border-radius: 11.6cqw; --px: calc(100cqi / 300); }
 .gr-handy .gr-insel { position: absolute; z-index: 3; top: 3.4cqw; left: 50%; width: 27cqw; height: 6.6cqw; margin-left: -13.5cqw; border-radius: 99px; background: var(--gr-kontur); }
@@ -89,8 +93,8 @@
 .gr-handy .gr-heim { position: absolute; z-index: 3; bottom: calc(7 * var(--px)); left: 50%; width: calc(110 * var(--px)); height: calc(4 * var(--px)); margin-left: calc(-55 * var(--px)); border-radius: 99px; background: var(--bsp-text); opacity: 0.55; }
 
 /* Tablet (quer 4 : 3 oder hoch 3 : 4) */
-.gr-tablet { height: var(--gr-hoehe, min(100cqh, 100cqw * 0.75)); aspect-ratio: 4 / 3; }
-.gr-tablet--hoch { height: var(--gr-hoehe, min(100cqh, 100cqw * 1.3333)); aspect-ratio: 3 / 4; }
+.gr-tablet { --gr-h: var(--gr-hoehe, min(100cqh, 100cqw * 0.75)); height: var(--gr-h); width: calc(var(--gr-h) * 4 / 3); aspect-ratio: 4 / 3; }
+.gr-tablet--hoch { --gr-h: var(--gr-hoehe, min(100cqh, 100cqw * 1.3333)); width: calc(var(--gr-h) * 3 / 4); aspect-ratio: 3 / 4; }
 .gr-tablet .gr-gehaeuse { border-radius: 4.8cqw; }
 .gr-tablet .gr-schirm { inset: 3cqw; border-radius: 2.4cqw; --px: calc(100cqi / 640); }
 .gr-tablet--hoch .gr-gehaeuse { border-radius: 6.4cqw; }
@@ -99,7 +103,7 @@
 .gr-tablet--hoch .gr-kamera { top: 1.6cqw; width: 1.4cqw; height: 1.4cqw; margin-left: -0.7cqw; }
 
 /* Laptop (Deckel 16 : 10 + Unterteil) */
-.gr-laptop { width: var(--gr-breite, min(100cqw, 100cqh * 1.6129)); aspect-ratio: 100 / 62; }
+.gr-laptop { --gr-b: var(--gr-breite, min(100cqw, 100cqh * 1.6129)); width: var(--gr-b); height: calc(var(--gr-b) * 0.62); aspect-ratio: 100 / 62; }
 .gr-laptop .gr-gehaeuse { inset: 0 7cqw 4cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; box-shadow: none; }
 .gr-laptop .gr-schirm { top: 2.4cqw; left: 9cqw; right: 9cqw; bottom: 6.2cqw; border-radius: 0.8cqw; --px: calc(100cqi / 640); }
 .gr-laptop .gr-kamera { position: absolute; z-index: 3; top: 0.9cqw; left: 50%; width: 0.8cqw; height: 0.8cqw; margin-left: -0.4cqw; border-radius: 50%; background: var(--gr-kontur); }
@@ -136,6 +140,9 @@
 @keyframes bm-vibrieren { 0%, 100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-1.5%) rotate(-1.2deg); } 40% { transform: translateX(1.5%) rotate(1.2deg); }
   60% { transform: translateX(-1%) rotate(-0.8deg); } 80% { transform: translateX(1%) rotate(0.8deg); } }
 @keyframes bm-schimmern { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+/* Personalisierte Texte (branchen.ts): lange Firmennamen (bis 40 Zeichen) dürfen nichts sprengen – umbrechen statt überlaufen */
+.sz [data-p] { overflow-wrap: anywhere; min-width: 0; }
 
 /* Etikett „Beispielhafte Darstellung“ (Drehbuch: überall klein) */
 .bsp-etikett { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; background: rgb(255 255 255 / 88%);
