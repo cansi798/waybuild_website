@@ -1,0 +1,168 @@
+---
+// Szene 11 „Die Arbeit läuft“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Drehbuch: Portal-Status „In Arbeit“, abends Fotos vom Fortschritt. Handy von Frau Weber, Kundenportal (gleiche Kopfzeile wie
+// Szene 10 und 12: 10-13/PortalKopf.astro). Fotos „echter Arbeiten“ sind gezeichnete Flächen (SVG ohne ids), keine Bilder.
+// Anleitung: docs/beispiel-szenen-anleitung.md, Referenz: Szene01.astro.
+// Phasen (3):
+//   0  Ausgang: Portal öffnet sich, nur die Kopfzeile steht (Uhr 8:15)
+//   1  Morgens: Status „In Arbeit“ (Punkt pulsiert), Fortschrittsbalken auf 15 %, erster Eintrag „Team ist da“
+//   2  Abends: Uhr springt auf 18:40 (Mond), zwei weitere Einträge, Balken wächst auf 60 %
+//   3  „Fotos vom Fortschritt“ erscheinen, drei Fotos nacheinander, Hinweis „Neu · 18:40“
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+import PortalKopf from './10-13/PortalKopf.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+
+const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
+---
+
+<SzeneRahmen nr={11} phasen={3} takt={1700} format="hoch" variante={variante}>
+  <Handy status={false}>
+    <!-- eigene Statusleiste: Uhrzeit wechselt von morgens nach abends -->
+    <div class="gr-status sz11-status">
+      <span class="sz11-zeit">
+        <span class="sz11-zeit-frueh">8:15</span>
+        <span class="sz11-zeit-abend"><svg class="sz11-mond" viewBox="0 0 24 24"><path d="M19 14.5A8 8 0 0 1 9.5 5a8 8 0 1 0 9.5 9.5z" /></svg>18:40</span>
+      </span>
+      <span class="gr-status__zeichen"><i></i><i></i></span>
+    </div>
+    <PortalKopf kompakt />
+    <div class="bm-app sz11-app">
+      <!-- Stand -->
+      <div class="bm-karte bm-karte--marke sz11-stand sz11-ein sz11-ein--1">
+        <p class="sz11-zeile"><span class="bm-chip sz11-chip"><i class="sz11-puls"></i>In Arbeit</span><span class="bm-klein">Tag 1 von 2</span></p>
+        <p class="sz11-titel">Wohnzimmer streichen</p>
+        <span class="sz11-balken"><i class="sz11-fuell"></i></span>
+        <p class="sz11-zeile"><span class="bm-klein">Fortschritt</span>
+          <span class="sz11-stapel"><b class="sz11-zahl-frueh">15 %</b><b class="sz11-zahl-abend">60 %</b></span></p>
+      </div>
+
+      <!-- Heute -->
+      <div class="bm-karte sz11-heute sz11-ein sz11-ein--2">
+        <p class="sz11-kopf">Heute</p>
+        <ol class="sz11-liste">
+          <li class="sz11-eintrag"><span class="sz11-uhr">8:00</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Team ist da, alles abgedeckt</span></li>
+          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--2"><span class="sz11-uhr">11:30</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Risse gespachtelt</span></li>
+          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--3"><span class="sz11-uhr">17:30</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Decke fertig, Wände begonnen</span></li>
+        </ol>
+      </div>
+
+      <!-- Fotos vom Fortschritt (gezeichnet) -->
+      <div class="sz11-fotos">
+        <p class="sz11-zeile"><span class="sz11-kopf">Fotos vom Fortschritt</span><span class="bm-chip sz11-neu">Neu · 18:40</span></p>
+        <div class="sz11-raster">
+          <span class="sz11-foto sz11-foto--1">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+              <rect width="100" height="100" fill="#ebe4d6" />
+              <path d="M0 0h60c-2 12 3 22 0 34s3 24 0 36 2 10 0 14H0z" fill="#c9d7c0" />
+              <rect y="84" width="100" height="16" fill="#d9c8a9" />
+              <path d="M0 86c20-3 40 2 60-1s30 2 40 0v15H0z" fill="#f4f2ee" />
+              <path d="M60 41h16v24l4 35" fill="none" stroke="#8a6d4b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <rect x="53" y="28" width="14" height="26" rx="4" fill="#b4c7aa" stroke="#6f8566" stroke-width="1.6" />
+              <path d="M14 92l8-7h22l6 7z" fill="#c3cfcd" />
+              <path d="M20 90l4-3h17l3 3z" fill="#b4c7aa" />
+            </svg>
+          </span>
+          <span class="sz11-foto sz11-foto--2">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+              <rect width="100" height="100" fill="#c9d7c0" />
+              <path d="M0 0h100v30L0 38z" fill="#fbfaf7" />
+              <path d="M0 37.5L100 29.5v3L0 40.5z" fill="#e6c25c" />
+              <path d="M30 100l12-58M62 100L50 42" stroke="#a98b63" stroke-width="3" fill="none" stroke-linecap="round" />
+              <path d="M40 52h12M37 66h18M34 80h24M31 94h30" stroke="#a98b63" stroke-width="2.4" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="sz11-foto sz11-foto--3">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+              <rect width="100" height="100" fill="#c9d7c0" />
+              <rect x="26" y="16" width="48" height="52" rx="2" fill="#fbfaf7" />
+              <rect x="31" y="21" width="17" height="42" fill="#dcebf3" />
+              <rect x="52" y="21" width="17" height="42" fill="#dcebf3" />
+              <rect x="22" y="68" width="56" height="5" rx="1.5" fill="#fbfaf7" />
+              <path d="M58 68l2-10h10l2 10z" fill="#c9a27a" />
+              <path d="M65 58c-6-8-2-16 0-18 2 2 6 10 0 18zM65 58c-10-2-12-10-11-13 3 0 10 5 11 13zM65 58c10-2 12-10 11-13-3 0-10 5-11 13z" fill="#5f9e7b" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </Handy>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 11 „Die Arbeit läuft“ – alle Regeln mit .sz11 (global, eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 3). Vorzustände NUR unter .sz11[data-phase]:not([data-erreicht~="k"]). Bewegt: transform/opacity. */
+  .sz11-app { gap: var(--bsp-a3); padding-top: var(--bsp-a3); }
+  .sz11-app p { margin: 0; }
+
+  /* Statusleiste mit wechselnder Uhrzeit */
+  .sz11-zeit { display: grid; }
+  .sz11-zeit > * { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: calc(3 * var(--px)); }
+  .sz11-zeit-frueh { opacity: 0; }
+  .sz11-mond { width: calc(11 * var(--px)); height: calc(11 * var(--px)); fill: var(--bsp-tinte); }
+
+  /* Stand */
+  .sz11-stand { display: flex; flex-direction: column; gap: calc(6 * var(--px)); }
+  .sz11-zeile { display: flex; justify-content: space-between; align-items: center; gap: var(--bsp-a2); }
+  .sz11 .sz11-chip { font-size: var(--bsp-schrift-s); padding: calc(4 * var(--px)) calc(10 * var(--px)); background: var(--bsp-tinte); color: var(--bsp-weiss); }
+  .sz11-puls { width: calc(7 * var(--px)); height: calc(7 * var(--px)); border-radius: 50%; background: #7ff0e6; }
+  .sz11-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-text); letter-spacing: -0.01em; }
+  .sz11-balken { position: relative; display: block; height: calc(10 * var(--px)); border-radius: 99px; background: var(--bsp-gerippe); overflow: hidden; }
+  .sz11-fuell { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, var(--bsp-tuerkis-dunkel), var(--bsp-tuerkis)); transform-origin: 0 50%; transform: scaleX(0.6); }
+  .sz11-stapel { display: grid; justify-items: end; }
+  .sz11-stapel > * { grid-area: 1 / 1; font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-tinte); }
+  .sz11-zahl-frueh { opacity: 0; }
+
+  /* Heute */
+  .sz11-kopf { font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); }
+  .sz11-heute .sz11-kopf { margin-bottom: calc(4 * var(--px)); }
+  .sz11-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: calc(2 * var(--px)); }
+  .sz11-eintrag { display: flex; align-items: center; gap: var(--bsp-a2); min-height: calc(26 * var(--px)); font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .sz11-uhr { flex: none; width: calc(34 * var(--px)); font-size: var(--bsp-schrift-xs); font-weight: 650; color: var(--bsp-text-leise); font-variant-numeric: tabular-nums; }
+  .sz11-pkt { flex: none; display: grid; place-items: center; width: calc(16 * var(--px)); height: calc(16 * var(--px)); border-radius: 50%; background: var(--bsp-ok); }
+  .sz11-pkt svg { width: 66%; height: 66%; fill: none; stroke: var(--bsp-weiss); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+  .sz11-was { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Fotos */
+  .sz11-fotos { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .sz11 .sz11-neu { background: #fdeee9; color: #a3381f; }
+  .sz11-raster { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: calc(6 * var(--px)); height: calc(208 * var(--px)); }
+  .sz11-foto { position: relative; display: block; min-height: 0; border-radius: var(--bsp-r-m); overflow: hidden; box-shadow: 0 0 0 calc(1 * var(--px)) rgb(0 79 76 / 10%), 0 calc(6 * var(--px)) calc(14 * var(--px)) calc(-8 * var(--px)) rgb(0 79 76 / 40%); }
+  .sz11-foto svg { display: block; width: 100%; height: 100%; }
+  .sz11-foto--1 { grid-row: 1 / 3; }
+
+  /* Übergänge (in beide Richtungen) */
+  .sz11-ein, .sz11-fotos { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz11-ein--1 { transition-delay: var(--bsp-auftritt); }
+  .sz11-ein--2 { transition-delay: calc(var(--bsp-auftritt) + var(--bsp-versatz)); }
+  .sz11-zeit > *, .sz11-stapel > * { transition: opacity var(--bsp-dauer-kurz) ease; }
+  .sz11-fuell { transition: transform var(--bsp-dauer-lang) var(--bsp-ease) 0.5s; }
+  .sz11-eintrag--spaeter { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz11-eintrag--2 { transition-delay: 0.35s; }
+  .sz11-eintrag--3 { transition-delay: calc(0.35s + 2 * var(--bsp-versatz)); }
+  .sz11-foto { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz11-foto--1 { transition-delay: 0.3s; }
+  .sz11-foto--2 { transition-delay: calc(0.3s + 2 * var(--bsp-versatz)); }
+  .sz11-foto--3 { transition-delay: calc(0.3s + 4 * var(--bsp-versatz)); }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: nur die Kopfzeile; Balken leer */
+  .sz11[data-phase]:not([data-erreicht~="1"]) .sz11-ein { opacity: 0; transform: translateY(calc(14 * var(--px))); }
+  .sz11[data-phase]:not([data-erreicht~="1"]) .sz11-fuell { transform: scaleX(0); }
+  /* Phase 1 (morgens): 8:15, 15 %, nur der erste Eintrag */
+  .sz11[data-erreicht~="1"]:not([data-erreicht~="2"]) .sz11-fuell { transform: scaleX(0.15); }
+  .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-zeit-frueh,
+  .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-zahl-frueh { opacity: 1; }
+  .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-zeit-abend,
+  .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-zahl-abend { opacity: 0; }
+  .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-eintrag--spaeter { opacity: 0; transform: translateX(calc(-10 * var(--px))); }
+  /* Status-Punkt pulsiert, solange die Szene gezeigt wird */
+  .sz11[data-aktiv][data-erreicht~="1"] .sz11-puls { animation: bm-schimmern 1.4s ease-in-out infinite; }
+  /* vor Phase 3: noch keine Fotos */
+  .sz11[data-phase]:not([data-erreicht~="3"]) .sz11-fotos { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  .sz11[data-phase]:not([data-erreicht~="3"]) .sz11-foto { opacity: 0; transform: scale(0.9); }
+  .sz11[data-aktiv][data-erreicht~="3"] .sz11-neu { animation: bm-puls 1.6s var(--bsp-ease) 1.2s 2 both; }
+</style>

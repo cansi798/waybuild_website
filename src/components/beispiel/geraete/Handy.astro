@@ -1,0 +1,29 @@
+---
+// Handy-Gerät für das Beispiel „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Schlichte Zeichnung im waybuild-Stil (2 px Kontur, weiche Radien, Insel oben, Heim-Strich unten). Bildschirm = Slot.
+// Größe: so groß wie der umgebende Größen-Container erlaubt; eigene Höhe per CSS-Variable --gr-hoehe (z. B. 80cqh).
+// Im Bildschirm gilt var(--px) = 1/300 der Bildschirmbreite (siehe styles/beispiel-mockup.css).
+import '../../../styles/beispiel-mockup.css';
+
+interface Props {
+  /** Statusleiste oben (Uhrzeit + Zeichen) zeigen */
+  status?: boolean;
+  /** Uhrzeit in der Statusleiste */
+  zeit?: string;
+  /** zusätzliche Klasse am Gerät (für szenen-eigenes CSS, z. B. Lage/Größe) */
+  class?: string;
+}
+const { status = true, zeit = '10:24', class: cls } = Astro.props;
+---
+
+<div class:list={['gr', 'gr-handy', cls]}>
+  <div class="gr-gehaeuse"></div>
+  <div class="gr-schirm">
+    <span class="gr-insel"></span>
+    {status && (
+      <div class="gr-status"><span>{zeit}</span><span class="gr-status__zeichen"><i></i><i></i></span></div>
+    )}
+    <div class="gr-inhalt"><slot /></div>
+    <span class="gr-heim"></span>
+  </div>
+</div>

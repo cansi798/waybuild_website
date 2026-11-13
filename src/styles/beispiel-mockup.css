@@ -1,0 +1,147 @@
+/* GERÄTE + MOCKUP-BAUSTEINE für das Beispiel „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+ * Wird von den Geräte-Komponenten (src/components/beispiel/geraete/*.astro) eingebunden, gilt also überall, wo ein Gerät
+ * gezeigt wird (Beispielseite und Teaser auf der Startseite). Bau-Anleitung: docs/beispiel-szenen-anleitung.md.
+ *
+ * Größen-Prinzip
+ * - Ein Gerät misst sich am nächsten Größen-Container (container-type: size): auf der Bühne .bsp-szene__bild, im Teaser .bsp-mini.
+ *   Standardgröße = so groß wie möglich darin; eigene Größe per --gr-hoehe (Handy, Tablet) bzw. --gr-breite (Laptop).
+ * - Der Bildschirm (.gr-schirm) ist selbst ein Container. Darin gilt die Einheit var(--px) = ein „Mockup-Pixel“:
+ *   Handy 300, Tablet quer 640 / hoch 480, Laptop 640 Mockup-Pixel breit. Alles im Bildschirm in var(--px) bzw. den
+ *   Größen-Tokens unten angeben, dann skaliert das Mockup mit jeder Gerätegröße mit (am Handy wie am großen Bildschirm).
+ * Gleiche Linienstärke (2 px Kontur) und gleiche Radien-Logik für alle Geräte. Nur transform/opacity werden animiert. */
+
+:root {
+  /* Farben (CI waybuild; Drehbuch: Türkis #00a6a1/#00807b, dunkel #004f4c, Creme #f6f3ee) */
+  --bsp-tuerkis: #00a6a1;
+  --bsp-tuerkis-dunkel: #00807b;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
+  --bsp-tinte: #006b68;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
+  --bsp-nacht: #004f4c;           /* Kontur der Geräte, dunkle Flächen */
+  --bsp-creme: #f6f3ee;
+  --bsp-papier: #fbfaf7;          /* Hintergrund in App-Bildschirmen */
+  --bsp-weiss: #ffffff;
+  --bsp-text: #2f3a39;
+  --bsp-text-leise: #5b6766;
+  --bsp-linie: #d5e8e6;
+  --bsp-linie-grau: #e3e0da;
+  --bsp-flaeche: #eef7f6;         /* zarte Türkis-Fläche (Karten, Hervorhebung) */
+  --bsp-gerippe: #e7ecea;         /* Platzhalter-Balken (Gerippe) */
+  --bsp-stern: #e3a008;           /* Bewertungs-Sterne */
+  --bsp-ok: #177049;              /* „Heute geöffnet“, Haken */
+  --bsp-ok-flaeche: #e4f3ea;
+  --bsp-hinweis: #c4462b;         /* Benachrichtigungs-Punkt */
+  /* Bewegung */
+  --bsp-dauer-kurz: 0.3s;
+  --bsp-dauer: 0.6s;
+  --bsp-dauer-lang: 0.9s;
+  --bsp-ease: cubic-bezier(0.22, 0.61, 0.36, 1);   /* weich auslaufend (wie Kundenreise-Bühne) */
+  --bsp-ease-feder: cubic-bezier(0.3, 1.4, 0.5, 1); /* leicht federnd (Haken, Knöpfe) */
+  --bsp-versatz: 0.12s;                             /* Abstand zwischen nacheinander erscheinenden Teilen */
+  --bsp-auftritt: 0.35s;                            /* Wartezeit, bis die Szene selbst eingeblendet ist */
+  /* Geräte */
+  --gr-kontur: var(--bsp-nacht);
+  --gr-strich: 2px;
+  --gr-gehaeuse: #ffffff;
+  --gr-schatten: 0 2px 4px rgb(0 79 76 / 6%), 0 28px 60px -28px rgb(0 79 76 / 38%);
+}
+
+/* ── Szenen-Wurzel (SzeneRahmen.astro): füllt die Bildfläche, Gerät(e) mittig ── */
+.sz { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+
+/* ── Geräte ── */
+.gr { position: relative; flex: none; container-type: size; max-width: 100%; max-height: 100%; }
+.gr-gehaeuse { position: absolute; inset: 0; background: var(--gr-gehaeuse); border: var(--gr-strich) solid var(--gr-kontur); box-shadow: var(--gr-schatten); }
+.gr-schirm { position: absolute; overflow: hidden; container-type: inline-size; background: var(--bsp-papier);
+  box-shadow: inset 0 0 0 1px rgb(0 79 76 / 10%);
+  display: flex; flex-direction: column; color: var(--bsp-text); font-family: var(--font-body); line-height: 1.35; text-align: left;
+  /* Größen-Tokens (in Mockup-Pixeln, siehe oben) */
+  --bsp-schrift-xs: calc(10 * var(--px));
+  --bsp-schrift-s: calc(12 * var(--px));
+  --bsp-schrift-m: calc(14 * var(--px));
+  --bsp-schrift-l: calc(17 * var(--px));
+  --bsp-schrift-xl: calc(21 * var(--px));
+  --bsp-schrift-xxl: calc(28 * var(--px));
+  --bsp-a1: calc(4 * var(--px));
+  --bsp-a2: calc(8 * var(--px));
+  --bsp-a3: calc(12 * var(--px));
+  --bsp-a4: calc(16 * var(--px));
+  --bsp-a6: calc(24 * var(--px));
+  --bsp-r-s: calc(6 * var(--px));
+  --bsp-r-m: calc(10 * var(--px));
+  --bsp-r-l: calc(16 * var(--px));
+  font-size: var(--bsp-schrift-m); }
+.gr-schirm * { box-sizing: border-box; }
+.gr-inhalt { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+/* Handy (hochkant, 9 : 19,5) */
+.gr-handy { height: var(--gr-hoehe, min(100cqh, 100cqw * 2.1667)); aspect-ratio: 9 / 19.5; }
+.gr-handy .gr-gehaeuse { border-radius: 15cqw; }
+.gr-handy .gr-schirm { inset: 3.6cqw; border-radius: 11.6cqw; --px: calc(100cqi / 300); }
+.gr-handy .gr-insel { position: absolute; z-index: 3; top: 3.4cqw; left: 50%; width: 27cqw; height: 6.6cqw; margin-left: -13.5cqw; border-radius: 99px; background: var(--gr-kontur); }
+/* Seitentasten */
+.gr-handy::before, .gr-handy::after { content: ''; position: absolute; width: 1.2cqw; border-radius: 1px; background: var(--gr-kontur); }
+.gr-handy::before { left: -1cqw; top: 22%; height: 7%; }
+.gr-handy::after { right: -1cqw; top: 28%; height: 11%; }
+.gr-status { position: relative; z-index: 2; flex: none; display: flex; justify-content: space-between; align-items: center;
+  height: calc(40 * var(--px)); padding: calc(6 * var(--px)) calc(26 * var(--px)) 0; font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-text); }
+.gr-status__zeichen { display: flex; gap: calc(4 * var(--px)); align-items: center; }
+.gr-status__zeichen i { display: block; width: calc(14 * var(--px)); height: calc(8 * var(--px)); border-radius: calc(2 * var(--px)); background: var(--bsp-text); opacity: 0.8; }
+.gr-status__zeichen i:first-child { width: calc(12 * var(--px)); opacity: 0.55; }
+.gr-handy .gr-heim { position: absolute; z-index: 3; bottom: calc(7 * var(--px)); left: 50%; width: calc(110 * var(--px)); height: calc(4 * var(--px)); margin-left: calc(-55 * var(--px)); border-radius: 99px; background: var(--bsp-text); opacity: 0.55; }
+
+/* Tablet (quer 4 : 3 oder hoch 3 : 4) */
+.gr-tablet { height: var(--gr-hoehe, min(100cqh, 100cqw * 0.75)); aspect-ratio: 4 / 3; }
+.gr-tablet--hoch { height: var(--gr-hoehe, min(100cqh, 100cqw * 1.3333)); aspect-ratio: 3 / 4; }
+.gr-tablet .gr-gehaeuse { border-radius: 4.8cqw; }
+.gr-tablet .gr-schirm { inset: 3cqw; border-radius: 2.4cqw; --px: calc(100cqi / 640); }
+.gr-tablet--hoch .gr-gehaeuse { border-radius: 6.4cqw; }
+.gr-tablet--hoch .gr-schirm { inset: 4cqw; border-radius: 3.2cqw; --px: calc(100cqi / 480); }
+.gr-tablet .gr-kamera { position: absolute; z-index: 3; top: 1.25cqw; left: 50%; width: 1.1cqw; height: 1.1cqw; margin-left: -0.55cqw; border-radius: 50%; background: var(--gr-kontur); }
+.gr-tablet--hoch .gr-kamera { top: 1.6cqw; width: 1.4cqw; height: 1.4cqw; margin-left: -0.7cqw; }
+
+/* Laptop (Deckel 16 : 10 + Unterteil) */
+.gr-laptop { width: var(--gr-breite, min(100cqw, 100cqh * 1.6129)); aspect-ratio: 100 / 62; }
+.gr-laptop .gr-gehaeuse { inset: 0 7cqw 4cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; box-shadow: none; }
+.gr-laptop .gr-schirm { top: 2.4cqw; left: 9cqw; right: 9cqw; bottom: 6.2cqw; border-radius: 0.8cqw; --px: calc(100cqi / 640); }
+.gr-laptop .gr-kamera { position: absolute; z-index: 3; top: 0.9cqw; left: 50%; width: 0.8cqw; height: 0.8cqw; margin-left: -0.4cqw; border-radius: 50%; background: var(--gr-kontur); }
+.gr-laptop .gr-basis { position: absolute; left: 0; right: 0; bottom: 0; height: 4.6cqw; background: var(--gr-gehaeuse); border: var(--gr-strich) solid var(--gr-kontur);
+  border-radius: 0.6cqw 0.6cqw 3cqw 3cqw / 0.6cqw 0.6cqw 2.6cqw 2.6cqw; box-shadow: var(--gr-schatten); }
+.gr-laptop .gr-basis::after { content: ''; position: absolute; top: -1px; left: 50%; width: 15cqw; height: 1.4cqw; margin-left: -7.5cqw;
+  border: var(--gr-strich) solid var(--gr-kontur); border-top: 0; border-radius: 0 0 1.2cqw 1.2cqw; background: var(--bsp-creme); }
+
+/* ── Mockup-Bausteine (bm-*), für alle Szenen gleich ── */
+.bm-app { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); padding: var(--bsp-a3) var(--bsp-a4) var(--bsp-a6); }
+.bm-titel { margin: 0; font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--bsp-text); }
+.bm-klein { margin: 0; font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
+.bm-karte { position: relative; padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau);
+  box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgb(0 79 76 / 5%); }
+.bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(0 166 161 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(0 79 76 / 35%); }
+.bm-knopf { display: inline-flex; align-items: center; justify-content: center; gap: var(--bsp-a1); min-height: calc(36 * var(--px)); padding: 0 var(--bsp-a4);
+  border-radius: 99px; background: var(--bsp-tinte); color: var(--bsp-weiss); font-size: var(--bsp-schrift-m); font-weight: 650; white-space: nowrap; }
+.bm-knopf--hell { background: var(--bsp-flaeche); color: var(--bsp-tinte); }
+.bm-chip { display: inline-flex; align-items: center; gap: var(--bsp-a1); padding: calc(3 * var(--px)) var(--bsp-a2); border-radius: 99px;
+  background: var(--bsp-flaeche); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 650; white-space: nowrap; }
+.bm-chip--ok { background: var(--bsp-ok-flaeche); color: var(--bsp-ok); }
+.bm-balken { display: block; height: calc(8 * var(--px)); border-radius: 99px; background: var(--bsp-gerippe); }
+.bm-balken--kurz { width: 40%; } .bm-balken--mittel { width: 65%; } .bm-balken--lang { width: 88%; }
+.bm-sterne { color: var(--bsp-stern); letter-spacing: calc(1 * var(--px)); }
+.bm-ok { display: inline-grid; place-items: center; width: calc(22 * var(--px)); height: calc(22 * var(--px)); border-radius: 50%; background: var(--bsp-ok); color: var(--bsp-weiss); }
+.bm-ok svg { width: 62%; height: 62%; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+/* Tipp-Kreis (Finger tippt): von der Szene platzieren und per Phase mit animation: bm-tippen auslösen. Grundform unsichtbar. */
+.bm-tipp { position: absolute; z-index: 4; width: calc(44 * var(--px)); height: calc(44 * var(--px)); margin: calc(-22 * var(--px)) 0 0 calc(-22 * var(--px));
+  border-radius: 50%; background: rgb(0 128 123 / 28%); border: calc(2 * var(--px)) solid rgb(0 128 123 / 55%); opacity: 0; pointer-events: none; }
+
+@keyframes bm-tippen { 0% { opacity: 0; transform: scale(0.4); } 25% { opacity: 1; transform: scale(0.8); } 100% { opacity: 0; transform: scale(1.5); } }
+@keyframes bm-blinken { 0%, 45% { opacity: 1; } 55%, 100% { opacity: 0; } }
+@keyframes bm-puls { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes bm-vibrieren { 0%, 100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-1.5%) rotate(-1.2deg); } 40% { transform: translateX(1.5%) rotate(1.2deg); }
+  60% { transform: translateX(-1%) rotate(-0.8deg); } 80% { transform: translateX(1%) rotate(0.8deg); } }
+@keyframes bm-schimmern { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+/* Etikett „Beispielhafte Darstellung“ (Drehbuch: überall klein) */
+.bsp-etikett { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; background: rgb(255 255 255 / 88%);
+  border: 1px solid var(--bsp-linie); color: var(--bsp-tinte); font-family: var(--font-body); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap; }
+.bsp-etikett::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bsp-tuerkis-dunkel); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gr *, .gr *::before, .gr *::after { transition: none !important; animation: none !important; }
+}

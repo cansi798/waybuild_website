@@ -4,6 +4,7 @@ import { href } from '../lib/paths';
 import Logo from './Logo.astro';
 import { GRUPPEN } from '../config/leistungen-neu';
 import FooterKontakt from './FooterKontakt.astro';
+import { BEISPIEL_LINK } from '../config/beispiel';
 
 // thema 'besucherreise' (neue Startseite): ohne Kontaktkopf (der Abschluss der Seite ist der CTA).
 // Logo C (Negativ) auf allen Seiten, auch auf der Startseite (Jamil, Talk qh87y3sj #5226/#5227 „überall“).
@@ -34,6 +35,8 @@ const year = new Date().getFullYear();
       <ul>
         <li><a href={href('/ueber-uns/')}>Über uns</a></li>
         <li><a href={href('/beispiele/')}>Beispiele</a></li>
+        {/* Animiertes Beispiel (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026): nur hier und im Teaser der Startseite verlinkt, nicht im Menü */}
+        <li><a href={href('/so-kann-es-laufen/')}>{BEISPIEL_LINK}</a></li>
         <li><a href={href('/warum-waybuild/')}>Warum waybuild</a></li>
         <li><a href={href('/kontakt/')}>Kontakt</a></li>
       </ul>

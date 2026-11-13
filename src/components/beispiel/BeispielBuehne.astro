@@ -1,0 +1,71 @@
+---
+// Bühne des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026). Scroll-Mechanik wie die
+// Kundenreise-Bühne der Startseite (gemeinsamer Kern src/scripts/buehne-kern.ts): Rechner sticky, je Szene ein Scroll-Stück,
+// Fortschrittsleiste mit 13 diskreten Segmenten; Handy Karten, die einzeln hereingleiten; reduziert/ohne JS alles statisch.
+// Je Szene: Mockup (szenen/SzeneNN.astro, aria-hidden) + Titel (h2) und Text aus config/beispiel.ts (der lesbare Inhalt).
+// Stil: styles/beispiel.css, Bewegung: scripts/beispiel.ts, Anleitung: docs/beispiel-szenen-anleitung.md.
+import Szene01 from './szenen/Szene01.astro';
+import Szene02 from './szenen/Szene02.astro';
+import Szene03 from './szenen/Szene03.astro';
+import Szene04 from './szenen/Szene04.astro';
+import Szene05 from './szenen/Szene05.astro';
+import Szene06 from './szenen/Szene06.astro';
+import Szene07 from './szenen/Szene07.astro';
+import Szene08 from './szenen/Szene08.astro';
+import Szene09 from './szenen/Szene09.astro';
+import Szene10 from './szenen/Szene10.astro';
+import Szene11 from './szenen/Szene11.astro';
+import Szene12 from './szenen/Szene12.astro';
+import Szene13 from './szenen/Szene13.astro';
+import { BEISPIEL_SZENEN, BEISPIEL_SCHLUSS, BEISPIEL_ETIKETT } from '../../config/beispiel';
+import { ANLIEGEN } from '../../config/startseite';
+import { href } from '../../lib/paths';
+import '../../styles/beispiel.css';
+
+const KOMPONENTEN = [Szene01, Szene02, Szene03, Szene04, Szene05, Szene06, Szene07, Szene08, Szene09, Szene10, Szene11, Szene12, Szene13];
+const n = BEISPIEL_SZENEN.length;
+const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+const zwei = (z: number) => String(z).padStart(2, '0');
+---
+
+<div class="bsp" data-beispiel data-stuecke={n + 1}>
+  <div class="bsp-buehne">
+    <div class="bsp-oben" aria-hidden="true">
+      <div class="bsp-leiste">
+        {BEISPIEL_SZENEN.map(() => <span class="bsp-segment"></span>)}
+      </div>
+      <span class="bsp-etikett bsp-buehne__etikett">{BEISPIEL_ETIKETT}</span>
+    </div>
+    <div class="bsp-flaeche wrap">
+      <ol class="bsp-schritte">
+        {BEISPIEL_SZENEN.map((sz, i) => {
+          const Komp = KOMPONENTEN[i];
+          return (
+            <li class="bsp-schritt bsp-szene" data-bsp-schritt id={`szene-${sz.nr}`}>
+              <div class="bsp-szene__bild">
+                {Komp && <Komp />}
+                <span class="bsp-etikett bsp-szene__etikett" aria-hidden="true">{BEISPIEL_ETIKETT}</span>
+              </div>
+              <div class="bsp-szene__text">
+                <p class="bsp-szene__zaehler" aria-hidden="true">{zwei(sz.nr)} <span>/ {n}</span></p>
+                <h2 class="bsp-szene__titel"><span class="sr-only">Szene {sz.nr} von {n}: </span>{sz.titel}</h2>
+                <p class="bsp-szene__satz">{sz.text}</p>
+              </div>
+            </li>
+          );
+        })}
+        <li class="bsp-schritt bsp-schluss" data-bsp-schritt id="schluss">
+          <div class="bsp-schluss__innen">
+            <h2 class="bsp-schluss__titel">{BEISPIEL_SCHLUSS.titel} <span class="bsp-schluss__unter">{BEISPIEL_SCHLUSS.unter}</span></h2>
+            <p class="bsp-schluss__knopf"><a class="btn btn--primary btn--lg" href={erstberatung}>{BEISPIEL_SCHLUSS.knopf}</a></p>
+            <p class="bsp-schluss__etikett"><span class="bsp-etikett">{BEISPIEL_ETIKETT}</span></p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '../../scripts/beispiel.ts';
+</script>

@@ -1,0 +1,50 @@
+---
+// Teaser „So kann es bei Ihnen laufen.“ auf der Startseite direkt nach #entspannt (Jamil, Talk qh87y3sj #5678/#5680,
+// 13.11.2026; Texte wörtlich aus dem Drehbuch, config/beispiel.ts → BEISPIEL_TEASER). Knopf „Beispiel ansehen“ →
+// /so-kann-es-laufen/. Daneben kleine, ruhende Vorschau: Szene 1 (Handy) vorne, Szene 10 (Laptop) dahinter – die echten
+// Szenen-Komponenten in der Variante „mini“ (Endzustand, ohne Phasen), also immer auf dem Stand der Beispielseite.
+import Szene01 from './szenen/Szene01.astro';
+import Szene10 from './szenen/Szene10.astro';
+import { BEISPIEL_TEASER, BEISPIEL_ETIKETT } from '../../config/beispiel';
+import { href } from '../../lib/paths';
+import '../../styles/beispiel-mockup.css';
+
+const t = BEISPIEL_TEASER;
+const hid = `${t.id}-h`;
+---
+
+<section class="section bt" id={t.id} aria-labelledby={hid}>
+  <div class="wrap bt-raster">
+    <div class="bt-text">
+      <span class="eyebrow">{t.kennzeile}</span>
+      <h2 id={hid} class="rule">{t.titel}</h2>
+      <p class="lead">{t.text}</p>
+      <p class="bt-knopf"><a class="btn btn--primary btn--lg" href={href('/so-kann-es-laufen/')}>{t.knopf}</a></p>
+    </div>
+    <div class="bt-vorschau" aria-hidden="true">
+      <div class="bsp-mini bt-mini bt-mini--laptop"><Szene10 variante="mini" /></div>
+      <div class="bsp-mini bt-mini bt-mini--handy"><Szene01 variante="mini" /></div>
+      <span class="bsp-etikett bt-etikett">{BEISPIEL_ETIKETT}</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hintergrund Weiß zwischen #entspannt (zartes Türkis) und #pakete (Papier) */
+  .bt { background: var(--white); }
+  .bt-raster { display: grid; gap: clamp(28px, 5vw, 56px); align-items: center; }
+  .bt-text .lead { text-wrap: pretty; }
+  .bt-knopf { margin: clamp(18px, 3vw, 28px) 0 0; }
+  /* Vorschau: Laptop hinten (rechts oben), Handy vorne (links unten); jede Fläche ist Größen-Container für ihr Gerät */
+  .bt-vorschau { position: relative; height: clamp(300px, 86vw, 440px); border-radius: 24px;
+    background: radial-gradient(110% 80% at 60% 40%, #e4f3f1 0%, #f2f8f7 50%, var(--bsp-creme) 100%); border: 1px solid #d5e8e6; overflow: hidden; }
+  .bt-mini { position: absolute; }
+  :global(.bsp-mini) { container-type: size; }
+  .bt-mini--laptop { right: 5%; top: 10%; width: 78%; height: 62%; }
+  .bt-mini--handy { left: 6%; bottom: 6%; width: 34%; height: 80%; }
+  .bt-etikett { position: absolute; right: 12px; bottom: 12px; }
+  @media (min-width: 900px) {
+    .bt-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+    .bt-vorschau { height: 460px; }
+  }
+</style>

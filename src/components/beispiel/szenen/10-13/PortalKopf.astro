@@ -1,0 +1,34 @@
+---
+// Kopfzeile des Kundenportals für die Szenen 10–12 des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680,
+// 13.11.2026). Erfundene Marke „Malerbetrieb Muster“ (gezeichnetes Rollen-Zeichen, kein echtes Logo) + „Kundenportal“,
+// rechts Frau Weber (Kürzel FW). Gleiche Kopfzeile in Szene 10 (Laptop), 11 (Handy) und 12 (Laptop): man erkennt das Portal
+// wieder. Nur innerhalb eines Gerätebildschirms benutzen (Maße in var(--px)). Klassen-Präfix szpk- (nur diese Datei).
+interface Props {
+  /** schmale Fassung fürs Handy: ohne Namen „Frau Weber“ neben dem Kürzel */
+  kompakt?: boolean;
+}
+const { kompakt = false } = Astro.props;
+---
+
+<div class:list={['szpk', { 'szpk--kompakt': kompakt }]}>
+  <span class="szpk-marke">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="13" height="6" rx="2" /><path d="M16 7h3.5v5.5H11v3.5" /><rect x="9.4" y="16" width="3.2" height="5.5" rx="1.2" /></svg>
+  </span>
+  <span class="szpk-name"><b>Malerbetrieb Muster</b><span>Kundenportal</span></span>
+  <span class="szpk-person">{!kompakt && <span class="szpk-wer">Frau Weber</span>}<span class="szpk-kuerzel">FW</span></span>
+</div>
+
+<style is:global>
+  /* Portal-Kopfzeile (Szenen 10–12). Ruhend, keine eigenen Phasen. */
+  .szpk { flex: none; display: flex; align-items: center; gap: var(--bsp-a2); padding: calc(10 * var(--px)) var(--bsp-a4);
+    background: var(--bsp-weiss); border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .szpk-marke { flex: none; display: grid; place-items: center; width: calc(28 * var(--px)); height: calc(28 * var(--px)); border-radius: calc(8 * var(--px)); background: var(--bsp-tinte); }
+  .szpk-marke svg { width: 64%; height: 64%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2.1; stroke-linejoin: round; stroke-linecap: round; }
+  .szpk-name { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.15; }
+  .szpk-name b { font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); letter-spacing: -0.01em; white-space: nowrap; }
+  .szpk-name span { font-size: var(--bsp-schrift-xs); font-weight: 600; color: var(--bsp-tinte); letter-spacing: 0.04em; text-transform: uppercase; }
+  .szpk-person { flex: none; display: flex; align-items: center; gap: var(--bsp-a2); font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
+  .szpk-kuerzel { display: grid; place-items: center; width: calc(28 * var(--px)); height: calc(28 * var(--px)); border-radius: 50%; background: var(--bsp-flaeche);
+    color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700; box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+  .szpk--kompakt { padding: calc(6 * var(--px)) var(--bsp-a4) calc(10 * var(--px)); }
+</style>

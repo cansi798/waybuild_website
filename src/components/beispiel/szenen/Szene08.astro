@@ -1,0 +1,226 @@
+---
+// Szene 8 „Geprüft und verschickt“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Drehbuch: Handy im Auto (Lenkrad angedeutet), „10 Minuten später“: Vorschlag prüfen, eine Zeile anpassen,
+// Knopf „Angebot versenden“. Preise wie Szene 7 (Beispiel); angepasst: Spachteln 2 → 3 Std. (netto 1.180,00 € + 19 %).
+// Aufbau wie Szene01.astro (Referenz), Anleitung: docs/beispiel-szenen-anleitung.md.
+// Phasen (3):
+//   0  Ausgang: Handy in der Halterung am Lenkrad, Vorschlag geöffnet, Positionen noch nicht geprüft
+//   1  Prüfen: Positionen 1–3 bekommen nacheinander ihren Haken
+//   2  Anpassen: Finger tippt auf „Risse spachteln“, 2 Std. · 130 € wird 3 Std. · 195 €, Summe springt auf 1.404,20 €
+//   3  Finger tippt „Angebot versenden“ → Knopf „✓ Angebot verschickt“ + Meldung „An Frau Weber gesendet“
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+
+const GEPRUEFT = [
+  { name: 'Abdecken und Abkleben', menge: 'pauschal', preis: '140,00 €' },
+  { name: 'Decke streichen, Weiß', menge: '25 m²', preis: '225,00 €' },
+  { name: 'Wände streichen, Salbei', menge: '62 m²', preis: '620,00 €' },
+];
+const HAKEN = '<svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg>';
+---
+
+<SzeneRahmen nr={8} phasen={3} takt={1800} format="hoch" variante={variante}>
+  <div class="sz08-auto">
+    <span class="sz08-rahmen">
+    <!-- Lenkrad (angedeutet, unten ausgeblendet) -->
+    <svg class="sz08-lenkrad" viewBox="0 0 400 300">
+      <path class="sz08-kranz" fill-rule="evenodd" d="M200 40a190 190 0 1 1 0 380a190 190 0 1 1 0-380zM200 72a158 158 0 1 0 0 316a158 158 0 1 0 0-316z" />
+      <path class="sz08-speiche" d="M44 216q0-6 6-6h300q6 0 6 6v20q0 6-6 6H50q-6 0-6-6z" />
+      <circle class="sz08-nabe" cx="200" cy="230" r="52" />
+      <circle class="sz08-nabe-innen" cx="200" cy="230" r="20" />
+    </svg>
+
+    <span class="sz08-etikett"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>10 Minuten später</span>
+
+    <span class="sz08-halter">
+      <Handy class="sz08-handy" zeit="11:04">
+        <div class="bm-app sz08-app">
+          <span class="sz08-kopf">
+            <span class="sz08-zurueck">‹</span>
+            <span class="sz08-kopf-text">
+              <span class="bm-titel">Angebotsvorschlag</span>
+              <span class="bm-klein">Frau Weber · Wohnzimmer</span>
+            </span>
+          </span>
+          <span class="sz08-vorschlag">
+            <svg viewBox="0 0 24 24"><path d="M12 2.5c.6 4.6 2.4 7.4 7.5 9.5-5.1 2.1-6.9 4.9-7.5 9.5-.6-4.6-2.4-7.4-7.5-9.5 5.1-2.1 6.9-4.9 7.5-9.5z" /></svg>
+            KI-Vorschlag · bitte prüfen
+          </span>
+
+          <!-- Aufnahme vom Termin -->
+          <span class="bm-karte sz08-aufnahme">
+            <span class="sz08-fotos"><i></i><i></i><i></i></span>
+            <span class="sz08-aufnahme-text"><b>Aufnahme vom Termin</b><span class="bm-klein">3 Fotos · unterschrieben</span></span>
+          </span>
+
+          <!-- Positionen -->
+          <span class="bm-karte sz08-liste">
+            {GEPRUEFT.map((p, i) => (
+              <span class:list={['sz08-zeile', `sz08-zeile--${i + 1}`]}>
+                <span class="sz08-haken" set:html={HAKEN} />
+                <span class="sz08-text"><span class="sz08-name">{p.name}</span><span class="sz08-menge">{p.menge}</span></span>
+                <span class="sz08-preis">{p.preis}</span>
+              </span>
+            ))}
+            <span class="sz08-zeile sz08-zeile--4">
+              <span class="sz08-ring"></span>
+              <span class="sz08-haken" set:html={HAKEN} />
+              <span class="sz08-text">
+                <span class="sz08-name">Risse spachteln <span class="bm-chip sz08-angepasst">angepasst</span></span>
+                <span class="sz08-stapel sz08-menge"><span class="sz08-alt">2 Std.</span><span class="sz08-neu">3 Std.</span></span>
+              </span>
+              <span class="sz08-stapel sz08-preis"><span class="sz08-alt">130,00 €</span><span class="sz08-neu">195,00 €</span></span>
+              <span class="bm-tipp sz08-tipp sz08-tipp--zeile"></span>
+            </span>
+            <span class="sz08-summe">
+              <span class="sz08-summe-text">Gesamt <span>inkl. MwSt.</span></span>
+              <span class="sz08-stapel sz08-summe-preis"><span class="sz08-alt">1.326,85 €</span><span class="sz08-neu">1.404,20 €</span></span>
+            </span>
+          </span>
+
+          <!-- persönliche Nachricht an die Kundin -->
+          <span class="bm-karte sz08-notiz">
+            <span class="sz08-notiz-kopf">Nachricht an Frau Weber</span>
+            <span class="sz08-notiz-text">Vielen Dank für den netten Termin!</span>
+          </span>
+
+          <!-- Meldung -->
+          <span class="sz08-meldung"><span class="bm-ok"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span>An Frau Weber gesendet</span>
+
+          <!-- Versenden -->
+          <span class="sz08-knopf">
+            <span class="bm-knopf sz08-knopf-los"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-7z" /></svg>Angebot versenden</span>
+            <span class="bm-knopf sz08-knopf-ok"><span class="bm-ok"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span>Angebot verschickt</span>
+            <span class="bm-tipp sz08-tipp sz08-tipp--knopf"></span>
+          </span>
+        </div>
+      </Handy>
+      <span class="sz08-klemme sz08-klemme--l"></span>
+      <span class="sz08-klemme sz08-klemme--r"></span>
+    </span>
+    </span>
+  </div>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 08 „Geprüft und verschickt“ – alle Regeln mit .sz08 (global, aber eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 3). Vorzustände NUR unter .sz08[data-phase]:not([data-erreicht~="k"]).
+   * Bewegt: nur transform/opacity. Eigener Größen-Container .sz08-auto: Lenkrad hinten links, Handy in Halterung rechts davon. */
+  .sz08-auto { position: relative; width: 100%; height: 100%; container-type: size; overflow: hidden; }
+  /* kompakter Rahmen in der Mitte (auf breiten Bühnen nicht auseinandergezogen) */
+  .sz08-rahmen { position: absolute; left: 50%; top: 0; width: min(100cqw, 100cqh * 1.15); height: 100%; container-type: size; transform: translateX(-50%); }
+
+  /* Lenkrad: weiß mit Kontur wie die Geräte, nach unten weich ausgeblendet */
+  .sz08-lenkrad { position: absolute; left: 36%; bottom: 0; width: min(100cqh, 74cqw); height: auto; transform: translateX(-50%); overflow: visible;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); mask-image: linear-gradient(to bottom, #000 55%, transparent 98%); }
+  .sz08-kranz, .sz08-speiche, .sz08-nabe { fill: var(--gr-gehaeuse); stroke: var(--gr-kontur); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .sz08-kranz { fill: #eef3f2; }
+  .sz08-nabe { fill: #e3ecea; }
+  .sz08-nabe-innen { fill: var(--bsp-flaeche); stroke: var(--gr-kontur); stroke-width: 2; vector-effect: non-scaling-stroke; }
+
+  /* Etikett „10 Minuten später“ */
+  .sz08-etikett { position: absolute; z-index: 3; left: 1cqw; top: 3cqh; display: inline-flex; align-items: center; gap: 0.45em; padding: 0.4em 0.9em 0.4em 0.7em;
+    border-radius: 99px; background: var(--bsp-nacht); color: var(--bsp-weiss); font-family: var(--font-head); font-size: clamp(11px, 3.1cqh, 17px); font-weight: 700;
+    letter-spacing: 0.01em; white-space: nowrap; box-shadow: 0 8px 20px -10px rgb(0 79 76 / 60%); transform: rotate(-3deg); }
+  .sz08-etikett svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+
+  /* Halterung + Handy */
+  .sz08-halter { position: absolute; z-index: 2; left: 63%; top: 50%; display: block; transform: translate(-50%, -50%); }
+  .sz08-handy { --gr-hoehe: min(90cqh, 54cqw * 2.1667); }
+  .sz08-klemme { position: absolute; top: 46%; width: 2cqh; height: 9cqh; border-radius: 1cqh; background: var(--bsp-nacht); }
+  .sz08-klemme--l { left: -1cqh; }
+  .sz08-klemme--r { right: -1cqh; }
+
+  /* Bildschirm */
+  .sz08-app { position: relative; gap: calc(10 * var(--px)); padding-top: var(--bsp-a1); }
+  .sz08-kopf { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .sz08-zurueck { flex: none; font-size: var(--bsp-schrift-xxl); line-height: 1; color: var(--bsp-tinte); margin-top: calc(-4 * var(--px)); }
+  .sz08-kopf-text { display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
+  .sz08-vorschlag { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--bsp-a1); padding: calc(4 * var(--px)) var(--bsp-a3); border-radius: 99px;
+    background: var(--bsp-flaeche); border: calc(1.5 * var(--px)) dashed var(--bsp-tuerkis-dunkel); color: var(--bsp-tinte); font-size: var(--bsp-schrift-s); font-weight: 700; white-space: nowrap; }
+  .sz08-vorschlag svg { width: calc(13 * var(--px)); height: calc(13 * var(--px)); fill: currentColor; }
+
+  .sz08-aufnahme { display: flex; align-items: center; gap: var(--bsp-a3); padding: var(--bsp-a2) var(--bsp-a3); }
+  .sz08-fotos { flex: none; display: flex; }
+  .sz08-fotos i { width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: var(--bsp-r-s); background: #e6dfd2; box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss); }
+  .sz08-fotos i + i { margin-left: calc(-8 * var(--px)); }
+  .sz08-fotos i:nth-child(2) { background: #efebe3; }
+  .sz08-fotos i:nth-child(3) { background: #cfe0e6; }
+  .sz08-aufnahme-text { display: flex; flex-direction: column; font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+
+  .sz08-liste { display: flex; flex-direction: column; padding: var(--bsp-a1) var(--bsp-a3) var(--bsp-a3); }
+  .sz08-zeile { position: relative; display: flex; align-items: center; gap: var(--bsp-a2); padding: calc(7 * var(--px)) 0; border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .sz08-haken { flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: 50%; background: var(--bsp-ok); }
+  /* leerer Prüfkreis unter dem Haken (sichtbar, solange noch nicht geprüft) */
+  .sz08-zeile:not(.sz08-summe)::after { content: ''; position: absolute; left: 0; top: 50%; width: calc(18 * var(--px)); height: calc(18 * var(--px)); margin-top: calc(-9 * var(--px));
+    border-radius: 50%; border: calc(1.5 * var(--px)) solid var(--bsp-linie); }
+  .sz08-haken { position: relative; z-index: 1; }
+  .sz08-haken svg { width: 66%; height: 66%; fill: none; stroke: var(--bsp-weiss); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sz08-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
+  .sz08-name { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-text); white-space: nowrap; }
+  .sz08-menge { font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); }
+  .sz08-preis { flex: none; font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text); font-variant-numeric: tabular-nums; text-align: right; }
+  /* Zahlen-Stapel: alter und neuer Wert übereinander, per opacity getauscht */
+  .sz08-stapel { display: grid; justify-items: start; }
+  .sz08-preis.sz08-stapel, .sz08-summe-preis { justify-items: end; }
+  .sz08-stapel > span { grid-area: 1 / 1; }
+  .sz08-alt { opacity: 0; }
+  .sz08-zeile--4 .sz08-neu { color: var(--bsp-tinte); font-weight: 700; }
+  .sz08-angepasst { padding: calc(1 * var(--px)) calc(6 * var(--px)); font-size: calc(9 * var(--px)); }
+  .sz08-ring { position: absolute; inset: calc(2 * var(--px)) calc(-6 * var(--px)); border-radius: var(--bsp-r-s); background: rgb(0 166 161 / 9%); border: calc(1.5 * var(--px)) solid var(--bsp-tuerkis); }
+  .sz08-tipp--zeile { left: 82%; top: 50%; }
+
+  .sz08-summe { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bsp-a2); padding-top: var(--bsp-a3); }
+  .sz08-summe-text { font-size: var(--bsp-schrift-s); font-weight: 700; color: var(--bsp-text); }
+  .sz08-summe-text span { font-size: var(--bsp-schrift-xs); font-weight: 500; color: var(--bsp-text-leise); }
+  .sz08-summe-preis { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; color: var(--bsp-tinte); font-variant-numeric: tabular-nums; }
+
+  .sz08-knopf { position: relative; display: grid; }
+  .sz08-knopf > .bm-knopf { grid-area: 1 / 1; min-height: calc(46 * var(--px)); font-size: var(--bsp-schrift-m); }
+  .sz08-knopf-los svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linejoin: round; }
+  .sz08-knopf-ok { background: var(--bsp-ok); gap: var(--bsp-a2); }
+  .sz08-knopf-ok .bm-ok { width: calc(20 * var(--px)); height: calc(20 * var(--px)); background: var(--bsp-weiss); color: var(--bsp-ok); }
+  .sz08-tipp--knopf { left: 50%; top: 50%; }
+
+  .sz08-notiz { display: flex; flex-direction: column; gap: calc(3 * var(--px)); padding: var(--bsp-a2) var(--bsp-a3); }
+  .sz08-notiz-kopf { font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bsp-tinte); }
+  .sz08-notiz-text { font-size: var(--bsp-schrift-s); color: var(--bsp-text); line-height: 1.4; }
+  .sz08-meldung { display: flex; align-items: center; gap: var(--bsp-a2); margin-top: auto; padding: var(--bsp-a2) var(--bsp-a3); border-radius: var(--bsp-r-m);
+    background: var(--bsp-ok-flaeche); color: var(--bsp-ok); font-size: var(--bsp-schrift-s); font-weight: 650; line-height: 1.3; }
+  .sz08-meldung .bm-ok { flex: none; width: calc(20 * var(--px)); height: calc(20 * var(--px)); }
+
+  /* Übergänge (gelten in beide Richtungen) */
+  .sz08-haken { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz08-zeile--1 .sz08-haken { transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
+  .sz08-zeile--2 .sz08-haken { transition-delay: calc(var(--bsp-auftritt) + 0.45s); }
+  .sz08-zeile--3 .sz08-haken { transition-delay: calc(var(--bsp-auftritt) + 0.8s); }
+  .sz08-zeile--4 .sz08-haken { transition-delay: 1.1s; }
+  .sz08-stapel > span { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.45s; }
+  .sz08-summe-preis > span { transition-delay: 0.75s; }
+  .sz08-ring, .sz08-angepasst { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.35s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.35s; }
+  .sz08-knopf-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.55s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.55s; }
+  .sz08-meldung { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.85s, transform var(--bsp-dauer) var(--bsp-ease) 0.85s; }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: noch nichts geprüft */
+  .sz08[data-phase]:not([data-erreicht~="1"]) .sz08-zeile--1 .sz08-haken,
+  .sz08[data-phase]:not([data-erreicht~="1"]) .sz08-zeile--2 .sz08-haken,
+  .sz08[data-phase]:not([data-erreicht~="1"]) .sz08-zeile--3 .sz08-haken { opacity: 0; transform: scale(0.3); }
+  /* vor Phase 2: Zeile 4 noch alt (2 Std. · 130 €), ohne Markierung; alte Summe */
+  .sz08[data-phase]:not([data-erreicht~="2"]) .sz08-zeile--4 .sz08-haken { opacity: 0; transform: scale(0.3); }
+  .sz08[data-phase]:not([data-erreicht~="2"]) .sz08-alt { opacity: 1; }
+  .sz08[data-phase]:not([data-erreicht~="2"]) .sz08-neu { opacity: 0; }
+  .sz08[data-phase]:not([data-erreicht~="2"]) .sz08-ring { opacity: 0; transform: scale(0.96); }
+  .sz08[data-phase]:not([data-erreicht~="2"]) .sz08-angepasst { opacity: 0; transform: scale(0.5); }
+  /* Phase 2: Finger tippt auf die Zeile */
+  .sz08[data-phase="2"] .sz08-tipp--zeile { animation: bm-tippen 0.7s var(--bsp-ease) 0.05s both; }
+  /* vor Phase 3: noch nicht verschickt */
+  .sz08[data-phase]:not([data-erreicht~="3"]) .sz08-knopf-ok { opacity: 0; transform: scale(0.92); }
+  .sz08[data-phase]:not([data-erreicht~="3"]) .sz08-meldung { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  /* Phase 3: Finger tippt „Angebot versenden“ */
+  .sz08[data-phase="3"] .sz08-tipp--knopf { animation: bm-tippen 0.75s var(--bsp-ease) 0.05s both; }
+</style>

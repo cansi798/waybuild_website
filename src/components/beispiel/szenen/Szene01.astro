@@ -1,0 +1,179 @@
+---
+// Szene 1 „Gefunden“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026). REFERENZ-SZENE für alle
+// weiteren Szenen (Aufbau, Phasen, CSS-Regeln): docs/beispiel-szenen-anleitung.md.
+// Drehbuch: Handy, Suche „Maler in der Nähe“, Treffer „Malerbetrieb Muster“ oben mit ★ 4,9 und „Heute geöffnet“.
+// Rechtliches: KEIN Suchmaschinen-Logo, keine echten Firmennamen – die Suche ist neutral („Suchen“), die übrigen Treffer sind
+// namenlose Gerippe.
+// Phasen (3):
+//   0  Ausgang: leeres Suchfeld mit Platzhalter „Suchen“ und blinkender Schreibmarke, sonst nichts
+//   1  „Maler in der Nähe“ wird Buchstabe für Buchstabe getippt, danach tippt der Finger auf die Lupe
+//   2  Filter, Karte mit Stecknadeln und Treffer gleiten nacheinander herein
+//   3  Hervorhebung: „Malerbetrieb Muster“ bekommt den Türkis-Rahmen, die anderen Treffer treten zurück, Finger tippt darauf
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+
+const SUCHE = 'Maler in der Nähe';
+// je Zeichen ein span (Tipp-Effekt nur über opacity); Leerzeichen als geschütztes Leerzeichen, damit es Breite behält
+const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
+---
+
+<SzeneRahmen nr={1} phasen={3} takt={1700} format="hoch" variante={variante}>
+  <Handy>
+    <div class="bm-app sz01-app">
+      <!-- Suchfeld -->
+      <div class="sz01-suche">
+        <svg class="sz01-lupe" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg>
+        <span class="sz01-feld">
+          <span class="sz01-platz">Suchen</span>
+          <span class="sz01-marke"></span>
+          <span class="sz01-text">{zeichen.map((z) => <span class="sz01-z">{z}</span>)}</span>
+        </span>
+        <span class="sz01-los"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" /><path d="M15.5 15.5l4 4" /></svg></span>
+        <span class="bm-tipp sz01-tipp sz01-tipp--suche"></span>
+      </div>
+
+      <!-- Filter -->
+      <div class="sz01-filter sz01-erscheint sz01-erscheint--1">
+        <span class="bm-chip">In der Nähe</span><span class="bm-chip sz01-chip-leer">Jetzt geöffnet</span><span class="bm-chip sz01-chip-leer">Top bewertet</span>
+      </div>
+
+      <!-- Karte mit Stecknadeln (neutral gezeichnet) -->
+      <div class="sz01-karte sz01-erscheint sz01-erscheint--2">
+        <svg class="sz01-plan" viewBox="0 0 288 120" preserveAspectRatio="xMidYMid slice">
+          <rect width="288" height="120" fill="#e6f0ee" />
+          <path d="M196 0h92v52c-30 6-62 2-92-12z" fill="#d8ece0" />
+          <path d="M-10 86C60 70 120 96 180 74s90-30 130-24" stroke="#fff" stroke-width="9" fill="none" />
+          <path d="M70 -10l34 140M190 -10l-28 140M-10 30h300" stroke="#fff" stroke-width="5" fill="none" />
+          <path d="M0 108h288" stroke="#cfe3df" stroke-width="3" fill="none" />
+        </svg>
+        <span class="sz01-pin sz01-pin--2"><i></i></span>
+        <span class="sz01-pin sz01-pin--3"><i></i></span>
+        <span class="sz01-pin sz01-pin--1"><i></i><b>Malerbetrieb Muster</b></span>
+      </div>
+
+      <!-- Treffer -->
+      <div class="sz01-liste">
+        <div class="bm-karte sz01-treffer sz01-treffer--top sz01-erscheint sz01-erscheint--3">
+          <span class="sz01-ring"></span>
+          <p class="sz01-name">Malerbetrieb Muster</p>
+          <p class="sz01-wertung"><strong>4,9</strong> <span class="bm-sterne">★★★★★</span> <span class="sz01-anzahl">(128)</span></p>
+          <p class="bm-klein">Malerbetrieb · Musterstadt · 1,2 km</p>
+          <p class="sz01-offen"><span class="bm-chip bm-chip--ok">Heute geöffnet</span> <span class="bm-klein">bis 18 Uhr</span></p>
+          <p class="sz01-aktionen"><span class="bm-knopf bm-knopf--hell sz01-mini-knopf">Anrufen</span><span class="bm-knopf sz01-mini-knopf">Website</span></p>
+          <span class="bm-tipp sz01-tipp sz01-tipp--treffer"></span>
+        </div>
+        <div class="bm-karte sz01-treffer sz01-treffer--rest sz01-erscheint sz01-erscheint--4">
+          <span class="bm-balken bm-balken--mittel"></span><span class="sz01-sterne-leer">★★★★</span><span class="bm-balken bm-balken--kurz"></span>
+        </div>
+        <div class="bm-karte sz01-treffer sz01-treffer--rest sz01-erscheint sz01-erscheint--5">
+          <span class="bm-balken bm-balken--lang"></span><span class="sz01-sterne-leer">★★★</span><span class="bm-balken bm-balken--kurz"></span>
+        </div>
+        <div class="bm-karte sz01-treffer sz01-treffer--rest sz01-erscheint sz01-erscheint--6">
+          <span class="bm-balken bm-balken--mittel"></span><span class="sz01-sterne-leer">★★★★</span><span class="bm-balken bm-balken--kurz"></span>
+        </div>
+      </div>
+    </div>
+  </Handy>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 01 „Gefunden“ – alle Regeln mit .sz01 beginnen (global, aber eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 3). Vorzustände NUR unter .sz01[data-phase]:not([data-erreicht~="k"]) –
+   * die setzt allein die Engine, ohne JS / reduziert / mini bleibt es beim Endzustand. Bewegt: nur transform/opacity. */
+  .sz01-app { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
+
+  /* Suchfeld */
+  .sz01-suche { position: relative; display: flex; align-items: center; gap: var(--bsp-a2); height: calc(46 * var(--px)); padding: 0 calc(6 * var(--px)) 0 var(--bsp-a3);
+    border-radius: 99px; background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-10 * var(--px)) rgb(0 79 76 / 30%); }
+  .sz01-lupe { flex: none; width: calc(18 * var(--px)); height: calc(18 * var(--px)); fill: none; stroke: var(--bsp-text-leise); stroke-width: 2.2; stroke-linecap: round; }
+  .sz01-feld { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; height: 100%; font-size: var(--bsp-schrift-m); white-space: nowrap; overflow: hidden; }
+  .sz01-text { color: var(--bsp-text); font-weight: 500; }
+  .sz01-platz { position: absolute; left: 0; color: var(--bsp-text-leise); opacity: 0; }
+  .sz01-marke { position: absolute; left: 0; top: 28%; width: calc(1.5 * var(--px)); height: 44%; background: var(--bsp-tinte); opacity: 0; }
+  .sz01-los { flex: none; display: grid; place-items: center; width: calc(34 * var(--px)); height: calc(34 * var(--px)); border-radius: 50%; background: var(--bsp-tinte); }
+  .sz01-los svg { width: 56%; height: 56%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2.4; stroke-linecap: round; }
+  .sz01-tipp--suche { right: calc(23 * var(--px)); top: 50%; left: auto; margin-right: calc(-22 * var(--px)); }
+
+  /* Filter */
+  .sz01-filter { display: flex; gap: var(--bsp-a1); overflow: hidden; }
+  .sz01-chip-leer { background: var(--bsp-weiss); color: var(--bsp-text-leise); box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie-grau); }
+
+  /* Karte */
+  .sz01-karte { position: relative; flex: none; height: calc(132 * var(--px)); border-radius: var(--bsp-r-l); overflow: hidden; box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+  .sz01-plan { display: block; width: 100%; height: 100%; }
+  .sz01-pin { position: absolute; display: flex; align-items: center; gap: calc(5 * var(--px)); transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz01-pin i { display: block; width: calc(14 * var(--px)); height: calc(14 * var(--px)); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #9fb1ae; box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss); }
+  .sz01-pin--1 { left: 38%; top: 34%; }
+  .sz01-pin--1 i { width: calc(22 * var(--px)); height: calc(22 * var(--px)); background: var(--bsp-tinte); }
+  .sz01-pin--1 b { padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-weiss); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700;
+    box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgb(0 79 76 / 20%); }
+  .sz01-pin--2 { left: 14%; top: 58%; transition-delay: 0.1s; }
+  .sz01-pin--3 { left: 78%; top: 62%; transition-delay: 0.2s; }
+
+  /* Treffer */
+  .sz01-liste { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .sz01-treffer p { margin: 0; }
+  .sz01-treffer--top { display: flex; flex-direction: column; gap: calc(3 * var(--px)); transform: scale(1.02); transform-origin: 50% 50%; }
+  .sz01-name { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-text); letter-spacing: -0.01em; }
+  .sz01-wertung { display: flex; align-items: center; gap: calc(4 * var(--px)); font-size: var(--bsp-schrift-s); }
+  .sz01-anzahl { color: var(--bsp-text-leise); }
+  .sz01-offen { display: flex; align-items: center; gap: var(--bsp-a1); }
+  .sz01-aktionen { display: flex; gap: var(--bsp-a2); margin-top: var(--bsp-a1) !important; }
+  .sz01-mini-knopf { min-height: calc(28 * var(--px)); padding: 0 var(--bsp-a3); font-size: var(--bsp-schrift-s); }
+  .sz01-ring { position: absolute; inset: calc(-1 * var(--px)); border-radius: inherit; pointer-events: none; border: calc(2 * var(--px)) solid var(--bsp-tuerkis);
+    box-shadow: 0 0 0 calc(4 * var(--px)) rgb(0 166 161 / 16%), 0 calc(14 * var(--px)) calc(26 * var(--px)) calc(-14 * var(--px)) rgb(0 79 76 / 45%); }
+  .sz01-tipp--treffer { left: 72%; top: 40%; }
+  .sz01-treffer--rest { display: flex; flex-direction: column; gap: calc(6 * var(--px)); opacity: 0.5; }
+  .sz01-sterne-leer { font-size: var(--bsp-schrift-xs); color: #c9d2d0; letter-spacing: calc(1 * var(--px)); line-height: 1; }
+
+  /* Übergänge (gelten in beide Richtungen) */
+  .sz01-z, .sz01-platz { transition: opacity 0.06s linear; }
+  .sz01-erscheint { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz01-erscheint--2 { transition-delay: calc(1 * var(--bsp-versatz)); }
+  .sz01-erscheint--3 { transition-delay: calc(2 * var(--bsp-versatz)); }
+  .sz01-erscheint--4 { transition-delay: calc(3 * var(--bsp-versatz)); }
+  .sz01-erscheint--5 { transition-delay: calc(4 * var(--bsp-versatz)); }
+  .sz01-erscheint--6 { transition-delay: calc(5 * var(--bsp-versatz)); }
+  .sz01-treffer--top { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(2 * var(--bsp-versatz)), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz01-ring { transition: opacity var(--bsp-dauer) var(--bsp-ease); }
+  .sz01-treffer--rest { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: Suchfeld leer, Platzhalter + blinkende Schreibmarke */
+  .sz01[data-phase]:not([data-erreicht~="1"]) .sz01-z { opacity: 0; }
+  .sz01[data-phase]:not([data-erreicht~="1"]) .sz01-platz { opacity: 1; }
+  .sz01[data-aktiv]:not([data-erreicht~="1"]) .sz01-marke { animation: bm-blinken 1s steps(1) infinite; }
+  /* Tippen: Zeichen nacheinander (Abstand 55 ms, nach dem Auftritt der Szene) */
+  .sz01[data-erreicht~="1"] .sz01-z { transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(2) { transition-delay: calc(var(--bsp-auftritt) + 0.155s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(3) { transition-delay: calc(var(--bsp-auftritt) + 0.21s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(4) { transition-delay: calc(var(--bsp-auftritt) + 0.265s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(5) { transition-delay: calc(var(--bsp-auftritt) + 0.32s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(6) { transition-delay: calc(var(--bsp-auftritt) + 0.375s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(7) { transition-delay: calc(var(--bsp-auftritt) + 0.43s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(8) { transition-delay: calc(var(--bsp-auftritt) + 0.485s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(9) { transition-delay: calc(var(--bsp-auftritt) + 0.54s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(10) { transition-delay: calc(var(--bsp-auftritt) + 0.595s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(11) { transition-delay: calc(var(--bsp-auftritt) + 0.65s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(12) { transition-delay: calc(var(--bsp-auftritt) + 0.705s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(13) { transition-delay: calc(var(--bsp-auftritt) + 0.76s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(14) { transition-delay: calc(var(--bsp-auftritt) + 0.815s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(15) { transition-delay: calc(var(--bsp-auftritt) + 0.87s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(16) { transition-delay: calc(var(--bsp-auftritt) + 0.925s); }
+  .sz01[data-erreicht~="1"] .sz01-z:nth-child(17) { transition-delay: calc(var(--bsp-auftritt) + 0.98s); }
+  /* nach dem Tippen: Finger tippt auf die Lupe (nur solange Phase 1 steht) */
+  .sz01[data-phase="1"] .sz01-tipp--suche { animation: bm-tippen 0.75s var(--bsp-ease) calc(var(--bsp-auftritt) + 1.15s) both; }
+  /* vor Phase 2: Filter, Karte, Treffer noch nicht da */
+  .sz01[data-phase]:not([data-erreicht~="2"]) .sz01-erscheint { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  .sz01[data-phase]:not([data-erreicht~="2"]) .sz01-pin { opacity: 0; transform: translateY(calc(-18 * var(--px))); }
+  /* vor Phase 3: keine Hervorhebung, alle Treffer gleich */
+  .sz01[data-phase]:not([data-erreicht~="3"]) .sz01-ring { opacity: 0; }
+  .sz01[data-erreicht~="2"]:not([data-erreicht~="3"]) .sz01-treffer--top { transform: none; }
+  .sz01[data-erreicht~="2"]:not([data-erreicht~="3"]) .sz01-treffer--rest { opacity: 1; }
+  /* Phase 3: Finger tippt auf den Treffer */
+  .sz01[data-phase="3"] .sz01-tipp--treffer { animation: bm-tippen 0.8s var(--bsp-ease) 0.45s both; }
+</style>

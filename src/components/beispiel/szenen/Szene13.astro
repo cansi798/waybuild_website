@@ -1,0 +1,162 @@
+---
+// Szene 13 „Begeistert erzählt“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Drehbuch: Mail „Wie zufrieden waren Sie?“ → ★★★★★; dann Nachbarin sucht „Maler in der Nähe“ → Szene 1 schimmert wieder auf
+// (Kreis). Links das Handy von Frau Weber (Mail, Sterne), rechts das Handy der Nachbarin = die echte Szene 1 als ruhende
+// Rückblende (Szene01 variante="mini"), dazwischen das Kreis-Zeichen „Der Kreis beginnt von vorn“.
+// Mail neutral gezeichnet (kein echter Mail-Anbieter). Anleitung: docs/beispiel-szenen-anleitung.md, Referenz: Szene01.astro.
+// Phasen (3, am Handy im Takt von 1,4 s):
+//   0  Ausgang: Handy von Frau Weber in der Mitte, Mail noch nicht da
+//   1  Mail „Wie zufrieden waren Sie?“ vom Malerbetrieb Muster gleitet herein, fünf leere Sterne
+//   2  ★★★★★ füllen sich nacheinander, „Danke für Ihre Bewertung!“ und ein kurzer Satz von Frau Weber
+//   3  Handy von Frau Weber rückt nach links, rechts erscheint das Handy der Nachbarin mit der Suche aus Szene 1 (schimmert),
+//      kurz danach das Kreis-Zeichen „Der Kreis beginnt von vorn“ dazwischen (dreht sich langsam, solange gezeigt)
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+import Szene01 from './Szene01.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+
+const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
+const stern = '<path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z" />';
+const sterne = [1, 2, 3, 4, 5];
+---
+
+<SzeneRahmen nr={13} phasen={3} takt={1400} format="hoch" variante={variante}>
+  <div class="sz13-paar">
+    <!-- Frau Weber: Mail mit Bewertung -->
+    <div class="sz13-spalte sz13-spalte--weber">
+      <Handy zeit="17:32" class="sz13-handy">
+        <div class="bm-app sz13-app">
+          <p class="sz13-zurueck"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>Posteingang</p>
+          <div class="sz13-mail sz13-ein sz13-ein--1">
+            <p class="sz13-absender"><span class="sz13-avatar">M</span><span class="sz13-von"><b>Malerbetrieb Muster</b><span class="bm-klein">an mich · 17:30</span></span></p>
+            <p class="sz13-betreff">Wie zufrieden waren Sie?</p>
+            <p class="sz13-anrede">Liebe Frau Weber, danke für Ihren Auftrag!</p>
+            <span class="bm-balken bm-balken--lang"></span>
+            <span class="bm-balken bm-balken--mittel"></span>
+          </div>
+          <div class="bm-karte bm-karte--marke sz13-bewertung sz13-ein sz13-ein--2">
+            <p class="bm-klein">Ihre Bewertung</p>
+            <span class="sz13-sterne">
+              {sterne.map((n) => (
+                <span class={`sz13-stern sz13-stern--${n}`}>
+                  <svg class="sz13-stern-leer" viewBox="0 0 24 24" set:html={stern} />
+                  <svg class="sz13-stern-voll" viewBox="0 0 24 24" set:html={stern} />
+                </span>
+              ))}
+            </span>
+            <p class="sz13-zitat">„Sauber, schnell und super freundlich. Gerne wieder!“</p>
+            <span class="bm-chip bm-chip--ok sz13-danke"><span class="bm-ok"><svg viewBox="0 0 24 24" set:html={haken} /></span>Danke für Ihre Bewertung!</span>
+          </div>
+          <span class="bm-knopf bm-knopf--hell sz13-teilen"><svg viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="18.5" r="2.5" /><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1" /></svg>Weiterempfehlen</span>
+        </div>
+      </Handy>
+      <span class="sz13-wer">Frau Weber</span>
+    </div>
+
+    <!-- Kreis-Zeichen -->
+    <div class="sz13-kreis">
+      <span class="sz13-kreis-zeichen">
+        <svg viewBox="0 0 48 48"><path d="M38.5 17A16 16 0 0 0 9.8 15.5" /><path d="M9.5 31a16 16 0 0 0 28.7 1.5" /><path d="M33 16.5l6 1 .8-6.2" /><path d="M15 31.5l-6-1-.8 6.2" /></svg>
+      </span>
+      <span class="sz13-kreis-text">Der Kreis beginnt von vorn</span>
+    </div>
+
+    <!-- Nachbarin: Suche aus Szene 1 als Rückblende -->
+    <div class="sz13-spalte sz13-spalte--nachbarin">
+      <div class="sz13-rueck">
+        <Szene01 variante="mini" />
+        <span class="sz13-glanz"></span>
+      </div>
+      <span class="sz13-wer">Nachbarin</span>
+    </div>
+  </div>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 13 „Begeistert erzählt“ – alle Regeln mit .sz13 (global, eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 3). Vorzustände NUR unter .sz13[data-phase]:not([data-erreicht~="k"]). Bewegt: transform/opacity.
+   * Maße außerhalb der Bildschirme in cqw/cqh von .sz13-paar (Größen-Container über die ganze Bildfläche). */
+  .sz13-paar { position: relative; width: 100%; height: 100%; container-type: size; display: flex; align-items: center; justify-content: center;
+    --sz13-b: min(38cqh, 37cqw);                  /* Breite eines Handys */
+    --sz13-m: min(19cqw, 26cqh);                  /* Breite der Mitte (Kreis-Zeichen) */
+    --sz13-v: calc((var(--sz13-b) + var(--sz13-m)) / 2); /* Weg, um das linke Handy allein in die Mitte zu rücken */ }
+  .sz13-spalte { flex: none; display: flex; flex-direction: column; align-items: center; gap: 2cqh; width: var(--sz13-b); }
+  .sz13-handy { --gr-hoehe: calc(var(--sz13-b) * 2.1667); }
+  .sz13-rueck { position: relative; container-type: size; width: var(--sz13-b); height: calc(var(--sz13-b) * 2.1667); }
+  .sz13-wer { display: inline-flex; align-items: center; padding: 0.4em 1em; border-radius: 99px; background: var(--bsp-weiss); border: 1px solid var(--bsp-linie);
+    color: var(--bsp-tinte); font-family: var(--font-body); font-size: clamp(10px, 2.6cqh, 14px); font-weight: 650; line-height: 1.2; white-space: nowrap; }
+  /* Schimmer um die Rückblende (Szene 1) */
+  .sz13-glanz { position: absolute; inset: -1.6cqw; border-radius: 17cqw; pointer-events: none;
+    box-shadow: 0 0 0 0.9cqw rgb(0 166 161 / 55%), 0 0 7cqw 1cqw rgb(0 166 161 / 40%); opacity: 0.75; }
+
+  /* Mitte: Kreis-Zeichen */
+  .sz13-kreis { flex: none; width: var(--sz13-m); display: flex; flex-direction: column; align-items: center; gap: 1.6cqh; text-align: center; }
+  .sz13-kreis-zeichen { display: grid; place-items: center; width: min(13cqw, 15cqh); height: min(13cqw, 15cqh); border-radius: 50%; background: var(--bsp-weiss);
+    box-shadow: 0 0 0 2px var(--bsp-tuerkis), 0 12px 28px -14px rgb(0 79 76 / 50%); }
+  .sz13-kreis-zeichen svg { width: 70%; height: 70%; fill: none; stroke: var(--bsp-tinte); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sz13-kreis-text { max-width: 100%; font-family: var(--font-head); font-size: clamp(9px, min(2.5cqh, 3.6cqw), 15px); font-weight: 700; line-height: 1.25; color: var(--bsp-tinte); text-wrap: balance; }
+
+  /* Mail */
+  .sz13-app { gap: var(--bsp-a3); padding-top: var(--bsp-a1); }
+  .sz13-app p { margin: 0; }
+  .sz13-zurueck { display: flex; align-items: center; gap: calc(2 * var(--px)); font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-tinte); }
+  .sz13-zurueck svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sz13-mail { display: flex; flex-direction: column; gap: var(--bsp-a2); }
+  .sz13-absender { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .sz13-avatar { flex: none; display: grid; place-items: center; width: calc(34 * var(--px)); height: calc(34 * var(--px)); border-radius: 50%; background: var(--bsp-tinte);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; }
+  .sz13-von { min-width: 0; display: flex; flex-direction: column; line-height: 1.2; }
+  .sz13-von b { font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); white-space: nowrap; }
+  .sz13-betreff { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; color: var(--bsp-text); margin-top: var(--bsp-a1) !important; }
+  .sz13-anrede { font-size: var(--bsp-schrift-m); color: var(--bsp-text); }
+
+  /* Bewertung */
+  .sz13-bewertung { display: flex; flex-direction: column; align-items: center; gap: var(--bsp-a2); text-align: center; padding: var(--bsp-a4) var(--bsp-a3); }
+  .sz13-sterne { display: flex; gap: calc(6 * var(--px)); }
+  .sz13-stern { position: relative; display: block; width: calc(44 * var(--px)); height: calc(44 * var(--px)); }
+  .sz13-stern svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sz13-stern-leer { fill: none; stroke: #c9d2d0; stroke-width: 1.6; stroke-linejoin: round; }
+  .sz13-stern-voll { fill: var(--bsp-stern); stroke: #c98a06; stroke-width: 1; stroke-linejoin: round; }
+  .sz13-zitat { font-size: var(--bsp-schrift-s); font-style: italic; color: var(--bsp-text); }
+  .sz13 .sz13-danke { font-size: var(--bsp-schrift-s); padding: calc(4 * var(--px)) calc(10 * var(--px)) calc(4 * var(--px)) calc(4 * var(--px)); }
+  .sz13-danke .bm-ok { width: calc(18 * var(--px)); height: calc(18 * var(--px)); }
+
+  .sz13-teilen { align-self: center; gap: var(--bsp-a2); }
+  .sz13-teilen svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2; }
+
+  /* Übergänge (in beide Richtungen) */
+  .sz13-ein { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz13-ein--1 { transition-delay: var(--bsp-auftritt); }
+  .sz13-ein--2 { transition-delay: calc(var(--bsp-auftritt) + 2 * var(--bsp-versatz)); }
+  .sz13-stern-voll { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz13-stern--2 .sz13-stern-voll { transition-delay: 0.18s; }
+  .sz13-stern--3 .sz13-stern-voll { transition-delay: 0.36s; }
+  .sz13-stern--4 .sz13-stern-voll { transition-delay: 0.54s; }
+  .sz13-stern--5 .sz13-stern-voll { transition-delay: 0.72s; }
+  .sz13-zitat, .sz13-danke, .sz13-teilen { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.85s, transform var(--bsp-dauer) var(--bsp-ease) 0.85s; }
+  .sz13-spalte--weber { transition: transform var(--bsp-dauer-lang) var(--bsp-ease); }
+  .sz13-spalte--nachbarin { transition: opacity var(--bsp-dauer-lang) var(--bsp-ease) 0.2s, transform var(--bsp-dauer-lang) var(--bsp-ease) 0.2s; }
+  .sz13-kreis { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: Postfach leer */
+  .sz13[data-phase]:not([data-erreicht~="1"]) .sz13-ein { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  /* vor Phase 2: Sterne leer, noch kein Dank */
+  .sz13[data-phase]:not([data-erreicht~="2"]) .sz13-stern-voll { opacity: 0; transform: scale(0.3); }
+  .sz13[data-phase]:not([data-erreicht~="2"]) .sz13-zitat,
+  .sz13[data-phase]:not([data-erreicht~="2"]) .sz13-danke,
+  .sz13[data-phase]:not([data-erreicht~="2"]) .sz13-teilen { opacity: 0; transform: translateY(calc(8 * var(--px))); }
+  /* vor Phase 3: Frau Weber allein in der Mitte, Nachbarin noch nicht da */
+  .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-spalte--weber { transform: translateX(var(--sz13-v)); }
+  .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-spalte--nachbarin { opacity: 0; transform: translateX(8cqw) scale(0.94); }
+  /* ab Phase 3: die Suche aus Szene 1 schimmert, solange die Szene gezeigt wird */
+  .sz13[data-aktiv][data-erreicht~="3"] .sz13-glanz { animation: bm-schimmern 2.2s ease-in-out 0.8s infinite both; }
+  /* vor Phase 3: noch kein Kreis-Zeichen; in Phase 3 erscheint es nach der Nachbarin */
+  .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-kreis { opacity: 0; transform: scale(0.6); }
+  .sz13[data-erreicht~="3"] .sz13-kreis { transition-delay: 0.9s; }
+  .sz13[data-aktiv][data-erreicht~="3"] .sz13-kreis-zeichen svg { animation: sz13-drehen 6s linear 1.5s infinite; }
+  @keyframes sz13-drehen { to { transform: rotate(360deg); } }
+</style>

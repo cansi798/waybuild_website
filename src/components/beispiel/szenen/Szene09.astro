@@ -1,0 +1,183 @@
+---
+// Szene 9 „Begeistert“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
+// Drehbuch: Handy von Frau Weber – neue Mail „Ihr Angebot vom Malerbetrieb Muster“ mit Knopf „Zum Kundenportal“,
+// Sprechblase „So schnell?“. Kein echter Mail-Anbieter: neutrales „Posteingang“. Betrag wie Szene 8 (Beispiel).
+// Aufbau wie Szene01.astro (Referenz), Anleitung: docs/beispiel-szenen-anleitung.md.
+// Phasen (3):
+//   0  Ausgang: Posteingang mit älteren Mails (Gerippe)
+//   1  Mitteilung gleitet von oben herein, die neue Mail rutscht oben in die Liste (ungelesen)
+//   2  Finger tippt die Mail an, sie öffnet sich (gleitet von rechts herein): Angebot + Knopf „Zum Kundenportal“
+//   3  Sprechblase „So schnell?“ springt auf, der Knopf leuchtet sanft
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+
+interface Props { variante?: 'buehne' | 'mini' }
+const { variante = 'buehne' } = Astro.props;
+---
+
+<SzeneRahmen nr={9} phasen={3} takt={1700} format="hoch" variante={variante}>
+  <div class="sz09-buehne">
+    <span class="sz09-gruppe">
+      <Handy class="sz09-handy" zeit="11:06">
+        <div class="sz09-schirm">
+          <!-- Ebene 1: Posteingang -->
+          <div class="bm-app sz09-eingang">
+            <span class="bm-titel sz09-eingang-titel">Posteingang</span>
+            <span class="sz09-suche"></span>
+            <span class="sz09-liste">
+              <span class="sz09-mail sz09-mail--neu">
+                <span class="sz09-avatar">M</span>
+                <span class="sz09-mail-text">
+                  <span class="sz09-absender">Malerbetrieb Muster <span class="sz09-zeit">11:05</span></span>
+                  <span class="sz09-betreff">Ihr Angebot vom Malerbetrieb Muster</span>
+                  <span class="sz09-vorschau">Guten Tag Frau Weber, vielen Dank …</span>
+                </span>
+                <span class="sz09-punkt"></span>
+                <span class="bm-tipp sz09-tipp"></span>
+              </span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--mittel"></span><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--kurz"></span></span></span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--kurz"></span><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--mittel"></span></span></span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--mittel"></span><span class="bm-balken bm-balken--mittel"></span><span class="bm-balken bm-balken--kurz"></span></span></span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--kurz"></span><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--kurz"></span></span></span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--mittel"></span><span class="bm-balken bm-balken--lang"></span><span class="bm-balken bm-balken--kurz"></span></span></span>
+              <span class="sz09-mail"><span class="sz09-avatar sz09-avatar--leer"></span><span class="sz09-mail-text"><span class="bm-balken bm-balken--kurz"></span><span class="bm-balken bm-balken--mittel"></span><span class="bm-balken bm-balken--kurz"></span></span></span>
+            </span>
+          </div>
+
+          <!-- Ebene 2: geöffnete Mail -->
+          <div class="bm-app sz09-offen">
+            <span class="sz09-zurueck">‹ Posteingang</span>
+            <span class="sz09-gross">Ihr Angebot vom Malerbetrieb Muster</span>
+            <span class="sz09-von">
+              <span class="sz09-avatar">M</span>
+              <span class="sz09-von-text"><b>Malerbetrieb Muster</b><span class="bm-klein">an Frau Weber · 11:05</span></span>
+            </span>
+            <span class="sz09-brief">
+              <span>Guten Tag Frau Weber,</span>
+              <span>vielen Dank für den Termin. Hier ist Ihr Angebot:</span>
+            </span>
+            <span class="bm-karte bm-karte--marke sz09-angebot">
+              <span class="sz09-angebot-kopf"><span class="bm-klein">Angebot Nr. A-041 · Wohnzimmer</span><span class="bm-chip">PDF</span></span>
+              <span class="sz09-angebot-was">Wände und Decke streichen</span>
+              <span class="sz09-angebot-preis">1.404,20 €</span>
+            </span>
+            <span class="sz09-knopf">
+              <span class="sz09-glanz"></span>
+              <span class="bm-knopf sz09-knopf-in">Zum Kundenportal <svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" /></svg></span>
+            </span>
+            <span class="bm-klein sz09-hinweis">Dort sehen Sie alle Schritte und können das Angebot annehmen.</span>
+            <span class="sz09-anhang">
+              <span class="sz09-datei">PDF</span>
+              <span class="sz09-anhang-text"><b>Angebot-A-041.pdf</b><span class="bm-klein">1 Seite</span></span>
+            </span>
+            <span class="sz09-gruss">Viele Grüße<br />Ihr Malerbetrieb Muster</span>
+          </div>
+
+          <!-- Mitteilung (nur in Phase 1 sichtbar) -->
+          <span class="sz09-mitteilung">
+            <span class="sz09-mitteilung-symbol"><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12" rx="2" /><path d="M4 7l8 6 8-6" /></svg></span>
+            <span class="sz09-mitteilung-text"><b>Malerbetrieb Muster</b><span>Ihr Angebot vom Malerbetrieb Muster</span></span>
+            <span class="sz09-jetzt">jetzt</span>
+          </span>
+        </div>
+      </Handy>
+      <!-- Sprechblase -->
+      <span class="sz09-blase">So schnell?</span>
+    </span>
+  </div>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 09 „Begeistert“ – alle Regeln mit .sz09 (global, aber eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 3). Vorzustände NUR unter .sz09[data-phase]:not([data-erreicht~="k"]);
+   * Mitteilung nur unter .sz09[data-phase="1"]. Bewegt: nur transform/opacity. */
+  .sz09-buehne { position: relative; width: 100%; height: 100%; container-type: size; display: grid; place-items: center; }
+  .sz09-gruppe { position: relative; display: block; }
+  .sz09-handy { --gr-hoehe: min(100cqh, 58cqw * 2.1667); } /* gleiche Höhe wie die anderen Handy-Szenen (1–4, 11) */
+
+  /* Sprechblase: rechts oben am Handy, Spitze zeigt nach links unten */
+  .sz09-blase { position: absolute; z-index: 4; left: 62%; top: 5%; padding: 0.55em 0.95em; border-radius: 1.1em; background: var(--bsp-weiss); color: var(--bsp-tinte);
+    border: 2px solid var(--bsp-nacht); font-family: var(--font-head); font-size: clamp(13px, min(4.2cqh, 4.8cqw), 24px); font-weight: 700; line-height: 1.2; white-space: nowrap;
+    box-shadow: 0 14px 30px -16px rgb(0 79 76 / 55%); transform: rotate(-4deg); transform-origin: 10% 100%; }
+  .sz09-blase::after { content: ''; position: absolute; left: 14%; bottom: -0.42em; width: 0.7em; height: 0.7em; background: var(--bsp-weiss);
+    border-right: 2px solid var(--bsp-nacht); border-bottom: 2px solid var(--bsp-nacht); transform: rotate(45deg); }
+
+  /* Bildschirm: zwei Ebenen übereinander */
+  .sz09-schirm { position: relative; flex: 1; min-height: 0; display: grid; overflow: hidden; }
+  .sz09-schirm > .bm-app { grid-area: 1 / 1; min-height: 0; }
+  .sz09-eingang { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
+  .sz09-eingang-titel { font-size: var(--bsp-schrift-xl); }
+  .sz09-suche { height: calc(30 * var(--px)); border-radius: 99px; background: var(--bsp-gerippe); }
+  .sz09-liste { position: relative; display: flex; flex-direction: column; }
+  .sz09-mail { position: relative; display: flex; align-items: flex-start; gap: var(--bsp-a2); height: calc(76 * var(--px)); padding: var(--bsp-a3) 0; border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .sz09-mail--neu { margin: 0 calc(-8 * var(--px)); padding: var(--bsp-a3) var(--bsp-a2); border-radius: var(--bsp-r-m); border-bottom: 0; background: var(--bsp-flaeche); }
+  .sz09-avatar { flex: none; display: grid; place-items: center; width: calc(34 * var(--px)); height: calc(34 * var(--px)); border-radius: 50%; background: var(--bsp-tinte);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; }
+  .sz09-avatar--leer { background: var(--bsp-gerippe); }
+  .sz09-mail-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(3 * var(--px)); }
+  .sz09-mail-text .bm-balken { height: calc(7 * var(--px)); }
+  .sz09-absender { display: flex; justify-content: space-between; font-size: var(--bsp-schrift-s); font-weight: 700; color: var(--bsp-text); white-space: nowrap; }
+  .sz09-zeit { font-weight: 500; color: var(--bsp-tinte); }
+  .sz09-betreff { font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sz09-vorschau { font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sz09-punkt { position: absolute; right: var(--bsp-a2); bottom: var(--bsp-a3); width: calc(9 * var(--px)); height: calc(9 * var(--px)); border-radius: 50%; background: var(--bsp-tuerkis); }
+  .sz09-tipp { left: 55%; top: 50%; }
+
+  /* geöffnete Mail */
+  .sz09-offen { position: relative; z-index: 2; gap: calc(14 * var(--px)); padding-top: var(--bsp-a2); background: var(--bsp-papier); box-shadow: calc(-10 * var(--px)) 0 calc(24 * var(--px)) calc(-12 * var(--px)) rgb(0 79 76 / 35%); }
+  .sz09-zurueck { font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-tinte); }
+  .sz09-gross { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--bsp-text); }
+  .sz09-von { display: flex; align-items: center; gap: var(--bsp-a2); }
+  .sz09-von-text { display: flex; flex-direction: column; font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .sz09-brief { display: flex; flex-direction: column; gap: var(--bsp-a1); font-size: var(--bsp-schrift-s); color: var(--bsp-text); line-height: 1.45; }
+  .sz09-angebot { display: flex; flex-direction: column; gap: calc(3 * var(--px)); }
+  .sz09-angebot-kopf { display: flex; justify-content: space-between; align-items: center; }
+  .sz09-angebot-was { font-size: var(--bsp-schrift-m); font-weight: 600; color: var(--bsp-text); }
+  .sz09-angebot-preis { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; color: var(--bsp-tinte); font-variant-numeric: tabular-nums; }
+  .sz09-knopf { position: relative; display: grid; }
+  .sz09-knopf-in { min-height: calc(44 * var(--px)); }
+  .sz09-knopf-in svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sz09-glanz { position: absolute; inset: calc(-5 * var(--px)); border-radius: 99px; background: rgb(0 166 161 / 22%); }
+  .sz09-hinweis { margin-top: calc(-4 * var(--px)); font-size: var(--bsp-schrift-xs); text-align: center; }
+  .sz09-anhang { display: flex; align-items: center; gap: var(--bsp-a2); padding: var(--bsp-a2); border-radius: var(--bsp-r-m); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); background: var(--bsp-weiss); }
+  .sz09-datei { flex: none; display: grid; place-items: center; width: calc(30 * var(--px)); height: calc(36 * var(--px)); border-radius: calc(4 * var(--px)); background: var(--bsp-flaeche);
+    color: var(--bsp-tinte); font-size: calc(9 * var(--px)); font-weight: 700; box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+  .sz09-anhang-text { min-width: 0; display: flex; flex-direction: column; font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .sz09-gruss { font-size: var(--bsp-schrift-s); color: var(--bsp-text); line-height: 1.45; }
+
+  /* Mitteilung */
+  .sz09-mitteilung { position: absolute; z-index: 5; left: var(--bsp-a2); right: var(--bsp-a2); top: calc(2 * var(--px)); display: flex; align-items: center; gap: var(--bsp-a2);
+    padding: var(--bsp-a2) var(--bsp-a3); border-radius: var(--bsp-r-l); background: rgb(255 255 255 / 97%); border: calc(1 * var(--px)) solid var(--bsp-linie);
+    box-shadow: 0 calc(12 * var(--px)) calc(26 * var(--px)) calc(-10 * var(--px)) rgb(0 79 76 / 45%); opacity: 0; transform: translateY(calc(-90 * var(--px))); }
+  .sz09-mitteilung-symbol { flex: none; display: grid; place-items: center; width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: var(--bsp-r-s); background: var(--bsp-tuerkis-dunkel); }
+  .sz09-mitteilung-symbol svg { width: 66%; height: 66%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2; stroke-linejoin: round; }
+  .sz09-mitteilung-text { flex: 1; min-width: 0; display: flex; flex-direction: column; font-size: var(--bsp-schrift-xs); color: var(--bsp-text); }
+  .sz09-mitteilung-text b { font-size: var(--bsp-schrift-s); }
+  .sz09-mitteilung-text span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sz09-jetzt { flex: none; align-self: flex-start; font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); }
+
+  /* Übergänge (gelten in beide Richtungen) */
+  .sz09-liste { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.5s); }
+  .sz09-mail--neu { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.65s); }
+  .sz09-mitteilung { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz09-offen { transition: transform var(--bsp-dauer) var(--bsp-ease) 0.45s; }
+  .sz09-blase { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.2s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.2s; }
+  .sz09-glanz { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.5s; }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: neue Mail fehlt, ältere Mails stehen oben */
+  .sz09[data-phase]:not([data-erreicht~="1"]) .sz09-liste { transform: translateY(calc(-76 * var(--px))); }
+  .sz09[data-phase]:not([data-erreicht~="1"]) .sz09-mail--neu { opacity: 0; }
+  /* Phase 1: Mitteilung von oben */
+  .sz09[data-phase="1"] .sz09-mitteilung { opacity: 1; transform: none; transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
+  /* vor Phase 2: Mail noch geschlossen */
+  .sz09[data-phase]:not([data-erreicht~="2"]) .sz09-offen { transform: translateX(105%); }
+  /* Phase 2: Finger tippt auf die neue Mail */
+  .sz09[data-phase="2"] .sz09-tipp { animation: bm-tippen 0.7s var(--bsp-ease) 0.05s both; }
+  /* vor Phase 3: keine Sprechblase, Knopf ohne Leuchten */
+  .sz09[data-phase]:not([data-erreicht~="3"]) .sz09-blase { opacity: 0; transform: rotate(-4deg) scale(0.4); }
+  .sz09[data-phase]:not([data-erreicht~="3"]) .sz09-glanz { opacity: 0; }
+  /* Phase 3, solange gezeigt: Knopf pulsiert sanft */
+  .sz09[data-aktiv][data-erreicht~="3"] .sz09-glanz { animation: bm-puls 1.6s ease-in-out 1s infinite; }
+</style>
