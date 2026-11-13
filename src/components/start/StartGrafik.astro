@@ -1,0 +1,37 @@
+---
+// Ruhige Strichgrafiken für „Was wir für Sie machen.“ (Startseite, Jamil, Talk qh87y3sj #5787–#5791, 13.11.2026), im Stil von
+// geschichte/GGrafik.astro (den Jamil „sehr ansprechend“ findet). Nur Schmuck (aria-hidden), der Inhalt steht im Text daneben.
+// CI: Türkis #00a6a1 / dunkel #004f4c, Papier #f7f5f0, Linie #ddd6c9.
+interface Props { name: 'website' | 'app' }
+const { name } = Astro.props;
+---
+
+<svg class="sg" viewBox="0 0 240 150" width="240" height="150" aria-hidden="true" focusable="false">
+  {name === 'website' && (<>
+    <rect x="18" y="16" width="150" height="96" rx="10" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
+    <rect x="18" y="16" width="150" height="16" rx="10" fill="#efebe3" /><rect x="18" y="24" width="150" height="8" fill="#efebe3" />
+    <circle cx="28" cy="24" r="2.5" fill="#cdc6ba" /><circle cx="36" cy="24" r="2.5" fill="#cdc6ba" /><circle cx="44" cy="24" r="2.5" fill="#cdc6ba" />
+    <rect x="30" y="42" width="70" height="8" rx="4" fill="#004f4c" />
+    <rect x="30" y="56" width="58" height="5" rx="2.5" fill="#cdc6ba" /><rect x="30" y="65" width="64" height="5" rx="2.5" fill="#cdc6ba" />
+    <rect x="30" y="78" width="40" height="14" rx="7" fill="#00a6a1" />
+    <rect x="112" y="42" width="44" height="50" rx="6" fill="#e9f6f5" /><path d="M118 84l10-12 8 7 6-5 10 10" fill="none" stroke="#9fd3d0" stroke-width="2" />
+    <path d="M8 118h178l-10 10H18z" fill="#efebe3" stroke="#ddd6c9" stroke-width="2" stroke-linejoin="round" />
+    <rect x="182" y="40" width="44" height="86" rx="9" fill="#fff" stroke="#004f4c" stroke-width="2" />
+    <rect x="196" y="45" width="16" height="3" rx="1.5" fill="#ddd6c9" />
+    <rect x="188" y="58" width="32" height="18" rx="8" fill="#e9f6f5" /><path d="M193 65h20 M193 70h12" stroke="#004f4c" stroke-width="1.8" stroke-linecap="round" />
+    <rect x="192" y="82" width="28" height="14" rx="7" fill="#00a6a1" /><path d="M199 89h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round" />
+    <circle cx="204" cy="112" r="6" fill="none" stroke="#00a6a1" stroke-width="1.8" /><path d="M204 108v5 M201 111q3 4 6 0" fill="none" stroke="#00a6a1" stroke-width="1.5" stroke-linecap="round" />
+  </>)}
+  {name === 'app' && (<>
+    <rect x="16" y="14" width="150" height="112" rx="12" fill="#fff" stroke="#004f4c" stroke-width="2" />
+    <rect x="28" y="26" width="60" height="7" rx="3.5" fill="#004f4c" />
+    <rect x="28" y="42" width="126" height="18" rx="6" fill="#f7f5f0" /><circle cx="38" cy="51" r="4" fill="#00a6a1" /><rect x="48" y="48" width="56" height="5" rx="2.5" fill="#cdc6ba" /><rect x="128" y="46" width="20" height="10" rx="5" fill="#e9f6f5" />
+    <rect x="28" y="66" width="126" height="18" rx="6" fill="#f7f5f0" /><circle cx="38" cy="75" r="4" fill="#9fd3d0" /><rect x="48" y="72" width="44" height="5" rx="2.5" fill="#cdc6ba" /><rect x="128" y="70" width="20" height="10" rx="5" fill="#efebe3" />
+    <rect x="28" y="90" width="126" height="18" rx="6" fill="#f7f5f0" /><circle cx="38" cy="99" r="4" fill="#9fd3d0" /><rect x="48" y="96" width="62" height="5" rx="2.5" fill="#cdc6ba" /><rect x="128" y="94" width="20" height="10" rx="5" fill="#efebe3" />
+    <path d="M180 34h40v76l-6 -5-6 5-6-5-6 5-6-5-6 5-4-4z" fill="#fff" stroke="#ddd6c9" stroke-width="2" stroke-linejoin="round" />
+    <rect x="188" y="44" width="24" height="5" rx="2.5" fill="#004f4c" />
+    <path d="M188 58h24 M188 66h18 M188 74h22" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
+    <circle cx="216" cy="92" r="13" fill="#00a6a1" /><path d="M210 92l4 4 8-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M120 132h70" stroke="#ddd6c9" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 6" />
+  </>)}
+</svg>

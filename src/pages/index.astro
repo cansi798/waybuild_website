@@ -35,6 +35,8 @@
 //   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
+import StartProdukte from '../components/start/StartProdukte.astro';
+import StartProblem from '../components/start/StartProblem.astro';
 import KartenAbschnitt from '../components/start/KartenAbschnitt.astro';
 import BeispielTeaser from '../components/beispiel/BeispielTeaser.astro';
 import PaketKarten from '../components/pakete/PaketKarten.astro';
@@ -88,7 +90,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
-  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und Kundenreise; nur darin
+  <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und „Was wir für Sie machen.“ (seit 13.11.2026, vorher Kundenreise); nur darin
        bleibt der Hero stehen (sticky), die Kundenreise gleitet darüber. Danach scrollt die Seite ganz normal (stapel.ts). -->
   <div class="stapel-paar">
   <section class="v-hero"><!-- ohne aria-labelledby: gleicher Satz wie die alte H2 weiter unten (axe landmark-unique) -->
@@ -108,6 +110,15 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
+  <!-- 6 Abschnitte (Jamil, Talk qh87y3sj #5787–#5791, 13.11.2026; Sicherung Tag vor-startseite-6abschnitte-20261113):
+       1 Aufmerksamkeit = Hero (Design unverändert) + „Was wir für Sie machen.“ (zwei Produkte, gleitet über den Hero),
+       2 Problem, 3 Lösung (Kundenreise, Umsetzung, Entspannt, Beispiel-Film), 4 Beweis (So gehen wir vor, Vergleich, Team),
+       5 Angebot (Pakete), 6 Handlung (Abschluss). -->
+  <StartProdukte />
+  </div>
+
+  <StartProblem />
+
   <!-- Kundenreise als „Bühne“ (Jamil, Talk qh87y3sj #5596/#5598/#5599/#5601/#5602, Variante A, 12.11.2026; Sicherung Tag
        vor-kundenreise-buehne-20261112). Vorher (seit 09.11., #5181–#5334): Journey-Map mit fünf Kreisen an einer Linie und je einem
        Glühbirnen-Knopf, der die Antwort (Etikett seit #5626 „Bestenfalls“) aufklappte. Kette und Linie sind entfernt; die Antworten
@@ -118,8 +129,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
        Scroll-Stück in den Knopf „Jetzt starten“ verwandelt (#5621; Sicherung Tag vor-buehne-feinschliff-20261112). Am Handy Karten
        untereinander, die einzeln hereingleiten. Ohne JS oder bei reduzierter Bewegung: alles sofort sichtbar untereinander.
        Alle Schritte stehen immer im HTML (Screenreader lesen alle, h2 → h3). Texte wörtlich aus KUNDENREISE (config/variante.ts),
-       Stil src/styles/kundenreise.css, Bewegung src/scripts/kundenreise.ts. Bleibt der Abschnitt, der über den stehenden Hero
-       gleitet (.stapel-paar, H2-id kontrast-h unverändert). -->
+       Stil src/styles/kundenreise.css, Bewegung src/scripts/kundenreise.ts. Seit 13.11.2026 Teil 3 „Lösung“ (nicht mehr im .stapel-paar; H2-id kontrast-h unverändert). -->
   <section class="section vreise" id="kundenreise" aria-labelledby="kontrast-h">
     <div class="wrap kr">
       <h2 id="kontrast-h" class="kr-titel">{KUNDENREISE.titel}</h2>
@@ -166,7 +176,6 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
       </div>
     </div>
   </section>
-  </div>
 
   <!-- Zwei neue Abschnitte zwischen Kundenreise und Preisen (Jamil, Talk qh87y3sj #5664–#5666, „ok“ #5670/#5672, 12.11.2026;
        Sicherung Tag vor-umsetzung-entspannt-20261112): „So machen wir aus Besuchern Kunden.“ (#umsetzung, Weiß) und
@@ -187,25 +196,6 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <!-- „So arbeiten wir.“ (#arbeitsweise, Verantwortung/Einfachheit/Verlässlichkeit) entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026;
        Sicherung Tag vor-kundenreise-buehne-20261112). -->
 
-  <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
-       Anker #pakete und #baukasten (alte Links) zeigen hierher. -->
-  <!-- Hintergründe (Jamil, Talk qh87y3sj #5204, 09.11.2026; #ablauf seit #5337 in „So gehen wir vor“): So gehen wir vor (Weiß)
-       → So arbeiten wir. (zartes Türkis) → #pakete hell → #vergleich Sand → darunter im Wechsel. -->
-  <section class="section" id="pakete" aria-labelledby="pakete-h">
-    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
-    <div class="wrap">
-      <div class="section-head center">
-        <span class="eyebrow">Pakete</span>
-        <h2 id="pakete-h" class="rule">Zwei Pakete. Feste Monatspreise.</h2>
-        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.</p>
-      </div>
-      <EinmaligDazu id="einmalig" />
-      <PaketKarten details={false} />
-      <!-- ohne Ablauf-Kette Anfrage → … → Buchhaltung, die drei Vorteile bleiben (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026) -->
-      <KomplettKarte kette={false} />
-      <p class="v-hinweis"><a href={href('/preise/')}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
-    </div>
-  </section>
 
   <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026), seit #5337 zusammengeführt mit „Von der Anfrage
        bis online“ (Sicherung vor-vorgehen-ablauf-20261109): links Kopf und drei Phasen, rechts sechs Schritte als Kartenstapel.
@@ -299,6 +289,27 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <!-- Kundenreise-Check (#check) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
 
   <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 in „So gehen wir vor“, seit #5337 auf der Karte Erstgespräch -->
+
+  <!-- 5 Angebot: Pakete seit 13.11.2026 nach dem Beweis (Jamil #5787–#5791: erst überzeugen, dann Preis) -->
+  <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
+       Anker #pakete und #baukasten (alte Links) zeigen hierher. -->
+  <!-- Hintergründe (Jamil, Talk qh87y3sj #5204, 09.11.2026; #ablauf seit #5337 in „So gehen wir vor“): So gehen wir vor (Weiß)
+       → So arbeiten wir. (zartes Türkis) → #pakete hell → #vergleich Sand → darunter im Wechsel. -->
+  <section class="section" id="pakete" aria-labelledby="pakete-h">
+    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Pakete</span>
+        <h2 id="pakete-h" class="rule">Zwei Pakete. Feste Monatspreise.</h2>
+        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.</p>
+      </div>
+      <EinmaligDazu id="einmalig" />
+      <PaketKarten details={false} />
+      <!-- ohne Ablauf-Kette Anfrage → … → Buchhaltung, die drei Vorteile bleiben (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026) -->
+      <KomplettKarte kette={false} />
+      <p class="v-hinweis"><a href={href('/preise/')}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+    </div>
+  </section>
 
   <!-- Abschluss (Jamil 4792): Claim „Von Anfang bis Wachstum.“ als Überschrift oben, alte Überschrift, Absatz, Linie, Logo und Schlusszeile entfernt (Jamil, Talk qh87y3sj #5290) -->
   <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">

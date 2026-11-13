@@ -1,0 +1,75 @@
+/* Startseite nach den 6 Abschnitten (Jamil, Talk qh87y3sj #5787–#5791, 13.11.2026):
+   „Was wir für Sie machen.“ (.s6-produkte, zwei Produkte) und „Kennen Sie das?“ (.s6-problem, drei Schmerzpunkte).
+   Ruhig, viel Weißraum, flache Strichgrafiken auf Papierfläche (wie /geschichte/). Nur CSS, keine Bewegung außer .reveal. */
+
+/* ---------- Abschnitt 1: zwei Produkte ---------- */
+.s6-produkte { background: var(--paper); }
+.s6-produkte .section-head h2 { max-width: 22ch; margin-inline: auto; text-wrap: balance; }
+.s6-produkte .lead { }
+.s6-karten { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 18px; }
+@media (min-width: 880px) { .s6-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+
+.s6-karte {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: clamp(20px, 3vw, 32px);
+  background: var(--white); border: 1px solid var(--line); border-radius: 26px;
+  box-shadow: 0 1px 2px rgba(0, 79, 76, 0.04), 0 18px 40px -28px rgba(0, 79, 76, 0.28);
+}
+.s6-karte__bild {
+  display: flex; justify-content: center; align-items: center; margin-bottom: 8px;
+  border-radius: 18px; background: var(--paper); padding: clamp(14px, 2.4vw, 24px);
+}
+.s6-karte__bild .sg { display: block; width: min(100%, 300px); height: auto; }
+.s6-karte__titel { margin: 0; font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem); line-height: 1.2; }
+.s6-karte__kurz { margin: 0; color: var(--ink-soft); line-height: 1.65; }
+
+.s6-stufen { display: grid; gap: 10px; margin-top: 6px; }
+@media (min-width: 520px) { .s6-stufen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.s6-stufe { padding: 14px 16px; border-radius: 16px; background: var(--paper); display: grid; gap: 4px; align-content: start; }
+.s6-stufe--plus { background: #e9f6f5; box-shadow: inset 0 0 0 1.5px #9fd3d0; }
+.s6-stufe__name { margin: 0; font-family: var(--font-head); font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.s6-stufe__tipp { font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.02em; color: #004f4c; background: #fff; border-radius: 999px; padding: 2px 9px; }
+.s6-stufe__was { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+.s6-stufe__preis { margin: 6px 0 0; font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+.s6-stufe__preis span { font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
+
+.s6-punkte { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
+.s6-punkte li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.55; }
+.s6-punkte li svg { color: #00a6a1; margin-top: 3px; }
+.s6-karte__preis { margin: 6px 0 0; padding: 12px 16px; border-radius: 14px; background: var(--paper); line-height: 1.5; }
+.s6-karte__preis strong { font-family: var(--font-head); }
+
+.s6-link {
+  margin-top: auto; padding-top: 10px; align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  font-weight: 600; color: #006b68; text-decoration: none;
+}
+.s6-link svg { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.s6-link:hover svg, .s6-link:focus-visible svg { transform: translateX(4px); }
+.s6-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.s6-hinweis { margin: 18px 0 0; text-align: center; font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ---------- Abschnitt 2: Problem ---------- */
+.s6-problem { background: var(--white); }
+.s6-problem .section-head h2 { text-wrap: balance; }
+.s6-schmerzen { list-style: none; margin: clamp(24px, 3.5vw, 40px) 0 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 860px) { .s6-schmerzen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; } }
+.s6-schmerz { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; padding: clamp(18px, 2.6vw, 26px); background: var(--paper); border: 1px solid var(--line); border-radius: 22px; }
+.s6-schmerz__bild { display: grid; place-items: center; aspect-ratio: 16 / 9; margin-bottom: 6px; border-radius: 16px; background: var(--white); padding: 10px; }
+.s6-schmerz__bild .gg { width: 100%; max-width: 200px; height: auto; }
+.s6-schmerz__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.28rem); line-height: 1.3; overflow-wrap: break-word; text-wrap: balance; }
+.s6-schmerz__text { margin: 0; line-height: 1.65; color: var(--ink-soft); }
+@media (max-width: 559px) {
+  .s6-schmerz { grid-template-columns: 92px minmax(0, 1fr); column-gap: 14px; row-gap: 4px; align-items: start; padding: 16px; }
+  .s6-schmerz__bild { grid-row: span 2; aspect-ratio: 1; margin: 0; padding: 6px; border-radius: 14px; }
+  .s6-schmerz__titel { font-size: 1.05rem; }
+  .s6-schmerz__text { font-size: 0.96rem; line-height: 1.55; }
+}
+.s6-ueberleitung { margin: clamp(24px, 3vw, 36px) 0 0; text-align: center; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); color: #006b68; }
+
+/* Hintergrund-Wechsel der neuen Reihenfolge (13.11.2026): Papier/Weiß abwechselnd, damit sich die Abschnitte ruhig trennen.
+   Hero Türkis → Leistungen Papier → Problem Weiß → Kundenreise Papier → Umsetzung Weiß → Entspannt zartes Türkis → Beispiel Weiß
+   → So gehen wir vor Papier → Vergleich Sand → (Team, nur Vorschau) → Pakete Weiß → Abschluss Sand. */
+#kundenreise { background: var(--paper); }
+#denkweise { background: var(--paper); }
+#pakete { background: var(--white); }

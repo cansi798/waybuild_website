@@ -90,7 +90,7 @@ a.gs-weg { grid-template-columns: auto minmax(0, 1fr); }
 /* ── Problem ── */
 .gs-schmerzen { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
 @media (min-width: 860px) { .gs-schmerzen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; } }
-.gs-schmerz { display: grid; align-content: start; gap: 10px; padding: clamp(18px, 2.6vw, 26px); background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
+.gs-schmerz { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; padding: clamp(18px, 2.6vw, 26px); background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
 .gs-schmerz__bild { display: grid; place-items: center; aspect-ratio: 16 / 9; margin-bottom: 6px; border-radius: 16px; background: var(--paper); padding: 10px; }
 .gs-schmerz__bild .gg { width: 100%; max-width: 200px; }
 .gs-schmerz__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.28rem); line-height: 1.3; hyphens: auto; overflow-wrap: break-word; }

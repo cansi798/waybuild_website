@@ -2,15 +2,15 @@
 // Kleine Strichgrafiken zu den Schmerzpunkten (/geschichte/). Nur Schmuck (aria-hidden), der Inhalt steht im Text daneben.
 // Farben der CI: Türkis #00a6a1 / dunkel #004f4c, Papier #f7f5f0, Linie #ddd6c9, Warnton #c2410c (nur kleine Zeichen).
 // Grafik „suche“ zeigt den Suchbegriff der gewählten Branche (data-g="suchNaehe", Text setzt geschichte.ts per textContent).
-interface Props { name: string }
-const { name } = Astro.props;
+interface Props { name: string; suche?: string }
+const { name, suche = 'Maler in der Nähe' } = Astro.props;
 ---
 
-<svg class="gg" viewBox="0 0 160 110" aria-hidden="true" focusable="false">
+<svg class="gg" viewBox="0 0 160 110" width="160" height="110" aria-hidden="true" focusable="false">
   {name === 'suche' && (<>
     <rect x="12" y="10" width="136" height="24" rx="12" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
     <circle cx="28" cy="22" r="5" fill="none" stroke="#004f4c" stroke-width="2" /><path d="M32 26l4 4" stroke="#004f4c" stroke-width="2" stroke-linecap="round" />
-    <text x="42" y="26.5" font-size="11" font-family="Jost Variable, sans-serif" fill="#3a3a3a" data-g="suchNaehe">Maler in der Nähe</text>
+    <text x="42" y="26.5" font-size="11" font-family="Jost Variable, sans-serif" fill="#3a3a3a" data-g="suchNaehe">{suche}</text>
     <rect x="12" y="44" width="136" height="16" rx="6" fill="#efebe3" /><rect x="20" y="49" width="60" height="6" rx="3" fill="#cdc6ba" />
     <rect x="12" y="66" width="136" height="16" rx="6" fill="#efebe3" /><rect x="20" y="71" width="76" height="6" rx="3" fill="#cdc6ba" />
     <rect x="12" y="88" width="136" height="16" rx="6" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="4 4" />
