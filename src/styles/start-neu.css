@@ -148,6 +148,8 @@ html.js .sn .sn-schmerz.reveal:nth-child(3n) { transition-delay: 180ms; }
 .sn-station__name--ziel { color: var(--sn-tinte); }
 .sn-station__frage { font-family: var(--font-head); font-weight: 600; font-size: clamp(1.05rem, 1rem + 0.35vw, 1.2rem); line-height: 1.45; color: var(--ink-soft); text-wrap: balance; }
 .sn-station__antwort { font-size: 1.04rem; line-height: 1.7; color: var(--ink); text-wrap: pretty; }
+.sn-station__loest { font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); }
+.sn-station__loest span { font-weight: 600; color: var(--sn-tinte); }
 .sn-station__etikett { display: block; margin-bottom: 2px; font-weight: 600; font-size: 0.9rem; color: var(--sn-tinte); }
 .sn-station__dafuer { margin-top: 8px !important; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); }
 .sn-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }

@@ -31,7 +31,10 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
 <section class="section sn sn-reise" id="kundenreise" aria-labelledby="sn-reise-h">
   <div class="wrap">
     <div class="sn-kopf sn-kopf--zweispaltig">
-      <h2 id="sn-reise-h" class="sn-h2">{K.titel}</h2>
+      <div>
+        <p class="sn-kenn">{K.kennzeile}</p>
+        <h2 id="sn-reise-h" class="sn-h2">{K.titel}</h2>
+      </div>
       <p class="sn-lead">{K.intro}</p>
     </div>
 
@@ -45,6 +48,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
               <p class="sn-station__marke" aria-hidden="true"><span class="sn-ico"><Icon name={REISE.symbole[i] ?? 'check'} size={22} /></span>{i + 1} / {n}</p>
               <h3 class="sn-station__name"><span class="sr-only">Schritt {i + 1} von {n}: </span>{st.name}</h3>
               <p class="sn-station__frage">{st.frage}</p>
+              <p class="sn-station__loest"><span>{REISE.loestTitel}:</span> {(REISE.loest[i] ?? []).join(' · ')}</p>
               <p class="sn-station__antwort"><span class="sn-station__etikett">{K.antwortTitel}</span>{st.antwort}</p>
               <p class="sn-station__dafuer">{REISE.dafuer}</p>
               <ul class="sn-chips">

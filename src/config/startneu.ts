@@ -67,6 +67,15 @@ export const REISE = {
   symbole: ['eye', 'shield', 'chat', 'ablauf', 'users'] as IconName[],
   grafiken: ['aufmerksamkeit', 'vertrauen', 'anfrage', 'bearbeitung', 'betreuung'] as const,
   dafuer: 'Dafür sorgen wir mit',
+  /** Jamil #5824 (e): je Station, welche Probleme aus Abschnitt 2 sie löst (Kurzform der Titel in PROBLEM) */
+  loestTitel: 'Löst',
+  loest: [
+    ['Kunden finden andere', 'Jede Änderung an der Website dauert Wochen'],
+    ['Die Website wirkt veraltet', 'Kunden finden Öffnungszeiten und Preise nicht'],
+    ['Nachrichten bleiben zu lange liegen', 'Termine werden doppelt vergeben'],
+    ['Angebote schreiben Sie abends', 'Informationen sind überall verteilt', 'Abläufe werden nicht eingehalten', 'Rechnungen gehen spät raus'],
+    ['Kunden fragen ständig nach dem Stand', 'Angebote werden nicht nachgefasst', 'Kaum Bewertungen bei Google'],
+  ],
   leistungen: [
     [{ paket: 'basis', id: 'website' }, { paket: 'basis', id: 'seo' }, { paket: 'basis', id: 'google-profil' }],
     [{ paket: 'basis', id: 'website' }, { paket: 'plus', id: 'google-pflege' }, { paket: 'basis', id: 'ki' }],

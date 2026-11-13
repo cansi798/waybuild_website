@@ -24,18 +24,21 @@ export const HERO_KNOPF = 'Kostenlose Erstberatung'; // überall gleicher Haupt-
  *  Fragen stellt sich der Besucher; je Station ein kleines Symbol, das die „perfekte Antwort“ (antwort = Optimalzustand, Sie-Form)
  *  aufklappt; am Ende schluss + knopf. ziel = kleine Beschriftung am Ende der Kurve. Nie „aus einer Hand“. */
 export const KUNDENREISE = {
-  titel: 'Ein guter erster Eindruck ist erst der Anfang.', // Jamil, Talk qh87y3sj #5655/#5658, 12.11.2026
-  intro: 'Ihre Kunden erleben nicht nur Ihre Website, sondern jeden Schritt danach. Wir sorgen dafür, dass jeder davon begeistert, vom ersten Klick bis zum zufriedenen Kunden.',
-  /** Fragen und Antworten neu (Jamil, Talk qh87y3sj #5632 „ok“, 12.11.2026; Sicherung Tag vor-bestenfalls-20261112) */
+  // Jamil #5820/#5824 (13.11.2026, „a-f“): Überschrift mit Nutzen (a), alter Satz als Kennzeile darüber; keine absoluten Versprechen
+  // (b, UWG Irreführung), klar wer was tut (c), Antworten kürzer (f). Vorher: Tag vor-reise-af-20261113.
+  kennzeile: 'Ein guter erster Eindruck ist erst der Anfang.', // Jamil, Talk qh87y3sj #5655/#5658, 12.11.2026 (bis 13.11. Überschrift)
+  titel: 'Vom ersten Klick bis zur Weiter\u00ADempfehlung.', // \u00AD = weiche Trennung, sonst bei 320 px zu breit
+  intro: 'Ihre Kunden erleben nicht nur Ihre Website, sondern auch alles danach: Anfrage, Angebot, Auftrag und Betreuung. Wir unterstützen Sie bei jedem dieser Schritte.',
+  /** Fragen wie von Jamil (#5632 „ok“, 12.11.2026), Antworten seit #5824 gekürzt und ohne absolute Versprechen */
   stationen: [
-    { name: 'Aufmerksamkeit', frage: 'Finden Kunden Sie – oder zuerst die Konkurrenz?', antwort: 'Wer nach Ihrer Leistung sucht, stößt bei Google und auf der Karte zuerst auf Sie und landet auf einer Website, die sofort überzeugt.' },
-    { name: 'Vertrauen', frage: 'Warum sollte jemand ausgerechnet Sie anrufen?', antwort: 'Echte Bewertungen, Beispiele Ihrer Arbeit und klare Worte zeigen in Sekunden: Hier bin ich richtig.' },
-    { name: 'Anfrage', frage: 'Wie viele Interessenten springen ab, weil der Kontakt zu umständlich ist?', antwort: 'Ein Klick, und die Anfrage ist da: per Formular, Terminbuchung oder Anruf. Rund um die Uhr, auch wenn Sie gerade beim Kunden sind.' },
-    { name: 'Bearbeitung', frage: 'Wie viele Anfragen gehen bei Ihnen im Alltag unter?', antwort: 'Keine Anfrage geht mehr verloren. Alle Anfragen werden zügig und verlässlich beantwortet, auch unangenehme Anfragen und auch an vollen Tagen. Vieles davon läuft automatisch im Hintergrund.' },
-    { name: 'Betreuung', frage: 'Kommen Ihre Kunden wieder und empfehlen Sie weiter?', antwort: 'Nach dem Auftrag bleiben Sie automatisch in Kontakt, bitten zur richtigen Zeit um eine Bewertung, und aus Kunden werden Fans, die Sie gern weiterempfehlen.' },
+    { name: 'Aufmerksamkeit', frage: 'Finden Kunden Sie – oder zuerst die Konkurrenz?', antwort: 'Wer nach Ihrer Leistung sucht, findet Sie leichter bei Google und auf der Karte. Dort sieht er eine Website, die Ihren Betrieb klar zeigt.' },
+    { name: 'Vertrauen', frage: 'Warum sollte jemand ausgerechnet Sie anrufen?', antwort: 'Bewertungen, Beispiele Ihrer Arbeit und klare Worte zeigen schnell: Hier bin ich richtig.' },
+    { name: 'Anfrage', frage: 'Wie viele Interessenten springen ab, weil der Kontakt zu umständlich ist?', antwort: 'Mit wenigen Klicks fragt der Kunde an, per Formular oder Anruf, mit der App auch per Terminbuchung. So erreicht er Sie, auch wenn Sie gerade beim Kunden sind.' },
+    { name: 'Bearbeitung', frage: 'Wie viele Anfragen gehen bei Ihnen im Alltag unter?', antwort: 'In der Betriebs-App landen Ihre Anfragen an einem Ort, und Sie sehen, was noch offen ist. Sie antworten selbst, in Ihrem Ton. Angebot und Rechnung bereitet die App vor.' },
+    { name: 'Betreuung', frage: 'Kommen Ihre Kunden wieder und empfehlen Sie weiter?', antwort: 'Mit der App melden Sie sich nach dem Auftrag bei Ihren Kunden und bitten um eine Bewertung. So bleiben Sie in Erinnerung und werden eher weiterempfohlen.' },
   ],
   /** Beschriftung des Symbols (Screenreader) und kleine Überschrift über jeder Antwort */
-  antwortTitel: 'Bestenfalls', // vorher „So sieht es im besten Fall aus“ (Jamil, Talk qh87y3sj #5626, 12.11.2026)
+  antwortTitel: 'Mit waybuild', // Jamil #5824 (d), 13.11.2026; davor „Bestenfalls“ (#5626), „So sieht es im besten Fall aus“
   ziel: 'zufriedener Kunde',
   /** Unterzeile unter „zufriedener Kunde“ (Jamil, Talk qh87y3sj #5632, 12.11.2026) */
   zielUnter: 'Mehr Anfragen, weniger Aufwand und Kunden, die gern wiederkommen.',

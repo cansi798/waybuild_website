@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ site }) => {
     `## Startseite: ${V_HERO.titel.replace(/\.$/, '')}`,
     `${V_HERO.titel} ${V_HERO.unter}`,
     `- ${BOTSCHAFT.service}`,
-    `- ${KUNDENREISE.titel} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} Bestenfalls: ${st.antwort})`).join('; ')}. Ziel: ${KUNDENREISE.ziel} – ${KUNDENREISE.zielUnter} ${KUNDENREISE.schluss}`,
+    `- ${KUNDENREISE.titel.replace(/\u00AD/g, '')} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} ${KUNDENREISE.antwortTitel}: ${st.antwort})`).join('; ')}. Ziel: ${KUNDENREISE.ziel} – ${KUNDENREISE.zielUnter} ${KUNDENREISE.schluss}`,
     // Zwei Abschnitte nach der Kundenreise (Jamil #5664–#5672)
     ...[UMSETZUNG, ENTSPANNT].map((a) => `- ${a.titel} ${a.intro} ${a.karten.map((k) => `${k.titel}: ${k.text}`).join(' ')}`),
     // „Was Sie davon haben.“ von der Startseite entfernt (Jamil #5633); „Was wir für Ihre Sichtbarkeit tun.“ jetzt bei den Leistungen (#5634)
