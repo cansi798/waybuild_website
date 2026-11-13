@@ -26,14 +26,35 @@ export const PRODUKTE = {
   },
 };
 
-/** Abschnitt 2: Problem. Drei Schmerzpunkte mit den Strichgrafiken aus /geschichte/ (Texte wie bisher, #5787–#5791) */
+/** Abschnitt 2: Problem. Neun Schmerzpunkte mit den Strichgrafiken aus /geschichte/ (eine je Grafik) und eine Liste weiterer
+ *  Alltagsprobleme. Jamil #5819 (13.11.2026): „noch mehr typische Probleme … es soll nach vielen Problemen aussehen, für die wir
+ *  eine Lösung haben“ (Prozesse nicht eingehalten, Nachrichten unbeantwortet, Kunde fragt nach Zwischenstand, Infos verstreut).
+ *  Nur Probleme, die Website, Plus-Pflege oder Betriebs-App wirklich lösen. Reihenfolge = Weg des Kunden (finden → Auftrag → Geld). */
 export const PROBLEM = {
   kennzeile: 'Kennen Sie das?',
   titel: 'Gute Arbeit allein reicht heute nicht.',
+  lead: 'Im Alltag kostet vieles Zeit, Nerven und Aufträge. Das meiste davon lässt sich lösen.',
   punkte: [
-    { grafik: 'suche', titel: 'Kunden suchen Sie. Und finden andere.', text: 'Wer bei Google nicht weit oben steht oder eine veraltete Seite hat, bekommt die Anfrage nicht.' },
+    { grafik: 'suche', titel: 'Kunden suchen Sie. Und finden andere.', text: 'Wer bei Google nicht weit oben steht, bekommt die Anfrage nicht.' },
+    { grafik: 'alt', titel: 'Die Website wirkt veraltet.', text: 'Besucher entscheiden in Sekunden. Eine alte Seite kostet Vertrauen, bevor jemand anruft.' },
+    { grafik: 'telefon', titel: 'Nachrichten bleiben zu lange liegen.', text: 'Anrufe, E-Mails, WhatsApp. Wer nicht schnell antwortet, verliert den Auftrag an andere.' },
     { grafik: 'abend', titel: 'Angebote schreiben Sie abends.', text: 'Nach dem Arbeitstag noch Preise ausrechnen und Texte tippen. Bis das Angebot raus ist, vergehen Tage.' },
-    { grafik: 'rechnung', titel: 'Rechnungen gehen spät raus.', text: 'Zeiten, Material und Notizen liegen verteilt. Bis alles beisammen ist, kommt Ihr Geld später als nötig.' },
+    { grafik: 'stand', titel: 'Kunden fragen ständig nach dem Stand.', text: 'Wann geht es los? Wie weit sind Sie? Jede Nachfrage unterbricht Ihre Arbeit.' },
+    { grafik: 'zettel', titel: 'Informationen sind überall verteilt.', text: 'Zettel, Handy, E-Mail und Kopf. Wer etwas sucht, sucht lange. Und manches geht verloren.' },
+    { grafik: 'plan', titel: 'Abläufe werden nicht eingehalten.', text: 'Jeder macht es ein bisschen anders. Schritte werden vergessen, Fehler wiederholen sich.' },
+    { grafik: 'papier', titel: 'Zeiten und Material stehen auf Papier.', text: 'Am Ende der Woche wird abgetippt. Das kostet Zeit und Fehler schleichen sich ein.' },
+    { grafik: 'rechnung', titel: 'Rechnungen gehen spät raus.', text: 'Bis alles beisammen ist, vergehen Tage. Ihr Geld kommt später als nötig.' },
+  ],
+  weitereTitel: 'Und oft auch das',
+  weitere: [
+    'Angebote werden nicht nachgefasst',
+    'Termine werden doppelt vergeben',
+    'Kein Überblick über offene Aufträge',
+    'Mitarbeitende fragen immer wieder dasselbe',
+    'Bei Krankheit oder Urlaub weiß niemand Bescheid',
+    'Kaum Bewertungen bei Google',
+    'Kunden finden Öffnungszeiten und Preise nicht',
+    'Jede Änderung an der Website dauert Wochen',
   ],
   ueberleitung: 'Genau das lösen wir.',
 };

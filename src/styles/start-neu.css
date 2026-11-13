@@ -101,27 +101,35 @@
 .sn-produkt .sn-link { margin-top: 4px; justify-self: start; }
 
 /* ═════ 2 · Problem ═════ */
+/* Neun Karten im Raster + Liste weiterer Probleme (Jamil #5819, 13.11.2026). Grafiken haben feste width/height (GGrafik),
+   Spalten minmax(0,1fr) + min-width:0: sonst sprengt WebKit das Raster bzw. stürzt ab (siehe /geschichte/, 13.11.2026). */
 .sn-problem { background: var(--white); }
-.sn-problem__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(8px, 2vw, 24px); }
-.sn-problem__kopf { margin-bottom: clamp(24px, 4vw, 40px); align-content: start; }
-.sn-problem__weiter { justify-self: start; margin-top: 4px; }
-.sn-schmerzen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-.sn-schmerz { min-width: 0; display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 16px; align-items: center;
-  padding: 14px; border-radius: 24px; background: var(--paper); }
-.sn-schmerz__bild { display: grid; place-items: center; aspect-ratio: 1; padding: 6px; border-radius: 16px; background: var(--white); }
+.sn-schmerzen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.sn-schmerz { min-width: 0; display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 14px; align-items: center;
+  padding: 12px 16px 12px 12px; border-radius: 22px; background: var(--paper); }
+.sn-schmerz__bild { display: grid; place-items: center; padding: 6px; border-radius: 14px; background: var(--white); }
 .sn-schmerz__bild .gg { width: 100%; height: auto; max-width: 220px; }
 .sn-schmerz__text { min-width: 0; display: grid; gap: 6px; }
-.sn-schmerz .sn-h3 { font-size: clamp(1.08rem, 1rem + 0.5vw, 1.4rem); overflow-wrap: break-word; }
-.sn-schmerz__text p { font-size: 0.98rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.sn-schmerz .sn-h3 { font-size: clamp(1.04rem, 0.98rem + 0.3vw, 1.2rem); overflow-wrap: break-word; }
+.sn-schmerz__text p { font-size: 0.96rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 640px) {
-  .sn-schmerz { grid-template-columns: 200px minmax(0, 1fr); gap: 28px; padding: 18px 28px 18px 18px; }
-  .sn-schmerz__bild { aspect-ratio: 4 / 3; padding: 14px; }
-  .sn-schmerz__text p { font-size: 1.04rem; line-height: 1.7; }
+  .sn-schmerzen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .sn-schmerz { grid-template-columns: minmax(0, 1fr); align-items: start; align-content: start; gap: 16px; padding: 14px 14px 22px; }
+  .sn-schmerz__bild { padding: 12px; }
+  .sn-schmerz__text { padding: 0 8px; }
+  .sn-schmerz__text p { line-height: 1.7; }
 }
-@media (min-width: 1000px) {
-  .sn-problem__raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(40px, 6vw, 96px); align-items: start; }
-  .sn-problem__kopf { position: sticky; top: calc(var(--kopf-gesamt, 73px) + 40px); margin-bottom: 0; }
-}
+@media (min-width: 1000px) { .sn-schmerzen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
+.sn-problem__weitere { display: grid; gap: 14px; margin-top: clamp(28px, 4vw, 44px); padding: clamp(20px, 3vw, 32px);
+  border-radius: 24px; border: 1px solid var(--sn-linie-t); }
+.sn-problem__wtitel { font-family: var(--font-head); font-size: 1.08rem; font-weight: 600; color: var(--ink); }
+.sn-problem__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.sn-problem__chips li { min-width: 0; padding: 8px 14px; border-radius: 999px; background: var(--paper); font-size: 0.96rem;
+  line-height: 1.35; color: var(--ink); overflow-wrap: break-word; }
+.sn-problem__weiter { display: inline-flex; margin-top: clamp(24px, 3vw, 36px); }
+html.js .sn .sn-schmerz.reveal:nth-child(3n+1) { transition-delay: 0ms; }
+html.js .sn .sn-schmerz.reveal:nth-child(3n+2) { transition-delay: 90ms; }
+html.js .sn .sn-schmerz.reveal:nth-child(3n) { transition-delay: 180ms; }
 
 /* ═════ 3 · Lösung: Kundenreise ═════ */
 .sn-reise { background: var(--paper); }
