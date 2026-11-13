@@ -35,6 +35,7 @@ export default defineConfig({
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
       filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen)\/?$/.test(page)
         && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/neu/`) // zweite Startseite /neu/: nicht in die Sitemap
+        && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/geschichte/`) // Entwurf /geschichte/ (noindex): nicht in die Sitemap
         && !/\/website-fuer\//.test(page)
         && !blogEntwuerfe.some((id) => page.replace(/\/$/, '').endsWith(`/blog/${id}`))
         && !altLeistungen.some((slug) => page.replace(/\/$/, '').endsWith(`/leistungen/${slug}`)),

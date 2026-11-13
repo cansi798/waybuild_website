@@ -1,0 +1,52 @@
+---
+// ENTWURF: Startseite als geführte Geschichte (Jamil, Talk qh87y3sj #5739–#5756, „Ja“ #5753 / „Leg los“ #5756, 13.11.2026).
+// Eigene Vorschau-Seite /geschichte/: noindex, aus keinem Menü verlinkt, nicht in der Sitemap (astro.config.mjs).
+// Jamils Startseite (index.astro) bleibt unverändert. thema="besucherreise" wie die Startseite: Knopf oben mit Erstberatung,
+// ohne zweiten Kontaktkopf im Fuß (der Abschnitt „Handlung“ ist der Abschluss).
+// Aufbau: Aufmerksamkeit (Hero + drei Wege, Branche, Firmenname) → Problem → Lösung (Film je Weg) → Beweis (Referenzen,
+// So arbeiten wir, Team) → Angebot (Pakete, passendes hervorgehoben) → Handlung (Erstberatung + WhatsApp).
+// Komponenten: src/components/geschichte/ (Texte texte.ts, Ablauf geschichte.ts, Stil geschichte.css).
+// Filme der Wege „website“ und „betrieb“ kommen aus src/components/geschichte/filme/ (eigener Zweig, OPTIONAL eingebunden):
+// fehlt eine Datei, zeigt die Seite „Film folgt“.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GHero from '../components/geschichte/GHero.astro';
+import GProblem from '../components/geschichte/GProblem.astro';
+import GLoesung from '../components/geschichte/GLoesung.astro';
+import GBeweis from '../components/geschichte/GBeweis.astro';
+import GAngebot from '../components/geschichte/GAngebot.astro';
+import GHandlung from '../components/geschichte/GHandlung.astro';
+import { GESCHICHTE_SEITE, WEGE, WEG_SPEICHER, STANDARD_WEG } from '../components/geschichte/texte';
+// Schriften früh laden (gleiche Dateien wie global.css): sonst bricht der Hero-Text nach dem Schriftwechsel neu um (CLS)
+import jostUrl from '@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url';
+import montserratUrl from '@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url';
+import '../styles/beispiel-mockup.css';
+import '../components/geschichte/geschichte.css';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const filme = import.meta.glob<{ default: any }>('../components/geschichte/filme/*.astro', { eager: true });
+const film = (name: string) => filme[`../components/geschichte/filme/${name}.astro`]?.default;
+const FilmWebsite = film('FilmWebsite');
+const FilmBetriebstag = film('FilmBetriebstag');
+const wegIds = WEGE.map((w) => w.id);
+---
+
+<BaseLayout title={GESCHICHTE_SEITE.titel} description={GESCHICHTE_SEITE.description} noindex thema="besucherreise">
+  <link rel="preload" href={jostUrl} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={montserratUrl} as="font" type="font/woff2" crossorigin />
+  <!-- Weg vor dem ersten Zeichnen setzen (aus sessionStorage, sonst Standard): CSS blendet die anderen Wege aus, ohne Layoutsprung -->
+  <script is:inline define:vars={{ k: WEG_SPEICHER, std: STANDARD_WEG, ids: wegIds }}>
+    var w = null;
+    try { w = sessionStorage.getItem(k); } catch (e) { w = null; }
+    document.documentElement.setAttribute('data-weg', ids.indexOf(w) >= 0 ? w : std);
+  </script>
+  <GHero />
+  <GProblem />
+  <GLoesung filmWebsite={FilmWebsite} filmBetrieb={FilmBetriebstag} />
+  <GBeweis />
+  <GAngebot />
+  <GHandlung />
+</BaseLayout>
+
+<script>
+  import '../components/geschichte/geschichte.ts';
+</script>
