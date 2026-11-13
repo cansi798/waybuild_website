@@ -1,83 +1,38 @@
 ---
-// STARTSEITE der waybuild Website (Stand 06.11.2026 abends). Alle Texte WÖRTLICH von Jamil (Talk qh87y3sj):
-//   Hero (Headline 4771, Subheadline 4783, Kundengeschichte in fünf Stationen 4784)
-//   · 2 Bausteine, die nicht passen (4786/4787; Abschnitt 1 auf Jamils Wunsch entfernt, 4806)
-//   · 3 Verstehen. Empfehlen. Umsetzen. (4788) + Woran wir glauben (4795/4796) in einem Abschnitt (4809, #denkweise) · 4 Vier Bereiche + Pakete (4789)
-//   · 5 Darauf können Sie sich verlassen (entfernt 08.11., #5136–#5138) · Check (#check, Vorschlag aus 4768; entfernt 09.11., #5211–#5213) · Abschluss (4792) · Claim (4793)
-// 08.11.2026 „einladender“ (Jamil 4927/4929, Rethinking NC Rethinking_Startseite-einladend_2026-11-08; Sicherung Branch
-//   vor-einladend-20261108): Claim oben im Hero, Prinzipien mit Zeichen + Linie, „Verlassen“ hinter die Prinzipien,
-//   Leistungsdetails zum Aufklappen. Texte unverändert.
-// 08.11.2026 (Jamil #4983–#4989; Sicherung Branch vor-hero-bausteine-20261108): Hero ohne Claim- und Zielgruppenzeile,
-//   Bausteine als vier getrennte Module mit verlorener Anfrage (statt Puzzle), Erstberatung in #denkweise integriert
-//   (vier Schritte Verstehen/Empfehlen/Umsetzen/Verbessern), eigener Abschnitt „So läuft die Erstberatung“ entfernt.
-// Sicherung des Stands vom 05.11.: Branch vor-unternehmensauftritt-20261106.
-// Texte in src/config/startseite.ts, Stil in src/styles/startseite.css (Bewegung: kundenreise.ts, stapel.ts; startseite.ts und vorgehen.ts am 09.11. entfernt)
-// (nur transform/opacity/stroke-dashoffset). Farben seit 08.11.2026 (Jamil #5008) wieder CI-Türkis wie alle Seiten; thema="besucherreise" steuert nur noch Kopf/Fuß-Inhalte.
-// Die alte Startseite (/hauptseite-alt/) ist gelöscht (Jamil, Talk qh87y3sj #5322, Q8); Sicherung Branch vor-aufraeumen-20261109.
-//
-// 08.11.2026 19:23 (Jamil, Talk qh87y3sj #5061/#5062 „Go“/„Ok“; Sicherung Branch vor-variante-start-20261108 = 80ba83c):
-//   OBEN steht jetzt die KOMPLETTE Startseite der Variante „an firma.de orientiert“ (Einstieg, Vertrauensleiste, Kontrastsatz,
-//   Pakete, Vergleich, Zeitleiste, Was Sie beitragen (entfernt 09.11., #5211–#5213), Fragen und Antworten, Abschluss; Code aus archiv/variante-firma-20261108,
-//   Texte src/config/variante.ts, Pakete/Preise/FAQ aus src/config/pakete-abo.ts). Ohne Banner und Navigation der Variante,
-//   ohne Gründungspaket, Links auf /variante/… → /preise/.
-//   DARUNTER alle bisherigen Abschnitte unverändert, getrennt durch „Bisherige Startseite, zum Aussortieren“ (nur Vorschau).
-//   Jamil sortiert selbst aus. Doppelte IDs: alte Blöcke mit Suffix -alt (#pakete-alt samt #baukasten-alt am 08.11. entfernt, #5136–#5138);
-//   #pakete und #baukasten zeigen auf den neuen Teil; #check (Kundenreise-Check) seit 09.11. entfernt (#5211–#5213).
-//   Der bisherige Hero ist ein zweiter Block mit H2 statt H1 (Text gleich), damit die Seite genau eine H1 hat.
-// 09.11.2026 (Jamil, Talk qh87y3sj #5181–#5187; Sicherung Branch vor-kundenreise-20261109): nach dem Hero die Kundenreise als
-//   Journey-Map (#kundenreise), danach „So arbeiten wir.“ (#arbeitsweise). Entfernt: „Einzelne Lösungen funktionieren.“
-//   (Bausteine) und „Ein Kunde interessiert sich nicht für Ihre Systeme.“ (#loesungen); BAUSTEINE/BEREICHE/BAUKASTEN-Daten
-//   sind aus startseite.ts entfernt (Baukasten-Daten liegen bei der archivierten Komponente unter archiv/baukasten-20261108/).
-// 09.11.2026 (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190; Sicherung Branch vor-so-gehen-wir-vor-20261109): nach der Kundenreise
-//   „So gehen wir vor“ (Verstehen, Verbinden, Verbessern; Komponente start/SoGehenWirVor.astro, Texte config/vorgehen.ts). Er trägt
-//   jetzt die Anker #denkweise und #erstberatung; der alte Abschnitt „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (VERSTEHEN) ist entfernt.
-// 09.11.2026 (Jamil, Talk qh87y3sj #5192, „ok“ #5194; Sicherung Branch vor-prinzipien-volltext-20261109): „So arbeiten wir.“ (#arbeitsweise)
-//   mit Jamils vollem Text (start/Prinzipien.astro, PRINZIPIEN in config/vorgehen.ts) statt der kurzen Fassung (ARBEITSWEISE entfernt).
+// STARTSEITE der waybuild Website. Neudesign unter dem Hero am 13.11.2026 (Jamil, Sprachnachricht Talk qh87y3sj #5810:
+// „komplett neu designen, passend zu unserem Design … Hero nicht anfassen“; Sicherung Tag vor-startseite-neudesign-20261113).
+// Sechs Teile (abgestimmt #5787–#5791): 1 Aufmerksamkeit = Hero (UNVERÄNDERT: Markup, Texte, variante-start.css) + zwei Produkte
+// (gleitet über den stehenden Hero, .stapel-paar + scripts/stapel.ts) · 2 Problem · 3 Lösung (Kundenreise mit Leistungen je Station,
+// Beispiel-Film) · 4 Beweis (echte Projekte, „Ganz entspannt“, Team nur Vorschau) · 5 Angebot (Pakete, Sicherheit, Fragen)
+// · 6 Handlung (Ablauf + Erstberatung). Komponenten src/components/startneu/, Texte src/config/startneu.ts, Stil src/styles/start-neu.css.
+// Frühere Stände und Entscheidungen: Git-Verlauf und Tags (z. B. vor-startseite-6abschnitte-20261113).
+// WICHTIG: In dieser Datei KEIN <style>-Block (Astro würde sonst data-astro-cid-Attribute an den Hero hängen).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SoGehenWirVor from '../components/start/SoGehenWirVor.astro';
-import StartProdukte from '../components/start/StartProdukte.astro';
-import StartProblem from '../components/start/StartProblem.astro';
-import KartenAbschnitt from '../components/start/KartenAbschnitt.astro';
-import BeispielTeaser from '../components/beispiel/BeispielTeaser.astro';
-import PaketKarten from '../components/pakete/PaketKarten.astro';
-import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
-import KomplettKarte from '../components/pakete/KomplettKarte.astro';
-import VVergleich from '../components/variante/VVergleich.astro';
-import Foto from '../components/Foto.astro';
-import Bild from '../components/Bild.astro';
-import Icon from '../components/Icon.astro';
-import type { IconName } from '../config/site';
-import { SEITEN_FOTO } from '../config/bilder';
+import SnProdukte from '../components/startneu/SnProdukte.astro';
+import SnProblem from '../components/startneu/SnProblem.astro';
+import SnReise from '../components/startneu/SnReise.astro';
+import SnBeweis from '../components/startneu/SnBeweis.astro';
+import SnAngebot from '../components/startneu/SnAngebot.astro';
+import SnHandlung from '../components/startneu/SnHandlung.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
-import { IS_PREVIEW } from '../lib/env';
-import { SHOW_HINTS } from '../config/site';
-import { B2B_HINWEIS, ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis, LAUFZEIT_HINWEIS } from '../config/pakete-abo';
-import { V_HERO, HERO_KNOPF, KUNDENREISE, VERGLEICH } from '../config/variante';
-import { ANLIEGEN, TEAM, STIMMEN, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/startseite';
+import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis } from '../config/pakete-abo';
+import { V_HERO, HERO_KNOPF } from '../config/variante';
+import { ANLIEGEN } from '../config/startseite';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
-import '../styles/kundenreise.css';
-import '../styles/fotos-start.css';
+import '../styles/start-neu.css';
 
-/** Symbol je Station der Kundenreise (Bühne, 12.11.2026): Aufmerksamkeit, Vertrauen, Anfrage, Bearbeitung, Betreuung */
-const KR_SYMBOL: IconName[] = ['eye', 'shield', 'chat', 'ablauf', 'users'];
 const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(paket)}`);
-// Platzhalter (Team-Fotos, Kundenstimmen; Jamil #4934) nur in der Vorschau, solange die Hinweise an sind
-const PLATZHALTER = SHOW_HINTS && IS_PREVIEW;
-// „Was unsere Kunden sagen“ (#stimmen) ausgeblendet, Jamil #5289; erst mit echten, freigegebenen Zitaten wieder einschalten
-const STIMMEN_ZEIGEN = false;
 
-// Neuer Teil oben (Variante-Startseite, Jamil #5061/#5062)
+// Hero (Jamil #5061/#5062, #5114): unverändert
 const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
 const V_DESCRIPTION = `Website, E-Mail und Google-Profil in zwei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Zwei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung (${komplettPreis()} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
-// FAQPage-JSON-LD der Startseite entfällt: die Fragen stehen seit #5136–#5138 auf /fragen/ (dort mit JSON-LD)
-
-
+// FAQPage-JSON-LD nur auf /fragen/ (Jamil #5136–#5138); die sechs Fragen unten im Angebot sind sichtbarer Text ohne Schema.
 ---
 
 <BaseLayout
@@ -87,7 +42,6 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   thema="besucherreise"
   stapel
 >
-  <!-- ============ NEU OBEN: Startseite der Variante „an firma.de orientiert“ (Jamil #5061/#5062, 08.11.2026) ============ -->
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->
   <!-- Stapel nur am Hero (Jamil, Talk qh87y3sj #5152–#5155, 09.11.2026): .stapel-paar umschließt Hero und „Was wir für Sie machen.“ (seit 13.11.2026, vorher Kundenreise); nur darin
@@ -110,227 +64,18 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
     <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
-  <!-- 6 Abschnitte (Jamil, Talk qh87y3sj #5787–#5791, 13.11.2026; Sicherung Tag vor-startseite-6abschnitte-20261113):
-       1 Aufmerksamkeit = Hero (Design unverändert) + „Was wir für Sie machen.“ (zwei Produkte, gleitet über den Hero),
-       2 Problem, 3 Lösung (Kundenreise, Umsetzung, Entspannt, Beispiel-Film), 4 Beweis (So gehen wir vor, Vergleich, Team),
-       5 Angebot (Pakete), 6 Handlung (Abschluss). -->
-  <StartProdukte />
+  <!-- Teil 1, zweiter Abschnitt: zwei Produkte (gleitet über den Hero) -->
+  <SnProdukte />
   </div>
 
-  <StartProblem />
-
-  <!-- Kundenreise als „Bühne“ (Jamil, Talk qh87y3sj #5596/#5598/#5599/#5601/#5602, Variante A, 12.11.2026; Sicherung Tag
-       vor-kundenreise-buehne-20261112). Vorher (seit 09.11., #5181–#5334): Journey-Map mit fünf Kreisen an einer Linie und je einem
-       Glühbirnen-Knopf, der die Antwort (Etikett seit #5626 „Bestenfalls“) aufklappte. Kette und Linie sind entfernt; die Antworten
-       stehen jetzt immer sichtbar in jedem Schritt (mit kleiner Glühbirne als Zeichen), damit kein Inhalt verloren geht.
-       Am Rechner (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): die Bühne bleibt beim Scrollen stehen (sticky), je
-       Scroll-Stück erscheint der nächste Schritt groß in der Mitte (großes Symbol statt Zahl seit #5620, Überschrift, Frage, Antwort), der vorige rückt
-       klein und blass nach oben aus; oben eine Fortschrittsleiste; zum Schluss „zufriedener Kunde“ mit Haken, der sich beim letzten
-       Scroll-Stück in den Knopf „Jetzt starten“ verwandelt (#5621; Sicherung Tag vor-buehne-feinschliff-20261112). Am Handy Karten
-       untereinander, die einzeln hereingleiten. Ohne JS oder bei reduzierter Bewegung: alles sofort sichtbar untereinander.
-       Alle Schritte stehen immer im HTML (Screenreader lesen alle, h2 → h3). Texte wörtlich aus KUNDENREISE (config/variante.ts),
-       Stil src/styles/kundenreise.css, Bewegung src/scripts/kundenreise.ts. Seit 13.11.2026 Teil 3 „Lösung“ (nicht mehr im .stapel-paar; H2-id kontrast-h unverändert). -->
-  <section class="section vreise" id="kundenreise" aria-labelledby="kontrast-h">
-    <div class="wrap kr">
-      <h2 id="kontrast-h" class="kr-titel">{KUNDENREISE.titel}</h2>
-      <p class="lead kr-intro">{KUNDENREISE.intro}</p>
-    </div>
-    <div class="krb" data-kundenreise>
-      <div class="krb-buehne">
-        <div class="krb-leiste" aria-hidden="true">
-          {[...KUNDENREISE.stationen, null].map(() => <span class="krb-segment"></span>)}
-        </div>
-        <div class="krb-flaeche wrap">
-          <ol class="krb-schritte">
-            {KUNDENREISE.stationen.map((st, i) => (
-              <li class="krb-schritt" data-krb-schritt>
-                <div class="krb-karte">
-                  <span class="krb-symbol" aria-hidden="true"><Icon name={KR_SYMBOL[i] ?? 'check'} size={48} /></span>
-                  <div class="krb-inhalt">
-                    <h3 class="krb-name"><span class="sr-only">Schritt {i + 1} von {KUNDENREISE.stationen.length}: </span>{st.name}</h3>
-                    <p class="krb-frage">{st.frage}</p>
-                    <div class="krb-antwort">
-                      <p class="krb-antwort__titel"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>{KUNDENREISE.antwortTitel}</p>
-                      <p class="krb-antwort__text">{st.antwort}</p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <!-- Ziel + Abschluss (#5619–#5621): „zufriedener Kunde“, Satz und Knopf „Jetzt starten“ (Erstberatung, gleiches Ziel wie
-               der Hero-Knopf). Auf der Bühne verwandelt sich beim letzten Scroll-Stück der Haken-Kreis in den Knopf (.ist-cta);
-               Handy, reduzierte Bewegung, ohne JS: Knopf direkt unter „zufriedener Kunde“. Der frühere Knopf unter der Bühne entfällt. -->
-          <div class="krb-schritt krb-ziel" data-krb-schritt>
-            <div class="krb-ziel__kopf">
-              <p class="krb-ziel__text">{KUNDENREISE.ziel}</p>
-              <p class="krb-ziel__unter">{KUNDENREISE.zielUnter}</p>
-            </div>
-            <p class="krb-ziel__satz">{KUNDENREISE.schluss}</p>
-            <span class="krb-haken" aria-hidden="true"><Icon name="check" size={40} /></span>
-            <div class="v-knopfe kr-cta krb-cta">
-              <a class="btn kr-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{KUNDENREISE.knopf}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Zwei neue Abschnitte zwischen Kundenreise und Preisen (Jamil, Talk qh87y3sj #5664–#5666, „ok“ #5670/#5672, 12.11.2026;
-       Sicherung Tag vor-umsetzung-entspannt-20261112): „So machen wir aus Besuchern Kunden.“ (#umsetzung, Weiß) und
-       „Ganz entspannt. Das ist unser Motto.“ (#entspannt, zartes Türkis). Komponente start/KartenAbschnitt.astro. -->
-  <KartenAbschnitt daten={UMSETZUNG} flaeche="weiss" />
-  <KartenAbschnitt daten={ENTSPANNT} flaeche="tuerkis" />
-
-  <!-- Teaser „So kann es bei Ihnen laufen.“ (#beispiel) direkt nach #entspannt (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026):
-       Kennzeile, Überschrift, Satz, Knopf „Beispiel ansehen“ → /so-kann-es-laufen/, Mini-Vorschau Szene 1 + 10.
-       Komponente components/beispiel/BeispielTeaser.astro, Texte config/beispiel.ts (BEISPIEL_TEASER). -->
-  <BeispielTeaser />
-
-  <!-- „Was Sie davon haben.“ (#vorteile, sechs Vorteil-Karten) entfernt (Jamil, Talk qh87y3sj #5633, 12.11.2026); Daten VORTEILE bleiben für /neu/ -->
-
-
-  <!-- „Was wir für Ihre Sichtbarkeit tun.“ (#sichtbarkeit) steht seit 12.11.2026 auf /leistungen/suchmaschinen-optimierung/ (Jamil, Talk qh87y3sj #5634) -->
-
-  <!-- „So arbeiten wir.“ (#arbeitsweise, Verantwortung/Einfachheit/Verlässlichkeit) entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026;
-       Sicherung Tag vor-kundenreise-buehne-20261112). -->
-
-
-  <!-- So gehen wir vor (Jamil, Talk qh87y3sj #5188, „ok 2b 3 ja“ #5190, 09.11.2026), seit #5337 zusammengeführt mit „Von der Anfrage
-       bis online“ (Sicherung vor-vorgehen-ablauf-20261109): links Kopf und drei Phasen, rechts sechs Schritte als Kartenstapel.
-       Anker #denkweise (Abschnitt), #ablauf (Beginn des Stapels), #erstberatung (Karte Erstgespräch).
-       Seit 12.11.2026 direkt nach den Preisen (#pakete), vor dem Vergleich (Jamil, Talk qh87y3sj #5612); links nur noch Kopf
-       (Phasen entfernt, #5606/#5610), auf den Karten nur die Zeitangabe (#5598). Anker ziehen mit. -->
-  <SoGehenWirVor />
-
-  <section class="section section--alt" id="vergleich" aria-labelledby="vgl-h">
-    <div class="wrap">
-      <!-- Stockfoto neben der Überschrift (Jamil, Talk qh87y3sj #5362): PC rechts, Handy darunter; lazy, keine Bildunterschrift -->
-      <div class="sf-kopf">
-      <div class="section-head">
-        <span class="eyebrow">Im Vergleich</span>
-        <h2 id="vgl-h" class="rule">Wir machen den Unterschied</h2>
-        <p class="lead">Sechs Fragen, die Ihnen bei der Wahl helfen.</p>
-      </div>
-      <Foto id={SEITEN_FOTO.startVergleich} sizes="(min-width: 1200px) 420px, (min-width: 900px) 36vw, calc(100vw - 32px)" class="sf-kopf__foto" />
-      </div>
-      <!-- Vier Karten statt Tabelle (Jamil, Talk qh87y3sj #5210): components/variante/VVergleich.astro -->
-      <VVergleich />
-      <p class="v-hinweis">{VERGLEICH.hinweis}</p>
-    </div>
-  </section>
-
-  <!-- „Von der Anfrage bis online“ (#ablauf) in „So gehen wir vor“ aufgegangen (Jamil, Talk qh87y3sj #5337) -->
-
-  <!-- Fragen und Antworten (#fragen) entfernt: eigene Seite /fragen/ (Jamil #5136–#5138) -->
-
-  <!-- „Welches Paket passt zu Ihnen?“ (.v-cta, zwei Knöpfe) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
-
-  <!-- ============ DARUNTER: bisherige Abschnitte. Gelber Trenner „Bisherige Startseite, zum Aussortieren“ und der alte
-       Hero (StartHero mit Kreislauf; Komponente bleibt erhalten) entfernt, Jamil #5140–#5142 ============ -->
-
-  <!-- Hintergründe unten im Wechsel (09.11.2026, nach dem Entfernen von „Was Sie beitragen“, „Welches Paket passt zu Ihnen?“ und
-       Kundenreise-Check, Jamil #5211–#5213; #stimmen ausgeblendet, Jamil #5289; #ablauf in „So gehen wir vor“, #5337): nach
-       #vergleich (Sand) in der Vorschau #team hell, Abschluss Sand; ohne Platzhalter (live) Abschluss hell (#referenzen entfernt, Jamil #5322 Q9). -->
-  <!-- „Verstehen. Empfehlen. Umsetzen. Verbessern.“ (#denkweise) entfernt; ersetzt durch „So gehen wir vor“ nach der Kundenreise -->
-
-  <!-- Wer hinter waybuild steht (Jamil #4934; Fotos und Test-Zitate #5636/#5637, 12.11.2026): zwei gleich hohe Karten mit rundem
-       Porträt (höchstens 180 px, Cans Quelle hat nur 256 px), Name, Rolle, Zitat. Nur in der Vorschau, solange die Zitate
-       Test-Zitate sind (vor Livegang von Can/Jamil bestätigen lassen). Keine strukturierten Daten mit den Zitaten. -->
-  {PLATZHALTER && (
-    <section class="bs" id="team" aria-labelledby="bs-team">
-      <div class="wrap">
-        <div class="bs-kopf bs-kopf--mitte">
-          <h2 id="bs-team">{TEAM.titel}</h2>
-          <p class="bs-lead">{TEAM.einleitung}</p>
-        </div>
-        <ul class="team4">
-          {TEAM.personen.map((m) => (
-            <li class="team4__karte">
-              <div class="team4__foto"><Bild name={m.foto} alt={m.alt} widths={[180, 360]} sizes="180px" class="team4__bild" /></div>
-              <h3 class="team4__name">{m.name}</h3>
-              <p class="team4__rolle">{m.rolle}</p>
-              <blockquote class="team4__zitat"><p>„{m.zitat}“</p></blockquote>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
-
-  <!-- „Darauf können Sie sich verlassen“ entfernt (Jamil #5136–#5138) -->
-
-  <!-- Preisteil unten (#pakete-alt) entfernt (Jamil #5136–#5138); Pakete stehen oben in #pakete -->
-
-  <!-- „Beispiele aus unserer Arbeit“ (#referenzen) von der Startseite entfernt (Jamil, Talk qh87y3sj #5322, Q9); der Abschnitt
-       steht weiter auf /leistungen/website/ und /beispiele/ (Komponente components/referenzen/ReferenzKarten.astro). -->
-
-  <!-- Kundenstimmen (Jamil #4934 Punkt 3): NUR PLATZHALTER, keine erfundenen Zitate/Namen/Sterne.
-       Ausgeblendet (Jamil, Talk qh87y3sj #5289 „entfernen“): Markup und STIMMEN bleiben für spätere echte, freigegebene
-       Kundenstimmen; dann STIMMEN_ZEIGEN auf true setzen und den Hintergrund-Wechsel (Abschluss) prüfen. -->
-  {STIMMEN_ZEIGEN && PLATZHALTER && (
-    <section class="bs bs--alt" id="stimmen" aria-labelledby="bs-stimmen">
-      <div class="wrap">
-        <div class="bs-kopf bs-kopf--mitte"><h2 id="bs-stimmen">{STIMMEN.titel}</h2></div>
-        <ul class="stimmen4">
-          {STIMMEN.quellen.map((q) => (
-            <li class="stimme4 platzhalter">
-              <span class="platzhalter__etikett">{STIMMEN.platzhalter}</span>
-              <blockquote class="stimme4__zitat"><p>{STIMMEN.zitat}</p></blockquote>
-              <p class="stimme4__quelle">{q}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
-
-  <!-- Kundenreise-Check (#check) entfernt (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026) -->
-
-  <!-- „So läuft die Erstberatung“: Anker #erstberatung seit 09.11.2026 in „So gehen wir vor“, seit #5337 auf der Karte Erstgespräch -->
-
-  <!-- 5 Angebot: Pakete seit 13.11.2026 nach dem Beweis (Jamil #5787–#5791: erst überzeugen, dann Preis) -->
-  <!-- Pakete der Variante, jetzt mit den Paketdaten aus pakete-abo.ts (Preise, Jahreskosten, Einmalig dazubuchen).
-       Anker #pakete und #baukasten (alte Links) zeigen hierher. -->
-  <!-- Hintergründe (Jamil, Talk qh87y3sj #5204, 09.11.2026; #ablauf seit #5337 in „So gehen wir vor“): So gehen wir vor (Weiß)
-       → So arbeiten wir. (zartes Türkis) → #pakete hell → #vergleich Sand → darunter im Wechsel. -->
-  <section class="section" id="pakete" aria-labelledby="pakete-h">
-    <span id="baukasten" class="pk-start__anker" aria-hidden="true"></span>
-    <div class="wrap">
-      <div class="section-head center">
-        <span class="eyebrow">Pakete</span>
-        <h2 id="pakete-h" class="rule">Zwei Pakete. Feste Monatspreise.</h2>
-        <p class="lead">Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.</p>
-      </div>
-      <EinmaligDazu id="einmalig" />
-      <PaketKarten details={false} />
-      <!-- ohne Ablauf-Kette Anfrage → … → Buchhaltung, die drei Vorteile bleiben (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026) -->
-      <KomplettKarte kette={false} />
-      <p class="v-hinweis"><a href={href('/preise/')}>Alle Inhalte, Vergleich und Zusatzleistungen ansehen</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
-    </div>
-  </section>
-
-  <!-- Abschluss (Jamil 4792): Claim „Von Anfang bis Wachstum.“ als Überschrift oben, alte Überschrift, Absatz, Linie, Logo und Schlusszeile entfernt (Jamil, Talk qh87y3sj #5290) -->
-  <section class:list={['bs', 'abschluss', { 'bs--alt': PLATZHALTER }]} aria-labelledby="bs-abschluss">
-    <!-- Stockfoto im Abschluss (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts; Handy Foto unter dem Text -->
-    <div class="wrap sf-abschluss">
-    <div class="abschluss__innen">
-      <h2 id="bs-abschluss" class="abschluss__titel">{ABSCHLUSS.titel}</h2>
-      <!-- „Warum waybuild?“ in drei Sätzen über dem Knopf (Jamil, Talk qh87y3sj #5381) -->
-      <div class="abschluss__warum">
-        <p class="abschluss__frage">{ABSCHLUSS.warumTitel}</p>
-        {ABSCHLUSS.warum.map((satz) => <p class="abschluss__text">{satz}</p>)}
-      </div>
-      <a class="btn btn--marke btn--lg" href={kontakt(ANLIEGEN.bewerten.paket)}>{ABSCHLUSS.cta}</a>
-      <p class="abschluss__unter">{ABSCHLUSS.unterCta}</p>
-    </div>
-    <Foto id={SEITEN_FOTO.startAbschluss} sizes="(min-width: 1200px) 520px, (min-width: 900px) 44vw, calc(100vw - 32px)" class="sf-abschluss__foto" />
-    </div>
-  </section>
+  <SnProblem />
+  <SnReise />
+  <SnBeweis />
+  <SnAngebot />
+  <SnHandlung />
 </BaseLayout>
 
 <script>
   import '../scripts/stapel.ts';
-  import '../scripts/kundenreise.ts';
+  import '../scripts/start-neu.ts';
 </script>

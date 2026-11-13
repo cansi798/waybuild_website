@@ -1,0 +1,93 @@
+---
+// Teil 3 „Lösung“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810). Fasst zusammen: Kundenreise (Texte wörtlich aus KUNDENREISE,
+// variante.ts), „So machen wir aus Besuchern Kunden.“ (je Station: womit wir es umsetzen, Leistungen genau wie in pakete-abo.ts)
+// und den Teaser „So kann es bei Ihnen laufen.“ (Film-Beispiel, Mini-Vorschau Szene 1 + 10).
+// Aufbau: Am PC (ab 60rem, mit JS) links die fünf Stationen und das Ziel untereinander, rechts ein stehender Rahmen (sticky) mit der
+// Strichgrafik der Station, die gerade in der Bildschirmmitte steht (scripts/start-neu.ts, IntersectionObserver). Kein Scroll-Kapern,
+// die Seite scrollt normal. Am Handy, ohne JS und bei reduzierter Bewegung: jede Station mit ihrer eigenen Grafik untereinander.
+// Anker #kundenreise bleibt (Links von Leistungsseiten).
+import Icon from '../Icon.astro';
+import ReiseGrafik from './ReiseGrafik.astro';
+import Szene01 from '../beispiel/szenen/Szene01.astro';
+import Szene10 from '../beispiel/szenen/Szene10.astro';
+import { KUNDENREISE as K } from '../../config/variante';
+import { ANLIEGEN } from '../../config/startseite';
+import { BEISPIEL_TEASER as BT, BEISPIEL_ETIKETT } from '../../config/beispiel';
+import { REISE, type LeistungsVerweis } from '../../config/startneu';
+import { ABO_PAKETE, KOMPLETTPAKET } from '../../config/pakete-abo';
+import { href } from '../../lib/paths';
+import '../../styles/beispiel-mockup.css';
+
+const leistung = (v: LeistungsVerweis) => {
+  if ('komplett' in v) return { text: KOMPLETTPAKET.name, paket: 'in Kombination' };
+  const p = ABO_PAKETE.find((x) => x.id === v.paket)!;
+  const l = p.leistungen.find((x) => x.id === v.id)!;
+  return { text: l.text, paket: p.name };
+};
+const n = K.stationen.length;
+const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<section class="section sn sn-reise" id="kundenreise" aria-labelledby="sn-reise-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <h2 id="sn-reise-h" class="sn-h2">{K.titel}</h2>
+      <p class="sn-lead">{K.intro}</p>
+    </div>
+
+    <div class="sn-reise__raster" data-reise>
+      <div class="sn-wisch" role="region" aria-label={`${K.titel} Fünf Stationen und das Ziel`} tabindex="0">
+      <ol class="sn-stationen">
+        {K.stationen.map((st, i) => (
+          <li class="sn-station" data-station={i}>
+            <div class="sn-station__bild sn-tafel"><ReiseGrafik name={REISE.grafiken[i]} /></div>
+            <div class="sn-station__inhalt">
+              <p class="sn-station__marke" aria-hidden="true"><span class="sn-ico"><Icon name={REISE.symbole[i] ?? 'check'} size={22} /></span>{i + 1} / {n}</p>
+              <h3 class="sn-station__name"><span class="sr-only">Schritt {i + 1} von {n}: </span>{st.name}</h3>
+              <p class="sn-station__frage">{st.frage}</p>
+              <p class="sn-station__antwort"><span class="sn-station__etikett">{K.antwortTitel}</span>{st.antwort}</p>
+              <p class="sn-station__dafuer">{REISE.dafuer}</p>
+              <ul class="sn-chips">
+                {(REISE.leistungen[i] ?? []).map(leistung).map((l) => <li><span>{l.text}</span><small>{l.paket}</small></li>)}
+              </ul>
+            </div>
+          </li>
+        ))}
+        <li class="sn-station sn-station--ziel" data-station={n}>
+          <div class="sn-station__bild sn-tafel"><ReiseGrafik name="ziel" /></div>
+          <div class="sn-station__inhalt">
+            <h3 class="sn-station__name sn-station__name--ziel">{K.ziel}</h3>
+            <p class="sn-station__frage">{K.zielUnter}</p>
+            <p class="sn-station__knopf"><a class="btn btn--lg sn-btn" href={kontakt}>{K.knopf}</a></p>
+          </div>
+        </li>
+      </ol>
+      </div>
+      <p class="sn-wisch__hinweis" aria-hidden="true">Zum Weiterlesen wischen <Icon name="arrow" size={16} /></p>
+
+      <div class="sn-buehne" aria-hidden="true">
+        <div class="sn-buehne__rahmen sn-tafel">
+          {[...REISE.grafiken, 'ziel' as const].map((g, i) => (
+            <div class:list={['sn-szene', { 'ist-aktiv': i === 0 }]} data-szene={i}><ReiseGrafik name={g} /></div>
+          ))}
+        </div>
+        <ol class="sn-buehne__punkte">
+          {[...K.stationen.map((s) => s.name), K.ziel].map((name, i) => <li class:list={{ 'ist-aktiv': i === 0 }} data-punkt={i}>{name}</li>)}
+        </ol>
+      </div>
+    </div>
+
+    <div class="sn-beispiel" id={BT.id}>
+      <div class="sn-beispiel__text">
+        <h3 class="sn-h3">{BT.titel}</h3>
+        <p>{BT.text}</p>
+        <a class="sn-link" href={href('/so-kann-es-laufen/')}>{BT.knopf} <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="sn-beispiel__vorschau" aria-hidden="true">
+        <div class="bsp-mini sn-mini sn-mini--laptop"><Szene10 variante="mini" /></div>
+        <div class="bsp-mini sn-mini sn-mini--handy"><Szene01 variante="mini" /></div>
+        <span class="bsp-etikett sn-mini__etikett">{BEISPIEL_ETIKETT}</span>
+      </div>
+    </div>
+  </div>
+</section>

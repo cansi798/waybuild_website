@@ -1,0 +1,52 @@
+---
+// Teil 1 „Aufmerksamkeit“, zweiter Abschnitt (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810): direkt unter dem Hero, gleitet als
+// zweiter Teil von .stapel-paar über den stehenden Hero (stapel.ts). Zwei Produkte: Website (Basis/Plus, Änderungen per Chat oder
+// Sprachnachricht) und Betriebs-App (Komplettpaket, nur in Kombination). Preise/Namen aus pakete-abo.ts, Texte aus config/startneu.ts.
+import StartGrafik from '../start/StartGrafik.astro';
+import Icon from '../Icon.astro';
+import { ABO_PAKETE, KOMPLETTPAKET, euro, komplettPreis } from '../../config/pakete-abo';
+import { PRODUKTE as T } from '../../config/startneu';
+import { href } from '../../lib/paths';
+
+const appText = KOMPLETTPAKET.text.replace(/\s*Nur zusammen mit Basis oder Plus buchbar\.$/, '');
+---
+
+<section class="section sn sn-produkte" id="leistungen" aria-labelledby="sn-produkte-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <h2 id="sn-produkte-h" class="sn-h2">{T.titel.split(/(?<=\.)\s+/).map((z) => <span class="sn-zeile">{z} </span>)}</h2>
+      <p class="sn-lead">{T.lead}</p>
+    </div>
+
+    <ul class="sn-produkte__liste">
+      <li class="sn-produkt sn-produkt--website reveal">
+        <div class="sn-produkt__bild"><StartGrafik name="website" /></div>
+        <div class="sn-produkt__text">
+          <h3 class="sn-h3">{T.website.titel}</h3>
+          <p>{T.website.text}</p>
+          <p class="sn-produkt__chat"><span class="sn-ico" aria-hidden="true"><Icon name="mic" size={20} /></span>{T.website.chat}</p>
+          <ul class="sn-stufen" aria-label="Pakete">
+            {ABO_PAKETE.map((p) => (
+              <li class:list={['sn-stufe', { 'sn-stufe--tipp': p.empfohlen }]}>
+                <span class="sn-stufe__name">{p.name}{p.empfohlen && <span class="sn-stufe__tipp">Empfohlen</span>}</span>
+                <span class="sn-stufe__was">{p.kurz}</span>
+                <span class="sn-stufe__preis"><b>{euro(p.preis)}</b> netto im Monat</span>
+              </li>
+            ))}
+          </ul>
+          <a class="sn-link" href="#pakete">{T.website.link} <Icon name="arrow" size={18} /></a>
+        </div>
+      </li>
+
+      <li class="sn-produkt sn-produkt--app reveal">
+        <div class="sn-produkt__bild"><StartGrafik name="app" /></div>
+        <div class="sn-produkt__text">
+          <h3 class="sn-h3">{T.app.titel}</h3>
+          <p>{appText}</p>
+          <p class="sn-produkt__preis"><span>{KOMPLETTPAKET.name}, nur zusammen mit Basis oder Plus</span><b>{komplettPreis()} netto im Monat</b></p>
+          <a class="sn-link" href={href('/so-kann-es-laufen/')}>{T.app.link} <Icon name="arrow" size={18} /></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

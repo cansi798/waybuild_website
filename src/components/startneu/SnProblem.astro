@@ -1,0 +1,29 @@
+---
+// Teil 2 „Problem“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810): drei typische Schmerzpunkte mit den ruhigen Strichgrafiken
+// aus /geschichte/ (geschichte/GGrafik.astro, die Jamil „sehr ansprechend“ findet, #5787). Am PC links die Überschrift (bleibt
+// stehen), rechts die drei Punkte untereinander; am Handy alles untereinander, Grafik klein neben dem Text.
+import GGrafik from '../geschichte/GGrafik.astro';
+import Icon from '../Icon.astro';
+import { PROBLEM as T } from '../../config/startneu';
+---
+
+<section class="section sn sn-problem" id="problem" aria-labelledby="sn-problem-h">
+  <div class="wrap sn-problem__raster">
+    <div class="sn-kopf sn-problem__kopf">
+      <p class="sn-kenn">{T.kennzeile}</p>
+      <h2 id="sn-problem-h" class="sn-h2">{T.titel}</h2>
+      <a class="sn-link sn-problem__weiter" href="#kundenreise">{T.ueberleitung} <Icon name="arrow" size={18} /></a>
+    </div>
+    <ul class="sn-schmerzen">
+      {T.punkte.map((p) => (
+        <li class="sn-schmerz reveal">
+          <div class="sn-schmerz__bild"><GGrafik name={p.grafik} suche="Betrieb in der Nähe" /></div>
+          <div class="sn-schmerz__text">
+            <h3 class="sn-h3">{p.titel}</h3>
+            <p>{p.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

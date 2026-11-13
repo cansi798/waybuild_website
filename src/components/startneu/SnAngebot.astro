@@ -1,0 +1,106 @@
+---
+// Teil 5 „Angebot“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810). Alle Preise, Namen und Leistungen aus pakete-abo.ts, nichts fest
+// im Text. Regeln: Basis „Enthalten:“ ohne Haken, Plus „Alles aus Basis, plus:“ mit Haken (#5669); Komplettpaket nur in Kombination
+// und nur mit Kombipreisen (#5642, #5659/#5660), kein Kombipreis mit dem Gründerpaket (#5464); Extras einmalig (#5613/#5615).
+// „Direkt buchen“ / „Kombi buchen“ öffnen das gemeinsame Buchungsfenster (pakete/BuchenDialog.astro, data-buchen/data-komplett),
+// ohne JS geht es zum Kontaktformular mit Vorauswahl. Darunter: was Sicherheit gibt (nur Belegtes) und sechs häufige Fragen
+// (Antworten aus site.ts/pakete-abo.ts über alleFragen()); FAQPage-JSON-LD bleibt nur auf /fragen/.
+// Anker: #pakete (Abschnitt), #baukasten (alte Links), #pk-basis/#pk-plus, #komplettpaket, #einmalig.
+import Icon from '../Icon.astro';
+import BuchenDialog from '../pakete/BuchenDialog.astro';
+import {
+  ABO_PAKETE, KOMPLETTPAKET as K, EINMALIG_DAZU as E, BUCHEN, euro, euroAb, bruttoVon, kombiPreise, einmalSumme,
+  paketById, LAUFZEIT_HINWEIS, B2B_HINWEIS,
+} from '../../config/pakete-abo';
+import { alleFragen } from '../../config/fragen';
+import { ANGEBOT as T, nbTeile } from '../../config/startneu';
+import { href } from '../../lib/paths';
+
+const kontaktPaket = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&buchen=1`;
+const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&komplett=1&buchen=1`;
+const kontaktExtras = `${href('/kontakt/')}?dazu=${encodeURIComponent(E.gesamt.id)}&buchen=1`;
+const kombis = kombiPreise();
+const appText = K.text.replace(/\s*Nur zusammen mit Basis oder Plus buchbar\.$/, '');
+const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((f): f is NonNullable<typeof f> => !!f && !f.platzhalter);
+---
+
+<section class="section sn sn-angebot" id="pakete" aria-labelledby="sn-angebot-h">
+  <span id="baukasten" class="sn-anker" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--mitte">
+      <p class="sn-kenn">{T.kennzeile}</p>
+      <h2 id="sn-angebot-h" class="sn-h2">{T.titel}</h2>
+      <p class="sn-lead">{T.lead}</p>
+    </div>
+
+    <div class="sn-pakete">
+      {ABO_PAKETE.map((p) => (
+        <article class:list={['sn-paket', { 'sn-paket--tipp': p.empfohlen }]} id={`pk-${p.id}`} aria-labelledby={`sn-pk-${p.id}`}>
+          <div class="sn-paket__kopf">
+            <h3 id={`sn-pk-${p.id}`} class="sn-paket__name">{p.name}</h3>
+            {p.empfohlen && <span class="sn-paket__tipp">Empfehlung</span>}
+          </div>
+          <p class="sn-paket__kurz">{p.kurz}</p>
+          <p class="sn-paket__preis"><b>{euro(p.preis)}</b><span>netto im Monat</span></p>
+          <p class="sn-paket__brutto">{euro(bruttoVon(p.preis))} inkl. 19 % MwSt.</p>
+          <p class="sn-paket__fuer">{p.fuer}</p>
+          <p class="sn-paket__listenkopf">{p.baut ? `Alles aus ${paketById(p.baut).name}, plus:` : 'Enthalten:'}</p>
+          <ul class:list={['sn-paket__liste', { 'sn-paket__liste--haken': !!p.baut }]}>
+            {p.leistungen.map((l) => <li>{p.baut ? <Icon name="check" size={18} /> : <span class="sn-punkt" aria-hidden="true"></span>}<span>{l.text}</span></li>)}
+          </ul>
+          <div class="sn-paket__fuss">
+            <a class="btn btn--lg sn-btn sn-paket__btn" href={kontaktPaket(p.name)} data-buchen={p.id}>{BUCHEN.knopf}<span class="sr-only">: Paket {p.name}</span></a>
+            <p class="sn-paket__laufzeit">{LAUFZEIT_HINWEIS}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <article class="sn-app" id="komplettpaket" aria-labelledby="sn-app-h">
+      <div class="sn-app__text">
+        <p class="sn-kenn">{K.label}</p>
+        <h3 id="sn-app-h" class="sn-h3">{T.appTitel}: {K.name}</h3>
+        <p class="sn-app__kurz">{K.kurz}</p>
+        <p>{appText} Nur zusammen mit Basis oder Plus buchbar.</p>
+      </div>
+      <ul class="sn-app__kombis">
+        {kombis.map((k) => (
+          <li class="sn-kombi">
+            <p class="sn-kombi__name">{k.paket.name} + {K.name}</p>
+            <p class="sn-kombi__preis"><b>{euroAb(k.preis, K.kombiAb)}</b> netto im Monat</p>
+            <p class="sn-kombi__statt">statt einzeln {euroAb(k.einzeln, K.kombiAb)} · {euroAb(bruttoVon(k.preis), K.kombiAb)} inkl. 19 % MwSt.</p>
+            <a class="btn sn-btn sn-btn--hell sn-kombi__btn" href={kontaktKombi(k.paket.name)} data-buchen={k.paket.id} data-komplett="1">Kombi buchen<span class="sr-only">: {k.paket.name} + {K.name}</span></a>
+          </li>
+        ))}
+      </ul>
+      {!K.kombiMitGruenderpaket && <p class="sn-app__hinweis">Kombipreise gelten nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
+    </article>
+
+    <div class="sn-extras" id="einmalig" role="region" aria-labelledby="sn-extras-h">
+      <div class="sn-extras__text">
+        <h3 id="sn-extras-h" class="sn-h4">Neu starten oder neu aufstellen?</h3>
+        <p>{E.gesamt.text.replace(/[.\s]+$/, '')} für <b>{euro(E.gesamt.preis)}</b> statt {euro(einmalSumme())}, einmalig netto. Einzeln: {E.liste.map((e) => `${e.name} ${euro(e.preis)}`).join(', ')}.</p>
+      </div>
+      <a class="btn sn-btn sn-btn--rand" href={kontaktExtras}>{BUCHEN.knopf}<span class="sr-only">: {E.gesamt.name}</span></a>
+    </div>
+
+    <ul class="sn-sicher">
+      {T.sicherheit.map((s) => (
+        <li><span class="sn-ico" aria-hidden="true"><Icon name={s.icon} size={22} /></span><p><b>{s.titel}</b> {nbTeile(s.text).map((t) => (t.nb ? <span class="sn-nb">{t.s}</span> : t.s))}</p></li>
+      ))}
+    </ul>
+
+    <p class="sn-fein sn-fein--mitte"><a href={href('/preise/')}>{T.allePreise}</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+
+    <div class="sn-fragen">
+      <div class="sn-fragen__kopf">
+        <h3 class="sn-h3">{T.fragenTitel}</h3>
+        <a class="sn-link" href={href('/fragen/')}>{T.alleFragen} <Icon name="arrow" size={18} /></a>
+      </div>
+      <dl class="sn-fragen__liste">
+        {fragen.map((f) => (<div><dt>{f.q}</dt><dd>{f.a}</dd></div>))}
+      </dl>
+    </div>
+  </div>
+  <BuchenDialog />
+</section>

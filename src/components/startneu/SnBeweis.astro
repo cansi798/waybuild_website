@@ -1,0 +1,90 @@
+---
+// Teil 4 „Beweis“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810). Nur Belegtes, nichts erfunden:
+// - drei echte Projekte aus REFERENZEN (startseite.ts; Jamil #4932: alle Kundenprojekte dürfen genannt werden), Messwerte von dort,
+//   Link nur bei „online“. Keine Stockfotos in der Nähe (UWG, config/bilder.ts).
+// - „Ganz entspannt. Das ist unser Motto.“ (ENTSPANNT, Jamils Wortlaut #5665/#5666) – fasst zusammen, was vorher im Vergleich
+//   (fester Ansprechpartner, im Monatspreis) und im Abschluss („Warum waybuild?“) doppelt stand. Der ausführliche Vergleich nach
+//   Anbieter-Art steht auf /warum-waybuild/ (Link).
+// - Team (Fotos + Test-Zitate) NUR in der Vorschau, solange die Zitate nicht bestätigt sind (#5636/#5637). Keine Zitate in JSON-LD.
+import Bild from '../Bild.astro';
+import Icon from '../Icon.astro';
+import { REFERENZEN, ENTSPANNT, TEAM } from '../../config/startseite';
+import { BEWEIS as T } from '../../config/startneu';
+import { href } from '../../lib/paths';
+import { IS_PREVIEW } from '../../lib/env';
+import { SHOW_HINTS } from '../../config/site';
+
+const refs = T.auswahl.map((name) => REFERENZEN.liste.find((r) => r.name === name)).filter((r): r is NonNullable<typeof r> => !!r && !!r.bild);
+const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
+---
+
+<section class="section sn sn-beweis" id="referenzen" aria-labelledby="sn-beweis-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <div>
+        <p class="sn-kenn">{T.kennzeile}</p>
+        <h2 id="sn-beweis-h" class="sn-h2">{REFERENZEN.titel}</h2>
+      </div>
+      <p class="sn-lead">{REFERENZEN.einleitung}</p>
+    </div>
+
+    <ul class="sn-refs">
+      {refs.map((r, i) => (
+        <li class:list={['sn-ref reveal', { 'sn-ref--gross': i === 0 }]}>
+          <div class="sn-ref__bild">
+            <span class="sn-ref__leiste" aria-hidden="true"><i></i><i></i><i></i></span>
+            <Bild name={r.bild!} alt={`Startseite der Website von ${r.name}${r.status === 'vorschau' ? ' (Vorschau)' : ''}`} widths={[400, 800, 1200]}
+              sizes={i === 0 ? '(min-width: 1000px) 620px, calc(100vw - 32px)' : '(min-width: 1000px) 420px, calc(100vw - 32px)'} class="sn-ref__img" />
+          </div>
+          <div class="sn-ref__text">
+            <p class="sn-ref__kopf"><span class="sn-ref__name">{r.name}</span><span class:list={['sn-ref__status', `sn-ref__status--${r.status}`]}>{REFERENZEN.etikett[r.status]}</span></p>
+            <p class="sn-ref__branche">{r.branche}{r.ort ? `, ${r.ort}` : ''}</p>
+            {r.ergebnis && <p class="sn-ref__ergebnis">{r.ergebnis}</p>}
+            {r.status === 'online' && r.url && (
+              <a class="sn-link" href={r.url} target="_blank" rel="noopener">{r.urlText ?? r.url}<span class="sr-only"> (öffnet in neuem Tab)</span> <Icon name="arrow" size={18} /></a>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="sn-fein">{REFERENZEN.messung} <a href={href('/beispiele/')}>{T.alle}</a></p>
+
+    <div class="sn-motto">
+      <div class="sn-motto__kopf">
+        <h3 class="sn-h2 sn-h2--klein">{ENTSPANNT.titel}</h3>
+        <p class="sn-lead">{ENTSPANNT.intro}</p>
+        <a class="sn-link" href={href('/warum-waybuild/')}>{T.vergleich} <Icon name="arrow" size={18} /></a>
+      </div>
+      <ul class="sn-motto__liste">
+        {ENTSPANNT.karten.map((k) => (
+          <li class="sn-motto__punkt reveal">
+            <span class="sn-ico sn-ico--gross" aria-hidden="true"><Icon name={k.icon} size={28} /></span>
+            <h4 class="sn-h4">{k.titel}</h4>
+            <p>{k.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {TEAM_ZEIGEN && (
+      <div class="sn-team" id="team">
+        <div class="sn-team__kopf">
+          <h3 class="sn-h3">{TEAM.titel}</h3>
+          <p>{TEAM.einleitung}</p>
+        </div>
+        <ul class="sn-team__liste">
+          {TEAM.personen.map((m) => (
+            <li class="sn-person">
+              <div class="sn-person__foto"><Bild name={m.foto} alt={m.alt} widths={[180, 360]} sizes="96px" class="sn-person__bild" /></div>
+              <div>
+                <p class="sn-person__name">{m.name}</p>
+                <p class="sn-person__rolle">{m.rolle}</p>
+                <blockquote class="sn-person__zitat"><p>„{m.zitat}“</p></blockquote>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>

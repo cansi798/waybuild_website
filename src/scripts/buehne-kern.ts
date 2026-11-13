@@ -1,5 +1,5 @@
 // Gemeinsamer Kern für Scroll-Bühnen (verallgemeinert aus der Kundenreise-Bühne vom 12.11.2026, src/scripts/kundenreise.ts).
-// Genutzt von: Kundenreise auf der Startseite (kundenreise.ts) und „So kann es laufen“ (beispiel.ts, Jamil Talk qh87y3sj
+// Genutzt von: (bis 13.11.2026 Kundenreise der Startseite, kundenreise.ts, gelöscht im Neudesign) und „So kann es laufen“ (beispiel.ts, Jamil Talk qh87y3sj
 // #5678/#5680, 13.11.2026).
 //
 // Drei Modi, die der Kern selbst wählt und bei Änderung der Fenstergröße/Bewegungs-Einstellung neu setzt:

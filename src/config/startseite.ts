@@ -169,7 +169,9 @@ export const BOTSCHAFT = {
 };
 
 /** Zwei Abschnitte zwischen Kundenreise und Preisen (Jamil, Talk qh87y3sj #5664/#5665/#5666, „ok“ #5670/#5672, 12.11.2026;
- *  Sicherung Tag vor-umsetzung-entspannt-20261112). Texte WÖRTLICH von Jamil. Komponente src/components/start/KartenAbschnitt.astro,
+ *  Sicherung Tag vor-umsetzung-entspannt-20261112). Texte WÖRTLICH von Jamil. Seit dem Neudesign 13.11.2026 (#5810): ENTSPANNT steht in
+ *  components/startneu/SnBeweis.astro, die Punkte von UMSETZUNG je Station in der Kundenreise (SnReise.astro, config/startneu.ts REISE);
+ *  UMSETZUNG selbst nutzt nur noch llms.txt. Frühere Komponente start/KartenAbschnitt.astro (gelöscht),
  *  Stil src/styles/karten-abschnitt.css. Karten mit großem Symbol (Stil der Kundenreise, ohne Kreis), keine Paket-Etiketten.
  *  Hinweis: „Alles aus einer Hand“ ist Jamils ausdrücklicher Wortlaut in #5666 (frühere Regel „nie ‚aus einer Hand‘“ damit überholt). */
 export type KartenAbschnitt = { id: string; kennzeile: string; titel: string; intro: string; karten: { icon: IconName; titel: string; text: string }[] };
