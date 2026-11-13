@@ -26,7 +26,7 @@
 .gf-uhrzeit { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 8px; border-radius: 99px; background: #00807b; color: #fff;
   font-family: var(--font-head); font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; line-height: 1.3; }
 .gf-uhrzeit svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.gf-uhrzeit__uhr { font-weight: 600; font-size: 0.8em; opacity: 0.85; }
+.gf-uhrzeit__uhr { font-weight: 600; font-size: 0.8em; }
 .gf .gf-titel { margin: 0 0 0.3em; font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.1rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink);
   hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; text-wrap: balance; }
 .gf-satz { margin: 0; max-width: 44ch; font-size: clamp(1.04rem, 0.98rem + 0.4vw, 1.22rem); line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: anywhere; }
@@ -45,7 +45,7 @@
 @supports (height: 100svh) { .gf--film { --gf-sicht: calc(100svh - var(--gf-kopf) - var(--gf-unten)); } }
 .gf--film .gf-buehne { position: relative; height: min(var(--gf-sicht), 800px); min-height: 400px; display: flex; flex-direction: column; overflow: hidden; outline: none;
   scroll-margin-top: var(--gf-kopf); }
-.gf--film .gf-oben { position: absolute; z-index: 4; top: 6px; right: 6px; margin: 0; pointer-events: none; }
+.gf--film .gf-oben { position: absolute; z-index: 4; top: 4px; right: max(6px, calc((100% - var(--wrap, 1160px)) / 2)); margin: 0; pointer-events: none; }
 .gf--film .gf-schritte { display: block; position: relative; flex: 1; min-height: 0; }
 .gf--film .gf-schritt { position: absolute; inset: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; align-items: stretch;
   gap: clamp(6px, 1.6vh, 16px); padding: clamp(32px, 5vh, 42px) 0 clamp(4px, 1vh, 10px); background: none; border: 0; border-radius: 0; box-shadow: none;
