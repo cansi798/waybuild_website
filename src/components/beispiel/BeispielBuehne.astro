@@ -1,9 +1,13 @@
 ---
-// Bühne des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026). Scroll-Mechanik wie die
-// Kundenreise-Bühne der Startseite (gemeinsamer Kern src/scripts/buehne-kern.ts): Rechner sticky, je Szene ein Scroll-Stück,
-// Fortschrittsleiste mit 13 diskreten Segmenten; Handy Karten, die einzeln hereingleiten; reduziert/ohne JS alles statisch.
+// Bühne des Beispiels „So kann es laufen“ als FILM (Jamil, Talk qh87y3sj #5683/#5709–#5715 + Änderung 08:57, 13.11.2026).
+// Ein Bildschirm ohne Scrollen: die Bühne füllt den sichtbaren Bereich (Handy wie Rechner), die Szenen laufen von selbst
+// nacheinander (je 2–4 s), unten die Steuerleiste (Zurück, Pause/Abspielen, Weiter, Segment je Szene zum Springen,
+// Branche ändern). Vor dem Start: Branche wählen + optional Firmenname (Personalisierung, components/beispiel/branchen.ts) –
+// der ganze Film läuft dann mit dem Betrieb des Besuchers. Ohne Auswahl: Standard (Maler) + Branchen-Wechsel am Ende.
+// Ohne JS: alle Szenen als Karten untereinander (Grundform, styles/beispiel.css). Reduzierte Bewegung: Film-Ansicht ohne
+// Autoplay, jede Szene im Endzustand, Weiter per Knopf/Pfeiltaste.
 // Je Szene: Mockup (szenen/SzeneNN.astro, aria-hidden) + Titel (h2) und Text aus config/beispiel.ts (der lesbare Inhalt).
-// Stil: styles/beispiel.css, Bewegung: scripts/beispiel.ts, Anleitung: docs/beispiel-szenen-anleitung.md.
+// Stil: styles/beispiel.css, Ablauf: scripts/beispiel.ts, Anleitung: docs/beispiel-szenen-anleitung.md.
 import Szene01 from './szenen/Szene01.astro';
 import Szene02 from './szenen/Szene02.astro';
 import Szene03 from './szenen/Szene03.astro';
@@ -17,7 +21,9 @@ import Szene10 from './szenen/Szene10.astro';
 import Szene11 from './szenen/Szene11.astro';
 import Szene12 from './szenen/Szene12.astro';
 import Szene13 from './szenen/Szene13.astro';
-import { BEISPIEL_SZENEN, BEISPIEL_SCHLUSS, BEISPIEL_ETIKETT } from '../../config/beispiel';
+import SzeneBranchen from './szenen/SzeneBranchen.astro';
+import { BRANCHEN, STANDARD, FIRMA_MAX } from './branchen';
+import { BEISPIEL_SZENEN, BEISPIEL_SCHLUSS, BEISPIEL_ETIKETT, BEISPIEL_START, BEISPIEL_BRANCHEN, BEISPIEL_STEUERUNG } from '../../config/beispiel';
 import { ANLIEGEN } from '../../config/startseite';
 import { href } from '../../lib/paths';
 import '../../styles/beispiel.css';
@@ -26,43 +32,121 @@ const KOMPONENTEN = [Szene01, Szene02, Szene03, Szene04, Szene05, Szene06, Szene
 const n = BEISPIEL_SZENEN.length;
 const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 const zwei = (z: number) => String(z).padStart(2, '0');
+const S = BEISPIEL_STEUERUNG;
+const ST = BEISPIEL_START;
+const BR = BEISPIEL_BRANCHEN;
 ---
 
-<div class="bsp" data-beispiel data-stuecke={n + 1}>
-  <div class="bsp-buehne">
+<div class="bsp" data-beispiel>
+  <div class="bsp-buehne" data-bsp-buehne>
     <div class="bsp-oben" aria-hidden="true">
-      <div class="bsp-leiste">
-        {BEISPIEL_SZENEN.map(() => <span class="bsp-segment"></span>)}
-      </div>
       <span class="bsp-etikett bsp-buehne__etikett">{BEISPIEL_ETIKETT}</span>
     </div>
     <div class="bsp-flaeche wrap">
       <ol class="bsp-schritte">
+        <!-- Start: Branche wählen (nur mit JS sichtbar, ohne JS bleibt die Geschichte des Malerbetriebs) -->
+        <li class="bsp-schritt bsp-start" data-bsp-schritt="start" id="start" hidden>
+          <div class="bsp-start__innen">
+            <p class="eyebrow bsp-start__kennzeile">{ST.kennzeile}</p>
+            <h2 class="bsp-start__titel">{ST.titel}</h2>
+            <p class="bsp-start__text">{ST.text}</p>
+            <form class="bsp-wahl" data-bsp-wahl novalidate>
+              <fieldset class="bsp-wahl__feld">
+                <legend class="bsp-wahl__legende">{ST.legende}</legend>
+                <div class="bsp-chips">
+                  {BRANCHEN.map((b) => (
+                    <label class="bsp-chip">
+                      <input type="radio" name="bsp-branche" value={b.id} checked={b.id === STANDARD.id} />
+                      <span>{b.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <label class="bsp-name">
+                <span class="bsp-name__titel">{ST.feld}</span>
+                <input class="bsp-name__eingabe" type="text" name="bsp-firma" maxlength={FIRMA_MAX} autocomplete="organization" spellcheck="false" placeholder={ST.platzhalter} />
+              </label>
+              <p class="bsp-start__knopf">
+                <button type="submit" class="btn btn--primary bsp-start__los" data-bsp-los>
+                  <span class="bsp-start__uhr" aria-hidden="true"></span>{ST.knopf}
+                </button>
+                <span class="bsp-start__auto" data-bsp-auto>{ST.auto}</span>
+              </p>
+              <p class="bsp-start__hinweis">{ST.hinweis}</p>
+            </form>
+          </div>
+        </li>
         {BEISPIEL_SZENEN.map((sz, i) => {
           const Komp = KOMPONENTEN[i];
           return (
-            <li class="bsp-schritt bsp-szene" data-bsp-schritt id={`szene-${sz.nr}`}>
+            <li class="bsp-schritt bsp-szene" data-bsp-schritt="szene" id={`szene-${sz.nr}`}>
               <div class="bsp-szene__bild">
                 {Komp && <Komp />}
                 <span class="bsp-etikett bsp-szene__etikett" aria-hidden="true">{BEISPIEL_ETIKETT}</span>
               </div>
               <div class="bsp-szene__text">
-                <p class="bsp-szene__zaehler" aria-hidden="true">{zwei(sz.nr)} <span>/ {n}</span></p>
+                <div class="bsp-szene__kopf">
+                  <p class="bsp-szene__zaehler" aria-hidden="true">{zwei(sz.nr)} <span>/ {n}</span></p>
+                  {sz.baustein && <p class="bsp-baustein"><span class="bsp-baustein__plus" aria-hidden="true">+</span><span class="sr-only">Baustein: </span>{sz.baustein}</p>}
+                </div>
                 <h2 class="bsp-szene__titel"><span class="sr-only">Szene {sz.nr} von {n}: </span>{sz.titel}</h2>
-                <p class="bsp-szene__satz">{sz.text}</p>
+                <p class="bsp-szene__satz" data-vorlage={sz.vorlage}>{sz.text}</p>
               </div>
             </li>
           );
         })}
-        <li class="bsp-schritt bsp-schluss" data-bsp-schritt id="schluss">
+        <!-- Branchen-Wechsel: „… oder bei Ihnen?“ (im Film nur ohne eigene Auswahl) -->
+        <li class="bsp-schritt bsp-szene bsp-branchen" data-bsp-schritt="branchen" id="branchen">
+          <div class="bsp-szene__bild">
+            <SzeneBranchen />
+            <span class="bsp-etikett bsp-szene__etikett" aria-hidden="true">{BEISPIEL_ETIKETT}</span>
+          </div>
+          <div class="bsp-szene__text">
+            <h2 class="bsp-szene__titel">{BR.titel}</h2>
+            <p class="bsp-szene__satz">{BR.text}</p>
+            <p class="bsp-branchen__knopf" hidden data-bsp-nurjs><button type="button" class="btn btn--ghost btn--sm" data-bsp="branche">{BR.knopf}</button></p>
+          </div>
+        </li>
+        <li class="bsp-schritt bsp-schluss" data-bsp-schritt="schluss" id="schluss">
           <div class="bsp-schluss__innen">
-            <h2 class="bsp-schluss__titel">{BEISPIEL_SCHLUSS.titel} <span class="bsp-schluss__unter">{BEISPIEL_SCHLUSS.unter}</span></h2>
-            <p class="bsp-schluss__knopf"><a class="btn btn--primary btn--lg" href={erstberatung}>{BEISPIEL_SCHLUSS.knopf}</a></p>
+            <h2 class="bsp-schluss__titel"><span data-bsp-schluss-titel data-vorlage-firma={BEISPIEL_SCHLUSS.titelFirma}>{BEISPIEL_SCHLUSS.titel}</span> <span class="bsp-schluss__unter">{BEISPIEL_SCHLUSS.unter}</span></h2>
+            <p class="bsp-schluss__knopf">
+              <a class="btn btn--primary btn--lg" href={erstberatung}>{BEISPIEL_SCHLUSS.knopf}</a>
+            </p>
+            <p class="bsp-schluss__mehr" hidden data-bsp-nurjs>
+              <button type="button" class="btn btn--ghost" data-bsp="nochmal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" /></svg>{BEISPIEL_SCHLUSS.nochmal}</button>
+              <button type="button" class="btn btn--ghost" data-bsp="branche">{BEISPIEL_SCHLUSS.andere}</button>
+            </p>
             <p class="bsp-schluss__etikett"><span class="bsp-etikett">{BEISPIEL_ETIKETT}</span></p>
           </div>
         </li>
       </ol>
     </div>
+
+    <!-- Steuerleiste (nur mit JS) -->
+    <div class="bsp-steuerung" data-bsp-steuerung hidden>
+      <button type="button" class="bsp-taste" data-bsp="zurueck" aria-label={S.zurueck}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button type="button" class="bsp-taste bsp-taste--haupt" data-bsp="pause" aria-label={S.pause} data-text-pause={S.pause} data-text-weiter={S.weiter}>
+        <svg class="bsp-taste__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13M15.5 5.5v13" /></svg>
+        <svg class="bsp-taste__spielen" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+      </button>
+      <button type="button" class="bsp-taste" data-bsp="vor" aria-label={S.vor}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+      <div class="bsp-leiste" role="group" aria-label={S.szenen}>
+        {BEISPIEL_SZENEN.map((sz) => (
+          <button type="button" class="bsp-segment" data-bsp-zu={sz.nr} aria-label={`${S.zuSzene} ${sz.nr}: ${sz.titel}`}><i></i></button>
+        ))}
+      </div>
+      <button type="button" class="bsp-taste bsp-taste--branche" data-bsp="branche" aria-label={S.branche}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" /><circle cx="16" cy="7" r="2" /><circle cx="10" cy="17" r="2" /></svg>
+      </button>
+    </div>
+    <p class="sr-only" aria-live="polite" data-bsp-ansage></p>
+    <p class="sr-only" data-bsp-hilfe hidden>{S.hilfe}</p>
   </div>
 </div>
 

@@ -11,12 +11,14 @@
 //   3  Handy von Frau Weber rückt nach links, rechts erscheint das Handy der Nachbarin mit der Suche aus Szene 1 (schimmert),
 //      kurz danach das Kreis-Zeichen „Der Kreis beginnt von vorn“ dazwischen (dreht sich langsam, solange gezeigt)
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
 import Szene01 from './Szene01.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
 const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
 const stern = '<path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z" />';
@@ -31,7 +33,7 @@ const sterne = [1, 2, 3, 4, 5];
         <div class="bm-app sz13-app">
           <p class="sz13-zurueck"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>Posteingang</p>
           <div class="sz13-mail sz13-ein sz13-ein--1">
-            <p class="sz13-absender"><span class="sz13-avatar">M</span><span class="sz13-von"><b>Malerbetrieb Muster</b><span class="bm-klein">an mich · 17:30</span></span></p>
+            <p class="sz13-absender"><span class="sz13-avatar" data-p="kuerzel">{W.kuerzel}</span><span class="sz13-von"><b data-p="firma">{W.firma}</b><span class="bm-klein">an mich · 17:30</span></span></p>
             <p class="sz13-betreff">Wie zufrieden waren Sie?</p>
             <p class="sz13-anrede">Liebe Frau Weber, danke für Ihren Auftrag!</p>
             <span class="bm-balken bm-balken--lang"></span>
@@ -47,7 +49,7 @@ const sterne = [1, 2, 3, 4, 5];
                 </span>
               ))}
             </span>
-            <p class="sz13-zitat">„Sauber, schnell und super freundlich. Gerne wieder!“</p>
+            <p class="sz13-zitat" data-p="bewertung">{W.bewertung}</p>
             <span class="bm-chip bm-chip--ok sz13-danke"><span class="bm-ok"><svg viewBox="0 0 24 24" set:html={haken} /></span>Danke für Ihre Bewertung!</span>
           </div>
           <span class="bm-knopf bm-knopf--hell sz13-teilen"><svg viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="18.5" r="2.5" /><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1" /></svg>Weiterempfehlen</span>
@@ -132,13 +134,13 @@ const sterne = [1, 2, 3, 4, 5];
   .sz13-ein--1 { transition-delay: var(--bsp-auftritt); }
   .sz13-ein--2 { transition-delay: calc(var(--bsp-auftritt) + 2 * var(--bsp-versatz)); }
   .sz13-stern-voll { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz13-stern--2 .sz13-stern-voll { transition-delay: 0.18s; }
-  .sz13-stern--3 .sz13-stern-voll { transition-delay: 0.36s; }
-  .sz13-stern--4 .sz13-stern-voll { transition-delay: 0.54s; }
-  .sz13-stern--5 .sz13-stern-voll { transition-delay: 0.72s; }
-  .sz13-zitat, .sz13-danke, .sz13-teilen { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.85s, transform var(--bsp-dauer) var(--bsp-ease) 0.85s; }
+  .sz13-stern--2 .sz13-stern-voll { transition-delay: calc(0.18s * var(--bsp-t, 1)); }
+  .sz13-stern--3 .sz13-stern-voll { transition-delay: calc(0.36s * var(--bsp-t, 1)); }
+  .sz13-stern--4 .sz13-stern-voll { transition-delay: calc(0.54s * var(--bsp-t, 1)); }
+  .sz13-stern--5 .sz13-stern-voll { transition-delay: calc(0.72s * var(--bsp-t, 1)); }
+  .sz13-zitat, .sz13-danke, .sz13-teilen { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.85s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease) calc(0.85s * var(--bsp-t, 1)); }
   .sz13-spalte--weber { transition: transform var(--bsp-dauer-lang) var(--bsp-ease); }
-  .sz13-spalte--nachbarin { transition: opacity var(--bsp-dauer-lang) var(--bsp-ease) 0.2s, transform var(--bsp-dauer-lang) var(--bsp-ease) 0.2s; }
+  .sz13-spalte--nachbarin { transition: opacity var(--bsp-dauer-lang) var(--bsp-ease) calc(0.2s * var(--bsp-t, 1)), transform var(--bsp-dauer-lang) var(--bsp-ease) calc(0.2s * var(--bsp-t, 1)); }
   .sz13-kreis { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
 
   /* ── Vorzustände (nur mit Engine) ── */
@@ -153,10 +155,10 @@ const sterne = [1, 2, 3, 4, 5];
   .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-spalte--weber { transform: translateX(var(--sz13-v)); }
   .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-spalte--nachbarin { opacity: 0; transform: translateX(8cqw) scale(0.94); }
   /* ab Phase 3: die Suche aus Szene 1 schimmert, solange die Szene gezeigt wird */
-  .sz13[data-aktiv][data-erreicht~="3"] .sz13-glanz { animation: bm-schimmern 2.2s ease-in-out 0.8s infinite both; }
+  .sz13[data-aktiv][data-erreicht~="3"] .sz13-glanz { animation: bm-schimmern calc(2.2s * var(--bsp-t, 1)) ease-in-out calc(0.8s * var(--bsp-t, 1)) infinite both; }
   /* vor Phase 3: noch kein Kreis-Zeichen; in Phase 3 erscheint es nach der Nachbarin */
   .sz13[data-phase]:not([data-erreicht~="3"]) .sz13-kreis { opacity: 0; transform: scale(0.6); }
-  .sz13[data-erreicht~="3"] .sz13-kreis { transition-delay: 0.9s; }
-  .sz13[data-aktiv][data-erreicht~="3"] .sz13-kreis-zeichen svg { animation: sz13-drehen 6s linear 1.5s infinite; }
+  .sz13[data-erreicht~="3"] .sz13-kreis { transition-delay: calc(0.9s * var(--bsp-t, 1)); }
+  .sz13[data-aktiv][data-erreicht~="3"] .sz13-kreis-zeichen svg { animation: sz13-drehen calc(6s * var(--bsp-t, 1)) linear calc(1.5s * var(--bsp-t, 1)) infinite; }
   @keyframes sz13-drehen { to { transform: rotate(360deg); } }
 </style>

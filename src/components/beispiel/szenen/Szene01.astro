@@ -8,20 +8,25 @@
 //   0  Ausgang: leeres Suchfeld mit Platzhalter „Suchen“ und blinkender Schreibmarke, sonst nichts
 //   1  „Maler in der Nähe“ wird Buchstabe für Buchstabe getippt, danach tippt der Finger auf die Lupe
 //   2  Filter, Karte mit Stecknadeln und Treffer gleiten nacheinander herein
-//   3  Hervorhebung: „Malerbetrieb Muster“ bekommt den Türkis-Rahmen, die anderen Treffer treten zurück, Finger tippt darauf
+//   3  Hervorhebung: „Malerbetrieb Muster“ bekommt den Türkis-Rahmen, die anderen Treffer treten zurück, der Finger kommt
+//      herein und tippt GENAU auf den Knopf „Website“ (Jamil #5683: lag vorher daneben). Die Zielposition misst
+//      scripts/beispiel.ts am Element [data-ziel] (getBoundingClientRect relativ zur Szene) und setzt --ziel-x/--ziel-y.
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
+import { STANDARD, werte } from '../branchen';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+// Texte der Standardbranche; data-p = Schlüssel aus branchen.ts → werte() (Personalisierung im Browser, nur textContent)
+const W = werte(STANDARD);
 
-const SUCHE = 'Maler in der Nähe';
+const SUCHE = W.suche;
 // je Zeichen ein span (Tipp-Effekt nur über opacity); Leerzeichen als geschütztes Leerzeichen, damit es Breite behält
 const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
 ---
 
-<SzeneRahmen nr={1} phasen={3} takt={1700} format="hoch" variante={variante}>
+<SzeneRahmen nr={1} phasen={3} takt={1700} dauer={3600} format="hoch" variante={variante}>
   <Handy>
     <div class="bm-app sz01-app">
       <!-- Suchfeld -->
@@ -30,7 +35,7 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
         <span class="sz01-feld">
           <span class="sz01-platz">Suchen</span>
           <span class="sz01-marke"></span>
-          <span class="sz01-text">{zeichen.map((z) => <span class="sz01-z">{z}</span>)}</span>
+          <span class="sz01-text" data-p-zeichen="suche">{zeichen.map((z) => <span class="sz01-z">{z}</span>)}</span>
         </span>
         <span class="sz01-los"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" /><path d="M15.5 15.5l4 4" /></svg></span>
         <span class="bm-tipp sz01-tipp sz01-tipp--suche"></span>
@@ -52,19 +57,18 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
         </svg>
         <span class="sz01-pin sz01-pin--2"><i></i></span>
         <span class="sz01-pin sz01-pin--3"><i></i></span>
-        <span class="sz01-pin sz01-pin--1"><i></i><b>Malerbetrieb Muster</b></span>
+        <span class="sz01-pin sz01-pin--1"><i></i><b data-p="firma">{W.firma}</b></span>
       </div>
 
       <!-- Treffer -->
       <div class="sz01-liste">
         <div class="bm-karte sz01-treffer sz01-treffer--top sz01-erscheint sz01-erscheint--3">
           <span class="sz01-ring"></span>
-          <p class="sz01-name">Malerbetrieb Muster</p>
+          <p class="sz01-name" data-p="firma">{W.firma}</p>
           <p class="sz01-wertung"><strong>4,9</strong> <span class="bm-sterne">★★★★★</span> <span class="sz01-anzahl">(128)</span></p>
-          <p class="bm-klein">Malerbetrieb · Musterstadt · 1,2 km</p>
+          <p class="bm-klein sz01-art"><span data-p="art">{W.art}</span> · Musterstadt · 1,2 km</p>
           <p class="sz01-offen"><span class="bm-chip bm-chip--ok">Heute geöffnet</span> <span class="bm-klein">bis 18 Uhr</span></p>
-          <p class="sz01-aktionen"><span class="bm-knopf bm-knopf--hell sz01-mini-knopf">Anrufen</span><span class="bm-knopf sz01-mini-knopf">Website</span></p>
-          <span class="bm-tipp sz01-tipp sz01-tipp--treffer"></span>
+          <p class="sz01-aktionen"><span class="bm-knopf bm-knopf--hell sz01-mini-knopf">Anrufen</span><span class="bm-knopf sz01-mini-knopf sz01-website">Website</span></p>
         </div>
         <div class="bm-karte sz01-treffer sz01-treffer--rest sz01-erscheint sz01-erscheint--4">
           <span class="bm-balken bm-balken--mittel"></span><span class="sz01-sterne-leer">★★★★</span><span class="bm-balken bm-balken--kurz"></span>
@@ -78,6 +82,11 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
       </div>
     </div>
   </Handy>
+  <!-- Finger (außerhalb des Bildschirms, damit er von unten hereinkommen kann); Spitze = Punkt (--ziel-x, --ziel-y) -->
+  <span class="sz01-zeiger" data-ziel=".sz01-website">
+    <span class="sz01-ring-tipp"></span>
+    <svg class="sz01-finger" viewBox="0 0 32 40"><path d="M11 3.5a3 3 0 0 1 6 0V16l7.5 1.6a3.2 3.2 0 0 1 2.5 3.6L25.6 31a7 7 0 0 1-6.9 6H14a7 7 0 0 1-5.6-2.8L3.2 27.3a2.8 2.8 0 0 1 4.1-3.8L11 26z" /></svg>
+  </span>
 </SzeneRahmen>
 
 <style is:global>
@@ -111,8 +120,8 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01-pin--1 i { width: calc(22 * var(--px)); height: calc(22 * var(--px)); background: var(--bsp-tinte); }
   .sz01-pin--1 b { padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-weiss); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700;
     box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgb(0 79 76 / 20%); }
-  .sz01-pin--2 { left: 14%; top: 58%; transition-delay: 0.1s; }
-  .sz01-pin--3 { left: 78%; top: 62%; transition-delay: 0.2s; }
+  .sz01-pin--2 { left: 14%; top: 58%; transition-delay: calc(0.1s * var(--bsp-t, 1)); }
+  .sz01-pin--3 { left: 78%; top: 62%; transition-delay: calc(0.2s * var(--bsp-t, 1)); }
 
   /* Treffer */
   .sz01-liste { display: flex; flex-direction: column; gap: var(--bsp-a2); }
@@ -126,12 +135,11 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01-mini-knopf { min-height: calc(28 * var(--px)); padding: 0 var(--bsp-a3); font-size: var(--bsp-schrift-s); }
   .sz01-ring { position: absolute; inset: calc(-1 * var(--px)); border-radius: inherit; pointer-events: none; border: calc(2 * var(--px)) solid var(--bsp-tuerkis);
     box-shadow: 0 0 0 calc(4 * var(--px)) rgb(0 166 161 / 16%), 0 calc(14 * var(--px)) calc(26 * var(--px)) calc(-14 * var(--px)) rgb(0 79 76 / 45%); }
-  .sz01-tipp--treffer { left: 72%; top: 40%; }
   .sz01-treffer--rest { display: flex; flex-direction: column; gap: calc(6 * var(--px)); opacity: 0.5; }
   .sz01-sterne-leer { font-size: var(--bsp-schrift-xs); color: #c9d2d0; letter-spacing: calc(1 * var(--px)); line-height: 1; }
 
   /* Übergänge (gelten in beide Richtungen) */
-  .sz01-z, .sz01-platz { transition: opacity 0.06s linear; }
+  .sz01-z, .sz01-platz { transition: opacity calc(0.06s * var(--bsp-t, 1)) linear; }
   .sz01-erscheint { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
   .sz01-erscheint--2 { transition-delay: calc(1 * var(--bsp-versatz)); }
   .sz01-erscheint--3 { transition-delay: calc(2 * var(--bsp-versatz)); }
@@ -146,27 +154,11 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   /* vor Phase 1: Suchfeld leer, Platzhalter + blinkende Schreibmarke */
   .sz01[data-phase]:not([data-erreicht~="1"]) .sz01-z { opacity: 0; }
   .sz01[data-phase]:not([data-erreicht~="1"]) .sz01-platz { opacity: 1; }
-  .sz01[data-aktiv]:not([data-erreicht~="1"]) .sz01-marke { animation: bm-blinken 1s steps(1) infinite; }
-  /* Tippen: Zeichen nacheinander (Abstand 55 ms, nach dem Auftritt der Szene) */
-  .sz01[data-erreicht~="1"] .sz01-z { transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(2) { transition-delay: calc(var(--bsp-auftritt) + 0.155s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(3) { transition-delay: calc(var(--bsp-auftritt) + 0.21s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(4) { transition-delay: calc(var(--bsp-auftritt) + 0.265s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(5) { transition-delay: calc(var(--bsp-auftritt) + 0.32s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(6) { transition-delay: calc(var(--bsp-auftritt) + 0.375s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(7) { transition-delay: calc(var(--bsp-auftritt) + 0.43s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(8) { transition-delay: calc(var(--bsp-auftritt) + 0.485s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(9) { transition-delay: calc(var(--bsp-auftritt) + 0.54s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(10) { transition-delay: calc(var(--bsp-auftritt) + 0.595s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(11) { transition-delay: calc(var(--bsp-auftritt) + 0.65s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(12) { transition-delay: calc(var(--bsp-auftritt) + 0.705s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(13) { transition-delay: calc(var(--bsp-auftritt) + 0.76s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(14) { transition-delay: calc(var(--bsp-auftritt) + 0.815s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(15) { transition-delay: calc(var(--bsp-auftritt) + 0.87s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(16) { transition-delay: calc(var(--bsp-auftritt) + 0.925s); }
-  .sz01[data-erreicht~="1"] .sz01-z:nth-child(17) { transition-delay: calc(var(--bsp-auftritt) + 0.98s); }
+  .sz01[data-aktiv]:not([data-erreicht~="1"]) .sz01-marke { animation: bm-blinken calc(1s * var(--bsp-t, 1)) steps(1) infinite; }
+  /* Tippen: Zeichen nacheinander (Index --i und Abstand --sz01-schritt setzt scripts/beispiel.ts je nach Länge der Suche) */
+  .sz01[data-erreicht~="1"] .sz01-z { transition-delay: calc(var(--bsp-auftritt) + 0.1s * var(--bsp-t, 1) + var(--i, 0) * var(--sz01-schritt, calc(0.055s * var(--bsp-t, 1)))); }
   /* nach dem Tippen: Finger tippt auf die Lupe (nur solange Phase 1 steht) */
-  .sz01[data-phase="1"] .sz01-tipp--suche { animation: bm-tippen 0.75s var(--bsp-ease) calc(var(--bsp-auftritt) + 1.15s) both; }
+  .sz01[data-phase="1"] .sz01-tipp--suche { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(1s * var(--bsp-t, 1))) both; }
   /* vor Phase 2: Filter, Karte, Treffer noch nicht da */
   .sz01[data-phase]:not([data-erreicht~="2"]) .sz01-erscheint { opacity: 0; transform: translateY(calc(16 * var(--px))); }
   .sz01[data-phase]:not([data-erreicht~="2"]) .sz01-pin { opacity: 0; transform: translateY(calc(-18 * var(--px))); }
@@ -174,6 +166,18 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01[data-phase]:not([data-erreicht~="3"]) .sz01-ring { opacity: 0; }
   .sz01[data-erreicht~="2"]:not([data-erreicht~="3"]) .sz01-treffer--top { transform: none; }
   .sz01[data-erreicht~="2"]:not([data-erreicht~="3"]) .sz01-treffer--rest { opacity: 1; }
-  /* Phase 3: Finger tippt auf den Treffer */
-  .sz01[data-phase="3"] .sz01-tipp--treffer { animation: bm-tippen 0.8s var(--bsp-ease) 0.45s both; }
+  /* Finger: nur mit Engine in Phase 3 (Grundform, mini, reduziert: unsichtbar). Breite ≈ 13 % der Handybreite. */
+  .sz01-zeiger { position: absolute; z-index: 6; left: var(--ziel-x, 74%); top: var(--ziel-y, 64%); width: 0; height: 0; opacity: 0; pointer-events: none;
+    --sz01-fb: calc(min(100cqh * 0.4615, 100cqw) * 0.15); }
+  .sz01-finger { position: absolute; left: calc(var(--sz01-fb) * -0.4375); top: calc(var(--sz01-fb) * -0.02); width: var(--sz01-fb); height: auto; overflow: visible;
+    fill: var(--bsp-weiss); stroke: var(--bsp-nacht); stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgb(0 79 76 / 30%)); }
+  .sz01-ring-tipp { position: absolute; left: calc(var(--sz01-fb) * -0.6); top: calc(var(--sz01-fb) * -0.6); width: calc(var(--sz01-fb) * 1.2); height: calc(var(--sz01-fb) * 1.2);
+    border-radius: 50%; background: rgb(0 128 123 / 28%); border: 2px solid rgb(0 128 123 / 55%); opacity: 0; }
+  .sz01[data-aktiv][data-phase="3"] .sz01-zeiger { animation: sz01-hinein calc(0.55s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.2s * var(--bsp-t, 1)) both; }
+  .sz01[data-aktiv][data-phase="3"] .sz01-finger { animation: sz01-druecken calc(0.3s * var(--bsp-t, 1)) ease-in-out calc(0.8s * var(--bsp-t, 1)) both; }
+  .sz01[data-aktiv][data-phase="3"] .sz01-ring-tipp { animation: bm-tippen calc(0.7s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.85s * var(--bsp-t, 1)) both; }
+  .sz01[data-aktiv][data-phase="3"] .sz01-website { animation: sz01-knopf calc(0.3s * var(--bsp-t, 1)) ease-in-out calc(0.85s * var(--bsp-t, 1)) both; }
+  @keyframes sz01-hinein { from { opacity: 0; transform: translate(calc(var(--sz01-fb) * 0.9), calc(var(--sz01-fb) * 1.6)); } to { opacity: 1; transform: none; } }
+  @keyframes sz01-druecken { 0%, 100% { transform: none; } 50% { transform: scale(0.9); } }
+  @keyframes sz01-knopf { 0%, 100% { transform: none; } 50% { transform: scale(0.94); } }
 </style>

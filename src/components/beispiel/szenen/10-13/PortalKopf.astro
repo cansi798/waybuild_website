@@ -3,18 +3,20 @@
 // 13.11.2026). Erfundene Marke „Malerbetrieb Muster“ (gezeichnetes Rollen-Zeichen, kein echtes Logo) + „Kundenportal“,
 // rechts Frau Weber (Kürzel FW). Gleiche Kopfzeile in Szene 10 (Laptop), 11 (Handy) und 12 (Laptop): man erkennt das Portal
 // wieder. Nur innerhalb eines Gerätebildschirms benutzen (Maße in var(--px)). Klassen-Präfix szpk- (nur diese Datei).
+import { STANDARD, werte } from '../../branchen';
 interface Props {
   /** schmale Fassung fürs Handy: ohne Namen „Frau Weber“ neben dem Kürzel */
   kompakt?: boolean;
 }
 const { kompakt = false } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 ---
 
 <div class:list={['szpk', { 'szpk--kompakt': kompakt }]}>
   <span class="szpk-marke">
     <svg viewBox="0 0 24 24"><rect x="3" y="4" width="13" height="6" rx="2" /><path d="M16 7h3.5v5.5H11v3.5" /><rect x="9.4" y="16" width="3.2" height="5.5" rx="1.2" /></svg>
   </span>
-  <span class="szpk-name"><b>Malerbetrieb Muster</b><span>Kundenportal</span></span>
+  <span class="szpk-name"><b data-p="firma">{W.firma}</b><span>Kundenportal</span></span>
   <span class="szpk-person">{!kompakt && <span class="szpk-wer">Frau Weber</span>}<span class="szpk-kuerzel">FW</span></span>
 </div>
 

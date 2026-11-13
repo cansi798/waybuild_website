@@ -9,12 +9,14 @@
 //   2  Abends: Uhr springt auf 18:40 (Mond), zwei weitere Einträge, Balken wächst auf 60 %
 //   3  „Fotos vom Fortschritt“ erscheinen, drei Fotos nacheinander, Hinweis „Neu · 18:40“
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
 import PortalKopf from './10-13/PortalKopf.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
 const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
 ---
@@ -33,8 +35,8 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
     <div class="bm-app sz11-app">
       <!-- Stand -->
       <div class="bm-karte bm-karte--marke sz11-stand sz11-ein sz11-ein--1">
-        <p class="sz11-zeile"><span class="bm-chip sz11-chip"><i class="sz11-puls"></i>In Arbeit</span><span class="bm-klein">Tag 1 von 2</span></p>
-        <p class="sz11-titel">Wohnzimmer streichen</p>
+        <p class="sz11-zeile"><span class="bm-chip sz11-chip"><i class="sz11-puls"></i>In Arbeit</span><span class="bm-klein" data-p="tage">{W.tage}</span></p>
+        <p class="sz11-titel" data-p="auftrag">{W.auftrag}</p>
         <span class="sz11-balken"><i class="sz11-fuell"></i></span>
         <p class="sz11-zeile"><span class="bm-klein">Fortschritt</span>
           <span class="sz11-stapel"><b class="sz11-zahl-frueh">15 %</b><b class="sz11-zahl-abend">60 %</b></span></p>
@@ -44,9 +46,9 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
       <div class="bm-karte sz11-heute sz11-ein sz11-ein--2">
         <p class="sz11-kopf">Heute</p>
         <ol class="sz11-liste">
-          <li class="sz11-eintrag"><span class="sz11-uhr">8:00</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Team ist da, alles abgedeckt</span></li>
-          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--2"><span class="sz11-uhr">11:30</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Risse gespachtelt</span></li>
-          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--3"><span class="sz11-uhr">17:30</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was">Decke fertig, Wände begonnen</span></li>
+          <li class="sz11-eintrag"><span class="sz11-uhr" data-p="aZeit0">{W.aZeit0}</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was" data-p="aText0">{W.aText0}</span></li>
+          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--2"><span class="sz11-uhr" data-p="aZeit1">{W.aZeit1}</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was" data-p="aText1">{W.aText1}</span></li>
+          <li class="sz11-eintrag sz11-eintrag--spaeter sz11-eintrag--3"><span class="sz11-uhr" data-p="aZeit2">{W.aZeit2}</span><span class="sz11-pkt"><svg viewBox="0 0 24 24" set:html={haken} /></span><span class="sz11-was" data-p="aText2">{W.aText2}</span></li>
         </ol>
       </div>
 
@@ -139,14 +141,14 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz11-ein--1 { transition-delay: var(--bsp-auftritt); }
   .sz11-ein--2 { transition-delay: calc(var(--bsp-auftritt) + var(--bsp-versatz)); }
   .sz11-zeit > *, .sz11-stapel > * { transition: opacity var(--bsp-dauer-kurz) ease; }
-  .sz11-fuell { transition: transform var(--bsp-dauer-lang) var(--bsp-ease) 0.5s; }
+  .sz11-fuell { transition: transform var(--bsp-dauer-lang) var(--bsp-ease) calc(0.5s * var(--bsp-t, 1)); }
   .sz11-eintrag--spaeter { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
-  .sz11-eintrag--2 { transition-delay: 0.35s; }
-  .sz11-eintrag--3 { transition-delay: calc(0.35s + 2 * var(--bsp-versatz)); }
+  .sz11-eintrag--2 { transition-delay: calc(0.35s * var(--bsp-t, 1)); }
+  .sz11-eintrag--3 { transition-delay: calc(calc(0.35s * var(--bsp-t, 1)) + 2 * var(--bsp-versatz)); }
   .sz11-foto { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz11-foto--1 { transition-delay: 0.3s; }
-  .sz11-foto--2 { transition-delay: calc(0.3s + 2 * var(--bsp-versatz)); }
-  .sz11-foto--3 { transition-delay: calc(0.3s + 4 * var(--bsp-versatz)); }
+  .sz11-foto--1 { transition-delay: calc(0.3s * var(--bsp-t, 1)); }
+  .sz11-foto--2 { transition-delay: calc(calc(0.3s * var(--bsp-t, 1)) + 2 * var(--bsp-versatz)); }
+  .sz11-foto--3 { transition-delay: calc(calc(0.3s * var(--bsp-t, 1)) + 4 * var(--bsp-versatz)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: nur die Kopfzeile; Balken leer */
@@ -160,9 +162,9 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-zahl-abend { opacity: 0; }
   .sz11[data-phase]:not([data-erreicht~="2"]) .sz11-eintrag--spaeter { opacity: 0; transform: translateX(calc(-10 * var(--px))); }
   /* Status-Punkt pulsiert, solange die Szene gezeigt wird */
-  .sz11[data-aktiv][data-erreicht~="1"] .sz11-puls { animation: bm-schimmern 1.4s ease-in-out infinite; }
+  .sz11[data-aktiv][data-erreicht~="1"] .sz11-puls { animation: bm-schimmern calc(1.4s * var(--bsp-t, 1)) ease-in-out infinite; }
   /* vor Phase 3: noch keine Fotos */
   .sz11[data-phase]:not([data-erreicht~="3"]) .sz11-fotos { opacity: 0; transform: translateY(calc(16 * var(--px))); }
   .sz11[data-phase]:not([data-erreicht~="3"]) .sz11-foto { opacity: 0; transform: scale(0.9); }
-  .sz11[data-aktiv][data-erreicht~="3"] .sz11-neu { animation: bm-puls 1.6s var(--bsp-ease) 1.2s 2 both; }
+  .sz11[data-aktiv][data-erreicht~="3"] .sz11-neu { animation: bm-puls calc(1.6s * var(--bsp-t, 1)) var(--bsp-ease) calc(1.2s * var(--bsp-t, 1)) 2 both; }
 </style>

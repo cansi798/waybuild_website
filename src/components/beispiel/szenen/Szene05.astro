@@ -10,12 +10,14 @@
 //   2  Laptop: Frau Weber gleitet oben in die Liste (Zeile leuchtet auf, die anderen rücken nach unten), Zähler „1“ im Menü
 //   3  Laptop: Hinweis „Besichtigung im Kalender eingetragen“ erscheint unten rechts
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
 import Laptop from '../geraete/Laptop.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
 const MENUE = ['Übersicht', 'Interessenten', 'Angebote', 'Aufträge', 'Rechnungen', 'Kalender'];
 const ALTE = [
@@ -34,7 +36,7 @@ const ALTE = [
       <Laptop class="sz05-laptop">
         <div class="sz05-app">
           <div class="sz05-seite">
-            <p class="sz05-logo"><span class="sz05-marke"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="13" height="6" rx="2" /><path d="M17 7h2.5v5H11v3" /><rect x="9.5" y="15" width="3" height="6" rx="1" /></svg></span>Muster</p>
+            <p class="sz05-logo"><span class="sz05-marke"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="13" height="6" rx="2" /><path d="M17 7h2.5v5H11v3" /><rect x="9.5" y="15" width="3" height="6" rx="1" /></svg></span><span class="sz05-logo-name" data-p="firma">{W.firma}</span></p>
             {MENUE.map((m, i) => (
               <p class:list={['sz05-punkt', { 'sz05-punkt--an': i === 1 }]}>
                 <span class="sz05-symbol"></span>{m}
@@ -47,7 +49,7 @@ const ALTE = [
             <div class="sz05-oben">
               <p class="sz05-titel">Interessenten</p>
               <span class="sz05-suche"><span class="bm-balken"></span></span>
-              <span class="sz05-ich">MM</span>
+              <span class="sz05-ich" data-p="kuerzel2">{W.kuerzel2}</span>
             </div>
             <p class="sz05-filter"><span class="bm-chip">Alle</span><span class="bm-chip sz05-chip-leer">Neu</span><span class="bm-chip sz05-chip-leer">Termin vereinbart</span></p>
 
@@ -57,7 +59,7 @@ const ALTE = [
                 <p class="sz05-zeile sz05-neu">
                   <span class="sz05-leuchten"></span>
                   <span class="sz05-wer"><span class="sz05-kreis">FW</span><span class="sz05-wer-text"><strong>Frau Weber</strong><small>Musterstadt</small></span></span>
-                  <span>Wohnzimmer · 25 m²</span>
+                  <span data-p="anliegen">{W.anliegen}</span>
                   <span class="sz05-termin">Do 19.11. · 10:00</span>
                   <span><span class="bm-chip sz05-chip-neu">Neu</span></span>
                 </p>
@@ -72,7 +74,7 @@ const ALTE = [
               </div>
             </div>
 
-            <p class="sz05-hinweis"><span class="bm-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Besichtigung im Kalender eingetragen: Do 19.11., 10:00</p>
+            <p class="sz05-hinweis"><span class="bm-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span><span data-p="terminKalender">{W.terminKalender}</span></p>
           </div>
         </div>
       </Laptop>
@@ -87,7 +89,7 @@ const ALTE = [
             <span class="sz05-app-symbol"><svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14" rx="2.5" /><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" /></svg></span>
             <span class="sz05-mit-text">
               <span class="sz05-mit-kopf"><span>Betriebs-App</span><span>jetzt</span></span>
-              <strong>Neuer Besichtigungstermin</strong>
+              <strong data-p="terminNeu">{W.terminNeu}</strong>
               <span>Frau Weber · Do 19.11., 10:00 Uhr</span>
             </span>
           </div>
@@ -205,11 +207,11 @@ const ALTE = [
   @keyframes sz05-wellen { 0%, 100% { opacity: 0; transform: scale(0.8); } 20%, 70% { opacity: 1; transform: scale(1); } }
 
   /* Übergänge (in beide Richtungen) */
-  .sz05-frueher { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.2s); }
-  .sz05-mitteilung { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.2s), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(var(--bsp-auftritt) + 0.2s); }
-  .sz05-neu { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.65s, transform var(--bsp-dauer) var(--bsp-ease) 0.65s; }
-  .sz05-alt { transition: transform 0.7s var(--bsp-ease) var(--bsp-auftritt); }
-  .sz05-zaehler { transition: opacity var(--bsp-dauer-kurz) ease 1s, transform var(--bsp-dauer) var(--bsp-ease-feder) 1s; }
+  .sz05-frueher { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.2s * var(--bsp-t, 1))); }
+  .sz05-mitteilung { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.2s * var(--bsp-t, 1))), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(var(--bsp-auftritt) + calc(0.2s * var(--bsp-t, 1))); }
+  .sz05-neu { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.65s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease) calc(0.65s * var(--bsp-t, 1)); }
+  .sz05-alt { transition: transform calc(0.7s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt); }
+  .sz05-zaehler { transition: opacity var(--bsp-dauer-kurz) ease calc(1s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(1s * var(--bsp-t, 1)); }
   .sz05-hinweis { transition: opacity var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt), transform var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt); }
 
   /* ── Vorzustände (nur mit Engine) ── */
@@ -217,14 +219,14 @@ const ALTE = [
   .sz05[data-phase]:not([data-erreicht~="1"]) .sz05-mitteilung { opacity: 0; transform: translateY(calc(-26 * var(--px))) scale(0.94); }
   .sz05[data-phase]:not([data-erreicht~="1"]) .sz05-frueher { transform: translateY(calc(-74 * var(--px))); }
   /* Phase 1: Handy vibriert, Bögen zittern */
-  .sz05[data-phase="1"] .sz05-handy { animation: bm-vibrieren 0.36s ease-in-out calc(var(--bsp-auftritt) + 0.1s) 3; }
-  .sz05[data-phase="1"] .sz05-welle { animation: sz05-wellen 1.1s var(--bsp-ease) calc(var(--bsp-auftritt) + 0.1s) both; }
+  .sz05[data-phase="1"] .sz05-handy { animation: bm-vibrieren calc(0.36s * var(--bsp-t, 1)) ease-in-out calc(var(--bsp-auftritt) + calc(0.1s * var(--bsp-t, 1))) 3; }
+  .sz05[data-phase="1"] .sz05-welle { animation: sz05-wellen calc(1.1s * var(--bsp-t, 1)) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.1s * var(--bsp-t, 1))) both; }
   /* vor Phase 2: Frau Weber noch nicht in der Liste, kein Zähler */
   .sz05[data-phase]:not([data-erreicht~="2"]) .sz05-neu { opacity: 0; transform: translateY(calc(-14 * var(--px))); }
   .sz05[data-phase]:not([data-erreicht~="2"]) .sz05-alt { transform: translateY(calc(-46 * var(--px))); }
   .sz05[data-phase]:not([data-erreicht~="2"]) .sz05-zaehler { opacity: 0; transform: scale(0.3); }
   /* Phase 2: die neue Zeile leuchtet kurz auf */
-  .sz05[data-phase="2"] .sz05-leuchten { animation: sz05-aufleuchten 1.4s ease-in-out 1.1s both; }
+  .sz05[data-phase="2"] .sz05-leuchten { animation: sz05-aufleuchten calc(1.4s * var(--bsp-t, 1)) ease-in-out calc(1.1s * var(--bsp-t, 1)) both; }
   /* vor Phase 3: kein Kalender-Hinweis */
   .sz05[data-phase]:not([data-erreicht~="3"]) .sz05-hinweis { opacity: 0; transform: translateY(calc(16 * var(--px))); }
 </style>

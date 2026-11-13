@@ -1,19 +1,19 @@
-/* BÜHNE „SO KANN ES LAUFEN“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026). Markup: components/beispiel/BeispielBuehne.astro,
- * Bewegung: scripts/beispiel.ts (Kern wie Kundenreise: scripts/buehne-kern.ts), Geräte/Tokens: styles/beispiel-mockup.css.
+/* FILM „SO KANN ES LAUFEN“ (Jamil, Talk qh87y3sj #5678/#5680, Film + Personalisierung #5683/#5709–#5715, 13.11.2026).
+ * Markup: components/beispiel/BeispielBuehne.astro, Ablauf: scripts/beispiel.ts, Geräte/Tokens: styles/beispiel-mockup.css.
  *
- * Drei Zustände (wie die Kundenreise-Bühne, styles/kundenreise.css):
- * 1. Grundform (ohne JS, reduzierte Bewegung): Szenen als Karten untereinander, jede im Endzustand, Schluss als letzte Karte.
- * 2. .bsp--gleiten (Handy und kleine Fenster mit JS): dieselben Karten gleiten einzeln herein; die Engine spielt dabei die
- *    Unter-Phasen der Szene einmal im Takt ab.
- * 3. .bsp--buehne (ab 48rem breit und 36rem hoch, JS, ohne reduzierte Bewegung): Bereich = Bildschirm + 13 Scroll-Stücke, die
- *    Bühne darin ist sticky. Je Stück eine Szene groß in der Mitte (Mockup), darunter Titel und Text; oben die
- *    Fortschrittsleiste mit 13 Segmenten (voll erst, wenn die Szene erreicht ist, nie anteilig). Letztes Stück: Schluss.
- * Bewegt werden nur transform und opacity; die Höhe des Bereichs steht von Anfang an fest. */
+ * Zwei Zustände:
+ * 1. Grundform (ohne JS): Szenen als Karten untereinander, jede im Endzustand, Schluss als letzte Karte.
+ * 2. .bsp--film (mit JS, Handy wie Rechner): EIN Bildschirm ohne Scrollen – die Bühne ist so hoch wie der sichtbare Bereich
+ *    (100svh minus Kopfzeile und am Handy minus Leiste unten). Ein Schritt nach dem anderen groß in der Mitte (Mockup),
+ *    darunter Titel und Text, unten die Steuerleiste (Zurück, Pause/Abspielen, Weiter, ein Segment je Szene, Branche).
+ *    Das Segment der laufenden Szene füllt sich in ihrer Dauer. .bsp--still (reduzierte Bewegung): gleiche Ansicht, kein
+ *    Autoplay, keine Übergänge, jede Szene im Endzustand.
+ * Bewegt werden nur transform und opacity. */
 
-.bsp { --bsp-n: 14; --bsp-kopf: var(--kopf-gesamt, calc(var(--header-h, 72px) + 1px)); --bsp-unten: 0px; --bsp-rand: #d5e8e6;
+.bsp { --bsp-kopf: var(--kopf-gesamt, calc(var(--header-h, 72px) + 1px)); --bsp-unten: 0px; --bsp-rand: #d5e8e6;
   position: relative; margin-block: clamp(20px, 4vw, 40px) clamp(32px, 6vw, 72px); }
 @media (max-width: 959px) { .bsp { --bsp-unten: calc(var(--stickybar-h, 64px) + env(safe-area-inset-bottom)); } }
-.bsp-oben { display: none; }
+.bsp-oben, .bsp-steuerung, .bsp-start { display: none; }
 
 /* ── 1. Grundform: Karten untereinander ── */
 .bsp-flaeche { max-width: 1080px; }
@@ -45,47 +45,135 @@
 .bsp-schluss__knopf { margin: 0 0 18px; }
 .bsp-schluss__etikett { margin: 0; }
 
-/* ── 2. Handy mit JS: jede Karte gleitet einzeln herein ── */
-.bsp--gleiten .bsp-schritt { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
-.bsp--gleiten .bsp-schritt.ist-da { opacity: 1; transform: none; }
+/* Baustein-Einblendung (weitere Möglichkeiten, Jamil #5709–#5715) */
+.bsp-szene__kopf { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 6px; }
+.bsp-szene__kopf .bsp-szene__zaehler { margin: 0; }
+.bsp-baustein { display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 3px 12px 3px 4px; border-radius: 99px; background: #e4f3f1; color: var(--bsp-tinte, #006b68);
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 650; line-height: 1.4; }
+.bsp-baustein__plus { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #00807b; color: #fff; font-weight: 700; line-height: 1; }
 
-/* ── 3. Bühne am Rechner ── */
-.bsp--buehne {
-  --bsp-sicht: calc(100svh - var(--bsp-kopf) - var(--bsp-unten));
-  --bsp-weg: 80svh; /* Scroll-Stück je Szene */
-  height: calc(var(--bsp-sicht) + (var(--bsp-n) - 1) * var(--bsp-weg));
+/* ── 2. Film ── */
+.bsp--film {
+  --bsp-t: 0.6; --bsp-dauer-kurz: 0.18s; --bsp-dauer: 0.36s; --bsp-dauer-lang: 0.54s; --bsp-versatz: 0.07s; --bsp-auftritt: 0.2s;
+  --bsp-sicht: calc(100vh - var(--bsp-kopf) - var(--bsp-unten));
   margin-block: 0 clamp(16px, 3vh, 32px);
 }
-.bsp--buehne .bsp-buehne { position: sticky; top: var(--bsp-kopf); height: var(--bsp-sicht); display: flex; flex-direction: column; overflow: hidden; }
-/* Kopfzeile der Bühne: Leiste mittig, rechts das Etikett „Beispielhafte Darstellung“ (steht, solange die Bühne steht) */
-.bsp--buehne .bsp-oben { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 640px) minmax(max-content, 1fr); align-items: center; gap: 16px;
-  flex: none; width: min(100% - 32px, var(--wrap)); margin: clamp(10px, 2.4vh, 22px) auto 0; }
-.bsp--buehne .bsp-leiste { grid-column: 2; display: flex; gap: 5px; }
-.bsp-buehne__etikett { grid-column: 3; justify-self: end; }
-.bsp-segment { position: relative; flex: 1; height: 4px; border-radius: 2px; background: var(--bsp-rand); overflow: hidden; }
-.bsp-segment::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #00807b; transform-origin: left; transform: scaleX(0); transition: transform 0.25s ease; }
-/* Segment voll erst, wenn seine Szene erreicht ist – nie anteilig (wie Kundenreise, Jamil #5624) */
-.bsp-segment.ist-voll::after { transform: none; }
-.bsp--buehne .bsp-flaeche { position: relative; flex: 1; min-height: 0; max-width: var(--wrap); }
-.bsp--buehne .bsp-schritte { display: block; height: 100%; }
-/* Unsichtbare Szenen nach dem Ausblenden zusätzlich visibility: hidden (spart Zeichenarbeit bei 14 Ebenen, nicht animiert) */
-.bsp--buehne .bsp-schritt { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(5%) scale(0.97);
-  transition: opacity 0.55s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0s linear 0.8s; }
-.bsp--buehne .bsp-schritt.ist-aktiv { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0.2s, 0.2s, 0s; }
-.bsp--buehne .bsp-schritt.ist-vorbei { opacity: 0; transform: translateY(-7%) scale(0.94); transition-duration: 0.45s, 0.8s, 0s; }
-/* Schluss bleibt per Tastatur erreichbar (Fokus auf „Jetzt starten“ springt zum Schluss, scripts/beispiel.ts) */
-.bsp--buehne .bsp-schluss { visibility: visible; }
-.bsp--buehne .bsp-szene { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; gap: clamp(8px, 2vh, 20px);
-  padding: clamp(8px, 2vh, 20px) 0 clamp(14px, 3.4vh, 36px); background: none; border: 0; border-radius: 0; box-shadow: none; }
-.bsp--buehne .bsp-szene__bild { height: auto; min-height: 0; padding: 0; border-radius: 0; background: radial-gradient(circle closest-side, rgb(0 166 161 / 12%), rgb(0 166 161 / 0%)); }
-.bsp--buehne .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: auto; }
-.bsp--buehne .bsp-szene__etikett { display: none; } /* auf der Bühne steht das Etikett einmal in der Kopfzeile */
-.bsp--buehne .bsp-szene__text { padding: 0; text-align: center; }
-.bsp--buehne .bsp-szene__zaehler { margin-bottom: 2px; }
-.bsp--buehne .bsp-szene__titel { margin-bottom: 0.2em; font-size: clamp(1.7rem, 1.1rem + 1.6vw, 2.6rem); color: var(--accent-ink); }
-.bsp--buehne .bsp-szene__satz { margin-inline: auto; max-width: 46ch; font-size: clamp(1.05rem, 0.85rem + 0.55vw, 1.3rem); text-wrap: balance;
-  min-height: 2lh; } /* immer Platz für zwei Zeilen: Geräte sind in jeder Szene gleich groß, egal ob der Satz ein- oder zweizeilig ist */
-.bsp--buehne .bsp-schluss { display: grid; place-items: center; padding: 0 16px; border: 0; border-radius: 0; background: none; }
-.bsp--buehne .bsp-schluss__titel { font-size: clamp(2.1rem, 1.2rem + 3vw, 3.6rem); }
+@supports (height: 100svh) { .bsp--film { --bsp-sicht: calc(100svh - var(--bsp-kopf) - var(--bsp-unten)); } }
+.bsp--film .bsp-buehne { position: relative; height: var(--bsp-sicht); min-height: 380px; display: flex; flex-direction: column; overflow: hidden;
+  scroll-margin-top: var(--bsp-kopf); outline: none; }
+.bsp--film .bsp-oben { display: flex; justify-content: flex-end; position: absolute; z-index: 4; top: 8px; right: max(12px, calc((100% - var(--wrap)) / 2)); pointer-events: none; }
+.bsp--film .bsp-flaeche { position: relative; flex: 1; min-height: 0; width: 100%; max-width: var(--wrap); }
+.bsp--film .bsp-schritte { display: block; position: relative; height: 100%; }
+.bsp--film .bsp-schritt { position: absolute; inset: 0; margin: 0; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(3%) scale(0.98);
+  transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0s linear 0.55s; }
+.bsp--film .bsp-schritt.ist-aktiv { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0.12s, 0.12s, 0s; }
+.bsp--film .bsp-schritt.ist-vorbei { transform: translateY(-4%) scale(0.97); transition-duration: 0.3s, 0.55s, 0s; }
+.bsp--film .bsp-szene { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; align-items: stretch; gap: clamp(6px, 1.6vh, 18px);
+  padding: clamp(30px, 5vh, 44px) 0 clamp(4px, 1vh, 12px); background: none; border: 0; border-radius: 0; box-shadow: none; }
+.bsp--film .bsp-szene__bild { height: auto; min-height: 0; padding: 0; border-radius: 0; background: radial-gradient(circle closest-side, rgb(0 166 161 / 12%), rgb(0 166 161 / 0%)); }
+.bsp--film .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: auto; }
+.bsp--film .bsp-szene__etikett { display: none; }
+.bsp--film .bsp-szene__text { padding: 0; text-align: center; }
+.bsp--film .bsp-szene__kopf { justify-content: center; margin-bottom: 2px; }
+.bsp--film .bsp-szene__titel { margin-bottom: 0.15em; font-size: clamp(1.3rem, 0.95rem + 1.6vw, 2.5rem); color: var(--accent-ink); }
+.bsp--film .bsp-szene__satz { margin-inline: auto; max-width: 46ch; font-size: clamp(0.98rem, 0.86rem + 0.5vw, 1.28rem); line-height: 1.5; text-wrap: balance; }
+@media (min-width: 48rem) and (min-height: 40rem) { .bsp--film .bsp-szene__satz { min-height: 2lh; } }
+/* Baustein erscheint kurz nach der Szene (2–4-s-Takt der Szene) */
+.bsp--film:not(.bsp--still) .ist-aktiv .bsp-baustein { animation: bsp-baustein 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) 0.7s both; }
+@keyframes bsp-baustein { from { opacity: 0; transform: translateY(6px) scale(0.85); } to { opacity: 1; transform: none; } }
+
+/* Start: Branche wählen */
+.bsp--film .bsp-start { display: grid; place-items: center; padding: clamp(30px, 5vh, 48px) 0 8px; overflow-y: auto; overscroll-behavior: contain; }
+.bsp-start__innen { width: min(100%, 44rem); margin: auto; text-align: center; }
+.bsp .bsp-start__kennzeile { margin: 0 0 6px; }
+.bsp .bsp-start__titel { margin: 0 0 0.3em; font-size: clamp(1.4rem, 1rem + 1.8vw, 2.4rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+.bsp-start__text { margin: 0 auto clamp(10px, 2vh, 20px); max-width: 40ch; font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.12rem); line-height: 1.5; color: var(--ink-soft); text-wrap: balance; }
+.bsp-wahl { display: grid; gap: clamp(10px, 2vh, 18px); justify-items: center; }
+.bsp-wahl__feld { margin: 0; padding: 0; border: 0; min-width: 0; width: 100%; }
+.bsp-wahl__legende { margin: 0 auto 8px; padding: 0; font-family: var(--font-head); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+.bsp-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.bsp-chip { position: relative; display: inline-flex; }
+.bsp-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.bsp-chip span { display: inline-flex; align-items: center; min-height: 36px; padding: 4px 14px; border-radius: 99px; border: 1.5px solid var(--bsp-rand); background: var(--white);
+  color: var(--ink); font-size: 0.92rem; font-weight: 600; line-height: 1.2; transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
+.bsp-chip input:hover + span { border-color: #00a6a1; }
+.bsp-chip input:checked + span { background: #00807b; border-color: #00807b; color: #fff; }
+.bsp-chip input:focus-visible + span { outline: 3px solid #00a6a1; outline-offset: 2px; }
+.bsp-name { display: grid; gap: 4px; width: min(100%, 22rem); text-align: left; }
+.bsp-name__titel { font-size: 0.85rem; font-weight: 650; color: var(--ink-soft); }
+.bsp-name__eingabe { width: 100%; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 1.5px solid var(--bsp-rand); background: var(--white); color: var(--ink);
+  font: inherit; font-size: 1rem; } /* 16 px: Safari zoomt beim Tippen nicht */
+.bsp-name__eingabe:focus-visible { outline: 3px solid #00a6a1; outline-offset: 1px; border-color: #00807b; }
+.bsp-start__knopf { display: grid; justify-items: center; gap: 6px; margin: 0; }
+.bsp-start__los { position: relative; overflow: hidden; }
+.bsp-start__uhr { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgb(255 255 255 / 70%); transform-origin: left; transform: scaleX(0); }
+.bsp-start__los.ist-auto .bsp-start__uhr { animation: bsp-fuellen 4.5s linear both; }
+.bsp--pausiert .bsp-start__uhr { animation-play-state: paused !important; }
+.bsp-start__auto { font-size: 0.82rem; color: var(--ink-soft); }
+.bsp-start__hinweis { margin: 0; font-size: 0.78rem; color: var(--ink-soft); }
+@media (max-height: 860px) { .bsp-start__text { display: none; } }
+@media (max-height: 760px) { .bsp .bsp-start__kennzeile { display: none; } .bsp-chip span { min-height: 32px; padding: 3px 12px; font-size: 0.88rem; }
+  .bsp-chips { gap: 5px; } .bsp-wahl { gap: 10px; } .bsp-wahl__legende { margin-bottom: 6px; } .bsp-name__eingabe { min-height: 42px; } }
+@media (max-height: 620px) {
+  .bsp--film .bsp-start { padding-top: 26px; }
+  .bsp-start__hinweis, .bsp-start__auto { display: none; }
+  .bsp-chips { gap: 4px; }
+  .bsp-chip span { min-height: 28px; padding: 2px 9px; font-size: 0.8rem; }
+  .bsp .bsp-start__titel { font-size: 1.2rem; }
+  .bsp-wahl { gap: 8px; }
+  .bsp-name__eingabe { min-height: 40px; padding: 6px 12px; }
+  .bsp-start__los { min-height: 42px; padding-block: 8px; }
+  /* Schluss kompakt */
+  .bsp--film .bsp-schluss { padding-top: 26px; }
+  .bsp--film .bsp-schluss__titel { font-size: 1.3rem; margin-bottom: 10px; }
+  .bsp--film .bsp-schluss__etikett { display: none; }
+  .bsp--film .bsp-schluss__knopf { margin-bottom: 10px; }
+  .bsp--film .bsp-schluss__knopf .btn--lg { min-height: 44px; padding: 10px 22px; font-size: 1rem; }
+  .bsp--film .bsp-schluss { padding-bottom: 0; }
+  .bsp-schluss__mehr { gap: 6px; margin-bottom: 0; }
+  .bsp-schluss__mehr .btn { min-height: 40px; padding: 6px 14px; font-size: 0.9rem; }
+}
+
+/* Branchen-Wechsel: Knopf zur Auswahl */
+.bsp-branchen__knopf { margin: 8px 0 0; }
+
+/* Schluss */
+.bsp--film .bsp-schluss { display: grid; place-items: center; padding: clamp(34px, 5vh, 48px) 16px 8px; border: 0; border-radius: 0; background: none; overflow-y: auto; }
+.bsp--film .bsp-schluss__titel { font-size: clamp(1.8rem, 1.1rem + 3vw, 3.6rem); overflow-wrap: break-word; text-wrap: balance; }
+.bsp-schluss__mehr { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 18px; }
+.bsp-schluss__mehr[hidden] { display: none; }
+.bsp-schluss__mehr .btn { gap: 8px; }
+.bsp-schluss__mehr svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Steuerleiste */
+.bsp--film .bsp-steuerung { display: flex; flex: none; align-items: center; gap: 6px; width: min(100% - 24px, var(--wrap)); margin: 0 auto; padding: 4px 0 8px; }
+.bsp-taste { flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1.5px solid var(--bsp-rand); background: var(--white);
+  color: #00807b; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+.bsp-taste:hover { border-color: #00a6a1; background: #eef7f6; }
+.bsp-taste:focus-visible, .bsp-segment:focus-visible { outline: 3px solid #00a6a1; outline-offset: 2px; }
+.bsp-taste svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.bsp-taste--haupt { background: #00807b; border-color: #00807b; color: #fff; }
+.bsp-taste--haupt:hover { background: #006b68; border-color: #006b68; }
+.bsp-taste--haupt .bsp-taste__spielen { fill: currentColor; stroke-width: 1.5; }
+.bsp-taste__spielen, .bsp-taste--haupt.ist-pause .bsp-taste__pause { display: none; }
+.bsp-taste--haupt.ist-pause .bsp-taste__spielen { display: block; }
+.bsp--still .bsp-taste--haupt { display: none; }
+.bsp-leiste { flex: 1; min-width: 0; display: flex; gap: 3px; margin: 0 4px; }
+.bsp-segment { flex: 1; min-width: 0; height: 44px; padding: 0; border: 0; border-radius: 4px; background: none; cursor: pointer; display: grid; align-items: center; }
+.bsp-segment i { position: relative; display: block; height: 4px; border-radius: 2px; background: var(--bsp-rand); overflow: hidden; transition: height 0.15s ease; }
+.bsp-segment i::after { content: ''; position: absolute; inset: 0; background: #00807b; transform-origin: left; transform: scaleX(0); }
+.bsp-segment:hover i, .bsp-segment[aria-current] i { height: 7px; }
+.bsp-segment.ist-voll i::after { transform: none; }
+.bsp-segment.ist-jetzt i::after { animation: bsp-fuellen var(--bsp-segment-dauer, 3s) linear both; }
+.bsp--pausiert .bsp-segment.ist-jetzt i::after { animation-play-state: paused; }
+@keyframes bsp-fuellen { from { transform: scaleX(0); } to { transform: none; } }
+/* angehalten: laufende Unter-Animationen der Szene stehen mit */
+.bsp--pausiert .ist-aktiv .sz, .bsp--pausiert .ist-aktiv .sz *, .bsp--pausiert .ist-aktiv .bsp-baustein { animation-play-state: paused !important; }
+@media (max-width: 26rem) {
+  .bsp-taste { width: 40px; height: 40px; }
+  .bsp--film .bsp-steuerung { gap: 4px; }
+  .bsp-taste--branche { display: none; }
+  .bsp-leiste { gap: 2px; margin: 0 2px; }
+}
 
 @media (prefers-reduced-motion: reduce) { .bsp *, .bsp *::after { transition: none !important; animation: none !important; } }

@@ -12,13 +12,14 @@
 // „Hochzählen“ ohne Skript/Inline-Styles: fertige Zwischenwerte übereinander gestapelt, per Keyframes nacheinander kurz sichtbar.
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
+import { STANDARD, werte } from '../branchen';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
 
-const RAEUME = ['Wohnzimmer', 'Schlafzimmer', 'Küche', 'Flur', 'Bad'];
-const FLAECHE_ZWISCHEN = ['9', '14', '19', '22'];
-const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
+const RAEUME = [0, 1, 2, 3, 4];
+const ZW = [0, 1, 2, 3];
 ---
 
 <SzeneRahmen nr={3} phasen={4} takt={1500} format="hoch" variante={variante}>
@@ -26,7 +27,7 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
     <div class="sz03-seite">
       <div class="sz03-kopf">
         <span class="sz03-marke"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="13" height="6" rx="2" /><path d="M17 7h2.5v5H11v3" /><rect x="9.5" y="15" width="3" height="6" rx="1" /></svg></span>
-        <span class="sz03-name">Malerbetrieb Muster</span>
+        <span class="sz03-name" data-p="firma">{W.firma}</span>
         <span class="sz03-menue"><i></i><i></i><i></i></span>
       </div>
 
@@ -38,10 +39,10 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
 
         <!-- 1 Raum -->
         <div class="bm-karte sz03-schritt">
-          <p class="sz03-frage"><span class="sz03-nr">1</span>Welcher Raum?</p>
+          <p class="sz03-frage"><span class="sz03-nr">1</span><span data-p="rFrage1">{W.rFrage1}</span></p>
           <p class="sz03-chips">
-            {RAEUME.map((r, i) => (
-              <span class:list={['sz03-chip', { 'sz03-chip--wahl': i === 0 }]}>{r}{i === 0 && <span class="sz03-chip-an">{r}</span>}</span>
+            {RAEUME.map((i) => (
+              <span class:list={['sz03-chip', { 'sz03-chip--wahl': i === 0 }]}><span data-p={`rOpt${i}`}>{W[`rOpt${i}`]}</span>{i === 0 && <span class="sz03-chip-an" data-p="rOpt0">{W.rOpt0}</span>}</span>
             ))}
           </p>
           <span class="bm-tipp sz03-tipp sz03-tipp--raum"></span>
@@ -49,13 +50,13 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
 
         <!-- 2 Fläche -->
         <div class="bm-karte sz03-schritt">
-          <p class="sz03-frage"><span class="sz03-nr">2</span>Wie groß?
+          <p class="sz03-frage"><span class="sz03-nr">2</span><span data-p="rFrage2">{W.rFrage2}</span>
             <span class="sz03-wert">
               <span class="sz03-stapel">
-                <span class="sz03-m sz03-m--start">5</span>
-                {FLAECHE_ZWISCHEN.map((z, i) => <span class:list={['sz03-m', 'sz03-m--zw', `sz03-m--${i + 1}`]}>{z}</span>)}
-                <span class="sz03-m sz03-m--ende">25</span>
-              </span> m²
+                <span class="sz03-m sz03-m--start" data-p="rStart">{W.rStart}</span>
+                {ZW.map((i) => <span class:list={['sz03-m', 'sz03-m--zw', `sz03-m--${i + 1}`]} data-p={`rWertZw${i}`}>{W[`rWertZw${i}`]}</span>)}
+                <span class="sz03-m sz03-m--ende" data-p="rWert">{W.rWert}</span>
+              </span> <span data-p="rEinheit">{W.rEinheit}</span>
             </span>
           </p>
           <span class="sz03-regler">
@@ -63,15 +64,15 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
             <span class="sz03-fuellung"></span>
             <span class="sz03-knauf"></span>
           </span>
-          <p class="sz03-skala"><span>5 m²</span><span>60 m²</span></p>
+          <p class="sz03-skala"><span data-p="rMin">{W.rMin}</span><span data-p="rMax">{W.rMax}</span></p>
         </div>
 
         <!-- 3 Umfang -->
         <div class="bm-karte sz03-schritt">
-          <p class="sz03-frage"><span class="sz03-nr">3</span>Was wird gestrichen?</p>
+          <p class="sz03-frage"><span class="sz03-nr">3</span><span data-p="rFrage3">{W.rFrage3}</span></p>
           <p class="sz03-wahl">
-            <span class="sz03-opt">Nur Wände</span>
-            <span class="sz03-opt sz03-opt--ziel">Wände und Decke<span class="sz03-opt-an"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>Wände und Decke</span></span>
+            <span class="sz03-opt" data-p="rUmfang1">{W.rUmfang1}</span>
+            <span class="sz03-opt sz03-opt--ziel"><span data-p="rUmfang2">{W.rUmfang2}</span><span class="sz03-opt-an"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg><span data-p="rUmfang2">{W.rUmfang2}</span></span></span>
           </p>
           <span class="bm-tipp sz03-tipp sz03-tipp--umfang"></span>
         </div>
@@ -85,13 +86,13 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
             <p class="sz03-preis">
               <span class="sz03-ca">ca.</span>
               <span class="sz03-zahl">
-                {PREIS_ZWISCHEN.map((z, i) => <span class:list={['sz03-z', 'sz03-z--zw', `sz03-z--${i + 1}`]}>{z} €</span>)}
-                <span class="sz03-z sz03-z--ende">1.200–1.500 €</span>
+                {ZW.map((i) => <span class:list={['sz03-z', 'sz03-z--zw', `sz03-z--${i + 1}`]} data-p={`rPreisZw${i}`}>{W[`rPreisZw${i}`]}</span>)}
+                <span class="sz03-z sz03-z--ende" data-p="rPreis">{W.rPreis}</span>
               </span>
             </p>
           </div>
-          <p class="bm-klein sz03-summe">Wohnzimmer · 25 m² · Wände und Decke</p>
-          <span class="bm-knopf sz03-buchen">Besichtigung buchen</span>
+          <p class="bm-klein sz03-summe" data-p="rSumme">{W.rSumme}</p>
+          <span class="bm-knopf sz03-buchen" data-p="terminBuchen">{W.terminBuchen}</span>
           <p class="sz03-fuss">Beispielpreis inkl. Material, unverbindlich</p>
         </div>
       </div>
@@ -107,7 +108,7 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
     background: var(--bsp-weiss); box-shadow: 0 calc(1 * var(--px)) 0 var(--bsp-linie-grau); }
   .sz03-marke { flex: none; display: grid; place-items: center; width: calc(26 * var(--px)); height: calc(26 * var(--px)); border-radius: calc(8 * var(--px)); background: var(--bsp-tinte); }
   .sz03-marke svg { width: 64%; height: 64%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2; stroke-linejoin: round; }
-  .sz03-name { flex: 1; font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); letter-spacing: -0.01em; white-space: nowrap; }
+  .sz03-name { flex: 1; font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); letter-spacing: -0.01em; white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .sz03-menue { display: grid; gap: calc(3.5 * var(--px)); width: calc(18 * var(--px)); }
   .sz03-menue i { display: block; height: calc(2 * var(--px)); border-radius: 99px; background: var(--bsp-text); }
 
@@ -167,12 +168,12 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
   .sz03-fuss { font-size: calc(9 * var(--px)); color: var(--bsp-text-leise); text-align: center; }
 
   /* Übergänge (in beide Richtungen) */
-  .sz03-chip-an, .sz03-opt-an { transition: opacity var(--bsp-dauer-kurz) ease 0.45s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.45s; }
-  .sz03-knauf, .sz03-fuellung { transition: transform 1s cubic-bezier(0.45, 0.05, 0.25, 1) var(--bsp-auftritt); }
+  .sz03-chip-an, .sz03-opt-an { transition: opacity var(--bsp-dauer-kurz) ease calc(0.45s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.45s * var(--bsp-t, 1)); }
+  .sz03-knauf, .sz03-fuellung { transition: transform calc(1s * var(--bsp-t, 1)) cubic-bezier(0.45, 0.05, 0.25, 1) var(--bsp-auftritt); }
   .sz03-ring, .sz03-warte, .sz03-summe, .sz03-buchen, .sz03-fuss { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
   .sz03-ring { transition-delay: var(--bsp-auftritt); }
-  .sz03-summe { transition-delay: 1.3s; } .sz03-buchen { transition-delay: 1.42s; } .sz03-fuss { transition-delay: 1.5s; }
-  .sz03-preis { transition: opacity var(--bsp-dauer-kurz) ease 0.45s; }
+  .sz03-summe { transition-delay: calc(1.3s * var(--bsp-t, 1)); } .sz03-buchen { transition-delay: calc(1.42s * var(--bsp-t, 1)); } .sz03-fuss { transition-delay: calc(1.5s * var(--bsp-t, 1)); }
+  .sz03-preis { transition: opacity var(--bsp-dauer-kurz) ease calc(0.45s * var(--bsp-t, 1)); }
 
   /* Zwischenwerte: je kurz sichtbar (Keyframes, nur opacity) */
   @keyframes sz03-aufblitzen { 0%, 100% { opacity: 0; } 1%, 99% { opacity: 1; } }
@@ -181,21 +182,21 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: kein Raum gewählt */
   .sz03[data-phase]:not([data-erreicht~="1"]) .sz03-chip-an { opacity: 0; transform: scale(0.85); }
-  .sz03[data-phase="1"] .sz03-tipp--raum { animation: bm-tippen 0.75s var(--bsp-ease) var(--bsp-auftritt) both; }
+  .sz03[data-phase="1"] .sz03-tipp--raum { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt) both; }
   /* vor Phase 2: Regler links, Fläche 5 m² */
   .sz03[data-phase]:not([data-erreicht~="2"]) .sz03-knauf { transform: translateX(calc(-84 * var(--px))); }
   .sz03[data-phase]:not([data-erreicht~="2"]) .sz03-fuellung { transform: scaleX(0.02); }
   .sz03[data-phase]:not([data-erreicht~="2"]) .sz03-m--start { opacity: 1; }
   .sz03[data-phase]:not([data-erreicht~="2"]) .sz03-m--ende { opacity: 0; }
   /* Phase 2: Zahl läuft mit dem Regler */
-  .sz03[data-phase="2"] .sz03-m--1 { animation: sz03-aufblitzen 0.2s linear calc(var(--bsp-auftritt) + 0.15s) both; }
-  .sz03[data-phase="2"] .sz03-m--2 { animation: sz03-aufblitzen 0.2s linear calc(var(--bsp-auftritt) + 0.35s) both; }
-  .sz03[data-phase="2"] .sz03-m--3 { animation: sz03-aufblitzen 0.2s linear calc(var(--bsp-auftritt) + 0.55s) both; }
-  .sz03[data-phase="2"] .sz03-m--4 { animation: sz03-aufblitzen 0.2s linear calc(var(--bsp-auftritt) + 0.75s) both; }
-  .sz03[data-phase="2"] .sz03-m--ende { animation: sz03-ankommen 0.05s linear calc(var(--bsp-auftritt) + 0.95s) both; }
+  .sz03[data-phase="2"] .sz03-m--1 { animation: sz03-aufblitzen calc(0.2s * var(--bsp-t, 1)) linear calc(var(--bsp-auftritt) + calc(0.15s * var(--bsp-t, 1))) both; }
+  .sz03[data-phase="2"] .sz03-m--2 { animation: sz03-aufblitzen calc(0.2s * var(--bsp-t, 1)) linear calc(var(--bsp-auftritt) + calc(0.35s * var(--bsp-t, 1))) both; }
+  .sz03[data-phase="2"] .sz03-m--3 { animation: sz03-aufblitzen calc(0.2s * var(--bsp-t, 1)) linear calc(var(--bsp-auftritt) + calc(0.55s * var(--bsp-t, 1))) both; }
+  .sz03[data-phase="2"] .sz03-m--4 { animation: sz03-aufblitzen calc(0.2s * var(--bsp-t, 1)) linear calc(var(--bsp-auftritt) + calc(0.75s * var(--bsp-t, 1))) both; }
+  .sz03[data-phase="2"] .sz03-m--ende { animation: sz03-ankommen calc(0.05s * var(--bsp-t, 1)) linear calc(var(--bsp-auftritt) + calc(0.95s * var(--bsp-t, 1))) both; }
   /* vor Phase 3: Umfang noch offen */
   .sz03[data-phase]:not([data-erreicht~="3"]) .sz03-opt-an { opacity: 0; transform: scale(0.9); }
-  .sz03[data-phase="3"] .sz03-tipp--umfang { animation: bm-tippen 0.75s var(--bsp-ease) var(--bsp-auftritt) both; }
+  .sz03[data-phase="3"] .sz03-tipp--umfang { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt) both; }
   /* vor Phase 4: Ergebnis wartet */
   .sz03[data-phase]:not([data-erreicht~="4"]) .sz03-ring { opacity: 0; }
   .sz03[data-phase]:not([data-erreicht~="4"]) .sz03-warte { opacity: 1; }
@@ -204,10 +205,10 @@ const PREIS_ZWISCHEN = ['240–300', '480–600', '720–900', '960–1.200'];
   .sz03[data-phase]:not([data-erreicht~="4"]) .sz03-fuss { opacity: 0; transform: translateY(calc(8 * var(--px))); }
   .sz03[data-erreicht~="4"] .sz03-warte { transition-delay: var(--bsp-auftritt); }
   /* Phase 4: Preis zählt hoch */
-  .sz03[data-phase="4"] .sz03-z--1 { animation: sz03-aufblitzen 0.13s linear 0.5s both; }
-  .sz03[data-phase="4"] .sz03-z--2 { animation: sz03-aufblitzen 0.13s linear 0.63s both; }
-  .sz03[data-phase="4"] .sz03-z--3 { animation: sz03-aufblitzen 0.13s linear 0.76s both; }
-  .sz03[data-phase="4"] .sz03-z--4 { animation: sz03-aufblitzen 0.15s linear 0.89s both; }
-  .sz03[data-phase="4"] .sz03-z--ende { animation: sz03-ankommen 0.05s linear 1.04s both; }
-  .sz03[data-phase="4"] .sz03-zahl { animation: bm-puls 0.5s var(--bsp-ease) 1.08s 1; }
+  .sz03[data-phase="4"] .sz03-z--1 { animation: sz03-aufblitzen calc(0.13s * var(--bsp-t, 1)) linear calc(0.5s * var(--bsp-t, 1)) both; }
+  .sz03[data-phase="4"] .sz03-z--2 { animation: sz03-aufblitzen calc(0.13s * var(--bsp-t, 1)) linear calc(0.63s * var(--bsp-t, 1)) both; }
+  .sz03[data-phase="4"] .sz03-z--3 { animation: sz03-aufblitzen calc(0.13s * var(--bsp-t, 1)) linear calc(0.76s * var(--bsp-t, 1)) both; }
+  .sz03[data-phase="4"] .sz03-z--4 { animation: sz03-aufblitzen calc(0.15s * var(--bsp-t, 1)) linear calc(0.89s * var(--bsp-t, 1)) both; }
+  .sz03[data-phase="4"] .sz03-z--ende { animation: sz03-ankommen calc(0.05s * var(--bsp-t, 1)) linear calc(1.04s * var(--bsp-t, 1)) both; }
+  .sz03[data-phase="4"] .sz03-zahl { animation: bm-puls calc(0.5s * var(--bsp-t, 1)) var(--bsp-ease) calc(1.08s * var(--bsp-t, 1)) 1; }
 </style>

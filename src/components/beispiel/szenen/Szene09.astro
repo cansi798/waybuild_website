@@ -9,11 +9,13 @@
 //   2  Finger tippt die Mail an, sie öffnet sich (gleitet von rechts herein): Angebot + Knopf „Zum Kundenportal“
 //   3  Sprechblase „So schnell?“ springt auf, der Knopf leuchtet sanft
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 ---
 
 <SzeneRahmen nr={9} phasen={3} takt={1700} format="hoch" variante={variante}>
@@ -27,10 +29,10 @@ const { variante = 'buehne' } = Astro.props;
             <span class="sz09-suche"></span>
             <span class="sz09-liste">
               <span class="sz09-mail sz09-mail--neu">
-                <span class="sz09-avatar">M</span>
+                <span class="sz09-avatar" data-p="kuerzel">{W.kuerzel}</span>
                 <span class="sz09-mail-text">
-                  <span class="sz09-absender">Malerbetrieb Muster <span class="sz09-zeit">11:05</span></span>
-                  <span class="sz09-betreff">Ihr Angebot vom Malerbetrieb Muster</span>
+                  <span class="sz09-absender"><span class="sz09-absender-name" data-p="firma">{W.firma}</span> <span class="sz09-zeit">11:05</span></span>
+                  <span class="sz09-betreff" data-p="mailBetreff">{W.mailBetreff}</span>
                   <span class="sz09-vorschau">Guten Tag Frau Weber, vielen Dank …</span>
                 </span>
                 <span class="sz09-punkt"></span>
@@ -48,19 +50,19 @@ const { variante = 'buehne' } = Astro.props;
           <!-- Ebene 2: geöffnete Mail -->
           <div class="bm-app sz09-offen">
             <span class="sz09-zurueck">‹ Posteingang</span>
-            <span class="sz09-gross">Ihr Angebot vom Malerbetrieb Muster</span>
+            <span class="sz09-gross" data-p="mailBetreff">{W.mailBetreff}</span>
             <span class="sz09-von">
-              <span class="sz09-avatar">M</span>
-              <span class="sz09-von-text"><b>Malerbetrieb Muster</b><span class="bm-klein">an Frau Weber · 11:05</span></span>
+              <span class="sz09-avatar" data-p="kuerzel">{W.kuerzel}</span>
+              <span class="sz09-von-text"><b data-p="firma">{W.firma}</b><span class="bm-klein">an Frau Weber · 11:05</span></span>
             </span>
             <span class="sz09-brief">
               <span>Guten Tag Frau Weber,</span>
               <span>vielen Dank für den Termin. Hier ist Ihr Angebot:</span>
             </span>
             <span class="bm-karte bm-karte--marke sz09-angebot">
-              <span class="sz09-angebot-kopf"><span class="bm-klein">Angebot Nr. A-041 · Wohnzimmer</span><span class="bm-chip">PDF</span></span>
-              <span class="sz09-angebot-was">Wände und Decke streichen</span>
-              <span class="sz09-angebot-preis">1.404,20 €</span>
+              <span class="sz09-angebot-kopf"><span class="bm-klein">Angebot Nr. A-041 · <span data-p="projekt">{W.projekt}</span></span><span class="bm-chip">PDF</span></span>
+              <span class="sz09-angebot-was" data-p="leistung">{W.leistung}</span>
+              <span class="sz09-angebot-preis" data-p="summeNeu">{W.summeNeu}</span>
             </span>
             <span class="sz09-knopf">
               <span class="sz09-glanz"></span>
@@ -71,13 +73,13 @@ const { variante = 'buehne' } = Astro.props;
               <span class="sz09-datei">PDF</span>
               <span class="sz09-anhang-text"><b>Angebot-A-041.pdf</b><span class="bm-klein">1 Seite</span></span>
             </span>
-            <span class="sz09-gruss">Viele Grüße<br />Ihr Malerbetrieb Muster</span>
+            <span class="sz09-gruss">Viele Grüße<br /><span data-p="gruss">{W.gruss}</span></span>
           </div>
 
           <!-- Mitteilung (nur in Phase 1 sichtbar) -->
           <span class="sz09-mitteilung">
             <span class="sz09-mitteilung-symbol"><svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12" rx="2" /><path d="M4 7l8 6 8-6" /></svg></span>
-            <span class="sz09-mitteilung-text"><b>Malerbetrieb Muster</b><span>Ihr Angebot vom Malerbetrieb Muster</span></span>
+            <span class="sz09-mitteilung-text"><b data-p="firma">{W.firma}</b><span data-p="mailBetreff">{W.mailBetreff}</span></span>
             <span class="sz09-jetzt">jetzt</span>
           </span>
         </div>
@@ -96,15 +98,16 @@ const { variante = 'buehne' } = Astro.props;
   .sz09-gruppe { position: relative; display: block; }
   .sz09-handy { --gr-hoehe: min(100cqh, 58cqw * 2.1667); } /* gleiche Höhe wie die anderen Handy-Szenen (1–4, 11) */
 
-  /* Sprechblase: rechts oben am Handy, Spitze zeigt nach links unten */
-  .sz09-blase { position: absolute; z-index: 4; left: 62%; top: 5%; padding: 0.55em 0.95em; border-radius: 1.1em; background: var(--bsp-weiss); color: var(--bsp-tinte);
+  /* Sprechblase: rechts unten am Handy im freien Teil unter der Mail (oben verdeckte sie Betreff und „‹ Posteingang“,
+   * Jamil #5683), Spitze zeigt nach links unten */
+  .sz09-blase { position: absolute; z-index: 4; left: 52%; top: 78%; padding: 0.55em 0.95em; border-radius: 1.1em; background: var(--bsp-weiss); color: var(--bsp-tinte);
     border: 2px solid var(--bsp-nacht); font-family: var(--font-head); font-size: clamp(13px, min(4.2cqh, 4.8cqw), 24px); font-weight: 700; line-height: 1.2; white-space: nowrap;
     box-shadow: 0 14px 30px -16px rgb(0 79 76 / 55%); transform: rotate(-4deg); transform-origin: 10% 100%; }
   .sz09-blase::after { content: ''; position: absolute; left: 14%; bottom: -0.42em; width: 0.7em; height: 0.7em; background: var(--bsp-weiss);
     border-right: 2px solid var(--bsp-nacht); border-bottom: 2px solid var(--bsp-nacht); transform: rotate(45deg); }
 
   /* Bildschirm: zwei Ebenen übereinander */
-  .sz09-schirm { position: relative; flex: 1; min-height: 0; display: grid; overflow: hidden; }
+  .sz09-schirm { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; } /* minmax(0): lange Firmennamen weiten die Spalte nicht */
   .sz09-schirm > .bm-app { grid-area: 1 / 1; min-height: 0; }
   .sz09-eingang { gap: var(--bsp-a3); padding-top: var(--bsp-a2); }
   .sz09-eingang-titel { font-size: var(--bsp-schrift-xl); }
@@ -118,7 +121,8 @@ const { variante = 'buehne' } = Astro.props;
   .sz09-mail-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(3 * var(--px)); }
   .sz09-mail-text .bm-balken { height: calc(7 * var(--px)); }
   .sz09-absender { display: flex; justify-content: space-between; font-size: var(--bsp-schrift-s); font-weight: 700; color: var(--bsp-text); white-space: nowrap; }
-  .sz09-zeit { font-weight: 500; color: var(--bsp-tinte); }
+  .sz09-zeit { flex: none; font-weight: 500; color: var(--bsp-tinte); }
+  .sz09-absender-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .sz09-betreff { font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sz09-vorschau { font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sz09-punkt { position: absolute; right: var(--bsp-a2); bottom: var(--bsp-a3); width: calc(9 * var(--px)); height: calc(9 * var(--px)); border-radius: 50%; background: var(--bsp-tuerkis); }
@@ -158,26 +162,26 @@ const { variante = 'buehne' } = Astro.props;
   .sz09-jetzt { flex: none; align-self: flex-start; font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); }
 
   /* Übergänge (gelten in beide Richtungen) */
-  .sz09-liste { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.5s); }
-  .sz09-mail--neu { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.65s); }
+  .sz09-liste { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.5s * var(--bsp-t, 1))); }
+  .sz09-mail--neu { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.65s * var(--bsp-t, 1))); }
   .sz09-mitteilung { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
-  .sz09-offen { transition: transform var(--bsp-dauer) var(--bsp-ease) 0.45s; }
-  .sz09-blase { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.2s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.2s; }
-  .sz09-glanz { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.5s; }
+  .sz09-offen { transition: transform var(--bsp-dauer) var(--bsp-ease) calc(0.45s * var(--bsp-t, 1)); }
+  .sz09-blase { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(0.2s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.2s * var(--bsp-t, 1)); }
+  .sz09-glanz { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.5s * var(--bsp-t, 1)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: neue Mail fehlt, ältere Mails stehen oben */
   .sz09[data-phase]:not([data-erreicht~="1"]) .sz09-liste { transform: translateY(calc(-76 * var(--px))); }
   .sz09[data-phase]:not([data-erreicht~="1"]) .sz09-mail--neu { opacity: 0; }
   /* Phase 1: Mitteilung von oben */
-  .sz09[data-phase="1"] .sz09-mitteilung { opacity: 1; transform: none; transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
+  .sz09[data-phase="1"] .sz09-mitteilung { opacity: 1; transform: none; transition-delay: calc(var(--bsp-auftritt) + calc(0.1s * var(--bsp-t, 1))); }
   /* vor Phase 2: Mail noch geschlossen */
   .sz09[data-phase]:not([data-erreicht~="2"]) .sz09-offen { transform: translateX(105%); }
   /* Phase 2: Finger tippt auf die neue Mail */
-  .sz09[data-phase="2"] .sz09-tipp { animation: bm-tippen 0.7s var(--bsp-ease) 0.05s both; }
+  .sz09[data-phase="2"] .sz09-tipp { animation: bm-tippen calc(0.7s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.05s * var(--bsp-t, 1)) both; }
   /* vor Phase 3: keine Sprechblase, Knopf ohne Leuchten */
   .sz09[data-phase]:not([data-erreicht~="3"]) .sz09-blase { opacity: 0; transform: rotate(-4deg) scale(0.4); }
   .sz09[data-phase]:not([data-erreicht~="3"]) .sz09-glanz { opacity: 0; }
   /* Phase 3, solange gezeigt: Knopf pulsiert sanft */
-  .sz09[data-aktiv][data-erreicht~="3"] .sz09-glanz { animation: bm-puls 1.6s ease-in-out 1s infinite; }
+  .sz09[data-aktiv][data-erreicht~="3"] .sz09-glanz { animation: bm-puls calc(1.6s * var(--bsp-t, 1)) ease-in-out calc(1s * var(--bsp-t, 1)) infinite; }
 </style>

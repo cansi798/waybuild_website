@@ -9,17 +9,15 @@
 //   3  Frau Weber unterschreibt: die Unterschrift zeichnet sich von links nach rechts, der Stift fährt mit
 //   4  Finger tippt auf „Abschicken“, der Knopf wird grün „✓ Abgeschickt“
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 4.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Tablet from '../geraete/Tablet.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
-const FLAECHEN = [
-  { name: 'Wände streichen', wert: '62 m²' },
-  { name: 'Decke streichen', wert: '25 m²' },
-  { name: 'Risse spachteln', wert: '2 Stellen' },
-];
+const FLAECHEN = [0, 1, 2];
 const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
 ---
 
@@ -28,10 +26,10 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
     <div class="sz06-app">
       <!-- Kopf des Formulars -->
       <div class="sz06-kopf">
-        <span class="sz06-marke">M</span>
+        <span class="sz06-marke" data-p="kuerzel">{W.kuerzel}</span>
         <span class="sz06-kopf-text">
-          <span class="sz06-titel">Besichtigung · Frau Weber</span>
-          <span class="bm-klein">Wohnzimmer · Musterstadt</span>
+          <span class="sz06-titel" data-p="terminKopf">{W.terminKopf}</span>
+          <span class="bm-klein" data-p="projektOrt">{W.projektOrt}</span>
         </span>
         <span class="bm-chip sz06-termin">Do · 10:00</span>
       </div>
@@ -40,19 +38,19 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
         <div class="sz06-spalte">
           <!-- Flächen -->
           <div class="bm-karte sz06-block">
-            <span class="sz06-ueber">Flächen</span>
+            <span class="sz06-ueber" data-p="aTitel">{W.aTitel}</span>
             {FLAECHEN.map((f) => (
               <span class="sz06-zeile">
                 <span class="sz06-box"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span>
-                <span class="sz06-name">{f.name}</span>
-                <span class="sz06-wert">{f.wert}</span>
+                <span class="sz06-name" data-p={`aName${f}`}>{W[`aName${f}`]}</span>
+                <span class="sz06-wert" data-p={`aWert${f}`}>{W[`aWert${f}`]}</span>
               </span>
             ))}
           </div>
 
           <!-- Farbe -->
           <div class="bm-karte sz06-block">
-            <span class="sz06-ueber">Farbe <span class="sz06-farbname">Wände: Salbei · Decke: Weiß</span></span>
+            <span class="sz06-ueber"><span data-p="aWahlTitel">{W.aWahlTitel}</span> <span class="sz06-farbname" data-p="aWahl">{W.aWahl}</span></span>
             <span class="sz06-farben">
               {FARBEN.map((f) => (
                 <span class:list={['sz06-farbe', `sz06-farbe--${f}`]}>{f === 'salbei' && <span class="sz06-wahl"></span>}</span>
@@ -118,7 +116,7 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
   .sz06-marke { flex: none; display: grid; place-items: center; width: calc(36 * var(--px)); height: calc(36 * var(--px)); border-radius: var(--bsp-r-m); background: var(--bsp-tinte);
     color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; }
   .sz06-kopf-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
-  .sz06-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; letter-spacing: -0.01em; color: var(--bsp-text); white-space: nowrap; }
+  .sz06-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; letter-spacing: -0.01em; color: var(--bsp-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sz06-termin { font-size: var(--bsp-schrift-s); padding: calc(4 * var(--px)) var(--bsp-a3); }
 
   /* Raster: links Formular, rechts Unterschrift + Abschicken */
@@ -133,12 +131,12 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
   .sz06-box { flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: calc(5 * var(--px));
     border: calc(1.5 * var(--px)) solid var(--bsp-tuerkis-dunkel); background: var(--bsp-flaeche); }
   .sz06-box svg { width: 80%; height: 80%; fill: none; stroke: var(--bsp-tinte); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
-  .sz06-name { flex: 1; min-width: 0; color: var(--bsp-text); white-space: nowrap; }
+  .sz06-name { flex: 1; min-width: 0; color: var(--bsp-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sz06-wert { flex: none; min-width: calc(74 * var(--px)); padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-papier);
     border: calc(1 * var(--px)) solid var(--bsp-linie-grau); font-weight: 650; color: var(--bsp-text); text-align: right; white-space: nowrap; }
 
   /* Farbe */
-  .sz06-farbname { margin-left: auto; font-size: var(--bsp-schrift-xs); font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--bsp-text-leise); white-space: nowrap; }
+  .sz06-farbname { margin-left: auto; font-size: var(--bsp-schrift-xs); font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--bsp-text-leise); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .sz06-farben { display: flex; gap: var(--bsp-a3); padding: calc(2 * var(--px)) 0; }
   .sz06-farbe { position: relative; width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: 50%; box-shadow: inset 0 0 0 calc(1 * var(--px)) rgb(0 0 0 / 10%); }
   .sz06-farbe--weiss { background: #f4f2ec; }
@@ -180,22 +178,22 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
 
   /* Übergänge (gelten in beide Richtungen) */
   .sz06-box svg, .sz06-wert, .sz06-farbname { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz06-zeile:nth-of-type(2) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.1s); }
-  .sz06-zeile:nth-of-type(2) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 0.3s); }
-  .sz06-zeile:nth-of-type(3) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.45s); }
-  .sz06-zeile:nth-of-type(3) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 0.65s); }
-  .sz06-zeile:nth-of-type(4) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + 0.8s); }
-  .sz06-zeile:nth-of-type(4) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + 1s); }
-  .sz06-wahl { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.15s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.15s; }
-  .sz06-farbname { transition-delay: 0.3s; }
+  .sz06-zeile:nth-of-type(2) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + calc(0.1s * var(--bsp-t, 1))); }
+  .sz06-zeile:nth-of-type(2) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + calc(0.3s * var(--bsp-t, 1))); }
+  .sz06-zeile:nth-of-type(3) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + calc(0.45s * var(--bsp-t, 1))); }
+  .sz06-zeile:nth-of-type(3) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + calc(0.65s * var(--bsp-t, 1))); }
+  .sz06-zeile:nth-of-type(4) .sz06-wert { transition-delay: calc(var(--bsp-auftritt) + calc(0.8s * var(--bsp-t, 1))); }
+  .sz06-zeile:nth-of-type(4) .sz06-box svg { transition-delay: calc(var(--bsp-auftritt) + calc(1s * var(--bsp-t, 1))); }
+  .sz06-wahl { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(0.15s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.15s * var(--bsp-t, 1)); }
+  .sz06-farbname { transition-delay: calc(0.3s * var(--bsp-t, 1)); }
   .sz06-foto, .sz06-anzahl { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz06-foto--1 { transition-delay: 0.45s; }
-  .sz06-foto--2 { transition-delay: 0.7s; }
-  .sz06-foto--3 { transition-delay: 0.95s; }
-  .sz06-anzahl { transition-delay: 1.05s; }
-  .sz06-decke, .sz06-bahn { transition: transform 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.2s; }
+  .sz06-foto--1 { transition-delay: calc(0.45s * var(--bsp-t, 1)); }
+  .sz06-foto--2 { transition-delay: calc(0.7s * var(--bsp-t, 1)); }
+  .sz06-foto--3 { transition-delay: calc(0.95s * var(--bsp-t, 1)); }
+  .sz06-anzahl { transition-delay: calc(1.05s * var(--bsp-t, 1)); }
+  .sz06-decke, .sz06-bahn { transition: transform calc(1.2s * var(--bsp-t, 1)) cubic-bezier(0.45, 0.05, 0.55, 0.95) calc(0.2s * var(--bsp-t, 1)); }
   .sz06-stift { transition: opacity var(--bsp-dauer-kurz) ease; }
-  .sz06-knopf-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.55s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.55s; }
+  .sz06-knopf-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(0.55s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.55s * var(--bsp-t, 1)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: keine Werte, Kästchen leer */
@@ -210,11 +208,11 @@ const FARBEN = ['weiss', 'salbei', 'sand', 'taube', 'anthrazit'];
   .sz06[data-phase]:not([data-erreicht~="3"]) .sz06-decke { transform: scaleX(1); }
   .sz06[data-phase]:not([data-erreicht~="3"]) .sz06-bahn { transform: translateX(-100%); }
   /* Phase 3: Stift sichtbar, solange gezeichnet wird; wackelt leicht mit der Schrift */
-  .sz06[data-phase="3"] .sz06-stift { opacity: 1; animation: sz06-schreiben 0.3s ease-in-out 0.2s 4 alternate both; }
+  .sz06[data-phase="3"] .sz06-stift { opacity: 1; animation: sz06-schreiben calc(0.3s * var(--bsp-t, 1)) ease-in-out calc(0.2s * var(--bsp-t, 1)) 4 alternate both; }
   /* vor Phase 4: noch nicht abgeschickt */
   .sz06[data-phase]:not([data-erreicht~="4"]) .sz06-knopf-ok { opacity: 0; transform: scale(0.92); }
   /* Phase 4: Finger tippt auf „Abschicken“ */
-  .sz06[data-phase="4"] .sz06-tipp { animation: bm-tippen 0.75s var(--bsp-ease) 0.05s both; }
+  .sz06[data-phase="4"] .sz06-tipp { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.05s * var(--bsp-t, 1)) both; }
 
   @keyframes sz06-schreiben { from { transform: rotate(24deg) translateY(0); } to { transform: rotate(20deg) translateY(calc(-10 * var(--px))); } }
 </style>

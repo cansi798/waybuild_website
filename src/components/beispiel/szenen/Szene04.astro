@@ -11,10 +11,12 @@
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Handy from '../geraete/Handy.astro';
+import { STANDARD, werte } from '../branchen';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
 
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 const WOCHENTAGE = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 // art: 'vorbei' (blass), 'heute' (Ring), 'frei' (Punkt), 'zu' (Wochenende/voll, blass), 'ziel' (Do 19.)
 type Tag = { t: number; art: 'vorbei' | 'heute' | 'frei' | 'zu' | 'ziel' };
@@ -36,8 +38,8 @@ const ZEITEN = [
         <div class="sz04-kopf">
           <span class="sz04-zurueck"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg></span>
           <span class="sz04-kopf-text">
-            <span class="bm-titel">Besichtigung buchen</span>
-            <span class="bm-klein">Malerbetrieb Muster</span>
+            <span class="bm-titel" data-p="terminBuchen">{W.terminBuchen}</span>
+            <span class="bm-klein" data-p="firma">{W.firma}</span>
           </span>
         </div>
 
@@ -71,8 +73,8 @@ const ZEITEN = [
         </div>
 
         <div class="bm-karte sz04-info">
-          <p><span class="sz04-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0113 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" /></svg></span>Bei Ihnen zu Hause, Musterstadt</p>
-          <p><span class="sz04-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><path d="M12 7.5V12l3 2" /></svg></span>ca. 30 Minuten · kostenlos</p>
+          <p><span class="sz04-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0113 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" /></svg></span><span data-p="terminOrt">{W.terminOrt}</span></p>
+          <p><span class="sz04-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><path d="M12 7.5V12l3 2" /></svg></span><span data-p="terminDauer">{W.terminDauer}</span></p>
         </div>
 
         <span class="bm-knopf sz04-bestaetigen">Termin bestätigen<span class="bm-tipp sz04-tipp sz04-tipp--knopf"></span></span>
@@ -85,7 +87,7 @@ const ZEITEN = [
         <span class="sz04-haken"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>
         <p class="sz04-blatt-titel">Termin steht</p>
         <p class="sz04-blatt-termin">Donnerstag, 19.11. · 10:00 Uhr</p>
-        <p class="bm-klein sz04-blatt-info">Besichtigung bei Ihnen zu Hause<br />Bestätigung kommt per E-Mail</p>
+        <p class="bm-klein sz04-blatt-info"><span data-p="terminInfo">{W.terminInfo}</span><br />Bestätigung kommt per E-Mail</p>
         <span class="bm-chip bm-chip--ok sz04-blatt-chip">✓ Im Kalender eingetragen</span>
       </div>
     </div>
@@ -155,30 +157,30 @@ const ZEITEN = [
   .sz04-blatt-chip { margin-top: calc(4 * var(--px)); }
 
   /* Übergänge (in beide Richtungen) */
-  .sz04-tag-an, .sz04-slot-an { transition: opacity var(--bsp-dauer-kurz) ease 0.45s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.45s; }
+  .sz04-tag-an, .sz04-slot-an { transition: opacity var(--bsp-dauer-kurz) ease calc(0.45s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.45s * var(--bsp-t, 1)); }
   .sz04-zeiten-titel, .sz04-slot { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
-  .sz04-zeiten-titel { transition-delay: 0.75s; }
-  .sz04-slot--1 { transition-delay: 0.85s; } .sz04-slot--2 { transition-delay: 0.93s; } .sz04-slot--3 { transition-delay: 1.01s; }
-  .sz04-slot--4 { transition-delay: 1.09s; } .sz04-slot--5 { transition-delay: 1.17s; } .sz04-slot--6 { transition-delay: 1.25s; }
-  .sz04-slot--ziel { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.93s, transform var(--bsp-dauer) var(--bsp-ease) 0.93s; }
-  .sz04-bestaetigen { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.5s; }
-  .sz04-schleier { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.7s; }
-  .sz04-blatt { transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) 0.75s; }
-  .sz04-haken { transition: opacity var(--bsp-dauer-kurz) ease 1.2s, transform 0.7s var(--bsp-ease-feder) 1.2s; }
+  .sz04-zeiten-titel { transition-delay: calc(0.75s * var(--bsp-t, 1)); }
+  .sz04-slot--1 { transition-delay: calc(0.85s * var(--bsp-t, 1)); } .sz04-slot--2 { transition-delay: calc(0.93s * var(--bsp-t, 1)); } .sz04-slot--3 { transition-delay: calc(1.01s * var(--bsp-t, 1)); }
+  .sz04-slot--4 { transition-delay: calc(1.09s * var(--bsp-t, 1)); } .sz04-slot--5 { transition-delay: calc(1.17s * var(--bsp-t, 1)); } .sz04-slot--6 { transition-delay: calc(1.25s * var(--bsp-t, 1)); }
+  .sz04-slot--ziel { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.93s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease) calc(0.93s * var(--bsp-t, 1)); }
+  .sz04-bestaetigen { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.5s * var(--bsp-t, 1)); }
+  .sz04-schleier { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.7s * var(--bsp-t, 1)); }
+  .sz04-blatt { transition: transform calc(0.75s * var(--bsp-t, 1)) cubic-bezier(0.2, 0.9, 0.3, 1) calc(0.75s * var(--bsp-t, 1)); }
+  .sz04-haken { transition: opacity var(--bsp-dauer-kurz) ease calc(1.2s * var(--bsp-t, 1)), transform calc(0.7s * var(--bsp-t, 1)) var(--bsp-ease-feder) calc(1.2s * var(--bsp-t, 1)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: kein Tag gewählt, keine Uhrzeiten */
   .sz04[data-phase]:not([data-erreicht~="1"]) .sz04-tag-an { opacity: 0; transform: scale(0.5); }
   .sz04[data-phase]:not([data-erreicht~="1"]) .sz04-zeiten-titel,
   .sz04[data-phase]:not([data-erreicht~="1"]) .sz04-slot { opacity: 0; transform: translateY(calc(10 * var(--px))); }
-  .sz04[data-phase="1"] .sz04-tipp--tag { animation: bm-tippen 0.75s var(--bsp-ease) var(--bsp-auftritt) both; }
+  .sz04[data-phase="1"] .sz04-tipp--tag { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt) both; }
   /* vor Phase 2: keine Uhrzeit, Knopf blass */
   .sz04[data-phase]:not([data-erreicht~="2"]) .sz04-slot-an { opacity: 0; transform: scale(0.85); }
   .sz04[data-phase]:not([data-erreicht~="2"]) .sz04-bestaetigen { opacity: 0.35; }
-  .sz04[data-phase="2"] .sz04-tipp--zeit { animation: bm-tippen 0.75s var(--bsp-ease) var(--bsp-auftritt) both; }
+  .sz04[data-phase="2"] .sz04-tipp--zeit { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt) both; }
   /* vor Phase 3: Bestätigung noch unten verborgen */
   .sz04[data-phase]:not([data-erreicht~="3"]) .sz04-schleier { opacity: 0; }
   .sz04[data-phase]:not([data-erreicht~="3"]) .sz04-blatt { transform: translateY(105%); }
   .sz04[data-phase]:not([data-erreicht~="3"]) .sz04-haken { opacity: 0; transform: scale(0.3); }
-  .sz04[data-phase="3"] .sz04-tipp--knopf { animation: bm-tippen 0.75s var(--bsp-ease) var(--bsp-auftritt) both; }
+  .sz04[data-phase="3"] .sz04-tipp--knopf { animation: bm-tippen calc(0.75s * var(--bsp-t, 1)) var(--bsp-ease) var(--bsp-auftritt) both; }
 </style>

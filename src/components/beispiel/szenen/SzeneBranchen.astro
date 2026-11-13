@@ -1,0 +1,73 @@
+---
+// Branchen-Wechsel „Und in Ihrer Branche?“ nach Szene 13 (Jamil, Talk qh87y3sj #5709–#5715 + Änderung 08:57, 13.11.2026:
+// „Punkt 2 (Branchen-Wechsel/‚geht alles‘) finde ich sehr gut“). Nur im Film ohne eigene Auswahl. Handy: der Suchtreffer
+// wechselt im Takt die Branche (Maler, Elektriker, Fotograf, Fahrschule, Coach … oder bei Ihnen?), darunter kommen die
+// Bausteine nacheinander dazu (Terminbuchung, Preisrechner, Kundenportal, Bewertungen, WhatsApp-Anbindung, Rechnungen …).
+// Phasen (1): 0 Ausgang, 1 Wechsel läuft (reine CSS-Keyframes, etwa 3 s). Endzustand (ohne JS, reduziert) = „… oder bei Ihnen?“
+// + alle Bausteine. Aufbau wie Szene01.astro (docs/beispiel-szenen-anleitung.md).
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Handy from '../geraete/Handy.astro';
+import { BEISPIEL_BRANCHEN } from '../../../config/beispiel';
+
+const B = BEISPIEL_BRANCHEN;
+---
+
+<SzeneRahmen nr={14} phasen={1} takt={1000} format="hoch">
+  <Handy>
+    <div class="bm-app szb-app">
+      <p class="bm-titel">Suchergebnisse</p>
+      <div class="bm-karte bm-karte--marke szb-treffer">
+        <span class="szb-stapel">
+          {B.wechsel.map((n, i) => <span class:list={['szb-name', `szb-name--${i + 1}`]}>{n}</span>)}
+          <span class="szb-name szb-name--ende">{B.oder}</span>
+        </span>
+        <p class="szb-wertung"><strong>4,9</strong> <span class="bm-sterne">★★★★★</span></p>
+        <p class="bm-klein">Musterstadt · Heute geöffnet</p>
+      </div>
+      <p class="szb-ueber">Bausteine nach Bedarf</p>
+      <p class="szb-bausteine">
+        {B.bausteine.map((b, i) => <span class:list={['bm-chip', 'szb-baustein', `szb-baustein--${i + 1}`]}>+ {b}</span>)}
+      </p>
+    </div>
+  </Handy>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Branchen-Wechsel – alle Regeln mit .sz14 / .szb- (global, eindeutig). GRUNDFORM = ENDZUSTAND. ===== */
+  .szb-app { gap: var(--bsp-a3); padding-top: var(--bsp-a3); }
+  .szb-treffer { display: flex; flex-direction: column; gap: calc(4 * var(--px)); }
+  .szb-treffer p { margin: 0; }
+  .szb-stapel { display: grid; min-height: calc(28 * var(--px)); align-items: center; }
+  .szb-name { grid-area: 1 / 1; font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; color: var(--bsp-text); opacity: 0; }
+  .szb-name--ende { opacity: 1; color: var(--bsp-tinte); }
+  .szb-wertung { display: flex; align-items: center; gap: calc(4 * var(--px)); font-size: var(--bsp-schrift-s); }
+  .szb-ueber { margin: var(--bsp-a2) 0 0; font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bsp-tinte); }
+  .szb-bausteine { display: flex; flex-wrap: wrap; gap: var(--bsp-a2); margin: 0; }
+  .szb-baustein { font-size: var(--bsp-schrift-s); padding: calc(5 * var(--px)) var(--bsp-a3); background: var(--bsp-weiss); box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); }
+
+  /* Film: Namen wechseln im Takt (0,42 s je Branche), dann bleibt „… oder bei Ihnen?“; Bausteine kommen nacheinander dazu */
+  .sz14[data-phase] .szb-name--ende { opacity: 0; }
+  .sz14[data-phase] .szb-baustein { opacity: 0; transform: translateY(calc(8 * var(--px))); }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name { animation: szb-kurz 0.42s linear both; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--1 { animation-delay: 0.1s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--2 { animation-delay: 0.52s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--3 { animation-delay: 0.94s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--4 { animation-delay: 1.36s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--5 { animation-delay: 1.78s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-name--ende { animation: szb-bleibt 0.3s ease 2.2s both; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein { animation: szb-dazu 0.35s var(--bsp-ease) both; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--1 { animation-delay: 0.3s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--2 { animation-delay: 0.55s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--3 { animation-delay: 0.8s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--4 { animation-delay: 1.05s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--5 { animation-delay: 1.3s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--6 { animation-delay: 1.55s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--7 { animation-delay: 1.8s; }
+  .sz14[data-aktiv][data-erreicht~="1"] .szb-baustein--8 { animation-delay: 2.05s; }
+  /* nach dem Wechsel (Szene vorbei, Phase steht): Endzustand */
+  .sz14[data-erreicht~="1"]:not([data-aktiv]) .szb-name--ende { opacity: 1; }
+  .sz14[data-erreicht~="1"]:not([data-aktiv]) .szb-baustein { opacity: 1; transform: none; }
+  @keyframes szb-kurz { 0% { opacity: 0; transform: translateY(40%); } 18%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-40%); } }
+  @keyframes szb-bleibt { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
+  @keyframes szb-dazu { from { opacity: 0; transform: translateY(calc(8 * var(--px))); } to { opacity: 1; transform: none; } }
+</style>

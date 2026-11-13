@@ -10,19 +10,21 @@
 //   3  Positionen 3 und 4 erscheinen
 //   4  Gesamtpreis + Hinweis „Zur Prüfung an den Meister“; KI-Symbol ruht mit Haken
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 4.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Laptop from '../geraete/Laptop.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
 // Beispielpreise (netto 1.115,00 € + 19 % = 1.326,85 €)
 const POSTEN = [
-  { name: 'Abdecken und Abkleben', menge: 'pauschal', preis: '140,00 €' },
-  { name: 'Decke streichen, Weiß', menge: '25 m²', preis: '225,00 €' },
-  { name: 'Wände streichen, Salbei', menge: '62 m²', preis: '620,00 €' },
-  { name: 'Risse spachteln', menge: '2 Std.', preis: '130,00 €' },
-];
+  { name: 'pName0', menge: 'pMenge0', preis: 'pPreis0' },
+  { name: 'pName1', menge: 'pMenge1', preis: 'pPreis1' },
+  { name: 'pName2', menge: 'pMenge2', preis: 'pPreis2' },
+  { name: 'anpName', menge: 'anpMengeAlt', preis: 'anpPreisAlt' },
+]; // Schlüssel in W
 ---
 
 <SzeneRahmen nr={7} phasen={4} takt={1500} format="quer" variante={variante}>
@@ -30,7 +32,7 @@ const POSTEN = [
     <div class="sz07-app">
       <!-- Seitenleiste der Büro-Software (Gerippe) -->
       <div class="sz07-leiste">
-        <span class="sz07-logo">M</span>
+        <span class="sz07-logo" data-p="kuerzel">{W.kuerzel}</span>
         <span class="sz07-nav"></span><span class="sz07-nav sz07-nav--an"></span><span class="sz07-nav"></span><span class="sz07-nav"></span>
       </div>
 
@@ -45,11 +47,11 @@ const POSTEN = [
           <div class="bm-karte sz07-aufnahme">
             <span class="sz07-ueber"><span class="bm-chip">Neu</span> Aufnahme</span>
             <span class="sz07-name">Frau Weber</span>
-            <span class="bm-klein sz07-ort">Wohnzimmer</span>
-            <span class="sz07-mini"><span>Wände</span><b>62 m²</b></span>
-            <span class="sz07-mini"><span>Decke</span><b>25 m²</b></span>
-            <span class="sz07-mini"><span>Risse</span><b>2</b></span>
-            <span class="sz07-farbe"><i></i> Salbei</span>
+            <span class="bm-klein sz07-ort" data-p="projekt">{W.projekt}</span>
+            <span class="sz07-mini"><span data-p="aKurz0">{W.aKurz0}</span><b data-p="aKurzWert0">{W.aKurzWert0}</b></span>
+            <span class="sz07-mini"><span data-p="aKurz1">{W.aKurz1}</span><b data-p="aKurzWert1">{W.aKurzWert1}</b></span>
+            <span class="sz07-mini"><span data-p="aKurz2">{W.aKurz2}</span><b data-p="aKurzWert2">{W.aKurzWert2}</b></span>
+            <span class="sz07-farbe"><i></i> <span data-p="aWahlKurz">{W.aWahlKurz}</span></span>
             <span class="sz07-fotos"><i></i><i></i><i></i></span>
             <svg class="sz07-unterschrift" viewBox="0 0 120 30"><path d="M6 12c2 9 4 14 6 15s4-11 6-11 3 12 5 11 4-14 7-16M34 22c3 1 7-1 7-4s-5-2-5 1c0 5 5 6 9 3M52 6c-1 8-1 15 0 19s6 2 7-2-3-6-7-3M64 22c3 1 7-1 7-4s-5-2-5 1c0 5 5 6 9 3M80 24c1-4 2-6 4-7s3 1 4 0M90 22c6 3 15 2 26-3" /></svg>
           </div>
@@ -69,7 +71,7 @@ const POSTEN = [
           <div class="sz07-blatt">
             <span class="sz07-blatt-kopf">
               <span class="sz07-blatt-titel">Angebotsvorschlag</span>
-              <span class="bm-klein">Frau Weber · Wohnzimmer</span>
+              <span class="bm-klein" data-p="kundeProjekt">{W.kundeProjekt}</span>
             </span>
             <span class="sz07-vorschlag">
               <svg viewBox="0 0 24 24"><path d="M12 2.5c.6 4.6 2.4 7.4 7.5 9.5-5.1 2.1-6.9 4.9-7.5 9.5-.6-4.6-2.4-7.4-7.5-9.5 5.1-2.1 6.9-4.9 7.5-9.5z" /></svg>
@@ -78,16 +80,16 @@ const POSTEN = [
             <span class="sz07-posten-liste">
               {POSTEN.map((p, i) => (
                 <span class:list={['sz07-posten', `sz07-posten--${i + 1}`]}>
-                  <span class="sz07-posten-name">{p.name}<span class="sz07-menge">{p.menge}</span></span>
-                  <span class="sz07-preis">{p.preis}</span>
+                  <span class="sz07-posten-name"><span data-p={p.name}>{W[p.name]}</span><span class="sz07-menge" data-p={p.menge}>{W[p.menge]}</span></span>
+                  <span class="sz07-preis" data-p={p.preis}>{W[p.preis]}</span>
                 </span>
               ))}
             </span>
             <span class="sz07-summe">
               <span class="sz07-summe-text">Gesamt <span>inkl. MwSt.</span></span>
-              <span class="sz07-summe-preis">1.326,85 €</span>
+              <span class="sz07-summe-preis" data-p="summeAlt">{W.summeAlt}</span>
             </span>
-            <span class="sz07-weiter"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" /></svg> Zur Prüfung an den Meister</span>
+            <span class="sz07-weiter"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" /></svg> Zur Prüfung <span data-p="chefAn">{W.chefAn}</span></span>
           </div>
         </div>
       </div>
@@ -167,13 +169,13 @@ const POSTEN = [
   /* Übergänge (gelten in beide Richtungen) */
   .sz07-aufnahme, .sz07-blatt, .sz07-posten, .sz07-summe, .sz07-weiter { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
   .sz07-aufnahme { transition-delay: var(--bsp-auftritt); }
-  .sz07-blatt { transition-delay: calc(var(--bsp-auftritt) + 0.75s); }
-  .sz07-ki, .sz07-ki-text { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.45s), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(var(--bsp-auftritt) + 0.45s); }
-  .sz07-pfeil { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.35s); }
-  .sz07-ki-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.6s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.6s; }
-  .sz07-posten--2, .sz07-posten--4 { transition-delay: 0.35s; }
+  .sz07-blatt { transition-delay: calc(var(--bsp-auftritt) + calc(0.75s * var(--bsp-t, 1))); }
+  .sz07-ki, .sz07-ki-text { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.45s * var(--bsp-t, 1))), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(var(--bsp-auftritt) + calc(0.45s * var(--bsp-t, 1))); }
+  .sz07-pfeil { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + calc(0.35s * var(--bsp-t, 1))); }
+  .sz07-ki-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(0.6s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.6s * var(--bsp-t, 1)); }
+  .sz07-posten--2, .sz07-posten--4 { transition-delay: calc(0.35s * var(--bsp-t, 1)); }
   .sz07-summe-preis { display: inline-block; transition: transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz07-weiter { transition-delay: 0.45s; }
+  .sz07-weiter { transition-delay: calc(0.45s * var(--bsp-t, 1)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: Aufnahme, KI und Blatt noch nicht da */
@@ -183,11 +185,11 @@ const POSTEN = [
   .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-pfeil { opacity: 0; }
   .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-blatt { opacity: 0; transform: translateY(calc(16 * var(--px))); }
   /* KI arbeitet (Phase 1–3, solange gezeigt): Funke dreht sich, Ring pulsiert, Punkte wandern über den Pfeil */
-  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-funke { animation: sz07-drehen 2.4s linear infinite; }
-  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-ki-ring { animation: sz07-ring 1.4s ease-out infinite; }
-  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt { animation: sz07-wandern 1.5s linear infinite; }
-  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(2) { animation-delay: 0.5s; }
-  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(3) { animation-delay: 1s; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-funke { animation: sz07-drehen calc(2.4s * var(--bsp-t, 1)) linear infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-ki-ring { animation: sz07-ring calc(1.4s * var(--bsp-t, 1)) ease-out infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt { animation: sz07-wandern calc(1.5s * var(--bsp-t, 1)) linear infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(2) { animation-delay: calc(0.5s * var(--bsp-t, 1)); }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(3) { animation-delay: calc(1s * var(--bsp-t, 1)); }
   /* vor Phase 2: noch keine Positionen */
   .sz07[data-phase]:not([data-erreicht~="2"]) .sz07-posten--1,
   .sz07[data-phase]:not([data-erreicht~="2"]) .sz07-posten--2 { opacity: 0; transform: translateY(calc(10 * var(--px))); }

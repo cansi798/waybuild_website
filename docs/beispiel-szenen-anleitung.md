@@ -8,6 +8,24 @@ Animiertes Beispiel auf `/so-kann-es-laufen/` (Jamil, Talk qh87y3sj #5678/#5680,
 Verbindlich ist das Drehbuch (in `src/config/beispiel.ts` steht je Szene unter `bild`, was man sieht). Titel und Texte der
 Szenen stehen dort wörtlich und werden **nicht** geändert.
 
+> **Stand 13.11.2026 (Jamil, Talk qh87y3sj #5683/#5709–#5715 + Änderung 08:57): Film statt Scroll-Bühne, personalisiert.**
+> - Die Seite läuft wie ein **Film ohne Scrollen**: ein Bildschirm (Bühne = sichtbare Höhe), die Szenen wechseln von selbst
+>   (je 2–4 s: 3 Phasen 3,3 s, 4 Phasen 3,6 s, eigene Dauer per `SzeneRahmen dauer={…}`), Steuerleiste unten (Zurück,
+>   Pause/Abspielen, Weiter, Segment je Szene, Branche ändern), Tastatur (Leertaste, Pfeile), Autoplay nur sichtbar/Tab
+>   sichtbar, reduzierte Bewegung = Endzustände ohne Autoplay. Ablauf: `src/scripts/beispiel.ts` (die Scroll-Engine
+>   `buehne-kern.ts` nutzt nur noch die Kundenreise).
+> - **Personalisierung:** Vor dem Start wählt der Besucher seine Branche und optional seinen Firmennamen. Alle
+>   branchen-abhängigen Texte der Szenen tragen `data-p="<schlüssel>"`; die Werte kommen aus
+>   `src/components/beispiel/branchen.ts` (`werte(branche, firma)`, eine Datenstruktur je Branche, leicht erweiterbar).
+>   Die Szenen rendern die Standardbranche (Maler, Drehbuch wörtlich); im Browser setzt das Skript **nur textContent**.
+>   Neue Texte in Szenen immer so einbauen: `<span data-p="firma">{W.firma}</span>` mit `const W = werte(STANDARD)`.
+> - **Zeiten in Szenen-CSS** stehen als `calc(Xs * var(--bsp-t, 1))`; im Film ist `--bsp-t: 0.6` (gestrafft), ebenso die
+>   Tokens `--bsp-dauer*`, `--bsp-auftritt`. Neue Zeiten bitte genauso schreiben.
+> - **Finger auf ein Ziel:** Element mit `data-ziel="<Selektor>"` bekommt in der letzten Phase `--ziel-x/--ziel-y` (Mitte
+>   des Ziels relativ zur Szene, gemessen) – so tippt der Finger in Szene 1 in jeder Breite genau auf „Website“.
+> - **Safari:** Geräte haben ihre Breite ausdrücklich aus der Höhe (nicht nur `aspect-ratio`), sonst fällt ein Gerät in
+>   einem inhaltsbreiten Eltern-Element in WebKit auf Breite 0 (Fehler Szene 8/9).
+
 ---
 
 ## 1. Was wo liegt
@@ -19,7 +37,8 @@ Szenen stehen dort wörtlich und werden **nicht** geändert.
 | `src/components/beispiel/geraete/Handy.astro`, `Tablet.astro`, `Laptop.astro` | Gerätezeichnungen, Bildschirm = Slot | nur benutzen |
 | `src/styles/beispiel-mockup.css` | Tokens (Farben, Größen, Bewegung), Geräte, Bausteine `bm-*`, Keyframes | nur benutzen |
 | `src/styles/beispiel.css` | Bühne/Karten (Layout, Leiste, Übergänge zwischen Szenen) | nicht ändern |
-| `src/scripts/beispiel.ts` | Engine (setzt Phasen), Kern `src/scripts/buehne-kern.ts` (auch Kundenreise!) | nicht ändern |
+| `src/scripts/beispiel.ts` | Film-Ablauf (Schritte, Phasen, Steuerung, Personalisierung) | nicht ändern |
+| `src/components/beispiel/branchen.ts` | Branchen-Daten + `werte()` (alle personalisierten Texte) | Branchen ergänzen |
 | `src/config/beispiel.ts` | Titel, Texte, Drehbuch-Notizen, Schluss, Teaser | nicht ändern |
 | `src/components/beispiel/BeispielBuehne.astro`, `BeispielTeaser.astro`, `Platzhalter.astro` | Bühne, Teaser, Platzhalter | nicht ändern |
 

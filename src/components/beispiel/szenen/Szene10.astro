@@ -12,12 +12,14 @@
 //   3  ✓ Angenommen: Knopf wird grün, Status „Angebot angenommen“, Schritt abgehakt, Ausführung ist der nächste Schritt,
 //      Hinweis „Der Betrieb ist informiert.“
 // Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 3.
+import { STANDARD, werte } from '../branchen';
 import SzeneRahmen from '../SzeneRahmen.astro';
 import Laptop from '../geraete/Laptop.astro';
 import PortalKopf from './10-13/PortalKopf.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+const W = werte(STANDARD); // Standardbranche; data-p = Schlüssel aus branchen.ts (Personalisierung im Browser)
 
 const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
 ---
@@ -31,8 +33,8 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
         <div class="sz10-spalte">
           <div class="bm-karte sz10-auftrag sz10-ein sz10-ein--1">
             <p class="bm-klein">Ihr Auftrag</p>
-            <p class="sz10-auftrag-titel">Wohnzimmer streichen</p>
-            <p class="bm-klein">Wände in Salbei · Decke in Weiß</p>
+            <p class="sz10-auftrag-titel" data-p="auftrag">{W.auftrag}</p>
+            <p class="bm-klein" data-p="detail">{W.detail}</p>
             <span class="sz10-status">
               <span class="bm-chip sz10-status-offen"><i></i>Angebot liegt vor</span>
               <span class="bm-chip bm-chip--ok sz10-status-an"><i></i>Angebot angenommen</span>
@@ -43,7 +45,7 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
             <ol class="sz10-liste">
               <li class="sz10-schritt sz10-schritt--fertig">
                 <span class="sz10-punkt"><svg viewBox="0 0 24 24" set:html={haken} /></span>
-                <span class="sz10-was">Besichtigung</span><span class="sz10-wann">Do, 19.11.</span>
+                <span class="sz10-was" data-p="terminArt">{W.terminArt}</span><span class="sz10-wann">Do, 19.11.</span>
               </li>
               <li class="sz10-schritt sz10-schritt--angebot">
                 <span class="sz10-punkt"><i class="sz10-ring"></i><svg class="sz10-haken" viewBox="0 0 24 24" set:html={haken} /></span>
@@ -56,7 +58,7 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
               </li>
               <li class="sz10-schritt">
                 <span class="sz10-punkt"></span>
-                <span class="sz10-was">Abnahme</span><span class="sz10-wann">danach</span>
+                <span class="sz10-was" data-p="abnahme">{W.abnahme}</span><span class="sz10-wann">danach</span>
               </li>
               <li class="sz10-schritt">
                 <span class="sz10-punkt"></span>
@@ -70,8 +72,8 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
         <div class="sz10-spalte">
           <div class="bm-karte bm-karte--marke sz10-angebot sz10-ein sz10-ein--3">
             <p class="sz10-angebot-kopf"><span class="bm-klein">Angebot Nr. A-041</span><span class="bm-chip">PDF</span></p>
-            <p class="sz10-angebot-was">Malerarbeiten Wohnzimmer</p>
-            <p class="sz10-preis">1.404,20 €</p>
+            <p class="sz10-angebot-was" data-p="angebotTitel">{W.angebotTitel}</p>
+            <p class="sz10-preis" data-p="summeNeu">{W.summeNeu}</p>
             <p class="bm-klein">inkl. MwSt.</p>
             <span class="sz10-knopfbox">
               <span class="bm-knopf sz10-annehmen">Angebot annehmen</span>
@@ -113,7 +115,7 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz10-liste { list-style: none; margin: 0; padding: 0; }
   .sz10-schritt { position: relative; display: flex; align-items: center; gap: var(--bsp-a2); height: calc(29 * var(--px)); font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
   .sz10-schritt + .sz10-schritt { border-top: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
-  .sz10-was { flex: 1; min-width: 0; white-space: nowrap; }
+  .sz10-was { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sz10-wann { flex: none; font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); }
   .sz10-punkt { position: relative; flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: 50%;
     box-shadow: inset 0 0 0 calc(1.5 * var(--px)) #c5cfcd; }
@@ -169,9 +171,9 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz10-status > *, .sz10-stapel > *, .sz10-ring { transition: opacity var(--bsp-dauer-kurz) ease; }
   .sz10-annehmen { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer-kurz) ease; }
   .sz10 .sz10-angenommen { transition: opacity var(--bsp-dauer-kurz) ease, transform var(--bsp-dauer) var(--bsp-ease-feder); }
-  .sz10-haken { transition: opacity var(--bsp-dauer-kurz) ease 0.15s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.15s; }
-  .sz10-schritt--naechst::before, .sz10-schritt--naechst .sz10-punkt { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.3s; }
-  .sz10-hinweis { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.45s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.45s; }
+  .sz10-haken { transition: opacity var(--bsp-dauer-kurz) ease calc(0.15s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.15s * var(--bsp-t, 1)); }
+  .sz10-schritt--naechst::before, .sz10-schritt--naechst .sz10-punkt { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.3s * var(--bsp-t, 1)); }
+  .sz10-hinweis { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(0.45s * var(--bsp-t, 1)), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(0.45s * var(--bsp-t, 1)); }
 
   /* ── Vorzustände (nur mit Engine) ── */
   /* vor Phase 1: nur die Kopfzeile */
@@ -191,8 +193,8 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz10[data-phase]:not([data-erreicht~="3"]) .sz10-schritt--naechst .sz10-wann { color: var(--bsp-text-leise); font-weight: 400; }
   .sz10[data-phase]:not([data-erreicht~="3"]) .sz10-hinweis { opacity: 0; transform: translateY(calc(10 * var(--px))); }
   /* Phase 1: Knopf lädt sanft zum Klicken ein (nur solange gezeigt) */
-  .sz10[data-aktiv][data-phase="1"] .sz10-annehmen { animation: bm-puls 1.6s var(--bsp-ease) 1.1s infinite; }
+  .sz10[data-aktiv][data-phase="1"] .sz10-annehmen { animation: bm-puls calc(1.6s * var(--bsp-t, 1)) var(--bsp-ease) calc(1.1s * var(--bsp-t, 1)) infinite; }
   /* Phase 2: Finger tippt auf „Angebot annehmen“ */
-  .sz10[data-phase="2"] .sz10-tipp { animation: bm-tippen 0.8s var(--bsp-ease) 0.25s both; }
-  .sz10[data-phase="2"] .sz10-annehmen { transform: scale(0.97); transition-delay: 0.3s; }
+  .sz10[data-phase="2"] .sz10-tipp { animation: bm-tippen calc(0.8s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.25s * var(--bsp-t, 1)) both; }
+  .sz10[data-phase="2"] .sz10-annehmen { transform: scale(0.97); transition-delay: calc(0.3s * var(--bsp-t, 1)); }
 </style>
