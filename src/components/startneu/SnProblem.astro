@@ -1,11 +1,14 @@
 ---
-// Teil 2 „Problem“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810, erweitert #5819): neun typische Schmerzpunkte mit den ruhigen
-// Strichgrafiken aus /geschichte/ (geschichte/GGrafik.astro, die Jamil „sehr ansprechend“ findet, #5787) und darunter eine Liste
-// weiterer Alltagsprobleme, damit sichtbar wird, wie viel wir lösen. Kopf oben, Karten im Raster (Handy 1, Tablet 2, PC 3 Spalten);
-// am Handy steht die Grafik klein neben dem Text.
+// Teil 2 „Problem“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810, erweitert #5819/#5826). Seit #5828 („die Problemkarten sind
+// zu viele … smarter per Animation, mit der Maus drüberfahren, mobil per Klick“) keine Kartenwand mehr, sondern eine Liste:
+// - PC mit Maus (ab 1000 px, hover): links alle Probleme als Zeilen, rechts eine Bildfläche mit Strichgrafik (geschichte/GGrafik)
+//   und Text des Problems unter der Maus bzw. im Fokus. Solange niemand eingreift, wechselt sie im Sichtbereich von selbst.
+// - Handy/Tablet: Aufklappliste, Tippen öffnet ein Problem (eins zur Zeit).
+// - Ohne JS: alles offen untereinander. Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pp*).
 import GGrafik from '../geschichte/GGrafik.astro';
 import Icon from '../Icon.astro';
 import { PROBLEM as T } from '../../config/startneu';
+const zwei = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <section class="section sn sn-problem" id="problem" aria-labelledby="sn-problem-h">
@@ -18,19 +21,32 @@ import { PROBLEM as T } from '../../config/startneu';
       <p class="sn-lead">{T.lead}</p>
     </div>
 
-    <ul class="sn-schmerzen">
-      {T.punkte.map((p) => (
-        <li class="sn-schmerz reveal">
-          <div class="sn-schmerz__bild"><GGrafik name={p.grafik} suche="Betrieb in der Nähe" /></div>
-          <div class="sn-schmerz__text">
-            <h3 class="sn-h3">{p.titel}</h3>
-            <p>{p.text}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div class="sn-pfeld" data-pfeld>
+      <p class="sn-pfeld__hinweis" aria-hidden="true">
+        <span class="sn-pfeld__maus">{T.hinweisMaus}</span><span class="sn-pfeld__tippen">{T.hinweisTippen}</span>
+      </p>
+      <ul class="sn-pliste">
+        {T.punkte.map((p, i) => (
+          <li class:list={['sn-pp', { 'ist-aktiv': i === 0 }]} data-pp={i}>
+            <h3 class="sn-pp__kopf">
+              <button type="button" class="sn-pp__knopf" id={`sn-pk-${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`sn-pd-${i}`}>
+                <span class="sn-pp__nr" aria-hidden="true">{zwei(i)}</span>
+                <span class="sn-pp__titel">{p.titel}</span>
+                <span class="sn-pp__pfeil" aria-hidden="true"><Icon name="chevron" size={18} /></span>
+              </button>
+            </h3>
+            <div class="sn-pp__detail" id={`sn-pd-${i}`} role="region" aria-labelledby={`sn-pk-${i}`}>
+              <div class="sn-pp__innen">
+                <div class="sn-pp__bild"><GGrafik name={p.grafik} suche="Betrieb in der Nähe" /></div>
+                <p class="sn-pp__text">{p.text}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-    <div class="sn-problem__weitere reveal">
+    <div class="sn-problem__weitere">
       <h3 class="sn-problem__wtitel">{T.weitereTitel}</h3>
       <ul class="sn-problem__chips">
         {T.weitere.map((w) => <li>{w}</li>)}

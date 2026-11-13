@@ -1,6 +1,7 @@
 ---
 // Kleine Strichgrafiken zu den Schmerzpunkten (/geschichte/). Nur Schmuck (aria-hidden), der Inhalt steht im Text daneben.
 // Farben der CI: Türkis #00a6a1 / dunkel #004f4c, Papier #f7f5f0, Linie #ddd6c9, Warnton #c2410c (nur kleine Zeichen).
+// 'aenderung' + 'kosten' für die Startseite (Jamil #5826, 13.11.2026)
 // Grafik „suche“ zeigt den Suchbegriff der gewählten Branche (data-g="suchNaehe", Text setzt geschichte.ts per textContent).
 interface Props { name: string; suche?: string }
 const { name, suche = 'Maler in der Nähe' } = Astro.props;
@@ -81,6 +82,37 @@ const { name, suche = 'Maler in der Nähe' } = Astro.props;
     <rect x="58" y="74" width="28" height="9" rx="3" fill="#e9f6f5" />
     <circle cx="118" cy="58" r="26" fill="#fff" stroke="#c2410c" stroke-width="2.5" />
     <path d="M118 42v16l11 7" fill="none" stroke="#c2410c" stroke-width="2.5" stroke-linecap="round" />
+  </>)}
+  {name === 'aenderung' && (<>
+    <rect x="10" y="14" width="90" height="72" rx="9" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
+    <rect x="10" y="14" width="90" height="14" rx="9" fill="#efebe3" /><rect x="10" y="21" width="90" height="7" fill="#efebe3" />
+    <circle cx="19" cy="21" r="2.3" fill="#cdc6ba" /><circle cx="26" cy="21" r="2.3" fill="#cdc6ba" /><circle cx="33" cy="21" r="2.3" fill="#cdc6ba" />
+    <rect x="18" y="36" width="28" height="14" rx="3" fill="#e4dfd5" />
+    <rect x="52" y="37" width="38" height="5" rx="2.5" fill="#cdc6ba" /><rect x="52" y="46" width="28" height="5" rx="2.5" fill="#cdc6ba" />
+    <rect x="32" y="58" width="70" height="30" rx="5" fill="#fff" stroke="#004f4c" stroke-width="2" />
+    <path d="M44 90l-4 8 12-8" fill="#fff" stroke="#004f4c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+    <path d="M42 67h24" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
+    <text x="67" y="82" font-size="11" text-anchor="middle" font-family="Jost Variable, sans-serif" fill="#004f4c">Änderung?</text>
+    <path d="M117 26h24 M117 72h24" stroke="#004f4c" stroke-width="2" stroke-linecap="round" />
+    <path d="M120 26v5c0 9 9 14 9 18c0 4-9 9-9 18v5 M138 26v5c0 9-9 14-9 18c0 4 9 9 9 18v5" fill="none" stroke="#004f4c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M123 32h12q-2 7-6 9q-4-2-6-9z" fill="#00a6a1" opacity="0.55" />
+    <path d="M123 68q6-9 12 0z" fill="#00a6a1" />
+    <rect x="112" y="82" width="40" height="16" rx="8" fill="#c2410c" />
+    <text x="132" y="93.5" font-size="9.5" text-anchor="middle" font-family="Montserrat Variable, sans-serif" font-weight="700" fill="#fff">3 Wo.</text>
+  </>)}
+  {name === 'kosten' && (<>
+    <rect x="14" y="10" width="88" height="94" rx="6" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
+    <text x="24" y="28" font-size="11" font-family="Jost Variable, sans-serif" fill="#004f4c">Angebot</text>
+    <path d="M24 34h68" stroke="#ddd6c9" stroke-width="2" stroke-linecap="round" />
+    <rect x="24" y="42" width="38" height="5" rx="2.5" fill="#cdc6ba" /><rect x="72" y="42" width="20" height="5" rx="2.5" fill="#cdc6ba" />
+    <rect x="20" y="54" width="76" height="17" rx="4" fill="#fdeee6" />
+    <text x="26" y="66" font-size="9.5" font-family="Jost Variable, sans-serif" fill="#c2410c">Sonderwunsch</text>
+    <path d="M24 80h68" stroke="#ddd6c9" stroke-width="2" stroke-linecap="round" />
+    <text x="94" y="97" font-size="14" text-anchor="end" font-family="Montserrat Variable, sans-serif" font-weight="700" fill="#c2410c">+ 2.400 €</text>
+    <circle cx="130" cy="26" r="14" fill="#fff" stroke="#004f4c" stroke-width="2" />
+    <text x="130" y="32" font-size="16" text-anchor="middle" font-family="Montserrat Variable, sans-serif" font-weight="700" fill="#004f4c">€</text>
+    <path d="M112 96l10-10l8 6l18-34" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M140.2 62.9L148 58l.2 9.1" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
   </>)}
 </svg>
 

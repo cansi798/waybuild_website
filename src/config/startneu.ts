@@ -29,7 +29,8 @@ export const PRODUKTE = {
 /** Abschnitt 2: Problem. Neun Schmerzpunkte mit den Strichgrafiken aus /geschichte/ (eine je Grafik) und eine Liste weiterer
  *  Alltagsprobleme. Jamil #5819 (13.11.2026): „noch mehr typische Probleme … es soll nach vielen Problemen aussehen, für die wir
  *  eine Lösung haben“ (Prozesse nicht eingehalten, Nachrichten unbeantwortet, Kunde fragt nach Zwischenstand, Infos verstreut).
- *  Nur Probleme, die Website, Plus-Pflege oder Betriebs-App wirklich lösen. Reihenfolge = Weg des Kunden (finden → Auftrag → Geld). */
+ *  #5826: + „Website-Änderungen dauern ewig“, „Individuelle Wünsche kosten viel Geld“. #5828: „zu viele Karten … smarter per Animation,
+ *  mit der Maus drüberfahren, mobil per Klick“ → Liste + Bildfläche (SnProblem.astro). Nur Probleme, die Website, Plus-Pflege oder Betriebs-App wirklich lösen. Reihenfolge = Weg des Kunden (finden → Auftrag → Geld). */
 export const PROBLEM = {
   kennzeile: 'Kennen Sie das?',
   titel: 'Gute Arbeit allein reicht heute nicht.',
@@ -37,6 +38,7 @@ export const PROBLEM = {
   punkte: [
     { grafik: 'suche', titel: 'Kunden suchen Sie. Und finden andere.', text: 'Wer bei Google nicht weit oben steht, bekommt die Anfrage nicht.' },
     { grafik: 'alt', titel: 'Die Website wirkt veraltet.', text: 'Besucher entscheiden in Sekunden. Eine alte Seite kostet Vertrauen, bevor jemand anruft.' },
+    { grafik: 'aenderung', titel: 'Website-Änderungen dauern ewig.', text: 'Neue Öffnungszeiten, ein neues Foto: Bis es online ist, vergehen Wochen. Oder Sie machen es abends selbst.' },
     { grafik: 'telefon', titel: 'Nachrichten bleiben zu lange liegen.', text: 'Anrufe, E-Mails, WhatsApp. Wer nicht schnell antwortet, verliert den Auftrag an andere.' },
     { grafik: 'abend', titel: 'Angebote schreiben Sie abends.', text: 'Nach dem Arbeitstag noch Preise ausrechnen und Texte tippen. Bis das Angebot raus ist, vergehen Tage.' },
     { grafik: 'stand', titel: 'Kunden fragen ständig nach dem Stand.', text: 'Wann geht es los? Wie weit sind Sie? Jede Nachfrage unterbricht Ihre Arbeit.' },
@@ -44,7 +46,11 @@ export const PROBLEM = {
     { grafik: 'plan', titel: 'Abläufe werden nicht eingehalten.', text: 'Jeder macht es ein bisschen anders. Schritte werden vergessen, Fehler wiederholen sich.' },
     { grafik: 'papier', titel: 'Zeiten und Material stehen auf Papier.', text: 'Am Ende der Woche wird abgetippt. Das kostet Zeit und Fehler schleichen sich ein.' },
     { grafik: 'rechnung', titel: 'Rechnungen gehen spät raus.', text: 'Bis alles beisammen ist, vergehen Tage. Ihr Geld kommt später als nötig.' },
+    { grafik: 'kosten', titel: 'Individuelle Wünsche kosten viel Geld.', text: 'Ein eigener Rechner oder ein besonderer Ablauf? Oft heißt das: neues Projekt, neuer Preis.' },
   ],
+  /** Bedienhinweis über der Liste (Jamil #5828: am PC per Maus drüberfahren, am Handy per Tippen) */
+  hinweisMaus: 'Fahren Sie mit der Maus über ein Problem.',
+  hinweisTippen: 'Tippen Sie auf ein Problem.',
   weitereTitel: 'Und oft auch das',
   weitere: [
     'Angebote werden nicht nachgefasst',
@@ -54,7 +60,6 @@ export const PROBLEM = {
     'Bei Krankheit oder Urlaub weiß niemand Bescheid',
     'Kaum Bewertungen bei Google',
     'Kunden finden Öffnungszeiten und Preise nicht',
-    'Jede Änderung an der Website dauert Wochen',
   ],
   ueberleitung: 'Genau das lösen wir.',
 };
@@ -70,7 +75,7 @@ export const REISE = {
   /** Jamil #5824 (e): je Station, welche Probleme aus Abschnitt 2 sie löst (Kurzform der Titel in PROBLEM) */
   loestTitel: 'Löst',
   loest: [
-    ['Kunden finden andere', 'Jede Änderung an der Website dauert Wochen'],
+    ['Kunden finden andere', 'Website-Änderungen dauern ewig'],
     ['Die Website wirkt veraltet', 'Kunden finden Öffnungszeiten und Preise nicht'],
     ['Nachrichten bleiben zu lange liegen', 'Termine werden doppelt vergeben'],
     ['Angebote schreiben Sie abends', 'Informationen sind überall verteilt', 'Abläufe werden nicht eingehalten', 'Rechnungen gehen spät raus'],
