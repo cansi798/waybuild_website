@@ -1,0 +1,66 @@
+---
+// Beweis (/geschichte/): nur Vorhandenes, nichts erfunden.
+// - Referenzen: REFERENZEN aus config/startseite.ts (Komponente referenzen/ReferenzKarten.astro), drei Projekte mit Messwerten.
+//   Kundenstimmen gibt es noch keine freigegebenen (STIMMEN dort sind Platzhalter, Jamil #5289) → hier keine.
+// - „So arbeiten wir“ in drei Schritten: Erstgespräch, Entwurf und Freigabe, Online aus VORGEHEN.schritte (config/vorgehen.ts).
+// - Team Can und Jamil: TEAM aus config/startseite.ts (Foto, Name, Rolle). Die Zitate dort sind Test-Zitate → hier nicht.
+import ReferenzKarten from '../referenzen/ReferenzKarten.astro';
+import Bild from '../Bild.astro';
+import { href } from '../../lib/paths';
+import { REFERENZEN, TEAM } from '../../config/startseite';
+import { VORGEHEN } from '../../config/vorgehen';
+import { BEWEIS } from './texte';
+
+const AUSWAHL = ['Bauwelt Handwerk', 'Destar Lackdoktor', 'Funkelfilm'];
+const refs = REFERENZEN.liste.filter((r) => r.name && AUSWAHL.includes(r.name));
+const schritte = ['Erstgespräch', 'Entwurf und Freigabe', 'Online'].map((t) => VORGEHEN.schritte.find((s) => s.titel === t)!).filter(Boolean);
+---
+
+<section class="section gs-beweis" id="referenzen-geschichte" aria-labelledby="gs-ref-h">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">{BEWEIS.kennzeile}</span>
+      <h2 id="gs-ref-h" class="rule">{BEWEIS.referenzenTitel}</h2>
+      <p class="lead">{REFERENZEN.einleitung}</p>
+    </div>
+    <ReferenzKarten liste={refs} />
+    <p class="gs-mehr"><a href={href('/beispiele/')}>{BEWEIS.alle}</a></p>
+  </div>
+</section>
+
+<section class="section section--alt gs-arbeiten" id="so-arbeiten-wir" aria-labelledby="gs-arbeiten-h">
+  <div class="wrap">
+    <div class="section-head center">
+      <h2 id="gs-arbeiten-h" class="rule">{BEWEIS.arbeitenTitel}</h2>
+      <p class="lead">{BEWEIS.arbeitenUnter}</p>
+    </div>
+    <ol class="gs-schritte">
+      {schritte.map((s, i) => (
+        <li class="gs-schritt">
+          <span class="gs-schritt__nr" aria-hidden="true">{i + 1}</span>
+          <p class="gs-schritt__wann">{s.wann}</p>
+          <h3 class="gs-schritt__titel"><span class="sr-only">Schritt {i + 1}: </span>{s.titel}</h3>
+          <p class="gs-schritt__text">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section gs-team" id="team-geschichte" aria-labelledby="gs-team-h">
+  <div class="wrap">
+    <div class="section-head center">
+      <h2 id="gs-team-h" class="rule">{TEAM.titel}</h2>
+      <p class="lead">{TEAM.einleitung}</p>
+    </div>
+    <ul class="gs-personen">
+      {TEAM.personen.map((m) => (
+        <li class="gs-person">
+          <div class="gs-person__foto"><Bild name={m.foto} alt={m.alt} widths={[160, 320]} sizes="160px" class="gs-person__bild" /></div>
+          <h3 class="gs-person__name">{m.name}</h3>
+          <p class="gs-person__rolle">{m.rolle}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

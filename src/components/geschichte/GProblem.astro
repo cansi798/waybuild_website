@@ -1,0 +1,33 @@
+---
+// Problem (/geschichte/): drei kurze Schmerzpunkte mit Grafik, abhängig vom Weg (data-gs-weg) und von der Branche
+// (data-gs-v = Vorlage mit {platzhaltern}, geschichte.ts füllt sie per textContent). Mit JS ist nur der gewählte Weg
+// sichtbar (CSS über html[data-weg]); ohne JS stehen alle drei Wege untereinander, jeder mit seinem Namen.
+import GGrafik from './GGrafik.astro';
+import GWegWahl from './GWegWahl.astro';
+import { WEGE, PROBLEM } from './texte';
+---
+
+<section class="section gs-problem" id="problem" aria-labelledby="gs-problem-h">
+  <div class="wrap">
+    <div class="section-head center gs-kopf">
+      <span class="eyebrow">{PROBLEM.kennzeile}</span>
+      <h2 id="gs-problem-h" class="rule" tabindex="-1">{PROBLEM.titel}</h2>
+      <p class="lead" data-gs-v={PROBLEM.lead} data-gs-vf={PROBLEM.leadFirma}>{PROBLEM.lead}</p>
+      <GWegWahl />
+    </div>
+    {WEGE.map((w) => (
+      <div class="gs-v gs-problem__weg" data-gs-weg={w.id} id={`weg-${w.id}`}>
+        <p class="gs-weglabel"><span>Ihr Weg</span> {w.titel}</p>
+        <ul class="gs-schmerzen">
+          {w.schmerzen.map((s) => (
+            <li class="gs-schmerz">
+              <div class="gs-schmerz__bild"><GGrafik name={s.grafik} /></div>
+              <h3 class="gs-schmerz__titel">{s.titel}</h3>
+              <p class="gs-schmerz__text" data-gs-v={s.vorlage}>{s.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

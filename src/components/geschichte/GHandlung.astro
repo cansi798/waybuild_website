@@ -1,0 +1,26 @@
+---
+// Handlung (/geschichte/): „Kostenlose Erstberatung“ und WhatsApp. Überschrift mit Firmenname, wenn der Besucher einen
+// eingetippt hat (geschichte.ts setzt ihn NUR per textContent), sonst „bei Ihnen“. Der WhatsApp-Text nennt den gewählten Weg
+// (nie den Firmennamen).
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
+import { whatsappLink } from '../../config/site';
+import { ANLIEGEN } from '../../config/startseite';
+import { HANDLUNG } from './texte';
+
+const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<section class="section section--dark gs-handlung" id="erstberatung" aria-labelledby="gs-handlung-h">
+  <div class="wrap gs-handlung__innen">
+    <span class="eyebrow">{HANDLUNG.kennzeile}</span>
+    <h2 id="gs-handlung-h" class="gs-handlung__titel" data-gs-v={HANDLUNG.titel} data-gs-vf={HANDLUNG.titelFirma}>{HANDLUNG.titel}</h2>
+    <p class="lead gs-handlung__text">{HANDLUNG.text}</p>
+    <div class="gs-handlung__knoepfe">
+      <a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a>
+      <a class="btn btn--ghost btn--lg gs-handlung__wa" href={whatsappLink(HANDLUNG.waText)} target="_blank" rel="noopener" data-gs-wa data-gs-wa-vorlage={HANDLUNG.waTextWeg}>
+        <Icon name="whatsapp" size={20} /> {HANDLUNG.whatsapp}<span class="sr-only"> (öffnet in neuem Tab)</span>
+      </a>
+    </div>
+  </div>
+</section>

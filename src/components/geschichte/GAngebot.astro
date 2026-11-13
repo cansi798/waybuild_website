@@ -1,0 +1,74 @@
+---
+// Angebot (/geschichte/): die bestehenden Paketkarten (PaketKarten + KomplettKarte, Daten aus config/pakete-abo.ts, Preise
+// NIE fest im Text). Je Weg ist das passende Paket hervorgehoben (CSS über html[data-weg], geschichte.css):
+//   website → Basis · anfragen → Plus und Kombi Plus + Komplettpaket · betrieb → Komplettpaket mit beiden Kombipreisen.
+// Regeln wie überall: Komplettpaket nur in Kombination (nur Kombipreise), kein Kombipreis mit dem Gründerpaket (Hinweis in
+// KomplettKarte). Darüber die Empfehlung je Weg in Worten, darunter „Klein anfangen, jederzeit erweitern“.
+import PaketKarten from '../pakete/PaketKarten.astro';
+import KomplettKarte from '../pakete/KomplettKarte.astro';
+import GWegWahl from './GWegWahl.astro';
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
+import {
+  paketById, euro, euroAb, bruttoVon, KOMPLETTPAKET, komplettZeile, kombiAbPreis, LAUFZEIT_HINWEIS, B2B_HINWEIS,
+} from '../../config/pakete-abo';
+import { WEGE, ANGEBOT, type WegId } from './texte';
+
+const basis = paketById('basis');
+const plus = paketById('plus');
+const kombiPlus = KOMPLETTPAKET.kombiPreis.plus;
+const PREIS: Record<WegId, string[]> = {
+  website: [`${basis.name}: ${euro(basis.preis)} netto im Monat (${euro(bruttoVon(basis.preis))} inkl. 19 % MwSt.).`],
+  anfragen: [
+    `${plus.name}: ${euro(plus.preis)} netto im Monat (${euro(bruttoVon(plus.preis))} inkl. 19 % MwSt.).`,
+    ...(kombiPlus != null ? [`${plus.name} + ${KOMPLETTPAKET.name} zusammen ${euroAb(kombiPlus, KOMPLETTPAKET.kombiAb)} netto im Monat.`] : []),
+  ],
+  betrieb: [`${komplettZeile()}`],
+};
+const ZIEL: Record<WegId, string> = { website: '#pk-basis', anfragen: '#pk-plus', betrieb: '#komplettpaket' };
+const STUFEN: { id: WegId; name: string; preis: string }[] = [
+  { id: 'website', name: basis.name, preis: euro(basis.preis) },
+  { id: 'anfragen', name: plus.name, preis: euro(plus.preis) },
+  { id: 'betrieb', name: `+ ${KOMPLETTPAKET.name}`, preis: `in Kombination ${euroAb(kombiAbPreis(), KOMPLETTPAKET.kombiAb)}` },
+];
+---
+
+<section class="section gs-angebot" id="pakete" aria-labelledby="gs-angebot-h">
+  <div class="wrap">
+    <div class="section-head center gs-kopf">
+      <span class="eyebrow">{ANGEBOT.kennzeile}</span>
+      <h2 id="gs-angebot-h" class="rule">{ANGEBOT.titel}</h2>
+      <p class="lead">{ANGEBOT.lead}</p>
+      <GWegWahl />
+    </div>
+
+    {WEGE.map((w) => (
+      <div class="gs-v gs-empfehlung" data-gs-weg={w.id}>
+        <p class="gs-empfehlung__kopf"><Icon name="check" size={20} /> <span data-gs-v={ANGEBOT.empfehlung} data-gs-vf={ANGEBOT.empfehlung.replace('für Sie', 'für {firma}')}>{ANGEBOT.empfehlung}</span></p>
+        <p class="gs-empfehlung__weg">Weg: {w.titel}</p>
+        <p class="gs-empfehlung__satz">{w.paket}</p>
+        {PREIS[w.id].map((z) => <p class="gs-empfehlung__preis">{z}</p>)}
+        <p class="gs-empfehlung__link"><a href={ZIEL[w.id]}>Zum Paket</a></p>
+      </div>
+    ))}
+
+    <div class="gs-pakete">
+      <PaketKarten details={false} />
+      <KomplettKarte />
+    </div>
+
+    <div class="gs-wachsen">
+      <div class="gs-wachsen__text">
+        <h3 class="gs-wachsen__titel">{ANGEBOT.wachsenTitel}</h3>
+        <p>{ANGEBOT.wachsenText}</p>
+      </div>
+      <ol class="gs-stufen">
+        {STUFEN.map((s) => (
+          <li class="gs-stufe" data-gs-stufe={s.id}><strong>{s.name}</strong><span>{s.preis}</span></li>
+        ))}
+      </ol>
+    </div>
+
+    <p class="gs-hinweis"><a href={href('/preise/')}>{ANGEBOT.alle}</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+---
+// Lösung (/geschichte/): je Weg der passende Film, er startet beim Hinscrollen von selbst (Autoplay der Filme).
+// Weg „anfragen“: der bestehende Film „So kann es laufen“ (BeispielBuehne, eingebunden wie auf /so-kann-es-laufen/).
+// Wege „website“ und „betrieb“: FilmWebsite / FilmBetriebstag aus components/geschichte/filme/ (anderer Agent). Die Seite
+// bindet sie OPTIONAL ein (import.meta.glob in pages/geschichte.astro, hier als Props); fehlt einer, steht „Film folgt“.
+// Wegwechsel = anderer Film (CSS über html[data-weg]); ohne JS stehen alle drei Abschnitte untereinander.
+import BeispielBuehne from '../beispiel/BeispielBuehne.astro';
+import GWegWahl from './GWegWahl.astro';
+import { WEGE, LOESUNG, type WegId } from './texte';
+
+interface Props {
+  // Astro-Komponenten aus import.meta.glob (props-frei); undefined = Film fehlt noch
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filmWebsite?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filmBetrieb?: any;
+}
+const { filmWebsite: FilmWebsite, filmBetrieb: FilmBetrieb } = Astro.props;
+const weg = (id: WegId) => WEGE.find((w) => w.id === id)!;
+---
+
+<section class="section section--alt gs-loesung" id="loesung" aria-labelledby="gs-loesung-h">
+  <div class="wrap">
+    <div class="section-head center gs-kopf">
+      <span class="eyebrow">{LOESUNG.kennzeile}</span>
+      <h2 id="gs-loesung-h" class="rule">{LOESUNG.titel}</h2>
+      {WEGE.map((w) => <p class="lead gs-v" data-gs-weg={w.id}>{w.loesung}</p>)}
+      <GWegWahl />
+    </div>
+  </div>
+
+  <div class="gs-v gs-film" data-gs-weg="website" id="film-website">
+    <p class="wrap gs-weglabel"><span>Ihr Weg</span> {weg('website').titel}</p>
+    {FilmWebsite ? <FilmWebsite /> : (
+      <div class="wrap"><div class="gs-film__folgt"><p class="gs-film__folgt-titel">{LOESUNG.platzhalter}</p><p>{LOESUNG.platzhalterText}</p></div></div>
+    )}
+  </div>
+
+  <div class="gs-v gs-film" data-gs-weg="anfragen" id="film-anfragen">
+    <p class="wrap gs-weglabel"><span>Ihr Weg</span> {weg('anfragen').titel}</p>
+    <BeispielBuehne />
+  </div>
+
+  <div class="gs-v gs-film" data-gs-weg="betrieb" id="film-betrieb">
+    <p class="wrap gs-weglabel"><span>Ihr Weg</span> {weg('betrieb').titel}</p>
+    {FilmBetrieb ? <FilmBetrieb /> : (
+      <div class="wrap"><div class="gs-film__folgt"><p class="gs-film__folgt-titel">{LOESUNG.platzhalter}</p><p>{LOESUNG.platzhalterText}</p></div></div>
+    )}
+  </div>
+</section>
