@@ -1,0 +1,87 @@
+---
+// Film „Ich brauche eine Website“, Szene 6 Abschluss „Gefunden werden. Überzeugen. Anfragen bekommen.“ (Jamil, Talk qh87y3sj
+// #5739–#5756, 13.11.2026). Kein Gerät: die drei Schritte als ruhige Reihe (schmal untereinander, breit nebeneinander) und
+// darunter „Später jederzeit erweiterbar“ mit möglichen Bausteinen. Phasen (3): je ein Schritt leuchtet auf, mit Schritt 3
+// erscheint die Erweiterung. Endzustand = Phase 3. Präfix .gfw6.
+import FilmRahmen from '../FilmRahmen.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+const STUFEN = [
+  { titel: 'Gefunden werden', text: 'Ganz oben, wenn Kunden suchen', bild: '<circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" />' },
+  { titel: 'Überzeugen', text: 'Ihre Website mit Ihrem Namen', bild: '<rect x="6.5" y="3" width="11" height="18" rx="2.5" /><path d="M10.5 18h3" />' },
+  { titel: 'Anfragen bekommen', text: 'Direkt aufs Handy und ins Postfach', bild: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" /><path d="M10 20.5a2 2 0 0 0 4 0" />' },
+];
+const BAUSTEINE = ['Terminbuchung', 'Preisrechner', 'Kundenportal', 'Rechnungen'];
+---
+
+<FilmRahmen kennung="gfw6">
+  <div class="gfw6-bild">
+    <p class="gfw6-firma"><span class="gfw6-zeichen" data-p="kuerzel">{W.kuerzel}</span><span data-p="firma">{W.firma}</span></p>
+    <ol class="gfw6-reihe">
+      {STUFEN.map((s, i) => (
+        <li class={`gfw6-stufe gfw6-stufe--${i + 1}`}>
+          <span class="gfw6-kreis"><svg viewBox="0 0 24 24" set:html={s.bild} /></span>
+          <span class="gfw6-wort"><b>{s.titel}</b><small>{s.text}</small></span>
+        </li>
+      ))}
+    </ol>
+    <div class="gfw6-mehr">
+      <p class="gfw6-mehr__titel"><span class="gfw6-plus">+</span>Später jederzeit erweiterbar</p>
+      <p class="gfw6-chips">{BAUSTEINE.map((b) => <span>{b}</span>)}</p>
+    </div>
+  </div>
+</FilmRahmen>
+
+<style is:global>
+  .gfw6-bild { max-height: 100%; width: min(100%, 36em); display: flex; flex-direction: column; align-items: stretch; gap: 0.9em; padding: 0 6%;
+    font-size: clamp(10px, min(3.4cqw, 2.5cqh), 18px); color: var(--bsp-text); font-family: var(--font-body); }
+  .gfw6-firma { display: flex; align-items: center; justify-content: center; gap: 0.5em; font-family: var(--font-head); font-size: 1.05em; font-weight: 750; text-align: center; }
+  .gfw6-zeichen { flex: none; display: grid; place-items: center; width: 1.9em; height: 1.9em; border-radius: 0.55em; background: var(--bsp-tinte); color: var(--bsp-weiss); font-size: 0.85em; }
+  .gfw6-reihe { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55em; }
+  .gfw6-stufe { position: relative; display: flex; align-items: center; gap: 0.9em; padding: 0.65em 1em; border-radius: 1em; background: var(--bsp-weiss); border: 1px solid var(--bsp-linie);
+    box-shadow: 0 1px 2px rgb(0 79 76 / 5%), 0 1em 2em -1.4em rgb(0 79 76 / 40%); }
+  .gfw6-kreis { flex: none; display: grid; place-items: center; width: 2.5em; height: 2.5em; border-radius: 50%; background: var(--bsp-tinte); color: var(--bsp-weiss);
+    box-shadow: 0 0 0 0.35em rgb(0 166 161 / 16%); }
+  .gfw6-kreis svg { width: 55%; height: 55%; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+  .gfw6-wort { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+  .gfw6-wort b { font-family: var(--font-head); font-size: 1.15em; font-weight: 750; letter-spacing: -0.01em; }
+  .gfw6-wort small { font-size: 0.85em; color: var(--bsp-text-leise); }
+  .gfw6-mehr { padding: 0.8em 1em; border-radius: 1em; border: 1.5px dashed rgb(0 128 123 / 45%); background: rgb(255 255 255 / 55%); text-align: center; }
+  .gfw6-mehr__titel { display: inline-flex; align-items: center; gap: 0.45em; font-weight: 700; color: var(--bsp-tinte); }
+  .gfw6-plus { display: inline-grid; place-items: center; width: 1.3em; height: 1.3em; border-radius: 50%; background: var(--bsp-tuerkis-dunkel); color: var(--bsp-weiss); font-weight: 700; line-height: 1; }
+  .gfw6-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4em; margin-top: 0.6em !important; }
+  .gfw6-chips span { padding: 0.2em 0.75em; border-radius: 99px; background: var(--bsp-flaeche); color: var(--bsp-tinte); font-size: 0.85em; font-weight: 650; }
+  /* niedrige Fläche (kleine Handys): drei Schritte kompakt nebeneinander, ohne Unterzeilen */
+  @container (max-height: 340px) {
+    .gfw6-bild { font-size: clamp(10px, min(3.6cqw, 4.6cqh), 15px); gap: 0.8em; padding: 0 2%; }
+    .gfw6-firma, .gfw6-wort small, .gfw6-chips span:nth-child(4) { display: none; }
+    .gfw6-reihe { flex-direction: row; gap: 0.5em; }
+    .gfw6-stufe { flex: 1; flex-direction: column; gap: 0.45em; padding: 0.7em 0.4em; text-align: center; }
+    .gfw6-wort b { font-size: 1em; line-height: 1.2; }
+    .gfw6-kreis { width: 2.4em; height: 2.4em; }
+    .gfw6-mehr { padding: 0.6em 0.8em; }
+  }
+  /* breit: Schritte nebeneinander */
+  @container (min-aspect-ratio: 8 / 5) and (min-width: 560px) {
+    .gfw6-bild { width: min(100%, 60em); font-size: clamp(11px, min(1.7cqw, 3.2cqh), 19px); gap: 1.6em; }
+    .gfw6-reihe { flex-direction: row; gap: 1em; }
+    .gfw6-stufe { flex: 1; flex-direction: column; text-align: center; padding: 1.4em 1em; }
+    .gfw6-kreis { width: 3.6em; height: 3.6em; }
+    .gfw6-mehr { align-self: center; padding: 0.9em 1.6em; }
+  }
+
+  .gfw6-stufe { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .gfw6-kreis { transition: background-color var(--bsp-dauer) ease, box-shadow var(--bsp-dauer) ease; }
+  .gfw6-mehr, .gfw6-firma { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.6s, transform var(--bsp-dauer) var(--bsp-ease) 0.6s; }
+  .gfw6-firma { transition-delay: 0.1s; }
+
+  .gfw6[data-phase]:not([data-erreicht~="1"]) .gfw6-stufe--1,
+  .gfw6[data-phase]:not([data-erreicht~="2"]) .gfw6-stufe--2,
+  .gfw6[data-phase]:not([data-erreicht~="3"]) .gfw6-stufe--3 { opacity: 0.35; transform: scale(0.96); }
+  .gfw6[data-phase]:not([data-erreicht~="1"]) .gfw6-stufe--1 .gfw6-kreis,
+  .gfw6[data-phase]:not([data-erreicht~="2"]) .gfw6-stufe--2 .gfw6-kreis,
+  .gfw6[data-phase]:not([data-erreicht~="3"]) .gfw6-stufe--3 .gfw6-kreis { background: #9fb1ae; box-shadow: 0 0 0 0 rgb(0 166 161 / 0%); }
+  .gfw6[data-phase]:not([data-erreicht~="3"]) .gfw6-mehr { opacity: 0; transform: translateY(0.8em); }
+  .gfw6[data-phase]:not([data-erreicht~="1"]) .gfw6-firma { opacity: 0; }
+</style>

@@ -1,0 +1,22 @@
+---
+// Wurzel jeder Szene der zwei Filme auf /geschichte/ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026) – gleiches Muster wie
+// components/beispiel/SzeneRahmen.astro, aber mit eigenem Klassen-Präfix (.gf-sz + .<kennung>, z. B. .gfw1, .gft3).
+// Die Engine (filmkern.ts) setzt hier data-phase="k", data-erreicht="1 … k" und data-aktiv.
+// Ohne JS und bei reduzierter Bewegung setzt niemand etwas: Das CSS jeder Szene zeigt dann den ENDZUSTAND.
+// Das Bild ist aria-hidden; lesbar sind Titel und Satz der Szene (daten.ts).
+interface Props {
+  /** eindeutige Kennung der Szene, zugleich Klassen-Präfix (gfw1 … gfw6, gft1 … gft7) */
+  kennung: string;
+  /** Anzahl Unter-Phasen (1 … 6) */
+  phasen?: number;
+  /** Dauer der Szene in ms (4500–5500, Jamil: ca. 5 s) */
+  dauer?: number;
+  /** 'hoch' (Handy) oder 'quer' (Laptop, mehrere Geräte) */
+  format?: 'hoch' | 'quer';
+}
+const { kennung, phasen = 3, dauer = 5000, format = 'hoch' } = Astro.props;
+---
+
+<div class:list={['gf-sz', kennung]} data-phasen={phasen} data-dauer={dauer} data-format={format} aria-hidden="true">
+  <slot />
+</div>

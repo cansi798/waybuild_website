@@ -1,0 +1,19 @@
+---
+// Film „Ein Tag im Betrieb“ für den Startseiten-Entwurf /geschichte/ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Ohne Props, mehrfach pro Seite einsetzbar. 7 Szenen à ca. 5 s, jede mit sichtbarer Uhrzeit: 07:30 Tagesplan · 09:00 vor Ort
+// (Fotos, Notizen, Arbeitszeit) · 11:00 neue Anfrage, Termin gebucht · 13:00 Material bestellt · 15:00 Angebot geprüft und
+// verschickt · 17:00 Rechnung mit einem Klick, Kundenportal · 18:00 Feierabend.
+// Branchen-Begriffe (Baustelle/Termin, Material, Leistungen) aus daten.ts + components/beispiel/branchen.ts, sonst neutral.
+// Personalisierung (sessionStorage + Event 'waybuild:personalisierung'): siehe Kopf von filmkern.ts.
+import FilmBuehne from './FilmBuehne.astro';
+import Tag1 from './szenen/Tag1.astro';
+import Tag2 from './szenen/Tag2.astro';
+import Tag3 from './szenen/Tag3.astro';
+import Tag4 from './szenen/Tag4.astro';
+import Tag5 from './szenen/Tag5.astro';
+import Tag6 from './szenen/Tag6.astro';
+import Tag7 from './szenen/Tag7.astro';
+import { FILM_TAG } from './daten';
+---
+
+<FilmBuehne art="tag" name={FILM_TAG.name} szenen={FILM_TAG.szenen} komponenten={[Tag1, Tag2, Tag3, Tag4, Tag5, Tag6, Tag7]} />
