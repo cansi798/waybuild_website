@@ -1,0 +1,85 @@
+---
+// Gemeinsame Bühne der zwei Filme auf /geschichte/ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026). Intern – benutzt werden
+// FilmWebsite.astro und FilmBetriebstag.astro (beide ohne Props, mehrfach pro Seite möglich: keine festen IDs, jede Instanz
+// bekommt im Browser eine eigene Kennung data-gf-instanz).
+// Aufbau wie der Film „So kann es laufen“ (components/beispiel/BeispielBuehne.astro): je Szene Bild (aria-hidden) + Titel und Satz,
+// unten die Steuerleiste (Zurück, Pause/Abspielen, Weiter, ein Segment je Szene), aria-live-Ansage.
+// Ohne JS: alle Szenen als Karten untereinander (Endzustand). Mit JS: ein Bildschirm, Szene für Szene (filmkern.ts).
+import { FILM_ETIKETT, FILM_STEUERUNG as S, satz, werteFilm, type FilmSzene } from './daten';
+import { STANDARD } from '../../beispiel/branchen';
+import './filme.css';
+
+interface Props {
+  /** 'website' | 'tag' (für Tests: ?gfilm=<art>) */
+  art: string;
+  name: string;
+  szenen: FilmSzene[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  komponenten: any[];
+}
+const { art, name, szenen, komponenten } = Astro.props;
+const W = werteFilm(STANDARD);
+const n = szenen.length;
+const zwei = (z: number) => String(z).padStart(2, '0');
+---
+
+<div class="gf" data-gfilm={art} data-gf-name={name}>
+  <div class="gf-buehne" data-gf-buehne>
+    <p class="gf-oben" aria-hidden="true"><span class="bsp-etikett">{FILM_ETIKETT}</span></p>
+    <ol class="gf-schritte">
+      {szenen.map((sz, i) => {
+        const Komp = komponenten[i];
+        const letzte = i === n - 1;
+        return (
+          <li class="gf-schritt" data-gf-schritt>
+            <div class="gf-bild">{Komp && <Komp />}</div>
+            <div class="gf-text">
+              <p class="gf-kopf" aria-hidden="true">
+                {sz.zeit
+                  ? <span class="gf-uhrzeit"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>{sz.zeit}<span class="gf-uhrzeit__uhr">Uhr</span></span>
+                  : <span class="gf-zaehler">{zwei(i + 1)} <span>/ {zwei(n)}</span></span>}
+              </p>
+              <h3 class="gf-titel"><span class="sr-only">{`Szene ${i + 1} von ${n}${sz.zeit ? `, ${sz.zeit} Uhr` : ''}: `}</span>{sz.titel}</h3>
+              <p class="gf-satz" data-vorlage={sz.vorlage}>{satz(sz, W)}</p>
+              {letzte && (
+                <p class="gf-nochmal" data-gf-nochmal hidden>
+                  <button type="button" class="btn btn--ghost btn--sm" data-gf="nochmal">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" /></svg>{S.nochmal}
+                  </button>
+                </p>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+
+    <!-- Steuerleiste (nur mit JS) -->
+    <div class="gf-steuerung" data-gf-steuerung hidden>
+      <button type="button" class="gf-taste" data-gf="zurueck" aria-label={S.zurueck}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button type="button" class="gf-taste gf-taste--haupt" data-gf="pause" aria-label={S.pause}
+        data-text-pause={S.pause} data-text-abspielen={S.abspielen} data-text-nochmal={S.nochmal}>
+        <svg class="gf-taste__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13M15.5 5.5v13" /></svg>
+        <svg class="gf-taste__spielen" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+        <svg class="gf-taste__nochmal" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" /></svg>
+        <span class="gf-taste__text" data-gf-tastentext aria-hidden="true">{S.pause}</span>
+      </button>
+      <button type="button" class="gf-taste" data-gf="vor" aria-label={S.vor}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+      <div class="gf-leiste" role="group" aria-label={`${S.szenen}: ${name}`}>
+        {szenen.map((sz, i) => (
+          <button type="button" class="gf-segment" data-gf-zu={i} aria-label={`${S.zuSzene} ${i + 1}: ${sz.zeit ? `${sz.zeit} Uhr, ` : ''}${sz.titel}`}><i></i></button>
+        ))}
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-gf-ansage></p>
+    <p class="sr-only" data-gf-hilfe hidden>{S.hilfe}</p>
+  </div>
+</div>
+
+<script>
+  import './filmkern.ts';
+</script>

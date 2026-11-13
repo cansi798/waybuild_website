@@ -1,0 +1,81 @@
+---
+// Film „Ich brauche eine Website“, Szene 5 „Neue Anfrage“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Handy im Betrieb (Sperrbildschirm). Phasen (3): 1 Handy vibriert, Mitteilung „Neue Anfrage“ fällt herein · 2 Mitteilung zeigt
+// die Angaben (Leistung, Nachricht) · 3 Knöpfe „Antworten“/„Anrufen“ + Hinweis „Auch im Postfach“. Endzustand = Phase 3.
+// Präfix .gfw5.
+import FilmRahmen from '../FilmRahmen.astro';
+import Handy from '../../../beispiel/geraete/Handy.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+---
+
+<FilmRahmen kennung="gfw5">
+  <Handy class="gfw5-handy" status={false}>
+    <div class="gfw5-sperre">
+      <p class="gfw5-status"><span>10:27</span><span class="gfw5-zeichen"><i></i><i></i></span></p>
+      <p class="gfw5-uhr">10:27</p>
+      <p class="gfw5-datum">Montag, 16. November</p>
+      <div class="gfw5-mitteilung">
+        <p class="gfw5-mkopf"><span class="gfw5-app"><svg viewBox="0 0 24 24"><path d="M4 6.5h16v11H4z" /><path d="M4 7l8 6 8-6" /></svg></span><span class="gfw5-von" data-p="vonFirma">{W.vonFirma}</span><span>jetzt</span></p>
+        <p class="gfw5-mtitel">Neue Anfrage</p>
+        <p class="gfw5-mtext" data-p="anfrageLeistung">{W.anfrageLeistung}</p>
+        <div class="gfw5-mehr">
+          <p class="gfw5-nachricht">„Hallo, ich hätte gern ein Angebot. Wann passt es Ihnen?“</p>
+          <p class="gfw5-knoepfe"><span>Antworten</span><span>Anrufen</span></p>
+        </div>
+      </div>
+      <p class="gfw5-tasten"><span><svg viewBox="0 0 24 24"><path d="M9 3h6l-1 6h-4zM10 9h4v12h-4z" /></svg></span><span><svg viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12" rx="2.5" /><circle cx="12" cy="13" r="3.2" /><path d="M9 7l1.5-2.5h3L15 7" /></svg></span></p>
+      <p class="gfw5-postfach"><span class="gf-haken"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></span>Auch im Postfach, mit allen Angaben</p>
+    </div>
+  </Handy>
+  <span class="gfw5-welle gfw5-welle--l"><svg viewBox="0 0 20 40"><path d="M16 4C8 12 8 28 16 36M9 10c-4 6-4 14 0 20" /></svg></span>
+  <span class="gfw5-welle gfw5-welle--r"><svg viewBox="0 0 20 40"><path d="M4 4c8 8 8 24 0 32M11 10c4 6 4 14 0 20" /></svg></span>
+</FilmRahmen>
+
+<style is:global>
+  .gfw5-sperre { position: relative; flex: 1; display: flex; flex-direction: column; align-items: stretch; padding: calc(10 * var(--px)) var(--bsp-a3) 0; color: var(--bsp-weiss);
+    background: radial-gradient(90% 55% at 20% 18%, rgb(0 166 161 / 55%), rgb(0 166 161 / 0%)), radial-gradient(80% 50% at 90% 85%, rgb(0 128 123 / 60%), rgb(0 128 123 / 0%)), #0a4a47; }
+  .gfw5-status { display: flex; justify-content: space-between; align-items: center; height: calc(30 * var(--px)); padding: 0 calc(14 * var(--px)); font-size: var(--bsp-schrift-s); font-weight: 600; }
+  .gfw5-zeichen { display: flex; gap: calc(4 * var(--px)); }
+  .gfw5-zeichen i { display: block; width: calc(14 * var(--px)); height: calc(8 * var(--px)); border-radius: calc(2 * var(--px)); background: var(--bsp-weiss); opacity: 0.85; }
+  .gfw5-uhr { margin-top: calc(26 * var(--px)) !important; text-align: center; font-family: var(--font-head); font-size: calc(64 * var(--px)); font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+  .gfw5-datum { margin-top: calc(6 * var(--px)) !important; text-align: center; font-size: var(--bsp-schrift-m); opacity: 0.85; }
+  .gfw5-mitteilung { display: flex; flex-direction: column; gap: calc(3 * var(--px)); margin-top: calc(34 * var(--px)); padding: calc(12 * var(--px)) calc(13 * var(--px)); border-radius: calc(18 * var(--px));
+    background: rgb(255 255 255 / 95%); color: var(--bsp-text); box-shadow: 0 calc(12 * var(--px)) calc(26 * var(--px)) calc(-10 * var(--px)) rgb(0 20 19 / 55%); }
+  .gfw5-mkopf { display: flex; align-items: center; gap: calc(6 * var(--px)); font-size: var(--bsp-schrift-xs); color: var(--bsp-text-leise); letter-spacing: 0.04em; text-transform: uppercase; }
+  .gfw5-app { flex: none; display: grid; place-items: center; width: calc(22 * var(--px)); height: calc(22 * var(--px)); border-radius: calc(6 * var(--px)); background: var(--bsp-tinte); }
+  .gfw5-app svg { width: 64%; height: 64%; fill: none; stroke: var(--bsp-weiss); stroke-width: 2; stroke-linejoin: round; }
+  .gfw5-von { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gfw5-mtitel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 750; letter-spacing: -0.01em; }
+  .gfw5-mtext { font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-tinte); }
+  .gfw5-mehr { display: flex; flex-direction: column; gap: var(--bsp-a2); margin-top: calc(4 * var(--px)); }
+  .gfw5-nachricht { font-size: var(--bsp-schrift-s); line-height: 1.4; color: var(--bsp-text); }
+  .gfw5-knoepfe { display: grid; grid-template-columns: 1fr 1fr; gap: calc(6 * var(--px)); }
+  .gfw5-knoepfe span { display: grid; place-items: center; min-height: calc(32 * var(--px)); border-radius: calc(10 * var(--px)); background: var(--bsp-flaeche); color: var(--bsp-tinte);
+    font-size: var(--bsp-schrift-s); font-weight: 700; }
+  .gfw5-knoepfe span:first-child { background: var(--bsp-tinte); color: var(--bsp-weiss); }
+  .gfw5-postfach { align-self: center; display: inline-flex; align-items: center; gap: calc(6 * var(--px)); margin-top: var(--bsp-a3) !important; padding: calc(6 * var(--px)) var(--bsp-a3);
+    border-radius: 99px; background: rgb(255 255 255 / 16%); font-size: var(--bsp-schrift-xs); font-weight: 600; }
+  .gfw5-postfach .gf-haken { width: calc(16 * var(--px)); height: calc(16 * var(--px)); background: var(--bsp-tuerkis); }
+  .gfw5-tasten { position: absolute; left: calc(26 * var(--px)); right: calc(26 * var(--px)); bottom: calc(30 * var(--px)); display: flex; justify-content: space-between; }
+  .gfw5-tasten span { display: grid; place-items: center; width: calc(40 * var(--px)); height: calc(40 * var(--px)); border-radius: 50%; background: rgb(255 255 255 / 16%); }
+  .gfw5-tasten svg { width: 50%; height: 50%; fill: none; stroke: var(--bsp-weiss); stroke-width: 1.8; stroke-linejoin: round; }
+  .gfw5 .gfw5-handy .gr-heim { background: var(--bsp-weiss); opacity: 0.8; }
+  .gfw5-welle { position: absolute; z-index: 3; top: 30%; width: 3.2cqh; aspect-ratio: 1 / 2; opacity: 0; pointer-events: none; }
+  .gfw5-welle svg { display: block; width: 100%; height: 100%; fill: none; stroke: var(--bsp-tuerkis-dunkel); stroke-width: 2.5; stroke-linecap: round; }
+  .gfw5-welle--l { left: calc(50% - 26cqh); }
+  .gfw5-welle--r { right: calc(50% - 26cqh); }
+
+  .gfw5-mitteilung { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.45s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.45s; }
+  .gfw5-mehr, .gfw5-postfach { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.2s, transform var(--bsp-dauer) var(--bsp-ease) 0.2s; }
+  .gfw5-knoepfe, .gfw5-postfach { transition-delay: 0.3s; }
+
+  .gfw5[data-phase]:not([data-erreicht~="1"]) .gfw5-mitteilung { opacity: 0; transform: translateY(calc(-30 * var(--px))) scale(0.94); }
+  .gfw5[data-phase="1"] .gfw5-handy { animation: bm-vibrieren 0.36s ease-in-out 0.4s 3; }
+  .gfw5[data-phase="1"] .gfw5-welle { animation: gfw5-wellen 1.2s var(--bsp-ease) 0.4s both; }
+  .gfw5[data-phase]:not([data-erreicht~="2"]) .gfw5-mehr { opacity: 0; transform: translateY(calc(-8 * var(--px))); }
+  .gfw5[data-phase]:not([data-erreicht~="3"]) .gfw5-knoepfe, .gfw5[data-phase]:not([data-erreicht~="3"]) .gfw5-postfach { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  .gfw5-knoepfe { transition: opacity var(--bsp-dauer) var(--bsp-ease) 0.3s, transform var(--bsp-dauer) var(--bsp-ease) 0.3s; }
+  @keyframes gfw5-wellen { 0%, 100% { opacity: 0; transform: scale(0.8); } 20%, 70% { opacity: 1; transform: scale(1); } }
+</style>

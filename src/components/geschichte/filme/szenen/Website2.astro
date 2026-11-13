@@ -1,0 +1,92 @@
+---
+// Film „Ich brauche eine Website“, Szene 2 „Die Website öffnet sich“ (Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+// Handy: moderne Website mit dem Firmennamen. Phasen (3): 1 Seite lädt (Ladebalken), Kopf mit Name erscheint · 2 Titelbild und
+// Überschrift gleiten herein · 3 Bewertung und Knöpfe, „Anfrage stellen“ leuchtet auf. Endzustand = Phase 3. Präfix .gfw2.
+import FilmRahmen from '../FilmRahmen.astro';
+import Handy from '../../../beispiel/geraete/Handy.astro';
+import { STANDARD } from '../../../beispiel/branchen';
+import { werteFilm } from '../daten';
+const W = werteFilm(STANDARD);
+---
+
+<FilmRahmen kennung="gfw2">
+  <Handy zeit="10:24">
+    <div class="gfw2-seite">
+      <div class="gfw2-adresse">
+        <svg viewBox="0 0 24 24"><rect x="6" y="10.5" width="12" height="9" rx="2" /><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" /></svg>
+        <span class="gfw2-adresse__text" data-p="firma">{W.firma}</span>
+        <span class="gfw2-laden"></span>
+      </div>
+      <div class="gfw2-kopf gfw2-a">
+        <span class="gfw2-zeichen" data-p="kuerzel">{W.kuerzel}</span>
+        <span class="gfw2-name" data-p="firma">{W.firma}</span>
+        <span class="gfw2-menue"><i></i><i></i><i></i></span>
+      </div>
+      <div class="gfw2-held gfw2-b">
+        <svg class="gfw2-foto" viewBox="0 0 270 150" preserveAspectRatio="xMidYMid slice">
+          <rect width="270" height="150" fill="#e2f1ee" />
+          <rect width="270" height="40" fill="#edf6f4" />
+          <rect x="0" y="112" width="270" height="38" fill="#e7dccb" />
+          <rect x="26" y="30" width="70" height="66" rx="3" fill="#ffffff" stroke="#cfe2df" stroke-width="2" />
+          <path d="M61 30v66M26 63h70" stroke="#e3efed" stroke-width="3" />
+          <path d="M120 108c0-16 8-22 22-22h66c14 0 22 6 22 22z" fill="#00807b" />
+          <rect x="114" y="96" width="122" height="18" rx="7" fill="#006b68" />
+          <circle cx="232" cy="44" r="16" fill="#f6f3ee" stroke="#d5e8e6" stroke-width="2" />
+          <path d="M40 112c-8-16 0-26 0-30 2 6 10 16 0 30z" fill="#3c8f6a" />
+        </svg>
+        <span class="gfw2-bildchip" data-p="bildchip">{W.bildchip}</span>
+      </div>
+      <div class="gfw2-text gfw2-b gfw2-b--2">
+        <p class="gfw2-kennzeile" data-p="seiteKennzeile">{W.seiteKennzeile}</p>
+        <p class="gfw2-h1"><span data-p="held1">{W.held1}</span><br /><span data-p="held2">{W.held2}</span></p>
+      </div>
+      <p class="gfw2-wertung gfw2-c"><strong>4,9</strong> <span class="bm-sterne">★★★★★</span> <span class="bm-klein">128 Bewertungen</span></p>
+      <p class="gfw2-knoepfe gfw2-c gfw2-c--2"><span class="bm-knopf gfw2-anfrage">Anfrage stellen</span><span class="bm-knopf bm-knopf--hell">Leistungen</span></p>
+      <div class="gfw2-leist gfw2-c gfw2-c--3">
+        <p class="gfw2-leist__titel">Unsere Leistungen</p>
+        {[0, 1, 2].map((i) => <p class="gfw2-leist__zeile"><span data-p={`preisWas${i}`}>{W[`preisWas${i}`]}</span><b data-p={`preis${i}`}>{W[`preis${i}`]}</b></p>)}
+      </div>
+    </div>
+  </Handy>
+</FilmRahmen>
+
+<style is:global>
+  .gfw2-seite { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); padding: 0 var(--bsp-a4) var(--bsp-a6); background: var(--bsp-weiss); }
+  .gfw2-adresse { position: relative; flex: none; display: flex; align-items: center; justify-content: center; gap: calc(5 * var(--px)); height: calc(30 * var(--px)); margin: 0 calc(-4 * var(--px));
+    padding: 0 var(--bsp-a3); border-radius: 99px; background: #f1f4f3; color: var(--bsp-text-leise); font-size: var(--bsp-schrift-s); overflow: hidden; }
+  .gfw2-adresse svg { flex: none; width: calc(13 * var(--px)); height: calc(13 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .gfw2-adresse__text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gfw2-laden { position: absolute; left: 0; right: 0; bottom: 0; height: calc(3 * var(--px)); background: var(--bsp-tuerkis); transform-origin: left; transform: scaleX(1); opacity: 0; }
+  .gfw2-kopf { display: flex; align-items: center; gap: var(--bsp-a2); padding-bottom: var(--bsp-a2); border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .gfw2-zeichen { flex: none; display: grid; place-items: center; width: calc(30 * var(--px)); height: calc(30 * var(--px)); border-radius: calc(9 * var(--px)); background: var(--bsp-tinte);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 750; }
+  .gfw2-name { flex: 1; font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 750; line-height: 1.15; color: var(--bsp-text); }
+  .gfw2-menue { display: flex; flex-direction: column; gap: calc(3 * var(--px)); }
+  .gfw2-menue i { display: block; width: calc(18 * var(--px)); height: calc(2 * var(--px)); border-radius: 2px; background: var(--bsp-text); }
+  .gfw2-held { position: relative; flex: none; height: calc(170 * var(--px)); border-radius: var(--bsp-r-l); overflow: hidden; }
+  .gfw2-foto { display: block; width: 100%; height: 100%; }
+  .gfw2-bildchip { position: absolute; left: var(--bsp-a2); bottom: var(--bsp-a2); padding: calc(3 * var(--px)) var(--bsp-a2); border-radius: 99px; background: rgb(255 255 255 / 92%);
+    color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 650; }
+  .gfw2-text { display: flex; flex-direction: column; gap: calc(4 * var(--px)); }
+  .gfw2-kennzeile { font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bsp-tinte); }
+  .gfw2-h1 { font-family: var(--font-head); font-size: var(--bsp-schrift-xxl); font-weight: 750; line-height: 1.08; letter-spacing: -0.02em; color: var(--bsp-text); }
+  .gfw2-wertung { display: flex; align-items: center; gap: calc(5 * var(--px)); font-size: var(--bsp-schrift-s); }
+  .gfw2-knoepfe { display: flex; gap: var(--bsp-a2); }
+  .gfw2-leist { display: flex; flex-direction: column; gap: calc(5 * var(--px)); padding-top: var(--bsp-a2); border-top: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .gfw2-leist__titel { font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 750; color: var(--bsp-text); }
+  .gfw2-leist__zeile { display: flex; justify-content: space-between; gap: var(--bsp-a2); padding: calc(7 * var(--px)) var(--bsp-a3); border-radius: var(--bsp-r-s); background: var(--bsp-flaeche); font-size: var(--bsp-schrift-s); }
+  .gfw2-leist__zeile b { flex: none; color: var(--bsp-tinte); }
+  .gfw2-c--3 { transition-delay: calc(3 * var(--bsp-versatz)); }
+  .gfw2-anfrage { box-shadow: 0 0 0 calc(4 * var(--px)) rgb(0 166 161 / 22%); }
+
+  .gfw2-a, .gfw2-b, .gfw2-c { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .gfw2-b--2, .gfw2-c--2 { transition-delay: calc(1.5 * var(--bsp-versatz)); }
+  .gfw2-anfrage { transition: box-shadow var(--bsp-dauer) var(--bsp-ease) 0.5s; }
+
+  .gfw2[data-phase]:not([data-erreicht~="1"]) .gfw2-a { opacity: 0; }
+  .gfw2[data-aktiv][data-phase="1"] .gfw2-laden { animation: gfw2-laden 1.1s var(--bsp-ease) both; }
+  .gfw2[data-phase]:not([data-erreicht~="2"]) .gfw2-b { opacity: 0; transform: translateY(calc(22 * var(--px))); }
+  .gfw2[data-phase]:not([data-erreicht~="3"]) .gfw2-c { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  .gfw2[data-phase]:not([data-erreicht~="3"]) .gfw2-anfrage { box-shadow: 0 0 0 0 rgb(0 166 161 / 0%); }
+  @keyframes gfw2-laden { 0% { opacity: 1; transform: scaleX(0); } 80% { opacity: 1; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1); } }
+</style>
