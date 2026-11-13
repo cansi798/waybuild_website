@@ -1,0 +1,76 @@
+---
+// Aufmerksamkeit (/geschichte/): kurze, starke Aussage + „Wie sähe das bei Ihnen aus?“ mit drei Wegen als große
+// Auswahlkarten, Branche (gleiche Daten wie der Film: components/beispiel/branchen.ts) und optionaler Firmenname.
+// Mit JS: Formular (geschichte.ts merkt die Wahl in sessionStorage, Schlüssel wie der Film). Ohne JS: drei Sprungmarken.
+import Icon from '../Icon.astro';
+import type { IconName } from '../../config/site';
+import { BRANCHEN, STANDARD, FIRMA_MAX } from '../beispiel/branchen';
+import { HERO, WEGE, STANDARD_WEG, type WegId } from './texte';
+
+const SYMBOL: Record<WegId, IconName> = { website: 'layout', anfragen: 'mail', betrieb: 'portal' };
+---
+
+<section class="gs-hero" aria-labelledby="gs-h1">
+  <div class="gs-hero__flaeche" aria-hidden="true"></div>
+  <div class="wrap gs-hero__innen">
+    <p class="gs-hero__kennzeile">{HERO.kennzeile}</p>
+    <h1 id="gs-h1" class="gs-hero__titel">{HERO.titel.map((t) => <span>{t}</span>)}</h1>
+    <p class="gs-hero__unter">{HERO.unter}</p>
+  </div>
+</section>
+
+<section class="gs-wahl" id="wahl" aria-labelledby="gs-wahl-h">
+  <div class="wrap">
+    <div class="gs-wahl__karte">
+      <div class="gs-wahl__kopf">
+        <h2 id="gs-wahl-h" class="gs-wahl__titel">{HERO.frage}</h2>
+        <p class="gs-wahl__unter">{HERO.frageUnter}</p>
+      </div>
+
+      <!-- Ohne JS: Sprungmarken zu den drei Wegen (alle Abschnitte stehen dann untereinander) -->
+      <nav class="gs-ohnejs" aria-label={HERO.wegeLegende}>
+        <p>{HERO.ohneJs}</p>
+        <ul class="gs-wege">
+          {WEGE.map((w) => (
+            <li><a class="gs-weg" href={`#weg-${w.id}`}><span class="gs-weg__symbol" aria-hidden="true"><Icon name={SYMBOL[w.id]} size={30} /></span><span class="gs-weg__text"><strong>{w.titel}</strong><span>{w.unter}</span></span></a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <form class="gs-form gs-nurjs" data-gs-form action="#problem" novalidate>
+        <fieldset class="gs-feld">
+          <legend class="sr-only">{HERO.wegeLegende}</legend>
+          <div class="gs-wege">
+            {WEGE.map((w) => (
+              <label class="gs-weg">
+                <input class="sr-only" type="radio" name="gs-weg" value={w.id} checked={w.id === STANDARD_WEG} />
+                <span class="gs-weg__symbol" aria-hidden="true"><Icon name={SYMBOL[w.id]} size={30} /></span>
+                <span class="gs-weg__text"><strong>{w.titel}</strong><span>{w.unter}</span></span>
+                <span class="gs-weg__haken" aria-hidden="true"><Icon name="check" size={18} /></span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="gs-form__unten">
+          <fieldset class="gs-feld gs-branchen">
+            <legend class="gs-legende">{HERO.branchenLegende}</legend>
+            <div class="gs-chips">
+              {BRANCHEN.map((b) => (
+                <label class="gs-chip"><input class="sr-only" type="radio" name="gs-branche" value={b.id} checked={b.id === STANDARD.id} /><span>{b.label}</span></label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="gs-form__rechts">
+            <label class="gs-name">
+              <span class="gs-legende">{HERO.feld}</span>
+              <input class="gs-name__eingabe" type="text" name="gs-firma" maxlength={FIRMA_MAX} autocomplete="organization" spellcheck="false" placeholder={HERO.platzhalter} />
+            </label>
+            <button type="submit" class="btn btn--primary btn--lg gs-form__los">{HERO.knopf} <Icon name="arrow" size={20} /></button>
+            <p class="gs-form__hinweis">{HERO.hinweis}</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

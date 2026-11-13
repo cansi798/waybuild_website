@@ -1,0 +1,11 @@
+---
+// Kleiner Umschalter „Weg wechseln“ (drei Knöpfe, aria-pressed) über Problem, Lösung und Angebot (/geschichte/).
+// Nur mit JS sichtbar (.gs-nurjs); geschichte.ts hält alle Umschalter und die Auswahlkarten im Hero gleich.
+import { WEGE, WEG_WAHL, STANDARD_WEG } from './texte';
+---
+
+<div class="gs-wegwahl gs-nurjs" role="group" aria-label={WEG_WAHL.legende}>
+  {WEGE.map((w) => (
+    <button type="button" class="gs-wegwahl__knopf" data-gs-weg-knopf={w.id} aria-pressed={w.id === STANDARD_WEG ? 'true' : 'false'}>{w.titel}</button>
+  ))}
+</div>

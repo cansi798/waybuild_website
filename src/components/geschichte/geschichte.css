@@ -1,0 +1,197 @@
+/* Seite /geschichte/ (Entwurf „Startseite als geführte Geschichte“, Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
+ * Stil der Website (CI-Türkis, Montserrat/Jost, runde Karten), ruhig und klar. Bewegung nur als kurze Übergänge
+ * (transform/opacity/Farbe), bei reduzierter Bewegung aus. Ohne JS: alle Wege untereinander, Formular aus, Sprungmarken an. */
+
+/* ── Wege: nur der gewählte ist sichtbar (html[data-weg] setzt das Inline-Skript vor dem ersten Zeichnen) ── */
+html.js[data-weg="website"] [data-gs-weg]:not([data-gs-weg="website"]),
+html.js[data-weg="anfragen"] [data-gs-weg]:not([data-gs-weg="anfragen"]),
+html.js[data-weg="betrieb"] [data-gs-weg]:not([data-gs-weg="betrieb"]) { display: none !important; }
+html:not(.js) .gs-nurjs { display: none !important; }
+html.js .gs-ohnejs { display: none; }
+html.js .gs-weglabel { display: none; }
+
+.gs-weglabel { margin: clamp(36px, 6vw, 64px) auto 18px; font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+.gs-weglabel span { display: inline-block; margin-right: 8px; padding: 3px 10px; border-radius: 99px; background: var(--accent-ink); color: var(--white); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; vertical-align: 0.15em; }
+
+/* ── Hero ── */
+.gs-hero { position: relative; overflow: hidden; isolation: isolate; color: var(--white); text-align: center;
+  background: linear-gradient(165deg, #004f4c 0%, #006b68 48%, #00a6a1 100%);
+  padding: clamp(48px, 7vw, 88px) 0 clamp(116px, 11vw, 150px); }
+.gs-hero__flaeche { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 70% at 85% 10%, rgb(95 224 218 / 30%), transparent 70%), radial-gradient(50% 60% at 8% 95%, rgb(0 166 161 / 45%), transparent 70%); }
+.gs-hero__kennzeile { margin: 0 0 18px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #bff0ec; }
+.gs-hero__titel { margin: 0 auto; font-size: clamp(2.35rem, 7.6vw, 4.9rem); line-height: 1.02; letter-spacing: -0.035em; color: var(--white); }
+.gs-hero__titel span { display: block; }
+.gs-hero__titel span + span { color: #a6f2ec; }
+.gs-hero__unter { max-width: 620px; margin: clamp(18px, 3vw, 28px) auto 0; font-size: clamp(1.08rem, 1rem + 0.5vw, 1.32rem); line-height: 1.6; color: #e6f6f5; }
+
+/* ── Auswahl „Wie sähe das bei Ihnen aus?“ ── */
+.gs-wahl { position: relative; margin-top: clamp(-150px, -11vw, -84px); padding-bottom: clamp(44px, 8vw, 96px); }
+.gs-wahl__karte { background: var(--white); border-radius: 28px; padding: clamp(20px, 4.4vw, 52px); box-shadow: 0 2px 4px rgb(0 79 76 / 6%), 0 32px 64px -32px rgb(0 79 76 / 35%); }
+.gs-wahl__kopf { text-align: center; margin-bottom: clamp(20px, 3.5vw, 34px); }
+.gs-wahl__titel { margin: 0 0 8px; font-size: clamp(1.6rem, 3.8vw, 2.4rem); }
+.gs-wahl__unter { margin: 0 auto; max-width: 780px; color: var(--ink-soft); }
+/* Feste Zeilenhöhe am Rechner: bis die Schrift geladen ist, bricht der Ersatz-Font anders um (sonst kleiner Layoutsprung) */
+@media (min-width: 900px) {
+  .gs-hero__unter { min-height: calc(2 * 1.6em); }
+  .gs-wahl__unter { min-height: 1.65em; }
+}
+.gs-ohnejs > p { margin: 0 0 12px; font-weight: 600; text-align: center; }
+
+.gs-feld { border: 0; margin: 0; padding: 0; min-width: 0; }
+.gs-wege { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+@media (min-width: 900px) { .gs-wege { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } }
+.gs-weg { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; height: 100%;
+  padding: 18px 18px; border: 2px solid var(--line); border-radius: 20px; background: var(--white); color: var(--ink); text-decoration: none; cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; }
+@media (min-width: 900px) { .gs-weg { grid-template-columns: 1fr; align-content: start; gap: 12px; padding: 26px 24px 24px; } }
+.gs-weg:hover { border-color: #9fd3d0; transform: translateY(-2px); }
+.gs-weg__symbol { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: #e9f6f5; color: var(--accent-ink); }
+.gs-weg__text { display: grid; gap: 4px; min-width: 0; }
+.gs-weg__text strong { font-family: var(--font-head); font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem); line-height: 1.3; overflow-wrap: break-word; hyphens: auto; }
+.gs-weg__text span { font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); }
+.gs-weg__haken { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); color: transparent; transition: inherit; }
+@media (min-width: 900px) { .gs-weg__haken { position: absolute; top: 18px; right: 18px; } }
+.gs-weg:has(input:checked) { border-color: var(--accent); background: #f0faf9; box-shadow: 0 0 0 4px rgb(0 166 161 / 14%); }
+.gs-weg:has(input:checked) .gs-weg__symbol { background: var(--accent-ink); color: var(--white); }
+.gs-weg:has(input:checked) .gs-weg__haken { border-color: var(--accent-ink); background: var(--accent-ink); color: var(--white); }
+.gs-weg:has(input:focus-visible), html.gs-tastatur .gs-weg:focus-within { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
+a.gs-weg { grid-template-columns: auto minmax(0, 1fr); }
+
+.gs-form__unten { display: grid; gap: 22px; margin-top: clamp(22px, 3.5vw, 34px); padding-top: clamp(20px, 3vw, 30px); border-top: 1px solid var(--line); }
+@media (min-width: 900px) { .gs-form__unten { grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: 40px; align-items: start; } }
+.gs-legende { display: block; margin-bottom: 10px; font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--ink); padding: 0; }
+.gs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.gs-chip { position: relative; cursor: pointer; }
+.gs-chip span { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 99px; background: var(--white); font-size: 0.93rem; line-height: 1.25; transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
+.gs-chip:hover span { border-color: #9fd3d0; }
+.gs-chip input:checked + span { background: var(--dark); border-color: var(--dark); color: var(--white); }
+.gs-chip input:focus-visible + span, html.gs-tastatur .gs-chip input:focus + span { outline: 3px solid var(--accent-ink); outline-offset: 2px; }
+.gs-form__rechts { display: grid; gap: 14px; }
+.gs-name { display: block; }
+.gs-name__eingabe { width: 100%; min-height: 50px; padding: 10px 16px; border: 1.5px solid var(--line); border-radius: 14px; font: inherit; color: var(--ink); background: var(--white); }
+.gs-name__eingabe:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; border-color: var(--accent-ink); }
+.gs-form__los { width: 100%; }
+.gs-form__hinweis { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); text-align: center; }
+
+/* ── Köpfe + Weg-Umschalter ── */
+.gs-kopf { max-width: 940px; margin-bottom: clamp(18px, 4vw, 40px); }
+.gs-kopf .lead { margin-inline: auto; }
+.gs-kopf h2:focus { outline: none; }
+.gs-kopf h2:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+.gs-wegwahl { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 22px auto 0; padding: 6px; max-width: 100%; width: fit-content;
+  border: 1px solid var(--line); border-radius: 22px; background: var(--white); }
+.gs-wegwahl__knopf { min-height: 40px; padding: 8px 14px; border: 0; border-radius: 16px; background: transparent; color: var(--ink); font: inherit; font-size: 0.88rem; font-weight: 600; line-height: 1.3; cursor: pointer; transition: background-color 0.15s ease, color 0.15s ease; }
+.gs-wegwahl__knopf:hover { background: #e9f6f5; }
+.gs-wegwahl__knopf[aria-pressed="true"] { background: var(--dark); color: var(--white); }
+@media (min-width: 860px) { .gs-wegwahl { flex-wrap: nowrap; border-radius: 99px; } .gs-wegwahl__knopf { white-space: nowrap; border-radius: 99px; } }
+@media (max-width: 599px) { .gs-wegwahl { display: grid; width: 100%; gap: 2px; padding: 4px; border-radius: 18px; } .gs-wegwahl__knopf { width: 100%; min-height: 40px; padding: 6px 12px; border-radius: 14px; } }
+
+/* ── Problem ── */
+.gs-schmerzen { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 860px) { .gs-schmerzen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; } }
+.gs-schmerz { display: grid; align-content: start; gap: 10px; padding: clamp(18px, 2.6vw, 26px); background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
+.gs-schmerz__bild { display: grid; place-items: center; aspect-ratio: 16 / 9; margin-bottom: 6px; border-radius: 16px; background: var(--paper); padding: 10px; }
+.gs-schmerz__bild .gg { width: 100%; max-width: 200px; }
+.gs-schmerz__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.28rem); line-height: 1.3; hyphens: auto; overflow-wrap: break-word; }
+.gs-schmerz__text { margin: 0; line-height: 1.65; color: var(--ink-soft); }
+/* Handy: Grafik klein links, Text rechts (kürzere Karten) */
+@media (max-width: 599px) {
+  .gs-schmerz { grid-template-columns: 92px minmax(0, 1fr); column-gap: 14px; row-gap: 4px; align-items: start; padding: 16px; }
+  .gs-schmerz__bild { grid-row: span 2; aspect-ratio: 1; margin: 0; padding: 6px; border-radius: 14px; }
+  .gs-schmerz__titel { font-size: 1.05rem; }
+  .gs-schmerz__text { font-size: 0.96rem; line-height: 1.55; }
+}
+
+/* Bestehender Film auf dieser Seite: die Auswahl trifft der Hero, das Startbild zeigt nur Titel + „Film starten“ */
+html.js .gs-film .bsp-wahl__feld, html.js .gs-film .bsp-name, html.js .gs-film .bsp-start__text, html.js .gs-film .bsp-start__hinweis { display: none; }
+
+/* ── Lösung / Filme ── */
+.gs-loesung .lead { margin-inline: auto; }
+.gs-film .wrap.gs-weglabel { display: block; text-align: center; }
+html.js .gs-film .wrap.gs-weglabel { display: none; }
+.gs-film__folgt { display: grid; place-items: center; align-content: center; gap: 6px; min-height: 320px; padding: 32px 20px; text-align: center;
+  border: 2px dashed #9fd3d0; border-radius: 24px; background: var(--white); color: var(--ink-soft); }
+.gs-film__folgt p { margin: 0; }
+.gs-film__folgt-titel { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--accent-ink); }
+
+/* ── Beweis ── */
+.gs-mehr { margin: 26px 0 0; text-align: center; font-weight: 650; }
+.gs-mehr a { color: var(--accent-ink); }
+.gs-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: none; }
+@media (min-width: 860px) { .gs-schritte { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; } }
+.gs-schritt { position: relative; display: grid; align-content: start; gap: 6px; padding: clamp(20px, 2.8vw, 28px); background: var(--white); border-radius: 22px; border: 1px solid var(--line); }
+.gs-schritt p, .gs-schritt h3 { margin: 0; }
+.gs-schritt__nr { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 8px; border-radius: 50%; background: var(--accent-ink); color: var(--white); font-family: var(--font-head); font-weight: 700; font-size: 1.15rem; }
+.gs-schritt__wann { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-ink); }
+.gs-schritt__titel { font-size: 1.25rem; }
+.gs-schritt__text { line-height: 1.65; color: var(--ink-soft); }
+.gs-personen { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 18px; max-width: 760px; }
+@media (min-width: 640px) { .gs-personen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; } }
+.gs-person { display: grid; justify-items: center; gap: 4px; padding: clamp(22px, 3vw, 32px); text-align: center; background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
+.gs-person h3, .gs-person p { margin: 0; }
+.gs-person__foto { width: 160px; height: 160px; margin-bottom: 12px; border-radius: 50%; overflow: hidden; background: #e9f6f5; }
+.gs-person__foto img { width: 100%; height: 100%; object-fit: cover; }
+.gs-person__rolle { color: var(--accent-ink); font-weight: 600; }
+
+/* ── Angebot ── */
+.gs-angebot .lead { margin-inline: auto; }
+.gs-empfehlung { display: grid; gap: 6px; max-width: 760px; margin: 0 auto clamp(30px, 4vw, 44px); padding: clamp(18px, 3vw, 26px) clamp(18px, 3vw, 30px);
+  border-radius: 20px; background: #e9f6f5; border-left: 5px solid var(--accent-ink); }
+.gs-empfehlung p { margin: 0; }
+.gs-empfehlung__kopf { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); }
+.gs-empfehlung__satz { font-family: var(--font-head); font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); font-weight: 700; line-height: 1.35; color: var(--ink); }
+.gs-empfehlung__preis { line-height: 1.55; color: var(--ink); }
+.gs-empfehlung__link a { font-weight: 650; color: var(--accent-ink); }
+.gs-empfehlung__weg { font-weight: 650; color: var(--ink-soft); }
+html.js .gs-empfehlung__weg { display: none; }
+
+.gs-angebot .pk, .gs-angebot .pm, .gs-angebot .pm__kombi-liste li { transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; }
+html.js[data-weg="website"] .gs-angebot .pk[aria-labelledby="pk-basis"],
+html.js[data-weg="anfragen"] .gs-angebot .pk[aria-labelledby="pk-plus"] {
+  border: 2px solid var(--accent); box-shadow: 0 0 0 6px rgb(0 166 161 / 18%), 0 24px 48px -24px rgb(0 79 76 / 40%); }
+html.js[data-weg="website"] .gs-angebot .pk[aria-labelledby="pk-plus"],
+html.js[data-weg="betrieb"] .gs-angebot .pk[aria-labelledby="pk-plus"] { border: 1px solid var(--line); box-shadow: none; }
+html.js[data-weg="website"] .gs-angebot .pk__badge,
+html.js[data-weg="betrieb"] .gs-angebot .pk__badge { display: none; }
+html.js[data-weg="anfragen"] .gs-angebot .pm__kombi-liste li:has([data-buchen="plus"]),
+html.js[data-weg="betrieb"] .gs-angebot .pm__kombi-liste li { border-color: var(--accent); background: #f0faf9; }
+html.js[data-weg="betrieb"] .gs-angebot .pm { border-color: var(--accent); box-shadow: 0 0 0 6px rgb(0 166 161 / 18%), 0 24px 48px -24px rgb(0 79 76 / 40%); }
+
+.gs-wachsen { display: grid; gap: 18px; margin-top: clamp(30px, 4vw, 44px); padding: clamp(20px, 3.4vw, 34px); border-radius: 22px; background: var(--paper-2); }
+@media (min-width: 900px) { .gs-wachsen { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 36px; align-items: center; } }
+.gs-wachsen__titel { margin: 0 0 6px; font-size: clamp(1.2rem, 1rem + 0.7vw, 1.5rem); }
+.gs-wachsen__text p { margin: 0; line-height: 1.65; color: var(--ink-soft); }
+.gs-stufen { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+@media (min-width: 600px) { .gs-stufen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; } }
+.gs-stufe { position: relative; display: grid; gap: 2px; padding: 14px 16px; border-radius: 16px; background: var(--white); border: 1.5px solid var(--line); text-align: center; line-height: 1.4; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.gs-stufe strong { font-family: var(--font-head); overflow-wrap: anywhere; }
+.gs-stufe span { font-size: 0.86rem; color: var(--ink-soft); }
+@media (min-width: 600px) { .gs-stufe + .gs-stufe::before { content: ''; position: absolute; left: -19px; top: 50%; width: 12px; height: 12px; border-top: 2.5px solid var(--accent-mid); border-right: 2.5px solid var(--accent-mid); transform: translateY(-50%) rotate(45deg); } }
+html.js[data-weg="website"] [data-gs-stufe="website"],
+html.js[data-weg="anfragen"] [data-gs-stufe="anfragen"],
+html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] { background: var(--dark); border-color: var(--dark); color: var(--white); }
+html.js[data-weg="website"] [data-gs-stufe="website"] span,
+html.js[data-weg="anfragen"] [data-gs-stufe="anfragen"] span,
+html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-lead); }
+.gs-hinweis { margin: 22px auto 0; max-width: 80ch; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); text-align: center; }
+.gs-hinweis a { color: var(--accent-ink); font-weight: 650; }
+
+/* ── Handlung ── */
+.gs-handlung__innen { text-align: center; }
+.gs-handlung__titel { max-width: 24ch; margin: 0 auto 16px; font-size: clamp(1.75rem, 4.6vw, 3.1rem); line-height: 1.12; overflow-wrap: break-word; hyphens: auto; }
+.gs-handlung__text { margin: 0 auto 28px; }
+.gs-handlung__knoepfe { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.gs-handlung__knoepfe .btn { max-width: 100%; }
+.gs-handlung__wa { color: var(--white); }
+.gs-handlung__wa:hover { background: rgb(255 255 255 / 8%); }
+
+@media (max-width: 420px) {
+  .gs-handlung__knoepfe .btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-weg, .gs-weg__haken, .gs-chip span, .gs-wegwahl__knopf, .gs-stufe,
+  .gs-angebot .pk, .gs-angebot .pm, .gs-angebot .pm__kombi-liste li { transition: none; }
+  .gs-weg:hover { transform: none; }
+}
