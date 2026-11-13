@@ -1,11 +1,206 @@
 ---
 // Szene 7 „Die KI rechnet“ des Beispiels „So kann es laufen“ (Jamil, Talk qh87y3sj #5678/#5680, 13.11.2026).
-// PLATZHALTER aus dem Grundgerüst: wird vom Szenen-Agenten durch das echte Mockup ersetzt (Drehbuch: BEISPIEL_SZENEN[6].bild
-// in src/config/beispiel.ts). Anleitung: docs/beispiel-szenen-anleitung.md, Referenz: Szene01.astro.
-import Platzhalter from '../Platzhalter.astro';
+// Drehbuch: Bildschirm/Laptop – Formular → Angebotsvorschlag mit Positionen und Preis entsteht (Positionen erscheinen
+// nacheinander, kleines KI-Symbol); ausdrücklich „Vorschlag, wird geprüft“. Preise sind Beispiele (passend zu Szene 3:
+// ca. 1.200–1.500 €). Aufbau wie Szene01.astro (Referenz), Anleitung: docs/beispiel-szenen-anleitung.md.
+// Phasen (4):
+//   0  Ausgang: Büro-Software, rechte Seite leer
+//   1  Die Aufnahme vom Tablet kommt an (Karte gleitet herein), KI-Symbol erscheint und arbeitet, leeres Vorschlagsblatt
+//   2  Positionen 1 und 2 erscheinen mit Preisen
+//   3  Positionen 3 und 4 erscheinen
+//   4  Gesamtpreis + Hinweis „Zur Prüfung an den Meister“; KI-Symbol ruht mit Haken
+// Endzustand (ohne JS, reduzierte Bewegung, Variante „mini“) = Phase 4.
+import SzeneRahmen from '../SzeneRahmen.astro';
+import Laptop from '../geraete/Laptop.astro';
 
 interface Props { variante?: 'buehne' | 'mini' }
 const { variante = 'buehne' } = Astro.props;
+
+// Beispielpreise (netto 1.115,00 € + 19 % = 1.326,85 €)
+const POSTEN = [
+  { name: 'Abdecken und Abkleben', menge: 'pauschal', preis: '140,00 €' },
+  { name: 'Decke streichen, Weiß', menge: '25 m²', preis: '225,00 €' },
+  { name: 'Wände streichen, Salbei', menge: '62 m²', preis: '620,00 €' },
+  { name: 'Risse spachteln', menge: '2 Std.', preis: '130,00 €' },
+];
 ---
 
-<Platzhalter nr={7} geraet="laptop" variante={variante} />
+<SzeneRahmen nr={7} phasen={4} takt={1500} format="quer" variante={variante}>
+  <Laptop>
+    <div class="sz07-app">
+      <!-- Seitenleiste der Büro-Software (Gerippe) -->
+      <div class="sz07-leiste">
+        <span class="sz07-logo">M</span>
+        <span class="sz07-nav"></span><span class="sz07-nav sz07-nav--an"></span><span class="sz07-nav"></span><span class="sz07-nav"></span>
+      </div>
+
+      <div class="sz07-haupt">
+        <div class="sz07-kopf">
+          <span class="sz07-kopf-titel">Angebote</span>
+          <span class="bm-balken sz07-suche"></span>
+        </div>
+
+        <div class="sz07-fluss">
+          <!-- Aufnahme vom Tablet -->
+          <div class="bm-karte sz07-aufnahme">
+            <span class="sz07-ueber"><span class="bm-chip">Neu</span> Aufnahme</span>
+            <span class="sz07-name">Frau Weber</span>
+            <span class="bm-klein sz07-ort">Wohnzimmer</span>
+            <span class="sz07-mini"><span>Wände</span><b>62 m²</b></span>
+            <span class="sz07-mini"><span>Decke</span><b>25 m²</b></span>
+            <span class="sz07-mini"><span>Risse</span><b>2</b></span>
+            <span class="sz07-farbe"><i></i> Salbei</span>
+            <span class="sz07-fotos"><i></i><i></i><i></i></span>
+            <svg class="sz07-unterschrift" viewBox="0 0 120 30"><path d="M6 12c2 9 4 14 6 15s4-11 6-11 3 12 5 11 4-14 7-16M34 22c3 1 7-1 7-4s-5-2-5 1c0 5 5 6 9 3M52 6c-1 8-1 15 0 19s6 2 7-2-3-6-7-3M64 22c3 1 7-1 7-4s-5-2-5 1c0 5 5 6 9 3M80 24c1-4 2-6 4-7s3 1 4 0M90 22c6 3 15 2 26-3" /></svg>
+          </div>
+
+          <!-- KI arbeitet: Pfeil mit wandernden Punkten + KI-Symbol -->
+          <div class="sz07-mitte">
+            <span class="sz07-pfeil"><span class="sz07-punkt"></span><span class="sz07-punkt"></span><span class="sz07-punkt"></span></span>
+            <span class="sz07-ki">
+              <span class="sz07-ki-ring"></span>
+              <svg class="sz07-funke" viewBox="0 0 24 24"><path d="M12 2.5c.6 4.6 2.4 7.4 7.5 9.5-5.1 2.1-6.9 4.9-7.5 9.5-.6-4.6-2.4-7.4-7.5-9.5 5.1-2.1 6.9-4.9 7.5-9.5z" /><path d="M19 2.5c.2 1.4.7 2.2 2.2 2.8-1.5.6-2 1.4-2.2 2.8-.2-1.4-.7-2.2-2.2-2.8 1.5-.6 2-1.4 2.2-2.8z" /></svg>
+              <span class="sz07-ki-ok"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" /></svg></span>
+            </span>
+            <span class="sz07-ki-text">KI</span>
+          </div>
+
+          <!-- Angebotsvorschlag entsteht -->
+          <div class="sz07-blatt">
+            <span class="sz07-blatt-kopf">
+              <span class="sz07-blatt-titel">Angebotsvorschlag</span>
+              <span class="bm-klein">Frau Weber · Wohnzimmer</span>
+            </span>
+            <span class="sz07-vorschlag">
+              <svg viewBox="0 0 24 24"><path d="M12 2.5c.6 4.6 2.4 7.4 7.5 9.5-5.1 2.1-6.9 4.9-7.5 9.5-.6-4.6-2.4-7.4-7.5-9.5 5.1-2.1 6.9-4.9 7.5-9.5z" /></svg>
+              Vorschlag, wird geprüft
+            </span>
+            <span class="sz07-posten-liste">
+              {POSTEN.map((p, i) => (
+                <span class:list={['sz07-posten', `sz07-posten--${i + 1}`]}>
+                  <span class="sz07-posten-name">{p.name}<span class="sz07-menge">{p.menge}</span></span>
+                  <span class="sz07-preis">{p.preis}</span>
+                </span>
+              ))}
+            </span>
+            <span class="sz07-summe">
+              <span class="sz07-summe-text">Gesamt <span>inkl. MwSt.</span></span>
+              <span class="sz07-summe-preis">1.326,85 €</span>
+            </span>
+            <span class="sz07-weiter"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6" /></svg> Zur Prüfung an den Meister</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Laptop>
+</SzeneRahmen>
+
+<style is:global>
+  /* ===== Szene 07 „Die KI rechnet“ – alle Regeln mit .sz07 (global, aber eindeutig) =====
+   * GRUNDFORM = ENDZUSTAND (Phase 4). Vorzustände NUR unter .sz07[data-phase]:not([data-erreicht~="k"]).
+   * Bewegt: nur transform/opacity. Bildschirm Laptop = 640 × ca. 417 Mockup-Px; am Handy klein → wenige, große Elemente. */
+  .sz07-app { flex: 1; min-height: 0; display: flex; background: var(--bsp-papier); }
+
+  /* Seitenleiste */
+  .sz07-leiste { flex: none; width: calc(50 * var(--px)); display: flex; flex-direction: column; align-items: center; gap: var(--bsp-a3); padding: var(--bsp-a3) 0; background: var(--bsp-nacht); }
+  .sz07-logo { display: grid; place-items: center; width: calc(28 * var(--px)); height: calc(28 * var(--px)); margin-bottom: var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-tuerkis);
+    color: var(--bsp-weiss); font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; }
+  .sz07-nav { width: calc(22 * var(--px)); height: calc(22 * var(--px)); border-radius: var(--bsp-r-s); background: rgb(255 255 255 / 16%); }
+  .sz07-nav--an { background: rgb(255 255 255 / 85%); }
+
+  .sz07-haupt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--bsp-a3); padding: var(--bsp-a3) var(--bsp-a4) var(--bsp-a4); }
+  .sz07-kopf { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--bsp-a4); }
+  .sz07-kopf-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-text); }
+  .sz07-suche { width: calc(140 * var(--px)); height: calc(22 * var(--px)); background: var(--bsp-weiss); box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie-grau); }
+
+  .sz07-fluss { flex: 1; min-height: 0; display: grid; grid-template-columns: calc(150 * var(--px)) calc(58 * var(--px)) minmax(0, 1fr); align-items: center; gap: var(--bsp-a2); }
+
+  /* Aufnahme (links) */
+  .sz07-aufnahme { display: flex; flex-direction: column; gap: calc(5 * var(--px)); padding: var(--bsp-a3); }
+  .sz07-ueber { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bsp-tinte); }
+  .sz07-name { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-text); }
+  .sz07-ort { margin-top: calc(-4 * var(--px)); }
+  .sz07-mini { display: flex; justify-content: space-between; font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
+  .sz07-mini b { color: var(--bsp-text); font-weight: 650; }
+  .sz07-farbe { display: flex; align-items: center; gap: var(--bsp-a2); padding-left: calc(3 * var(--px)); font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
+  .sz07-farbe i { width: calc(14 * var(--px)); height: calc(14 * var(--px)); border-radius: 50%; background: #a9bba3; box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss), 0 0 0 calc(3.5 * var(--px)) var(--bsp-tuerkis); }
+  .sz07-fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(4 * var(--px)); }
+  .sz07-fotos i { aspect-ratio: 4 / 3; border-radius: calc(3 * var(--px)); background: #e6dfd2; }
+  .sz07-fotos i:nth-child(2) { background: #efebe3; }
+  .sz07-fotos i:nth-child(3) { background: #cfe0e6; }
+  .sz07-unterschrift { width: 80%; height: auto; fill: none; stroke: var(--bsp-nacht); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Mitte: Pfeil + KI */
+  .sz07-mitte { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--bsp-a1); }
+  .sz07-pfeil { position: absolute; left: calc(-6 * var(--px)); right: calc(-6 * var(--px)); top: calc(23 * var(--px)); height: calc(2 * var(--px));
+    background: repeating-linear-gradient(90deg, var(--bsp-tuerkis) 0 calc(4 * var(--px)), transparent calc(4 * var(--px)) calc(8 * var(--px))); opacity: 0.7; }
+  .sz07-punkt { position: absolute; left: 0; top: 50%; width: calc(7 * var(--px)); height: calc(7 * var(--px)); margin-top: calc(-3.5 * var(--px)); border-radius: 50%; background: var(--bsp-tuerkis); opacity: 0; }
+  .sz07-ki { position: relative; z-index: 1; display: grid; place-items: center; width: calc(48 * var(--px)); height: calc(48 * var(--px)); border-radius: 50%;
+    background: var(--bsp-weiss); border: calc(2 * var(--px)) solid var(--bsp-tuerkis); box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-6 * var(--px)) rgb(0 79 76 / 40%); }
+  .sz07-ki-ring { position: absolute; inset: calc(-7 * var(--px)); border-radius: 50%; border: calc(2 * var(--px)) solid rgb(0 166 161 / 35%); opacity: 0; }
+  .sz07-funke { width: 58%; height: 58%; fill: var(--bsp-tinte); }
+  .sz07-ki-ok { position: absolute; right: calc(-6 * var(--px)); bottom: calc(-6 * var(--px)); display: grid; place-items: center; width: calc(20 * var(--px)); height: calc(20 * var(--px));
+    border-radius: 50%; background: var(--bsp-ok); box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss); }
+  .sz07-ki-ok svg { width: 64%; height: 64%; fill: none; stroke: var(--bsp-weiss); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+  .sz07-ki-text { font-family: var(--font-head); font-size: var(--bsp-schrift-s); font-weight: 700; letter-spacing: 0.1em; color: var(--bsp-tinte); }
+
+  /* Vorschlagsblatt (rechts) */
+  .sz07-blatt { display: flex; flex-direction: column; gap: var(--bsp-a2); padding: var(--bsp-a4); border-radius: var(--bsp-r-m); background: var(--bsp-weiss);
+    border: calc(1 * var(--px)) solid var(--bsp-linie-grau); box-shadow: 0 calc(14 * var(--px)) calc(30 * var(--px)) calc(-18 * var(--px)) rgb(0 79 76 / 40%); }
+  .sz07-blatt-kopf { display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
+  .sz07-blatt-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; letter-spacing: -0.01em; color: var(--bsp-text); line-height: 1.15; }
+  .sz07-vorschlag { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--bsp-a1); padding: calc(4 * var(--px)) var(--bsp-a3); border-radius: 99px;
+    background: var(--bsp-flaeche); border: calc(1.5 * var(--px)) dashed var(--bsp-tuerkis-dunkel); color: var(--bsp-tinte); font-size: var(--bsp-schrift-s); font-weight: 700; white-space: nowrap; }
+  .sz07-vorschlag svg { width: calc(13 * var(--px)); height: calc(13 * var(--px)); fill: currentColor; }
+  .sz07-posten-liste { display: flex; flex-direction: column; }
+  .sz07-posten { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bsp-a3); padding: calc(6 * var(--px)) 0; border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
+  .sz07-posten-name { min-width: 0; font-size: var(--bsp-schrift-m); color: var(--bsp-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sz07-menge { margin-left: var(--bsp-a2); font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
+  .sz07-preis { flex: none; font-size: var(--bsp-schrift-m); font-weight: 650; color: var(--bsp-text); font-variant-numeric: tabular-nums; }
+  .sz07-summe { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bsp-a3); padding-top: var(--bsp-a1); }
+  .sz07-summe-text { font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); }
+  .sz07-summe-text span { font-size: var(--bsp-schrift-xs); font-weight: 500; color: var(--bsp-text-leise); }
+  .sz07-summe-preis { font-family: var(--font-head); font-size: var(--bsp-schrift-xxl); font-weight: 700; letter-spacing: -0.02em; color: var(--bsp-tinte); font-variant-numeric: tabular-nums; }
+  .sz07-weiter { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-tinte); }
+  .sz07-weiter svg { width: calc(14 * var(--px)); height: calc(14 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Übergänge (gelten in beide Richtungen) */
+  .sz07-aufnahme, .sz07-blatt, .sz07-posten, .sz07-summe, .sz07-weiter { transition: opacity var(--bsp-dauer) var(--bsp-ease), transform var(--bsp-dauer) var(--bsp-ease); }
+  .sz07-aufnahme { transition-delay: var(--bsp-auftritt); }
+  .sz07-blatt { transition-delay: calc(var(--bsp-auftritt) + 0.75s); }
+  .sz07-ki, .sz07-ki-text { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.45s), transform var(--bsp-dauer) var(--bsp-ease-feder) calc(var(--bsp-auftritt) + 0.45s); }
+  .sz07-pfeil { transition: opacity var(--bsp-dauer) var(--bsp-ease) calc(var(--bsp-auftritt) + 0.35s); }
+  .sz07-ki-ok { transition: opacity var(--bsp-dauer-kurz) var(--bsp-ease) 0.6s, transform var(--bsp-dauer) var(--bsp-ease-feder) 0.6s; }
+  .sz07-posten--2, .sz07-posten--4 { transition-delay: 0.35s; }
+  .sz07-summe-preis { display: inline-block; transition: transform var(--bsp-dauer) var(--bsp-ease-feder); }
+  .sz07-weiter { transition-delay: 0.45s; }
+
+  /* ── Vorzustände (nur mit Engine) ── */
+  /* vor Phase 1: Aufnahme, KI und Blatt noch nicht da */
+  .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-aufnahme { opacity: 0; transform: translateX(calc(-24 * var(--px))); }
+  .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-ki,
+  .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-ki-text { opacity: 0; transform: scale(0.6); }
+  .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-pfeil { opacity: 0; }
+  .sz07[data-phase]:not([data-erreicht~="1"]) .sz07-blatt { opacity: 0; transform: translateY(calc(16 * var(--px))); }
+  /* KI arbeitet (Phase 1–3, solange gezeigt): Funke dreht sich, Ring pulsiert, Punkte wandern über den Pfeil */
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-funke { animation: sz07-drehen 2.4s linear infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-ki-ring { animation: sz07-ring 1.4s ease-out infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt { animation: sz07-wandern 1.5s linear infinite; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(2) { animation-delay: 0.5s; }
+  .sz07[data-aktiv][data-erreicht~="1"]:not([data-erreicht~="4"]) .sz07-punkt:nth-child(3) { animation-delay: 1s; }
+  /* vor Phase 2: noch keine Positionen */
+  .sz07[data-phase]:not([data-erreicht~="2"]) .sz07-posten--1,
+  .sz07[data-phase]:not([data-erreicht~="2"]) .sz07-posten--2 { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  /* vor Phase 3: Positionen 3 + 4 fehlen */
+  .sz07[data-phase]:not([data-erreicht~="3"]) .sz07-posten--3,
+  .sz07[data-phase]:not([data-erreicht~="3"]) .sz07-posten--4 { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  /* vor Phase 4: keine Summe, KI noch ohne Haken */
+  .sz07[data-phase]:not([data-erreicht~="4"]) .sz07-summe { opacity: 0; transform: translateY(calc(10 * var(--px))); }
+  .sz07[data-phase]:not([data-erreicht~="4"]) .sz07-summe-preis { transform: scale(0.85); }
+  .sz07[data-phase]:not([data-erreicht~="4"]) .sz07-weiter { opacity: 0; transform: translateX(calc(-10 * var(--px))); }
+  .sz07[data-phase]:not([data-erreicht~="4"]) .sz07-ki-ok { opacity: 0; transform: scale(0.3); }
+
+  @keyframes sz07-drehen { to { transform: rotate(360deg); } }
+  @keyframes sz07-ring { 0% { opacity: 0.9; transform: scale(0.85); } 100% { opacity: 0; transform: scale(1.35); } }
+  @keyframes sz07-wandern { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: translateX(calc(62 * var(--px))); } }
+</style>
