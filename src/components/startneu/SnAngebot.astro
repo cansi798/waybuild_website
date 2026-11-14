@@ -43,6 +43,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
           <p class="sn-paket__kurz">{p.kurz}</p>
           <p class="sn-paket__preis"><b>{euro(p.preis)}</b><span>netto im Monat</span></p>
           <p class="sn-paket__brutto">{euro(bruttoVon(p.preis))} inkl. 19 % MwSt.</p>
+          <p class="sn-paket__jahr">{euro(p.preis * 12)} netto im Jahr</p><!-- Jamil #5912 -->
           <p class="sn-paket__fuer">{p.fuer}</p>
           <p class="sn-paket__listenkopf">{p.baut ? `Alles aus ${paketById(p.baut).name}, plus:` : 'Enthalten:'}</p>
           <ul class:list={['sn-paket__liste', { 'sn-paket__liste--haken': !!p.baut }]}>
@@ -63,16 +64,15 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
         <p class="sn-app__kurz">{K.kurz}</p>
         <p>{appText} Nur zusammen mit Basis oder Plus buchbar.</p>
       </div>
-      <ul class="sn-app__kombis">
-        {kombis.map((k) => (
-          <li class="sn-kombi">
-            <p class="sn-kombi__name">{k.paket.name} + {K.name}</p>
-            <p class="sn-kombi__preis"><b>{euroAb(k.preis, K.kombiAb)}</b> netto im Monat</p>
-            <p class="sn-kombi__statt">statt einzeln {euroAb(k.einzeln, K.kombiAb)} · {euroAb(bruttoVon(k.preis), K.kombiAb)} inkl. 19 % MwSt.</p>
-            <a class="btn sn-btn sn-btn--hell sn-kombi__btn" href={kontaktKombi(k.paket.name)} data-buchen={k.paket.id} data-komplett="1">Kombi buchen<span class="sr-only">: {k.paket.name} + {K.name}</span></a>
-          </li>
-        ))}
-      </ul>
+      {/* Jamil #5911 (14.11.2026): statt zwei Kombi-Karten nur „ab 419,99 € netto“ mit Hinweis, dass Basis oder Plus enthalten ist;
+          #5912: darunter der Jahrespreis netto */}
+      <div class="sn-kombi sn-kombi--eins">
+        <p class="sn-kombi__name">{K.name} inklusive Website-Paket</p>
+        <p class="sn-kombi__preis"><b>{euroAb(kombis[0].preis, true)}</b> netto im Monat</p>
+        <p class="sn-kombi__jahr">{euroAb(kombis[0].preis * 12, true)} netto im Jahr</p>
+        <p class="sn-kombi__statt">Basis oder Plus ist je nach Wahl enthalten.</p>
+        <a class="btn sn-btn sn-btn--hell sn-kombi__btn" href={kontaktKombi(kombis[0].paket.name)} data-buchen={kombis[0].paket.id} data-komplett="1">Kombi buchen<span class="sr-only">: {K.name}</span></a>
+      </div>
       {!K.kombiMitGruenderpaket && <p class="sn-app__hinweis">Kombipreise gelten nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
     </article>
 
