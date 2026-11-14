@@ -1,0 +1,40 @@
+---
+// /neu/ Kapitel 8, erster Teil „Fragen“ (Sprungziel #fragen, Fläche Weiß, auf der Seite schaltbar über ZEIGE.fragen).
+// Höchstens sechs Fragen, die eine Entscheidung aufhalten, als Aufklapper ohne Skript. Quelle: alleFragen() in
+// src/config/fragen.ts, Auswahl über den genauen Fragetext. Einträge mit `platzhalter` werden nie gezeigt; fehlt eine
+// Frage in der Quelle, entfällt sie still. Kein JSON-LD (der Datensatz für Suchmaschinen steht auf /fragen/).
+import Abschnitt from '../Abschnitt.astro';
+import type { NeuLinks } from '../vertrag';
+import { alleFragen, FRAGEN_TITEL } from '../../../config/fragen';
+import '../../../styles/neu-abschluss.css';
+
+interface Props { links: NeuLinks }
+const { links } = Astro.props;
+
+const AUSWAHL = [
+  'Was kostet eine Website bei waybuild?',
+  'Gibt es Einrichtungskosten?',
+  'Wie lange läuft der Vertrag?',
+  'Wie schnell ist meine Website online?',
+  'Kann ich meine bestehende Domain mitnehmen?',
+  'Kann ich später in ein größeres Paket wechseln?',
+];
+const quelle = alleFragen().filter((f) => !f.platzhalter);
+const fragen = AUSWAHL.flatMap((q) => quelle.filter((f) => f.q === q).slice(0, 1));
+---
+
+{fragen.length > 0 && (
+  <Abschnitt id="fragen" titel={FRAGEN_TITEL}>
+    <div class="nb-fragen">
+      <div class="nb-fragen__liste">
+        {fragen.map((f, i) => (
+          <details class="neu-mehr reveal" style={`--neu-i: ${i}`}>
+            <summary><span class="nb-fragen__frage">{f.q}</span></summary>
+            <div class="neu-mehr__inhalt"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+      <p class="nb-fragen__weiter"><a class="neu-link" href={links.fragen}>Alle Fragen</a></p>
+    </div>
+  </Abschnitt>
+)}
