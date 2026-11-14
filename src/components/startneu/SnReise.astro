@@ -1,7 +1,7 @@
 ---
 // Teil 3 „Lösung“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810). Fasst zusammen: Kundenreise (Texte wörtlich aus KUNDENREISE,
 // variante.ts), „So machen wir aus Besuchern Kunden.“ (je Station: womit wir es umsetzen, Leistungen genau wie in pakete-abo.ts)
-// und den Teaser „So kann es bei Ihnen laufen.“ (Film-Beispiel, Mini-Vorschau Szene 1 + 10).
+// (seit Jamil #5834/#5836/#5837, 14.11.2026 ohne Leistungs-Chips, ohne Punkte-Leiste und ohne „1 / 5“-Marke) und den Teaser „So kann es bei Ihnen laufen.“ (Film-Beispiel, Mini-Vorschau Szene 1 + 10).
 // Aufbau: Am PC (ab 60rem, mit JS) links die fünf Stationen und das Ziel untereinander, rechts ein stehender Rahmen (sticky) mit der
 // Strichgrafik der Station, die gerade in der Bildschirmmitte steht (scripts/start-neu.ts, IntersectionObserver). Kein Scroll-Kapern,
 // die Seite scrollt normal. Am Handy, ohne JS und bei reduzierter Bewegung: jede Station mit ihrer eigenen Grafik untereinander.
@@ -13,17 +13,10 @@ import Szene10 from '../beispiel/szenen/Szene10.astro';
 import { KUNDENREISE as K } from '../../config/variante';
 import { ANLIEGEN } from '../../config/startseite';
 import { BEISPIEL_TEASER as BT, BEISPIEL_ETIKETT } from '../../config/beispiel';
-import { REISE, type LeistungsVerweis } from '../../config/startneu';
-import { ABO_PAKETE, KOMPLETTPAKET } from '../../config/pakete-abo';
+import { REISE } from '../../config/startneu';
 import { href } from '../../lib/paths';
 import '../../styles/beispiel-mockup.css';
 
-const leistung = (v: LeistungsVerweis) => {
-  if ('komplett' in v) return { text: KOMPLETTPAKET.name, paket: 'in Kombination' };
-  const p = ABO_PAKETE.find((x) => x.id === v.paket)!;
-  const l = p.leistungen.find((x) => x.id === v.id)!;
-  return { text: l.text, paket: p.name };
-};
 const n = K.stationen.length;
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
@@ -45,15 +38,10 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
           <li class="sn-station" data-station={i}>
             <div class="sn-station__bild sn-tafel"><ReiseGrafik name={REISE.grafiken[i]} /></div>
             <div class="sn-station__inhalt">
-              <p class="sn-station__marke" aria-hidden="true"><span class="sn-ico"><Icon name={REISE.symbole[i] ?? 'check'} size={22} /></span>{i + 1} / {n}</p>
               <h3 class="sn-station__name"><span class="sr-only">Schritt {i + 1} von {n}: </span>{st.name}</h3>
               <p class="sn-station__frage">{st.frage}</p>
               <p class="sn-station__loest"><span>{REISE.loestTitel}:</span> {(REISE.loest[i] ?? []).join(' · ')}</p>
               <p class="sn-station__antwort"><span class="sn-station__etikett">{K.antwortTitel}</span>{st.antwort}</p>
-              <p class="sn-station__dafuer">{REISE.dafuer}</p>
-              <ul class="sn-chips">
-                {(REISE.leistungen[i] ?? []).map(leistung).map((l) => <li><span>{l.text}</span><small>{l.paket}</small></li>)}
-              </ul>
             </div>
           </li>
         ))}
@@ -75,9 +63,6 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
             <div class:list={['sn-szene', { 'ist-aktiv': i === 0 }]} data-szene={i}><ReiseGrafik name={g} /></div>
           ))}
         </div>
-        <ol class="sn-buehne__punkte">
-          {[...K.stationen.map((s) => s.name), K.ziel].map((name, i) => <li class:list={{ 'ist-aktiv': i === 0 }} data-punkt={i}>{name}</li>)}
-        </ol>
       </div>
     </div>
 

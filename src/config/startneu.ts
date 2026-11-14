@@ -6,7 +6,6 @@
 // Hier stehen NUR die neuen, verbindenden Texte. Jamils Texte kommen unverändert aus ihren Dateien (KUNDENREISE in variante.ts,
 // ENTSPANNT/REFERENZEN/TEAM/CLAIM in startseite.ts, VORGEHEN in vorgehen.ts). Preise und Leistungen NIE hier, immer aus pakete-abo.ts.
 import type { IconName } from './site';
-import type { AboPaket } from './pakete-abo';
 
 /** Abschnitt 1, zweiter Teil: zwei Produkte (Texte wie bisher in start/StartProdukte.astro, #5787–#5791) */
 export const PRODUKTE = {
@@ -18,9 +17,8 @@ export const PRODUKTE = {
   app: {
     titel: 'Ihre Betriebs-App',
     text: 'Eine Software, die genau zu Ihrem Betrieb passt: Anfrage, Angebot, Auftrag und Rechnung greifen ineinander. Dazu bauen wir, was Sie sonst brauchen.',
-    beispiele: ['Preisrechner', 'Terminbuchung', 'Kundenportal', 'Checklisten vor Ort', 'Zeiten und Material', 'Ihre eigenen Abläufe'],
+    beispiele: ['Von Anfrage bis Abschluss', 'Preisrechner', 'Terminbuchung', 'Kundenportal', 'Checklisten vor Ort', 'Zeiten und Material', 'Ihre eigenen Abläufe'],
     beispieleTitel: 'Zum Beispiel',
-    moeglich: 'Fast alles ist möglich. Sagen Sie uns, wie Sie arbeiten.',
     chat: 'Änderungen jederzeit per Chat oder Sprachnachricht.',
     link: 'So kann es bei Ihnen laufen',
   },
@@ -51,6 +49,7 @@ export const PROBLEM = {
   /** Bedienhinweis über der Liste (Jamil #5828: am PC per Maus drüberfahren, am Handy per Tippen) */
   hinweisMaus: 'Fahren Sie mit der Maus über ein Problem.',
   hinweisTippen: 'Tippen Sie auf ein Problem.',
+  // #5833 (14.11.2026): „nimmt noch zu viel Platz ein“ → kompakte Stichwort-Kacheln + eine Bildfläche, „weitere“ als eine Zeile
   weitereTitel: 'Und oft auch das',
   weitere: [
     'Angebote werden nicht nachgefasst',
@@ -64,14 +63,10 @@ export const PROBLEM = {
   ueberleitung: 'Genau das lösen wir.',
 };
 
-/** Abschnitt 3: je Station der Kundenreise, womit wir den guten Zustand erreichen. Verweise auf Leistungen in pakete-abo.ts
- *  (paket + id → Text genau wie dort definiert) bzw. das Komplettpaket. Ersetzt den Abschnitt „So machen wir aus Besuchern Kunden.“
- *  (UMSETZUNG), dessen fünf Punkte hier je Station stehen. Reihenfolge = KUNDENREISE.stationen. */
-export type LeistungsVerweis = { paket: AboPaket['id']; id: string } | { komplett: true };
+/** Abschnitt 3: Grafik und „Löst“-Zeile je Station der Kundenreise. Reihenfolge = KUNDENREISE.stationen. Die Leistungs-Chips
+ *  („Dafür sorgen wir mit“), Symbole und „1 / 5“ sind seit Jamil #5834/#5837 (14.11.2026) entfernt. */
 export const REISE = {
-  symbole: ['eye', 'shield', 'chat', 'ablauf', 'users'] as IconName[],
   grafiken: ['aufmerksamkeit', 'vertrauen', 'anfrage', 'bearbeitung', 'betreuung'] as const,
-  dafuer: 'Dafür sorgen wir mit',
   /** Jamil #5824 (e): je Station, welche Probleme aus Abschnitt 2 sie löst (Kurzform der Titel in PROBLEM) */
   loestTitel: 'Löst',
   loest: [
@@ -81,13 +76,6 @@ export const REISE = {
     ['Angebote schreiben Sie abends', 'Informationen sind überall verteilt', 'Abläufe werden nicht eingehalten', 'Rechnungen gehen spät raus'],
     ['Kunden fragen ständig nach dem Stand', 'Angebote werden nicht nachgefasst', 'Kaum Bewertungen bei Google'],
   ],
-  leistungen: [
-    [{ paket: 'basis', id: 'website' }, { paket: 'basis', id: 'seo' }, { paket: 'basis', id: 'google-profil' }],
-    [{ paket: 'basis', id: 'website' }, { paket: 'plus', id: 'google-pflege' }, { paket: 'basis', id: 'ki' }],
-    [{ paket: 'basis', id: 'website' }, { paket: 'basis', id: 'email' }, { paket: 'plus', id: 'mail-ordner' }],
-    [{ komplett: true }, { paket: 'plus', id: 'mail-ordner' }],
-    [{ komplett: true }, { paket: 'plus', id: 'bericht' }],
-  ] as LeistungsVerweis[][],
 };
 
 /** Abschnitt 4: Beweis */

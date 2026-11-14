@@ -7,13 +7,11 @@ const raster = document.querySelector<HTMLElement>('[data-reise]');
 if (raster && 'IntersectionObserver' in window) {
   const stationen = Array.from(raster.querySelectorAll<HTMLElement>('[data-station]'));
   const szenen = Array.from(raster.querySelectorAll<HTMLElement>('[data-szene]'));
-  const punkte = Array.from(raster.querySelectorAll<HTMLElement>('[data-punkt]'));
   let aktiv = 0;
   const setze = (i: number) => {
     if (i === aktiv) return;
     aktiv = i;
     szenen.forEach((s, k) => s.classList.toggle('ist-aktiv', k === i));
-    punkte.forEach((p, k) => p.classList.toggle('ist-aktiv', k === i));
     stationen.forEach((s, k) => s.classList.toggle('ist-aktiv', k === i));
   };
   stationen[0]?.classList.add('ist-aktiv');
@@ -23,14 +21,13 @@ if (raster && 'IntersectionObserver' in window) {
   stationen.forEach((s) => io.observe(s));
 }
 
-// Problem-Liste (components/startneu/SnProblem.astro, Jamil #5828): PC mit Maus = Bildfläche zeigt das Problem unter Maus/Fokus und
-// wechselt im Sichtbereich von selbst, bis jemand eingreift; Handy/Tablet = Aufklappliste (Tippen öffnet, nochmal Tippen schließt).
-// Welche Darstellung gilt, entscheidet dieselbe Media Query wie im CSS.
+// Problem-Kacheln (components/startneu/SnProblem.astro, Jamil #5828/#5833): Kachel wählen = passende Bildfläche einblenden.
+// PC mit Maus: Maus/Fokus wählt, im Sichtbereich wechselt es von selbst, bis jemand eingreift. Handy/Tablet: Tippen wählt.
 const feld = document.querySelector<HTMLElement>('[data-pfeld]');
 
 if (feld) {
-  const zeilen = Array.from(feld.querySelectorAll<HTMLElement>('[data-pp]'));
-  const knoepfe = zeilen.map((z) => z.querySelector<HTMLButtonElement>('.sn-pp__knopf')!);
+  const kacheln = Array.from(feld.querySelectorAll<HTMLButtonElement>('[data-pp]'));
+  const flaechen = Array.from(feld.querySelectorAll<HTMLElement>('[data-pd]'));
   const pc = window.matchMedia('(min-width: 1000px) and (hover: hover) and (pointer: fine)');
   const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
   let aktiv = 0;
@@ -39,27 +36,22 @@ if (feld) {
 
   const setze = (i: number) => {
     aktiv = i;
-    zeilen.forEach((z, k) => z.classList.toggle('ist-aktiv', k === i));
-    knoepfe.forEach((b, k) => b.setAttribute('aria-expanded', String(k === i)));
-  };
-  const stoppe = () => { eingegriffen = true; window.clearInterval(selbst); selbst = undefined; };
-  const starte = () => {
-    if (eingegriffen || selbst !== undefined || !pc.matches || ruhig.matches) return;
-    selbst = window.setInterval(() => setze((aktiv + 1) % zeilen.length), 3800);
+    kacheln.forEach((k, n) => { k.classList.toggle('ist-aktiv', n === i); k.setAttribute('aria-expanded', String(n === i)); });
+    flaechen.forEach((f, n) => f.classList.toggle('ist-aktiv', n === i));
   };
   const halte = () => { window.clearInterval(selbst); selbst = undefined; };
+  const stoppe = () => { eingegriffen = true; halte(); };
+  const starte = () => {
+    if (eingegriffen || selbst !== undefined || !pc.matches || ruhig.matches) return;
+    selbst = window.setInterval(() => setze((aktiv + 1) % kacheln.length), 3800);
+  };
 
-  zeilen.forEach((z, i) => {
-    z.addEventListener('mouseenter', () => { if (pc.matches) { stoppe(); setze(i); } });
-    knoepfe[i].addEventListener('focus', () => { if (pc.matches) { stoppe(); setze(i); } });
-    knoepfe[i].addEventListener('click', () => {
-      stoppe();
-      if (pc.matches) setze(i);
-      else setze(aktiv === i ? -1 : i); // -1 = alle zu
-    });
+  kacheln.forEach((k, i) => {
+    k.addEventListener('mouseenter', () => { if (pc.matches) { stoppe(); setze(i); } });
+    k.addEventListener('focus', () => { stoppe(); setze(i); });
+    k.addEventListener('click', () => { stoppe(); setze(i); });
   });
-  // Am PC ist immer eins offen: beim Wechsel vom Handy- ins PC-Layout (Fenster breiter) ggf. das erste zeigen
-  pc.addEventListener('change', () => { if (pc.matches && aktiv < 0) setze(0); if (!pc.matches) halte(); });
+  pc.addEventListener('change', () => { if (!pc.matches) halte(); });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([e]) => (e.isIntersecting ? starte() : halte()), { threshold: 0.35 }).observe(feld);

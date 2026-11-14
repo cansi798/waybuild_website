@@ -101,73 +101,51 @@
 .sn-produkt .sn-link { margin-top: 4px; justify-self: start; }
 
 /* ═════ 2 · Problem ═════ */
-/* Liste + Bildfläche statt Kartenwand (Jamil #5828, 13.11.2026). Grafiken mit festen width/height (GGrafik), Spalten minmax(0,1fr)
-   + min-width:0 wegen WebKit (siehe /geschichte/). Ohne JS (kein html.js) ist alles offen untereinander. */
+/* Kompakt (Jamil #5828 Animation, #5833 weniger Platz, 14.11.2026): Stichwort-Kacheln + EINE Bildfläche. Grafiken mit festen
+   width/height (GGrafik), Spalten minmax(0,1fr) + min-width:0 wegen WebKit (siehe /geschichte/). Ohne JS alle Flächen untereinander. */
 .sn-problem { background: var(--white); }
-.sn-pfeld { position: relative; }
-.sn-pfeld__hinweis { margin-bottom: 10px !important; font-size: 0.92rem; font-weight: 600; color: var(--sn-tinte); }
+.sn-pfeld { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.sn-pfeld__wahl { min-width: 0; }
+.sn-pfeld__hinweis { margin-bottom: 12px !important; font-size: 0.92rem; font-weight: 600; color: var(--sn-tinte); }
 .sn-pfeld__maus { display: none; }
 html:not(.js) .sn-pfeld__hinweis { display: none; }
-.sn-pliste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--sn-linie); }
-.sn-pp { position: relative; min-width: 0; border-bottom: 1px solid var(--sn-linie); }
-.sn-pp__kopf { margin: 0; font: inherit; }
-.sn-pp__knopf { width: 100%; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
-  padding: 16px 4px; border: 0; background: none; text-align: left; cursor: pointer; color: var(--ink-soft);
-  font-family: var(--font-head); font-weight: 600; font-size: clamp(1.02rem, 0.96rem + 0.35vw, 1.2rem); line-height: 1.35; transition: color 0.25s ease; }
-.sn-pp__knopf:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; border-radius: 8px; }
-.sn-pp__titel { min-width: 0; overflow-wrap: break-word; }
-.sn-pp__nr { font-size: 0.82rem; font-weight: 700; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
-.sn-pp__pfeil { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 999px; background: var(--paper); color: var(--sn-tinte);
-  transition: transform 0.35s ease, background 0.25s ease; }
-.sn-pp.ist-aktiv .sn-pp__knopf { color: var(--ink); }
-.sn-pp.ist-aktiv .sn-pp__pfeil { transform: rotate(180deg); background: var(--sn-tinte); color: var(--white); }
-.sn-pp__innen { min-width: 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; padding: 0 4px 18px; }
-.sn-pp__bild { display: grid; place-items: center; padding: 8px; border-radius: 14px; background: var(--paper); }
-.sn-pp__bild .gg { width: 100%; height: auto; }
-.sn-pp__text { font-size: 1rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
-@media (min-width: 640px) { .sn-pp__innen { grid-template-columns: 180px minmax(0, 1fr); gap: 24px; } .sn-pp__bild { padding: 14px; } }
-/* Handy/Tablet mit JS: Aufklappen (0fr → 1fr), zugeklappter Text ist auch für Screenreader weg (visibility) */
-html.js .sn-pp__detail { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
-html.js .sn-pp__detail > .sn-pp__innen { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 0.4s; }
-html.js .sn-pp.ist-aktiv .sn-pp__detail { grid-template-rows: 1fr; }
-html.js .sn-pp.ist-aktiv .sn-pp__detail > .sn-pp__innen { visibility: visible; transition-delay: 0s; }
-/* PC mit Maus: links die Liste, rechts die Bildfläche (alle Detail-Flächen liegen übereinander, die aktive blendet ein) */
-@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
-  html.js .sn-pfeld { --sn-pspalte: 44%; --sn-pabstand: clamp(40px, 5vw, 80px); min-height: 560px; }
-  html.js .sn-pfeld__maus { display: inline; }
-  html.js .sn-pfeld__tippen { display: none; }
-  html.js .sn-pfeld__hinweis, html.js .sn-pliste { width: var(--sn-pspalte); }
-  html.js .sn-pp { position: static; } /* Bezugsrahmen der Bildfläche ist .sn-pfeld, nicht die Zeile */
-  html.js .sn-pp__knopf { position: relative; padding: 13px 12px 13px 18px; }
-  html.js .sn-pp__knopf::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: var(--sn-tinte);
-    transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
-  html.js .sn-pp.ist-aktiv .sn-pp__knopf::before { transform: scaleY(1); }
-  html.js .sn-pp.ist-aktiv .sn-pp__knopf { background: var(--paper); border-radius: 12px; }
-  html.js .sn-pp__pfeil { transform: rotate(-90deg); opacity: 0; }
-  html.js .sn-pp.ist-aktiv .sn-pp__pfeil { transform: rotate(-90deg); opacity: 1; }
-  html.js .sn-pp__detail { position: absolute; top: 0; bottom: 0; left: calc(var(--sn-pspalte) + var(--sn-pabstand)); right: 0;
-    display: grid; grid-template-rows: none; align-content: center; pointer-events: none;
-    opacity: 0; visibility: hidden; transform: translateY(18px) scale(0.98);
-    transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.45s; }
-  html.js .sn-pp.ist-aktiv .sn-pp__detail { grid-template-rows: none; opacity: 1; visibility: visible; transform: none; transition-delay: 0s; pointer-events: auto; }
-  html.js .sn-pp__detail > .sn-pp__innen { visibility: inherit; overflow: visible; transition: none; grid-template-columns: minmax(0, 1fr); gap: 22px;
-    padding: clamp(24px, 2.6vw, 36px); border-radius: 28px; background: var(--paper); }
-  html.js .sn-pp__bild { padding: clamp(20px, 3vw, 40px); border-radius: 20px; background: var(--white); }
-  html.js .sn-pp__bild .gg { max-width: 420px; }
-  html.js .sn-pp.ist-aktiv .sn-pp__bild .gg { animation: snPpEin 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-  html.js .sn-pp__text { font-size: 1.15rem; color: var(--ink); }
+.sn-pkacheln { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sn-pkacheln li { min-width: 0; max-width: 100%; }
+.sn-pk { max-width: 100%; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--sn-linie); background: var(--white); cursor: pointer;
+  font-family: var(--font-head); font-weight: 600; font-size: 0.92rem; line-height: 1.3; color: var(--ink-soft); text-align: left;
+  overflow-wrap: break-word; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease; }
+.sn-pk:hover { border-color: var(--sn-tinte); color: var(--ink); }
+.sn-pk:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; }
+.sn-pk.ist-aktiv { background: var(--sn-tinte); border-color: var(--sn-tinte); color: var(--white); }
+.sn-pbuehne { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.sn-pd { min-width: 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center;
+  padding: 14px; border-radius: 22px; background: var(--paper); }
+.sn-pd__bild { display: grid; place-items: center; padding: 8px; border-radius: 14px; background: var(--white); }
+.sn-pd__bild .gg { width: 100%; height: auto; }
+.sn-pd__text { min-width: 0; display: grid; gap: 6px; }
+.sn-pd__titel { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.04rem, 0.98rem + 0.3vw, 1.2rem); line-height: 1.3; color: var(--ink); overflow-wrap: break-word; }
+.sn-pd__text > * { min-width: 0; overflow-wrap: break-word; }
+/* Sehr schmal (unter 360 px): Bild über dem Text, sonst ist die Textspalte für „Website-Änderungen“ zu schmal (14.11.2026) */
+@media (max-width: 359px) { .sn-pd { grid-template-columns: minmax(0, 1fr); } .sn-pd__bild .gg { max-width: 200px; } }
+.sn-pd__text p { font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 640px) { .sn-pd { grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 18px 26px 18px 18px; } .sn-pd__bild { padding: 14px; } }
+/* Mit JS: alle Flächen liegen in derselben Rasterzelle übereinander, die gewählte blendet ein (Höhe = größte Fläche, kein Springen) */
+html.js .sn-pd { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.4s; }
+html.js .sn-pd.ist-aktiv { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (min-width: 1000px) {
+  .sn-pfeld { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: clamp(32px, 4vw, 64px); align-items: center; }
+  .sn-pk { font-size: 0.98rem; padding: 10px 16px; }
+  .sn-pd { grid-template-columns: minmax(0, 1fr); padding: 18px; gap: 16px; }
+  .sn-pd__bild .gg { max-width: 300px; }
+  .sn-pd__text { padding: 0 8px 6px; }
 }
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) { html.js .sn-pfeld__maus { display: inline; } html.js .sn-pfeld__tippen { display: none; } }
 @keyframes snPpEin { from { transform: scale(0.92); opacity: 0.4; } to { transform: none; opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  html.js .sn-pp__detail, html.js .sn-pp__detail > .sn-pp__innen, .sn-pp__pfeil, html.js .sn-pp__knopf::before { transition: none !important; }
-  html.js .sn-pp.ist-aktiv .sn-pp__bild .gg { animation: none; }
-}
-.sn-problem__weitere { display: grid; gap: 14px; margin-top: clamp(28px, 4vw, 44px); padding: clamp(20px, 3vw, 32px);
-  border-radius: 24px; border: 1px solid var(--sn-linie-t); }
-.sn-problem__wtitel { font-family: var(--font-head); font-size: 1.08rem; font-weight: 600; color: var(--ink); }
-.sn-problem__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
-.sn-problem__chips li { min-width: 0; padding: 8px 14px; border-radius: 999px; background: var(--paper); font-size: 0.96rem;
-  line-height: 1.35; color: var(--ink); overflow-wrap: break-word; }
+@media (prefers-reduced-motion: reduce) { html.js .sn-pd, .sn-pk { transition: none !important; } html.js .sn-pd.ist-aktiv .gg { animation: none; } }
+.sn-problem__weitere { margin-top: clamp(20px, 3vw, 28px) !important; font-size: 0.98rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.sn-problem__weitere b { color: var(--ink); font-weight: 600; }
 .sn-problem__weiter { display: inline-flex; margin-top: clamp(24px, 3vw, 36px); }
 
 /* ═════ 3 · Lösung: Kundenreise ═════ */
@@ -180,8 +158,6 @@ html.js .sn-pp.ist-aktiv .sn-pp__detail > .sn-pp__innen { visibility: visible; t
 .sn-station__bild { display: grid; place-items: center; padding: clamp(14px, 3vw, 28px); background: var(--paper); border-radius: 20px; }
 .sn-station__bild .rg { max-width: 360px; }
 .sn-station__inhalt { min-width: 0; display: grid; gap: 10px; align-content: start; padding: 0 clamp(6px, 1.4vw, 14px) clamp(6px, 1vw, 12px); }
-.sn-station__marke { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.92rem; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
-.sn-station__marke .sn-ico { width: 40px; height: 40px; border-radius: 12px; background: var(--sn-hauch); color: var(--sn-tinte); }
 .sn-station__name { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink);
   hyphens: manual; overflow-wrap: normal; }
 .sn-station__name--ziel { color: var(--sn-tinte); }
@@ -190,11 +166,6 @@ html.js .sn-pp.ist-aktiv .sn-pp__detail > .sn-pp__innen { visibility: visible; t
 .sn-station__loest { font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); }
 .sn-station__loest span { font-weight: 600; color: var(--sn-tinte); }
 .sn-station__etikett { display: block; margin-bottom: 2px; font-weight: 600; font-size: 0.9rem; color: var(--sn-tinte); }
-.sn-station__dafuer { margin-top: 8px !important; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); }
-.sn-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.sn-chips li { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; max-width: 100%; padding: 7px 12px; border-radius: 12px;
-  background: var(--sn-hauch); font-size: 0.92rem; line-height: 1.4; color: var(--ink); }
-.sn-chips small { font-size: 0.8rem; font-weight: 600; color: var(--sn-tinte); }
 .sn-station__knopf { margin-top: 10px !important; }
 .sn-buehne { display: none; }
 .sn-wisch__hinweis { display: none; }
@@ -219,8 +190,6 @@ html.js .sn-pp.ist-aktiv .sn-pp__detail > .sn-pp__innen { visibility: visible; t
   html.js .sn-station:last-child { min-height: 58svh; }
   html.js .sn-station__bild { display: none; }
   html.js .sn-station__inhalt { padding: 0; transition: opacity 0.5s ease; }
-  html.js .sn-station:not(.ist-aktiv) .sn-station__marke .sn-ico { background: var(--white); }
-  html.js .sn-station.ist-aktiv .sn-station__marke .sn-ico { background: var(--sn-tinte); color: var(--white); }
   html.js .sn-buehne { display: block; position: sticky; top: calc(var(--kopf-gesamt, 73px) + max(24px, (100svh - var(--kopf-gesamt, 73px) - min(64svh, 560px) - 56px) / 2));
     align-self: start; }
   .sn-buehne__rahmen { position: relative; height: min(64svh, 560px); overflow: hidden; box-shadow: var(--sn-schatten); }
@@ -230,12 +199,6 @@ html.js .sn-pp.ist-aktiv .sn-pp__detail > .sn-pp__innen { visibility: visible; t
   .sn-szene .rg { width: 100%; max-width: 540px; max-height: 100%; }
   .sn-szene .rg-hl { transform-box: fill-box; transform-origin: center; transform: scale(0.94); opacity: 0.4; transition: transform 0.9s var(--sn-kurve) 0.25s, opacity 0.6s ease 0.25s; }
   .sn-szene.ist-aktiv .rg-hl { transform: none; opacity: 1; }
-  .sn-buehne__punkte { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; }
-  .sn-buehne__punkte li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 0.78rem; font-weight: 600; color: var(--ink-soft); }
-  .sn-buehne__punkte li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--sn-linie); transition: background-color 0.3s ease, transform 0.4s var(--sn-kurve); }
-  .sn-buehne__punkte li:not(.ist-aktiv) { font-size: 0; gap: 0; }
-  .sn-buehne__punkte li.ist-aktiv { color: var(--sn-tinte); }
-  .sn-buehne__punkte li.ist-aktiv::before { background: var(--sn-tinte); transform: scale(1.3); }
 }
 
 /* Beispiel-Film (früher eigener Abschnitt #beispiel): ruhiges Band am Ende der Lösung */
@@ -414,5 +377,4 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 .sn-produkt__bsp-titel { margin: 2px 0 -4px; font-weight: 600; font-size: 0.92rem; color: var(--sn-tinte) !important; }
 .sn-produkt__bsp { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .sn-produkt__bsp li { padding: 7px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--sn-linie-t); font-size: 0.94rem; line-height: 1.3; color: var(--ink); }
-.sn-produkt__moeglich { font-family: var(--font-head); font-weight: 600; color: var(--sn-tief) !important; }
 .sn-produkt--app .sn-produkt__chat .sn-ico { background: var(--white); }
