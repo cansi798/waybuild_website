@@ -36,6 +36,16 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
     'Kann ich meine bestehende Domain mitnehmen?',
     'Bietet webgold auch Software, Cloud und IT an?',
   ] },
+  // Jamil #5933 (14.11.2026): Fragen, die Ängste nehmen (Antworten in site.ts → faqs)
+  { id: 'sorgen', titel: 'Sorgen und Sicherheit', fragen: [
+    'Was passiert mit meinen alten E-Mails?',
+    'Wie lange dauert die Umstellung?',
+    'Kann ich während der Umstellung normal weiterarbeiten?',
+    'Muss ich mich mit Technik auskennen?',
+    'Was ist, wenn mir die Website nicht gefällt?',
+    'Was passiert bei Problemen oder Ausfällen?',
+    'Ich habe wenig Zeit. Schaffe ich das neben dem Tagesgeschäft?',
+  ] },
   { id: 'vertrag', titel: 'Vertrag', fragen: [
     'Wie lange läuft der Vertrag?',
     'Was passiert nach 24 Monaten?',

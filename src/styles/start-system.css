@@ -1,103 +1,147 @@
-/* STARTSEITE, Abschnitt „Warum Website und WebApp zusammen besonders stark sind“ (Jamil Talk qh87y3sj #5853, 14.11.2026;
- * überarbeitet nach #5905/#5906, 14.11.2026: hochwertiger Prozessweg, Ergebnis-Block mit Nutzenpunkten).
+/* STARTSEITE, Abschnitt „Warum Website und Web-App zusammen besonders stark sind“ (Jamil Talk qh87y3sj #5853, 14.11.2026;
+ * überarbeitet nach #5905/#5906; NEU gestaltet nach #5938, 14.11.2026: Vorher (verstreute Kärtchen) → Nachher (Kreislauf aus
+ * sechs Stationen, Folgeauftrag schließt den Kreis) → fünf Nutzenkarten).
  * Komponente: src/components/startneu/SnSystem.astro, Präfix .ss-. Farben nur aus Variablen (start-neu.css / start-farben.css):
  * Primär --sn-tinte, Dunkel --sn-tief, Positiv --sn-tuerkis, Gold --gold (nur Zier: Lichtpunkt, Ring, Akzentstriche – nie Schrift).
  * Kontraste: Text --ink/--ink-soft auf Weiß bzw. Hauch ≥ 6,9 : 1, Primär auf Weiß 6,4 : 1. Lichtpunkt nur ohne
- * prefers-reduced-motion. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit), lange Wörter mit overflow-wrap + &shy;. */
+ * prefers-reduced-motion. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit), lange Wörter mit overflow-wrap.
+ * Ring-Geometrie: Handy = senkrechte Linie durch die Medaillon-Mitten, Rückweg links; ab 760 px 3 × 2 in Schlangen-Reihenfolge
+ * (4–6 laufen in Reihe 2 von rechts nach links), feste Zeilenhöhe --ss-zeile, damit der Ring exakt durch alle Mitten läuft. */
 
 /* .ss */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
-.ss .sn-kopf .sn-h2 { max-width: 20ch; }
-.ss-unterzeile { font-family: var(--font-head); font-weight: 600; color: var(--sn-tinte); }
-
-.ss-problem { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; max-width: 62ch; }
-.ss-problem p { font-size: clamp(1.05rem, 1rem + 0.3vw, 1.18rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+.ss .sn-kopf .sn-h2 { max-width: 18ch; overflow-wrap: break-word; }
+.ss-kopf-links { min-width: 0; }
+.ss-problem { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; max-width: 52ch; }
+.ss-problem p { margin: 0; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.18rem); line-height: 1.7; color: var(--ink-soft);
+  text-wrap: pretty; overflow-wrap: break-word; }
 
 /* ── Tafel ── */
-.ss-tafel { margin-top: clamp(36px, 5vw, 56px); padding: clamp(24px, 4.5vw, 64px); border-radius: 32px; background: var(--white);
-  box-shadow: var(--sn-schatten); }
-.ss-ganz { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem); line-height: 1.3;
-  letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.ss-tafel { display: grid; grid-template-columns: minmax(0, 1fr); padding: clamp(20px, 4.5vw, 64px); border-radius: 32px;
+  background: var(--white); box-shadow: var(--sn-schatten); }
+.ss-tafel > * { min-width: 0; }
 
-/* ── Prozessweg ──
- * Handy: senkrecht, Medaillon links, Nummer + Name rechts; die Bahn läuft senkrecht durch die Medaillon-Mitten. */
-.ss-strecke { --ss-m: 68px; --ss-gap: 30px; position: relative; margin-top: clamp(28px, 4vw, 48px); }
-.ss-fluss { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--ss-gap); position: relative; }
-.ss-station { position: relative; min-width: 0; display: grid; grid-template-columns: var(--ss-m) minmax(0, 1fr); align-items: center; column-gap: 18px; }
+.ss-marke { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 16px; font-family: var(--font-head); font-weight: 700;
+  font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.ss-marke::before { content: ''; width: 7px; height: 7px; border-radius: 50%; }
+.ss-marke--vorher { color: var(--ink-soft); }
+.ss-marke--vorher::before { background: var(--line, #e6e0d4); box-shadow: inset 0 0 0 1.5px var(--ink-soft); }
+.ss-marke--nachher { color: var(--sn-tinte); }
+.ss-marke--nachher::before { background: var(--gold); box-shadow: 0 0 0 3px rgb(216 167 79 / 22%); }
+
+/* ── Vorher: Kärtchen, leicht durcheinander ── */
+.ss-vorher { padding: clamp(18px, 3vw, 28px); border-radius: 24px; background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--sn-linie); }
+.ss-chaos { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; padding: 6px 2px 8px; }
+.ss-chaos-faden { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--ink-soft); opacity: 0.35; pointer-events: none; }
+.ss-karte { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; gap: 8px;
+  padding: 12px 12px 13px; border-radius: 14px; background: var(--white); color: var(--ink-soft);
+  box-shadow: inset 0 0 0 1px var(--sn-linie), 0 12px 22px -18px rgb(44 49 53 / 40%); }
+.ss-karte-ico { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--paper); color: var(--ink-soft); }
+.ss-karte-name { min-width: 0; max-width: 100%; font-family: var(--font-head); font-weight: 600; font-size: 0.88rem; line-height: 1.3;
+  color: var(--ink); overflow-wrap: break-word; hyphens: manual; }
+.ss-karte--1 { transform: rotate(-3deg) translateY(2px); }
+.ss-karte--2 { transform: rotate(2.5deg) translate(2px, 10px); }
+.ss-karte--3 { transform: rotate(1.5deg) translate(-2px, -2px); }
+/* „verloren“: eine Karte blasser, mit gestricheltem Rand */
+.ss-karte--4 { transform: rotate(-2deg) translate(1px, 8px); opacity: 0.72;
+  box-shadow: none; outline: 1.5px dashed var(--sn-linie); outline-offset: -1.5px; }
+
+/* ── Übergang ── */
+.ss-wende { display: grid; place-items: center; padding: 18px 0; }
+.ss-wende-kreis { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--sn-tinte);
+  background: var(--white); box-shadow: inset 0 0 0 1px var(--sn-linie-t), 0 0 0 6px var(--sn-hauch); }
+
+/* ── Nachher ── */
+.ss-nachher { padding: clamp(18px, 3vw, 32px); border-radius: 24px; background: linear-gradient(180deg, var(--sn-hauch), var(--white));
+  box-shadow: inset 0 0 0 1px var(--sn-linie-t); }
+.ss-loesung { margin: 0; max-width: 34ch; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 1.05rem + 0.65vw, 1.55rem);
+  line-height: 1.3; letter-spacing: -0.02em; color: var(--sn-tief); text-wrap: balance; overflow-wrap: break-word; }
+
+/* Strecke, Handy: senkrecht, Medaillon links, Text rechts; Rückweg-Spur --ss-r links daneben */
+.ss-strecke { --ss-m: 64px; --ss-gap: 22px; --ss-r: 20px; position: relative; margin-top: clamp(24px, 4vw, 40px); }
+.ss-fluss { list-style: none; margin: 0; padding: 0 0 0 var(--ss-r); display: grid; grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--ss-gap); position: relative; z-index: 1; }
+.ss-station { position: relative; min-width: 0; display: grid; grid-template-columns: var(--ss-m) minmax(0, 1fr); align-items: center;
+  column-gap: 16px; min-height: var(--ss-m); }
 
 .ss-medaillon { position: relative; z-index: 1; display: grid; place-items: center; width: var(--ss-m); height: var(--ss-m); border-radius: 50%;
   color: var(--sn-tinte);
   background: radial-gradient(120% 120% at 30% 20%, var(--white) 0%, var(--white) 35%, var(--sn-hauch) 100%);
-  box-shadow: 0 0 0 6px var(--white), inset 0 0 0 1px var(--sn-linie-t), 0 18px 34px -22px rgb(8 78 76 / 45%); }
+  box-shadow: 0 0 0 5px var(--white), inset 0 0 0 1px var(--sn-linie-t), 0 18px 34px -22px rgb(8 78 76 / 45%); }
 .ss-medaillon svg { width: 60%; height: 60%; }
 .ss-medaillon .ss-akz { stroke: var(--sn-tuerkis); }
 
-/* letzte Station hervorgehoben: Primär gefüllt, feiner Goldring */
-.ss-station:last-child .ss-medaillon { color: var(--white);
+/* letzte Station (Folgeauftrag) schließt den Kreis: Primär gefüllt, feiner Goldring */
+.ss-station--folgeauftrag .ss-medaillon { color: var(--white);
   background: radial-gradient(120% 120% at 30% 20%, var(--sn-tinte) 0%, var(--sn-tinte) 45%, var(--sn-tief) 100%);
   box-shadow: 0 0 0 4px var(--white), 0 0 0 5.5px var(--gold), 0 22px 40px -22px rgb(8 78 76 / 60%); }
-.ss-station:last-child .ss-medaillon .ss-akz { stroke: var(--gold); }
+.ss-station--folgeauftrag .ss-medaillon .ss-akz { stroke: var(--gold); }
 
-.ss-text { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 4px; }
-.ss-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; color: var(--sn-tinte);
+.ss-text { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 3px; }
+.ss-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.76rem; letter-spacing: 0.12em; color: var(--sn-tinte);
   font-variant-numeric: tabular-nums; }
-.ss-name { font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; line-height: 1.3; letter-spacing: -0.01em;
+.ss-name { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; line-height: 1.3; letter-spacing: -0.01em;
   color: var(--ink); overflow-wrap: break-word; }
-.ss-station:last-child .ss-name { color: var(--sn-tief); font-weight: 800; }
+.ss-station--folgeauftrag .ss-name { color: var(--sn-tief); font-weight: 800; }
 
-/* Bahn: dünne Linie hinter den Medaillons, darin der Lichtpunkt */
-.ss-bahn { position: absolute; left: calc(var(--ss-m) / 2 - 0.75px); top: calc(var(--ss-m) / 2); bottom: calc(var(--ss-m) / 2);
-  width: 1.5px; border-radius: 2px; background: linear-gradient(180deg, var(--sn-linie-t), var(--sn-tuerkis)); }
-.ss-licht { position: absolute; left: 50%; top: 0; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%;
+/* Ring: Handy = rechte Kante durch die Medaillon-Mitten, linke Kante = Rückweg vom Folgeauftrag zur Website */
+.ss-ring { position: absolute; z-index: 0; left: 0; top: calc(var(--ss-m) / 2); bottom: calc(var(--ss-m) / 2);
+  width: calc(var(--ss-r) + var(--ss-m) / 2); border: 1.5px solid var(--sn-linie-t); border-radius: 18px; }
+.ss-zurueck { position: absolute; left: -0.75px; top: 50%; display: grid; place-items: center; width: 24px; height: 24px;
+  margin: -12px 0 0 -12px; border-radius: 50%; color: var(--gold); background: var(--white);
+  box-shadow: inset 0 0 0 1.5px var(--gold); }
+.ss-licht { position: absolute; left: 100%; top: 0; width: 9px; height: 9px; margin: -5.25px 0 0 -5.25px; border-radius: 50%;
   background: var(--gold); box-shadow: 0 0 0 4px rgb(216 167 79 / 22%), 0 0 14px 2px rgb(216 167 79 / 45%); opacity: 0; }
 
-/* Anschluss: die Linie läuft vom „zufriedenen Kunden“ weiter in den Ergebnis-Block */
-.ss-anschluss { position: relative; height: clamp(36px, 6vw, 52px); margin-left: calc(var(--ss-m-a, 68px) / 2 - 0.75px); width: 1.5px;
-  background: linear-gradient(180deg, var(--sn-tuerkis), var(--gold)); }
-.ss-anschluss::after { content: ''; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%;
-  background: var(--white); box-shadow: inset 0 0 0 1.5px var(--gold); }
-.ss-anschluss .ss-licht { top: 0; }
-
-/* PC: waagerecht, Nummer + Name unter dem Medaillon; Bahn verbindet die Spaltenmitten */
+/* PC/Tablet: 3 × 2, Reihe 2 läuft von rechts nach links → geschlossene Schleife durch alle sechs Mitten */
 @media (min-width: 760px) {
-  .ss-strecke { --ss-m: 96px; --ss-gap: 24px; }
-  .ss-fluss { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--ss-gap); row-gap: 0; }
-  .ss-station { grid-template-columns: minmax(0, 1fr); justify-items: center; row-gap: 20px; text-align: center; }
-  .ss-text { justify-items: center; row-gap: 6px; }
-  .ss-name { font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.2rem); text-wrap: balance; }
-  .ss-bahn { left: calc((100% - 3 * var(--ss-gap)) / 8); right: calc((100% - 3 * var(--ss-gap)) / 8); top: calc(var(--ss-m) / 2 - 0.75px);
-    bottom: auto; width: auto; height: 1.5px; background: linear-gradient(90deg, var(--sn-linie-t), var(--sn-tuerkis)); }
-  .ss-bahn .ss-licht { left: 0; top: 50%; }
-  /* Anschluss unter der vierten Spalte (gleiche Spaltenformel wie die Bahn) */
-  .ss-anschluss { --ss-gap: 24px; margin-left: calc(100% - (100% - 3 * var(--ss-gap)) / 8 - 0.75px); margin-top: 20px; }
+  .ss-strecke { --ss-m: 88px; --ss-gap: 24px; --ss-rg: 28px; --ss-zeile: calc(var(--ss-m) + 74px); }
+  .ss-fluss { padding: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: var(--ss-zeile);
+    column-gap: var(--ss-gap); row-gap: var(--ss-rg); }
+  .ss-station { grid-template-columns: minmax(0, 1fr); align-items: start; justify-items: center; align-content: start;
+    row-gap: 16px; text-align: center; min-height: 0; }
+  .ss-station:nth-child(4) { grid-area: 2 / 3; }
+  .ss-station:nth-child(5) { grid-area: 2 / 2; }
+  .ss-station:nth-child(6) { grid-area: 2 / 1; }
+  .ss-text { justify-items: center; row-gap: 4px; }
+  .ss-name { font-size: clamp(1.02rem, 0.95rem + 0.3vw, 1.15rem); text-wrap: balance; }
+  .ss-ring { left: calc((100% - 2 * var(--ss-gap)) / 6); right: calc((100% - 2 * var(--ss-gap)) / 6); width: auto;
+    top: calc(var(--ss-m) / 2); bottom: auto; height: calc(var(--ss-zeile) + var(--ss-rg)); border-radius: 28px; }
+  .ss-licht { left: 0; top: 0; }
 }
 
-/* Lichtpunkt: läuft die Bahn entlang (0–60 %), dann den Anschluss hinunter in das Ergebnis (60–85 %) */
+/* breit: Vorher und Nachher nebeneinander, Pfeil zeigt nach rechts */
+@media (min-width: 1100px) {
+  .ss-tafel { grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1.45fr); align-items: stretch; }
+  .ss-vorher { display: flex; flex-direction: column; }
+  .ss-chaos { flex: 1; align-content: center; gap: 22px 16px; }
+  .ss-wende { padding: 0 18px; }
+  .ss-wende-kreis svg { transform: rotate(-90deg); }
+  .ss-ergebnis { grid-column: 1 / -1; }
+}
+
+/* Lichtpunkt läuft den Ring entlang */
 @media (prefers-reduced-motion: no-preference) {
-  .ss-bahn .ss-licht { animation: ss-lauf-hoch 6.4s var(--sn-kurve) infinite; }
-  .ss-anschluss .ss-licht { animation: ss-anschluss 6.4s ease-in-out infinite; }
-  @media (min-width: 760px) { .ss-bahn .ss-licht { animation-name: ss-lauf-quer; } }
+  .ss-licht { animation: ss-ring-hoch 8s linear infinite; }
+  @media (min-width: 760px) { .ss-licht { animation-name: ss-ring-quer; } }
 }
-@keyframes ss-lauf-hoch {
-  0% { top: 0; opacity: 0; } 5% { opacity: 1; } 55% { opacity: 1; } 60% { top: 100%; opacity: 0; } 100% { top: 100%; opacity: 0; }
+/* Handy: rechts hinunter (Stationen), unten nach links, links hinauf (Rückweg), oben zurück */
+@keyframes ss-ring-hoch {
+  0% { left: 100%; top: 0; opacity: 0; } 4% { opacity: 1; }
+  70% { left: 100%; top: 100%; } 76% { left: 0; top: 100%; }
+  94% { left: 0; top: 0; opacity: 1; } 100% { left: 100%; top: 0; opacity: 0; }
 }
-@keyframes ss-lauf-quer {
-  0% { left: 0; opacity: 0; } 5% { opacity: 1; } 55% { opacity: 1; } 60% { left: 100%; opacity: 0; } 100% { left: 100%; opacity: 0; }
-}
-@keyframes ss-anschluss {
-  0%, 60% { top: 0; opacity: 0; } 63% { opacity: 1; } 82% { opacity: 1; } 86% { top: 100%; opacity: 0; } 100% { top: 100%; opacity: 0; }
+/* ab 760 px: im Uhrzeigersinn 1 → 3, hinunter zu 4, 4 → 6, hinauf zu 1 */
+@keyframes ss-ring-quer {
+  0% { left: 0; top: 0; opacity: 0; } 4% { opacity: 1; }
+  32% { left: 100%; top: 0; } 48% { left: 100%; top: 100%; }
+  80% { left: 0; top: 100%; } 96% { left: 0; top: 0; opacity: 1; } 100% { left: 0; top: 0; opacity: 0; }
 }
 
-/* ── Ergebnis-Block „Was Ihnen das bringt“ ── */
-.ss-ergebnis { margin-top: 18px; padding: clamp(22px, 3.5vw, 40px); border-radius: 24px;
-  background: linear-gradient(180deg, var(--sn-hauch), var(--white)); box-shadow: inset 0 0 0 1px var(--sn-linie-t); }
-.ss-ergebnis-kopf { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+/* ── Nutzenkarten ── */
+.ss-ergebnis { margin-top: clamp(28px, 4vw, 48px); }
 .ss-ergebnis-h { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.25; letter-spacing: -0.02em; color: var(--ink); }
-.ss-verbund { margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; text-wrap: pretty; overflow-wrap: break-word; }
-@media (min-width: 960px) {
-  .ss-ergebnis-kopf { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: baseline; column-gap: 40px; }
-}
-
-.ss-nutzen { list-style: none; margin: clamp(20px, 3vw, 32px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.ss-nutzen { list-style: none; margin: clamp(16px, 2.5vw, 24px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .ss-punkt { min-width: 0; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--white);
   box-shadow: inset 0 0 0 1px var(--sn-linie), 0 10px 24px -20px rgb(8 78 76 / 35%); }
 .ss-punkt-text { min-width: 0; font-family: var(--font-head); font-weight: 600; font-size: 1rem; line-height: 1.4; color: var(--ink);
@@ -109,7 +153,7 @@
   .ss-nutzen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ss-punkt:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
-/* breit: fünf ruhige Spalten, Haken über dem Text, damit lange Wörter Platz haben */
+/* breit: fünf ruhige Spalten, Haken über dem Text */
 @media (min-width: 1100px) {
   .ss-nutzen { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .ss-punkt:last-child:nth-child(odd) { grid-column: auto; }

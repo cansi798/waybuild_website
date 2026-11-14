@@ -227,4 +227,35 @@ export const faqs = [
     q: 'Sind die Preise netto?',
     a: `Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Zum Beispiel kostet ${PAKETE[0].name} ${formatEuro(PAKETE[0].preis)} netto im Monat, das sind ${formatEuro(brutto(PAKETE[0].preis))} inkl. MwSt. Unser Angebot richtet sich ausschließlich an Unternehmen und Selbstständige (B2B).`,
   },
+  // Jamil #5933 (14.11.2026): Fragen, die Ängste nehmen. Nur Aussagen aus den Configs (14 Tage nach Inhalten, Domain ohne
+  // Ausfall, Freigabe vor Veröffentlichung, fester Ansprechpartner, Hosting in Deutschland), keine Garantien (UWG).
+  // Eigentum/Rechte bewusst weggelassen: in pakete-abo.ts noch offen (Platzhalter beim Logo).
+  {
+    q: 'Was passiert mit meinen alten E-Mails?', // Jamil #5933
+    a: 'Das besprechen wir vorab mit Ihnen. In der Regel lassen sich Ihre bestehenden E-Mails in die neuen Postfächer übertragen. Wann und wie wir umstellen, stimmen wir mit Ihnen ab.',
+  },
+  {
+    q: 'Wie lange dauert die Umstellung?', // Jamil #5933
+    a: 'Ihre neue Website ist in der Regel innerhalb von 14 Tagen online, nachdem Ihre Inhalte (Texte, Bilder, Logo) vorliegen. Den Zeitpunkt der Umstellung von Domain und E-Mail-Postfächern legen wir gemeinsam mit Ihnen fest.',
+  },
+  {
+    q: 'Kann ich während der Umstellung normal weiterarbeiten?', // Jamil #5933 („Werde ich arbeitsunfähig sein für eine Zeit?“)
+    a: 'Das ist unser Ziel. Wir bauen Ihre neue Website im Hintergrund auf, und online geht sie erst nach Ihrer Freigabe. Die Verwaltung Ihrer bestehenden Domain übernehmen wir ohne Ausfall. Den Zeitpunkt für die E-Mail-Umstellung stimmen wir vorab mit Ihnen ab.',
+  },
+  {
+    q: 'Muss ich mich mit Technik auskennen?', // Jamil #5933
+    a: 'Nein. Hosting, Sicherheitsupdates, SSL und Backups erledigen wir im Hintergrund. Änderungswünsche schicken Sie uns einfach per Nachricht, auch als Sprachnachricht. Was wir für Google und KI-Assistenten tun, erklären wir Ihnen in leichter Sprache.',
+  },
+  {
+    q: 'Was ist, wenn mir die Website nicht gefällt?', // Jamil #5933
+    a: 'Sie sehen die Website, bevor sie online geht. Wir erarbeiten die Inhalte mit Ihnen, setzen sie um, und Sie geben frei. Was Ihnen nicht gefällt, sagen Sie uns, und wir besprechen die Änderungen mit Ihnen.',
+  },
+  {
+    q: 'Was passiert bei Problemen oder Ausfällen?', // Jamil #5933
+    a: `Sie melden sich bei Ihrem festen Ansprechpartner, ${HOURS}. Sie landen weder in einem Callcenter noch in einem Ticketsystem. Wartung, Sicherheitsupdates und Backups sind im Monatspreis enthalten.`,
+  },
+  {
+    q: 'Ich habe wenig Zeit. Schaffe ich das neben dem Tagesgeschäft?', // Jamil #5933
+    a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 20 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.',
+  },
 ];

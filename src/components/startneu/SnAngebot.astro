@@ -76,7 +76,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
         </div>
       </article>
     </div>
-    {!K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Der Kombipreis für das Komplettpaket gilt nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
+    {!K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Der Kombipreis für „{K.name}“ gilt nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
 
 
     <div class="sn-extras" id="einmalig" role="region" aria-labelledby="sn-extras-h">

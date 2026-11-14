@@ -6,6 +6,7 @@
 // Platzhalter in {geschweiften Klammern} füllt das Skript (geschichte.ts) mit der gewählten Branche und dem Firmennamen,
 // immer nur als Text (textContent). Ohne JS steht der Standardtext (Maler bzw. „Ihr Betrieb“) da.
 
+import { KOMPLETTPAKET } from '../../config/pakete-abo';
 export type WegId = 'website' | 'anfragen' | 'betrieb';
 
 export interface Schmerz { titel: string; text: string; vorlage?: string; grafik: string }
@@ -75,7 +76,7 @@ export const WEGE: Weg[] = [
         text: 'Notizen vom Termin, Fotos im Handy, Preise im Kopf. Nichts liegt an einem Ort.' },
     ],
     loesung: 'Vom Suchtreffer über das Angebot bis zur Rechnung, alles greift ineinander.',
-    paket: 'Für mehr Anfragen passt das Paket Online wachsen. Für schnellere Angebote kommt das Komplettpaket dazu.',
+    paket: 'Für mehr Anfragen passt das Paket Online wachsen. Für schnellere Angebote kommt „' + KOMPLETTPAKET.name + '“ dazu.',
   },
   {
     id: 'betrieb', kurz: 'c',
@@ -90,7 +91,7 @@ export const WEGE: Weg[] = [
         text: 'Bis alles beisammen ist, vergehen Wochen. Ihr Geld kommt später als nötig.' },
     ],
     loesung: 'Ein Tag im Betrieb: Planung, Zeiten, Material und Rechnung in einer Software, die zu Ihren Abläufen passt.',
-    paket: 'Für Ihren ganzen Betrieb passt das Komplettpaket, zusammen mit Online sichtbar oder Online wachsen.',
+    paket: 'Für Ihren ganzen Betrieb passt „' + KOMPLETTPAKET.name + '“, zusammen mit Online sichtbar oder Online wachsen.',
   },
 ];
 

@@ -123,7 +123,7 @@ export type PreisArt = 'zusaetzlich' | 'gesamt';
 export const KOMPLETTPAKET = {
   id: 'komplett' as const,
   label: 'Optional dazu',
-  name: 'Komplettpaket',
+  name: 'Rundum digital', // Jamil #5936 (14.11.2026), vorher „Komplettpaket“
   kurz: 'Auftragsverwaltung, individuell an Ihre Abläufe angepasst',
   /** „Nur zusammen …“ statt „Zusätzlich zu Basis oder Plus buchbar.“ (Jamil, Talk qh87y3sj #5642, 12.11.2026): einzeln nicht buchbar */
   text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Nur zusammen mit Online sichtbar oder Online wachsen buchbar.',

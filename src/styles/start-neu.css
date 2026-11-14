@@ -126,7 +126,7 @@ html:not(.js) .sn-pfeld__hinweis { display: none; }
 .sn-pd__titel { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.04rem, 0.98rem + 0.3vw, 1.2rem); line-height: 1.3; color: var(--ink); overflow-wrap: break-word; }
 .sn-pd__text > * { min-width: 0; overflow-wrap: break-word; }
 /* Sehr schmal (unter 360 px): Bild über dem Text, sonst ist die Textspalte für „Website-Änderungen“ zu schmal (14.11.2026) */
-@media (max-width: 359px) { .sn-pd { grid-template-columns: minmax(0, 1fr); } .sn-pd__bild .gg { max-width: 200px; } }
+@media (max-width: 639px) { .sn-pd { grid-template-columns: minmax(0, 1fr); } .sn-pd__bild .gg { max-width: 320px; } } /* Handy: Bild über dem Text, groß genug für die Grafik-Texte (14.11.2026) */
 .sn-pd__text p { font-size: 0.98rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 640px) { .sn-pd { grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 18px 26px 18px 18px; } .sn-pd__bild { padding: 14px; } }
 /* Mit JS: alle Flächen liegen in derselben Rasterzelle übereinander, die gewählte blendet ein (Höhe = größte Fläche, kein Springen) */

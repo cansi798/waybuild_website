@@ -104,6 +104,9 @@ export const ANGEBOT = {
     'Kann ich später in ein größeres Paket wechseln?',
     'Kann ich meine bestehende Domain mitnehmen?',
     'Sind die Preise netto?',
+    // Jamil #5933: Fragen, die Ängste nehmen (max. 8 auf der Startseite)
+    'Kann ich während der Umstellung normal weiterarbeiten?',
+    'Was passiert mit meinen alten E-Mails?',
   ],
   alleFragen: 'Alle Fragen ansehen',
   allePreise: 'Alle Inhalte, Vergleich und Zusatzleistungen',
@@ -112,7 +115,7 @@ export const ANGEBOT = {
 /** Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text, Knopf ABSCHLUSS_KNOPF (variante.ts). */
 export const ABSCHLUSS = {
   titel: 'Die richtige digitale Lösung beginnt mit dem richtigen Gespräch.',
-  text: 'Ob neue Website, individuelle WebApp oder die Digitalisierung bestehender Prozesse: Gemeinsam finden wir heraus, welche Lösung Ihr Unternehmen wirklich weiterbringt.',
+  text: 'Ob neue Website, individuelle Web-App oder die Digitalisierung bestehender Prozesse: Gemeinsam finden wir heraus, welche Lösung Ihr Unternehmen wirklich weiterbringt.',
 };
 
 /** Abschnitt 6: Handlung (seit 14.11.2026 nicht mehr auf der Startseite, ersetzt durch ABSCHLUSS). Überschrift = KUNDENREISE.schluss (Jamil #5662), Ablauf = VORGEHEN.schritte. */

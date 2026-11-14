@@ -279,7 +279,7 @@ import '../styles/seite-kontakt.css';
       const gewaehlt = interesse.value === 'website' ? wahlSelect?.selectedOptions[0]?.dataset.text ?? '' : '';
       if (gewaehlt) data.paket = data.paket ? `${gewaehlt}; ${data.paket}` : gewaehlt;
       if (interesse.value === 'website' && komplettBox?.checked) {
-        data.komplettpaket = komplettBox.dataset.text ?? 'Komplettpaket';
+        data.komplettpaket = komplettBox.dataset.text ?? form.dataset.komplettName ?? '';
         if (monatText) data.monatlich = monatText;
         if (data.paket) data.paket = `${data.paket} + ${form.dataset.komplettName}`; // ohne Grundpaket nicht wählbar (#5642)
       }

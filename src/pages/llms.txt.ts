@@ -51,7 +51,7 @@ export const GET: APIRoute = async ({ site }) => {
     // Auftragsverwaltungs-Liste und Ablauf stehen nicht mehr auf der Karte (Jamil #5606/#5610/#5641)
     `- ${KOMPLETTPAKET.name}: ${komplett}`,
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
-    '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit Paketwahl, Komplettpaket und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
+    '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit Paketwahl, „Rundum digital“ und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
     `- Ablauf: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel}`).join(', ')} (siehe „${VORGEHEN.titel}“). Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',

@@ -10,7 +10,7 @@ export const PARTNER = {
   titel: 'Ein Partner für Ihre gesamte digitale Entwicklung.',
   vorteile: [
     { icon: 'compass', titel: 'Individuelle Lösungen', text: 'Keine Standardpakete, sondern Lösungen, die zu Ihrem Unternehmen passen.' },
-    { icon: 'layers', titel: 'Alles aus einer Hand', text: 'Website, WebApps und Weiterentwicklung von einem Ansprechpartner.' },
+    { icon: 'layers', titel: 'Alles aus einer Hand', text: 'Website, Web-Apps und Weiterentwicklung von einem Ansprechpartner.' },
     { icon: 'refresh', titel: 'Langfristige Zusammenarbeit', text: 'Wir begleiten Unternehmen nicht nur beim Start, sondern auch beim nächsten Wachstumsschritt.' },
     { icon: 'shield', titel: 'Zukunftssichere Systeme', text: 'Digitale Lösungen, die heute funktionieren und morgen erweitert werden können.' },
   ] as { icon: IconName; titel: string; text: string }[],

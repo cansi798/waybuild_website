@@ -28,7 +28,7 @@ export const PHASEN = {
     {
       titel: 'Arbeits\u00ADabläufe digitalisieren',
       kern: 'Viele Aufgaben wiederholen sich täglich.',
-      text: 'Mit individuellen WebApps digitalisieren wir interne Abläufe, Dokumentationen, Freigaben, Kundenprozesse oder Verwaltungsaufgaben.',
+      text: 'Mit individuellen Web-Apps digitalisieren wir interne Abläufe, Dokumentationen, Freigaben, Kundenprozesse oder Verwaltungsaufgaben.',
       icon: 'ablauf',
     },
     {

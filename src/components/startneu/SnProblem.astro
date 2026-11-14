@@ -1,10 +1,10 @@
 ---
 // Teil 2 „Problem“ (Neudesign 13.11.2026, Jamil Talk qh87y3sj #5810, erweitert #5819/#5826, Animation #5828). Seit #5833 (14.11.:
 // „nimmt noch zu viel Platz ein“) kompakt: alle Probleme als Stichwort-Kacheln, daneben (PC) bzw. darunter (Handy) EINE Bildfläche
-// mit Strichgrafik (geschichte/GGrafik), Titel und Text des gewählten Problems. PC: Maus/Fokus wählt, im Sichtbereich wechselt
+// mit Illustration (ProblemGrafik, seit Jamil #5928–#5930, 14.11.2026; vorher geschichte/GGrafik), Titel und Text des gewählten Problems. PC: Maus/Fokus wählt, im Sichtbereich wechselt
 // es von selbst, bis jemand eingreift. Handy: Tippen wählt. Ohne JS: alle Bildflächen untereinander.
 // Bedienhinweis entfernt (Jamil #5866, 14.11.2026). Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026). Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pk*, .sn-pd*).
-import GGrafik from '../geschichte/GGrafik.astro';
+import ProblemGrafik from './ProblemGrafik.astro';
 import { PROBLEM as T } from '../../config/startneu';
 const kurz = (t: string) => t.replace(/\.$/, '');
 ---
@@ -30,7 +30,7 @@ const kurz = (t: string) => t.replace(/\.$/, '');
       <div class="sn-pbuehne">
         {T.punkte.map((p, i) => (
           <div class:list={['sn-pd', { 'ist-aktiv': i === 0 }]} id={`sn-pd-${i}`} data-pd={i}>
-            <div class="sn-pd__bild"><GGrafik name={p.grafik} suche="Betrieb in der Nähe" /></div>
+            <div class="sn-pd__bild"><ProblemGrafik name={p.grafik} suche="Betrieb in der Nähe" /></div>
             <div class="sn-pd__text">
               <h3 class="sn-pd__titel">{p.titel}</h3>
               <p>{p.text}</p>

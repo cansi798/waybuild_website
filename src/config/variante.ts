@@ -11,7 +11,7 @@ export const V_HERO = {
   titel: 'Digitale Lösungen für Unternehmen, die mehr erreichen wollen.', // Jamil Talk qh87y3sj #5845, 14.11.2026 (vorher #5129 „Von der ersten Aufmerksamkeit …“)
   /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5359, 09.11.2026: „beide Sätze beginnen mit von“ – H1 bleibt, Unterzeile ohne „Von …“).
    *  Vorher #5174. Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Ob professionelle Website, individuelle WebApp oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
+  unter: 'Ob professionelle Website, individuelle Web-App oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
   /** Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) */
   fuer: 'Für klein- und mittelständische Unternehmen.', // Jamil #5878, 14.11.2026 (vorher die Aufzählung aus #5847)
 };
