@@ -8,7 +8,8 @@
 // SEIT 14.11.2026 neue Reihenfolge nach Jamils Konzept (Talk qh87y3sj #5843–#5855, Sicherung Tag vor-jamil-konzept-20261114):
 // Hero (neue Texte, Design gleich) → „Ganz gleich, wo Sie gerade stehen.“ (SnWege, gleitet über den Hero) → „Kommt Ihnen das bekannt
 // vor?“ (SnProblem) → Phasen (SnPhasen) → Website + WebApp (SnSystem) → Partner (SnPartner) → Abschluss (SnAbschluss).
-// Produkte, Kundenreise, Beweis, Angebot und Handlung sind nicht mehr auf der Startseite (Komponenten bleiben im Ordner).
+// Jamil #5858/#5859 (14.11.2026) wieder rein: Beispiel-Film mit Firmenname (SnBeispiel), Can + Jamil (SnTeam), Vergleich (SnVergleich),
+// Ablauf (SnAblauf), Preise unten (SnAngebot). Hintergründe im Wechsel: Hauch/Papier/Weiß. Produkte, Kundenreise, Projekte (SnBeweis) bleiben draußen.
 // Frühere Stände und Entscheidungen: Git-Verlauf und Tags (z. B. vor-startseite-6abschnitte-20261113).
 // WICHTIG: In dieser Datei KEIN <style>-Block (Astro würde sonst data-astro-cid-Attribute an den Hero hängen).
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -18,6 +19,11 @@ import SnPhasen from '../components/startneu/SnPhasen.astro';
 import SnSystem from '../components/startneu/SnSystem.astro';
 import SnPartner from '../components/startneu/SnPartner.astro';
 import SnAbschluss from '../components/startneu/SnAbschluss.astro';
+import SnBeispiel from '../components/startneu/SnBeispiel.astro';
+import SnTeam from '../components/startneu/SnTeam.astro';
+import SnVergleich from '../components/startneu/SnVergleich.astro';
+import SnAblauf from '../components/startneu/SnAblauf.astro';
+import SnAngebot from '../components/startneu/SnAngebot.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis } from '../config/pakete-abo';
@@ -75,9 +81,14 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   </div>
 
   <SnProblem />
+  <SnBeispiel />
   <SnPhasen />
   <SnSystem />
   <SnPartner />
+  <SnTeam />
+  <SnVergleich />
+  <SnAblauf />
+  <SnAngebot />
   <SnAbschluss />
 </BaseLayout>
 

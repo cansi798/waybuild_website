@@ -1,0 +1,27 @@
+---
+// Startseite: der personalisierbare Beispiel-Film „So kann es laufen.“ (Branche + Firmenname wählen, 13 Szenen; Jamil #5683/
+// #5709–#5715) direkt auf der Startseite, wieder eingebaut auf Jamils Wunsch (Talk qh87y3sj #5858, 14.11.2026: „die animation, …
+// wo ein kunde seinen firmennamen eingeben kann … wieder rein“). Gleiche Bühne wie /so-kann-es-laufen/ (BeispielBuehne), Texte aus
+// config/beispiel.ts. Anker #beispiel.
+import BeispielBuehne from '../beispiel/BeispielBuehne.astro';
+import { BEISPIEL_SEITE as T, BEISPIEL_ETIKETT } from '../../config/beispiel';
+import '../../styles/beispiel-mockup.css';
+---
+
+<section class="section sn sn-beispielfilm" id="beispiel" aria-labelledby="sn-beispielfilm-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <div>
+        <p class="sn-kenn">{T.kennzeile}</p>
+        <h2 id="sn-beispielfilm-h" class="sn-h2">{T.h1}</h2>
+      </div>
+      <div>
+        <p class="sn-lead">{T.intro}</p>
+        <p class="sn-beispielfilm__etikett"><span class="bsp-etikett">{BEISPIEL_ETIKETT}</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="bsp-abschnitt" role="group" aria-label={T.geschichte}>
+    <BeispielBuehne />
+  </div>
+</section>

@@ -1,0 +1,25 @@
+---
+// Startseite: Ablauf „So geht es los“ in sechs Schritten (VORGEHEN.schritte, vorgehen.ts, alle Zeitangaben „in der Regel“), wieder
+// eingebaut auf Jamils Wunsch (Talk qh87y3sj #5859, 14.11.2026: „den ablauf wieder rein“). Markup und Stil wie bisher in SnHandlung
+// (.sn-ablauf, .sn-schritt in start-neu.css). Anker #ablauf, Schritt-Anker (#erstberatung u. a.) bleiben erhalten.
+import { VORGEHEN } from '../../config/vorgehen';
+import { HANDLUNG as T, nbTeile } from '../../config/startneu';
+---
+
+<section class="section sn sn-ablaufteil" id="ablauf" aria-labelledby="sn-ablauf-h">
+  <div class="wrap">
+    <div class="sn-kopf">
+      <h2 id="sn-ablauf-h" class="sn-h2">{T.ablaufTitel}</h2>
+    </div>
+    <ol class="sn-ablauf">
+      {VORGEHEN.schritte.map((s, i) => (
+        <li class="sn-schritt reveal" id={s.anker}>
+          <span class="sn-schritt__nr" aria-hidden="true">{i + 1}</span>
+          <p class="sn-schritt__wann">{s.wann}</p>
+          <h3 class="sn-schritt__titel"><span class="sr-only">Schritt {i + 1}: </span>{s.titel}</h3>
+          <p class="sn-schritt__text">{nbTeile(s.text).map((t) => (t.nb ? <span class="sn-nb">{t.s}</span> : t.s))}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

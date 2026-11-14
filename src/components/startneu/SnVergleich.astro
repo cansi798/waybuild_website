@@ -1,0 +1,21 @@
+---
+// Startseite: Vergleichsabschnitt „Wir machen den Unterschied“ wieder eingefügt (Jamil Talk qh87y3sj #5858, 14.11.2026).
+// Kopftexte wie früher auf der Startseite; die Karten kommen unverändert aus variante/VVergleich.astro (Texte: config/variante.ts,
+// VERGLEICH), darunter der Hinweistext VERGLEICH.hinweis. VVergleich bringt sein CSS selbst mit. Keine Stockfotos.
+// Stil: styles/start-vergleich.css.
+import VVergleich from '../variante/VVergleich.astro';
+import { VERGLEICH } from '../../config/variante';
+import '../../styles/start-vergleich.css';
+---
+
+<section class="section sn svg" id="vergleich" aria-labelledby="svg-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--mitte">
+      <p class="sn-kenn">Im Vergleich</p>
+      <h2 id="svg-h" class="sn-h2">Wir machen den Unterschied</h2>
+      <p class="sn-lead">Sechs Fragen, die Ihnen bei der Wahl helfen.</p>
+    </div>
+    <VVergleich />
+    <p class="svg__hinweis">{VERGLEICH.hinweis}</p>
+  </div>
+</section>

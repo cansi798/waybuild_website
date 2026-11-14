@@ -1,0 +1,4 @@
+/* Startseite: Vergleichsabschnitt (Jamil Talk qh87y3sj #5858, 14.11.2026). Präfix .svg- */
+.svg { background: var(--white); }
+.svg .sn-kopf { margin-bottom: clamp(28px, 4vw, 48px); }
+.sn .svg__hinweis { margin: 18px auto 0; max-width: 62ch; text-align: center; font-size: 0.85rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }

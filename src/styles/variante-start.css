@@ -84,7 +84,7 @@
 /* H1 deutlich größer, Wörter brechen nie in sich (inline-block, keine Silbentrennung) */
 .v-hero .v-titel { max-width: 13.5em; margin: 0 auto 0.5em; line-height: 1.02;
   /* wie bisher clamp(2.6rem, 6.8vw, 92px), aber nie breiter als das längste Wort „Aufmerksamkeit“ (≈ 8,1 × Schriftgröße) bei 20 px Rand je Seite (Jamil #5129) */
-  font-size: min(92px, max(41.6px, 6.8vw), calc((100vw - 40px) / 8.4)); /* px: Hero bleibt bei größerer Grundschrift gleich (#5292) */
+  font-size: min(78px, max(36px, 5.8vw), calc((100vw - 40px) / 8.4)); /* px: Hero bleibt bei größerer Grundschrift gleich (#5292); 14.11.2026 Jamil #5860 „etwas kleiner“ (vorher 92px/41.6px/6.8vw) */
   letter-spacing: -0.035em; hyphens: manual; -webkit-hyphens: manual; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
 .v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 23.2px); line-height: 1.5; } /* höchstens 23,2 px wie bisher: Maßstab, die übrige Schrift bleibt darunter (#5292) */
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
@@ -176,4 +176,4 @@ html.stapeln .stapel-paar > .v-hero + section {
 html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-index: 20; pointer-events: none;
   background: #0b2a29; opacity: calc(var(--deckt, 0) * 0.15); }
 /* Vertrauenshinweis unter dem Hero-Knopf (Jamil #5847, 14.11.2026) */
-.v-hero .v-fuer { margin: 26px auto 0; max-width: 46ch; color: rgb(255 255 255 / 88%); font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem); line-height: 1.55; text-wrap: balance; }
+.v-hero .v-fuer { margin: 22px auto 0; max-width: 52ch; color: rgb(255 255 255 / 82%); font-size: clamp(0.8rem, 0.78rem + 0.12vw, 0.88rem); /* Jamil #5860 „noch kleiner“ */ line-height: 1.55; text-wrap: balance; }

@@ -1,0 +1,7 @@
+/* Startseite: Teamabschnitt (Jamil Talk qh87y3sj #5858, 14.11.2026). Präfix .stm-; Karten-Stile in start-neu.css */
+.stm { background: var(--paper); }
+.stm .sn-kopf { margin-bottom: clamp(24px, 4vw, 40px); }
+/* Karte steht schon auf Papier-Grund: weiß absetzen, kein Extra-Abstand oben */
+.stm .sn-team { margin-top: 0; background: var(--white); }
+/* Kopf steht jetzt außerhalb der Box: die .sn-team-Box hat nur noch eine Spalte (sonst landen die Personen in der schmalen 4fr-Spalte) */
+.stm .sn-team { grid-template-columns: minmax(0, 1fr) !important; margin-top: 0; }

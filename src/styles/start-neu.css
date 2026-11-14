@@ -390,3 +390,9 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 .sn-abschluss__knoepfe { display: grid; gap: 14px; justify-items: center; margin-top: 10px; }
 .sn-abschluss .sn-claim { margin-top: clamp(32px, 5vw, 56px) !important; }
 @media (max-width: 599px) { .sn-abschluss__knoepfe { justify-items: stretch; width: 100%; } }
+
+/* ═════ Wieder eingebaut 14.11.2026 (Jamil #5858/#5859): Beispiel-Film und Ablauf ═════ */
+.sn-beispielfilm { background: var(--sn-hauch); }
+.sn-beispielfilm .sn-kopf { margin-bottom: clamp(20px, 3vw, 32px); }
+.sn-beispielfilm__etikett { margin-top: 12px !important; }
+.sn-ablaufteil { background: var(--sn-hauch); }

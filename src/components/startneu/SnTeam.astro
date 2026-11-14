@@ -1,0 +1,38 @@
+---
+// Startseite: Teamabschnitt wieder eingefügt (Jamil Talk qh87y3sj #5858, 14.11.2026, „can und mich wieder rein“).
+// Inhalt wie bisher in SnBeweis.astro: TEAM aus config/startseite.ts, Fotos + Test-Zitate NUR in der Vorschau, solange die Zitate
+// nicht bestätigt sind (#5636/#5637). Bedingung TEAM_ZEIGEN unverändert; ist sie false, rendert die Komponente nichts.
+// Karten-Stile (.sn-team*, .sn-person*) liegen in start-neu.css; Hülle + Kopf: styles/start-team.css. Keine Zitate in JSON-LD.
+import Bild from '../Bild.astro';
+import { TEAM } from '../../config/startseite';
+import { IS_PREVIEW } from '../../lib/env';
+import { SHOW_HINTS } from '../../config/site';
+import '../../styles/start-team.css';
+
+const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
+---
+
+{TEAM_ZEIGEN && (
+  <section class="section sn stm" id="team" aria-labelledby="stm-h">
+    <div class="wrap">
+      <div class="sn-kopf sn-kopf--mitte">
+        <h2 id="stm-h" class="sn-h2">{TEAM.titel}</h2>
+        <p class="sn-lead">{TEAM.einleitung}</p>
+      </div>
+      <div class="sn-team">
+        <ul class="sn-team__liste">
+          {TEAM.personen.map((m) => (
+            <li class="sn-person">
+              <div class="sn-person__foto"><Bild name={m.foto} alt={m.alt} widths={[180, 360]} sizes="96px" class="sn-person__bild" /></div>
+              <div>
+                <p class="sn-person__name">{m.name}</p>
+                <p class="sn-person__rolle">{m.rolle}</p>
+                <blockquote class="sn-person__zitat"><p>„{m.zitat}“</p></blockquote>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}
