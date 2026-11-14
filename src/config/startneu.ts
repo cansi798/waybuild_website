@@ -30,9 +30,10 @@ export const PRODUKTE = {
  *  #5826: + „Website-Änderungen dauern ewig“, „Individuelle Wünsche kosten viel Geld“. #5828: „zu viele Karten … smarter per Animation,
  *  mit der Maus drüberfahren, mobil per Klick“ → Liste + Bildfläche (SnProblem.astro). Nur Probleme, die Website, Plus-Pflege oder Betriebs-App wirklich lösen. Reihenfolge = Weg des Kunden (finden → Auftrag → Geld). */
 export const PROBLEM = {
-  kennzeile: 'Kennen Sie das?',
-  titel: 'Gute Arbeit allein reicht heute nicht.',
-  lead: 'Im Alltag kostet vieles Zeit, Nerven und Aufträge. Das meiste davon lässt sich lösen.',
+  // Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026); vorher „Kennen Sie das?“ / „Gute Arbeit allein reicht heute nicht.“
+  titel: 'Kommt Ihnen das bekannt vor?',
+  lead: 'Viele Unternehmen verlieren täglich Zeit an die gleichen Probleme.',
+  schluss: 'Je größer ein Unternehmen wird, desto wichtiger werden klare digitale Prozesse.',
   punkte: [
     { grafik: 'suche', titel: 'Kunden suchen Sie. Und finden andere.', text: 'Wer bei Google nicht weit oben steht, bekommt die Anfrage nicht.' },
     { grafik: 'alt', titel: 'Die Website wirkt veraltet.', text: 'Besucher entscheiden in Sekunden. Eine alte Seite kostet Vertrauen, bevor jemand anruft.' },
@@ -60,7 +61,6 @@ export const PROBLEM = {
     'Kaum Bewertungen bei Google',
     'Kunden finden Öffnungszeiten und Preise nicht',
   ],
-  ueberleitung: 'Genau das lösen wir.',
 };
 
 /** Abschnitt 3: Grafik und „Löst“-Zeile je Station der Kundenreise. Reihenfolge = KUNDENREISE.stationen. Die Leistungs-Chips
@@ -113,7 +113,13 @@ export const ANGEBOT = {
   allePreise: 'Alle Inhalte, Vergleich und Zusatzleistungen',
 };
 
-/** Abschnitt 6: Handlung. Überschrift = KUNDENREISE.schluss (Jamil #5662), Ablauf = VORGEHEN.schritte. */
+/** Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text, Knopf ABSCHLUSS_KNOPF (variante.ts). */
+export const ABSCHLUSS = {
+  titel: 'Die richtige digitale Lösung beginnt mit dem richtigen Gespräch.',
+  text: 'Ob neue Website, individuelle WebApp oder die Digitalisierung bestehender Prozesse: Gemeinsam finden wir heraus, welche Lösung Ihr Unternehmen wirklich weiterbringt.',
+};
+
+/** Abschnitt 6: Handlung (seit 14.11.2026 nicht mehr auf der Startseite, ersetzt durch ABSCHLUSS). Überschrift = KUNDENREISE.schluss (Jamil #5662), Ablauf = VORGEHEN.schritte. */
 export const HANDLUNG = {
   ablaufTitel: 'So geht es los',
   oder: 'Lieber schreiben?',

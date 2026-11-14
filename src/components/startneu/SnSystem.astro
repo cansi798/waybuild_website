@@ -1,0 +1,45 @@
+---
+// Startseite: „Warum Website und WebApp zusammen besonders stark sind“ (Jamil Talk qh87y3sj #5853, 14.11.2026).
+// Kopf (H2 + Unterzeile), zwei Sätze zum Problem, dann die Fluss-Grafik Website → Anfrage → Bearbeitung → Kunde
+// (PC waagerecht, Handy senkrecht; ein Lichtpunkt läuft die Verbindungen entlang, nur ohne prefers-reduced-motion),
+// darunter der Verbund-Satz und fünf Nutzenpunkte mit Haken. Texte: config/start-system.ts, Stil: styles/start-system.css.
+import Icon from '../Icon.astro';
+import { SYSTEM as T } from '../../config/start-system';
+import '../../styles/start-system.css';
+---
+
+<section class="section sn ss" id="system" aria-labelledby="ss-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <h2 id="ss-h" class="sn-h2">{T.titel}</h2>
+      <p class="sn-lead ss-unterzeile">{T.unterzeile}</p>
+    </div>
+
+    <div class="ss-problem reveal">
+      {T.problem.map((s) => <p>{s}</p>)}
+    </div>
+
+    <div class="ss-tafel reveal">
+      <p class="ss-ganz">{T.ganzheitlich}</p>
+      <ol class="ss-fluss" aria-label={T.flussLabel}>
+        {T.fluss.map((f, i) => (
+          <li class="ss-station" style={`--i: ${i}`}>
+            <span class="ss-knoten" aria-hidden="true"><Icon name={f.icon} size={26} /></span>
+            <span class="ss-name">{f.name}</span>
+            {i < T.fluss.length - 1 && <span class="ss-weg" aria-hidden="true"></span>}
+          </li>
+        ))}
+      </ol>
+      <p class="ss-verbund">{T.verbund}</p>
+    </div>
+
+    <ul class="ss-nutzen" aria-label={T.nutzenTitel}>
+      {T.nutzen.map((n) => (
+        <li class="ss-punkt reveal">
+          <span class="ss-haken" aria-hidden="true"><Icon name="check" size={18} /></span>
+          <span>{n}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

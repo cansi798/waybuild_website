@@ -1,0 +1,28 @@
+---
+// Startseite: „Ein Partner für Ihre gesamte digitale Entwicklung.“ (Jamil Talk qh87y3sj #5854, 14.11.2026).
+// Kennzeile „Warum Unternehmen mit waybuild arbeiten“ (Jamils „webgold“ = Tippfehler, immer „waybuild“), H2, vier Vorteile
+// als ruhige Karten (PC vier nebeneinander, mittlere Breite 2 × 2, Handy untereinander) mit Icon, H3 und Satz.
+// Texte: config/start-partner.ts, Stil: styles/start-partner.css.
+import Icon from '../Icon.astro';
+import { PARTNER as T } from '../../config/start-partner';
+import '../../styles/start-partner.css';
+---
+
+<section class="section sn sp" id="partner" aria-labelledby="sp-h">
+  <div class="wrap">
+    <div class="sn-kopf">
+      <p class="sn-kenn">{T.kenn}</p>
+      <h2 id="sp-h" class="sn-h2">{T.titel}</h2>
+    </div>
+
+    <ul class="sp-liste">
+      {T.vorteile.map((v) => (
+        <li class="sp-karte reveal">
+          <span class="sp-ico" aria-hidden="true"><Icon name={v.icon} size={24} /></span>
+          <h3 class="sn-h4 sp-titel">{v.titel}</h3>
+          <p class="sp-text">{v.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

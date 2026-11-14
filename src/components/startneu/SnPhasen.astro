@@ -1,0 +1,33 @@
+---
+// STARTSEITE: „Lösungen für jede Unternehmensphase“ (Jamil Talk qh87y3sj #5852, 14.11.2026). Vier Phasen als aufsteigender Weg:
+// PC vier Spalten, jede Stufe etwas höher (wachsender Abstand oben) mit verbindender Linie; Tablet 2 × 2; Handy senkrechte Zeitleiste.
+// Texte aus config/start-phasen.ts, Stil in styles/start-phasen.css.
+import Icon from '../Icon.astro';
+import { PHASEN as T } from '../../config/start-phasen';
+import '../../styles/start-phasen.css';
+---
+
+<section class="section sn sph" id="phasen" aria-labelledby="sph-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--zweispaltig">
+      <h2 id="sph-h" class="sn-h2">{T.titel}</h2>
+      <p class="sn-lead">{T.lead}</p>
+    </div>
+
+    <ol class="sph-weg">
+      {T.phasen.map((p, i) => (
+        <li class="sph-phase reveal">
+          <div class="sph-marke">
+            <span class="sph-ico" aria-hidden="true"><Icon name={p.icon} size={22} /></span>
+          </div>
+          <div class="sph-karte">
+            <p class="sph-nr">Phase {i + 1}</p>
+            <h3 class="sn-h3 sph-titel">{p.titel}</h3>
+            <p class="sph-kern">{p.kern}</p>
+            {p.text && <p class="sph-text">{p.text}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

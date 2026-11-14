@@ -1,0 +1,25 @@
+---
+// Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text und ein Knopf „Kostenlose Beratung
+// vereinbaren“ (gleiches Ziel wie der Hero-Knopf), darunter WhatsApp als Alternative und der Claim. Ersetzt auf der Startseite
+// SnHandlung (Ablauf in sechs Schritten), die Komponente bleibt für spätere Nutzung erhalten. Anker #kontakt-start.
+import Icon from '../Icon.astro';
+import { ABSCHLUSS_KNOPF } from '../../config/variante';
+import { ANLIEGEN, CLAIM } from '../../config/startseite';
+import { ABSCHLUSS as T, HANDLUNG as H } from '../../config/startneu';
+import { whatsappLink } from '../../config/site';
+import { href } from '../../lib/paths';
+
+const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<section class="section sn sn-abschluss" id="kontakt-start" aria-labelledby="sn-abschluss-h">
+  <div class="wrap sn-abschluss__innen">
+    <h2 id="sn-abschluss-h" class="sn-h2 sn-h2--gross">{T.titel}</h2>
+    <p class="sn-lead sn-abschluss__text">{T.text}</p>
+    <div class="sn-abschluss__knoepfe">
+      <a class="btn btn--lg sn-btn sn-btn--gross" href={kontakt}>{ABSCHLUSS_KNOPF}</a>
+      <p class="sn-handlung__oder">{H.oder} <a href={whatsappLink(H.waText)} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {H.whatsapp}<span class="sr-only"> (öffnet in neuem Tab)</span></a></p>
+    </div>
+    <p class="sn-claim">{CLAIM}</p>
+  </div>
+</section>

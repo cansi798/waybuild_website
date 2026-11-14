@@ -1,0 +1,22 @@
+/* STARTSEITE, Abschnitt „Ein Partner für Ihre gesamte digitale Entwicklung.“ (Jamil Talk qh87y3sj #5854, 14.11.2026).
+ * Komponente: src/components/startneu/SnPartner.astro, Präfix .sp-. Farben aus .sn (start-neu.css).
+ * Weißer Hintergrund, vier ruhige Karten auf Papier: Handy untereinander, mittlere Breite 2 × 2, PC vier nebeneinander.
+ * Kontraste: Text --ink/--ink-soft auf Papier ≥ 6,9 : 1. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit). */
+
+.sp { background: var(--white); }
+.sp .sn-kopf .sn-h2 { max-width: 20ch; }
+
+.sp-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 640px) { .sp-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 1100px) { .sp-liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.sp-karte { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 12px;
+  padding: clamp(24px, 3vw, 32px); border-radius: 28px; background: var(--paper);
+  transition: transform 0.5s var(--sn-kurve), box-shadow 0.5s var(--sn-kurve); }
+.sp-karte:hover { transform: translateY(-3px); box-shadow: var(--sn-schatten); }
+.sp-ico { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 8px; border-radius: 16px;
+  background: var(--white); color: var(--sn-tinte); box-shadow: inset 0 0 0 1px var(--sn-linie); }
+.sp-ico svg { stroke-width: 1.7; }
+.sp-titel { overflow-wrap: break-word; hyphens: auto; }
+.sp-text { font-size: 1rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+@media (prefers-reduced-motion: reduce) { .sp-karte { transition: none; } .sp-karte:hover { transform: none; } }

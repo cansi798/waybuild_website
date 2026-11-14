@@ -5,15 +5,19 @@
 // (gleitet über den stehenden Hero, .stapel-paar + scripts/stapel.ts) · 2 Problem · 3 Lösung (Kundenreise mit Leistungen je Station,
 // Beispiel-Film) · 4 Beweis (echte Projekte, „Ganz entspannt“, Team nur Vorschau) · 5 Angebot (Pakete, Sicherheit, Fragen)
 // · 6 Handlung (Ablauf + Erstberatung). Komponenten src/components/startneu/, Texte src/config/startneu.ts, Stil src/styles/start-neu.css.
+// SEIT 14.11.2026 neue Reihenfolge nach Jamils Konzept (Talk qh87y3sj #5843–#5855, Sicherung Tag vor-jamil-konzept-20261114):
+// Hero (neue Texte, Design gleich) → „Ganz gleich, wo Sie gerade stehen.“ (SnWege, gleitet über den Hero) → „Kommt Ihnen das bekannt
+// vor?“ (SnProblem) → Phasen (SnPhasen) → Website + WebApp (SnSystem) → Partner (SnPartner) → Abschluss (SnAbschluss).
+// Produkte, Kundenreise, Beweis, Angebot und Handlung sind nicht mehr auf der Startseite (Komponenten bleiben im Ordner).
 // Frühere Stände und Entscheidungen: Git-Verlauf und Tags (z. B. vor-startseite-6abschnitte-20261113).
 // WICHTIG: In dieser Datei KEIN <style>-Block (Astro würde sonst data-astro-cid-Attribute an den Hero hängen).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SnProdukte from '../components/startneu/SnProdukte.astro';
+import SnWege from '../components/startneu/SnWege.astro';
 import SnProblem from '../components/startneu/SnProblem.astro';
-import SnReise from '../components/startneu/SnReise.astro';
-import SnBeweis from '../components/startneu/SnBeweis.astro';
-import SnAngebot from '../components/startneu/SnAngebot.astro';
-import SnHandlung from '../components/startneu/SnHandlung.astro';
+import SnPhasen from '../components/startneu/SnPhasen.astro';
+import SnSystem from '../components/startneu/SnSystem.astro';
+import SnPartner from '../components/startneu/SnPartner.astro';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis } from '../config/pakete-abo';
@@ -60,19 +64,21 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
       <div class="v-knopfe v-ein v-ein--3">
         <a class="btn v-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
       </div>
+      <!-- Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) -->
+      <p class="v-fuer v-ein v-ein--4">{V_HERO.fuer}</p>
     </div>
     <!-- Leiste mit vier Vorteilen entfernt (Jamil, Talk qh87y3sj #5166, 09.11.2026) -->
   </section>
 
-  <!-- Teil 1, zweiter Abschnitt: zwei Produkte (gleitet über den Hero) -->
-  <SnProdukte />
+  <!-- „Ganz gleich, wo Sie gerade stehen.“ (Jamil #5848) gleitet über den stehenden Hero -->
+  <SnWege />
   </div>
 
   <SnProblem />
-  <SnReise />
-  <SnBeweis />
-  <SnAngebot />
-  <SnHandlung />
+  <SnPhasen />
+  <SnSystem />
+  <SnPartner />
+  <SnAbschluss />
 </BaseLayout>
 
 <script>

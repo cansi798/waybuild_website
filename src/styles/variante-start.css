@@ -175,3 +175,5 @@ html.stapeln .stapel-paar > .v-hero + section {
 .stapel-schatten { display: none; }
 html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-index: 20; pointer-events: none;
   background: #0b2a29; opacity: calc(var(--deckt, 0) * 0.15); }
+/* Vertrauenshinweis unter dem Hero-Knopf (Jamil #5847, 14.11.2026) */
+.v-hero .v-fuer { margin: 26px auto 0; max-width: 46ch; color: rgb(255 255 255 / 88%); font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem); line-height: 1.55; text-wrap: balance; }

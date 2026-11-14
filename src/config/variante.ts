@@ -8,14 +8,18 @@
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
 export const V_HERO = {
   /** H1 im Hero, Variante E von Jamil (Talk qh87y3sj #5129). Title und Meta-Description bleiben eigenständig (index.astro). */
-  titel: 'Von der ersten Aufmerksamkeit bis zum zufriedenen Kunden.',
+  titel: 'Digitale Lösungen für Unternehmen, die mehr erreichen wollen.', // Jamil Talk qh87y3sj #5845, 14.11.2026 (vorher #5129 „Von der ersten Aufmerksamkeit …“)
   /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5359, 09.11.2026: „beide Sätze beginnen mit von“ – H1 bleibt, Unterzeile ohne „Von …“).
    *  Vorher #5174. Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Mehr Sichtbarkeit, mehr Anfragen, glücklichere Kunden. Wir beraten Sie und übernehmen die ganze Technik.', // Jamil, Talk qh87y3sj #5654, 12.11.2026
+  unter: 'Ob professionelle Website, individuelle WebApp oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
+  /** Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) */
+  fuer: 'Für Dienstleister, Handwerksbetriebe, Agenturen, Händler und mittelständische Unternehmen.',
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
-export const HERO_KNOPF = 'Kostenlose Erstberatung'; // überall gleicher Haupt-CTA (Jamil, Talk qh87y3sj #5322 Q2)
+export const HERO_KNOPF = 'Kostenlose Beratung'; // Jamil #5846, 14.11.2026 (vorher „Kostenlose Erstberatung“)
+/** Knopf im Abschluss der Startseite (Jamil #5855, 14.11.2026) */
+export const ABSCHLUSS_KNOPF = 'Kostenlose Beratung vereinbaren';
 
 /** Abschnitt direkt nach dem Hero „Kundenreise“ als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182: „wirkt wie ein Arbeitsprozess,
  *  muss eine Customer Journey sein“, Variante B #5184, Text #5185, Plan „ok“ #5187, 09.11.2026). Ersetzt das „Zusammenspiel“ mit

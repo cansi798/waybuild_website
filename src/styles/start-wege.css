@@ -1,0 +1,40 @@
+/* STARTSEITE „Ganz gleich, wo Sie gerade stehen.“ (Jamil Talk qh87y3sj #5848, 14.11.2026), Komponente startneu/SnWege.astro.
+ * Steht direkt nach dem Hero im .stapel-paar und gleitet über den stehenden Hero (stapel.ts). Wie bei .sn-produkte: deckender
+ * Hintergrund (Papier) und eigener Stapelkontext; Rundung oben + Schatten setzt variante-start.css für „.v-hero + section“,
+ * hier zur Sicherheit gleich wiederholt. Zwei gleichwertige weiße Karten, Handy untereinander. Grid immer minmax(0, 1fr). */
+
+.sw { position: relative; background: var(--paper); }
+html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px 0 0; }
+@media (max-width: 719px) { html.stapeln .stapel-paar > .v-hero + .sw { border-radius: 20px 20px 0 0; } }
+
+.sw .sn-kopf .sn-h2 { max-width: 20ch; }
+.sw .sn-lead { max-width: 52ch; }
+
+.sw-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 900px) { .sw-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+
+.sw-karte { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr;
+  gap: 24px; padding: clamp(16px, 2vw, 24px); border-radius: 32px; background: var(--white); box-shadow: var(--sn-schatten);
+  transition: transform 0.5s var(--sn-kurve), box-shadow 0.5s var(--sn-kurve); }
+@media (hover: hover) { .sw-karte:hover { transform: translateY(-4px); } }
+
+.sw-bild { display: grid; place-items: center; min-height: clamp(180px, 36vw, 260px); padding: clamp(16px, 3vw, 32px);
+  border-radius: 20px; background: var(--paper); }
+.sw-karte--app .sw-bild { background: var(--sn-hauch); }
+.sw-bild .sg { display: block; width: min(100%, 320px); height: auto; }
+
+.sw-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  padding: 0 clamp(4px, 1.4vw, 16px) clamp(4px, 1vw, 12px); }
+.sw-text .sn-h3 { overflow-wrap: break-word; }
+.sw-erkl { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+
+/* „Ideal für …“ abgesetzt: kleines Hinweisfeld mit Icon */
+.sw-ideal { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-top: 4px !important; padding: 14px 16px;
+  border-radius: 16px; background: var(--sn-hauch); color: var(--sn-tief); font-weight: 500; line-height: 1.55; overflow-wrap: break-word; }
+.sw-ideal > span:last-child { min-width: 0; }
+.sw-ideal .sn-ico { width: 32px; height: 32px; margin-top: -3px; border-radius: 10px; background: var(--white); color: var(--sn-tinte); }
+.sw-karte--app .sw-ideal { background: var(--paper); }
+
+.sw-link { margin-top: auto; padding-top: 4px; }
+
+@media (prefers-reduced-motion: reduce) { .sw-karte { transition: none; } .sw-karte:hover { transform: none; } }

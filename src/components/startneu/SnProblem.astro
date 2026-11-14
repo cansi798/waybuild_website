@@ -3,9 +3,8 @@
 // „nimmt noch zu viel Platz ein“) kompakt: alle Probleme als Stichwort-Kacheln, daneben (PC) bzw. darunter (Handy) EINE Bildfläche
 // mit Strichgrafik (geschichte/GGrafik), Titel und Text des gewählten Problems. PC: Maus/Fokus wählt, im Sichtbereich wechselt
 // es von selbst, bis jemand eingreift. Handy: Tippen wählt. Ohne JS: alle Bildflächen untereinander.
-// Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pk*, .sn-pd*).
+// Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026). Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pk*, .sn-pd*).
 import GGrafik from '../geschichte/GGrafik.astro';
-import Icon from '../Icon.astro';
 import { PROBLEM as T } from '../../config/startneu';
 const kurz = (t: string) => t.replace(/\.$/, '');
 ---
@@ -13,10 +12,7 @@ const kurz = (t: string) => t.replace(/\.$/, '');
 <section class="section sn sn-problem" id="problem" aria-labelledby="sn-problem-h">
   <div class="wrap">
     <div class="sn-kopf sn-kopf--zweispaltig sn-problem__kopf">
-      <div>
-        <p class="sn-kenn">{T.kennzeile}</p>
-        <h2 id="sn-problem-h" class="sn-h2">{T.titel}</h2>
-      </div>
+      <h2 id="sn-problem-h" class="sn-h2">{T.titel}</h2>
       <p class="sn-lead">{T.lead}</p>
     </div>
 
@@ -49,6 +45,6 @@ const kurz = (t: string) => t.replace(/\.$/, '');
 
     <p class="sn-problem__weitere"><b>{T.weitereTitel}:</b> {T.weitere.join(' · ')}</p>
 
-    <a class="sn-link sn-problem__weiter" href="#kundenreise">{T.ueberleitung} <Icon name="arrow" size={18} /></a>
+    <p class="sn-problem__schluss">{T.schluss}</p>
   </div>
 </section>

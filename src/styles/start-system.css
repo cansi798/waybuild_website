@@ -1,0 +1,70 @@
+/* STARTSEITE, Abschnitt „Warum Website und WebApp zusammen besonders stark sind“ (Jamil Talk qh87y3sj #5853, 14.11.2026).
+ * Komponente: src/components/startneu/SnSystem.astro, Präfix .ss-. Farben aus .sn (start-neu.css).
+ * Hintergrund Hauch, Fluss-Grafik auf weißer Tafel. Kontraste: Text --ink/--ink-soft auf Weiß bzw. Hauch ≥ 6,9 : 1,
+ * Tinte #006b68 auf Hauch 5,7 : 1. Lichtpunkt nur ohne prefers-reduced-motion. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit). */
+
+.ss { background: var(--sn-hauch); }
+.ss .sn-kopf .sn-h2 { max-width: 20ch; }
+.ss-unterzeile { font-family: var(--font-head); font-weight: 600; color: var(--sn-tinte); }
+
+.ss-problem { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; max-width: 62ch; }
+.ss-problem p { font-size: clamp(1.05rem, 1rem + 0.3vw, 1.18rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+
+/* ── Fluss-Grafik ── */
+.ss-tafel { margin-top: clamp(36px, 5vw, 56px); padding: clamp(24px, 4vw, 56px); border-radius: 32px; background: var(--white);
+  box-shadow: var(--sn-schatten); }
+.ss-ganz { font-family: var(--font-head); font-weight: 650; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem); line-height: 1.3;
+  letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.ss-verbund { margin-top: clamp(28px, 4vw, 44px) !important; padding-top: clamp(20px, 3vw, 28px); border-top: 1px solid var(--sn-linie-t);
+  font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); max-width: 60ch; text-wrap: pretty; }
+
+/* Handy: senkrecht, Knoten links, Name rechts, Verbindung unter dem Knoten */
+.ss-fluss { --ss-knoten: 64px; --ss-abstand: 44px; list-style: none; margin: clamp(24px, 4vw, 40px) 0 0; padding: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--ss-abstand); }
+.ss-station { position: relative; min-width: 0; display: grid; grid-template-columns: var(--ss-knoten) minmax(0, 1fr);
+  align-items: center; column-gap: 18px; }
+.ss-knoten { display: grid; place-items: center; width: var(--ss-knoten); height: var(--ss-knoten); border-radius: 20px;
+  background: var(--sn-hauch); color: var(--sn-tinte); box-shadow: inset 0 0 0 1px var(--sn-linie-t); }
+.ss-knoten svg { stroke-width: 1.7; }
+.ss-station:last-child .ss-knoten { background: var(--sn-tinte); color: var(--white); box-shadow: none; }
+.ss-name { font-family: var(--font-head); font-weight: 650; font-size: 1.1rem; line-height: 1.3; color: var(--ink); overflow-wrap: break-word; }
+
+/* Verbindung mit Pfeilspitze; ::after ist der Lichtpunkt */
+.ss-weg { position: absolute; left: calc(var(--ss-knoten) / 2 - 1px); top: calc(var(--ss-knoten) + 6px);
+  width: 2px; height: calc(var(--ss-abstand) - 12px); background: var(--sn-linie-t); border-radius: 2px; }
+.ss-weg::before { content: ''; position: absolute; left: 50%; bottom: -1px; width: 8px; height: 8px; transform: translateX(-50%) rotate(45deg);
+  border-right: 2px solid var(--sn-tuerkis); border-bottom: 2px solid var(--sn-tuerkis); }
+.ss-weg::after { content: ''; position: absolute; left: 50%; top: 0; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%;
+  background: var(--sn-tuerkis); box-shadow: 0 0 0 4px rgb(0 166 161 / 18%); opacity: 0; }
+
+/* PC: waagerecht, Name unter dem Knoten, Verbindung zwischen den Knoten */
+@media (min-width: 760px) {
+  .ss-fluss { --ss-knoten: 76px; --ss-abstand: 24px; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--ss-abstand); row-gap: 0; }
+  .ss-station { grid-template-columns: minmax(0, 1fr); justify-items: center; row-gap: 14px; text-align: center; }
+  .ss-knoten { border-radius: 24px; }
+  .ss-weg { left: calc(50% + var(--ss-knoten) / 2 + 10px); top: calc(var(--ss-knoten) / 2 - 1px);
+    width: calc(100% + var(--ss-abstand) - var(--ss-knoten) - 20px); height: 2px; }
+  .ss-weg::before { left: auto; right: -1px; bottom: auto; top: 50%; transform: translateY(-50%) rotate(-45deg); }
+  .ss-weg::after { left: 0; top: 50%; margin-left: 0; margin-top: -4px; }
+}
+
+/* Lichtpunkt: läuft nacheinander über die drei Verbindungen (je ein Drittel der Zeit) */
+@media (prefers-reduced-motion: no-preference) {
+  .ss-weg::after { animation: ss-lauf-hoch 4.8s var(--sn-kurve) infinite; animation-delay: calc(var(--i) * 1.6s); }
+  @media (min-width: 760px) { .ss-weg::after { animation-name: ss-lauf-quer; } }
+}
+@keyframes ss-lauf-hoch {
+  0% { top: 0; opacity: 0; } 4% { opacity: 1; } 28% { opacity: 1; } 33% { top: calc(100% - 8px); opacity: 0; } 100% { top: calc(100% - 8px); opacity: 0; }
+}
+@keyframes ss-lauf-quer {
+  0% { left: 0; opacity: 0; } 4% { opacity: 1; } 28% { opacity: 1; } 33% { left: calc(100% - 8px); opacity: 0; } 100% { left: calc(100% - 8px); opacity: 0; }
+}
+
+/* ── Nutzenpunkte ── */
+.ss-nutzen { list-style: none; margin: clamp(36px, 5vw, 56px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (min-width: 640px) { .ss-nutzen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .ss-nutzen { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.ss-punkt { min-width: 0; display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px; border-radius: 18px; background: var(--white);
+  font-weight: 600; font-size: 1rem; line-height: 1.45; color: var(--ink); overflow-wrap: break-word; }
+.ss-haken { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--sn-tinte); color: var(--white); }
+.ss-haken svg { stroke-width: 2.4; }
