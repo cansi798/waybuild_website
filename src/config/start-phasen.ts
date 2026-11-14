@@ -11,7 +11,7 @@ export interface Phase {
 
 export const PHASEN = {
   titel: 'Lösungen für jede Unternehmens\u00ADphase', // \u00AD = weiche Trennung, sonst bei 320 px zu breit
-  lead: 'Lösungen, die mit Ihrem Unternehmen wachsen.',
+  lead: 'Digitale Bausteine, die mit Ihrem Unternehmen wachsen.', // Jamil #5883: nicht zweimal „Lösungen“ am Satzanfang (vorher „Lösungen, die …“)
   phasen: [
     {
       titel: 'Professionelle Website',
@@ -26,7 +26,7 @@ export const PHASEN = {
       icon: 'mail',
     },
     {
-      titel: 'Arbeits\u00ADabläufe digitali\u00ADsieren',
+      titel: 'Arbeits\u00ADabläufe digitalisieren',
       kern: 'Viele Aufgaben wiederholen sich täglich.',
       text: 'Mit individuellen WebApps digitalisieren wir interne Abläufe, Dokumentationen, Freigaben, Kundenprozesse oder Verwaltungsaufgaben.',
       icon: 'ablauf',

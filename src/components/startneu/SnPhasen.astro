@@ -2,7 +2,6 @@
 // STARTSEITE: „Lösungen für jede Unternehmensphase“ (Jamil Talk qh87y3sj #5852, 14.11.2026). Vier Phasen als aufsteigender Weg:
 // PC vier Spalten, jede Stufe etwas höher (wachsender Abstand oben) mit verbindender Linie; Tablet 2 × 2; Handy senkrechte Zeitleiste.
 // Texte aus config/start-phasen.ts, Stil in styles/start-phasen.css.
-import Icon from '../Icon.astro';
 import { PHASEN as T } from '../../config/start-phasen';
 import '../../styles/start-phasen.css';
 ---
@@ -18,7 +17,7 @@ import '../../styles/start-phasen.css';
       {T.phasen.map((p, i) => (
         <li class="sph-phase reveal">
           <div class="sph-marke">
-            <span class="sph-ico" aria-hidden="true"><Icon name={p.icon} size={22} /></span>
+            <span class="sph-ico" aria-hidden="true"></span><!-- ruhiger Punkt statt Icon (Jamil #5884: Icons wirkten zu billig) -->
           </div>
           <div class="sph-karte">
             <p class="sph-nr">Phase {i + 1}</p>

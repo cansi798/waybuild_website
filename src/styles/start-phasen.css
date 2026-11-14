@@ -16,10 +16,13 @@
 .sph-phase { position: relative; min-width: 0; display: grid; grid-template-columns: var(--marke) minmax(0, 1fr); column-gap: 16px; align-items: start; }
 
 .sph-marke { position: relative; z-index: 1; display: grid; place-items: center; }
-.sph-ico { display: grid; place-items: center; width: var(--marke); height: var(--marke); border-radius: 16px;
-  background: var(--sn-hauch); color: var(--sn-tinte); box-shadow: 0 0 0 6px var(--paper); }
-.sph-ico svg { stroke-width: 1.7; }
-.sph-phase:last-child .sph-ico { background: var(--sn-tinte); color: var(--white); }
+/* Markierung auf der Linie: ruhiger Punkt mit hellem Ring statt Icon-Kachel (Jamil #5884, 14.11.2026); wird nach oben kräftiger */
+.sph-ico { display: grid; place-items: center; width: var(--marke); height: var(--marke); }
+.sph-ico::before { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--white); border: 3px solid var(--sn-tuerkis);
+  box-shadow: 0 0 0 6px var(--paper), 0 0 0 10px rgb(0 166 161 / 12%); }
+.sph-phase:nth-child(3) .sph-ico::before { background: var(--sn-hauch); border-color: var(--sn-mittel); }
+.sph-phase:last-child .sph-ico::before { width: 18px; height: 18px; background: var(--sn-tinte); border-color: var(--sn-tinte);
+  box-shadow: 0 0 0 6px var(--paper), 0 0 0 12px rgb(0 107 104 / 16%); }
 
 .sph-karte { min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: clamp(18px, 2.2vw, 26px); border-radius: 24px; background: var(--paper); }
 .sph-phase:last-child .sph-karte { background: var(--sn-hauch); }
