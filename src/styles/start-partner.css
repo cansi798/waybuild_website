@@ -3,7 +3,7 @@
  * Weißer Hintergrund, vier ruhige Karten auf Papier: Handy untereinander, mittlere Breite 2 × 2, PC vier nebeneinander.
  * Kontraste: Text --ink/--ink-soft auf Papier ≥ 6,9 : 1. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit). */
 
-.sp { background: var(--white); }
+/* .sp */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sp .sn-kopf .sn-h2 { max-width: 20ch; }
 
 .sp-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }

@@ -17,7 +17,7 @@
 .sw2-zeichen--nein { background: var(--sn-sand); color: var(--ink-soft); }
 
 /* 1 · Was uns unterscheidet */
-.sw2-unterschied { background: var(--paper); }
+/* .sw2-unterschied */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sw2-unterschied .sn-kopf .sn-h2 { max-width: 16ch; }
 .sw2-punkte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); column-gap: clamp(28px, 4vw, 56px); }
 @media (min-width: 700px) { .sw2-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -31,16 +31,16 @@
 @media (max-width: 389px) { #unterschied-h { font-size: 1.7rem; overflow-wrap: break-word; } }
 
 /* 3 · Eigenbetrieb */
-.sw2-eigen { background: var(--sn-hauch); }
+/* .sw2-eigen */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sw2-eigen__innen { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); }
 @media (min-width: 900px) { .sw2-eigen__innen { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: clamp(40px, 6vw, 96px); align-items: center; } }
 .sw2-eigen .sn-h2 { max-width: 18ch; }
 .sw2-eigen__lead { margin-top: 18px !important; }
-.sw2-eigen .sw2-liste { padding: clamp(10px, 2vw, 18px) clamp(20px, 3vw, 32px); border-radius: 24px; background: var(--white); }
+.sw2-eigen .sw2-liste { padding: clamp(10px, 2vw, 18px) clamp(20px, 3vw, 32px); border-radius: 24px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .sw2-eigen .sw2-liste li { border-top-color: var(--sn-linie-t); }
 
 /* 4 · Für wen */
-.sw2-fuerwen { background: var(--white); }
+/* .sw2-fuerwen */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sw2-fit { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 @media (min-width: 860px) { .sw2-fit { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; } }
 .sw2-fit__karte { min-width: 0; display: grid; align-content: start; gap: 14px; padding: clamp(24px, 3.4vw, 40px); border-radius: 28px; }
@@ -49,12 +49,12 @@
 .sw2-fit__karte--nein .sw2-liste li { color: var(--ink-soft); }
 
 /* 5 · Säulen */
-.sw2-saeulen { background: var(--paper); }
+/* .sw2-saeulen */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sw2-saeulen__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 @media (min-width: 640px) { .sw2-saeulen__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
 @media (min-width: 1100px) { .sw2-saeulen__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .sw2-saeule { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px;
-  padding: clamp(24px, 3vw, 32px); border-radius: 28px; background: var(--white);
+  padding: clamp(24px, 3vw, 32px); border-radius: 28px; background: var(--paper); /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
   transition: transform 0.5s var(--sn-kurve), box-shadow 0.5s var(--sn-kurve); }
 .sw2-saeule:hover { transform: translateY(-3px); box-shadow: var(--sn-schatten); }
 .sw2-saeule h3 { overflow-wrap: break-word; hyphens: auto; }

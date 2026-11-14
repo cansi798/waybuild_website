@@ -3,7 +3,7 @@
  * Hintergrund (Papier) und eigener Stapelkontext; Rundung oben + Schatten setzt variante-start.css für „.v-hero + section“,
  * hier zur Sicherheit gleich wiederholt. Zwei gleichwertige weiße Karten, Handy untereinander. Grid immer minmax(0, 1fr). */
 
-.sw { position: relative; background: var(--paper); }
+.sw { position: relative; } /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px 0 0; }
 @media (max-width: 719px) { html.stapeln .stapel-paar > .v-hero + .sw { border-radius: 20px 20px 0 0; } }
 
@@ -14,7 +14,7 @@ html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px
 @media (min-width: 900px) { .sw-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
 
 .sw-karte { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr;
-  gap: 24px; padding: clamp(16px, 2vw, 24px); border-radius: 32px; background: var(--white); box-shadow: var(--sn-schatten);
+  gap: 24px; padding: clamp(16px, 2vw, 24px); border-radius: 32px; background: var(--white); box-shadow: var(--sn-schatten); --paper: var(--creme);
   transition: transform 0.5s var(--sn-kurve), box-shadow 0.5s var(--sn-kurve); }
 @media (hover: hover) { .sw-karte:hover { transform: translateY(-4px); } }
 
@@ -38,3 +38,19 @@ html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px
 .sw-link { margin-top: auto; padding-top: 4px; }
 
 @media (prefers-reduced-motion: reduce) { .sw-karte { transition: none; } .sw-karte:hover { transform: none; } }
+
+/* „+“ zwischen den Karten und Hinweis „Einzeln oder zusammen“ (Jamil #5927, 14.11.2026) */
+.sw-liste { position: relative; }
+.sw-plus { position: relative; display: grid; place-items: center; height: 0; margin: -10px 0; z-index: 2; }
+.sw-plus span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--sn-tinte); color: #fff;
+  font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; line-height: 1; box-shadow: 0 0 0 6px var(--band, #fff), 0 0 0 7px rgb(216 167 79 / 70%); }
+@media (min-width: 900px) {
+  .sw-plus { position: absolute; left: 50%; top: 50%; width: 0; height: 0; margin: 0; }
+  .sw-plus span { transform: translate(-50%, -50%); }
+}
+.sw-liste > .sw-plus { order: 1; }
+.sw-liste > .sw-karte:last-of-type { order: 2; }
+.sw-beides { display: grid; justify-items: center; gap: 8px; max-width: 640px; margin: clamp(28px, 4vw, 44px) auto 0; text-align: center; }
+.sn .sw-beides__kurz { font-weight: 700; font-size: 0.92rem; color: #8a6420; /* dunkles Gold, 5,6 : 1 auf Weiß */ letter-spacing: 0.02em; }
+.sn .sw-beides__titel { font-family: var(--font-head); font-weight: 800; font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem); color: var(--ink); letter-spacing: -0.02em; }
+.sn .sw-beides__text { color: var(--ink-soft); line-height: 1.7; text-wrap: pretty; }

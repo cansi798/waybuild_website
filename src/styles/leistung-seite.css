@@ -13,7 +13,7 @@
 @media (max-width: 599px) { .ls-kopf__knopf .btn { width: 100%; } }
 
 /* ── 2 · Kennen Sie das? ── */
-.ls-problem { background: var(--white); }
+/* .ls-problem */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-intro { min-width: 0; display: grid; gap: 14px; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
 .ls-intro p { margin: 0; }
 .ls-intro a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
@@ -25,13 +25,13 @@
 .ls-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
 
 /* ── 3 · Was Sie bekommen ── */
-.ls-umfang { background: var(--paper); }
+/* .ls-umfang */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-umfang__gruppe + .ls-umfang__gruppe { margin-top: clamp(28px, 4vw, 44px); }
 .ls-umfang__zwischen { margin-bottom: 14px !important; color: var(--sn-tinte); }
 .ls-umfang__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 @media (min-width: 760px) { .ls-umfang__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
 .ls-punkt { min-width: 0; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 16px; align-items: start;
-  padding: 20px 22px; border-radius: 20px; background: var(--white); }
+  padding: 20px 22px; border-radius: 20px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .ls-punkt__zeichen { width: 10px; height: 10px; margin-top: 0.55em; border-radius: 50%; background: var(--sn-tuerkis); }
 .ls-punkt__text { display: grid; gap: 4px; line-height: 1.6; color: var(--ink-soft); overflow-wrap: break-word; text-wrap: pretty; }
 .ls-punkt__text strong { font-family: var(--font-head); font-weight: 650; color: var(--ink); }
@@ -53,11 +53,11 @@
 .ls-verwandt__link:hover svg, .ls-verwandt__link:focus-visible svg { transform: translateX(4px); }
 
 /* Beispiele (Referenzen nur bei „website“) */
-.ls-referenzen { background: var(--white); }
+/* .ls-referenzen */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-mehr { margin-top: 28px !important; text-align: center; }
 
 /* ── 4 · So läuft es ab (Karten .sn-schritt aus start-neu.css) ── */
-.ls-ablauf { background: var(--sn-hauch); }
+/* .ls-ablauf */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 @media (min-width: 1000px) {
   .sn-ablauf.ls-ablauf--2, .sn-ablauf.ls-ablauf--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -65,7 +65,7 @@
 .ls-ablauf .sn-schritt { padding: 24px; }
 
 /* ── 5 · Passendes Paket ── */
-.ls-paket { background: var(--white); }
+/* .ls-paket */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-paket__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); }
 @media (min-width: 960px) { .ls-paket__raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
 .ls-paket__text { min-width: 0; display: grid; gap: 14px; align-content: start; }
@@ -90,13 +90,13 @@
 @media (max-width: 599px) { .ls-paket__knoepfe .btn { width: 100%; } }
 
 /* ── 6 · Häufige Fragen ── */
-.ls-fragen { background: var(--paper); }
+/* .ls-fragen */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-fragen__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); }
 @media (min-width: 960px) { .ls-fragen__raster { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
 .ls-fragen__raster > * { min-width: 0; }
 .ls-fragen__mehr { margin-top: 12px !important; }
 .ls-faq { display: grid; gap: 10px; }
-.ls-faq__item { border-radius: 20px; background: var(--white); }
+.ls-faq__item { border-radius: 20px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .ls-faq__item summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) 32px; gap: 16px; align-items: center;
   min-height: 48px; padding: 18px 22px; border-radius: 20px; }
 .ls-faq__item summary::-webkit-details-marker { display: none; }

@@ -59,7 +59,7 @@ export const WEGE: Weg[] = [
         text: 'Während Sie beim Kunden sind, klingelt es im Büro. Wer nicht durchkommt, ruft beim Nächsten an.' },
     ],
     loesung: 'Eine Website, die Ihre Arbeit zeigt und Anfragen sauber zu Ihnen bringt.',
-    paket: 'Für Ihre Website passt das Paket Basis.',
+    paket: 'Für Ihre Website passt das Paket Online sichtbar.',
   },
   {
     id: 'anfragen', kurz: 'b',
@@ -75,7 +75,7 @@ export const WEGE: Weg[] = [
         text: 'Notizen vom Termin, Fotos im Handy, Preise im Kopf. Nichts liegt an einem Ort.' },
     ],
     loesung: 'Vom Suchtreffer über das Angebot bis zur Rechnung, alles greift ineinander.',
-    paket: 'Für mehr Anfragen passt das Paket Plus. Für schnellere Angebote kommt das Komplettpaket dazu.',
+    paket: 'Für mehr Anfragen passt das Paket Online wachsen. Für schnellere Angebote kommt das Komplettpaket dazu.',
   },
   {
     id: 'betrieb', kurz: 'c',
@@ -90,7 +90,7 @@ export const WEGE: Weg[] = [
         text: 'Bis alles beisammen ist, vergehen Wochen. Ihr Geld kommt später als nötig.' },
     ],
     loesung: 'Ein Tag im Betrieb: Planung, Zeiten, Material und Rechnung in einer Software, die zu Ihren Abläufen passt.',
-    paket: 'Für Ihren ganzen Betrieb passt das Komplettpaket, zusammen mit Basis oder Plus.',
+    paket: 'Für Ihren ganzen Betrieb passt das Komplettpaket, zusammen mit Online sichtbar oder Online wachsen.',
   },
 ];
 
@@ -107,7 +107,7 @@ export const PROBLEM = {
 
 export const LOESUNG = {
   kennzeile: 'Die Lösung',
-  titel: 'So löst waybuild das.',
+  titel: 'So löst webgold das.',
   /** Titel des Startbilds im bestehenden Film (dort sonst „Wie sähe das bei Ihnen aus?“, doppelt zum Hero) */
   filmStart: 'So kann es bei Ihnen laufen.',
   filmStartFirma: 'So kann es bei {firma} laufen.',
@@ -142,6 +142,6 @@ export const HANDLUNG = {
   titelFirma: 'Wir zeigen Ihnen in 20 Minuten, wie das bei {firma} aussehen würde.',
   text: 'Kostenlos und unverbindlich. Wir hören zu und empfehlen das passende Paket.',
   whatsapp: 'Per WhatsApp schreiben',
-  waText: 'Hallo waybuild, ich interessiere mich für eine kostenlose Erstberatung.',
-  waTextWeg: 'Hallo waybuild, ich interessiere mich für eine kostenlose Erstberatung. Mein Thema: {weg}.',
+  waText: 'Hallo webgold, ich interessiere mich für eine kostenlose Erstberatung.',
+  waTextWeg: 'Hallo webgold, ich interessiere mich für eine kostenlose Erstberatung. Mein Thema: {weg}.',
 };

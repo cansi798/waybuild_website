@@ -86,7 +86,7 @@ export const BEWEIS = {
 /** Abschnitt 5: Angebot. Sicherheit nur mit Aussagen, die in pakete-abo.ts, site.ts (IN_ALLEN, FAQ) oder vorgehen.ts stehen. */
 export const ANGEBOT = {
   kennzeile: 'Pakete',
-  titel: 'Zwei Pakete. Feste Monatspreise.',
+  titel: 'Drei Pakete. Feste Monatspreise.', // Jamil #5923 (vorher „Zwei Pakete“)
   lead: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.',
   appTitel: 'Die Betriebs-App dazu',
   sicherheit: [
@@ -120,7 +120,7 @@ export const HANDLUNG = {
   ablaufTitel: 'So geht es los',
   oder: 'Lieber schreiben?',
   whatsapp: 'Per WhatsApp anfragen',
-  waText: 'Hallo waybuild, ich interessiere mich für eine kostenlose Erstberatung.',
+  waText: 'Hallo webgold, ich interessiere mich für eine kostenlose Erstberatung.',
 };
 
 /** Wörter mit Bindestrich wie „E-Mail-Postfächern“ nicht am Bindestrich umbrechen (sah am Handy aus wie „E-“ / „Mail“):

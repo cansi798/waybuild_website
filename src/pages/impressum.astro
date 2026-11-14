@@ -16,7 +16,7 @@ import Hint from '../components/Hint.astro';
       )}
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
-        {company.legalName}<br />
+        {company.name} – powered by {company.legalName}<br />
         <Val value={company.street} label="Straße & Hausnummer" where="src/config/site.ts → company.street" /><br />
         <Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" />
       </p>

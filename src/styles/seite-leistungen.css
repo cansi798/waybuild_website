@@ -19,8 +19,7 @@
 
 /* ── Gruppen ── */
 .sl-gruppe { padding-block: clamp(64px, 9vw, 120px); scroll-margin-top: calc(var(--header-h, 72px) + 8px); }
-.sl-gruppe--weiss { background: var(--white); }
-.sl-gruppe--papier { background: var(--paper); }
+/* .sl-gruppe--weiss / --papier */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sl-gruppe__titel { min-width: 0; }
 .sl-gruppe__kopf .sn-h2 { overflow-wrap: break-word; }
 
@@ -31,7 +30,7 @@
 .sl-karte { position: relative; min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: clamp(24px, 2.6vw, 32px);
   border-radius: 24px; background: var(--paper); box-shadow: inset 0 0 0 1px transparent;
   transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
-.sl-gruppe--papier .sl-karte { background: var(--white); }
+/* Karten: var(--paper) = Gegenfarbe des Abschnitts (global.css) */
 .sl-karte:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #cfe6e3, 0 1px 2px rgb(0 79 76 / 5%), 0 28px 56px -36px rgb(0 79 76 / 38%); }
 .sl-karte__nr { padding-bottom: 14px; border-bottom: 1px solid #ddd6c9; font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
   letter-spacing: 0.02em; color: #006b68; font-variant-numeric: tabular-nums; }
@@ -49,7 +48,7 @@
 .sl-karte:hover .sl-karte__mehr { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ── Preis-Hinweis ── */
-.sl-preis { background: var(--white); }
+/* .sl-preis */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sl-preis__innen { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
 @media (min-width: 900px) { .sl-preis__innen { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); } }
 .sl-preis__text { min-width: 0; display: grid; gap: 16px; }

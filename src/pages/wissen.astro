@@ -24,7 +24,7 @@ const ratgeber = (await getCollection('ratgeber'))
   .map((a) => ({ titel: a.data.title, path: `/ratgeber/${a.id}/`, info: datumText(a.data.datum) }));
 
 // Häufige Fragen: drei Kernfragen (Preis, Tempo, Vertrag), Sprung zum Thema auf /fragen/; Platzhalter nie
-const TOP = ['Was kostet eine Website bei waybuild?', 'Wie schnell ist meine Website online?', 'Wie lange läuft der Vertrag?'];
+const TOP = ['Was kostet eine Website bei webgold?', 'Wie schnell ist meine Website online?', 'Wie lange läuft der Vertrag?'];
 const gruppen = fragenNachThema();
 const mitThema = gruppen.flatMap((g) => g.fragen.filter((f) => !f.platzhalter).map((f) => ({ f, id: g.id })));
 const fragen = [
@@ -47,7 +47,7 @@ const BEREICHE: { titel: string; text: string; path: string; alle: string; eintr
 
 <BaseLayout
   title="Wissen: Ratgeber, Fragen und Blog"
-  description="Wissen von waybuild an einem Ort: Ratgeber zu Website, Software und Cloud, häufige Fragen zu Paketen und Ablauf sowie Beiträge im Blog."
+  description="Wissen von webgold an einem Ort: Ratgeber zu Website, Software und Cloud, häufige Fragen zu Paketen und Ablauf sowie Beiträge im Blog."
   breadcrumb={[{ name: 'Wissen', path: '/wissen/' }]}
 >
   <PageHeader eyebrow="Ratgeber, Fragen und Blog" title="Wissen" foto={SEITEN_FOTO.wissen} lead="Hier finden Sie unsere Ratgeber, die häufigsten Fragen und den Blog an einem Ort. Kurz erklärt, rund um Website, Software und Cloud für Unternehmen." />

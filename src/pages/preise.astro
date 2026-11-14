@@ -53,7 +53,7 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Auftragsverwaltun
 
 <BaseLayout
   title={`Preise: Website-Abo ab ${euro(aboPreisAb())} im Monat`}
-  description={`${preiseText} im Monat netto, keine Einrichtungskosten, keine Seitenbegrenzung. Optional dazu: ${KOMPLETTPAKET.name} ${komplettPreis()}.`}
+  description={`${preiseText} im Monat netto, ohne Einrichtungskosten. Optional: ${KOMPLETTPAKET.name} ${komplettPreis()}.`}
   schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >

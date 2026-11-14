@@ -2,7 +2,7 @@
  * Ruhige Karten in Weiß auf Papier, Nummern statt Icon-Kacheln, feine Linien, großzügiger Weißraum. Tokens aus start-neu.css (.sn).
  * WebKit: Spalten minmax(0, 1fr) + min-width: 0, lange Titel brechen um (overflow-wrap). */
 
-.swi.sn { background: var(--paper); padding-block: clamp(56px, 8vw, 112px); }
+.swi.sn { padding-block: clamp(56px, 8vw, 112px); }
 .swi p { margin: 0; }
 
 /* Raster */

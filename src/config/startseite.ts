@@ -91,14 +91,14 @@ export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: '
  *  Wird nur in der Vorschau gezeigt (SHOW_HINTS + PUBLIC_PREVIEW, index.astro), solange die Zitate Test-Zitate sind.
  *  Die Zitate NICHT in strukturierte Daten übernehmen. */
 export const TEAM = {
-  titel: 'Wer hinter waybuild steht',
+  titel: 'Wer hinter webgold steht',
   einleitung: 'Sie sprechen mit Menschen, nicht mit einer Hotline.',
   personen: [
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
-    { name: 'Can Siebert', rolle: 'Chief Executive Officer', foto: 'team/can-siebert', alt: 'Can Siebert, Chief Executive Officer von waybuild', // Jamil #5869, 14.11.2026 (Impressum bleibt „Geschäftsführer“)
+    { name: 'Can Siebert', rolle: 'Chief Executive Officer', foto: 'team/can-siebert', alt: 'Can Siebert, Chief Executive Officer von webgold', // Jamil #5869, 14.11.2026 (Impressum bleibt „Geschäftsführer“)
       zitat: 'Unsere Kunden sollen sich um ihr Geschäft kümmern. Um alles, was dafür online laufen muss, kümmern wir uns.' },
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
-    { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von waybuild',
+    { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von webgold',
       zitat: 'Hinter jeder Anfrage steht ein Mensch, der Hilfe sucht. Deshalb sorgen wir dafür, dass keine verloren geht.' },
   ],
 };
@@ -143,7 +143,7 @@ export const VORTEILE = {
     { icon: 'euro', titel: 'Feste Monatspreise', text: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten, ohne Einrichtungsgebühr. Sie wissen vorher, was Sie jeden Monat zahlen.' },
     { icon: 'user', titel: 'Ein fester Ansprechpartner', text: 'Statt einer Hotline haben Sie einen festen Ansprechpartner, der Ihr Projekt kennt. Änderungen schicken Sie einfach per Nachricht, auch als Sprachnachricht.' },
     { icon: 'rocket', titel: 'Schnell online', text: 'Bei Websites in der Regel 14 Tage, nachdem Ihre Inhalte vorliegen. Die Technik richten wir ein, Sie geben frei.' },
-    { icon: 'chart', titel: 'Sehen, was Ihre Website bringt', text: 'Jeden Monat ein kurzer Bericht mit Besuchern, Anfragen und Suchbegriffen, verständlich erklärt. So sehen Sie, was funktioniert.', paket: 'Ab Paket Plus' },
+    { icon: 'chart', titel: 'Sehen, was Ihre Website bringt', text: 'Jeden Monat ein kurzer Bericht mit Besuchern, Anfragen und Suchbegriffen, verständlich erklärt. So sehen Sie, was funktioniert.', paket: 'Ab Paket Online wachsen' },
   ] as { icon: IconName; titel: string; text: string; paket?: string }[],
 };
 
@@ -151,7 +151,7 @@ export const VORTEILE = {
  *  Seit Jamil, Talk qh87y3sj #5381 (10.11.2026): über dem Knopf eine kurze Antwort „Warum waybuild?“ in drei Sätzen. */
 export const ABSCHLUSS = {
   titel: CLAIM,
-  warumTitel: 'Warum waybuild?',
+  warumTitel: 'Warum webgold?',
   warum: [
     'Wir betrachten nicht nur Ihre Website, sondern den ganzen Weg Ihrer Kunden, von der ersten Suche bis zur Betreuung nach dem Auftrag.',
     'Sie zahlen einen festen Monatspreis ohne Einrichtungsgebühr und haben einen festen Ansprechpartner.',
@@ -190,7 +190,7 @@ export const UMSETZUNG: KartenAbschnitt = {
 };
 export const ENTSPANNT: KartenAbschnitt = {
   id: 'entspannt',
-  kennzeile: 'Warum waybuild',
+  kennzeile: 'Warum webgold',
   titel: 'Ganz entspannt. Das ist unser Motto.',
   intro: 'Sie haben eine Idee oder wollen etwas ändern? Sagen Sie es uns einfach. Den Rest erledigen wir.',
   karten: [

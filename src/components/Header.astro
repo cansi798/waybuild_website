@@ -23,7 +23,7 @@ const isCurrent = (path?: string) => path && current === href(path);
 
 <header class="hdr" id="siteHeader">
   <div class="wrap hdr__inner">
-    <a href={href('/')} class="hdr__logo" aria-label="waybuild, zur Startseite"><Logo /></a>
+    <a href={href('/')} class="hdr__logo" aria-label="webgold, zur Startseite"><Logo /></a>
 
     <nav class="hdr__nav" aria-label="Hauptnavigation">
       <ul>
@@ -100,9 +100,13 @@ const isCurrent = (path?: string) => path && current === href(path);
    * Hover/aktuelle Seite --paper-2 mit #006b68; Fokusrahmen #006b68. Knopf „Kostenlose Erstberatung“ dunkles
    * Logo-Türkis #006b68 mit Weiß (6,36 : 1), Hover #004f4c (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
   .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
+  /* leicht transparent mit Weichzeichner dahinter (Jamil #5916, 14.11.2026); ohne backdrop-filter fast deckend */
   .hdr::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
-    background: var(--paper);
+    background: rgb(255 255 255 / 94%);
+  }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .hdr::before { background: rgb(255 255 255 / 72%); -webkit-backdrop-filter: saturate(170%) blur(16px); backdrop-filter: saturate(170%) blur(16px); }
   }
   .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
   .hdr .hdr__cta { background: var(--accent-ink); color: var(--white); }

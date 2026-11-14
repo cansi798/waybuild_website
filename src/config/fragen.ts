@@ -16,7 +16,7 @@ export const FRAGEN_TITEL = 'Häufige Fragen';
 /** Themen in dieser Reihenfolge; Zuordnung über den genauen Fragetext. */
 const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
   { id: 'pakete', titel: 'Pakete und Preise', fragen: [
-    'Was kostet eine Website bei waybuild?',
+    'Was kostet eine Website bei webgold?',
     'Was ist der Unterschied zwischen den Paketen?',
     'Gibt es Einrichtungskosten?',
     'Was kostet ein Paket im Jahr?',
@@ -34,7 +34,7 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
   { id: 'technik', titel: 'Technik und Betreuung', fragen: [
     'Was ist bei Website as a Service enthalten?',
     'Kann ich meine bestehende Domain mitnehmen?',
-    'Bietet waybuild auch Software, Cloud und IT an?',
+    'Bietet webgold auch Software, Cloud und IT an?',
   ] },
   { id: 'vertrag', titel: 'Vertrag', fragen: [
     'Wie lange läuft der Vertrag?',

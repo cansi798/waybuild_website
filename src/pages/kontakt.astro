@@ -161,14 +161,17 @@ import '../styles/seite-kontakt.css';
     const wahlSelect = form.elements.namedItem('paket_wahl') as HTMLSelectElement | null;
     const paket = (params.get('paket') ?? '').trim();
     const norm = (t: string) => t.toLowerCase().replace(/^paket\s+/, '');
-    const treffer = wahlSelect ? [...wahlSelect.options].find((o) => o.dataset.name && norm(paket).startsWith(o.dataset.name.toLowerCase())) : undefined;
+    // alte Werte (Basis/Plus, vor der Umbenennung am 14.11.2026) werden weiter akzeptiert
+    const alt: Record<string, string> = { basis: 'basis', plus: 'plus' };
+    const altId = alt[norm(paket).split(/[\s(]/)[0]];
+    const treffer = wahlSelect ? [...wahlSelect.options].find((o) => (o.dataset.name && norm(paket).startsWith(o.dataset.name.toLowerCase())) || (altId && o.value === altId)) : undefined;
     // ?paket=Komplettpaket (oder Komplett) bzw. ?komplett=1 hakt das Komplettpaket an, Grundpaket bleibt wählbar
     const komplettBox = form.querySelector<HTMLInputElement>('input[name="komplett_wahl"]');
     const komplettParam = params.get('komplett') === '1' || norm(paket).startsWith('komplett');
     if (komplettBox && komplettParam) komplettBox.checked = true;
     if (treffer && wahlSelect) wahlSelect.value = treffer.value;
     else if (paket && !norm(paket).startsWith('komplett')) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
-    // Komplettpaket nur zusammen mit Basis oder Plus (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
+    // Komplettpaket nur zusammen mit Online sichtbar oder Online wachsen (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
     // nicht angehakt; ein Wunsch aus dem Link (?komplett=1) wird gemerkt und beim Wählen eines Pakets wieder angehakt.
     let komplettWunsch = komplettParam;
     const komplettPruefen = () => {
@@ -305,7 +308,7 @@ import '../styles/seite-kontakt.css';
             ...data,
             access_key: form.dataset.key,
             subject: `${buchen ? 'Buchung' : 'Anfrage'}: ${interessText(data)}${data.paket ? ` – ${data.paket}` : ''}${data.branche ? ` (${data.branche})` : ''}`,
-            from_name: 'Waybuild Website',
+            from_name: 'webgold Website',
             replyto: data.email,
           }),
         });

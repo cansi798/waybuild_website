@@ -1,12 +1,12 @@
 // STARTSEITE, Abschnitt „Ein Partner für Ihre gesamte digitale Entwicklung.“ (Jamil Talk qh87y3sj #5854, 14.11.2026).
 // Texte wörtlich aus Jamils Nachricht, zwei Korrekturen:
-//   - Kennzeile: Jamil schrieb „webgold“ – Tippfehler, der Firmenname ist IMMER „waybuild“.
+//   - Kennzeile: Marke seit 14.11.2026 „webgold“ (Jamil, Talk #5913).
 //   - „Alles aus einer Hand“: Jamils „… aus einem Ansprechpartner“ ist holprig, daher „… von einem Ansprechpartner“.
 // Komponente: src/components/startneu/SnPartner.astro, Stil: src/styles/start-partner.css.
 import type { IconName } from './site';
 
 export const PARTNER = {
-  kenn: 'Warum Unternehmen mit waybuild arbeiten',
+  kenn: 'Warum Unternehmen mit webgold arbeiten',
   titel: 'Ein Partner für Ihre gesamte digitale Entwicklung.',
   vorteile: [
     { icon: 'compass', titel: 'Individuelle Lösungen', text: 'Keine Standardpakete, sondern Lösungen, die zu Ihrem Unternehmen passen.' },

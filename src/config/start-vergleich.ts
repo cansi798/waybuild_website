@@ -11,7 +11,7 @@ export const VERGLEICH_START = {
   spalten: [
     { lang: 'Website-Baukasten', kurz: 'Baukasten' } as { lang: string; kurz: string; zusatz?: string; zusatzKurz?: string },
     { lang: 'Klassische Agentur', kurz: 'Agentur', zusatz: '/ IT-Dienstleister', zusatzKurz: '/ IT' }, // + IT-Dienstleister: Jamil #5889 (zweite, kleinere Zeile)
-    { lang: 'waybuild', kurz: 'waybuild' },
+    { lang: 'webgold', kurz: 'webgold' },
   ],
   zeilen: [
     { punkt: 'Website online bringen', werte: [{ s: 'ja' }, { s: 'ja' }, { s: 'ja' }] },

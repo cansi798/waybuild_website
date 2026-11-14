@@ -11,7 +11,7 @@ export const SHOW_HINTS = true;
 export const isMissing = (v?: string | null) => !v || v.trim().startsWith('TODO');
 
 export const company = {
-  name: 'Waybuild',
+  name: 'webgold',
   legalName: 'Waybuild UG (haftungsbeschränkt)',
   slogan: 'Menschliche Beratung. KI-gestützte Umsetzung. Kontinuierliche Verbesserung.',
   email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
@@ -35,7 +35,7 @@ export const company = {
 export const PHONE_IS_PLACEHOLDER = true;
 /** Telefon-Helfer: tel:-Link und WhatsApp-Link (wa.me) aus company.phone. */
 export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/^0/, '');
-export const whatsappLink = (text = 'Hallo waybuild, ich interessiere mich für Website as a Service.') =>
+export const whatsappLink = (text = 'Hallo webgold, ich interessiere mich für Website as a Service.') =>
   `https://wa.me/${phoneTel().replace('+', '')}?text=${encodeURIComponent(text)}`;
 /** Erreichbarkeit (Footer-Kopf, Kontakt, Menü, llms.txt). 9 bis 17 Uhr: Jamil, Talk qh87y3sj #5322 (Q4). */
 export const HOURS = 'Montag bis Freitag, 9 bis 17 Uhr';
@@ -172,16 +172,16 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 
 export const faqs = [
   {
-    q: 'Was kostet eine Website bei waybuild?',
-    a: `Es gibt zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Basis oder Plus buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    q: 'Was kostet eine Website bei webgold?',
+    a: `Es gibt zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Basis oder Plus, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Basis oder Plus buchbar\.$/, '')}`,
+    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Online sichtbar oder Online wachsen, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')}`,
   },
   {
     q: 'Was ist bei Website as a Service enthalten?',
-    a: 'Schon im Paket Basis: persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
+    a: 'Schon im Paket Online sichtbar: persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
   },
   {
     q: 'Wie lange läuft der Vertrag?',
@@ -220,7 +220,7 @@ export const faqs = [
     a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall.',
   },
   {
-    q: 'Bietet waybuild auch Software, Cloud und IT an?',
+    q: 'Bietet webgold auch Software, Cloud und IT an?',
     a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
   },
   {

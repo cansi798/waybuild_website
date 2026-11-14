@@ -6,7 +6,7 @@
 
 .section.sb--start { background: var(--paper-2); min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
   display: flex; flex-direction: column; justify-content: center; }
-.section.sb--leistung { background: var(--white); }
+/* .section.sb--leistung */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .sb-kopf { max-width: 760px; }
 .sb-kopf .lead { text-wrap: pretty; }
 

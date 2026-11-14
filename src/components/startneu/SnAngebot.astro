@@ -20,7 +20,7 @@ const kontaktPaket = (name: string) => `${href('/kontakt/')}?paket=${encodeURICo
 const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&komplett=1&buchen=1`;
 const kontaktExtras = `${href('/kontakt/')}?dazu=${encodeURIComponent(E.gesamt.id)}&buchen=1`;
 const kombis = kombiPreise();
-const appText = K.text.replace(/\s*Nur zusammen mit Basis oder Plus buchbar\.$/, '');
+const appText = K.text.replace(/\s*Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '');
 const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((f): f is NonNullable<typeof f> => !!f && !f.platzhalter);
 ---
 
@@ -55,26 +55,29 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
           </div>
         </article>
       ))}
+      {/* Drittes Paket (Jamil #5922/#5923, 14.11.2026): Komplettpaket gleichrangig neben Online sichtbar und Online wachsen; Preis „ab“ inkl. Website-Paket (#5911) */}
+      <article class="sn-paket sn-paket--komplett" id="komplettpaket" aria-labelledby="sn-pk-komplett">
+        <div class="sn-paket__kopf">
+          <h3 id="sn-pk-komplett" class="sn-paket__name">{K.name}</h3>
+          <span class="sn-paket__tipp sn-paket__tipp--gold">Website + Betriebs-App</span>
+        </div>
+        <p class="sn-paket__kurz">{K.kurz}</p>
+        <p class="sn-paket__preis"><b>{euroAb(kombis[0].preis, true)}</b><span>netto im Monat</span></p>
+        <p class="sn-paket__brutto">{euroAb(bruttoVon(kombis[0].preis), true)} inkl. 19 % MwSt.</p>
+        <p class="sn-paket__jahr">{euroAb(kombis[0].preis * 12, true)} netto im Jahr</p>
+        <p class="sn-paket__fuer">Je nach Wahl ist Online sichtbar oder Online wachsen enthalten. {appText}</p>
+        <p class="sn-paket__listenkopf">Alles aus Ihrem gewählten Paket, plus:</p>
+        <ul class="sn-paket__liste sn-paket__liste--haken">
+          {K.software.slice(0, 5).map((t) => <li><Icon name="check" size={18} /><span>{t}</span></li>)}
+        </ul>
+        <div class="sn-paket__fuss">
+          <a class="btn btn--lg sn-btn sn-paket__btn" href={kontaktKombi(kombis[0].paket.name)} data-buchen={kombis[0].paket.id} data-komplett="1">{BUCHEN.knopf}<span class="sr-only">: {K.name}</span></a>
+          <p class="sn-paket__laufzeit">{LAUFZEIT_HINWEIS}</p>
+        </div>
+      </article>
     </div>
+    {!K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Der Kombipreis für das Komplettpaket gilt nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
 
-    <article class="sn-app" id="komplettpaket" aria-labelledby="sn-app-h">
-      <div class="sn-app__text">
-        <p class="sn-kenn">{K.label}</p>
-        <h3 id="sn-app-h" class="sn-h3">{T.appTitel}: {K.name}</h3>
-        <p class="sn-app__kurz">{K.kurz}</p>
-        <p>{appText} Nur zusammen mit Basis oder Plus buchbar.</p>
-      </div>
-      {/* Jamil #5911 (14.11.2026): statt zwei Kombi-Karten nur „ab 419,99 € netto“ mit Hinweis, dass Basis oder Plus enthalten ist;
-          #5912: darunter der Jahrespreis netto */}
-      <div class="sn-kombi sn-kombi--eins">
-        <p class="sn-kombi__name">{K.name} inklusive Website-Paket</p>
-        <p class="sn-kombi__preis"><b>{euroAb(kombis[0].preis, true)}</b> netto im Monat</p>
-        <p class="sn-kombi__jahr">{euroAb(kombis[0].preis * 12, true)} netto im Jahr</p>
-        <p class="sn-kombi__statt">Basis oder Plus ist je nach Wahl enthalten.</p>
-        <a class="btn sn-btn sn-btn--hell sn-kombi__btn" href={kontaktKombi(kombis[0].paket.name)} data-buchen={kombis[0].paket.id} data-komplett="1">Kombi buchen<span class="sr-only">: {K.name}</span></a>
-      </div>
-      {!K.kombiMitGruenderpaket && <p class="sn-app__hinweis">Kombipreise gelten nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
-    </article>
 
     <div class="sn-extras" id="einmalig" role="region" aria-labelledby="sn-extras-h">
       <div class="sn-extras__text">

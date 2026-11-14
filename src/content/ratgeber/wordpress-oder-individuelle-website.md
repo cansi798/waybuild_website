@@ -33,4 +33,4 @@ Google bewertet die Geschwindigkeit einer Seite mit (Core Web Vitals). Außerdem
 - Sie veröffentlichen **täglich** Inhalte und wollen alles selbst pflegen.
 - Sie brauchen ein sehr spezielles Plugin-Ökosystem.
 
-Bei Waybuild setzen wir deshalb standardmäßig auf eigene Technik und bauen auf **ausdrücklichen Wunsch** auch mit WordPress.
+Bei webgold setzen wir deshalb standardmäßig auf eigene Technik und bauen auf **ausdrücklichen Wunsch** auch mit WordPress.

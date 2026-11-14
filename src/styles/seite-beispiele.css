@@ -8,8 +8,8 @@
 .sb-bereiche a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 16px; border-radius: 999px; background: var(--white);
   border: 1px solid var(--line); font-weight: 650; color: var(--ink); text-decoration: none; }
 
-.sb-bereich { background: var(--white); scroll-margin-top: calc(var(--header-h) + 8px); }
-.sb-bereich--papier { background: var(--paper); }
+.sb-bereich { scroll-margin-top: calc(var(--header-h) + 8px); }
+/* .sb-bereich / --papier */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 
 /* Fakten als ruhige Punktzeile */
 .sb-fakten { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
@@ -20,7 +20,7 @@
 .sb-projekte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 32px); }
 .sb-projekt { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 28px); align-items: center;
   padding: clamp(14px, 2vw, 20px); border-radius: 32px; background: var(--paper); }
-.sb-bereich--papier .sb-projekt { background: var(--white); }
+/* Karten: var(--paper) = Gegenfarbe des Abschnitts (global.css) */
 @media (min-width: 1000px) {
   .sb-projekt { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 4vw, 56px); }
   .sb-projekt--gespiegelt { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
@@ -46,7 +46,6 @@
 .sb-status { padding: 2px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; }
 .sb-status--online { background: var(--sn-tinte); color: var(--white); }
 .sb-status--vorschau { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 1px var(--sn-linie); }
-.sb-bereich--papier .sb-status--vorschau { background: var(--paper); }
 
 .sb-fakten-dl { margin: 4px 0 0; display: grid; grid-template-columns: minmax(0, 1fr); }
 .sb-fakten-dl > div { min-width: 0; display: grid; gap: 2px; padding: 12px 0; border-top: 1px solid var(--sn-linie); }
@@ -58,4 +57,4 @@
 .sb-mehr { margin-top: 12px !important; text-align: center; }
 
 /* Beispiel-Film auf Papier, damit er sich vom Abschluss (Hauch) absetzt */
-.sb-film .sn-beispielfilm { background: var(--paper); }
+.sb-film .sn-beispielfilm { background: transparent; } /* .sb-film zählt als Abschnitt (global.css) */

@@ -21,9 +21,9 @@ export const GET: APIRoute = async ({ site }) => {
   const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
   // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, Kombipreise nicht mit dem Gesamtpaket der Extras
-  const komplett = `Nur zusammen mit Basis oder Plus buchbar (einzeln nicht): ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Basis oder Plus buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
+  const komplett = `Nur zusammen mit Online sichtbar oder Online wachsen buchbar (einzeln nicht): ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
   const lines = [
-    `# ${company.legalName}`,
+    `# ${company.name} – powered by ${company.legalName}`,
     '',
     `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in zwei festen Monatspaketen (${PAKETE.map((p) => p.name).join(', ')}, optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
@@ -39,7 +39,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen
     `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.wann}): ${s.text}`).join(' ')}`,
-    `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} waybuild: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
+    `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} webgold: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
     `- ${ABSCHLUSS.warumTitel} ${ABSCHLUSS.warum.join(' ')}`,
     `- Leitsatz: ${CLAIM}`,
     '',
@@ -79,7 +79,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- [Leistungen](${url('/leistungen/')}): alle Leistungen in vier Gruppen (${gruppen.map((g) => g.titel).join(', ')})`,
     `- [Beispiele](${url('/beispiele/')}): echte Projekte unserer Kunden, Bereich Websites`,
     `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt., optional ${komplettZeile()}`,
-    `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH_START.spalten.map((sp) => sp.lang + (sp.zusatz ? ' ' + sp.zusatz : '')).join(', ')}`,
+    `- [Warum webgold](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH_START.spalten.map((sp) => sp.lang + (sp.zusatz ? ' ' + sp.zusatz : '')).join(', ')}`,
     `- [Wissen](${url('/wissen/')}): Übersicht über Ratgeber, Häufige Fragen und Blog`,
     `- [Häufige Fragen](${url('/fragen/')}): Pakete und Preise, Ablauf, Technik und Vertrag`,
     `- [Blog](${url('/blog/')}): Beiträge zu Websites, Sichtbarkeit bei Google und KI-Suche`,

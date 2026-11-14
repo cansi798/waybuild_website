@@ -23,7 +23,7 @@ const nr = (n: number) => String(n).padStart(2, '0');
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Leistungen von waybuild',
+  name: 'Leistungen von webgold',
   itemListElement: gruppen.flatMap((g) => g.eintraege).map((l, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -35,7 +35,7 @@ const itemList = {
 
 <BaseLayout
   title="Leistungen: von Website bis Betreuung"
-  description="Alle Leistungen von waybuild entlang der Kundenreise: gefunden werden, Vertrauen gewinnen, Anfragen und Abläufe, Betreuung und Verbesserung."
+  description="Alle Leistungen von webgold entlang der Kundenreise: gefunden werden, Vertrauen gewinnen, Anfragen und Abläufe, Betreuung und Verbesserung."
   schema={[itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >

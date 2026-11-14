@@ -18,9 +18,9 @@ Beim **Kauf** bezahlen Sie die Erstellung einmal. Um Hosting, Updates und Änder
 
 Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 1.500 bis 3.000 €**, mit SEO und mehr Inhalten **3.500 bis 6.000 €** ([eoglou, 2026](https://eoglou.de/blog/website-kosten-handwerker/)). Dazu kommen laufende Kosten für Hosting, Domain, E-Mail und Wartung.
 
-| Kosten | Kaufen | Mieten (z. B. Waybuild, Website as a Service) |
+| Kosten | Kaufen | Mieten (z. B. webgold, Website as a Service) |
 |---|---|---|
-| Start | 1.500–3.000 € | bei Waybuild: 0 € Einrichtung |
+| Start | 1.500–3.000 € | bei webgold: 0 € Einrichtung |
 | Laufend | Hosting, Wartung, Änderungen extra | fester Monatspreis, alles inklusive |
 | Technik-Aufwand | bei Ihnen | beim Anbieter |
 | Planbarkeit | schwankend | fester Betrag, voll absetzbar |
@@ -41,7 +41,7 @@ Laut Marktübersichten kostet eine gekaufte Website für kleine Betriebe **etwa 
 
 ## Worauf Sie bei Miet-Angeboten achten sollten
 
-1. **Laufzeit und Bindung:** Wie lange läuft der Vertrag, und kommen Sie danach ohne Hürden heraus? Bei Waybuild sind es 24 Monate Mindestlaufzeit, danach ist das Abo monatlich kündbar.
+1. **Laufzeit und Bindung:** Wie lange läuft der Vertrag, und kommen Sie danach ohne Hürden heraus? Bei webgold sind es 24 Monate Mindestlaufzeit, danach ist das Abo monatlich kündbar.
 2. **E-Mail:** Oft sind nur 2–5 Postfächer enthalten. Prüfen Sie, ob das für Ihr Team reicht.
 3. **Eigentum:** Gehören Ihnen Domain, Website und Code?
 4. **Technik:** Steckt ein Baukasten- oder WordPress-Template dahinter, oder wird die Seite wirklich individuell gebaut?

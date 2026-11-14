@@ -39,8 +39,8 @@ const organization = {
   // Mit vollständiger Adresse zusätzlich lokales Unternehmen → Chance auf lokale Suchergebnisse
   '@type': hasAddress ? ['Organization', 'ProfessionalService'] : 'Organization',
   '@id': `${siteRoot}#organization`,
-  name: company.legalName,
-  alternateName: company.name,
+  name: company.name,
+  legalName: company.legalName,
   url: siteRoot,
   logo: absolute('/icon-512.png', Astro.site),
   image: ogImage,
@@ -128,7 +128,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Waybuild: Ihre Website. Ein Unikat. Komplett betreut." />
+    <meta property="og:image:alt" content="webgold: Ihre Website. Ein Unikat. Komplett betreut." />
     <meta name="twitter:card" content="summary_large_image" />
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}

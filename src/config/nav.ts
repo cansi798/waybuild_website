@@ -39,8 +39,8 @@ export const NAV: NavItem[] = [
   {
     label: 'Unternehmen',
     children: [
-      { label: 'Warum waybuild', path: '/warum-waybuild/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' },
-      { label: 'Über uns', path: '/ueber-uns/', icon: 'user', desc: 'Wer hinter waybuild steht' },
+      { label: 'Warum webgold', path: '/warum-waybuild/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' },
+      { label: 'Über uns', path: '/ueber-uns/', icon: 'user', desc: 'Wer hinter webgold steht' },
       { label: 'Beispiele', path: '/beispiele/', icon: 'eye', desc: 'Echte Projekte unserer Kunden' },
       { label: 'Kontakt', path: '/kontakt/', icon: 'chat', desc: 'Erstberatung, Telefon, WhatsApp' },
     ],

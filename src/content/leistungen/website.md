@@ -4,8 +4,8 @@ menuTitel: "Website"
 gruppe: gefunden
 station: aufmerksamkeit
 kurz: "Eine Website ohne Seitenbegrenzung, für Handy, Tablet und PC, von uns betreut."
-description: "Ihre Website mit waybuild: ohne Seitenbegrenzung, für Handy, Tablet und PC. Hosting in Deutschland, Updates und Sicherungen sind im Monatspreis enthalten."
-paket: "im Basis-Paket"
+description: "Ihre Website mit webgold: ohne Seitenbegrenzung, für Handy, Tablet und PC. Hosting in Deutschland, Updates und Sicherungen sind im Monatspreis enthalten."
+paket: "im Paket Online sichtbar"
 fragen:
   - frage: "Wie viele Seiten bekomme ich?"
     antwort: "Es gibt keine Seitenbegrenzung. Wir legen gemeinsam mit Ihnen fest, welche Seiten Ihre Kunden wirklich brauchen."
@@ -39,7 +39,7 @@ schritte:
   - titel: "Verbessern"
     text: "Nach dem Start bleibt Ihre Website nicht stehen. Wir pflegen sie und entwickeln sie mit Ihnen weiter."
 pakete: [basis, plus]
-paketText: "Die Website ist schon im Paket Basis enthalten. Im Paket Plus kommen unter anderem die erweiterte Suchmaschinen-Optimierung, die Pflege Ihres Google-Profils und ein Monatsbericht dazu."
+paketText: "Die Website ist schon im Paket Online sichtbar enthalten. Im Paket Online wachsen kommen unter anderem die erweiterte Suchmaschinen-Optimierung, die Pflege Ihres Google-Profils und ein Monatsbericht dazu."
 passt: "Wenn Sie eine professionelle Website möchten, ohne sich selbst um die Technik kümmern zu müssen, ist das der richtige Einstieg. In der kostenlosen Erstberatung besprechen wir, was Ihre Website für Sie leisten soll."
 verwandt: [inhalte, suchmaschinen-optimierung, anfragen, betreuung]
 ---

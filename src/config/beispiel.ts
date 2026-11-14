@@ -27,7 +27,7 @@ export const BEISPIEL_SEITE = {
   description: 'Ein Beispiel in 13 Szenen: Wie ein Malerbetrieb mit Website, Kundenportal und eigener Software vom ersten Suchtreffer bis zur Weiterempfehlung arbeitet.',
   kennzeile: 'Beispiel',
   h1: 'So kann es laufen.',
-  intro: 'Vom ersten Google-Treffer bis zur Weiterempfehlung: Erleben Sie in einer kurzen Geschichte, wie ein Malerbetrieb mit waybuild arbeitet.',
+  intro: 'Vom ersten Google-Treffer bis zur Weiterempfehlung: Erleben Sie in einer kurzen Geschichte, wie ein Malerbetrieb mit webgold arbeitet.',
   /** Name der Geschichte für Screenreader (Liste der Szenen) */
   geschichte: 'Die Geschichte von Frau Weber und dem Malerbetrieb Muster in 13 Szenen',
 };
@@ -122,7 +122,7 @@ export const BEISPIEL_TEASER = {
   id: 'beispiel',
   kennzeile: 'Beispiel',
   titel: 'So kann es bei Ihnen laufen.',
-  text: 'Vom ersten Google-Treffer bis zur Weiterempfehlung: Erleben Sie in einer kurzen Geschichte, wie ein Malerbetrieb mit waybuild arbeitet.',
+  text: 'Vom ersten Google-Treffer bis zur Weiterempfehlung: Erleben Sie in einer kurzen Geschichte, wie ein Malerbetrieb mit webgold arbeitet.',
   knopf: 'Beispiel ansehen',
   /** Szenen, die im Teaser als kleines, ruhendes Mini-Mockup (Endzustand) erscheinen */
   vorschau: [1, 10],

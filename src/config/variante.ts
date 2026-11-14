@@ -42,7 +42,7 @@ export const KUNDENREISE = {
     { name: 'Betreuung', frage: 'Kommen Ihre Kunden wieder und empfehlen Sie weiter?', antwort: 'Mit der App melden Sie sich nach dem Auftrag bei Ihren Kunden und bitten um eine Bewertung. So bleiben Sie in Erinnerung und werden eher weiterempfohlen.' },
   ],
   /** Beschriftung des Symbols (Screenreader) und kleine Überschrift über jeder Antwort */
-  antwortTitel: 'Mit waybuild', // Jamil #5824 (d), 13.11.2026; davor „Bestenfalls“ (#5626), „So sieht es im besten Fall aus“
+  antwortTitel: 'Mit webgold', // Jamil #5824 (d), 13.11.2026; davor „Bestenfalls“ (#5626), „So sieht es im besten Fall aus“
   ziel: 'zufriedener Kunde',
   /** Unterzeile unter „zufriedener Kunde“ (Jamil, Talk qh87y3sj #5632, 12.11.2026) */
   zielUnter: 'Mehr Anfragen, weniger Aufwand und Kunden, die gern wiederkommen.',
@@ -58,7 +58,7 @@ export const KUNDENREISE = {
  *  Letzte Spalte = waybuild (VVergleich.astro und llms.txt lesen werte[3]). Seit #5447 ohne Zeilen-Icons und ohne Häkchen.
  *  Einzige Quelle für beide Vergleiche: Startseite (VVergleich.astro) und /warum-waybuild/ (Tabelle/Karten) (Jamil, Talk qh87y3sj #5369). */
 export const VERGLEICH = {
-  spalten: ['Selbst machen', 'Baukasten', 'Agentur oder Softwarehaus', 'waybuild'],
+  spalten: ['Selbst machen', 'Baukasten', 'Agentur oder Softwarehaus', 'webgold'],
   zeilen: [
     { frage: 'Wer setzt um?', werte: ['Sie selbst', 'Sie selbst, mit Vorlagen', 'Das Projektteam', 'Wir, gemeinsam mit Ihnen'] },
     { frage: 'Wie gut passt die Lösung zu Ihrem Betrieb?', werte: ['So gut, wie Ihre Zeit es erlaubt', 'Im Rahmen der Vorlagen', 'Individuell, meist gegen Aufpreis', 'Abgestimmt auf Ihre Abläufe'] },

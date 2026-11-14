@@ -116,7 +116,7 @@ const manual: Todo[] = [
   },
   {
     title: 'Startseite: Test-Zitate von Can und Jamil bestätigen',
-    detail: 'Fotos sind drin (12.11.2026, Jamil #5636/#5637). Die beiden Zitate in „Wer hinter waybuild steht“ sind TEST-Zitate („erfinden, nur für den Test“) und müssen vor Livegang von Can und Jamil bestätigt oder ersetzt werden; bis dahin nur in der Vorschau. Cans Foto-Quelle hat nur 256 px (höchstens ~180 px zeigen).',
+    detail: 'Fotos sind drin (12.11.2026, Jamil #5636/#5637). Die beiden Zitate in „Wer hinter webgold steht“ sind TEST-Zitate („erfinden, nur für den Test“) und müssen vor Livegang von Can und Jamil bestätigt oder ersetzt werden; bis dahin nur in der Vorschau. Cans Foto-Quelle hat nur 256 px (höchstens ~180 px zeigen).',
     where: 'src/config/startseite.ts → TEAM, src/pages/index.astro (#team)',
     done: false,
     priority: 'wichtig',
@@ -151,7 +151,7 @@ const manual: Todo[] = [
   },
   {
     title: 'Firmensitz / Einzugsgebiet für lokales SEO',
-    detail: 'Adresse Norderstedt ist eingetragen – die Seite meldet waybuild jetzt als lokales Unternehmen (ProfessionalService) an Google. Optional später: Stadt in Titel & Texte aufnehmen („IT-Service Norderstedt“).',
+    detail: 'Adresse Norderstedt ist eingetragen – die Seite meldet webgold jetzt als lokales Unternehmen (ProfessionalService) an Google. Optional später: Stadt in Titel & Texte aufnehmen („IT-Service Norderstedt“).',
     where: 'src/config/site.ts → company, src/pages/index.astro',
     done: true,
     priority: 'wichtig',
@@ -159,7 +159,7 @@ const manual: Todo[] = [
   {
     title: 'Finales Logo (optional)',
     detail: 'Logo-Entwurf C „Reine Wortmarke“ als SVG eingebaut (Jamil, Talk qh87y3sj #5226/#5227): Header, Footer (Negativ), Favicon, App-Icons, Vorschaubild.',
-    where: 'src/components/Logo.astro, public/logo-waybuild.svg, public/logo-waybuild-negativ.svg',
+    where: 'src/components/Logo.astro, public/logo-webgold.svg, public/logo-webgold-negativ.svg (alt: logo-waybuild*.svg)',
     done: true,
     priority: 'später',
   },

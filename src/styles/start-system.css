@@ -5,7 +5,7 @@
  * Kontraste: Text --ink/--ink-soft auf Weiß bzw. Hauch ≥ 6,9 : 1, Primär auf Weiß 6,4 : 1. Lichtpunkt nur ohne
  * prefers-reduced-motion. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit), lange Wörter mit overflow-wrap + &shy;. */
 
-.ss { background: var(--sn-hauch); }
+/* .ss */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ss .sn-kopf .sn-h2 { max-width: 20ch; }
 .ss-unterzeile { font-family: var(--font-head); font-weight: 600; color: var(--sn-tinte); }
 

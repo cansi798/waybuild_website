@@ -4,7 +4,7 @@
  * Ruhig: Papier-Hintergrund, Formular als weiße Karte (runde Ecken, weicher Schatten), daneben Kontaktwege in Hauch.
  * WebKit: Spalten minmax(0, 1fr) und min-width: 0; lange Adressen/E-Mails dürfen umbrechen. */
 
-.sk.sn { background: var(--paper); padding-block: clamp(56px, 8vw, 112px); }
+.sk.sn { padding-block: clamp(56px, 8vw, 112px); }
 .sk p { margin: 0; }
 
 .sk-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 40px); }
@@ -21,7 +21,7 @@
 
 /* ── Formular (gleiche Klassen wie vorher, neue Optik) ── */
 .sk .sk-form { display: grid; gap: 20px; padding: clamp(22px, 4vw, 44px); border: 0; border-radius: 28px;
-  background: var(--white); box-shadow: var(--sn-schatten); }
+  background: var(--white); box-shadow: var(--sn-schatten); --paper: var(--creme); } /* Felder darin creme */
 .sk .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 @media (min-width: 640px) { .sk .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .sk .row > * { min-width: 0; }

@@ -11,6 +11,7 @@
   --ink-soft: #545454;  /* Logo-Grau (Wunsch 10.10.2026) */
   --paper: #f7f5f0;
   --paper-2: #efebe3;
+  --creme: #F8F6F0;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
   --accent: #00a6a1;  /* waybuild-IT-Türkis (Wunsch 10.10.2026, vorher Orange) */
   --accent-ink: #006b68;
@@ -44,7 +45,7 @@ body {
   font-size: 1.0625rem; /* 17,5 px Handy … 19 px PC (Jamil #5292) */
   line-height: 1.65;
   color: var(--ink);
-  background: var(--paper);
+  background: var(--white);
   text-rendering: optimizeLegibility;
 }
 
@@ -66,6 +67,23 @@ img { max-width: 100%; height: auto; display: block; }
 .section { padding-block: clamp(44px, 9vw, 120px); }
 .section--alt { background: var(--paper-2); }
 .section--dark { background: var(--dark); color: var(--paper); }
+
+/* Abschnitte strikt im Wechsel Weiß / Creme, auf allen Seiten (Jamil, Talk qh87y3sj #5915, 14.11.2026: „hintergrund weiß und creme
+ * abwechselnd auf allen seiten … das creme aber noch etwas blasser“). Gezählt werden nur die hellen Abschnitte direkt in <main>
+ * (dunkle Flächen wie Hero, Seitenkopf .ph, .section--dark und die Fußzeile zählen nicht mit). So bleibt der Wechsel auch dann
+ * richtig, wenn ein Abschnitt fehlt (z. B. SnTeam nur in der Vorschau). Unterseiten: nach dem Seitenkopf zuerst Weiß.
+ * Startseite (main[data-stapel]): SnWege im .stapel-paar ist Weiß, danach beginnt der Wechsel mit Creme.
+ * --band = Hintergrund des Abschnitts; --paper wird im Abschnitt auf die Gegenfarbe gesetzt, dadurch sind Karten (background:
+ * var(--paper)) in weißen Abschnitten creme und in Creme-Abschnitten weiß. Zartes Türkis (--sn-hauch) nur noch für Karten/Akzente. */
+main > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt),
+main[data-stapel] > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt),
+main[data-stapel] .stapel-paar > .section {
+  --band: var(--white); --paper: var(--creme); background: var(--band);
+}
+main > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt),
+main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt) {
+  --band: var(--creme); --paper: var(--white); background: var(--band);
+}
 
 .eyebrow {
   display: inline-block;

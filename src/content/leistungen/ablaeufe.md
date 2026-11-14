@@ -42,7 +42,7 @@ schritte:
     text: "Wir sorgen dafür, dass Website, Kommunikation, Prozesse und Systeme zusammenarbeiten. Abstimmungen mit Beteiligten übernehmen wir, damit Ihr Aufwand gering bleibt."
   - titel: "Verbessern"
     text: "Wir beginnen mit dem Schritt, der den größten Einfluss auf Ihre Kunden und Ihren Alltag hat, und entwickeln die Abläufe von dort aus weiter."
-paketText: "Abläufe sind in jedem Betrieb anders. Deshalb erstellen wir ein individuelles Angebot. Für die Verwaltung von Anfrage, Angebot, Auftrag und Rechnung gibt es zusätzlich das Komplettpaket, buchbar zusammen mit Basis oder Plus, mehr dazu auf der [Preisseite](/preise/)."
+paketText: "Abläufe sind in jedem Betrieb anders. Deshalb erstellen wir ein individuelles Angebot. Für die Verwaltung von Anfrage, Angebot, Auftrag und Rechnung gibt es zusätzlich das Komplettpaket, buchbar zusammen mit Online sichtbar oder Online wachsen, mehr dazu auf der [Preisseite](/preise/)."
 passt: "Wenn Anfragen bei Ihnen schon einmal liegen geblieben sind oder Sie viel Zeit mit Abstimmen und Abtippen verbringen, lohnt sich ein genauer Blick. Der erste Schritt ist die kostenlose Erstberatung."
 verwandt: [anfragen, nachfassen, terminbuchung]
 ---

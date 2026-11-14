@@ -47,7 +47,7 @@ export type AboPaket = {
 
 export const ABO_PAKETE: AboPaket[] = [
   {
-    id: 'basis', name: 'Basis', kurz: 'Professionell online', preis: 79.99,
+    id: 'basis', name: 'Online sichtbar', kurz: 'Professionell online', preis: 79.99,
     fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
     leistungen: [
       { id: 'website', text: 'Website', zeile: 'Website ohne Seitenbegrenzung',
@@ -64,7 +64,7 @@ export const ABO_PAKETE: AboPaket[] = [
     ],
   },
   {
-    id: 'plus', name: 'Plus', kurz: 'Gefunden werden und Anfragen gewinnen', preis: 149.99, empfohlen: true, baut: 'basis',
+    id: 'plus', name: 'Online wachsen', kurz: 'Gefunden werden und Anfragen gewinnen', preis: 149.99, empfohlen: true, baut: 'basis',
     fuer: 'Für Betriebe vor Ort, die über Google regelmäßig neue Kunden gewinnen wollen.',
     leistungen: [
       { id: 'google-pflege', text: 'Google-Profil pflegen',
@@ -126,7 +126,7 @@ export const KOMPLETTPAKET = {
   name: 'Komplettpaket',
   kurz: 'Auftragsverwaltung, individuell an Ihre Abläufe angepasst',
   /** „Nur zusammen …“ statt „Zusätzlich zu Basis oder Plus buchbar.“ (Jamil, Talk qh87y3sj #5642, 12.11.2026): einzeln nicht buchbar */
-  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Nur zusammen mit Basis oder Plus buchbar.',
+  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Nur zusammen mit Online sichtbar oder Online wachsen buchbar.',
   preis: 369.99,
   ab: true,
   kombiAb: true,
@@ -164,7 +164,7 @@ export const kombiAbPreis = () => Math.min(...ABO_PAKETE.flatMap((p) => (K.kombi
 /** „in Kombination ab 419,99 €“ (vorher „zusätzlich ab 369,99 €“) */
 export const komplettPreis = () => `in Kombination ${euroAb(kombiAbPreis(), K.kombiAb)}`;
 /** Erklärung zum Preis, z. B. unter dem Betrag */
-export const komplettPreisArt = () => (K.preisArt === 'zusaetzlich' ? 'zusätzlich zum Monatspreis von Basis oder Plus' : 'Gesamtpreis, Basis oder Plus inklusive');
+export const komplettPreisArt = () => (K.preisArt === 'zusaetzlich' ? 'zusätzlich zum Monatspreis von Online sichtbar oder Online wachsen' : 'Gesamtpreis, Online sichtbar oder Online wachsen inklusive');
 /** Eine Zeile für Texte: „Komplettpaket nur in Kombination: mit Basis ab 419,99 € oder mit Plus ab 489,99 € im Monat netto zzgl. MwSt.“ */
 export const komplettZeile = () =>
   `${K.name} nur in Kombination: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`mit ${p.name} ${euroAb(K.kombiPreis[p.id] as number, K.kombiAb)}`])).join(' oder ')} im Monat netto zzgl. MwSt.`;

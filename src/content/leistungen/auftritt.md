@@ -13,7 +13,7 @@ fragen:
   - frage: "Wie viele Logo-Entwürfe bekomme ich?"
     antwort: "Sie bekommen 3 Entwürfe und 2 Korrekturrunden, dazu die Dateien für Web und Druck."
   - frage: "Kann ich die Extras einzeln buchen?"
-    antwort: "Ja. Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur können Sie zu Basis oder Plus einzeln oder zusammen als Gesamtpaket einmalig zum Festpreis dazubuchen. Die Preise finden Sie auf der Preisseite."
+    antwort: "Ja. Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur können Sie zu Online sichtbar oder Online wachsen einzeln oder zusammen als Gesamtpaket einmalig zum Festpreis dazubuchen. Die Preise finden Sie auf der Preisseite."
   - frage: "Sind die Visitenkarten schon gedruckt?"
     antwort: "Nein. Wir gestalten die Visitenkarten passend zu Ihrem Logo als druckfertige Datei. Der Druck ist nicht enthalten."
 # von uns ergänzt (#5892): probleme
@@ -42,7 +42,7 @@ schritte:
   - titel: "Verbessern"
     text: "Kommt später etwas hinzu, sprechen Sie uns an. Wir achten darauf, dass Ihr Auftritt einheitlich bleibt."
 extras: true
-paketText: "Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind kein Teil der Monatspakete. Sie buchen sie zu Basis oder Plus einmalig zum Festpreis dazu, ohne monatliche Kosten."
+paketText: "Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind kein Teil der Monatspakete. Sie buchen sie zu Online sichtbar oder Online wachsen einmalig zum Festpreis dazu, ohne monatliche Kosten."
 passt: "Wenn Sie gründen, Ihr Unternehmen neu aufstellen oder endlich überall gleich auftreten möchten, ist ein einheitlicher Auftritt der richtige Schritt. In der kostenlosen Erstberatung klären wir, was Sie schon haben und was noch fehlt."
 verwandt: [website, inhalte, bewertungen]
 ---
