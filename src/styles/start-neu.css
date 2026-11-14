@@ -406,8 +406,8 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 @media (min-width: 1200px) { .sn-pakete { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1180px; gap: 20px; } }
 @media (min-width: 900px) and (max-width: 1199px) { .sn-paket--komplett { grid-column: 1 / -1; } } /* unter 1200 px: zwei Karten + Komplettpaket volle Breite */
 .sn-paket__tipp { max-width: 100%; overflow-wrap: break-word; }
-.sn-paket--komplett { box-shadow: inset 0 0 0 2px var(--gold, #d8a74f), var(--sn-schatten); }
-.sn-paket__tipp--gold { background: #b8862f; color: #fff; }
+.sn-paket--komplett { box-shadow: inset 0 0 0 2px var(--gold, #d4af37), var(--sn-schatten); }
+.sn-paket__tipp--gold { background: #d4af37; color: #2c3135; } /* dunkle Schrift auf Gold (8 : 1) */
 .sn-paket__brutto { margin-bottom: 0 !important; }
 .sn-paket .sn-paket__jahr { margin-top: -6px !important; font-size: 0.76rem; line-height: 1.3; color: var(--ink-soft); }
 .sn-pakete__hinweis { margin-top: 16px !important; }
@@ -418,3 +418,20 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
   .sn-pakete .sn-paket__preis b { font-size: clamp(2.2rem, 1.6rem + 1.2vw, 2.7rem); }
   .sn-pakete .sn-paket__name { font-size: 1.5rem; }
 }
+
+/* Alle Zeilen der Paketkarten auf gleicher Höhe (Jamil #5942, 14.11.2026): gemeinsame Zeilen per subgrid
+   (Kopf, Kurztext, Preis, Brutto, Jahr, Für-wen, Listenkopf, Liste, Fuß = 9 Zeilen). Ohne subgrid-Unterstützung bleibt es wie bisher. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 900px) {
+    .sn-pakete { grid-auto-rows: auto; row-gap: 0; }
+    .sn-pakete > .sn-paket { display: grid; grid-row: span 9; grid-template-rows: subgrid; row-gap: 10px; align-content: start; }
+    .sn-pakete > .sn-paket > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+    .sn-pakete > .sn-paket .sn-paket__preis { align-self: end; }
+    .sn-pakete > .sn-paket .sn-paket__fuss { align-self: end; }
+  }
+  @media (min-width: 900px) and (max-width: 1199px) { .sn-pakete { row-gap: 24px; } }
+}
+@supports (grid-template-rows: subgrid) { @media (min-width: 900px) {
+  .sn-pakete > .sn-paket .sn-paket__kopf { align-self: start; }
+  .sn-pakete > .sn-paket .sn-paket__liste { align-self: start; align-content: start; }
+} }
