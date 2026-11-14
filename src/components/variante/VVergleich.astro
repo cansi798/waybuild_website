@@ -117,7 +117,7 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
   /* waybuild-Karte hervorgehoben: eigener heller Türkis-Ton (#5447), leicht angehoben, Rand #00807B.
      Desktop: per order in die rechte Spalte (#5326). */
   .vk__karte--wir {
-    order: 1; position: relative; z-index: 1; transform: translateY(-10px);
+    order: 1; position: relative; z-index: 1; /* nicht mehr angehoben: gleiche Höhe wie die anderen Karten (Jamil #5870, 14.11.2026) */
     background: var(--vk-hell); border: 2px solid var(--vk-tuerkis); box-shadow: 0 2px 4px rgb(0 79 76 / 8%), 0 18px 40px rgb(0 79 76 / 14%);
   }
   .vk__karte--wir .vk__name { color: var(--accent-ink); font-size: 1.25rem; } /* #006b68 auf #e9f6f5: 5,8 : 1 */
@@ -167,7 +167,7 @@ const REIHE = [WIR, ...VERGLEICH.spalten.map((_, s) => s).filter((s) => s !== WI
 
     /* ---------- Aufbau beim Hereinscrollen (#5285): nur mit .vk--bereit (JS, Bewegung erlaubt) ---------- */
     .vk__scroll { --vk-y: 0px; }
-    .vk__karte--wir { --vk-y: -10px; }
+    .vk__karte--wir { --vk-y: 0px; } /* #5870: gleiche Höhe */
     /* Versteckt wird ohne Übergang; die Übergänge hängen nur am Zielzustand (.vk--an). */
     .vk--bereit .vk__fragen, .vk--bereit .vk__karte { opacity: 0; transform: translateY(calc(var(--vk-y) + 26px)); }
     .vk--an .vk__fragen, .vk--an .vk__karte {

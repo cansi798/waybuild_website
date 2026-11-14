@@ -95,7 +95,7 @@ export const TEAM = {
   einleitung: 'Sie sprechen mit Menschen, nicht mit einer Hotline.',
   personen: [
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
-    { name: 'Can Siebert', rolle: 'Geschäftsführer', foto: 'team/can-siebert', alt: 'Can Siebert, Geschäftsführer von waybuild',
+    { name: 'Can Siebert', rolle: 'Chief Executive Officer', foto: 'team/can-siebert', alt: 'Can Siebert, Chief Executive Officer von waybuild', // Jamil #5869, 14.11.2026 (Impressum bleibt „Geschäftsführer“)
       zitat: 'Unsere Kunden sollen sich um ihr Geschäft kümmern. Um alles, was dafür online laufen muss, kümmern wir uns.' },
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
     { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von waybuild',
