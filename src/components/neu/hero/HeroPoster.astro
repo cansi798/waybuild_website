@@ -1,0 +1,105 @@
+---
+// Standbild der Hero-Bühne von /neu/ (Paket 1): Strichzeichnung als eingebettetes SVG, keine Bilddatei, keine Netzanfrage.
+// Links ein Browserfenster mit den Bausteinen einer Website, rechts eine Tafel mit fünf Stationen, dazwischen eine
+// geschwungene Linie mit Lichtpunkt: vom Knopf der Website zur ersten Station. Stufe 1 = dieses Bild; Stufe 2 = es zeichnet
+// sich einmal selbst (nur CSS in neu-hero.css; die Gruppen nh-z--1 … 7 geben die Reihenfolge vor).
+// Alle Wörter stehen als Text neben der Bühne (NeuHero.astro), hier steht nur die Bildbeschreibung.
+// Maße: Ausschnitt 732 × 496, eng um die Zeichnung (flacher als die Bühne mit 4:3). Die Ränder in der Bühne setzt
+// neu-hero.css (--nh-kante, --nh-band): Wer den Ausschnitt ändert, passt --nh-band dort an.
+import '../../../styles/neu-hero.css';
+
+// Abgerundetes Rechteck als Pfad: Pfade mit pathLength lassen sich in allen Browsern zeichnen, Grundformen nicht überall
+const eck = (x: number, y: number, w: number, h: number, r: number) =>
+  `M${x + r} ${y}h${w - 2 * r}a${r} ${r} 0 0 1 ${r} ${r}v${h - 2 * r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w - 2 * r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h - 2 * r)}a${r} ${r} 0 0 1 ${r} ${-r}z`;
+
+// Drei Karten der Website (x links) und fünf Stationen der Tafel (y Mitte)
+const KARTEN = [64, 196, 328];
+const STATIONEN = [140, 229, 318, 407, 496];
+const FENSTER = eck(36, 54, 434, 492, 14);
+const TAFEL = eck(566, 54, 198, 492, 14);
+---
+
+<svg
+  class="nh-zeichnung"
+  viewBox="34 52 732 496"
+  role="img"
+  aria-label="Zeichnung: links eine Website, rechts eine Auftragsverwaltung mit den Stationen Anfrage, Angebot, Auftrag, Rechnung und Buchhaltung."
+  focusable="false"
+  fill="none"
+  stroke="#5fe0da"
+  stroke-width="2.2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <defs>
+    <radialGradient id="nh-schein">
+      <stop offset="0" stop-color="#5fe0da" stop-opacity=".55"></stop>
+      <stop offset="1" stop-color="#5fe0da" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  {/* Browserfenster: Fläche, Rahmen und Leiste */}
+  <g class="nh-z nh-z--1">
+    <path class="nh-flaeche nh-glas" stroke="none" d={FENSTER}></path>
+    <path pathLength="1" d={FENSTER}></path>
+    <path pathLength="1" d="M36 92H470"></path>
+  </g>
+
+  {/* Website: Kopfzeile, Überschrift, Bild, drei Karten, Zeile neben dem Knopf, Fußzeile */}
+  <g class="nh-z nh-z--2">
+    <circle class="nh-punkt nh-leise" cx="60" cy="73" r="4"></circle>
+    <circle class="nh-punkt nh-leise" cx="76" cy="73" r="4"></circle>
+    <circle class="nh-punkt nh-leise" cx="92" cy="73" r="4"></circle>
+    <path class="nh-leise" pathLength="1" d={eck(158, 64, 190, 18, 9)}></path>
+    <path class="nh-dick" pathLength="1" d="M66 120H110"></path>
+    <path class="nh-leise" pathLength="1" d="M330 120h28M372 120h28M414 120h28"></path>
+    <path class="nh-dick" pathLength="1" d="M66 170H236M66 195H198"></path>
+    <path class="nh-leise" pathLength="1" d="M64 226H232M64 242H190"></path>
+    <path pathLength="1" d={eck(276, 150, 166, 116, 10)}></path>
+    <path class="nh-leise" pathLength="1" d="M290 252l38-44 25 27 19-21 42 38"></path>
+    <circle class="nh-punkt nh-leise" cx="414" cy="178" r="8"></circle>
+    <path pathLength="1" d={KARTEN.map((x) => eck(x, 302, 114, 104, 10)).join('')}></path>
+    {KARTEN.map((x) => <circle class="nh-punkt nh-leise" cx={x + 23} cy="331" r="7"></circle>)}
+    <path class="nh-leise" pathLength="1" d={KARTEN.map((x) => `M${x + 16} 362h66M${x + 16} 378h42`).join('')}></path>
+    <path pathLength="1" d="M64 450H214"></path>
+    <path class="nh-leise" pathLength="1" d="M64 466H172"></path>
+    <path class="nh-leise" pathLength="1" d="M64 502H442M64 524h44M122 524h44M180 524h44M398 524h44"></path>
+  </g>
+
+  {/* Der eine türkisfarbene Knopf der Website */}
+  <g class="nh-z nh-z--3">
+    <path class="nh-flaeche" fill="#00a6a1" stroke="none" d={eck(334, 440, 108, 36, 18)}></path>
+    <path class="nh-flaeche" stroke="#fff" d="M362 458H414"></path>
+  </g>
+
+  {/* Geschwungene Linie: vom Knopf zur ersten Station */}
+  <g class="nh-z nh-z--4">
+    <path class="nh-bahn" pathLength="1" d="M442 458C540 458 500 140 589 140"></path>
+  </g>
+
+  {/* Tafel der Auftragsverwaltung: Fläche, Rahmen und Kopf */}
+  <g class="nh-z nh-z--5">
+    <path class="nh-flaeche nh-glas" stroke="none" d={TAFEL}></path>
+    <path pathLength="1" d={TAFEL}></path>
+    <path pathLength="1" d="M566 92H764"></path>
+    <path class="nh-dick" pathLength="1" d="M588 73H652"></path>
+  </g>
+
+  {/* Fünf Stationen an einer Schiene, je eine Karte; die erste ist erreicht */}
+  <g class="nh-z nh-z--6">
+    <path class="nh-leise" pathLength="1" d={STATIONEN.slice(1).map((y) => `M596 ${y - 78}V${y - 11}`).join('')}></path>
+    <path pathLength="1" d={eck(620, 112, 124, 56, 9)}></path>
+    <path class="nh-leise" pathLength="1" d={STATIONEN.slice(1).map((y) => eck(620, y - 28, 124, 56, 9)).join('')}></path>
+    <path pathLength="1" d="M636 132h70"></path>
+    <path class="nh-leise" pathLength="1" d={`M636 148h44${STATIONEN.slice(1).map((y) => `M636 ${y - 8}h70M636 ${y + 8}h44`).join('')}`}></path>
+    {STATIONEN.map((y, i) => <circle class={i ? 'nh-ring' : 'nh-punkt'} cx="596" cy={y} r="7"></circle>)}
+  </g>
+
+  {/* Lichtpunkt auf der Linie (Mitte der Kurve) */}
+  <g class="nh-z nh-z--7">
+    <g class="nh-lichtpunkt">
+      <circle fill="url(#nh-schein)" stroke="none" cx="519" cy="299" r="30"></circle>
+      <circle fill="#eafffd" stroke="none" cx="519" cy="299" r="6"></circle>
+    </g>
+  </g>
+</svg>
