@@ -1,0 +1,64 @@
+---
+// Zweite Startseite /neu/, Kapitel „Vergleich“ (Can, Sitzung 11.11.2026). Texte aus VERGLEICH (config/variante.ts) und
+// PREIS_FRUEH.link (config/startseite.ts); der Kopf lautet wie auf der heutigen Startseite.
+// Zwei Fassungen desselben Inhalts: ab 900 px eine echte Tabelle (Spalten- und Zeilenköpfe), darunter vier Karten,
+// „waybuild“ zuerst. Die jeweils andere Fassung steht per CSS auf display: none (auch für Vorleseprogramme weg).
+// Nichts zum seitlichen Wischen. UWG § 6: keine Namen, sachlich, keine Zeichen neben den Antworten, nur Text.
+import '../../../styles/neu-angebot.css';
+import Abschnitt from '../Abschnitt.astro';
+import type { NeuLinks } from '../vertrag';
+import { VERGLEICH } from '../../../config/variante';
+import { PREIS_FRUEH } from '../../../config/startseite';
+
+interface Props { links: NeuLinks }
+const { links } = Astro.props;
+
+const ID = 'vergleich';
+// „waybuild“ ist die letzte Spalte der Liste; in den Karten steht sie vorn
+const WIR = VERGLEICH.spalten.length - 1;
+const REIHE = [WIR, ...VERGLEICH.spalten.map((_, i) => i).filter((i) => i !== WIR)];
+---
+
+<Abschnitt id={ID} flaeche="sand" eyebrow="Im Vergleich" titel="Wir machen den Unterschied" lead="Sechs Fragen, die Ihnen bei der Wahl helfen.">
+  <!-- ab 900 px -->
+  <div class="na-vgl__tafel reveal">
+    <table class="na-vgl__tabelle" aria-labelledby={`${ID}-h`}>
+      <thead>
+        <tr>
+          <td class="na-vgl__ecke"></td>
+          {VERGLEICH.spalten.map((s, i) => <th scope="col" class:list={[{ 'na-vgl__wir': i === WIR }]}>{s}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {VERGLEICH.zeilen.map((z) => (
+          <tr>
+            <th scope="row">{z.frage}</th>
+            {z.werte.map((w, i) => <td class:list={[{ 'na-vgl__wir': i === WIR }]}>{w}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- unter 900 px -->
+  <ul class="na-vgl__karten" style={`--na-karte-zeilen: ${VERGLEICH.zeilen.length + 1}; --na-liste-zeilen: ${VERGLEICH.zeilen.length}`}>
+    {REIHE.map((s, n) => (
+      <li class:list={['na-vgl__karte', 'reveal', { 'na-vgl__karte--wir': s === WIR }]} style={`--neu-i: ${n % 2}`}>
+        <h3 class="na-vgl__name">{VERGLEICH.spalten[s]}</h3>
+        <dl class="na-vgl__liste">
+          {VERGLEICH.zeilen.map((z) => (
+            <div class="na-vgl__paar">
+              <dt>{z.frage}</dt>
+              <dd>{z.werte[s]}</dd>
+            </div>
+          ))}
+        </dl>
+      </li>
+    ))}
+  </ul>
+
+  <div class="na-fuss na-fuss--vergleich reveal">
+    <p class="na-hinweis">{VERGLEICH.hinweis}</p>
+    <a class="neu-link neu-link--ab" href={links.pakete}>{PREIS_FRUEH.link}</a>
+  </div>
+</Abschnitt>
