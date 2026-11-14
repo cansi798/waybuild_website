@@ -3,7 +3,7 @@
 // „nimmt noch zu viel Platz ein“) kompakt: alle Probleme als Stichwort-Kacheln, daneben (PC) bzw. darunter (Handy) EINE Bildfläche
 // mit Strichgrafik (geschichte/GGrafik), Titel und Text des gewählten Problems. PC: Maus/Fokus wählt, im Sichtbereich wechselt
 // es von selbst, bis jemand eingreift. Handy: Tippen wählt. Ohne JS: alle Bildflächen untereinander.
-// Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026). Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pk*, .sn-pd*).
+// Bedienhinweis entfernt (Jamil #5866, 14.11.2026). Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026). Logik: scripts/start-neu.ts ([data-pfeld]), Stil: styles/start-neu.css (.sn-pk*, .sn-pd*).
 import GGrafik from '../geschichte/GGrafik.astro';
 import { PROBLEM as T } from '../../config/startneu';
 const kurz = (t: string) => t.replace(/\.$/, '');
@@ -18,9 +18,6 @@ const kurz = (t: string) => t.replace(/\.$/, '');
 
     <div class="sn-pfeld" data-pfeld>
       <div class="sn-pfeld__wahl">
-        <p class="sn-pfeld__hinweis" aria-hidden="true">
-          <span class="sn-pfeld__maus">{T.hinweisMaus}</span><span class="sn-pfeld__tippen">{T.hinweisTippen}</span>
-        </p>
         <ul class="sn-pkacheln">
           {T.punkte.map((p, i) => (
             <li>
