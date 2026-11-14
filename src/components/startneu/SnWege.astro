@@ -24,7 +24,7 @@ import '../../styles/start-wege.css';
           <div class="sw-text">
             <h3 class="sn-h3">{k.frage}</h3>
             <p class="sw-erkl">{k.text}</p>
-            <p class="sw-ideal"><span class="sn-ico" aria-hidden="true"><Icon name={k.icon} size={20} /></span><span>{k.ideal}</span></p>
+            <p class="sw-ideal"><span>{k.ideal}</span></p><!-- ohne Icon (Jamil #5879, 14.11.2026) -->
             <a class="sn-link sw-link" href={href(k.link.pfad)}>{k.link.text} <Icon name="arrow" size={18} /></a>
           </div>
         </li>

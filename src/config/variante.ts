@@ -13,7 +13,7 @@ export const V_HERO = {
    *  Vorher #5174. Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
   unter: 'Ob professionelle Website, individuelle WebApp oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
   /** Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) */
-  fuer: 'Für Dienstleister, Handwerksbetriebe, Agenturen, Händler und mittelständische Unternehmen.',
+  fuer: 'Für klein- und mittelständische Unternehmen.', // Jamil #5878, 14.11.2026 (vorher die Aufzählung aus #5847)
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
