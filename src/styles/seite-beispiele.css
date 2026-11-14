@@ -1,0 +1,61 @@
+/* /beispiele/ im Stil der neuen Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026). Präfix .sb-.
+ * Farben/Token aus .sn (start-neu.css). Hintergründe: Bereiche Weiß/Papier im Wechsel → Beispiel-Film Papier → Hauch (SnAbschluss).
+ * Große, ruhige Projektkarten: Bildschirmfoto im Browserrahmen + Text, am PC nebeneinander und abwechselnd gespiegelt.
+ * Grids mit minmax(0, 1fr) + min-width: 0 (WebKit, kein Querscrollen). */
+
+/* Sprungnavigation im Seitenkopf (nur bei mehr als einem Bereich) */
+.sb-bereiche ul { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sb-bereiche a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 16px; border-radius: 999px; background: var(--white);
+  border: 1px solid var(--line); font-weight: 650; color: var(--ink); text-decoration: none; }
+
+.sb-bereich { background: var(--white); scroll-margin-top: calc(var(--header-h) + 8px); }
+.sb-bereich--papier { background: var(--paper); }
+
+/* Fakten als ruhige Punktzeile */
+.sb-fakten { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.sb-fakten li { position: relative; min-width: 0; padding-left: 16px; font-size: 0.95rem; font-weight: 500; color: var(--ink); overflow-wrap: break-word; }
+.sb-fakten li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--sn-tuerkis); }
+
+/* Projektkarten */
+.sb-projekte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 32px); }
+.sb-projekt { position: relative; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 28px); align-items: center;
+  padding: clamp(14px, 2vw, 20px); border-radius: 32px; background: var(--paper); }
+.sb-bereich--papier .sb-projekt { background: var(--white); }
+@media (min-width: 1000px) {
+  .sb-projekt { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 4vw, 56px); }
+  .sb-projekt--gespiegelt { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .sb-projekt--gespiegelt .sb-projekt__bild { order: 2; }
+  .sb-projekt__text { padding-block: 12px; }
+  .sb-projekt:not(.sb-projekt--gespiegelt) .sb-projekt__text { padding-right: 20px; }
+  .sb-projekt--gespiegelt .sb-projekt__text { padding-left: 20px; }
+}
+
+.sb-projekt__bild { min-width: 0; overflow: hidden; border-radius: 20px; background: var(--white);
+  box-shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 18px 40px -26px rgb(0 79 76 / 42%); }
+.sb-projekt__leiste { display: flex; gap: 6px; align-items: center; height: 26px; padding-inline: 14px; background: var(--sn-sand); }
+.sb-projekt__leiste i { width: 8px; height: 8px; border-radius: 50%; background: #cdc6ba; }
+.sb-projekt__bild picture, .sb-projekt__img { display: block; width: 100%; height: auto; }
+.sb-projekt__img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.sb-projekt__leer { display: grid; place-items: center; aspect-ratio: 16 / 10; padding: 24px; background: var(--sn-hauch);
+  font-family: var(--font-head); font-weight: 650; color: var(--sn-tinte); text-align: center; overflow-wrap: break-word; }
+
+.sb-projekt__text { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-content: start; padding: 0 clamp(6px, 1.4vw, 12px) clamp(8px, 1.4vw, 12px); }
+.sb-projekt__kopf { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.sb-projekt__branche { min-width: 0; font-size: 0.95rem; color: var(--ink-soft); overflow-wrap: break-word; }
+.sb-projekt__name { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); overflow-wrap: break-word; }
+.sb-status { padding: 2px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; }
+.sb-status--online { background: var(--sn-tinte); color: var(--white); }
+.sb-status--vorschau { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 1px var(--sn-linie); }
+.sb-bereich--papier .sb-status--vorschau { background: var(--paper); }
+
+.sb-fakten-dl { margin: 4px 0 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+.sb-fakten-dl > div { min-width: 0; display: grid; gap: 2px; padding: 12px 0; border-top: 1px solid var(--sn-linie); }
+.sb-fakten-dl dt { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em; color: var(--sn-tinte); }
+.sb-fakten-dl dd { margin: 0; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+.sb-ergebnis dd { color: var(--ink); font-weight: 500; }
+.sb-projekt .sn-link { justify-self: start; overflow-wrap: anywhere; }
+
+.sb-mehr { margin-top: 12px !important; text-align: center; }
+
+/* Beispiel-Film auf Papier, damit er sich vom Abschluss (Hauch) absetzt */
+.sb-film .sn-beispielfilm { background: var(--paper); }

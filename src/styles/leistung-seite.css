@@ -1,0 +1,119 @@
+/* LEISTUNGSSEITEN /leistungen/<slug>/ im Stil der neuen Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026).
+ * Vorlage: src/components/leistungen/LeistungSeite.astro. Grundbausteine (.sn, .sn-h2, .sn-kopf, .sn-ablauf, .sn-btn, .sn-link)
+ * kommen aus start-neu.css; hier nur Ergänzungen mit Präfix .ls-.
+ * Hintergründe im Wechsel: Kopf Türkis → Problem Weiß → Umfang Papier → (Beispiele Weiß) → Ablauf Hauch → Paket Weiß
+ * → Fragen Papier → Abschluss Hauch. Keine Icon-Kacheln: Zahlen, ruhige Punkte, feine Linien.
+ * Grids immer minmax(0, 1fr) + min-width: 0 (WebKit), lange Wörter dürfen umbrechen (320 px). */
+
+/* ── 1 · Kopf ── */
+.ls-kopf__knopf { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 28px; }
+.ls-kopf__paket { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 0.95rem;
+  text-decoration: underline; text-decoration-color: rgb(255 255 255 / 45%); text-underline-offset: 5px; }
+.ls-kopf__paket:hover { text-decoration-color: #fff; }
+@media (max-width: 599px) { .ls-kopf__knopf .btn { width: 100%; } }
+
+/* ── 2 · Kennen Sie das? ── */
+.ls-problem { background: var(--white); }
+.ls-intro { min-width: 0; display: grid; gap: 14px; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+.ls-intro p { margin: 0; }
+.ls-intro a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+.ls-probleme { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 800px) { .ls-probleme { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
+.ls-problem-karte { min-width: 0; display: grid; gap: 10px; align-content: start; padding: clamp(22px, 3vw, 32px);
+  border-radius: 24px; background: var(--paper); border-top: 3px solid var(--sn-tuerkis); overflow-wrap: break-word; }
+.ls-problem-karte p { line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+.ls-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
+
+/* ── 3 · Was Sie bekommen ── */
+.ls-umfang { background: var(--paper); }
+.ls-umfang__gruppe + .ls-umfang__gruppe { margin-top: clamp(28px, 4vw, 44px); }
+.ls-umfang__zwischen { margin-bottom: 14px !important; color: var(--sn-tinte); }
+.ls-umfang__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (min-width: 760px) { .ls-umfang__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
+.ls-punkt { min-width: 0; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 16px; align-items: start;
+  padding: 20px 22px; border-radius: 20px; background: var(--white); }
+.ls-punkt__zeichen { width: 10px; height: 10px; margin-top: 0.55em; border-radius: 50%; background: var(--sn-tuerkis); }
+.ls-punkt__text { display: grid; gap: 4px; line-height: 1.6; color: var(--ink-soft); overflow-wrap: break-word; text-wrap: pretty; }
+.ls-punkt__text strong { font-family: var(--font-head); font-weight: 650; color: var(--ink); }
+.ls-punkt__text a, .ls-umfang__hinweis a, .ls-problem-karte a, .ls-paket a:not(.btn):not(.sn-link), .sn-schritt__text a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+.ls-umfang__hinweis { margin-top: 24px !important; font-size: 0.98rem; }
+
+.ls-verwandt { margin-top: clamp(40px, 6vw, 64px); padding-top: 28px; border-top: 1px solid var(--sn-linie); }
+.ls-verwandt__titel { margin-bottom: 16px !important; font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: var(--sn-tinte); }
+.ls-verwandt__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+@media (min-width: 760px) { .ls-verwandt__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; } }
+@media (min-width: 1100px) { .ls-verwandt__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ls-verwandt__liste li { min-width: 0; border-bottom: 1px solid var(--sn-linie); }
+.ls-verwandt__link { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; row-gap: 2px; align-items: center;
+  padding: 16px 0; min-height: 44px; text-decoration: none; color: var(--ink); }
+.ls-verwandt__link strong { font-family: var(--font-head); font-weight: 650; }
+.ls-verwandt__link span { grid-column: 1; font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); overflow-wrap: break-word; }
+.ls-verwandt__link svg { grid-column: 2; grid-row: 1 / span 2; color: var(--sn-tinte); transition: transform 0.4s var(--sn-kurve); }
+.ls-verwandt__link:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+.ls-verwandt__link:hover svg, .ls-verwandt__link:focus-visible svg { transform: translateX(4px); }
+
+/* Beispiele (Referenzen nur bei „website“) */
+.ls-referenzen { background: var(--white); }
+.ls-mehr { margin-top: 28px !important; text-align: center; }
+
+/* ── 4 · So läuft es ab (Karten .sn-schritt aus start-neu.css) ── */
+.ls-ablauf { background: var(--sn-hauch); }
+@media (min-width: 1000px) {
+  .sn-ablauf.ls-ablauf--2, .sn-ablauf.ls-ablauf--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.ls-ablauf .sn-schritt__nr { grid-row: span 2; background: var(--sn-hauch); }
+.ls-ablauf .sn-schritt { padding: 24px; }
+
+/* ── 5 · Passendes Paket ── */
+.ls-paket { background: var(--white); }
+.ls-paket__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); }
+@media (min-width: 960px) { .ls-paket__raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } }
+.ls-paket__text { min-width: 0; display: grid; gap: 14px; align-content: start; }
+.ls-paket__frage { margin-top: 16px !important; }
+.ls-paket__passt { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+.ls-paket__karten { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-content: start; }
+@media (min-width: 640px) { .ls-paket__karten:has(.ls-paketkarte + .ls-paketkarte) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ls-paket__karten > :not(.ls-paketkarte) { grid-column: 1 / -1; } }
+.ls-paketkarte { min-width: 0; display: grid; gap: 6px; align-content: start; padding: clamp(22px, 3vw, 32px);
+  border-radius: 24px; background: var(--paper); overflow-wrap: break-word; }
+.ls-paketkarte--tipp { background: var(--sn-hauch); }
+.ls-paketkarte--anfrage { background: var(--white); border: 1.5px dashed var(--sn-linie); }
+.ls-paketkarte__label { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sn-tinte); }
+.ls-paketkarte__name { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem); letter-spacing: -0.02em; color: var(--ink); }
+.ls-paketkarte__kurz { color: var(--ink-soft); }
+.ls-paketkarte__preis { margin-top: 10px !important; color: var(--ink-soft); }
+.ls-paketkarte__preis b { font-family: var(--font-head); font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); color: var(--ink); letter-spacing: -0.02em; }
+.ls-paketkarte__brutto { font-size: 0.88rem; color: var(--ink-soft); }
+.ls-paketkarte__fuer { margin-top: 8px !important; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.ls-paket__hinweis { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.ls-paket__knoepfe { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 4px; }
+@media (max-width: 599px) { .ls-paket__knoepfe .btn { width: 100%; } }
+
+/* ── 6 · Häufige Fragen ── */
+.ls-fragen { background: var(--paper); }
+.ls-fragen__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); }
+@media (min-width: 960px) { .ls-fragen__raster { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
+.ls-fragen__raster > * { min-width: 0; }
+.ls-fragen__mehr { margin-top: 12px !important; }
+.ls-faq { display: grid; gap: 10px; }
+.ls-faq__item { border-radius: 20px; background: var(--white); }
+.ls-faq__item summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) 32px; gap: 16px; align-items: center;
+  min-height: 48px; padding: 18px 22px; border-radius: 20px; }
+.ls-faq__item summary::-webkit-details-marker { display: none; }
+.ls-faq__item summary:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; }
+.ls-faq__frage { margin: 0; font-family: var(--font-head); font-weight: 650; font-size: 1.05rem; line-height: 1.4; letter-spacing: -0.01em; color: var(--ink); overflow-wrap: break-word; }
+.ls-faq__zeichen { position: relative; width: 32px; height: 32px; border-radius: 50%; background: var(--sn-hauch); }
+.ls-faq__zeichen::before, .ls-faq__zeichen::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px;
+  border-radius: 2px; background: var(--sn-tinte); transition: transform 0.3s var(--sn-kurve); }
+.ls-faq__zeichen::after { transform: rotate(90deg); }
+.ls-faq__item[open] .ls-faq__zeichen::after { transform: rotate(0deg); }
+.ls-faq__item p { margin: 0; padding: 0 22px 20px; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+@media (prefers-reduced-motion: reduce) {
+  .ls-faq__zeichen::before, .ls-faq__zeichen::after, .ls-verwandt__link svg { transition: none; }
+}
+
+/* Einmalige Extras (nur „Auftritt“, Preise aus EINMALIG_DAZU) */
+.ls-extras { list-style: none; margin: 10px 0 4px; padding: 0; display: grid; }
+.ls-extras li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--sn-linie); min-width: 0; }
+.ls-extras li span { min-width: 0; overflow-wrap: break-word; color: var(--ink); }
+.ls-extras li b { flex: none; font-family: var(--font-head); color: var(--ink); font-variant-numeric: tabular-nums; }

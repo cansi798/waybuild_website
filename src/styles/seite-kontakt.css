@@ -1,0 +1,125 @@
+/* KONTAKT (/kontakt/) im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026).
+ * Das Formular ist funktional unverändert (Felder, name-Attribute, IDs, data-*, Skript in kontakt.astro); hier steht nur die Optik.
+ * Alles hängt an .sk (Abschnitt), damit nichts auf andere Seiten wirkt. Farben/Tokens aus start-neu.css (.sn).
+ * Ruhig: Papier-Hintergrund, Formular als weiße Karte (runde Ecken, weicher Schatten), daneben Kontaktwege in Hauch.
+ * WebKit: Spalten minmax(0, 1fr) und min-width: 0; lange Adressen/E-Mails dürfen umbrechen. */
+
+.sk.sn { background: var(--paper); padding-block: clamp(56px, 8vw, 112px); }
+.sk p { margin: 0; }
+
+.sk-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 40px); }
+@media (min-width: 960px) {
+  .sk-raster { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(36px, 4vw, 64px); align-items: start; }
+}
+.sk-formteil, .sk-seite { min-width: 0; }
+
+/* Kopf über dem Formular */
+.sk-kopf { display: grid; gap: 12px; margin-bottom: clamp(22px, 3vw, 32px); }
+.sk-kopf .sn-h2 { max-width: 22ch; }
+.sk-kopf .sn-kenn { margin-bottom: 0 !important; }
+.sk-kopf__text { color: var(--ink-soft); line-height: 1.7; }
+
+/* ── Formular (gleiche Klassen wie vorher, neue Optik) ── */
+.sk .sk-form { display: grid; gap: 20px; padding: clamp(22px, 4vw, 44px); border: 0; border-radius: 28px;
+  background: var(--white); box-shadow: var(--sn-schatten); }
+.sk .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 640px) { .sk .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sk .row > * { min-width: 0; }
+.sk label { display: grid; gap: 8px; min-width: 0; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.sk label small, .sk legend small { font-weight: 400; color: var(--ink-soft); }
+.sk input, .sk select, .sk textarea {
+  font: inherit; font-weight: 400; color: var(--ink); width: 100%; max-width: 100%;
+  padding: 13px 16px; min-height: 52px; border: 1.5px solid var(--sn-linie); border-radius: 14px; background: var(--paper);
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.sk textarea { line-height: 1.6; resize: vertical; }
+.sk input:hover, .sk select:hover, .sk textarea:hover { border-color: #c9c0b0; }
+.sk input:focus, .sk select:focus, .sk textarea:focus { outline: none; border-color: var(--sn-tinte); background: var(--white);
+  box-shadow: 0 0 0 3px rgb(0 107 104 / 18%); }
+.sk input:focus-visible, .sk select:focus-visible, .sk textarea:focus-visible { outline: 2px solid var(--sn-tinte); outline-offset: 1px; }
+/* Handy: Auswahltexte („Worum geht es?“) passen bei 390 px ganz ins Feld (Jamil #5215) */
+@media (max-width: 480px) {
+  .sk .sk-form { padding-left: 16px; padding-right: 16px; border-radius: 22px; }
+  .sk select { padding-left: 12px; padding-right: 8px; }
+}
+
+/* Datenschutz-Haken */
+.sk .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
+.sk .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 3px; padding: 0; flex: none; accent-color: var(--sn-tinte); box-shadow: none; }
+.sk .check a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+/* Spam-Schutz (Honeypot): bleibt unsichtbar */
+.sk .hp { position: absolute; left: -9999px; }
+
+/* Paket- und Extras-Wahl */
+.sk .wahl { display: grid; gap: 12px; margin: 0; padding: 18px 20px 20px; border: 0; border-radius: 20px; background: var(--sn-hauch); min-width: 0; }
+.sk .wahl[hidden] { display: none; }
+.sk .wahl legend { float: left; width: 100%; padding: 0; margin-bottom: 4px; font-family: var(--font-head); font-weight: 650; font-size: 1rem; color: var(--ink); }
+.sk .wahl legend + * { clear: both; }
+.sk .wahl select { background: var(--white); }
+.sk .wahl__kopf { margin-top: 6px; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.sk .wahl__kopf small { font-weight: 400; color: var(--ink-soft); }
+.sk .wahl__dazu { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px 18px; }
+@media (min-width: 640px) { .sk .wahl__dazu { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sk .wahl__opt { display: flex; gap: 10px; align-items: center; min-width: 0; min-height: 44px; font-weight: 400; overflow-wrap: break-word; }
+.sk .wahl__opt input { width: 20px; min-height: 20px; height: 20px; padding: 0; flex: none; accent-color: var(--sn-tinte); box-shadow: none; }
+.sk .wahl__opt b { font-weight: 650; white-space: nowrap; }
+.sk .wahl__opt--alle { grid-column: 1 / -1; padding: 10px 14px; border: 1.5px solid var(--sn-tinte); border-radius: 14px; background: var(--white); font-weight: 650; color: var(--sn-tinte); }
+.sk .wahl__opt--komplett { padding: 10px 14px; border: 1px solid var(--sn-linie-t); border-radius: 14px; background: var(--white); }
+.sk .wahl__opt--komplett small { display: block; font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); }
+.sk .wahl__summe { font-size: 0.95rem; }
+.sk .wahl__summe small { display: block; font-size: 0.85rem; color: var(--ink-soft); }
+.sk .wahl__summe[hidden] { display: none; }
+.sk .wahl__summe b { font-family: var(--font-head); color: var(--ink); }
+.sk .wahl__hinweis { padding: 12px 14px; border-left: 3px solid var(--sn-tinte); border-radius: 0 12px 12px 0; background: var(--white); font-size: 0.9rem; line-height: 1.6; }
+
+/* Mitgesendete Angaben (älterer Stand der Startseite) */
+.sk .check-mit { display: grid; gap: 8px; padding: 16px 18px; border-radius: 16px; border: 1.5px dashed var(--sn-linie); background: var(--paper); }
+.sk .check-mit[hidden] { display: none; }
+.sk .check-mit__kopf { font-weight: 650; font-size: 0.95rem; }
+.sk .check-mit__text { white-space: pre-line; font-size: 0.9rem; line-height: 1.55; color: var(--ink-soft); }
+.sk .check-mit .btn { justify-self: start; }
+
+/* Absenden: gleicher Knopf wie auf der Startseite */
+.sk .sk-form button[type="submit"] { justify-self: stretch; min-height: 56px; background: var(--sn-tinte); color: var(--white); border-color: transparent;
+  box-shadow: 0 14px 30px -18px rgb(0 47 45 / 60%); transition: transform 0.4s var(--sn-kurve), background-color 0.3s ease; }
+.sk .sk-form button[type="submit"]:hover { background: var(--sn-tief); transform: translateY(-2px); }
+.sk .sk-form button[type="submit"]:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 3px; }
+.sk .sk-form button[type="submit"]:disabled { opacity: 0.7; transform: none; cursor: progress; }
+@media (min-width: 640px) { .sk .sk-form button[type="submit"] { justify-self: start; } }
+
+/* So geht es weiter: drei ruhige Punkte auf einer feinen Linie */
+.sk .after { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); }
+.sk .after li { position: relative; min-width: 0; padding-top: 16px; border-top: 1px solid var(--sn-linie); }
+.sk .after li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--sn-linie); }
+.sk .after li:first-child::before { background: var(--sn-tuerkis); }
+.sk .after strong { display: block; font-family: var(--font-head); color: var(--ink); font-size: 0.95rem; }
+.sk .form__status { font-weight: 600; color: var(--sn-tinte); }
+.sk .form__status:empty { display: none; }
+
+/* ── Kontaktwege (ruhige Karte) ── */
+.sk-seite { display: grid; gap: 24px; }
+@media (min-width: 960px) { .sk-seite { position: sticky; top: 112px; } }
+.sk .sk-karte { display: grid; gap: 14px; padding: clamp(22px, 3vw, 32px); border: 0; border-radius: 24px; background: var(--sn-hauch); }
+.sk-karte__text { color: var(--ink-soft); line-height: 1.6; }
+.sk-wege { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 8px; }
+.sk-weg { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 16px; border-radius: 16px; background: var(--white);
+  color: var(--ink); text-decoration: none; min-width: 0; transition: transform 0.35s var(--sn-kurve), box-shadow 0.35s var(--sn-kurve); }
+.sk-weg svg { flex: none; color: var(--sn-tinte); }
+.sk-weg > span { display: grid; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+.sk-weg small { font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
+.sk-weg:hover { transform: translateY(-2px); box-shadow: var(--sn-schatten); }
+.sk-weg:hover > span { color: var(--sn-tinte); }
+.sk .sk-weg:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; border-radius: 16px; }
+.sk .muted { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; overflow-wrap: break-word; }
+.sk-adresse { padding-top: 14px; border-top: 1px solid var(--sn-linie-t); }
+
+/* Versprechen: feine Linie statt Kacheln */
+.sk .promise { list-style: none; padding: 0 4px; margin: 0; display: grid; gap: 16px; }
+.sk .promise li { padding-left: 18px; border-left: 2px solid var(--sn-tuerkis); line-height: 1.55; color: var(--ink-soft); font-size: 0.94rem; }
+.sk .promise strong { display: block; color: var(--ink); font-family: var(--font-head); font-weight: 650; font-size: 0.98rem; }
+@media (max-width: 599px) { .sk .promise { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-weg, .sk .sk-form button[type="submit"], .sk input, .sk select, .sk textarea { transition: none; }
+  .sk-weg:hover, .sk .sk-form button[type="submit"]:hover { transform: none; }
+}

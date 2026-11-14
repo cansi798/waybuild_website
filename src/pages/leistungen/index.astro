@@ -3,15 +3,22 @@
 // Kundenreise, je Leistung eine Karte (menuTitel, kurz, Paket-Hinweis ohne Preis). Daten: src/content/leistungen/ +
 // src/config/leistungen-neu.ts. Die frühere Übersicht „Website as a Service“ mit Ausbaustufen (Altbestand
 // src/config/leistungen.ts) liegt in Git (Sicherung Branch vor-leistungen-neu-20261109).
+// SEIT 14.11.2026 im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892): sn-Bausteine (start-neu.css), ruhige Karten ohne
+// Icon-Kacheln, Hintergründe im Wechsel Weiß/Papier, danach SnSystem (Website + WebApp), Preis-Hinweis und SnAbschluss.
+// Eigener Stil: src/styles/seite-leistungen.css (Präfix .sl-). Anker #gefunden, #vertrauen, #anfragen, #betreuung bleiben.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Icon from '../../components/Icon.astro';
-import { gruppenMitLeistungen, ICONS, paketAnzeige } from '../../config/leistungen-neu';
-import { ANLIEGEN } from '../../config/startseite';
+import SnSystem from '../../components/startneu/SnSystem.astro';
+import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
+import { gruppenMitLeistungen, paketAnzeige } from '../../config/leistungen-neu';
+import { ABO_PAKETE, aboPreisAb, euro } from '../../config/pakete-abo';
 import { href, absolute } from '../../lib/paths';
+import '../../styles/start-neu.css';
+import '../../styles/seite-leistungen.css';
 
 const gruppen = await gruppenMitLeistungen();
-const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+const nr = (n: number) => String(n).padStart(2, '0');
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -33,36 +40,39 @@ const itemList = {
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >
   <PageHeader eyebrow="Leistungen" title="Alles, was aus Interessenten Kunden macht." lead="Unsere Leistungen folgen dem Weg Ihrer Kunden: vom ersten Eindruck über die Anfrage bis zur Betreuung danach.">
-    <p class="ph-hinweis"><a href={href('/#kundenreise')}>Die Kundenreise auf der Startseite ansehen</a></p>
+    <!-- früher Link auf /#kundenreise; die Kundenreise ist seit 14.11.2026 nicht mehr auf der Startseite (#5843–#5855) -->
+    <p class="sl-ph-hinweis"><a href="#system">Warum Website und WebApp zusammen stark sind</a></p>
   </PageHeader>
 
-  <nav class="lsprung wrap" aria-label="Leistungsgruppen">
-    <ul>
-      {gruppen.map((g, i) => (
-        <li><a href={`#${g.id}`}><span aria-hidden="true">{i + 1}</span>{g.titel}</a></li>
-      ))}
-    </ul>
+  <!-- Sprungleiste zu den vier Bereichen: Zahl + Name, keine Kacheln -->
+  <nav class="sl-sprung" aria-label="Leistungsbereiche">
+    <div class="wrap">
+      <ol class="sl-sprung__liste">
+        {gruppen.map((g, i) => (
+          <li><a href={`#${g.id}`}><span class="sl-sprung__nr" aria-hidden="true">{nr(i + 1)}</span>{g.titel}</a></li>
+        ))}
+      </ol>
+    </div>
   </nav>
 
   {gruppen.map((g, i) => (
-    <section class:list={['section lgruppe', { 'section--sand': i % 2 === 1 }]} id={g.id} aria-labelledby={`${g.id}-h`}>
+    <section class:list={['section sn sl-gruppe', i % 2 === 1 ? 'sl-gruppe--papier' : 'sl-gruppe--weiss']} id={g.id} aria-labelledby={`${g.id}-h`}>
       <div class="wrap">
-        <div class="lgruppe__kopf">
-          <span class="lgruppe__nr" aria-hidden="true">{i + 1}</span>
-          <div>
-            <h2 id={`${g.id}-h`}>{g.titel}</h2>
-            <p class="lead">{g.text}</p>
+        <div class="sn-kopf sn-kopf--zweispaltig sl-gruppe__kopf">
+          <div class="sl-gruppe__titel">
+            <p class="sn-kenn">Bereich {i + 1} von {gruppen.length}</p>
+            <h2 id={`${g.id}-h`} class="sn-h2 sn-h2--klein">{g.titel}</h2>
           </div>
+          <p class="sn-lead">{g.text}</p>
         </div>
-        <ul class="lkarten">
-          {g.eintraege.map((l) => (
-            <li>
-              <a class="card lkarte" href={href(`/leistungen/${l.id}/`)}>
-                <span class="lkarte__icon"><Icon name={ICONS[l.id] ?? 'check'} size={22} /></span>
-                <h3>{l.data.menuTitel}</h3>
-                <p>{l.data.kurz}</p>
-                <span class="lkarte__paket">{paketAnzeige(l.data.paket)}</span>
-              </a>
+        <ul class="sl-karten">
+          {g.eintraege.map((l, j) => (
+            <li class="sl-karte">
+              <span class="sl-karte__nr" aria-hidden="true">{nr(i + 1)}.{j + 1}</span>
+              <h3 class="sn-h4 sl-karte__titel"><a href={href(`/leistungen/${l.id}/`)}>{l.data.menuTitel}</a></h3>
+              <p class="sl-karte__text">{l.data.kurz}</p>
+              <p class="sl-karte__paket">{paketAnzeige(l.data.paket)}</p>
+              <span class="sl-karte__mehr" aria-hidden="true">Mehr erfahren <Icon name="arrow" size={18} /></span>
             </li>
           ))}
         </ul>
@@ -70,55 +80,26 @@ const itemList = {
     </section>
   ))}
 
-  <section class="section lcta-sec">
-    <div class="wrap lcta">
-      <div>
-        <h2>Nicht sicher, was Sie brauchen?</h2>
-        <p class="lead">In der kostenlosen Erstberatung, rund 20 Minuten, sehen wir uns gemeinsam an, wo Sie am meisten gewinnen.</p>
+  <SnSystem />
+
+  <!-- Preis-Hinweis zwischen System und Abschluss (von uns ergänzt (#5892)); Preise nur aus pakete-abo.ts -->
+  <section class="section sn sl-preis" aria-labelledby="sl-preis-h">
+    <div class="wrap sl-preis__innen">
+      <div class="sl-preis__text">
+        <p class="sn-kenn">Preise</p>
+        <h2 id="sl-preis-h" class="sn-h2 sn-h2--klein">Feste Pakete statt Einzelpreise.</h2>
+        <p class="sn-lead">Viele dieser Leistungen stecken schon in unseren Paketen. Was darüber hinausgeht, bieten wir Ihnen nach einem Gespräch an.</p>
       </div>
-      <div class="lcta__knoepfe">
-        <a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a>
-        <a class="btn btn--lg btn--ghost lcta__ghost" href={href('/preise/')}>Preise ansehen</a>
+      <div class="sl-preis__zahlen">
+        <ul class="sl-preis__liste">
+          {ABO_PAKETE.map((p) => (
+            <li><span class="sl-preis__name">{p.name}</span><span class="sl-preis__betrag">{euro(p.preis)}</span><span class="sl-preis__einheit">netto im Monat</span></li>
+          ))}
+        </ul>
+        <a class="sn-link" href={href('/preise/')}>Alle Preise ab {euro(aboPreisAb())} ansehen <Icon name="arrow" size={18} /></a>
       </div>
     </div>
   </section>
+
+  <SnAbschluss />
 </BaseLayout>
-
-<style>
-  .ph-hinweis { margin: 10px 0 0; }
-  .ph-hinweis a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
-
-  /* Sprungleiste zu den vier Gruppen */
-  .lsprung { padding-block: 18px; }
-  .lsprung ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
-  .lsprung a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 650; font-size: 0.92rem; color: var(--ink); text-decoration: none; }
-  .lsprung a:hover { border-color: var(--accent-ink); }
-  .lsprung a span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-ink); color: var(--white); font-size: 0.8rem; }
-
-  .lgruppe { scroll-margin-top: calc(var(--header-h) + 8px); padding-block: clamp(40px, 7vw, 88px); }
-  .lgruppe__kopf { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; max-width: 760px; margin-bottom: clamp(20px, 4vw, 36px); }
-  .lgruppe__kopf h2 { margin: 0 0 0.3em; overflow-wrap: break-word; }
-  .lgruppe__kopf .lead { margin: 0; }
-  .lgruppe__nr { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--dark); color: var(--accent); font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; margin-top: 2px; }
-
-  .lkarten { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 700px) { .lkarten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 1100px) { .lkarten { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .lkarte { display: grid; gap: 6px; align-content: start; height: 100%; text-decoration: none; color: var(--ink); transition: border-color 0.2s ease, transform 0.2s ease; }
-  .lkarte:hover { border-color: var(--accent-ink); transform: translateY(-2px); }
-  .lkarte h3 { margin: 4px 0 0; font-size: 1.15rem; color: var(--dark); overflow-wrap: break-word; hyphens: auto; }
-  .lkarte p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
-  .lkarte__icon { width: 42px; height: 42px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; }
-  .lkarte__paket { margin-top: 6px; font-size: 0.82rem; font-weight: 650; color: var(--accent-ink); }
-  @media (prefers-reduced-motion: reduce) { .lkarte, .lkarte:hover { transition: none; transform: none; } }
-
-  .lcta { display: grid; gap: 24px; align-items: center; }
-  @media (min-width: 960px) { .lcta { grid-template-columns: 1.4fr 1fr; gap: 48px; } }
-  .lcta h2 { margin-bottom: 0.4em; }
-  .lcta .lead { margin: 0; }
-  .lcta__knoepfe { display: flex; flex-wrap: wrap; gap: 12px; }
-  .lcta-sec { padding-block: clamp(40px, 6vw, 72px); }
-  .lcta { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: clamp(24px, 4vw, 44px); width: min(100% - 32px, var(--wrap)); }
-  .lcta__ghost { color: var(--accent-ink); }
-  @media (max-width: 767px) { .lcta__knoepfe .btn { width: 100%; } }
-</style>

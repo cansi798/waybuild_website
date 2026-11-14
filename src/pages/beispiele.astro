@@ -1,18 +1,26 @@
 ---
 // Beispiele (früher „Referenzen“, Jamil, Talk qh87y3sj #5288, 09.11.2026): echte Projekte nach Bereichen, zuerst „Websites“.
 // Seit #5322 (Q5) heißt die Seite „Beispiele“ unter /beispiele/; /referenzen/ ist nur noch eine Weiterleitung (src/pages/referenzen.astro).
-// Bereiche in src/config/referenzen.ts (später z. B. „Software“), Karten = gemeinsame Komponente ReferenzKarten
-// (gleiche Karten wie Startseite und /leistungen/website/). Die früheren MUSTER-Beispiele (config/home.ts) sind
-// seitdem nicht mehr zu sehen, weil echte, freigegebene Projekte da sind (Jamil #4932).
+// Bereiche in src/config/referenzen.ts (später z. B. „Software“), Projekte = REFERENZEN in src/config/startseite.ts (Regeln dort:
+// nur Belegtes, Link nur bei status 'online').
+// Neu im Stil der Startseite (Jamil #5892, 14.11.2026): je Projekt eine ruhige, große Karte (Bildschirmfoto im Browserrahmen +
+// Ausgangslage/Umsetzung/Ergebnis), am PC abwechselnd links/rechts. Danach der Beispiel-Film (SnBeispiel, Anker #beispiel) und
+// SnAbschluss. Hintergründe: Bereiche Weiß/Papier im Wechsel → Film Papier (statt Hauch, damit er sich vom Abschluss absetzt) → Hauch.
+// Stil: styles/seite-beispiele.css (.sb-).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import Siegel from '../components/Siegel.astro';
-import ReferenzKarten from '../components/referenzen/ReferenzKarten.astro';
+import Bild from '../components/Bild.astro';
+import Icon from '../components/Icon.astro';
+import SnBeispiel from '../components/startneu/SnBeispiel.astro';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
 import { REFERENZ_BEREICHE } from '../config/referenzen';
-import { ANLIEGEN } from '../config/startseite';
+import { REFERENZEN } from '../config/startseite';
 import { href } from '../lib/paths';
+import '../styles/start-neu.css';
+import '../styles/seite-beispiele.css';
 
-const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+// Fakten der früheren Siegel-Leiste dieser Seite
+const fakten = ['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Ladezeiten', 'Hosting in Deutschland'];
 ---
 
 <BaseLayout
@@ -22,45 +30,64 @@ const erstberatung = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstber
 >
   <PageHeader eyebrow="Beispiele" title="Beispiele aus unserer Arbeit." lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
     {REFERENZ_BEREICHE.length > 1 && (
-      <nav class="rbereiche" aria-label="Bereiche">
+      <nav class="sb-bereiche" aria-label="Bereiche">
         <ul>{REFERENZ_BEREICHE.map((b) => <li><a href={`#${b.id}`}>{b.titel}</a></li>)}</ul>
       </nav>
     )}
   </PageHeader>
 
   {REFERENZ_BEREICHE.map((b, i) => (
-    <section class:list={['section rbereich', { 'section--sand': i % 2 === 1 }]} id={b.id} aria-labelledby={`${b.id}-h`}>
+    <section class:list={['section sn sb-bereich', { 'sb-bereich--papier': i % 2 === 1 }]} id={b.id} aria-labelledby={`${b.id}-h`}>
       <div class="wrap">
-        <div class="rbereich__kopf">
-          <span class="eyebrow">Bereich</span>
-          <h2 id={`${b.id}-h`}>{b.titel}</h2>
-          <p class="lead">{b.text}</p>
+        <div class="sn-kopf sn-kopf--zweispaltig">
+          <div>
+            <p class="sn-kenn">Bereich</p>
+            <h2 id={`${b.id}-h`} class="sn-h2">{b.titel}</h2>
+          </div>
+          <div>
+            <p class="sn-lead">{b.text}</p>
+            <ul class="sb-fakten">{fakten.map((f) => <li>{f}</li>)}</ul>
+          </div>
         </div>
-        <ReferenzKarten liste={b.liste} />
-        {b.id === 'websites' && <p class="rmehr"><a href={href('/leistungen/website/')}>Mehr zur Leistung Website</a></p>}
+
+        <ul class="sb-projekte">
+          {b.liste.map((r, k) => (
+            <li class:list={['sb-projekt reveal', { 'sb-projekt--gespiegelt': k % 2 === 1 }]}>
+              <div class="sb-projekt__bild">
+                <span class="sb-projekt__leiste" aria-hidden="true"><i></i><i></i><i></i></span>
+                {r.name && r.bild
+                  ? <Bild name={r.bild} alt={`Startseite der Website von ${r.name}${r.status === 'vorschau' ? ' (Vorschau)' : ''}`} widths={[480, 800, 1200]} sizes="(min-width: 1000px) 640px, calc(100vw - 64px)" class="sb-projekt__img" />
+                  : <span class="sb-projekt__leer" aria-hidden="true">{r.branche}</span>}
+              </div>
+              <div class="sb-projekt__text">
+                <div class="sb-projekt__kopf">
+                  <span class:list={['sb-status', `sb-status--${r.status}`]}>{REFERENZEN.etikett[r.status]}</span>
+                  <span class="sb-projekt__branche">{r.name ? r.branche : ''}{r.name && r.ort ? ' · ' : ''}{r.ort}</span>
+                </div>
+                <h3 class="sn-h3 sb-projekt__name">{r.name ?? r.branche}</h3>
+                <dl class="sb-fakten-dl">
+                  <div><dt>Ausgangslage</dt><dd>{r.ausgang}</dd></div>
+                  <div><dt>Umsetzung</dt><dd>{r.gemacht}</dd></div>
+                  {r.ergebnis && <div class="sb-ergebnis"><dt>Ergebnis</dt><dd>{r.ergebnis}</dd></div>}
+                </dl>
+                {r.status === 'online' && r.url && (
+                  <a class="sn-link" href={r.url} target="_blank" rel="noopener">Website ansehen: {r.urlText ?? r.url}<span class="sr-only"> (öffnet in neuem Tab)</span> <Icon name="arrow" size={18} /></a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <p class="sn-fein">{REFERENZEN.messung}</p>
+        {b.id === 'websites' && <p class="sb-mehr"><a class="sn-link" href={href('/leistungen/website/')}>Mehr zur Leistung Website <Icon name="arrow" size={18} /></a></p>}
       </div>
     </section>
   ))}
 
-  <section class="section section--tight">
-    <div class="wrap">
-      <p class="next"><a class="btn btn--primary btn--lg" href={erstberatung}>{ANLIEGEN.erstberatung.label}</a></p>
-    </div>
-  </section>
+  <!-- Beispiel-Film „So kann es laufen.“ (wie auf der Startseite, Bühne auch unter /so-kann-es-laufen/) -->
+  <div class="sb-film">
+    <SnBeispiel />
+  </div>
 
-  <Siegel fakten={['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Ladezeiten', 'Hosting in Deutschland']} />
+  <SnAbschluss />
 </BaseLayout>
-
-<style>
-  .rbereiche ul { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .rbereiche a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 16px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 650; color: var(--ink); text-decoration: none; }
-  .rbereich { scroll-margin-top: calc(var(--header-h) + 8px); }
-  .rbereich__kopf { max-width: 720px; }
-  .rbereich__kopf h2 { margin: 0 0 0.4em; }
-  .rbereich__kopf .lead { margin: 0; }
-  .rmehr { margin: 24px 0 0; text-align: center; }
-  .rmehr a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
-  .section--tight { padding-block: 0 clamp(36px, 6vw, 64px); }
-  .next { margin: 0; text-align: center; }
-  @media (max-width: 599px) { .next .btn { width: 100%; } }
-</style>

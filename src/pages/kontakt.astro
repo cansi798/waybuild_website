@@ -4,6 +4,7 @@ import PageHeader from '../components/PageHeader.astro';
 import { company, phoneTel, whatsappLink, HOURS, WAAS } from '../config/site';
 import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
+import Icon from '../components/Icon.astro';
 import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
 import { SAEULEN } from '../config/angebot';
@@ -27,8 +28,12 @@ const paketText = (p: (typeof ABO_PAKETE)[number]) => `${p.name} (${euro(p.preis
 
 // Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
 // Ohne Key öffnet sich als Rückfall das E-Mail-Programm. Key setzen: GitHub → Settings → Variables → WEB3FORMS_KEY
+// Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): Formular funktional unverändert
+// (Felder, name-Attribute, IDs, data-*, Skript), nur der Rahmen und die Optik sind neu. Stil: src/styles/seite-kontakt.css (.sk-).
 const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
+import '../styles/start-neu.css';
+import '../styles/seite-kontakt.css';
 ---
 
 <BaseLayout
@@ -43,9 +48,16 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
     lead="Antwort in der Regel am nächsten Werktag. Erstberatung kostenlos."
   />
 
-  <section class="section">
-    <div class="wrap contact">
-      <form class="form card" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+  <section class="section sn sk" aria-labelledby="sk-form-h">
+    <div class="wrap contact sk-raster">
+      <div class="sk-formteil">
+      <!-- von uns ergänzt (#5892): kurzer Kopf über dem Formular -->
+      <div class="sk-kopf">
+        <p class="sn-kenn">Kostenlose Erstberatung</p>
+        <h2 id="sk-form-h" class="sn-h2 sn-h2--klein">Erzählen Sie uns kurz, worum es geht.</h2>
+        <p class="sk-kopf__text">Ein paar Angaben genügen. Pflichtfelder sind mit * markiert.</p>
+      </div>
+      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
             <option value="">Noch unsicher – bitte beraten Sie mich</option>
@@ -104,19 +116,21 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
         )}
         <p class="form__status" role="status" aria-live="polite"></p>
       </form>
+      </div>
 
-      <aside class="side">
-        <div class="card side__card">
-          <h2>Direkter Draht</h2>
-          <p><a href={`mailto:${company.email}`}>{company.email}</a></p>
-          <div class="direct">
-            <a class="btn btn--ghost btn--sm" href={`tel:${phoneTel()}`}>📞 {company.phone}</a>
-            <a class="btn btn--ghost btn--sm" href={whatsappLink()} target="_blank" rel="noopener">💬 WhatsApp</a>
-          </div>
-          <p class="muted">{HOURS}</p>
-          <p class="muted">{company.legalName}<br /><Val value={company.street} label="Straße" where="src/config/site.ts → company.street" /><br /><Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /></p>
+      <aside class="side sk-seite" aria-labelledby="sk-draht-h">
+        <div class="card side__card sk-karte">
+          <h2 id="sk-draht-h" class="sn-h4">Direkter Draht</h2>
+          <p class="sk-karte__text">Lieber gleich sprechen? Erreichen Sie uns auch so.</p><!-- von uns ergänzt (#5892) -->
+          <ul class="sk-wege">
+            <li><a class="sk-weg" href={`tel:${phoneTel()}`}><Icon name="phone" size={20} /><span><small>Telefon</small>{company.phone}</span></a></li>
+            <li><a class="sk-weg" href={whatsappLink()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /><span><small>WhatsApp</small>Nachricht schreiben<span class="sr-only"> (öffnet in neuem Tab)</span></span></a></li>
+            <li><a class="sk-weg" href={`mailto:${company.email}`}><Icon name="mail" size={20} /><span><small>E-Mail</small>{company.email}</span></a></li>
+          </ul>
+          <p class="muted sk-zeiten">{HOURS}</p>
+          <p class="muted sk-adresse">{company.legalName}<br /><Val value={company.street} label="Straße" where="src/config/site.ts → company.street" /><br /><Val value={company.zip} label="PLZ" where="src/config/site.ts → company.zip" /> <Val value={company.city} label="Ort" where="src/config/site.ts → company.city" /></p>
         </div>
-        <ul class="promise">
+        <ul class="promise sk-versprechen">
           <li><strong>Antwort in der Regel am nächsten Werktag</strong>Persönlich, nicht automatisiert.</li>
           <li><strong>Kostenlos & unverbindlich</strong>Die Erstberatung kostet nichts.</li>
           <li><strong>Ehrliche Beratung</strong>Wir empfehlen, was Sie wirklich brauchen.</li>
@@ -308,67 +322,3 @@ const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
   }
 </script>
 
-<style>
-  .contact { display: grid; gap: 32px; }
-  @media (min-width: 960px) { .contact { grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: start; } }
-  .form { display: grid; gap: 18px; }
-  .row { display: grid; gap: 18px; }
-  @media (min-width: 640px) { .row { grid-template-columns: 1fr 1fr; } }
-  label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
-  legend small { font-weight: 400; color: var(--ink-soft); }
-  input, select, textarea {
-    font: inherit; font-weight: 400; color: var(--ink); width: 100%;
-    padding: 12px 14px; min-height: 48px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper);
-  }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--dark); background: var(--white); }
-  /* Handy: Auswahltexte („Worum geht es?“) passen bei 390 px ganz ins Feld (Prüfung Unterseiten, Jamil, Talk qh87y3sj #5215) */
-  @media (max-width: 480px) {
-    .form.card { padding-left: 14px; padding-right: 14px; }
-    select { padding-left: 10px; padding-right: 8px; }
-  }
-  .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.9rem; color: var(--ink-soft); }
-  .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 2px; flex: none; accent-color: var(--accent); }
-  .hp { position: absolute; left: -9999px; }
-  .wahl { display: grid; gap: 10px; margin: 0; padding: 14px 16px 16px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--paper); min-width: 0; }
-  .wahl[hidden] { display: none; }
-  .wahl legend { padding: 0 6px; font-weight: 600; font-size: 0.95rem; }
-  .wahl select { background: var(--white); }
-  .wahl__kopf { margin: 4px 0 0; font-weight: 600; font-size: 0.95rem; }
-  .wahl__kopf small { font-weight: 400; color: var(--ink-soft); }
-  .wahl__dazu { display: grid; gap: 4px 18px; }
-  @media (min-width: 640px) { .wahl__dazu { grid-template-columns: 1fr 1fr; } }
-  .wahl__opt { display: flex; gap: 10px; align-items: center; font-weight: 400; min-height: 44px; }
-  .wahl__opt input { width: 20px; min-height: 20px; height: 20px; flex: none; accent-color: var(--accent); }
-  .wahl__opt b { font-weight: 650; white-space: nowrap; }
-  .wahl__opt--alle { grid-column: 1 / -1; padding: 8px 12px; border: 2px solid var(--accent); border-radius: 12px; background: var(--white); font-weight: 650; color: var(--accent-ink); }
-  .wahl__opt--komplett { padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--white); }
-  .wahl__opt--komplett small { display: block; font-size: 0.85rem; color: var(--ink-soft); }
-  .wahl__summe { margin: 0; font-size: 0.95rem; }
-  .wahl__summe small { display: block; font-size: 0.85rem; color: var(--ink-soft); }
-  .wahl__summe[hidden] { display: none; }
-  .wahl__summe b { font-family: var(--font-head); }
-  .wahl__hinweis { margin: 0; padding: 10px 12px; border-left: 4px solid var(--accent-ink); background: var(--white); font-size: 0.9rem; line-height: 1.6; }
-  .check-mit { display: grid; gap: 8px; padding: 14px 16px; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--paper); }
-  .check-mit[hidden] { display: none; }
-  .check-mit__kopf { margin: 0; font-weight: 650; font-size: 0.95rem; }
-  .check-mit__text { margin: 0; white-space: pre-line; font-size: 0.9rem; line-height: 1.55; color: var(--ink-soft); }
-  .check-mit .btn { justify-self: start; }
-  .form .btn { justify-self: stretch; }
-  @media (min-width: 640px) { .form .btn { justify-self: start; } }
-  label small { font-weight: 400; color: var(--ink-soft); }
-  .after { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 0.82rem; color: var(--ink-soft); }
-  .after li { border-top: 2px solid var(--line); padding-top: 8px; }
-  .after li:first-child { border-color: var(--accent); }
-  .after strong { display: block; color: var(--ink); font-size: 0.9rem; }
-  .form__status { margin: 0; font-weight: 600; }
-  .side { display: grid; gap: 20px; }
-  .side__card h2 { font-size: 1.3rem; }
-  .side__card a { font-weight: 650; }
-  .direct { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
-  .direct .btn { border-color: var(--line); }
-  .muted { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
-  .promise { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
-  .promise li { padding-left: 18px; border-left: 3px solid var(--accent); }
-  .promise strong { display: block; }
-  @media (max-width: 599px) { .promise { display: none; } }
-</style>

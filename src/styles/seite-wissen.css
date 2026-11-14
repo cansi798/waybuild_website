@@ -1,0 +1,58 @@
+/* WISSEN, RATGEBER, BLOG (/wissen/, /ratgeber/, /blog/ und Artikel) im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026).
+ * Ruhige Karten in Weiß auf Papier, Nummern statt Icon-Kacheln, feine Linien, großzügiger Weißraum. Tokens aus start-neu.css (.sn).
+ * WebKit: Spalten minmax(0, 1fr) + min-width: 0, lange Titel brechen um (overflow-wrap). */
+
+.swi.sn { background: var(--paper); padding-block: clamp(56px, 8vw, 112px); }
+.swi p { margin: 0; }
+
+/* Raster */
+.swi-raster { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(16px, 2vw, 24px); }
+@media (min-width: 1000px) { .swi-raster { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 680px) and (max-width: 999px) { .swi-raster--artikel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.swi-raster > li { min-width: 0; display: flex; }
+
+/* Bereichs-Karte (/wissen/) */
+.swi-karte { display: flex; flex-direction: column; gap: 14px; width: 100%; min-width: 0; padding: clamp(24px, 3vw, 36px);
+  border-radius: 28px; background: var(--white); box-shadow: var(--sn-schatten); }
+.swi-karte__nr { font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-mittel); font-variant-numeric: tabular-nums; }
+.swi-karte .sn-h3 { overflow-wrap: break-word; hyphens: auto; }
+.swi-karte .sn-h3 a { color: inherit; text-decoration: none; }
+.swi-karte .sn-h3 a:hover { color: var(--sn-tinte); }
+.swi-karte__text { color: var(--ink-soft); line-height: 1.7; }
+.swi-liste { list-style: none; margin: 6px 0 0; padding: 0; border-top: 1px solid var(--sn-linie); }
+.swi-liste li { border-bottom: 1px solid var(--sn-linie); }
+.swi-liste a { display: grid; gap: 4px; min-height: 44px; padding: 14px 0; color: var(--ink); text-decoration: none; }
+.swi-liste a:hover .swi-liste__titel { color: var(--sn-tinte); text-decoration: underline; text-underline-offset: 3px; }
+.swi-liste__titel { font-weight: 600; line-height: 1.45; overflow-wrap: break-word; hyphens: auto; }
+.swi-liste small { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 0.85rem; }
+.swi-karte__alle { margin-top: auto; padding-top: 6px; }
+
+/* Entwurf-Hinweis */
+.swi-entwurf { display: inline-block; padding: 1px 9px; border-radius: 999px; background: var(--sn-hauch); color: var(--sn-tinte); font-weight: 650; font-size: 0.78rem; }
+
+/* Artikel-Karte (/ratgeber/, /blog/) */
+.swi-artikel { display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; padding: clamp(24px, 3vw, 32px);
+  border-radius: 24px; background: var(--white); color: var(--ink); text-decoration: none;
+  transition: transform 0.45s var(--sn-kurve), box-shadow 0.45s var(--sn-kurve); }
+.swi-artikel:hover { transform: translateY(-3px); box-shadow: var(--sn-schatten); }
+.swi .swi-artikel:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 3px; border-radius: 24px; }
+.swi-artikel .sn-h4 { font-size: clamp(1.12rem, 1.05rem + 0.3vw, 1.25rem); overflow-wrap: break-word; hyphens: auto; }
+.swi-artikel p { color: var(--ink-soft); line-height: 1.7; }
+.swi-artikel__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--ink-soft); }
+.swi-artikel__mehr { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 6px; font-weight: 600; color: var(--sn-tinte); }
+.swi-artikel__mehr svg { flex: none; transition: transform 0.4s var(--sn-kurve); }
+.swi-artikel:hover .swi-artikel__mehr svg { transform: translateX(4px); }
+
+/* Lesetypografie in Artikeln (ratgeber/[id], blog/[id]) */
+.swi-lesen { max-width: 68ch; font-size: clamp(1.04rem, 1rem + 0.2vw, 1.12rem); line-height: 1.75; color: var(--ink); overflow-wrap: break-word; }
+.swi-lesen p, .swi-lesen ul, .swi-lesen ol { margin-block: 0 1.1em; }
+.swi-lesen h2 { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.35rem, 1.2rem + 0.7vw, 1.7rem); line-height: 1.2;
+  letter-spacing: -0.02em; margin: 2em 0 0.6em; text-wrap: balance; }
+.swi-lesen h3 { font-family: var(--font-head); font-weight: 650; font-size: 1.15rem; line-height: 1.3; margin: 1.6em 0 0.5em; }
+.swi-lesen a { color: var(--sn-tinte, #006b68); font-weight: 600; text-underline-offset: 3px; }
+.swi-lesen strong { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .swi-artikel, .swi-artikel__mehr svg { transition: none; }
+  .swi-artikel:hover, .swi-artikel:hover .swi-artikel__mehr svg { transform: none; }
+}

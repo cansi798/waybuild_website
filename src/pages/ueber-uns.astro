@@ -1,12 +1,22 @@
 ---
+// /ueber-uns/ im Stil der neuen Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026). Inhalte erhalten (Mission, Werte, Fakten),
+// Optik wie src/components/startneu/. Abschnitte: Mission (Weiß) → Team (Papier) → Werte (Weiß) → Arbeitsweise (Papier) → SnAbschluss (Hauch).
+// Team: TEAM aus config/startseite.ts (Can „Chief Executive Officer“, Jamil „Chief Operating Officer“). Fotos + Test-Zitate NUR unter
+// derselben Bedingung wie SnTeam.astro (SHOW_HINTS && IS_PREVIEW, #5636/#5637); sonst nur Name und Rolle mit Initialen.
+// Zitate NICHT in strukturierte Daten übernehmen. Stil: styles/seite-ueber.css (.su-).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Hint from '../components/Hint.astro';
-import Val from '../components/Val.astro';
-import { company } from '../config/site';
-import More from '../components/More.astro';
 import Bild from '../components/Bild.astro';
-import Siegel from '../components/Siegel.astro';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
+import { TEAM } from '../config/startseite';
+import { IS_PREVIEW } from '../lib/env';
+import { SHOW_HINTS } from '../config/site';
+import '../styles/start-neu.css';
+import '../styles/seite-ueber.css';
+
+const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW; // gleiche Bedingung wie SnTeam.astro
+const initialen = (n: string) => n.split(/\s+/).map((t) => t[0]).join('').slice(0, 2).toUpperCase();
 
 const values = [
   { title: 'Menschlich', text: 'Strategie, Erfahrung und Verständnis für Ihr Geschäft.' },
@@ -14,93 +24,113 @@ const values = [
   { title: 'Transparent', text: 'Fester Monatspreis, keine versteckten Kosten.' },
   { title: 'Langfristig', text: 'Wir entwickeln Ihre Website laufend weiter. Kunden sollen bleiben, weil es passt.' },
 ];
+
+// von uns ergänzt (#5892): Arbeitsweise in drei Schritten, Wortlaut aus den bisherigen Texten dieser Seite und /warum-waybuild/
+const arbeitsweise = [
+  { title: 'Menschliche Beratung', text: 'Gemeinsam mit Ihnen entwickeln wir Zielgruppen, Positionierung und Customer Journey.' },
+  { title: 'KI-gestützte Umsetzung', text: 'Danach setzt unsere KI die Ergebnisse schnell um.' },
+  { title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
+];
+const nr = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <BaseLayout
-  title="Über uns: wer hinter Waybuild steht"
-  description="Waybuild verbindet menschliche Beratung mit KI-gestützter Umsetzung: digitale Unternehmensplattformen für kleine und mittlere Unternehmen."
+  title="Über uns: wer hinter waybuild steht"
+  description="waybuild verbindet menschliche Beratung mit KI-gestützter Umsetzung: digitale Unternehmensplattformen für kleine und mittlere Unternehmen."
   breadcrumb={[{ name: 'Über uns', path: '/ueber-uns/' }]}
 >
   <PageHeader
     eyebrow="Über uns"
-    title={"Wir bauen digitale Unternehmens\u00adplattformen."}
+    title={"Wir bauen digitale Unternehmens­plattformen."}
     lead="Für kleine und mittlere Unternehmen, ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen."
   />
 
-  <section class="section">
-    <div class="wrap story">
-      <div class="story__text">
-        <h2>Unsere Mission</h2>
-        <p class="story__lead">Viele Unternehmen wissen, dass es KI gibt, aber nicht, wie daraus eine Website wird, die Kunden bringt. <strong>Dabei helfen wir.</strong></p>
-        <More label="Wie wir arbeiten">
-          <p>
-            Wir kombinieren menschliche Beratung mit der Geschwindigkeit moderner KI-Systeme. Gemeinsam mit Ihnen
-            entwickeln wir Zielgruppen, Positionierung und Customer Journey. Danach setzt unsere KI die Ergebnisse
-            schnell um.
-          </p>
-          <p>
-            Wir wollen kleinen und mittleren Unternehmen helfen, professioneller aufzutreten, effizienter zu arbeiten und langfristig zu wachsen.
-            Die Website ist dabei nur der erste Schritt.
-          </p>
-        </More>
-        <Hint block label="Persönliche Gründungsgeschichte" where="src/pages/ueber-uns.astro">
-          Ein, zwei Sätze in eigenen Worten: Wer seid ihr, woher kommt ihr, warum macht ihr das? Das wirkt stärker als jeder Werbetext.
-        </Hint>
-      </div>
-
-      <aside class="founder">
-        <Bild name="team/gruender" alt={`Porträt von ${company.managingDirector}, Gründung und Geschäftsführung von Waybuild`} widths={[400, 800]} sizes="(min-width: 900px) 400px, 100vw" class="founder__img">
-          <div class="founder__photo" role="img" aria-label="Foto der Geschäftsführung (folgt)">
-            <span>Foto folgt</span>
-          </div>
-          <Hint label="Foto: src/assets/bilder/team/gruender.jpg" where="src/assets/bilder/LIESMICH.md" />
-        </Bild>
-        <p class="founder__name"><Val value={company.managingDirector} label="Name Geschäftsführung" where="src/config/site.ts → company.managingDirector" /></p>
-        <p class="founder__role">Gründung & Geschäftsführung</p>
-      </aside>
-    </div>
-  </section>
-
-  <section class="section section--alt" aria-labelledby="werte-h">
+  <!-- 1 · Mission (Weiß) -->
+  <section class="section sn su-mission" aria-labelledby="mission-h">
     <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Unsere Werte</span>
-        <h2 id="werte-h">Wofür wir stehen</h2>
+      <div class="sn-kopf sn-kopf--zweispaltig">
+        <div>
+          <p class="sn-kenn">Unsere Mission</p>
+          <h2 id="mission-h" class="sn-h2 sn-h2--klein">Viele Unternehmen wissen, dass es KI gibt, aber nicht, wie daraus eine Website wird, die Kunden bringt. <span class="su-akzent">Dabei helfen wir.</span></h2>
+        </div>
+        <div class="su-mission__text">
+          <p class="sn-lead">Wir kombinieren menschliche Beratung mit der Geschwindigkeit moderner KI-Systeme.</p>
+          <p>Wir wollen kleinen und mittleren Unternehmen helfen, professioneller aufzutreten, effizienter zu arbeiten und langfristig zu wachsen. Die Website ist dabei nur der erste Schritt.</p>
+        </div>
       </div>
-      <div class="values">
-        {values.map((v) => (
-          <div class="card">
-            <h3>{v.title}</h3>
-            <p>{v.text}</p>
-          </div>
-        ))}
-      </div>
+      <Hint block label="Persönliche Gründungsgeschichte" where="src/pages/ueber-uns.astro">
+        Ein, zwei Sätze in eigenen Worten: Wer seid ihr, woher kommt ihr, warum macht ihr das? Das wirkt stärker als jeder Werbetext.
+      </Hint>
     </div>
   </section>
-  <Siegel fakten={['Menschliche Beratung', 'KI-gestützte Umsetzung', 'Kontinuierliche Verbesserung']} />
-</BaseLayout>
 
-<style>
-  .story { display: grid; gap: 40px; }
-  @media (min-width: 900px) { .story { grid-template-columns: 1.5fr 1fr; gap: 72px; align-items: start; } }
-  .story__lead { font-size: clamp(1.3rem, 2.6vw, 1.7rem); line-height: 1.35; color: var(--ink-soft); }
-  .story__lead strong { color: var(--ink); }
-  .founder { display: grid; gap: 4px; }
-  .founder :global(.founder__img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; margin-bottom: 14px; }
-  .founder__photo {
-    aspect-ratio: 1; border-radius: 24px; display: grid; place-items: center; margin-bottom: 14px;
-    background: radial-gradient(circle at 50% 38%, #bdeeec 0 18%, transparent 19%), linear-gradient(160deg, #4fd1cb, #00a6a1 55%, #006b68);
-    color: rgb(255 255 255 / 85%); font-weight: 600;
-  }
-  .founder__photo span { margin-top: 55%; }
-  .founder__name { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; margin: 0; }
-  .founder__role { color: var(--accent-ink); font-weight: 600; margin: 0 0 8px; }
-  /* minmax(0, 1fr) + min-width: 0: lange Wörter („Menschlich“, „Transparent“) sprengen das Raster nicht mehr;
-     unter 390 px eine Spalte statt Querscrollen (Jamil #5215). Ab 390 px unverändert. */
-  .values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  @media (max-width: 389px) { .values { grid-template-columns: minmax(0, 1fr); } }
-  @media (min-width: 900px) { .values { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-  .values > .card { min-width: 0; }
-  .values h3, .values p { overflow-wrap: break-word; }
-  .values p { color: var(--ink-soft); margin: 0; }
-</style>
+  <!-- 2 · Team (Papier) -->
+  <section class="section sn su-team" id="team" aria-labelledby="su-team-h">
+    <div class="wrap">
+      <div class="sn-kopf">
+        <p class="sn-kenn">Team</p>
+        <h2 id="su-team-h" class="sn-h2">{TEAM.titel}</h2>
+        <p class="sn-lead">{TEAM.einleitung}</p>
+      </div>
+      <ul class="su-personen">
+        {TEAM.personen.map((m) => (
+          <li class="su-person">
+            <div class="su-person__foto">
+              {TEAM_ZEIGEN
+                ? <Bild name={m.foto} alt={m.alt} widths={[180, 360]} sizes="120px" class="su-person__bild" />
+                : <span class="su-person__initialen" aria-hidden="true">{initialen(m.name)}</span>}
+            </div>
+            <div class="su-person__text">
+              <h3 class="sn-h3">{m.name}</h3>
+              <p class="su-person__rolle">{m.rolle}</p>
+              {TEAM_ZEIGEN && <blockquote class="su-person__zitat"><p>„{m.zitat}“</p></blockquote>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 · Werte (Weiß): große Typografie, Nummern, feine Linien -->
+  <section class="section sn su-werte" aria-labelledby="werte-h">
+    <div class="wrap">
+      <div class="sn-kopf">
+        <p class="sn-kenn">Unsere Werte</p>
+        <h2 id="werte-h" class="sn-h2">Wofür wir stehen.</h2>
+      </div>
+      <ul class="su-werte__liste">
+        {values.map((v, i) => (
+          <li class="su-wert reveal">
+            <span class="su-nr" aria-hidden="true">{nr(i)}</span>
+            <h3 class="su-wert__titel">{v.title}</h3>
+            <p>{v.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Arbeitsweise (Papier), von uns ergänzt (#5892) -->
+  <section class="section sn su-weise" aria-labelledby="weise-h">
+    <div class="wrap">
+      <div class="sn-kopf sn-kopf--zweispaltig">
+        <div>
+          <p class="sn-kenn">Wie wir arbeiten</p>
+          <h2 id="weise-h" class="sn-h2">Erst verstehen, dann bauen.</h2>
+        </div>
+        <p class="sn-lead">Die Ideen entwickeln wir mit Ihnen. Die KI beschleunigt nur die Umsetzung.</p>
+      </div>
+      <ol class="su-weise__liste">
+        {arbeitsweise.map((a, i) => (
+          <li class="su-schritt reveal">
+            <span class="su-nr" aria-hidden="true">{nr(i)}</span>
+            <h3 class="sn-h4">{a.title}</h3>
+            <p>{a.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <SnAbschluss />
+</BaseLayout>

@@ -1,0 +1,66 @@
+/* HÄUFIGE FRAGEN (/fragen/) im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026).
+ * Themen links (am PC mitlaufend), Fragen rechts als ruhige Akkordeon-Liste (<details>) mit feinen Linien, Nummern statt Icons.
+ * Daten und FAQPage-JSON-LD unverändert (fragen.astro, config/fragen.ts). Tokens aus start-neu.css (.sn).
+ * WebKit: Spalten minmax(0, 1fr) + min-width: 0, lange Fragen brechen um. */
+
+.sf.sn { background: var(--white); padding-block: clamp(56px, 8vw, 112px); }
+.sf p { margin: 0; }
+
+.sf-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 48px); }
+@media (min-width: 960px) {
+  .sf-raster { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+}
+
+/* Themen */
+.sf-themen { min-width: 0; }
+.sf-themen__kopf { margin-bottom: 12px !important; font-weight: 600; font-size: 0.95rem; color: var(--sn-tinte); }
+.sf-themen ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sf-themen a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 16px; border: 1px solid var(--sn-linie);
+  border-radius: 999px; background: var(--white); color: var(--ink); font-family: var(--font-head); font-weight: 600; font-size: 0.92rem;
+  text-decoration: none; transition: border-color 0.25s ease, color 0.25s ease; }
+.sf-themen a:hover { border-color: var(--sn-tinte); color: var(--sn-tinte); }
+.sf-themen__zahl { font-family: var(--font-body); font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
+@media (min-width: 960px) {
+  .sf-themen { position: sticky; top: 112px; }
+  .sf-themen ul { display: grid; gap: 0; border-top: 1px solid var(--sn-linie); }
+  .sf-themen li { border-bottom: 1px solid var(--sn-linie); }
+  .sf-themen a { display: flex; justify-content: space-between; width: 100%; padding: 12px 2px; border: 0; border-radius: 0; background: none; }
+}
+
+/* Gruppen */
+.sf-gruppen { min-width: 0; display: grid; gap: clamp(48px, 7vw, 88px); }
+.sf-gruppe { min-width: 0; scroll-margin-top: 100px; }
+.sf-gruppe__kopf { display: flex; align-items: baseline; gap: 16px; margin-bottom: clamp(16px, 2.5vw, 24px); }
+.sf-gruppe__nr { flex: none; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-mittel); font-variant-numeric: tabular-nums; }
+.sf-gruppe__kopf .sn-h3 { min-width: 0; overflow-wrap: break-word; }
+
+/* Akkordeon */
+.sf-liste { border-top: 1px solid var(--sn-linie); }
+.sf-frage { border-bottom: 1px solid var(--sn-linie); }
+.sf-frage summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; padding: 18px 4px;
+  cursor: pointer; list-style: none; border-radius: 8px; }
+.sf-frage summary::-webkit-details-marker { display: none; }
+.sf-frage summary:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; }
+.sf-frage h3 { margin: 0; min-width: 0; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.02rem, 0.98rem + 0.2vw, 1.12rem);
+  line-height: 1.45; letter-spacing: -0.01em; color: var(--ink); overflow-wrap: break-word; text-wrap: pretty; transition: color 0.25s ease; }
+.sf-frage summary:hover h3 { color: var(--sn-tinte); }
+/* Plus/Minus aus zwei feinen Linien in einem Kreis */
+.sf-frage__zeichen { position: relative; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--sn-hauch);
+  transition: background-color 0.3s ease, transform 0.4s var(--sn-kurve); }
+.sf-frage__zeichen::before, .sf-frage__zeichen::after { content: ''; position: absolute; top: 50%; left: 50%; width: 14px; height: 2px;
+  margin: -1px 0 0 -7px; border-radius: 2px; background: var(--sn-tinte); transition: transform 0.4s var(--sn-kurve), opacity 0.3s ease; }
+.sf-frage__zeichen::after { transform: rotate(90deg); }
+.sf-frage[open] .sf-frage__zeichen { background: var(--sn-tinte); }
+.sf-frage[open] .sf-frage__zeichen::before, .sf-frage[open] .sf-frage__zeichen::after { background: var(--white); }
+.sf-frage[open] .sf-frage__zeichen::after { transform: rotate(0deg); opacity: 0; }
+.sf-frage__antwort { padding: 0 56px 24px 4px; }
+.sf-frage__antwort p { max-width: 68ch; line-height: 1.75; color: var(--ink-soft); overflow-wrap: break-word; }
+@media (max-width: 560px) { .sf-frage__antwort { padding-right: 4px; } }
+
+/* Platzhalter (nur Vorschau) */
+.sf-frage--platzhalter { padding-inline: 12px; border: 2px dashed #b3261e; border-radius: 14px; background: #fffafa; margin-block: 8px; }
+.sf-etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-themen a, .sf-frage h3, .sf-frage__zeichen, .sf-frage__zeichen::before, .sf-frage__zeichen::after { transition: none; }
+}

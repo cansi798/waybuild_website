@@ -4,10 +4,14 @@
 // Verlinkt NUR im Footer (Spalte „Unternehmen“), nicht in der Navigation. In der Sitemap (Standard).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { href } from '../lib/paths';
 import { SHOW_HINTS } from '../config/site';
 import { IS_PREVIEW } from '../lib/env';
 import { FRAGEN_TITEL, fragenNachThema } from '../config/fragen';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
+import '../styles/start-neu.css';
+import '../styles/seite-fragen.css';
+// Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): Themen links (am PC mitlaufend), Fragen rechts als
+// ruhige Akkordeon-Liste mit feinen Linien; Abschluss wie auf der Startseite (SnAbschluss). Stil: src/styles/seite-fragen.css (.sf-).
 
 const zeigePlatzhalter = SHOW_HINTS && IS_PREVIEW;
 const gruppen = fragenNachThema()
@@ -30,52 +34,38 @@ const faqLd = {
 >
   <PageHeader eyebrow="Fragen und Antworten" title={FRAGEN_TITEL} lead="Die wichtigsten Antworten auf einen Blick. Ihre Frage ist nicht dabei? Wir antworten in der Regel am nächsten Werktag." />
 
-  <section class="section">
-    <div class="wrap fr">
-      <nav class="fr__themen" aria-label="Themen">
-        {gruppen.map((g) => <a href={`#${g.id}`}>{g.titel}</a>)}
+  <section class="section sn sf" aria-label="Fragen nach Themen">
+    <div class="wrap sf-raster">
+      <nav class="sf-themen" aria-label="Themen">
+        <p class="sf-themen__kopf">Themen</p>
+        <ul>
+          {gruppen.map((g) => <li><a href={`#${g.id}`}>{g.titel}<span class="sf-themen__zahl" aria-hidden="true">{g.fragen.length}</span></a></li>)}
+        </ul>
       </nav>
-      {gruppen.map((g) => (
-        <section class="fr__gruppe" id={g.id} aria-labelledby={`${g.id}-h`}>
-          <h2 id={`${g.id}-h`}>{g.titel}</h2>
-          <div class="fr__liste">
-            {g.fragen.map((f) => (
-              <details class:list={['fr__item', { 'fr__item--platzhalter': f.platzhalter }]}>
-                <summary><h3>{f.q}</h3></summary>
-                {f.platzhalter && <span class="fr__etikett">Platzhalter, nur Vorschau</span>}
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      ))}
-      <div class="fr__ende card">
-        <h2>Noch eine Frage offen?</h2>
-        <p>Schreiben Sie uns oder rufen Sie an. Im kostenlosen Erstgespräch klären wir alles in Ruhe.</p>
-        <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Frage stellen</a>
+      <div class="sf-gruppen">
+        {gruppen.map((g, gi) => (
+          <section class="sf-gruppe" id={g.id} aria-labelledby={`${g.id}-h`}>
+            <div class="sf-gruppe__kopf">
+              <span class="sf-gruppe__nr" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+              <h2 id={`${g.id}-h`} class="sn-h3">{g.titel}</h2>
+            </div>
+            <div class="sf-liste">
+              {g.fragen.map((f) => (
+                <details class:list={['sf-frage', { 'sf-frage--platzhalter': f.platzhalter }]}>
+                  <summary><h3>{f.q}</h3><span class="sf-frage__zeichen" aria-hidden="true"></span></summary>
+                  <div class="sf-frage__antwort">
+                    {f.platzhalter && <span class="sf-etikett">Platzhalter, nur Vorschau</span>}
+                    <p>{f.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   </section>
+
+  <SnAbschluss />
 </BaseLayout>
 
-<style>
-  .fr { max-width: 900px; display: grid; gap: clamp(36px, 5vw, 56px); }
-  .fr__themen { display: flex; flex-wrap: wrap; gap: 10px; }
-  .fr__themen a { padding: 8px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--white); color: var(--accent-ink); font-weight: 650; text-decoration: none; }
-  .fr__themen a:hover { border-color: var(--accent-ink); }
-  .fr__gruppe { scroll-margin-top: 100px; }
-  .fr__gruppe h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 16px; }
-  .fr__liste { display: grid; gap: 12px; }
-  .fr__item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; }
-  .fr__item summary { cursor: pointer; list-style: none; padding-block: 14px; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
-  .fr__item summary::-webkit-details-marker { display: none; }
-  .fr__item summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--accent-ink); flex: none; }
-  .fr__item[open] summary::after { content: '–'; }
-  .fr__item h3 { margin: 0; font-size: 1.05rem; line-height: 1.4; }
-  .fr__item p { margin: 0 0 16px; line-height: 1.7; color: var(--ink-soft); }
-  .fr__item--platzhalter { border: 2px dashed #b3261e; background: #fffafa; }
-  .fr__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }
-  .fr__ende { display: grid; gap: 10px; justify-items: start; }
-  .fr__ende h2 { margin: 0; font-size: 1.4rem; }
-  .fr__ende p { margin: 0; color: var(--ink-soft); }
-</style>

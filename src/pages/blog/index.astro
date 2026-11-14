@@ -6,6 +6,12 @@ import PageHeader from '../../components/PageHeader.astro';
 import { SEITEN_FOTO } from '../../config/bilder';
 import { getCollection } from 'astro:content';
 import { href } from '../../lib/paths';
+import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
+import Icon from '../../components/Icon.astro';
+import '../../styles/start-neu.css';
+import '../../styles/seite-wissen.css';
+// Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): ruhiges Karten-Raster, Abschluss wie auf der
+// Startseite. Stil: src/styles/seite-wissen.css (.swi-).
 
 const beitraege = (await getCollection('blog')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const datum = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -17,36 +23,26 @@ const datum = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month
   breadcrumb={[{ name: 'Blog', path: '/blog/' }]}
 >
   <PageHeader eyebrow="Blog" title="Gedanken aus der Praxis." foto={SEITEN_FOTO.blog} lead="Wie wir arbeiten, was sich gerade ändert und was das für Ihr Unternehmen bedeutet." />
-  <section class="section">
+  <section class="section sn swi swi--papier" aria-label="Alle Blog-Beiträge">
     <div class="wrap">
-      <ul class="bl">
+      <ul class="swi-raster swi-raster--artikel">
         {beitraege.map((b) => (
           <li>
-            <a class="bl__card" href={href(`/blog/${b.id}/`)}>
-              <span class="bl__meta">
+            <a class="swi-artikel" href={href(`/blog/${b.id}/`)}>
+              <span class="swi-artikel__meta">
                 <time datetime={b.data.date.toISOString()}>{datum(b.data.date)}</time>
-                {b.data.draft && <span class="bl__draft">Entwurf</span>}
+                {b.data.draft && <span class="swi-entwurf">Entwurf</span>}
               </span>
-              <h2>{b.data.title}</h2>
+              <h2 class="sn-h4">{b.data.title}</h2>
               <p>{b.data.description}</p>
-              <span class="bl__more">Lesen →</span>
+              <span class="swi-artikel__mehr">Lesen <Icon name="arrow" size={18} /></span>
             </a>
           </li>
         ))}
       </ul>
     </div>
   </section>
+
+  <SnAbschluss />
 </BaseLayout>
 
-<style>
-  .bl { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
-  @media (min-width: 900px) { .bl { grid-template-columns: repeat(3, 1fr); } }
-  .bl__card { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease; }
-  .bl__card:hover { border-color: var(--dark); transform: translateY(-2px); }
-  @media (prefers-reduced-motion: reduce) { .bl__card { transition: none; } .bl__card:hover { transform: none; } }
-  .bl__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--ink-soft); }
-  .bl__draft { padding: 2px 10px; border-radius: 999px; border: 1px solid var(--accent-ink); color: var(--accent-ink); font-weight: 650; font-size: 0.78rem; }
-  .bl__card h2 { font-size: 1.3rem; margin: 0; }
-  .bl__card p { color: var(--ink-soft); margin: 0; }
-  .bl__more { margin-top: auto; font-weight: 650; color: var(--accent-ink); }
-</style>

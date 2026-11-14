@@ -1,17 +1,19 @@
 ---
 // Preis-Seite (Jamil, Talk qh87y3sj #5056, 08.11.2026 „ok go“): die Pakete Basis · Plus sind die richtige Website,
 // optional dazu das Komplettpaket (Auftragsverwaltung, #5450–#5464). Daten AUSSCHLIESSLICH aus src/config/pakete-abo.ts (Preise nie fest in Texte schreiben).
-// Inhalt: „Einmalig dazubuchen“ (Leiste) · Karten mit Jahreskosten ·
-// Vergleichstabelle · So starten Sie · Ausbaustufen · B2B-Hinweis (Fragen seit 08.11. auf /fragen/).
-// Sprungmarken #websites, #software, #cloud, #beratung, #stundensaetze wurden früher verlinkt – sie bleiben erhalten.
+// SEIT 14.11.2026 im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892): Pakete, Komplettpaket und „Einmalig dazu“ über die
+// Startseiten-Komponente SnAngebot (gleiche Optik, gleiches Buchungsfenster), danach Vergleich der Pakete · So starten Sie ·
+// Ausbaustufen · Hinweise · SnAbschluss. Stil: start-neu.css + src/styles/seite-preise.css (Präfix .spr-).
+// Die sechs Fragen und der Link „Alle Preise“ aus SnAngebot sind hier ausgeblendet (Paket-FAQ nur auf /fragen/, Jamil #5140–#5142).
+// Sprungmarken: #preise, #websites (vor den Paketen), #pakete, #pk-basis, #pk-plus, #komplettpaket, #einmalig, #baukasten (SnAngebot),
+// #vergleich, #start, #stundensaetze, #software, #cloud, #beratung – alle erhalten.
+// SnVergleich (Anbieter-Vergleich der Startseite) bewusst NICHT eingebunden: es trägt ebenfalls id="vergleich" (doppelte ID).
 // Vorher (Fundament/Wegweiser/Wahrzeichen aus site.ts PAKETE): Sicherung Branch vor-pakete-live-20261108.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
-import PaketKarten from '../components/pakete/PaketKarten.astro';
-import EinmaligDazu from '../components/pakete/EinmaligDazu.astro';
-import KomplettKarte from '../components/pakete/KomplettKarte.astro';
+import SnAngebot from '../components/startneu/SnAngebot.astro';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
 import { SHOW_HINTS } from '../config/site';
 import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
@@ -22,6 +24,8 @@ import {
   ABO_PAKETE, KOMPLETTPAKET, euro, jahresPreis, jahresBrutto, aboPreisAb, komplettPreis, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
   AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
 } from '../config/pakete-abo';
+import '../styles/start-neu.css';
+import '../styles/seite-preise.css';
 
 const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
 const zeilen = vergleichsZeilen();
@@ -55,137 +59,99 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Auftragsverwaltun
 >
   <PageHeader eyebrow="Preise" title="Zwei Pakete. Fester Monatspreis." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, keine versteckten Kosten. ${komplettText}`} />
 
-  <section class="section section--alt" id="pakete" aria-labelledby="pakete-h">
+  <!-- alte Sprungmarken, direkt vor den Paketen -->
+  <span id="preise" class="spr-anker" aria-hidden="true"></span>
+  <span id="websites" class="spr-anker" aria-hidden="true"></span>
+
+  <!-- Pakete · Komplettpaket · Einmalig dazu · Sicherheit (Hintergrund Sand), Anker #pakete -->
+  <SnAngebot />
+
+  <!-- Hintergründe: Pakete Sand → Vergleich Weiß → Start Papier → Ausbaustufen Weiß → Abschluss Hauch -->
+  <section class="section sn spr-vgl" id="vergleich" aria-labelledby="spr-vgl-h">
     <div class="wrap">
-      <h2 class="sr-only" id="pakete-h">Die Pakete</h2>
-      <span id="preise" class="anker" aria-hidden="true"></span>
-      <span id="websites" class="anker" aria-hidden="true"></span>
-      <EinmaligDazu />
-      <PaketKarten />
-      <KomplettKarte />
-      <p class="netto">{B2B_HINWEIS}</p>
-    </div>
-  </section>
-
-  <!-- Abschnitt „In allen Paketen enthalten – Alles in einem Preis.“ (12 Kacheln) entfernt (Jamil #5356); Sprungmarke #websites sitzt jetzt bei den Paketen -->
-
-  <!-- Abschnitt „Fair für alle / Sie brauchen etwas aus dem Paket nicht?“ entfernt (Jamil #5133/#5134); FAQ-Frage dazu bleibt -->
-
-  <!-- Hintergründe wechseln hell/sand: Pakete sand → Vergleich hell → Start sand → Ausbaustufen hell → Abschluss sand (#5356) -->
-  <section class="section" id="vergleich" aria-labelledby="vgl-h">
-    <div class="wrap">
-      <SectionHead center eyebrow="Im Überblick" pre="Welches Paket " accent="passt?" text="Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei." id="vgl-h" />
-      <div class="vgl__scroll" role="region" aria-label="Paketvergleich" tabindex="0">
-        <table class="vgl">
+      <div class="sn-kopf sn-kopf--mitte">
+        <p class="sn-kenn">Im Überblick</p>
+        <h2 id="spr-vgl-h" class="sn-h2">Welches Paket passt?</h2>
+        <p class="sn-lead">Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei.</p>
+      </div>
+      <div class="spr-vgl__tafel" role="region" aria-label="Paketvergleich" tabindex="0">
+        <table class="spr-vgl__tabelle">
+          <caption class="sr-only">Vergleich der Pakete {ABO_PAKETE.map((p) => p.name).join(' und ')}</caption>
           <thead>
-            <tr><th scope="col">Leistung</th>{ABO_PAKETE.map((p) => <th scope="col">{p.name}<span>{euro(p.preis)} netto / Monat</span></th>)}</tr>
+            <tr><th scope="col">Leistung</th>{ABO_PAKETE.map((p) => <th scope="col" class:list={{ 'spr-vgl__tipp': p.empfohlen }}>{p.name}<span>{euro(p.preis)} netto / Monat</span></th>)}</tr>
           </thead>
           <tbody>
             {zeilen.map((z) => (
-              <tr><th scope="row">{z.text}</th>{z.werte.map((x) => <td>{typeof x === 'string' ? <span class="vgl__wert">{x}</span> : x ? <><Icon name="check" size={18} /><span class="sr-only">enthalten</span></> : <span class="vgl__nein" aria-label="nicht enthalten">–</span>}</td>)}</tr>
+              <tr><th scope="row">{z.text}</th>{z.werte.map((x) => <td>{typeof x === 'string' ? <span class="spr-vgl__wert">{x}</span> : x ? <><span class="spr-vgl__ja" aria-hidden="true"><Icon name="check" size={16} /></span><span class="sr-only">enthalten</span></> : <><span class="spr-vgl__nein" aria-hidden="true">–</span><span class="sr-only">nicht enthalten</span></>}</td>)}</tr>
             ))}
             {GLEICH.map((g) => (
-              <tr><th scope="row">{g.t}</th>{ABO_PAKETE.map(() => <td>{g.w === true ? <><Icon name="check" size={18} /><span class="sr-only">enthalten</span></> : g.w}</td>)}</tr>
+              <tr><th scope="row">{g.t}</th>{ABO_PAKETE.map(() => <td>{g.w === true ? <><span class="spr-vgl__ja" aria-hidden="true"><Icon name="check" size={16} /></span><span class="sr-only">enthalten</span></> : <span class="spr-vgl__wert">{g.w}</span>}</td>)}</tr>
             ))}
             <tr><th scope="row">Mindestlaufzeit</th>{ABO_PAKETE.map(() => <td>{LAUFZEIT_MONATE} Monate</td>)}</tr>
-            <tr class="vgl__summe"><th scope="row">Kosten pro Jahr (netto)</th>{ABO_PAKETE.map((p) => <td>{euro(jahresPreis(p.preis))}<span>{euro(jahresBrutto(p.preis))} brutto</span></td>)}</tr>
+            <tr class="spr-vgl__summe"><th scope="row">Kosten pro Jahr (netto)</th>{ABO_PAKETE.map((p) => <td>{euro(jahresPreis(p.preis))}<span>{euro(jahresBrutto(p.preis))} brutto</span></td>)}</tr>
           </tbody>
         </table>
       </div>
-      <p class="netto">{LAUFZEIT_MONATE} Monate Mindestlaufzeit. Danach ist das Abo monatlich kündbar, mit einem Monat Frist zum Monatsende. {B2B_HINWEIS}</p>
+      <p class="sn-fein sn-fein--mitte">{LAUFZEIT_MONATE} Monate Mindestlaufzeit. Danach ist das Abo monatlich kündbar, mit einem Monat Frist zum Monatsende. {B2B_HINWEIS}</p>
     </div>
   </section>
 
-  <section class="section section--alt" id="start" aria-labelledby="start-h">
+  <section class="section sn spr-start" id="start" aria-labelledby="spr-start-h">
     <div class="wrap">
-      <SectionHead center eyebrow="So starten Sie" pre="In drei Schritten " accent="online." id="start-h" />
-      <ol class="start">
+      <div class="sn-kopf sn-kopf--zweispaltig">
+        <div class="spr-kopf__titel">
+          <p class="sn-kenn">So starten Sie</p>
+          <h2 id="spr-start-h" class="sn-h2">In drei Schritten online.</h2>
+        </div>
+        <!-- von uns ergänzt (#5892) -->
+        <p class="sn-lead">Vom ersten Gespräch bis zur fertigen Website begleiten wir Sie persönlich.</p>
+      </div>
+      <ol class="spr-schritte">
         {START.map((st, i) => (
-          <li class="card start__k"><span class="start__n">{i + 1}</span><h3>{st.t}</h3><p>{st.x}</p></li>
+          <li class="spr-schritt">
+            <span class="spr-schritt__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="sn-h4">{st.t}</h3>
+            <p>{st.x}</p>
+          </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="section" id="stundensaetze" aria-labelledby="ausbau-h">
+  <section class="section sn spr-ausbau" id="stundensaetze" aria-labelledby="spr-ausbau-h">
     <div class="wrap">
-      <SectionHead eyebrow="Mehr als eine Website?" pre="Ausbaustufen auf " accent="Anfrage" text={`Die Website ist der erste Schritt. Für größere Vorhaben, zum Beispiel ${AUF_ANFRAGE.slice(0, 2).join(' oder ')}, erstellen wir ein individuelles Angebot.`} id="ausbau-h" />
-      <ul class="ausbau">
+      <div class="sn-kopf sn-kopf--zweispaltig">
+        <div class="spr-kopf__titel">
+          <p class="sn-kenn">Mehr als eine Website?</p>
+          <h2 id="spr-ausbau-h" class="sn-h2">Ausbaustufen auf Anfrage</h2>
+        </div>
+        <p class="sn-lead">{`Die Website ist der erste Schritt. Für größere Vorhaben, zum Beispiel ${AUF_ANFRAGE.slice(0, 2).join(' oder ')}, erstellen wir ein individuelles Angebot.`}</p>
+      </div>
+      <ul class="spr-stufen">
         {ausbau.map((s) => (
-          <li id={s.id} class="card ausbau__card">
-            <span class="ausbau__icon"><Icon name={s.icon} size={22} /></span>
-            <h3>{s.title}</h3>
-            <p>{s.claim}</p>
-            <ul class="ausbau__links">
+          <li id={s.id} class="spr-stufe">
+            <p class="spr-stufe__tag">Individuelles Angebot</p>
+            <h3 class="sn-h3">{s.title}</h3>
+            <p class="spr-stufe__text">{s.claim}</p>
+            <ul class="spr-stufe__liste">
               {/* Titel ohne Link: die alten Leistungsseiten sind gelöscht (Jamil, Talk qh87y3sj #5322) */}
-              {leistungenNach(s.id).filter((l) => l.slug !== 'abo-wartung').map((l) => <li>{l.title}</li>)}
+              {leistungenNach(s.id).filter((l) => l.slug !== 'abo-wartung').map((l) => <li><span class="sn-punkt" aria-hidden="true"></span><span>{l.title}</span></li>)}
             </ul>
-            <span class="ausbau__tag">Individuelles Angebot</span>
           </li>
         ))}
       </ul>
       {hinweise && (
-        <div class="card nicht">
-          <span class="nicht__etikett">Platzhalter</span>
-          <h3>Nicht im Preis enthalten</h3>
+        <div class="spr-nicht">
+          <span class="spr-nicht__etikett">Platzhalter</span>
+          <h3 class="sn-h4">Nicht im Preis enthalten</h3>
           <p>Beispiele, die Can und Jamil noch bestätigen: {NICHT_ENTHALTEN.join(', ')}.</p>
         </div>
       )}
-      <p class="netto">{RECHT}</p>
+      <p class="sn-fein">{RECHT}</p>
+      <p class="sn-fein spr-b2b">{B2B_HINWEIS}</p>
     </div>
   </section>
 
-  <!-- Paket-FAQ entfernt: alle Fragen auf /fragen/ (Jamil #5140–#5142) -->
-
-  <section class="section section--alt cta-pk" aria-labelledby="cta-h">
-    <div class="wrap">
-      <h2 id="cta-h">Unsicher, welches Paket passt?</h2>
-      <p class="lead">Im kostenlosen Erstgespräch empfehlen wir Ihnen das passende Paket, auch wenn es das kleinere ist.</p>
-      <a class="btn btn--primary btn--lg" href={href('/kontakt/')}>Kostenlose Erstberatung</a>
-      <p class="netto">{B2B_HINWEIS}</p>
-    </div>
-  </section>
+  <!-- Paket-FAQ: alle Fragen auf /fragen/ (Jamil #5140–#5142). Alter Abschluss „Unsicher, welches Paket passt?“ durch SnAbschluss ersetzt (#5892). -->
+  <SnAbschluss />
 </BaseLayout>
-
-<style>
-  .anker { display: block; position: relative; top: -120px; }
-  .netto { margin: 22px auto 0; max-width: 820px; text-align: center; font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft); }
-  .vgl__scroll { position: relative; overflow-x: auto; max-width: 980px; margin-inline: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--white); }
-  .vgl { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.92rem; }
-  .vgl th, .vgl td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: center; vertical-align: middle; }
-  .vgl thead th { background: var(--dark); color: var(--white); font-family: var(--font-head); font-size: 1rem; }
-  .vgl thead th span, .vgl__summe td span { display: block; font-family: var(--font-body, inherit); font-size: 0.78rem; font-weight: 500; }
-  .vgl thead th:first-child, .vgl tbody th { text-align: left; }
-  .vgl tbody th { font-weight: 600; }
-  .vgl td :global(.icon) { color: var(--accent-ink); }
-  .vgl__wert { display: inline-block; max-width: 18ch; font-size: 0.86rem; font-weight: 600; line-height: 1.4; color: var(--accent-ink); }
-  .vgl__nein { color: var(--ink-soft); }
-  .vgl tbody tr:nth-child(even) { background: #f7fbfb; }
-  .vgl__summe th, .vgl__summe td { font-weight: 700; background: #e9f6f5 !important; border-bottom: 0; }
-  .vgl__summe td span { color: var(--ink-soft); }
-  .start { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 860px) { .start { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .start__k { display: flex; flex-direction: column; gap: 6px; border-radius: 18px; }
-  .start__k h3, .start__k p { margin: 0; }
-  .start__k p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
-  .start__n { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 800; }
-  .ausbau { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-  @media (min-width: 900px) { .ausbau { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-  .ausbau__card { display: flex; flex-direction: column; gap: 8px; border-radius: 18px; scroll-margin-top: 90px; }
-  .ausbau__card h3, .ausbau__card p { margin: 0; }
-  .ausbau__card p { color: var(--ink-soft); font-size: 0.95rem; }
-  .ausbau__icon { width: 44px; height: 44px; border-radius: 12px; background: var(--dark); color: var(--accent); display: inline-grid; place-items: center; }
-  .ausbau__links { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.92rem; }
-  .ausbau__links a { font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
-  .ausbau__tag { margin-top: auto; padding-top: 8px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
-  .nicht { margin-top: 20px; border: 2px dashed #b3261e !important; background: #fffafa !important; }
-  .nicht h3 { margin: 0 0 6px; font-size: 1.1rem; }
-  .nicht p { margin: 0; line-height: 1.7; }
-  .nicht__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }
-  .cta-pk { text-align: center; }
-  .cta-pk .lead { margin: 12px auto 24px; max-width: 640px; }
-  .cta-pk .btn--primary { color: var(--on-accent); }
-  /* Kontrast (axe) nur auf dieser Seite, wie zuvor auf /variante/: Knopfschrift auf Türkis 5,1 : 1 statt 3,8 : 1
-     (auch Handy-Leiste). Footer-Unterzeile seit #5072 global #e6f6f5 auf #006b68 (FooterKontakt.astro). */
-  :global(.btn--primary) { color: var(--on-accent); }
-</style>

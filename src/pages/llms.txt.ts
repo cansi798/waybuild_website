@@ -9,6 +9,7 @@ import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
 import { CLAIM, BOTSCHAFT, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/startseite';
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
+import { VERGLEICH_START } from '../config/start-vergleich';
 import { VORGEHEN } from '../config/vorgehen';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
 
@@ -78,7 +79,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- [Leistungen](${url('/leistungen/')}): alle Leistungen in vier Gruppen (${gruppen.map((g) => g.titel).join(', ')})`,
     `- [Beispiele](${url('/beispiele/')}): echte Projekte unserer Kunden, Bereich Websites`,
     `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt., optional ${komplettZeile()}`,
-    `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH.spalten.join(', ')}`,
+    `- [Warum waybuild](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH_START.spalten.map((sp) => sp.lang + (sp.zusatz ? ' ' + sp.zusatz : '')).join(', ')}`,
     `- [Wissen](${url('/wissen/')}): Übersicht über Ratgeber, Häufige Fragen und Blog`,
     `- [Häufige Fragen](${url('/fragen/')}): Pakete und Preise, Ablauf, Technik und Vertrag`,
     `- [Blog](${url('/blog/')}): Beiträge zu Websites, Sichtbarkeit bei Google und KI-Suche`,

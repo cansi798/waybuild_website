@@ -3,6 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import { getCollection } from 'astro:content';
 import { href } from '../../lib/paths';
+import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
+import Icon from '../../components/Icon.astro';
+import '../../styles/start-neu.css';
+import '../../styles/seite-wissen.css';
+// Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): ruhiges Karten-Raster, Abschluss wie auf der
+// Startseite. Stil: src/styles/seite-wissen.css (.swi-).
 
 const artikel = (await getCollection('ratgeber')).sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime());
 ---
@@ -13,29 +19,23 @@ const artikel = (await getCollection('ratgeber')).sort((a, b) => b.data.datum.ge
   breadcrumb={[{ name: 'Ratgeber', path: '/ratgeber/' }]}
 >
   <PageHeader eyebrow="Ratgeber" title="Kurz erklärt." lead="Das Wichtigste zu Websites, Software, Cloud und IT, in wenigen Minuten gelesen." />
-  <section class="section">
+  <section class="section sn swi swi--papier" aria-label="Alle Ratgeber">
     <div class="wrap">
-      <ul class="al">
-        {artikel.map((a) => (
+      <ul class="swi-raster swi-raster--artikel">
+        {artikel.map((a, i) => (
           <li>
-            <a class="al__card" href={href(`/ratgeber/${a.id}/`)}>
-              <h2>{a.data.title}</h2>
+            <a class="swi-artikel" href={href(`/ratgeber/${a.id}/`)}>
+              <span class="swi-karte__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="sn-h4">{a.data.title}</h2>
               <p>{a.data.kurz[0]}</p>
-              <span>Lesen →</span>
+              <span class="swi-artikel__mehr">Lesen <Icon name="arrow" size={18} /></span>
             </a>
           </li>
         ))}
       </ul>
     </div>
   </section>
+
+  <SnAbschluss />
 </BaseLayout>
 
-<style>
-  .al { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
-  @media (min-width: 900px) { .al { grid-template-columns: repeat(3, 1fr); } }
-  .al__card { display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 26px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease; }
-  .al__card:hover { border-color: var(--dark); transform: translateY(-2px); }
-  .al__card h2 { font-size: 1.3rem; margin: 0; }
-  .al__card p { color: var(--ink-soft); margin: 0; }
-  .al__card span { margin-top: auto; font-weight: 650; color: var(--accent-ink); }
-</style>

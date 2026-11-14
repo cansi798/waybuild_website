@@ -13,30 +13,39 @@ fragen:
     antwort: "Kleine Änderungen in der Regel innerhalb von 1 Stunde, werktags von 9 bis 17 Uhr. Wenn etwas länger dauert, sagen wir Ihnen das frühzeitig."
   - frage: "Kostet jede Änderung extra?"
     antwort: "Nein. Änderungen per Nachricht sind im fairen Rahmen im Monatspreis enthalten. Größere Vorhaben besprechen wir vorher mit Ihnen."
-  - frage: "Was ist im Paket Komplett anders?"
-    antwort: "Ihre Änderungswünsche kommen bei uns zuerst dran. Außerdem setzen wir mehr Verbesserungen im Monat um, mehr dazu unter Auswertung."
+  - frage: "Was kommt im Paket Plus dazu?"
+    antwort: "Ab Paket Plus halten wir zusätzlich Ihr Google-Profil aktuell und schicken Ihnen jeden Monat einen kurzen Bericht mit Besuchern, Anfragen und Suchbegriffen."
+# von uns ergänzt (#5892): probleme
+probleme:
+  - titel: "Veraltete Angaben bleiben stehen"
+    text: "Öffnungszeiten, Angebote oder Fotos ändern sich, aber die Website zieht nicht mit."
+  - titel: "Niemand kümmert sich um die Technik"
+    text: "An Updates und Sicherungen denkt im Alltag kaum jemand, bis etwas nicht mehr funktioniert."
+  - titel: "Unklar, wen man anrufen soll"
+    text: "Statt einem festen Ansprechpartner gibt es ein Ticketsystem oder gar niemanden."
+umfang:
+  - titel: "Hosting in Deutschland"
+    text: "Ihre Website läuft auf Servern in Deutschland."
+  - titel: "Updates und Sicherungen"
+    text: "Wir halten die Technik aktuell und sichern Ihre Website regelmäßig."
+  - titel: "Änderungen per Nachricht"
+    text: "Schicken Sie uns Ihren Wunsch als Text, Screenshot oder Sprachnachricht. Änderungen sind im fairen Rahmen im Monatspreis enthalten. Kleine Änderungen setzen wir in der Regel innerhalb von 1 Stunde um (werktags 9 bis 17 Uhr)."
+  - titel: "Fester Ansprechpartner"
+    text: "Sie sprechen mit jemandem, der Ihr Unternehmen kennt, statt mit einem allgemeinen Support."
+umfangHinweis: "Ab Paket Plus halten wir außerdem Ihr Google-Profil aktuell, mehr dazu unter [Google-Profil](/leistungen/google-profil/)."
+schritte:
+  - titel: "Verstehen"
+    text: "Schon im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, was sich bei Ihnen häufig ändert und wie Sie uns am liebsten erreichen."
+  - titel: "Verbinden"
+    text: "Wir achten darauf, dass Ihre Angaben überall gleich sind, zum Beispiel auf der Website und ab Paket Plus im Google-Profil."
+  - titel: "Verbessern"
+    text: "Was uns bei der Betreuung auffällt, sprechen wir an. Wenn wir einen besseren Weg sehen oder ein Risiko erkennen, sagen wir es Ihnen."
+pakete: [basis, plus]
+paketText: "Die Betreuung ist in beiden Paketen enthalten, schon ab Basis."
+passt: "Die Betreuung passt, wenn Sie sich nicht selbst um Technik kümmern möchten und einen festen Ansprechpartner schätzen. Welches Paket zu Ihnen passt, klären wir in der kostenlosen Erstberatung."
+verwandt: [website, google-profil, auswertung]
 ---
 
-## Worum es geht
+Eine Website ist nach dem Start nicht fertig. Öffnungszeiten ändern sich, ein neues Angebot kommt dazu, ein Foto soll ausgetauscht werden. Dazu kommen Updates und Sicherungen, an die im Alltag kaum jemand denkt, bis etwas nicht mehr funktioniert.
 
-Eine Website ist nach dem Start nicht fertig. Öffnungszeiten ändern sich, ein neues Angebot kommt dazu, ein Foto soll ausgetauscht werden. Dazu kommen Updates und Sicherungen, an die im Alltag kaum jemand denkt, bis etwas nicht mehr funktioniert. Viele Unternehmer wissen dann nicht, wen sie anrufen sollen, oder müssen sich selbst in die Technik einarbeiten. So bleiben veraltete Angaben stehen, und Ihre Kunden bekommen ein falsches Bild.
-
-## Was wir übernehmen
-
-- **Hosting in Deutschland:** Ihre Website läuft auf Servern in Deutschland.
-- **Updates und Sicherungen:** Wir halten die Technik aktuell und sichern Ihre Website regelmäßig.
-- **Änderungen per Nachricht:** Schicken Sie uns Ihren Wunsch als Text, Screenshot oder Sprachnachricht. Änderungen sind im fairen Rahmen im Monatspreis enthalten. Kleine Änderungen setzen wir in der Regel innerhalb von 1 Stunde um (werktags 9 bis 17 Uhr).
-- **Fester Ansprechpartner:** Sie sprechen mit jemandem, der Ihr Unternehmen kennt, statt mit einem allgemeinen Support.
-- **Bevorzugte Bearbeitung:** Im Paket Komplett kommen Ihre Änderungswünsche bei uns zuerst dran.
-
-Ab Paket Plus halten wir außerdem Ihr Google-Profil aktuell, mehr dazu unter [Google-Profil](/leistungen/google-profil/). Wie Ihre Website entsteht, beschreiben wir unter [Website](/leistungen/website/). Wie wir Zahlen auswerten und Ihre Website gezielt weiterentwickeln, lesen Sie unter [Auswertung](/leistungen/auswertung/).
-
-## So läuft es ab
-
-- **Verstehen:** Schon im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, was sich bei Ihnen häufig ändert und wie Sie uns am liebsten erreichen.
-- **Verbinden:** Wir achten darauf, dass Ihre Angaben überall gleich sind, zum Beispiel auf der Website und ab Paket Plus im Google-Profil.
-- **Verbessern:** Was uns bei der Betreuung auffällt, sprechen wir an. Wenn wir einen besseren Weg sehen oder ein Risiko erkennen, sagen wir es Ihnen.
-
-## Passt das zu Ihnen?
-
-Die Betreuung ist in allen drei Paketen enthalten, schon ab Basis. Sie passt, wenn Sie sich nicht selbst um Technik kümmern möchten und einen festen Ansprechpartner schätzen. Welches Paket zu Ihnen passt, klären wir in der kostenlosen Erstberatung.
+Viele Unternehmer wissen dann nicht, wen sie anrufen sollen, oder müssen sich selbst in die Technik einarbeiten. So bleiben veraltete Angaben stehen, und Ihre Kunden bekommen ein falsches Bild.

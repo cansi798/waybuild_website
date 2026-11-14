@@ -5,6 +5,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
 import { href, absolute } from '../../lib/paths';
+import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
+import '../../styles/start-neu.css';
+import '../../styles/seite-wissen.css';
+// Seit 14.11.2026 (Jamil Talk qh87y3sj #5892): ruhige Lesetypografie (.swi-lesen, max. 68ch) und Abschluss wie auf der Startseite.
 
 export async function getStaticPaths() {
   const all = await getCollection('blog');
@@ -50,7 +54,7 @@ const schema = [
         {entwurf && <p class="post__draft" role="note">Entwurf – wird noch geprüft</p>}
       </header>
 
-      <div class="prose post__body">
+      <div class="prose post__body swi-lesen">
         <Content />
       </div>
 
@@ -75,6 +79,7 @@ const schema = [
       </nav>
     </div>
   </article>
+  <SnAbschluss />
 </BaseLayout>
 
 <style>

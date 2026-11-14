@@ -1,5 +1,6 @@
 ---
-// Seitenkopf der Unterseiten. Optional ein Stockfoto (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts;
+// Seitenkopf der Unterseiten. Seit 14.11.2026 im Stil des Startseiten-Heros (Jamil Talk qh87y3sj #5892: „Unterseiten im selben Stil
+// wie die Hauptseite“): türkiser Verlauf mit weichen Farbflächen, weiße Schrift, links ausgerichtet. Optional ein Stockfoto (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts;
 // Handy Foto unter dem Text. Ohne `foto` bleibt der Kopf wie bisher.
 import Foto from './Foto.astro';
 import type { FotoId } from '../config/bilder';
@@ -14,6 +15,7 @@ const { eyebrow, title, lead, foto } = Astro.props;
 ---
 
 <section class="ph">
+  <div class="ph__flaechen" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class:list={['wrap', { 'ph__raster': foto }]}>
     <div class="ph__text">
       <span class="eyebrow">{eyebrow}</span>
@@ -27,19 +29,27 @@ const { eyebrow, title, lead, foto } = Astro.props;
 
 <style>
   .ph {
-    position: relative; overflow: hidden;
-    padding-block: clamp(48px, 8vw, 96px) clamp(32px, 5vw, 56px);
-    border-bottom: 1px solid var(--line);
+    position: relative; overflow: hidden; isolation: isolate; color: #fff;
+    padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px);
+    background: linear-gradient(160deg, #0a9a94 0%, #007a75 45%, #00605d 100%);
   }
-  .ph::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background-image: linear-gradient(rgb(0 79 76 / 5%) 1px, transparent 1px), linear-gradient(90deg, rgb(0 79 76 / 5%) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse at 85% 30%, #000 10%, transparent 60%);
-  }
+  /* weiche, sehr langsam treibende Farbflächen wie im Startseiten-Hero (nur CSS) */
+  .ph__flaechen { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .ph__flaechen span { position: absolute; width: 520px; height: 520px; border-radius: 50%; filter: blur(70px); opacity: 0.55; }
+  .ph__flaechen span:nth-child(1) { background: #19b5ae; top: -220px; left: -140px; animation: ph-treib 26s ease-in-out infinite alternate; }
+  .ph__flaechen span:nth-child(2) { background: #0d6f8a; bottom: -260px; right: -120px; animation: ph-treib 32s ease-in-out infinite alternate-reverse; }
+  .ph__flaechen span:nth-child(3) { background: #5fd3c6; top: 20%; right: 25%; width: 340px; height: 340px; opacity: 0.25; animation: ph-treib 38s ease-in-out infinite alternate; }
+  @keyframes ph-treib { to { transform: translate(60px, 40px) scale(1.08); } }
+  @media (prefers-reduced-motion: reduce) { .ph__flaechen span { animation: none; } }
   .ph .wrap { position: relative; }
-  .ph h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); max-width: 18ch; }
+  .ph .eyebrow { color: #c6f1ec; }
+  .ph .eyebrow::before { background: #c6f1ec; }
+  .ph h1 { color: #fff; font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem); line-height: 1.06; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
+  .ph .lead { color: rgb(255 255 255 / 90%); max-width: 56ch; text-wrap: pretty; }
+  .ph :global(a:not(.btn)) { color: #fff; }
+  .ph :global(.btn) { background: #fff; color: #006b68; border-color: #fff; }
   .ph__text { min-width: 0; }
   .ph__raster { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  .ph__raster :global(.ph__foto) { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -30px rgb(0 0 0 / 45%); }
   @media (min-width: 900px) { .ph__raster { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
 </style>

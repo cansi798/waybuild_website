@@ -1,0 +1,49 @@
+/* /ueber-uns/ im Stil der neuen Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026). Präfix .su-.
+ * Farben/Token aus .sn (start-neu.css). Hintergründe: Weiß → Papier (Team) → Weiß (Werte) → Papier (Arbeitsweise) → Hauch (SnAbschluss).
+ * Keine Icon-Kacheln: Nummern, Initialen, feine Linien. Grids mit minmax(0, 1fr) + min-width: 0 (WebKit, kein Querscrollen). */
+
+.su-nr { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sn-tinte); }
+
+/* 1 · Mission */
+.su-mission { background: var(--white); }
+.su-mission .sn-kopf { margin-bottom: 0; }
+.su-mission .sn-kopf .sn-h2 { max-width: 24ch; }
+.su-akzent { color: var(--sn-tinte); }
+.su-mission__text { display: grid; gap: 16px; }
+.su-mission__text > p:not(.sn-lead) { line-height: 1.7; color: var(--ink-soft); max-width: 52ch; text-wrap: pretty; }
+.su-mission .hint { margin-top: 32px; }
+
+/* 2 · Team */
+.su-team { background: var(--paper); }
+.su-personen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 800px) { .su-personen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+.su-person { min-width: 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 20px; align-items: start;
+  padding: clamp(20px, 3vw, 32px); border-radius: 28px; background: var(--white); }
+@media (min-width: 560px) { .su-person { grid-template-columns: 120px minmax(0, 1fr); gap: 24px; } }
+.su-person__foto { width: 100%; aspect-ratio: 1; border-radius: 24px; overflow: hidden; background: var(--sn-hauch); display: grid; place-items: center; }
+.su-person__foto picture, .su-person__bild { display: block; width: 100%; height: 100%; }
+.su-person__bild { object-fit: cover; object-position: 50% 30%; }
+.su-person__initialen { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); letter-spacing: -0.02em; color: var(--sn-tinte); }
+.su-person__text { min-width: 0; display: grid; gap: 4px; align-content: start; padding-top: 4px; }
+.su-person__text h3 { overflow-wrap: break-word; }
+.su-person__rolle { font-size: 0.95rem; font-weight: 600; color: var(--sn-tinte); overflow-wrap: break-word; }
+.su-person__zitat { margin: 12px 0 0; padding: 14px 0 0; border-top: 1px solid var(--sn-linie); }
+.su-person__zitat p { font-size: 1rem; line-height: 1.65; color: var(--ink); text-wrap: pretty; }
+
+/* 3 · Werte */
+.su-werte { background: var(--white); }
+.su-werte__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); column-gap: clamp(24px, 3vw, 40px); }
+@media (min-width: 640px) { .su-werte__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .su-werte__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.su-wert { min-width: 0; display: grid; align-content: start; gap: 10px; padding: clamp(22px, 3vw, 32px) 0 clamp(26px, 3vw, 36px); border-top: 1px solid var(--sn-linie); }
+.su-wert__titel { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); line-height: 1.15; letter-spacing: -0.025em;
+  color: var(--ink); overflow-wrap: break-word; hyphens: auto; }
+.su-wert p { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+
+/* 4 · Arbeitsweise */
+.su-weise { background: var(--paper); }
+.su-weise__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 860px) { .su-weise__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
+.su-schritt { min-width: 0; display: grid; align-content: start; gap: 10px; padding: clamp(24px, 3vw, 32px); border-radius: 28px; background: var(--white); }
+.su-schritt h3 { overflow-wrap: break-word; hyphens: auto; }
+.su-schritt p { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }

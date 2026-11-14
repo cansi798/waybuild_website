@@ -7,6 +7,10 @@ import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
 import PreisBlock from '../../components/PreisBlock.astro';
 import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
+import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
+import '../../styles/start-neu.css';
+import '../../styles/seite-wissen.css';
+// Seit 14.11.2026 (Jamil Talk qh87y3sj #5892): ruhige Lesetypografie (.swi-lesen, max. 68ch) und Abschluss wie auf der Startseite.
 
 export async function getStaticPaths() {
   const all = await getCollection('ratgeber');
@@ -56,7 +60,7 @@ const schema = [
         <ul>{entry.data.kurz.map((k) => <li>{k}</li>)}</ul>
       </aside>
 
-      <div class="prose art__body">
+      <div class="prose art__body swi-lesen">
         <Content />
       </div>
 
@@ -96,6 +100,7 @@ const schema = [
     </div>
   </article>
   {!leistung && <PreisBlock ab="basis" merkmale={['website', 'seo', 'google-profil', 'optimierung']} kontakt={`${href('/kontakt/')}?leistung=business-website`} id="preis" />}
+  <SnAbschluss />
 </BaseLayout>
 
 <style>

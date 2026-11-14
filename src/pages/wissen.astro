@@ -8,8 +8,12 @@ import { SEITEN_FOTO } from '../config/bilder';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { href } from '../lib/paths';
-import type { IconName } from '../config/site';
 import { FRAGEN_TITEL, fragenNachThema } from '../config/fragen';
+import SnAbschluss from '../components/startneu/SnAbschluss.astro';
+import '../styles/start-neu.css';
+import '../styles/seite-wissen.css';
+// Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): drei ruhige Karten mit Nummer statt Icon-Kachel,
+// Einträge als Liste mit feinen Linien, Abschluss wie auf der Startseite. Stil: src/styles/seite-wissen.css (.swi-).
 
 const datumText = (d: Date) => d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -34,10 +38,10 @@ const blog = (await getCollection('blog'))
   .slice(0, 3)
   .map((b) => ({ titel: b.data.title, path: `/blog/${b.id}/`, info: datumText(b.data.date), entwurf: !!b.data.draft }));
 
-const BEREICHE: { icon: IconName; titel: string; text: string; path: string; alle: string; eintraege: { titel: string; path: string; info: string; entwurf?: boolean }[] }[] = [
-  { icon: 'book', titel: 'Ratgeber', text: 'Kurz erklärt: was eine Website kostet, mieten oder kaufen, Software, Cloud und IT.', path: '/ratgeber/', alle: 'Alle Ratgeber', eintraege: ratgeber },
-  { icon: 'frage', titel: FRAGEN_TITEL, text: 'Antworten zu Paketen und Preisen, Ablauf, Technik und Vertrag.', path: '/fragen/', alle: 'Alle Fragen', eintraege: fragen },
-  { icon: 'pen', titel: 'Blog', text: 'Einordnungen zu Websites, Sichtbarkeit bei Google und in der KI-Suche für kleine und mittlere Unternehmen.', path: '/blog/', alle: 'Zum Blog', eintraege: blog },
+const BEREICHE: { titel: string; text: string; path: string; alle: string; eintraege: { titel: string; path: string; info: string; entwurf?: boolean }[] }[] = [
+  { titel: 'Ratgeber', text: 'Kurz erklärt: was eine Website kostet, mieten oder kaufen, Software, Cloud und IT.', path: '/ratgeber/', alle: 'Alle Ratgeber', eintraege: ratgeber },
+  { titel: FRAGEN_TITEL, text: 'Antworten zu Paketen und Preisen, Ablauf, Technik und Vertrag.', path: '/fragen/', alle: 'Alle Fragen', eintraege: fragen },
+  { titel: 'Blog', text: 'Einordnungen zu Websites, Sichtbarkeit bei Google und in der KI-Suche für kleine und mittlere Unternehmen.', path: '/blog/', alle: 'Zum Blog', eintraege: blog },
 ];
 ---
 
@@ -48,52 +52,43 @@ const BEREICHE: { icon: IconName; titel: string; text: string; path: string; all
 >
   <PageHeader eyebrow="Ratgeber, Fragen und Blog" title="Wissen" foto={SEITEN_FOTO.wissen} lead="Hier finden Sie unsere Ratgeber, die häufigsten Fragen und den Blog an einem Ort. Kurz erklärt, rund um Website, Software und Cloud für Unternehmen." />
 
-  <section class="section">
+  <section class="section sn swi" aria-labelledby="swi-h">
     <div class="wrap">
-      <ul class="wi">
-        {BEREICHE.map((b) => (
-          <li class="wi__karte card">
-            <span class="wi__icon"><Icon name={b.icon} size={26} /></span>
-            <h2><a href={href(b.path)}>{b.titel}</a></h2>
-            <p class="wi__text">{b.text}</p>
+      <!-- von uns ergänzt (#5892): Kopf über den drei Bereichen -->
+      <div class="sn-kopf sn-kopf--zweispaltig">
+        <div>
+          <p class="sn-kenn">Drei Bereiche</p>
+          <h2 id="swi-h" class="sn-h2 sn-h2--klein">Kurz erklärt, wenn Sie es brauchen.</h2>
+        </div>
+        <p class="sn-lead">Lesen Sie in Ruhe nach, bevor Sie entscheiden. Je Bereich sehen Sie hier die neuesten Einträge.</p>
+      </div>
+      <ul class="swi-raster">
+        {BEREICHE.map((b, i) => (
+          <li class="swi-karte">
+            <span class="swi-karte__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="sn-h3"><a href={href(b.path)}>{b.titel}</a></h3>
+            <p class="swi-karte__text">{b.text}</p>
             {b.eintraege.length > 0 && (
-              <ul class="wi__liste">
+              <ul class="swi-liste">
                 {b.eintraege.map((e) => (
                   <li>
                     <a href={href(e.path)}>
-                      <span class="wi__titel">{e.titel}</span>
+                      <span class="swi-liste__titel">{e.titel}</span>
                       {(e.entwurf || e.info) && (
-                        <small>{e.entwurf && <span class="wi__entwurf">Entwurf</span>}{e.info}</small>
+                        <small>{e.entwurf && <span class="swi-entwurf">Entwurf</span>}{e.info}</small>
                       )}
                     </a>
                   </li>
                 ))}
               </ul>
             )}
-            <a class="wi__alle" href={href(b.path)}>{b.alle} <Icon name="arrow" size={18} /></a>
+            <a class="sn-link swi-karte__alle" href={href(b.path)}>{b.alle} <Icon name="arrow" size={18} /></a>
           </li>
         ))}
       </ul>
     </div>
   </section>
+
+  <SnAbschluss />
 </BaseLayout>
 
-<style>
-  .wi { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
-  @media (min-width: 1000px) { .wi { grid-template-columns: repeat(3, 1fr); } }
-  .wi__karte { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  .wi__icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: var(--paper-2); color: var(--accent-ink); }
-  .wi__karte h2 { font-size: 1.45rem; margin: 4px 0 0; overflow-wrap: break-word; hyphens: auto; }
-  .wi__karte h2 a { text-decoration: none; color: inherit; }
-  .wi__karte h2 a:hover { color: var(--accent-ink); }
-  .wi__text { color: var(--ink-soft); margin: 0; }
-  .wi__liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
-  .wi__liste li { border-bottom: 1px solid var(--line); }
-  .wi__liste a { display: grid; gap: 3px; padding: 12px 0; text-decoration: none; color: var(--ink); min-height: 44px; }
-  .wi__liste a:hover .wi__titel { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
-  .wi__titel { font-weight: 600; line-height: 1.4; overflow-wrap: break-word; hyphens: auto; }
-  .wi__liste small { color: var(--ink-soft); font-size: 0.85rem; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .wi__entwurf { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--paper-2); color: var(--accent-ink); font-weight: 650; font-size: 0.78rem; }
-  .wi__alle { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 6px; font-weight: 650; color: var(--accent-ink); text-decoration: none; min-height: 44px; }
-  .wi__alle:hover { text-decoration: underline; text-underline-offset: 4px; }
-</style>
