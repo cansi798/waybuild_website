@@ -97,26 +97,26 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
   </>)}
 
   {name === 'stand' && (<>
+    {/* Drei Fragen von drei verschiedenen Kunden, ohne rote Zahl (Jamil #5948, 14.11.2026) */}
     <ellipse cx="160" cy="112" rx="166" ry="106" fill={url('hof')} />
-    {/* Kunde 1 */}
-    <circle cx="36" cy="62" r="20" fill={url('zart')} stroke="#0B6D6B" stroke-width="1.5" />
-    <circle cx="36" cy="56" r="6" fill="none" stroke="#0B6D6B" stroke-width="1.5" />
-    <path d="M25.5 74c1.6-5.6 5.8-8.6 10.5-8.6s8.9 3 10.5 8.6" fill="none" stroke="#0B6D6B" stroke-width="1.5" stroke-linecap="round" />
-    <path d="M86 22H252A20 20 0 0 1 272 42V54A20 20 0 0 1 252 74H92L72 86L76 70.5A20 20 0 0 1 66 54V42A20 20 0 0 1 86 22Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
-    <text x="169" y="54" font-size="17" font-weight="600" text-anchor="middle" font-family={schrift} fill="#2C3135">Wann geht es los?</text>
-    <circle cx="270" cy="24" r="14" fill="#C2410C" stroke="#fff" stroke-width="3" />
-    <text x="270" y="29.5" font-size="15" font-weight="700" text-anchor="middle" font-family={schrift} fill="#fff">5</text>
-    {/* Kunde 2 */}
-    <circle cx="286" cy="146" r="20" fill="#d4af37" fill-opacity="0.14" stroke="#d4af37" stroke-width="1.5" />
-    <circle cx="286" cy="140" r="6" fill="none" stroke="#d4af37" stroke-width="1.5" />
-    <path d="M275.5 158c1.6-5.6 5.8-8.6 10.5-8.6s8.9 3 10.5 8.6" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" />
-    <path d="M68 104H234A20 20 0 0 1 254 124V136A20 20 0 0 1 244 152.5L248 168L228 156H68A20 20 0 0 1 48 136V124A20 20 0 0 1 68 104Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
-    <text x="151" y="136" font-size="17" font-weight="600" text-anchor="middle" font-family={schrift} fill="#2C3135">Gibt es was Neues?</text>
-    {/* Die nächste Frage wird schon getippt */}
-    <rect x="66" y="180" width="64" height="30" rx="15" fill="#fff" stroke="#E6E0D4" stroke-width="1.5" filter={url('schatten')} />
-    <circle cx="84" cy="195" r="3.5" fill="#8A8F94" />
-    <circle cx="98" cy="195" r="3.5" fill="#8A8F94" opacity="0.6" />
-    <circle cx="112" cy="195" r="3.5" fill="#8A8F94" opacity="0.35" />
+    {/* Kunde 1 (links, Primär) */}
+    <circle cx="30" cy="40" r="17" fill={url('zart')} stroke="#0B6D6B" stroke-width="1.5" />
+    <circle cx="30" cy="35" r="5" fill="none" stroke="#0B6D6B" stroke-width="1.5" />
+    <path d="M21 50c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#0B6D6B" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M70 20H226A18 18 0 0 1 244 38V42A18 18 0 0 1 226 60H70A18 18 0 0 1 56 54L50 46L58 43A18 18 0 0 1 52 38A18 18 0 0 1 70 20Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
+    <text x="148" y="45.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#2C3135">Wann geht es los?</text>
+    {/* Kunde 2 (rechts, Gold) */}
+    <circle cx="290" cy="110" r="17" fill="#d4af37" fill-opacity="0.14" stroke="#d4af37" stroke-width="1.5" />
+    <circle cx="290" cy="105" r="5" fill="none" stroke="#d4af37" stroke-width="1.5" />
+    <path d="M281 120c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M94 90H250A18 18 0 0 1 264 96L270 104L262 107A18 18 0 0 1 268 112A18 18 0 0 1 250 130H94A18 18 0 0 1 76 112V108A18 18 0 0 1 94 90Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
+    <text x="172" y="115.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#2C3135">Gibt es was Neues?</text>
+    {/* Kunde 3 (links, Positiv-Grün) */}
+    <circle cx="30" cy="180" r="17" fill="#2C9A7A" fill-opacity="0.12" stroke="#2C9A7A" stroke-width="1.5" />
+    <circle cx="30" cy="175" r="5" fill="none" stroke="#2C9A7A" stroke-width="1.5" />
+    <path d="M21 190c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#2C9A7A" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M70 160H226A18 18 0 0 1 244 178V182A18 18 0 0 1 226 200H70A18 18 0 0 1 56 194L50 186L58 183A18 18 0 0 1 52 178A18 18 0 0 1 70 160Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
+    <text x="148" y="185.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#2C3135">Wie weit sind Sie?</text>
   </>)}
 
   {name === 'zettel' && (<>
