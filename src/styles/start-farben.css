@@ -1,0 +1,51 @@
+/* Neue Farben + Schrift NUR für die Startseite (Jamil Talk qh87y3sj #5899/#5900, 14.11.2026: „bitte erstmal nur für hauptseite
+   anpassen“). Greift über html[data-thema="besucherreise"] (setzt nur index.astro), Unterseiten bleiben unverändert.
+   Palette: Primär #0B6D6B · dunkle Flächen #084E4C · Gold-Akzent #D8A74F · Hintergrund #FAF8F4 · Karten #FFFFFF · Text #2C3135
+   · positive Akzente #2C9A7A. Schrift: Manrope (lokal über @fontsource-variable/manrope, kein Google-Server):
+   Überschriften 700–800, Text 400–500, Buttons 600.
+   Kontrast: #0B6D6B auf Weiß 6,4 : 1, #2C3135 auf #FAF8F4 12,6 : 1; Gold nur als Zier (Linien, Punkte), nie als kleine Schrift. */
+html[data-thema='besucherreise'] {
+  --font-head: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ink: #2c3135;
+  --ink-soft: #545b61;
+  --paper: #faf8f4;
+  --white: #ffffff;
+  --dark: #084e4c;
+  --accent: #2c9a7a;
+  --accent-ink: #0b6d6b;
+  --accent-mid: #2c9a7a;
+  --gold: #d8a74f;
+  --line: #e6e0d4;
+}
+html[data-thema='besucherreise'] body { background: var(--paper); font-family: var(--font-body); font-weight: 450; color: var(--ink); }
+html[data-thema='besucherreise'] .sn {
+  --sn-tinte: #0b6d6b; --sn-tief: #084e4c; --sn-tuerkis: #2c9a7a; --sn-mittel: #2c9a7a; --sn-hauch: #edf4f1;
+  --sn-sand: #f3efe6; --sn-linie: #e6e0d4; --sn-linie-t: #cfe3dc;
+  --sn-schatten: 0 1px 2px rgb(8 78 76 / 5%), 0 28px 56px -36px rgb(8 78 76 / 34%);
+}
+/* Überschriften 700–800, Buttons 600 */
+html[data-thema='besucherreise'] :is(h1, h2, .sn-h2, .v-titel) { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.035em; }
+html[data-thema='besucherreise'] :is(h3, h4, .sn-h3, .sn-h4) { font-family: var(--font-head); font-weight: 700; }
+html[data-thema='besucherreise'] :is(.btn, button, .sn-pk) { font-family: var(--font-head); font-weight: 600; }
+html[data-thema='besucherreise'] .sn-kenn { font-weight: 700; letter-spacing: 0.01em; }
+
+/* Hero: Grund in Primär, Farbflächen in Primär / Positiv / Dunkel */
+html[data-thema='besucherreise'] .v-hero { background: #0b6d6b; }
+html[data-thema='besucherreise'] .v-blob--1 { background: radial-gradient(closest-side, rgb(44 154 122 / 55%), rgb(44 154 122 / 0)); }
+html[data-thema='besucherreise'] .v-blob--2 { background: radial-gradient(closest-side, rgb(216 167 79 / 16%), rgb(216 167 79 / 0)); }
+html[data-thema='besucherreise'] .v-blob--3 { background: radial-gradient(closest-side, rgb(8 78 76 / 90%), rgb(8 78 76 / 0)); }
+html[data-thema='besucherreise'] .v-blob--4 { background: radial-gradient(closest-side, rgb(44 154 122 / 38%), rgb(44 154 122 / 0)); }
+html[data-thema='besucherreise'] .v-leucht { color: #0b6d6b; }
+
+/* Gold-Akzent sparsam als Zier */
+html[data-thema='besucherreise'] .sn-problem__schluss { border-top-color: var(--gold); }
+html[data-thema='besucherreise'] .sph-phase:last-child .sph-ico::before { box-shadow: 0 0 0 6px var(--paper), 0 0 0 12px rgb(216 167 79 / 35%); }
+html[data-thema='besucherreise'] .svg-tabelle thead .svg-wir { box-shadow: inset 0 3px 0 var(--gold); }
+html[data-thema='besucherreise'] .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(216 167 79 / 45%); }
+
+/* Positive Akzente (Haken) in #2C9A7A */
+html[data-thema='besucherreise'] .svg-ja .svg-zeichen { color: #2c9a7a; background: #e4f2ec; }
+
+/* Kopf- und Fußzeile in den neuen Grüntönen */
+html[data-thema='besucherreise'] .footer { background: #084e4c; }
