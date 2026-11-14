@@ -23,7 +23,7 @@ const wir = T.spalten.length - 1;
           <tr>
             <td></td>
             {T.spalten.map((sp, i) => (
-              <th scope="col" class:list={{ 'svg-wir': i === wir }}><span class="svg-lang">{sp.lang}</span><span class="svg-kurz" aria-hidden="true">{sp.kurz}</span></th>
+              <th scope="col" class:list={{ 'svg-wir': i === wir }}><span class="svg-lang">{sp.lang}{sp.zusatz && <span class="svg-zusatz">{sp.zusatz}</span>}</span><span class="svg-kurz" aria-hidden="true">{sp.kurz}{sp.zusatzKurz && <span class="svg-zusatz">{sp.zusatzKurz}</span>}</span></th>
             ))}
           </tr>
         </thead>
