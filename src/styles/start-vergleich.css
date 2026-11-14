@@ -1,4 +1,51 @@
-/* Startseite: Vergleichsabschnitt (Jamil Talk qh87y3sj #5858, 14.11.2026). Präfix .svg- */
+/* Startseite: Vergleichstabelle (Jamil #5871–#5873, 14.11.2026). Präfix .svg-. Weißer Abschnitt, Tabelle auf heller Tafel,
+   waybuild-Spalte zart türkis hinterlegt. Zeichen: ✓ Türkis, ⚠ Bernstein, ✗ Rot (nur als Icon-Farbe, Text bleibt dunkel). */
 .svg { background: var(--white); }
-.svg .sn-kopf { margin-bottom: clamp(28px, 4vw, 48px); }
-.sn .svg__hinweis { margin: 18px auto 0; max-width: 62ch; text-align: center; font-size: 0.85rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+.svg .sn-kopf .sn-h2 { max-width: 20ch; margin-inline: auto; }
+.svg-tafel { max-width: 1000px; margin: 0 auto; border: 1px solid var(--sn-linie); border-radius: 24px; overflow: hidden; background: var(--white);
+  box-shadow: var(--sn-schatten); }
+.svg-tabelle { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.svg-tabelle th, .svg-tabelle td { position: relative; padding: 16px 12px; text-align: left; vertical-align: middle; border-top: 1px solid var(--sn-linie);
+  min-width: 0; overflow-wrap: break-word; }
+.svg-tabelle thead th, .svg-tabelle thead td { border-top: 0; padding-top: 20px; padding-bottom: 18px; font-family: var(--font-head); font-weight: 700;
+  font-size: 0.98rem; color: var(--ink); }
+.svg-tabelle tbody th { font-weight: 600; font-size: 0.98rem; line-height: 1.4; color: var(--ink); padding-left: clamp(14px, 3vw, 28px); }
+.svg-tabelle thead td { width: 38%; }
+.svg-tabelle .svg-wir { background: var(--sn-hauch); }
+.svg-tabelle thead .svg-wir { color: var(--sn-tinte); font-size: 1.05rem; }
+.svg-zeichen { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; vertical-align: middle; }
+.svg-zeichen svg { stroke-width: 2.4; }
+.svg-ja .svg-zeichen { background: #e3f4f2; color: #00807b; }
+.svg-teils .svg-zeichen { background: #fdf3dc; color: #a16207; }
+.svg-nein .svg-zeichen { background: #fdecea; color: #c2410c; }
+.svg-tabelle .svg-wir .svg-zeichen { background: var(--white); }
+.svg-notiz { display: block; margin-top: 4px; font-size: 0.86rem; line-height: 1.35; color: var(--ink-soft); }
+.svg-kurz { display: none; }
+@media (min-width: 640px) {
+  .svg-notiz { display: inline; margin: 0 0 0 8px; vertical-align: middle; }
+  .svg-tabelle th, .svg-tabelle td { padding: 18px 20px; }
+}
+@media (max-width: 639px) {
+  .svg-lang { display: none; }
+  .svg-kurz { display: inline; }
+  .svg-tabelle thead td { width: 36%; }
+  .svg-tabelle th, .svg-tabelle td { padding: 12px 3px; }
+  .svg-tabelle tbody th { font-size: 0.86rem; padding-left: 12px; -webkit-hyphens: auto; hyphens: auto; }
+  .svg-tabelle thead th { font-size: 0.72rem; white-space: nowrap; text-align: center; letter-spacing: -0.01em; }
+  .svg-tabelle thead .svg-wir { font-size: 0.78rem; }
+  .svg-notiz { font-size: 0.74rem; }
+  .svg-tabelle td { text-align: center; }
+  .svg-tafel { border-radius: 18px; }
+}
+.svg-legende { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin: 18px 0 0; padding: 0; font-size: 0.88rem; color: var(--ink-soft); }
+.svg-legende li { display: inline-flex; align-items: center; gap: 6px; }
+.svg-legende .svg-zeichen { width: 22px; height: 22px; }
+.sn .svg__hinweis { margin: 14px auto 0; max-width: 62ch; text-align: center; font-size: 0.85rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
+/* Sehr schmal (unter 400 px): erste Spalte schmaler, Kopf kleiner, damit „Baukasten · Agentur · waybuild“ nebeneinander passen */
+@media (max-width: 399px) {
+  .svg-tabelle thead td { width: 33%; }
+  .svg-tabelle thead th { font-size: 0.66rem; padding-inline: 2px; }
+  .svg-tabelle thead .svg-wir { font-size: 0.7rem; }
+  .svg-tabelle tbody th { font-size: 0.8rem; padding-left: 10px; padding-right: 4px; }
+  .svg-zeichen { width: 26px; height: 26px; }
+}

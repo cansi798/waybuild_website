@@ -1,21 +1,51 @@
 ---
-// Startseite: Vergleichsabschnitt „Wir machen den Unterschied“ wieder eingefügt (Jamil Talk qh87y3sj #5858, 14.11.2026).
-// Kopftexte wie früher auf der Startseite; die Karten kommen unverändert aus variante/VVergleich.astro (Texte: config/variante.ts,
-// VERGLEICH), darunter der Hinweistext VERGLEICH.hinweis. VVergleich bringt sein CSS selbst mit. Keine Stockfotos.
-// Stil: styles/start-vergleich.css.
-import VVergleich from '../variante/VVergleich.astro';
+// Startseite: Vergleichstabelle (Jamil Talk qh87y3sj #5858 „wieder rein“, neu nach #5871–#5873, 14.11.2026). Echte <table>
+// (Zeilenköpfe th scope="row"), Zeichen als Icons mit Klartext für Screenreader, Legende darunter. Am Handy kurze Spaltennamen.
+// Texte: config/start-vergleich.ts, Hinweis (Anbieter-Arten, UWG) aus variante.ts. Stil: styles/start-vergleich.css.
+import Icon from '../Icon.astro';
+import { VERGLEICH_START as T } from '../../config/start-vergleich';
 import { VERGLEICH } from '../../config/variante';
 import '../../styles/start-vergleich.css';
+const symbol = { ja: 'check', teils: 'warnung', nein: 'close' } as const;
+const wir = T.spalten.length - 1;
 ---
 
 <section class="section sn svg" id="vergleich" aria-labelledby="svg-h">
   <div class="wrap">
     <div class="sn-kopf sn-kopf--mitte">
-      <p class="sn-kenn">Im Vergleich</p>
-      <h2 id="svg-h" class="sn-h2">Wir machen den Unterschied</h2>
-      <p class="sn-lead">Sechs Fragen, die Ihnen bei der Wahl helfen.</p>
+      <p class="sn-kenn">{T.kennzeile}</p>
+      <h2 id="svg-h" class="sn-h2">{T.titel}</h2>
     </div>
-    <VVergleich />
+    <div class="svg-tafel">
+      <table class="svg-tabelle">
+        <caption class="sr-only">{T.titel} Vergleich nach Anbieter-Art</caption>
+        <thead>
+          <tr>
+            <td></td>
+            {T.spalten.map((sp, i) => (
+              <th scope="col" class:list={{ 'svg-wir': i === wir }}><span class="svg-lang">{sp.lang}</span><span class="svg-kurz" aria-hidden="true">{sp.kurz}</span></th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {T.zeilen.map((z) => (
+            <tr>
+              <th scope="row">{z.punkt}</th>
+              {z.werte.map((w, i) => (
+                <td class:list={[`svg-${w.s}`, { 'svg-wir': i === wir }]}>
+                  <span class="svg-zeichen" aria-hidden="true"><Icon name={symbol[w.s]} size={18} /></span>
+                  <span class="sr-only">{T.stufen[w.s]}</span>
+                  {w.notiz && <span class="svg-notiz">{w.notiz}</span>}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <ul class="svg-legende" aria-hidden="true">
+      {(['ja', 'teils', 'nein'] as const).map((s) => <li class={`svg-${s}`}><span class="svg-zeichen"><Icon name={symbol[s]} size={14} /></span>{T.stufen[s]}</li>)}
+    </ul>
     <p class="svg__hinweis">{VERGLEICH.hinweis}</p>
   </div>
 </section>
