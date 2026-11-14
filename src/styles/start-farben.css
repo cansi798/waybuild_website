@@ -41,7 +41,7 @@ html[data-thema='besucherreise'] .v-leucht { color: #0b6d6b; }
 /* Gold-Akzent sparsam als Zier */
 html[data-thema='besucherreise'] .sn-problem__schluss { border-top-color: var(--gold); }
 html[data-thema='besucherreise'] .sph-phase:last-child .sph-ico::before { box-shadow: 0 0 0 6px var(--paper), 0 0 0 12px rgb(216 167 79 / 35%); }
-html[data-thema='besucherreise'] .svg-tabelle thead .svg-wir { box-shadow: inset 0 3px 0 var(--gold); }
+/* Goldstrich über der waybuild-Spalte entfernt (Jamil #5907) */
 html[data-thema='besucherreise'] .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(216 167 79 / 45%); }
 
 /* Positive Akzente (Haken) in #2C9A7A */
