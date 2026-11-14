@@ -1,12 +1,12 @@
 /* Neue Farben + Schrift NUR für die Startseite (Jamil Talk qh87y3sj #5899/#5900, 14.11.2026: „bitte erstmal nur für hauptseite
    anpassen“). Greift über html[data-thema="besucherreise"] (setzt nur index.astro), Unterseiten bleiben unverändert.
    Palette: Primär #0B6D6B · dunkle Flächen #084E4C · Gold-Akzent #D8A74F · Hintergrund #FAF8F4 · Karten #FFFFFF · Text #2C3135
-   · positive Akzente #2C9A7A. Schrift: Manrope (lokal über @fontsource-variable/manrope, kein Google-Server):
+   · positive Akzente #2C9A7A. Schrift: Plus Jakarta Sans (seit #5903, vorher Manrope; lokal über @fontsource-variable/plus-jakarta-sans, kein Google-Server):
    Überschriften 700–800, Text 400–500, Buttons 600.
    Kontrast: #0B6D6B auf Weiß 6,4 : 1, #2C3135 auf #FAF8F4 12,6 : 1; Gold nur als Zier (Linien, Punkte), nie als kleine Schrift. */
 html[data-thema='besucherreise'] {
-  --font-head: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ink: #2c3135;
   --ink-soft: #545b61;
   --paper: #faf8f4;
