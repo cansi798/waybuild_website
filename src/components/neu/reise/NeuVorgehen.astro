@@ -1,0 +1,77 @@
+---
+// Kapitel 4 der zweiten Startseite /neu/: „So gehen wir vor“ und im selben Kapitel „So arbeiten wir.“.
+// Oben eine senkrechte Zeitlinie: drei Phasen, darunter jeweils ihre Schritte (am PC Phase links, Schritte rechts der Linie).
+// Die Linie zieht sich je Phase einmal von oben (Lichtmotiv aus dem Fundament), der Punkt markiert den Beginn einer Phase.
+// Darunter die drei Grundsätze: Wort und Leitsatz sichtbar, der Leitsatz öffnet den Aufklapper mit dem ganzen Text.
+// Sprungziele: #denkweise (Kapitel), #ablauf (Zeitlinie), #erstberatung (Schritt Erstgespräch), #arbeitsweise (Grundsätze).
+// Texte wörtlich aus src/config/vorgehen.ts (VORGEHEN, PRINZIPIEN), Knopf: HERO_KNOPF. Stil: src/styles/neu-reise.css (.nr-*).
+import Abschnitt from '../Abschnitt.astro';
+import type { NeuLinks } from '../vertrag';
+import { VORGEHEN, PRINZIPIEN } from '../../../config/vorgehen';
+import { HERO_KNOPF } from '../../../config/variante';
+import '../../../styles/neu-reise.css';
+
+interface Props {
+  links: NeuLinks;
+}
+const { links } = Astro.props;
+
+// „E-Mail“ bleibt in einer Zeile (kein Zeilenende nach „E-“); der Wortlaut ändert sich dadurch nicht
+const teile = (t: string) => t.split(/(E-Mail)/);
+---
+
+<Abschnitt id="denkweise" titel={VORGEHEN.titel} lead={VORGEHEN.unter}>
+  <p class="neu-text nr-auftakt reveal" style="--neu-i: 1">{VORGEHEN.intro}</p>
+
+  <ol class="nr-ablauf" id="ablauf">
+    {VORGEHEN.phasen.map((p, pi) => (
+      <li class="nr-phase">
+        <span class="neu-linie neu-linie--senkrecht nr-phase__linie reveal" aria-hidden="true"></span>
+        <div class="nr-phase__kopf reveal">
+          <span class="neu-punkt nr-phase__marke" aria-hidden="true"></span>
+          <h3 class="nr-phase__wort">{p.wort}</h3>
+          <p class="nr-phase__text">{p.text}</p>
+          {p.betont && <p class="nr-phase__betont">{p.betont}</p>}
+        </div>
+        <ol class="nr-schritte">
+          {VORGEHEN.schritte.filter((s) => s.phase === pi).map((s, si) => (
+            <li class="nr-schritt reveal" id={s.anker} style={`--neu-i: ${si}`}>
+              <span class="nr-schritt__marke" aria-hidden="true"></span>
+              {/* Überschrift zuerst im Dokument, die Zeitangabe steht per CSS darüber */}
+              <h4 class="nr-schritt__titel">{s.titel}</h4>
+              <p class="nr-schritt__wann">{s.wann}</p>
+              <p class="nr-schritt__text">{teile(s.text).map((t) => (t === 'E-Mail' ? <span class="nr-fest">{t}</span> : t))}</p>
+            </li>
+          ))}
+        </ol>
+      </li>
+    ))}
+  </ol>
+
+  <div class="nr-grund" id="arbeitsweise">
+    <div class="nr-grund__kopf reveal">
+      <h3 class="nr-grund__titel">{PRINZIPIEN.titel}</h3>
+      <p class="nr-grund__unter">{PRINZIPIEN.unter}</p>
+    </div>
+    <ul class="nr-grund__liste">
+      {PRINZIPIEN.liste.map((g, i) => (
+        <li class="nr-grundsatz reveal" style={`--neu-i: ${i}`}>
+          <h4 class="nr-grundsatz__wort">{g.wort}</h4>
+          <details class="neu-mehr nr-grundsatz__mehr">
+            {/* Beschriftung ist der Leitsatz selbst; für Vorleseprogramme steht das Wort davor.
+                Der sichtbare Text steht in eigener Zeile (nr-zeile): nur so gleicht auch Safari den Umbruch aus. */}
+            <summary><span class="sr-only">{g.wort}: </span><span class="nr-zeile">{g.leit}</span></summary>
+            <div class="neu-mehr__inhalt">
+              {g.zeilen.map((z) => <p>{z}</p>)}
+              <p class="nr-grundsatz__schluss">{g.schluss.map((s, n) => <>{n > 0 && <br />}{s}</>)}</p>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <p class="nr-abschluss reveal">
+    <a class="btn btn--primary btn--lg" href={links.erstberatung}>{HERO_KNOPF}</a>
+  </p>
+</Abschnitt>

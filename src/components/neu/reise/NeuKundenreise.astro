@@ -1,0 +1,45 @@
+---
+// Kapitel 2 der zweiten Startseite /neu/: Kundenreise. Fünf Stationen auf einer Linie (PC waagerecht, Telefon senkrecht).
+// Je Station die Frage sichtbar, die Antwort im Aufklapper (<details>, ohne Skript). Am Ende der Linie steht das Ziel,
+// darunter Schlusssatz und der eine Knopf des Kapitels. Die Linie zieht sich einmal (Lichtmotiv aus dem Fundament).
+// Texte wörtlich aus src/config/variante.ts (KUNDENREISE). Stil: src/styles/neu-reise.css (.nr-*).
+import Abschnitt from '../Abschnitt.astro';
+import type { NeuLinks } from '../vertrag';
+import { KUNDENREISE } from '../../../config/variante';
+import '../../../styles/neu-reise.css';
+
+interface Props {
+  links: NeuLinks;
+}
+const { links } = Astro.props;
+---
+
+<Abschnitt id="reise" titel={KUNDENREISE.titel} lead={KUNDENREISE.intro}>
+  <div class="nr-reise">
+    {/* zwei Linien, je Breite ist eine sichtbar: waagerecht am PC, senkrecht darunter */}
+    <span class="neu-linie nr-reise__waag reveal" aria-hidden="true"></span>
+    <span class="neu-linie neu-linie--senkrecht nr-reise__senk reveal" aria-hidden="true"></span>
+    <ol class="nr-reise__liste">
+      {KUNDENREISE.stationen.map((s, i) => (
+        <li class="nr-station reveal" style={`--neu-i: ${i}`}>
+          <span class="nr-station__marke" aria-hidden="true"></span>
+          <h3 class="nr-station__name">{s.name}</h3>
+          <p class="nr-station__frage">{s.frage}</p>
+          <details class="neu-mehr nr-station__mehr">
+            {/* gleiche sichtbare Beschriftung an allen fünf; für Vorleseprogramme um die Station ergänzt.
+                Der sichtbare Text steht in eigener Zeile (nr-zeile): nur so gleicht auch Safari den Umbruch aus. */}
+            <summary><span class="nr-zeile">{KUNDENREISE.antwortTitel}</span><span class="sr-only">: {s.name}</span></summary>
+            <div class="neu-mehr__inhalt">
+              <p>{s.antwort}</p>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ol>
+    <p class="nr-reise__ziel reveal"><span class="neu-punkt" aria-hidden="true"></span>{KUNDENREISE.ziel}</p>
+  </div>
+  <div class="nr-reise__schluss reveal">
+    <p class="nr-reise__satz">{KUNDENREISE.schluss}</p>
+    <a class="btn btn--primary btn--lg" href={links.erstberatung}>{KUNDENREISE.knopf}</a>
+  </div>
+</Abschnitt>

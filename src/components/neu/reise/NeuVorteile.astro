@@ -1,0 +1,38 @@
+---
+// Kapitel 3 der zweiten Startseite /neu/: Vorteile. Sechs Karten im Raster 3 × 2 (Tablet 2 × 3, Telefon einspaltig),
+// darunter eine ruhige Zeile mit drei Links (der frühere Abschnitt „Sichtbarkeit“ geht hier auf). Kein Knopf.
+// Texte wörtlich aus src/config/startseite.ts (VORTEILE) und src/config/sichtbarkeit.ts (PANELS.*.link).
+// Stil: src/styles/neu-reise.css (.nr-*).
+import Abschnitt from '../Abschnitt.astro';
+import Icon from '../../Icon.astro';
+import type { NeuLinks } from '../vertrag';
+import { VORTEILE } from '../../../config/startseite';
+import { PANELS } from '../../../config/sichtbarkeit';
+import { href } from '../../../lib/paths';
+import '../../../styles/neu-reise.css';
+
+interface Props {
+  links: NeuLinks;
+}
+// links gehört zum Vertrag aller Abschnitte; dieses Kapitel hat keine Handlung und braucht es nicht
+
+const mehr = [PANELS.analyse.link, PANELS.google.link, PANELS.ki.link];
+---
+
+<Abschnitt id="vorteile" flaeche="sand" eyebrow={VORTEILE.eyebrow} titel={VORTEILE.titel} lead={VORTEILE.intro}>
+  <ul class="nr-vorteile">
+    {VORTEILE.liste.map((v, i) => (
+      <li class="neu-karte nr-vorteil reveal" style={`--neu-i: ${i % 3}`}>
+        <Icon name={v.icon} size={28} class="nr-vorteil__symbol" />
+        <h3 class="nr-vorteil__titel">{v.titel}</h3>
+        <p class="nr-vorteil__text">{v.text}</p>
+        {v.paket && <p class="nr-vorteil__paket">{v.paket}</p>}
+      </li>
+    ))}
+  </ul>
+  <ul class="nr-vorteile__mehr reveal">
+    {mehr.map((l) => (
+      <li><a class="neu-link" href={href(l.href)}>{l.text}</a></li>
+    ))}
+  </ul>
+</Abschnitt>

@@ -1,0 +1,421 @@
+/* ============================================================================================================
+ * Zweite Startseite /neu/ – Paket „Reise“: Kapitel 2 Kundenreise, 3 Vorteile, 4 So gehen wir vor (Sitzung 11.11.2026).
+ * Geladen von den drei Komponenten in src/components/neu/reise/ (jede lädt diese Datei selbst).
+ * Fundament: src/styles/neu.css (Variablen --neu-…, Klassen neu-…). Eigene Klassen: nr-, nur unter .neu.
+ * Wo eine Fundament-Klasse am selben Element sitzt (neu-linie, neu-punkt, neu-mehr, neu-karte), steht hier eine
+ * Klasse mehr im Selektor: So gewinnt die Regel unabhängig von der Reihenfolge der Stylesheets.
+ * Hausregeln wie im Fundament; Bewegung nur opacity und transform (über .reveal), bei „weniger Bewegung“ steht alles.
+ * ============================================================================================================ */
+
+/* ============================== Kapitel 2: Kundenreise ============================== */
+/* Telefon und Tablet: Linie senkrecht links, Stationen untereinander. --nr-name = Schriftgröße des Stationsnamens,
+ * daraus die Mitte seiner ersten Zeile (Zeilenhöhe 1,25) für Marke und Linienanfang. */
+.neu .nr-reise {
+  --nr-name: var(--neu-h3);
+  --nr-rand: 36px;                       /* Platz links für Linie und Marken */
+  position: relative;
+  padding-left: var(--nr-rand);
+}
+.neu .nr-reise__liste {
+  display: grid;
+  gap: clamp(32px, 1.2rem + 3vw, 52px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.neu .nr-station { position: relative; min-width: 0; }
+/* Marke: Ring auf der Linie */
+.neu .nr-station__marke {
+  position: absolute;
+  left: calc(-1 * var(--nr-rand));
+  top: calc(var(--nr-name) * 0.625 - 6px);
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--neu-licht);
+  border-radius: 50%;
+  background: var(--white);
+}
+.neu .nr-station__name {
+  margin: 0 0 8px;
+  font-family: var(--font-head);
+  font-size: var(--nr-name);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--neu-text);
+  overflow-wrap: break-word;
+}
+.neu .nr-station__frage {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text-leise);
+  text-wrap: pretty;
+}
+.neu .nr-reise .nr-station__mehr { max-width: var(--neu-mass); margin-top: 18px; }
+/* Beschriftung der Aufklapper (Kapitel 2 und 4): bricht sie um (320 px, PC-Spalten), dann in gleich lange Zeilen.
+ * Eigene Zeile nur für den sichtbaren Text: Mit dem Zusatz für Vorleseprogramme im selben Block gleicht Safari nicht aus. */
+.neu .nr-zeile { display: block; text-wrap: balance; }
+
+/* Linien: senkrecht von der ersten Marke bis zum Punkt am Ziel; die waagerechte gibt es erst am PC */
+.neu .nr-reise .nr-reise__senk {
+  position: absolute;
+  left: 5px;
+  top: calc(var(--nr-name) * 0.625);
+  bottom: 12px;
+  height: auto;
+}
+.neu .nr-reise .nr-reise__waag { display: none; }
+
+/* Ziel am Ende der Linie: Punkt und kleine Beschriftung */
+.neu .nr-reise__ziel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+  margin: clamp(32px, 1.2rem + 3vw, 52px) 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neu-akzent-text);
+}
+.neu .nr-reise .nr-reise__ziel .neu-punkt { position: absolute; left: calc(-1 * var(--nr-rand)); top: 50%; margin-top: -6px; }
+/* Ziel nur einblenden, nicht verschieben: der Punkt sitzt fest auf der Linie */
+html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
+
+/* Schlusssatz und der eine Knopf des Kapitels */
+.neu .nr-reise__schluss {
+  display: grid;
+  justify-items: start;
+  gap: 24px;
+  margin-top: clamp(48px, 2rem + 4vw, 96px);
+}
+.neu .nr-reise__satz {
+  max-width: 26ch;
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--neu-text);
+  text-wrap: balance;
+}
+
+/* Tablet: Name links, Frage und Antwort rechts daneben */
+@media (min-width: 700px) {
+  .neu .nr-station {
+    display: grid;
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+    column-gap: 32px;
+    align-items: baseline;
+  }
+  .neu .nr-station__name { grid-row: 1 / span 2; margin-bottom: 0; }
+  .neu .nr-station__frage,
+  .neu .nr-reise .nr-station__mehr { grid-column: 2; }
+  .neu .nr-reise__schluss { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 40px; }
+}
+
+/* PC: fünf Stationen nebeneinander an einer waagerechten Linie; das Ziel steht rechts über dem Linienende */
+@media (min-width: 1120px) {
+  .neu .nr-reise { --nr-name: 1.12rem; --nr-oben: 44px; padding: var(--nr-oben) 0 0; }
+  .neu .nr-reise__liste { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 var(--neu-luecke); align-items: start; }
+  .neu .nr-station { display: block; padding-top: 36px; }
+  .neu .nr-station__marke { left: 0; top: -5px; }
+  .neu .nr-station__name { margin-bottom: 12px; }
+  .neu .nr-station__frage { -webkit-hyphens: auto; hyphens: auto; }
+  /* nur die Linie oben: offene Antworten sind verschieden lang, eine Linie darunter stünde je Spalte auf anderer Höhe */
+  .neu .nr-reise .nr-station__mehr { margin-top: 20px; border-bottom: 0; }
+  .neu .nr-reise .nr-station__mehr > summary { font-size: max(17px, 0.94rem); }
+  .neu .nr-reise .nr-station__mehr .neu-mehr__inhalt { -webkit-hyphens: auto; hyphens: auto; }
+
+  .neu .nr-reise .nr-reise__senk { display: none; }
+  .neu .nr-reise .nr-reise__waag { display: block; position: absolute; left: 6px; right: 6px; top: var(--nr-oben); width: auto; }
+
+  .neu .nr-reise__ziel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    flex-direction: column-reverse;        /* Beschriftung oben, Punkt unten auf der Linie */
+    align-items: flex-end;
+    justify-content: space-between;
+    height: calc(var(--nr-oben) + 7px);
+    min-height: 0;
+    margin: 0;
+  }
+  .neu .nr-reise .nr-reise__ziel .neu-punkt { position: static; margin: 0; }
+  /* Punkt und Beschriftung erscheinen, wenn die Linie angekommen ist */
+  html.js .neu .nr-reise .nr-reise__ziel.reveal { transition-delay: 450ms; }
+  html.js .neu .nr-reise .nr-reise__ziel .neu-punkt { transition-delay: 650ms; }
+
+  /* Name, Frage und Aufklapper aller fünf Stationen stehen je auf gleicher Höhe */
+  @supports (grid-template-rows: subgrid) {
+    .neu .nr-station { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; grid-row: span 3; row-gap: 0; align-items: start; }
+    .neu .nr-station__name { grid-row: auto; }
+    .neu .nr-station__frage,
+    .neu .nr-reise .nr-station__mehr { grid-column: 1; }
+  }
+}
+@media (min-width: 1280px) {
+  .neu .nr-reise { --nr-name: 1.2rem; }
+}
+
+/* ============================== Kapitel 3: Vorteile ============================== */
+.neu .nr-vorteile {
+  display: grid;
+  gap: var(--neu-luecke);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.neu .nr-vorteile .nr-vorteil { display: flex; flex-direction: column; min-width: 0; }
+.neu .nr-vorteil__symbol { flex: none; margin-bottom: 22px; color: var(--neu-akzent-text); }
+.neu .nr-vorteil__titel {
+  margin: 0 0 10px;
+  font-family: var(--font-head);
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--neu-text);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.neu .nr-vorteil__text {
+  margin: 0;
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text-leise);
+  text-wrap: pretty;
+}
+/* Etikett: sitzt unten in der Karte, in einer Reihe also auf gleicher Höhe */
+.neu .nr-vorteil__paket {
+  align-self: flex-start;
+  margin: auto 0 0;
+  padding: 5px 12px;
+  border: 1px solid var(--neu-rand);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: var(--neu-akzent-text);
+}
+/* Abstand über dem Etikett, auch wenn die Karte die höchste der Reihe ist */
+.neu .nr-vorteil__text:not(:last-child) { margin-bottom: 22px; }
+
+/* ruhige Zeile mit drei Links */
+.neu .nr-vorteile__mehr {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: clamp(28px, 1rem + 2.6vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .neu .nr-vorteile { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Symbol, Titel, Text und Etikett stehen in einer Reihe je auf gleicher Höhe */
+  @supports (grid-template-rows: subgrid) {
+    .neu .nr-vorteile .nr-vorteil { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; grid-row: span 4; row-gap: 0; }
+    .neu .nr-vorteil__symbol { justify-self: start; }
+    .neu .nr-vorteil__paket { justify-self: start; align-self: end; }
+  }
+}
+@media (min-width: 900px) {
+  .neu .nr-vorteile__mehr { flex-direction: row; flex-wrap: wrap; gap: 4px clamp(28px, 3.4vw, 56px); }
+}
+@media (min-width: 1040px) {
+  .neu .nr-vorteile { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ============================== Kapitel 4: So gehen wir vor ============================== */
+/* Einleitung gehört optisch zum Kopf: rückt um dessen unteren Abstand (neu.css: .neu-kopf) nach oben, übernimmt ihn nach unten */
+.neu .nr-auftakt {
+  --nr-kopf-abstand: clamp(28px, 1rem + 3.4vw, 64px);
+  margin: calc(var(--neu-absatz) - var(--nr-kopf-abstand)) 0 var(--nr-kopf-abstand);
+}
+
+/* ---------- Zeitlinie. Telefon: Linie links, Phase und ihre Schritte untereinander ---------- */
+.neu .nr-ablauf {
+  --nr-wort: clamp(1.45rem, 1.2rem + 1vw, 1.9rem);   /* Schriftgröße der Phase; Mitte der ersten Zeile = 0,6 × */
+  --nr-rand: 36px;
+  --nr-wann: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.neu .nr-phase { position: relative; padding: 0 0 clamp(44px, 1.6rem + 3vw, 72px) var(--nr-rand); }
+.neu .nr-phase:last-child { padding-bottom: 8px; }
+/* Linie je Phase, die Stücke schließen aneinander an; sie beginnt am ersten Punkt und läuft nach „Laufend“ aus */
+.neu .nr-ablauf .nr-phase__linie { position: absolute; left: 5px; top: 0; bottom: 0; height: auto; }
+.neu .nr-ablauf .nr-phase:first-child .nr-phase__linie { top: calc(var(--nr-wort) * 0.6); }
+.neu .nr-ablauf .nr-phase:last-child .nr-phase__linie::before { background: linear-gradient(180deg, var(--neu-licht) 62%, transparent); }
+
+.neu .nr-phase__kopf { position: relative; min-width: 0; }
+/* Punkt = Beginn einer Phase */
+.neu .nr-ablauf .nr-phase__marke { position: absolute; left: calc(-1 * var(--nr-rand)); top: calc(var(--nr-wort) * 0.6 - 6px); }
+.neu .nr-phase__wort {
+  margin: 0 0 10px;
+  font-family: var(--font-head);
+  font-size: var(--nr-wort);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--neu-akzent-text);
+}
+.neu .nr-phase__text {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text);
+  text-wrap: pretty;
+}
+.neu .nr-phase__betont {
+  margin: var(--neu-absatz) 0 0;
+  font-size: var(--neu-fliess);
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--neu-text);
+  text-wrap: balance;
+}
+
+.neu .nr-schritte {
+  display: grid;
+  gap: 28px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.neu .nr-schritt { position: relative; display: flex; flex-direction: column; min-width: 0; }
+/* Schritte nur einblenden, nicht verschieben: ihre Marken sitzen fest auf der Linie */
+html.js .neu .nr-ablauf .nr-schritt.reveal { transform: none; }
+/* Marke: Ring auf Höhe der Zeitangabe */
+.neu .nr-schritt__marke {
+  position: absolute;
+  left: calc(1px - var(--nr-rand));
+  top: calc(var(--nr-wann) * 0.7 - 5px);
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--neu-licht);
+  border-radius: 50%;
+  background: var(--white);
+}
+.neu .nr-schritt__wann {
+  order: -1;
+  margin: 0 0 6px;
+  font-size: var(--nr-wann);
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--neu-akzent-text);
+  text-wrap: balance;                    /* lange Zeitangabe: kein einzelnes Wort in der zweiten Zeile */
+}
+.neu .nr-schritt__titel {
+  margin: 0 0 4px;
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--neu-text);
+}
+.neu .nr-schritt__text {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: var(--neu-fliess);
+  line-height: var(--neu-zeile);
+  color: var(--neu-text-leise);
+  text-wrap: pretty;
+}
+/* fester Begriff, der am Bindestrich nicht umbrechen soll */
+.neu .nr-fest { white-space: nowrap; }
+
+/* PC: Phase links, Linie dazwischen, Schritte rechts. Der Punkt der Phase steht auf Höhe des ersten Schritts. */
+@media (min-width: 960px) {
+  .neu .nr-ablauf { --nr-teiler: 39%; --nr-innen: clamp(40px, 5vw, 72px); }
+  .neu .nr-phase {
+    display: grid;
+    grid-template-columns: var(--nr-teiler) minmax(0, 1fr);
+    align-items: start;
+    padding: 0 0 clamp(56px, 6vw, 88px);
+  }
+  .neu .nr-phase:last-child { padding-bottom: 40px; }
+  .neu .nr-ablauf .nr-phase__linie { left: calc(var(--nr-teiler) - 1px); }
+  .neu .nr-phase__kopf { padding-right: var(--nr-innen); }
+  .neu .nr-ablauf .nr-phase__marke { left: auto; right: -6px; }
+  .neu .nr-phase__text { max-width: 36ch; }
+  .neu .nr-schritte {
+    gap: 36px;
+    margin: 0;
+    padding: calc(var(--nr-wort) * 0.6 - var(--nr-wann) * 0.7) 0 0 var(--nr-innen);
+  }
+  .neu .nr-schritt__marke { left: calc(-5px - var(--nr-innen)); }
+  .neu .nr-schritt:first-child .nr-schritt__marke { display: none; }
+}
+
+/* ---------- „So arbeiten wir.“: drei Grundsätze ---------- */
+.neu .nr-grund { margin-top: clamp(64px, 2.4rem + 6vw, 136px); }
+.neu .nr-grund__kopf { max-width: 46rem; margin-bottom: clamp(28px, 1rem + 2.6vw, 52px); }
+.neu .nr-grund__titel {
+  margin: 0 0 0.45em;
+  font-family: var(--font-head);
+  font-size: clamp(1.45rem, 1.2rem + 1.1vw, 2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--neu-text);
+  text-wrap: balance;
+}
+.neu .nr-grund__unter {
+  max-width: var(--neu-mass);
+  margin: 0;
+  font-size: var(--neu-lead);
+  line-height: 1.6;
+  color: var(--neu-text-leise);
+}
+.neu .nr-grund__liste {
+  display: grid;
+  gap: 28px clamp(24px, 3.4vw, 56px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* je Grundsatz eine feine Linie oben; der Aufklapper selbst bleibt ohne Rahmen */
+.neu .nr-grundsatz { min-width: 0; padding-top: 22px; border-top: 1px solid var(--neu-rand); }
+.neu .nr-grundsatz__wort {
+  margin: 0 0 2px;
+  font-family: var(--font-head);
+  font-size: var(--neu-h3);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--neu-akzent-text);
+  overflow-wrap: break-word;
+}
+.neu .nr-grund .nr-grundsatz__mehr { border: 0; }
+.neu .nr-grund .nr-grundsatz__mehr > summary { padding-block: 12px; }
+.neu .nr-grund .nr-grundsatz__mehr > summary::after { top: 22px; }
+.neu .nr-grund .nr-grundsatz__mehr .neu-mehr__inhalt { color: var(--neu-text-leise); }
+/* Absatzabstand kommt aus dem Fundament (--neu-absatz); der Schluss hebt sich nur durch Gewicht und Farbe ab */
+.neu .nr-grund .nr-grundsatz__mehr .neu-mehr__inhalt .nr-grundsatz__schluss { font-weight: 650; color: var(--neu-text); }
+@media (min-width: 900px) {
+  .neu .nr-grund__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+}
+
+/* der eine Knopf des Kapitels */
+.neu .nr-abschluss { margin: clamp(40px, 1.6rem + 3vw, 72px) 0 0; }
+
+/* Telefon: Knöpfe über die ganze Breite (große Trefferfläche) */
+@media (max-width: 519px) {
+  .neu .nr-reise__schluss .btn,
+  .neu .nr-abschluss .btn { width: 100%; }
+  .neu .nr-reise__schluss { justify-items: stretch; }
+}
