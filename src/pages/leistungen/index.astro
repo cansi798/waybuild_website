@@ -58,7 +58,7 @@ const itemList = {
   {gruppen.map((g, i) => (
     <section class:list={['section sn sl-gruppe', i % 2 === 1 ? 'sl-gruppe--papier' : 'sl-gruppe--weiss']} id={g.id} aria-labelledby={`${g.id}-h`}>
       <div class="wrap">
-        <div class="sn-kopf sn-kopf--zweispaltig sl-gruppe__kopf">
+        <div class="sn-kopf sl-gruppe__kopf">
           <div class="sl-gruppe__titel">
             <p class="sn-kenn">Bereich {i + 1} von {gruppen.length}</p>
             <h2 id={`${g.id}-h`} class="sn-h2 sn-h2--klein">{g.titel}</h2>

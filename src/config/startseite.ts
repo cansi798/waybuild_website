@@ -99,7 +99,7 @@ export const TEAM = {
       zitat: 'Unsere Kunden sollen sich um ihr Geschäft kümmern. Um alles, was dafür online laufen muss, kümmern wir uns.' },
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
     { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von webgold',
-      zitat: 'Hinter jeder Anfrage steht ein Mensch, der Hilfe sucht. Deshalb sorgen wir dafür, dass keine verloren geht.' },
+      zitat: 'Hinter jeder Anfrage steht ein Mensch, der Hilfe sucht. Deshalb sorgen wir dafür, dass möglichst keine verloren geht.' }, // Jamil #6011, Audit #5953 W2
   ],
 };
 

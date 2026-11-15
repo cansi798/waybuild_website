@@ -14,13 +14,17 @@ import { href } from '../../lib/paths';
 import { IS_PREVIEW } from '../../lib/env';
 import { SHOW_HINTS } from '../../config/site';
 
+// `nurProjekte`: nur die drei echten Projekte (Bild, Online/Vorschau ehrlich gekennzeichnet), ohne Motto und Team. So steht der
+// Abschnitt seit Jamil #6011 (Audit #5953 V1, 15.11.2026) auf der Startseite vor den Paketen. Keine Kundenstimmen, keine erfundenen Zitate.
+interface Props { nurProjekte?: boolean }
+const { nurProjekte = false } = Astro.props;
 const refs = T.auswahl.map((name) => REFERENZEN.liste.find((r) => r.name === name)).filter((r): r is NonNullable<typeof r> => !!r && !!r.bild);
 const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
 ---
 
 <section class="section sn sn-beweis" id="referenzen" aria-labelledby="sn-beweis-h">
   <div class="wrap">
-    <div class="sn-kopf sn-kopf--zweispaltig">
+    <div class="sn-kopf">
       <div>
         <p class="sn-kenn">{T.kennzeile}</p>
         <h2 id="sn-beweis-h" class="sn-h2">{REFERENZEN.titel}</h2>
@@ -49,6 +53,7 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
     </ul>
     <p class="sn-fein">{REFERENZEN.messung} <a href={href('/beispiele/')}>{T.alle}</a></p>
 
+    {!nurProjekte && (<>
     <div class="sn-motto">
       <div class="sn-motto__kopf">
         <h3 class="sn-h2 sn-h2--klein">{ENTSPANNT.titel}</h3>
@@ -66,7 +71,9 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
       </ul>
     </div>
 
-    {TEAM_ZEIGEN && (
+    </>)}
+
+    {!nurProjekte && TEAM_ZEIGEN && (
       <div class="sn-team" id="team">
         <div class="sn-team__kopf">
           <h3 class="sn-h3">{TEAM.titel}</h3>

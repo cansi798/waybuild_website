@@ -61,6 +61,9 @@ const leistungen = defineCollection({
     pakete: z.array(z.enum(['basis', 'plus'])).optional(),
     /** true = im Paketteil die einmaligen Extras (EINMALIG_DAZU aus pakete-abo.ts) mit Festpreis zeigen */
     extras: z.boolean().optional(),
+    /** true = im Paketteil der buchbare Kasten „Rundum digital“ (KOMPLETTPAKET aus pakete-abo.ts, Kombipreise, Knöpfe buchen/Beratung);
+     *  Jamil #6011, Audit #5953 L1 (15.11.2026) */
+    komplett: z.boolean().optional(),
     /** Erklärung zum Paket (ohne Preise; Preise kommen nur aus pakete-abo.ts) */
     paketText: z.string().optional(),
     /** „Passt das zu Ihnen?“ */

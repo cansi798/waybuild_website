@@ -13,7 +13,7 @@ export type LeistungNeu = CollectionEntry<'leistungen'>;
 export const GRUPPEN: { id: GruppeId; titel: string; text: string; slugs: string[] }[] = [
   { id: 'gefunden', titel: 'Gefunden werden', text: 'Damit Kunden Sie bei Google und auf Karten entdecken.', slugs: ['website', 'google-profil', 'suchmaschinen-optimierung'] }, // Social Media entfernt (Jamil, Talk qh87y3sj #5630, 12.11.2026)
   { id: 'vertrauen', titel: 'Vertrauen gewinnen', text: 'Damit Interessenten verstehen, was Sie anbieten, und sich für Sie entscheiden.', slugs: ['inhalte', 'auftritt', 'bewertungen'] },
-  { id: 'anfragen', titel: 'Anfragen und Abläufe', text: 'Damit aus Interesse ein Kontakt wird und keine Anfrage liegen bleibt.', slugs: ['anfragen', 'terminbuchung', 'ablaeufe'] },
+  { id: 'anfragen', titel: 'Anfragen und Abläufe', text: 'Damit aus Interesse ein Kontakt wird und möglichst keine Anfrage liegen bleibt.' /* Jamil #6011, Audit #5953 W2 */, slugs: ['anfragen', 'terminbuchung', 'ablaeufe'] },
   { id: 'betreuung', titel: 'Betreuung und Verbesserung', text: 'Damit Ihre Website aktuell bleibt und aus Kunden zufriedene Kunden werden.', slugs: ['betreuung', 'auswertung', 'nachfassen'] },
 ];
 

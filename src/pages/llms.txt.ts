@@ -25,7 +25,7 @@ export const GET: APIRoute = async ({ site }) => {
   const lines = [
     `# ${company.name} – powered by ${company.legalName}`,
     '',
-    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in zwei festen Monatspaketen (${PAKETE.map((p) => p.name).join(', ')}, optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in drei Paketen (${PAKETE.map((p) => p.name).join(', ')} und ${KOMPLETTPAKET.name} mit Website und Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     PREIS_HINWEIS,
     '',
@@ -36,7 +36,7 @@ export const GET: APIRoute = async ({ site }) => {
     // Zwei Abschnitte nach der Kundenreise (Jamil #5664–#5672)
     ...[UMSETZUNG, ENTSPANNT].map((a) => `- ${a.titel} ${a.intro} ${a.karten.map((k) => `${k.titel}: ${k.text}`).join(' ')}`),
     // „Was Sie davon haben.“ von der Startseite entfernt (Jamil #5633); „Was wir für Ihre Sichtbarkeit tun.“ jetzt bei den Leistungen (#5634)
-    `- Zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
+    `- Drei Pakete, davon zwei Website-Pakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
     // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen
     `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.wann}): ${s.text}`).join(' ')}`,
     `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} webgold: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
@@ -44,7 +44,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- Leitsatz: ${CLAIM}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
-    `${WAAS.claim} Zwei feste Monatspakete ohne Einrichtungskosten, optional dazu das ${KOMPLETTPAKET.name}; Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind einmalig dazubuchbar. ${OFFER}`,
+    `${WAAS.claim} Drei Pakete ohne Einrichtungskosten: zwei Website-Pakete und das ${KOMPLETTPAKET.name}; Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur sind einmalig dazubuchbar. ${OFFER}`,
     `- In allen Paketen: ${IN_ALLEN.join(', ')}.`,
     `- Geschäftsmodell: ${MODELL.join(', ')}.`,
     ...PAKETE.map((p) => `- Paket ${p.name}: ${formatEuro(p.preis)} pro Monat netto zzgl. MwSt. (${formatEuro(brutto(p.preis))} inkl. MwSt.). ${p.kurz}. ${p.features.join(', ')}.`),

@@ -156,7 +156,7 @@ export const MODELL = [
   'Keine Seitenbegrenzung',
   'Fester Monatspreis, netto zzgl. MwSt.',
   `${WAAS.laufzeitMonate} Monate Mindestlaufzeit`,
-  'Keine versteckten Kosten',
+  'Alle Kosten auf einen Blick', // Jamil #6011, Audit #5953 W3
 ];
 
 /** Ablauf aus Kundensicht in vier Schritten (auch Grundlage der animierten Ablauf-Szene). */
@@ -172,8 +172,8 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 
 export const faqs = [
   {
-    q: 'Was kostet eine Website bei webgold?',
-    a: `Es gibt zwei feste Monatspakete: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    q: 'Was kostet eine Website bei webgold?', // „drei Pakete“: Jamil #6011, Audit #5953 P1 (vorher „zwei feste Monatspakete“)
+    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',

@@ -47,3 +47,4 @@
 .su-schritt { min-width: 0; display: grid; align-content: start; gap: 10px; padding: clamp(24px, 3vw, 32px); border-radius: 28px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .su-schritt h3 { overflow-wrap: break-word; hyphens: auto; }
 .su-schritt p { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
+.su-wert__link { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; } /* Jamil #6011, Audit #5953 W3 */

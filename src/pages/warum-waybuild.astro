@@ -18,7 +18,7 @@ import '../styles/seite-warum.css';
 const unterschiede: { title: string; text: string; link?: { label: string; path: string } }[] = [
   { title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
   { title: 'KI-gestützte Umsetzung', text: 'Die Ideen entwickeln wir mit Ihnen. Danach beschleunigt die KI die Umsetzung, und Ihre Website ist deutlich schneller fertig.' },
-  { title: 'Fester Monatspreis, alles drin', text: 'Feste Pakete, keine Einrichtungskosten, keine versteckten Kosten.', link: { label: 'Zum Preis', path: '/preise/' } },
+  { title: 'Fester Monatspreis, alles drin', text: 'Feste Pakete, keine Einrichtungskosten, alle Kosten auf einen Blick.' /* Jamil #6011, Audit #5953 W3 */, link: { label: 'Zum Preis', path: '/preise/' } },
   { title: 'Keine Seitenbegrenzung', text: 'Ihre Website wächst mit Ihrem Unternehmen. Wir zählen keine Seiten, eine neue Seite kostet keinen Aufpreis.' },
   { title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
   { title: 'Ein Ansprechpartner', text: 'Vom Erstgespräch bis zur Betreuung spricht dieselbe Person mit Ihnen, die Ihr Unternehmen kennt.' },
@@ -61,7 +61,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
   <!-- 1 · Was uns unterscheidet (Papier): sechs Punkte als nummerierte Typografie statt Icon-Kacheln -->
   <section class="section sn sw2-unterschied" aria-labelledby="unterschied-h">
     <div class="wrap">
-      <div class="sn-kopf sn-kopf--zweispaltig">
+      <div class="sn-kopf">
         <div>
           <p class="sn-kenn">Was uns unterscheidet</p>
           <h2 id="unterschied-h" class="sn-h2">Ein echter Digitalisierungs&shy;partner.</h2>
@@ -126,7 +126,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
   <!-- 5 · Ziel / Säulen (Papier) -->
   <section class="section sn sw2-saeulen" aria-labelledby="saeulen-h">
     <div class="wrap">
-      <div class="sn-kopf sn-kopf--zweispaltig">
+      <div class="sn-kopf">
         <div>
           <p class="sn-kenn">Unser Ziel</p>
           <h2 id="saeulen-h" class="sn-h2">Die Website ist nur der erste Schritt.</h2>

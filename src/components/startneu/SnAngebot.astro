@@ -67,7 +67,14 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
         <p class="sn-paket__preis"><b>{euroAb(kombis[0].preis, true)}</b><span>netto im Monat</span></p>
         <p class="sn-paket__brutto">{euroAb(bruttoVon(kombis[0].preis), true)} inkl. 19 % MwSt.</p>
         <p class="sn-paket__jahr">{euroAb(kombis[0].preis * 12, true)} netto im Jahr</p>
-        <p class="sn-paket__fuer">Je nach Wahl ist Online sichtbar oder Online wachsen enthalten. {appText}</p>
+        {/* Beide Kombipreise direkt auf der Karte (Jamil #6011, Audit #5953 P2), Werte aus pakete-abo.ts. Im selben Element wie
+            „Für wen“, damit die Karte bei 9 gemeinsamen subgrid-Zeilen bleibt (Jamil #5942). */}
+        <div class="sn-paket__fuer">
+          <ul class="sn-paket__kombis" aria-label={`Preise ${K.name} je Website-Paket`}>
+            {kombis.map((k) => <li>mit {k.paket.name} <b>{euroAb(k.preis, K.kombiAb)}</b> netto im Monat</li>)}
+          </ul>
+          <p>Je nach Wahl ist Online sichtbar oder Online wachsen enthalten. {appText}</p>
+        </div>
         <p class="sn-paket__listenkopf">Alles aus Ihrem gewählten Paket, plus:</p>
         <ul class="sn-paket__liste sn-paket__liste--haken">
           {K.software.slice(0, 5).map((t) => <li><Icon name="check" size={18} /><span>{t}</span></li>)}

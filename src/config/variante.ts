@@ -14,6 +14,10 @@ export const V_HERO = {
   unter: 'Ob professionelle Website, individuelle Web-App oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
   /** Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) */
   fuer: 'Für klein- und mittelständische Unternehmen.', // Jamil #5878, 14.11.2026 (vorher die Aufzählung aus #5847)
+  /** Belegzeile unter dem Vertrauenshinweis (Jamil #6011, Audit #5953 E2, 15.11.2026): nur belegte Fakten. Der Preis „ab …“ kommt
+   *  in index.astro aus pakete-abo.ts (aboPreisAb). Belege: keine Einrichtungsgebühr + Erstgespräch kostenlos = ANGEBOT.sicherheit
+   *  (startneu.ts), Hosting in Deutschland = Paketleistung „Website“ (pakete-abo.ts), Hoster ALL-INKL laut Impressum/Datenschutz. */
+  beleg: ['Keine Einrichtungsgebühr', 'Hosting in Deutschland', 'Erstberatung kostenlos'],
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */

@@ -176,4 +176,8 @@ html.stapeln .stapel-paar > .v-hero + section {
 html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-index: 20; pointer-events: none;
   background: #0b2a29; opacity: calc(var(--deckt, 0) * 0.15); }
 /* Vertrauenshinweis unter dem Hero-Knopf (Jamil #5847, 14.11.2026) */
+/* Belegzeile unter dem Vertrauenshinweis (Jamil #6011, Audit #5953 E2): klein, Teile brechen nur an den Punkten um */
+.v-hero .v-beleg { margin: 10px auto 0; max-width: 64ch; color: rgb(255 255 255 / 92%); font-size: clamp(0.8rem, 0.78rem + 0.12vw, 0.88rem); font-weight: 600; line-height: 1.7; text-wrap: balance; }
+.v-hero .v-beleg__teil { white-space: nowrap; }
+.v-hero .v-beleg__punkt { color: rgb(255 255 255 / 60%); }
 .v-hero .v-fuer { margin: 22px auto 0; max-width: 52ch; color: rgb(255 255 255 / 82%); font-size: clamp(0.8rem, 0.78rem + 0.12vw, 0.88rem); /* Jamil #5860 „noch kleiner“ */ line-height: 1.55; text-wrap: balance; }

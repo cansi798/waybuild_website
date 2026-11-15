@@ -117,3 +117,16 @@
 .ls-extras li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--sn-linie); min-width: 0; }
 .ls-extras li span { min-width: 0; overflow-wrap: break-word; color: var(--ink); }
 .ls-extras li b { flex: none; font-family: var(--font-head); color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Kasten „Rundum digital“ auf /leistungen/ablaeufe/ (Jamil #6011, Audit #5953 L1): über die ganze Breite, deutlich abgesetzt */
+.ls-paketkarte--komplett { grid-column: 1 / -1; gap: 10px; background: var(--sn-hauch); border: 1.5px solid var(--sn-linie-t); }
+.ls-kombis { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.ls-kombis li { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding-bottom: 6px; border-bottom: 1px solid var(--sn-linie-t); color: var(--ink-soft); }
+.ls-kombis b { font-family: var(--font-head); font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem); color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
+.ls-komplett__liste { list-style: none; margin: 8px 0 4px; padding: 0; display: grid; gap: 8px; }
+.ls-komplett__liste li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.6; color: var(--ink-soft); }
+.ls-komplett__liste svg { margin-top: 4px; color: var(--sn-tinte); }
+/* Einleitung unter „Kennen Sie das?“ steht seit Jamil #6012 unter der Überschrift: Zeilenlänge begrenzen */
+.ls-problem .ls-intro { max-width: 72ch; }
+/* Neben dem Kasten „Rundum digital“ auch das individuelle Angebot über die ganze Breite (Jamil #6011, Audit #5953 L1) */
+.ls-paketkarte--komplett ~ .ls-paketkarte--anfrage { grid-column: 1 / -1; }

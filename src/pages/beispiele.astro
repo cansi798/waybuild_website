@@ -39,7 +39,7 @@ const fakten = ['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Lad
   {REFERENZ_BEREICHE.map((b, i) => (
     <section class:list={['section sn sb-bereich', { 'sb-bereich--papier': i % 2 === 1 }]} id={b.id} aria-labelledby={`${b.id}-h`}>
       <div class="wrap">
-        <div class="sn-kopf sn-kopf--zweispaltig">
+        <div class="sn-kopf">
           <div>
             <p class="sn-kenn">Bereich</p>
             <h2 id={`${b.id}-h`} class="sn-h2">{b.titel}</h2>

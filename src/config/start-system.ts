@@ -40,7 +40,7 @@ export const SYSTEM = {
   /** Überschrift über den Nutzenkarten: von uns (seit #5906), nicht Jamils Wortlaut */
   ergebnisTitel: 'Was Ihnen das bringt',
   nutzen: [
-    'Keine verlorenen Anfragen',
+    'Weniger verlorene Anfragen', // Jamil #6011, Audit #5953 W2 (vorher „Keine verlorenen Anfragen“)
     'Weniger Rückfragen von Kunden',
     'Aufgaben gehen nicht unter',
     'Alle Informationen an einem Ort',

@@ -22,7 +22,7 @@ import SnAbschluss from '../startneu/SnAbschluss.astro';
 import { LEISTUNG_FOTO } from '../../config/bilder';
 import { LEISTUNG_PANELS } from '../../config/sichtbarkeit';
 import { gruppeById, LEISTUNGEN_META, paketAnzeige, type LeistungNeu } from '../../config/leistungen-neu';
-import { ABO_PAKETE, EINMALIG_DAZU, euro, bruttoVon, gesamtZeile, LAUFZEIT_HINWEIS, B2B_HINWEIS } from '../../config/pakete-abo';
+import { ABO_PAKETE, EINMALIG_DAZU, KOMPLETTPAKET, BUCHEN, euro, euroAb, bruttoVon, gesamtZeile, kombiPreise, komplettPreis, LAUFZEIT_HINWEIS, B2B_HINWEIS } from '../../config/pakete-abo';
 import { ANLIEGEN, REFERENZEN } from '../../config/startseite';
 import { HERO_KNOPF } from '../../config/variante';
 import { href, absolute } from '../../lib/paths';
@@ -59,6 +59,9 @@ for (const u of umfang) {
 const verwandt = (d.verwandt ?? []).flatMap((slug) => LEISTUNGEN_META.filter((m) => m.slug === slug && slug !== eintrag.id));
 const pakete = (d.pakete ?? []).map((id) => ABO_PAKETE.find((p) => p.id === id)!).filter(Boolean);
 const extras = d.extras === true;
+const komplett = d.komplett === true; // Kasten „Rundum digital“ (Jamil #6011, Audit #5953 L1)
+const kombis = kombiPreise();
+const kontaktKombi = href(`/kontakt/?paket=${encodeURIComponent(kombis[0]?.paket.name ?? '')}&komplett=1&buchen=1`);
 const aufAnfrage = pakete.length === 0 && !extras;
 // von uns ergänzt (#5892): Standardtext, falls `paketText` fehlt
 const paketText = d.paketText ?? (aufAnfrage
@@ -95,14 +98,14 @@ const schema = [
   <PageHeader eyebrow={gruppe.titel} title={d.title} lead={d.kurz} foto={foto}>
     <div class="ls-kopf__knopf">
       <a class="btn btn--lg" href={kontakt}>{HERO_KNOPF}</a>
-      <a class="ls-kopf__paket" href="#paket">{paketAnzeige(d.paket)}</a>
+      <a class="ls-kopf__paket" href="#paket">{komplett ? `Paket ${KOMPLETTPAKET.name}: ${komplettPreis()}` : paketAnzeige(d.paket)}</a>
     </div>
   </PageHeader>
 
   <!-- 2 · Kennen Sie das? -->
   <section class="section sn ls-problem" aria-labelledby="ls-problem-h">
     <div class="wrap">
-      <div class="sn-kopf sn-kopf--zweispaltig">
+      <div class="sn-kopf">
         <div>
           <p class="sn-kenn">Ausgangslage</p>
           <h2 id="ls-problem-h" class="sn-h2">Kennen Sie das?</h2>
@@ -173,7 +176,7 @@ const schema = [
   {eintrag.id === 'website' && (
     <section class="section sn ls-referenzen" id="referenzen" aria-labelledby="ls-ref-h">
       <div class="wrap">
-        <div class="sn-kopf sn-kopf--zweispaltig">
+        <div class="sn-kopf">
           <h2 id="ls-ref-h" class="sn-h2 sn-h2--klein">{REFERENZEN.titel}</h2>
           <p class="sn-lead">{REFERENZEN.einleitung}</p>
         </div>
@@ -238,6 +241,25 @@ const schema = [
               ))}
             </ul>
             <p class="ls-paketkarte__fuer">{gesamtZeile()}. {EINMALIG_DAZU.hinweis}</p>
+          </article>
+        )}
+        {komplett && (
+          <article class="ls-paketkarte ls-paketkarte--komplett" id="rundum-digital" aria-labelledby="ls-pk-komplett">
+            <p class="ls-paketkarte__label">Buchbares Paket · Website + Betriebs-App</p>
+            <h3 id="ls-pk-komplett" class="ls-paketkarte__name">{KOMPLETTPAKET.name}</h3>
+            <p class="ls-paketkarte__kurz">{KOMPLETTPAKET.kurz}</p>
+            <ul class="ls-kombis">
+              {kombis.map((k) => <li><span>mit {k.paket.name}</span><b>{euroAb(k.preis, KOMPLETTPAKET.kombiAb)}</b></li>)}
+            </ul>
+            <p class="ls-paketkarte__brutto">netto im Monat zzgl. 19 % MwSt., Website-Paket inklusive</p>
+            <ul class="ls-komplett__liste">
+              {KOMPLETTPAKET.software.slice(0, 4).map((t) => <li><Icon name="check" size={18} /><span>{t}</span></li>)}
+            </ul>
+            <div class="ls-paket__knoepfe">
+              <a class="btn btn--lg sn-btn" href={kontaktKombi}>{BUCHEN.knopf}<span class="sr-only">: {KOMPLETTPAKET.name}</span></a>
+              <a class="sn-link" href={kontakt}>{HERO_KNOPF} <Icon name="arrow" size={18} /></a>
+            </div>
+            <p class="sn-fein">{BUCHEN.kaufHinweis} {LAUFZEIT_HINWEIS}</p>
           </article>
         )}
         {aufAnfrage && (

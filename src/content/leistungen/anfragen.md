@@ -4,7 +4,7 @@ menuTitel: "Anfragen"
 gruppe: anfragen
 station: anfrage
 kurz: "Einfache Kontaktwege und Anfragen, die geordnet ankommen statt unterzugehen."
-description: "Formular, Postfach oder Kundenverwaltung: Wir machen es Interessenten leicht, sich bei Ihnen zu melden, und sorgen dafür, dass keine Anfrage untergeht."
+description: "Formular, Postfach oder Kundenverwaltung: Wir machen es Interessenten leicht, sich bei Ihnen zu melden, damit möglichst keine Anfrage untergeht."
 paket: "auf Anfrage"
 fragen:
   - frage: "Welche Kontaktwege sind sinnvoll?"

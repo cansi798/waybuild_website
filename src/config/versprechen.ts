@@ -105,8 +105,8 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
   {
     id: 'transparenz',
     icon: 'eye',
-    title: 'Keine versteckten Kosten',
-    zeilen: ['Keine versteckten', 'Kosten'],
+    title: 'Alle Kosten auf einen Blick', // Jamil #6011, Audit #5953 W3 (vorher „Keine versteckten Kosten“)
+    zeilen: ['Alle Kosten', 'auf einen Blick'],
     short: 'Maximale Transparenz.',
     long: 'Was der Monatspreis abdeckt, steht im Vertrag. Extras berechnen wir nur, wenn Sie sie ausdrücklich und vorher schriftlich beauftragt haben.',
   },

@@ -6,7 +6,8 @@
  * - Farben nur aus der CI: Türkis #00a6a1 (Flächen, Zeichen), Tinte #006b68 (Schrift, Knöpfe), Tief #004f4c, Hauch #eaf5f4,
  *   Papier #f7f5f0, Sand #efebe3, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
  * - Schrift: Plus Jakarta Sans für Überschriften und Text (QA #5952, vorher Montserrat/Jost), Zeilenabstand 1,7.
- * - Überschriften links über einer zweispaltigen Kopfzeile statt alles mittig; Karten nur, wo sie etwas zusammenfassen.
+ * - Überschriften links, Unterzeile/Lead immer direkt darunter (Jamil #6012, 15.11.2026: „Subheadline immer unter Headline, auf der
+ *   gesamten Website“; der frühere Modifier .sn-kopf--zweispaltig ist entfernt); Karten nur, wo sie etwas zusammenfassen.
  * - Eine Sache darf auffallen: der stehende Bildrahmen der Kundenreise (Teil 3). Alles andere bleibt still.
  * - Hintergründe im Wechsel: Produkte Papier → Problem Weiß → Lösung Papier → Beweis Weiß → Angebot Sand → Handlung Hauch.
  * Kontraste (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
@@ -38,17 +39,13 @@
 
 .sn-kopf { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-bottom: clamp(36px, 5vw, 64px); }
 .sn-kopf .sn-h2 { max-width: 22ch; }
-@media (min-width: 900px) {
-  .sn-kopf--zweispaltig { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(32px, 5vw, 80px); align-items: end; }
-  .sn-kopf--zweispaltig .sn-lead { padding-bottom: 6px; }
-}
+/* Kein zweispaltiger Kopf mehr: Überschrift oben, Unterzeile direkt darunter, auf allen Seiten (Jamil #6012) */
 .sn-kopf--mitte { justify-items: center; text-align: center; }
 .sn-zeile { display: block; }
 .sn-nb { white-space: nowrap; }
 /* .sr-only (position: absolute) immer in einem eigenen Bezugsrahmen halten (WebKit, siehe .sn-station) */
 .sn-schritt, .sn-paket, .sn-kombi, .sn-ref, .sn-extras, .sn-handlung__oder, .sn-produkt { position: relative; }
 .sn-produkte .sn-kopf .sn-h2 { max-width: 24ch; }
-@media (min-width: 900px) { .sn-produkte .sn-kopf--zweispaltig { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); } }
 .sn-kopf--mitte .sn-h2 { max-width: 18ch; }
 .sn-kopf--mitte .sn-lead { max-width: 56ch; }
 
@@ -351,7 +348,7 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
 .sn-handlung__knoepfe { display: grid; gap: 14px; justify-items: start; }
 .sn-handlung__oder { color: var(--ink-soft); }
 .sn-handlung__oder a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; vertical-align: middle; }
-@media (min-width: 1000px) { .sn-handlung__kopf { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: 64px; } }
+/* .sn-handlung__kopf bleibt einspaltig: Überschrift oben, Text und Knöpfe darunter (Jamil #6012) */
 @media (max-width: 599px) { .sn-handlung__knoepfe { justify-items: stretch; } .sn-btn--gross { width: 100%; } }
 .sn-ablauf__titel { margin-bottom: 18px !important; }
 .sn-ablauf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; counter-reset: none; }
@@ -435,3 +432,7 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
   .sn-pakete > .sn-paket .sn-paket__kopf { align-self: start; }
   .sn-pakete > .sn-paket .sn-paket__liste { align-self: start; align-content: start; }
 } }
+
+/* Kombipreise auf der Karte „Rundum digital“ (Jamil #6011, Audit #5953 P2) */
+.sn-paket__kombis { list-style: none; margin: 0 0 10px; padding: 0 0 10px; display: grid; gap: 4px; border-bottom: 1px solid var(--sn-linie); font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
+.sn-paket__kombis b { color: var(--ink); font-weight: 700; white-space: nowrap; }

@@ -29,8 +29,9 @@ export const START_ABLAUF = {
   lead: 'Erst verstehen, dann bauen: Sie sehen bereits vor einer Beauftragung, was für Ihr Unternehmen möglich ist.',
   schritte: [
     {
-      titel: 'Produkt auswählen & Termin buchen',
-      text: 'Ob neue Website, Relaunch oder individuelle Software: Sie wählen die passende Lösung und buchen direkt einen Termin.',
+      // Jamil #6011, Audit #5953 H3 (15.11.2026): ehrlich, es gibt keinen Kalender – Anfrage senden, wir melden uns mit Terminvorschlägen
+      titel: 'Produkt auswählen & Anfrage senden',
+      text: 'Ob neue Website, Relaunch oder individuelle Software: Sie wählen die passende Lösung und senden uns eine kurze Anfrage. Wir melden uns persönlich mit Terminvorschlägen.',
       zeit: 'Dauer: 2 Minuten',
       anker: 'erstberatung',
     },
