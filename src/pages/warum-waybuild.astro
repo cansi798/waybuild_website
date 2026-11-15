@@ -4,6 +4,8 @@
 // Neu im Stil der Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026): Inhalte erhalten, Optik wie src/components/startneu/.
 // Der alte Vergleich (VERGLEICH aus variante.ts, Tabelle + Handy-Karten) ist hier durch die Vergleichstabelle der Startseite
 // ersetzt (SnVergleich, Daten config/start-vergleich.ts). VERGLEICH in variante.ts bleibt (llms.txt.ts und Hinweis in SnVergleich).
+// 15.11.2026 (Jamil #6038, Audit L6/L7/W4): Kopfsatz ohne Widerspruch zu den Website-Paketen, Technik in Nutzen übersetzt,
+// keine absoluten Zusagen („deutlich schneller“, „dieselbe Person“).
 // Abschnitte im Wechsel: Papier → Weiß (Vergleich) → Hauch → Weiß → Papier → Hauch (SnAbschluss). Stil: styles/seite-warum.css (.sw2-).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
@@ -17,18 +19,18 @@ import '../styles/seite-warum.css';
 
 const unterschiede: { title: string; text: string; link?: { label: string; path: string } }[] = [
   { title: 'Beratung zuerst', text: 'Zielgruppen, Positionierung, Customer Journey: Wir denken mit Ihnen, bevor gebaut wird.' },
-  { title: 'KI-gestützte Umsetzung', text: 'Die Ideen entwickeln wir mit Ihnen. Danach beschleunigt die KI die Umsetzung, und Ihre Website ist deutlich schneller fertig.' },
+  { title: 'KI-gestützte Umsetzung', text: 'Die Ideen entwickeln wir mit Ihnen. Danach beschleunigt die KI die Umsetzung: Ihre Website ist in der Regel innerhalb von 14 Tagen online, nachdem Ihre Inhalte vorliegen.' },
   { title: 'Fester Monatspreis, alles drin', text: 'Feste Pakete, keine Einrichtungskosten, alle Kosten auf einen Blick.' /* Jamil #6011, Audit #5953 W3 */, link: { label: 'Zum Preis', path: '/preise/' } },
   { title: 'Keine Seitenbegrenzung', text: 'Ihre Website wächst mit Ihrem Unternehmen. Wir zählen keine Seiten, eine neue Seite kostet keinen Aufpreis.' },
   { title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
-  { title: 'Ein Ansprechpartner', text: 'Vom Erstgespräch bis zur Betreuung spricht dieselbe Person mit Ihnen, die Ihr Unternehmen kennt.' },
+  { title: 'Ein Ansprechpartner', text: 'Vom Erstgespräch bis zur Betreuung haben Sie einen festen Ansprechpartner, der Ihr Unternehmen kennt.' },
 ];
 
 const eigenbetrieb = [
   'Zwei-Faktor-Anmeldung',
-  'Videokonferenzen über das Talk-High-Performance-Backend',
-  'Online-Dokumentenbearbeitung direkt im Browser',
-  'Digitales Dokumentenarchiv mit Paperless',
+  'Videokonferenzen über unseren eigenen Server',
+  'Dokumente gemeinsam direkt im Browser bearbeiten',
+  'Digitales Dokumentenarchiv mit Texterkennung',
   'Automatische Backups',
 ];
 
@@ -53,7 +55,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
   <PageHeader
     eyebrow="Warum webgold"
     title="Keine klassische Webagentur."
-    lead="Wir verkaufen keine Websites. Wir verkaufen digitale Kundenerlebnisse."
+    lead="Sie bekommen nicht nur eine Website, sondern ein durchdachtes digitales Kundenerlebnis."
   >
     <p class="sw2-ph-cta"><a class="btn btn--primary" href={href('/kontakt/')}>Kostenlose Erstberatung</a> <a class="btn btn--ghost" href={href('/preise/')}>Preis ansehen</a></p>
   </PageHeader>
@@ -91,7 +93,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
       <div>
         <p class="sn-kenn">Wir nutzen, was wir verkaufen</p>
         <h2 id="eigen-h" class="sn-h2 sn-h2--klein">Unsere eigene IT läuft auf derselben Technik.</h2>
-        <p class="sn-lead sw2-eigen__lead">webgold betreibt selbst eine gehärtete Nextcloud. Sie ist die Basis für unsere Plattform-Vision.</p>
+        <p class="sn-lead sw2-eigen__lead">webgold betreibt selbst eine abgesicherte Nextcloud. Darauf bauen wir unsere weiteren Angebote auf.</p>
       </div>
       <ul class="sw2-liste">
         {eigenbetrieb.map((e) => <li><span class="sw2-punktzeichen" aria-hidden="true"></span><span>{e}</span></li>)}
@@ -131,7 +133,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
           <p class="sn-kenn">Unser Ziel</p>
           <h2 id="saeulen-h" class="sn-h2">Die Website ist nur der erste Schritt.</h2>
         </div>
-        <p class="sn-lead">Daraus entwickeln wir Schritt für Schritt ein digitales Betriebssystem für KMU.</p>
+        <p class="sn-lead">Darauf bauen wir Schritt für Schritt weitere digitale Werkzeuge für kleine und mittlere Unternehmen auf.</p>
       </div>
       <ul class="sw2-saeulen__liste">
         {SAEULEN.map((s, i) => (

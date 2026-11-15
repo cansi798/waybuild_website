@@ -48,7 +48,7 @@ const START = [
 ];
 
 const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
-const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Auftragsverwaltung, nur ${komplettPreis()}.`;
+const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${komplettPreis()}.`; // Web-App einheitlich (Jamil #6038, Audit K2)
 ---
 
 <BaseLayout

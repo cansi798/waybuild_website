@@ -1,4 +1,5 @@
 ---
+// Kombi-Hinweis in Alltagssprache (Jamil #6038, Audit P3, 15.11.2026).
 // Komplettpaket (Jamil, Talk qh87y3sj #5450–#5462, 10.11.2026): breite Karte unter den Paketen Basis und Plus
 // (Startseite #pakete und /preise/), OPTIONAL ZUSÄTZLICH buchbar, kein drittes Paket. Inhalt nur die Auftragsverwaltung.
 // Ersetzt die frühere Premium-Karte „Komplett + Auftragsverwaltung“ (Gestaltung übernommen). Daten aus KOMPLETTPAKET in
@@ -51,7 +52,7 @@ const erste = [...kombis].sort((a, b) => a.preis - b.preis)[0];
           </li>
         ))}
       </ul>
-      {!P.kombiMitGruenderpaket && <p class="pm__kombi-hinweis">Kombipreise gelten nicht zusammen mit dem Gesamtpaket „{EINMALIG_DAZU.gesamt.name}“.</p>}
+      {!P.kombiMitGruenderpaket && <p class="pm__kombi-hinweis">Wenn Sie zusätzlich das Gesamtpaket „{EINMALIG_DAZU.gesamt.name}“ buchen, entfällt der Kombipreis. Dann gelten die Einzelpreise.</p>}
     </div>
   )}
 

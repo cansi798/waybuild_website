@@ -69,3 +69,5 @@
   .sl-karte__mehr svg { transition: none; }
   .sl-karte:hover .sl-karte__mehr svg, .sl-karte:focus-within .sl-karte__mehr svg { transform: none; }
 }
+/* Tippfläche der Kartentitel mind. 44 px hoch, ohne Layoutänderung (Jamil #6038, Audit M4) */
+.sl-karte__titel a { display: inline-block; padding-block: 10px; margin-block: -10px; }

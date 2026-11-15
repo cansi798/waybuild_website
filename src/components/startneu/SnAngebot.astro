@@ -21,8 +21,10 @@ const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURICo
 const kontaktExtras = `${href('/kontakt/')}?dazu=${encodeURIComponent(E.gesamt.id)}&buchen=1`;
 const kombis = kombiPreise();
 const appText = K.text.replace(/\s*Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '');
-interface Props { zeigeFragen?: boolean }
-const { zeigeFragen = true } = Astro.props; // Startseite ohne FAQ (Jamil #5967)
+interface Props { zeigeFragen?: boolean; kompakt?: boolean }
+// Startseite ohne FAQ (Jamil #5967). kompakt (Startseite, Jamil #6038, Audit P6/M1): nur die drei Karten, Wahlhilfe und ein Link
+// auf /preise/; Extras, Sicherheits-Kacheln und Kombi-Hinweis stehen nur auf der Preisseite.
+const { zeigeFragen = true, kompakt = false } = Astro.props;
 const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((f): f is NonNullable<typeof f> => !!f && !f.platzhalter);
 ---
 
@@ -61,7 +63,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
       <article class="sn-paket sn-paket--komplett" id="komplettpaket" aria-labelledby="sn-pk-komplett">
         <div class="sn-paket__kopf">
           <h3 id="sn-pk-komplett" class="sn-paket__name">{K.name}</h3>
-          <span class="sn-paket__tipp sn-paket__tipp--gold">Website + Betriebs-App</span>
+          <span class="sn-paket__tipp sn-paket__tipp--gold">Website + Web-App</span>{/* Web-App einheitlich (Jamil #5928–#5939; #6038, Audit K2) */}
         </div>
         <p class="sn-paket__kurz">{K.kurz}</p>
         <p class="sn-paket__preis"><b>{euroAb(kombis[0].preis, true)}</b><span>netto im Monat</span></p>
@@ -85,9 +87,20 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
         </div>
       </article>
     </div>
-    {!K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Der Kombipreis für „{K.name}“ gilt nicht zusammen mit dem Gesamtpaket „{E.gesamt.name}“.</p>}
+    {/* Wahlhilfe unter den Karten (Jamil #6038, Audit P5) */}
+    <div class="sn-wahlhilfe">
+      <h3 class="sn-h4 sn-wahlhilfe__titel">{T.wahlhilfe.titel}</h3>
+      <ul class="sn-wahlhilfe__liste">
+        {T.wahlhilfe.zeilen.map((z) => <li><span>{z.wenn}</span> <Icon name="arrow" size={16} /> <a href={z.id === 'komplett' ? '#komplettpaket' : `#pk-${z.id}`}>{z.id === 'komplett' ? K.name : paketById(z.id).name}</a></li>)}
+      </ul>
+    </div>
 
+    {/* Kombi-Regel in Alltagssprache (Jamil #6038, Audit P3), nur auf der Preisseite */}
+    {!kompakt && !K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Wenn Sie zusätzlich das Gesamtpaket „{E.gesamt.name}“ buchen, entfällt der Kombipreis von „{K.name}“. Dann gelten die Einzelpreise.</p>}
 
+    {kompakt ? (
+      <p class="sn-fein sn-fein--mitte sn-angebot__mehr"><a class="sn-link" href={href('/preise/')}>{T.alleDetails} <Icon name="arrow" size={18} /></a><br />{LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+    ) : (<>
     <div class="sn-extras" id="einmalig" role="region" aria-labelledby="sn-extras-h">
       <div class="sn-extras__text">
         <h3 id="sn-extras-h" class="sn-h4">Neu starten oder neu aufstellen?</h3>
@@ -103,6 +116,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
     </ul>
 
     <p class="sn-fein sn-fein--mitte"><a href={href('/preise/')}>{T.allePreise}</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
+    </>)}
 
     {zeigeFragen && (
     <div class="sn-fragen">

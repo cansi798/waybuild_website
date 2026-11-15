@@ -41,6 +41,7 @@ import '../styles/seite-kontakt.css';
   description="Kostenlose Erstberatung zu Website as a Service anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
+  ohneKontaktkopf
 >
   <PageHeader
     eyebrow="Kontakt"
@@ -284,9 +285,32 @@ import '../styles/seite-kontakt.css';
 
     const interessText = (d: Record<string, string>) => interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
     const status = form.querySelector<HTMLElement>('.form__status')!;
+    // Eigene Fehlermeldungen unter JEDEM fehlenden Pflichtfeld statt nur der Browser-Blase am ersten (Jamil #6038, Audit B4).
+    // Verknüpft per aria-describedby + aria-invalid, verschwindet beim Korrigieren; Fokus auf das erste fehlende Feld.
+    const meldung = (f: HTMLInputElement) => {
+      if (f.type === 'checkbox') return 'Bitte stimmen Sie der Datenschutzerklärung zu.';
+      if (f.validity.valueMissing) return f.name === 'email' ? 'Bitte geben Sie Ihre E-Mail-Adresse an.' : 'Bitte geben Sie Ihren Namen an.';
+      return 'Bitte prüfen Sie die E-Mail-Adresse (zum Beispiel name@firma.de).';
+    };
+    const pflicht = Array.from(form.querySelectorAll<HTMLInputElement>('input[required]'));
+    const zeigeFehler = (f: HTMLInputElement) => {
+      const id = `fehler-${f.name}`;
+      let el = document.getElementById(id);
+      if (f.validity.valid) { el?.remove(); f.removeAttribute('aria-invalid'); f.removeAttribute('aria-describedby'); return true; }
+      if (!el) {
+        el = document.createElement('span');
+        el.id = id; el.className = 'form__fehler';
+        (f.type === 'checkbox' ? f.closest('label')! : f).insertAdjacentElement('afterend', el);
+      }
+      el.textContent = meldung(f);
+      f.setAttribute('aria-invalid', 'true'); f.setAttribute('aria-describedby', id);
+      return false;
+    };
+    pflicht.forEach((f) => f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => { if (f.hasAttribute('aria-invalid')) zeigeFehler(f); }));
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!form.reportValidity()) return;
+      const fehlend = pflicht.filter((f) => !zeigeFehler(f));
+      if (fehlend.length) { fehlend[0].focus(); return; }
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
       if (data.website) return; // Honeypot: Bots füllen das versteckte Feld aus
       delete data.website;

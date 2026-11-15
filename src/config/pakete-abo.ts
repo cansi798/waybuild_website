@@ -254,7 +254,7 @@ export const FAQ_PAKETE: PaketFrage[] = [
   { q: 'Sind die Preise netto?',
     a: 'Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Unser Angebot richtet sich an Unternehmen und Selbstständige.' },
   { q: 'Kann ich meine bestehende Domain mitnehmen?',
-    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall.' },
+    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain, in der Regel ohne Ausfall.' }, // Jamil #6038, Audit W4
 ];
 
 /** Kurzfassung für den Preisteil der Startseite: diese Leistungen je Paket (Rest auf /preise/). */

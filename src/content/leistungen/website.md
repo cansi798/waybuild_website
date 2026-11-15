@@ -14,7 +14,7 @@ fragen:
   - frage: "Wann ist meine Website online?"
     antwort: "In der Regel 14 Tage, nachdem Ihre Inhalte bei uns sind. Vorher sehen Sie den Entwurf und geben ihn frei."
   - frage: "Kann ich meine bestehende Domain behalten?"
-    antwort: "Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall."
+    antwort: "Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain, in der Regel ohne Ausfall."
 # von uns ergänzt (#5892): probleme
 probleme:
   - titel: "Die Website wirkt veraltet"
@@ -28,7 +28,7 @@ umfang:
   - text: "ein klarer Aufbau, damit Besucher schnell finden, was sie suchen"
   - text: "Hosting in Deutschland, Updates und Sicherungen im Monatspreis"
   - text: "E-Mail-Postfächer mit Ihrer eigenen Adresse und einer einheitlichen Signatur"
-  - text: "die Übernahme Ihrer bestehenden Domain ohne Ausfall"
+  - text: "die Übernahme Ihrer bestehenden Domain, in der Regel ohne Ausfall"
   - text: "Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein. Das ersetzt keine Rechtsberatung."
 umfangHinweis: "Die Texte erarbeiten wir gemeinsam mit Ihnen, mehr dazu unter [Klare Inhalte](/leistungen/inhalte/). Was nach dem Start passiert, finden Sie unter [Betreuung](/leistungen/betreuung/)."
 schritte:

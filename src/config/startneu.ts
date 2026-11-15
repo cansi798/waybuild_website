@@ -88,7 +88,7 @@ export const ANGEBOT = {
   kennzeile: 'Pakete',
   titel: 'Drei Pakete. Feste Monatspreise.', // Jamil #5923 (vorher „Zwei Pakete“)
   lead: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.',
-  appTitel: 'Die Betriebs-App dazu',
+  appTitel: 'Die Web-App dazu', // Web-App einheitlich (Jamil #5928–#5939; #6038, Audit K2)
   sicherheit: [
     { icon: 'euro', titel: 'Keine Einrichtungsgebühr', text: 'Auch die Einrichtung von Website und Google-Profil ist im Monatspreis enthalten.' },
     { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 20 Minuten, unverbindlich. Wir empfehlen das passende Paket.' },
@@ -110,6 +110,18 @@ export const ANGEBOT = {
   ],
   alleFragen: 'Alle Fragen ansehen',
   allePreise: 'Alle Inhalte, Vergleich und Zusatzleistungen',
+  /** Startseite kompakt (Jamil #6038, Audit P6): Link statt Extras/Sicherheit */
+  alleDetails: 'Alle Details, Extras und Fragen zu den Paketen',
+  /** Wahlhilfe unter den Karten (Jamil #6038, Audit P5); Sätze aus den „Für wen“-Texten der Pakete in pakete-abo.ts,
+   *  Paketnamen kommen über die id aus pakete-abo.ts (SnAngebot.astro) */
+  wahlhilfe: {
+    titel: 'Welches Paket passt zu mir?',
+    zeilen: [
+      { wenn: 'Sie wollen gut gefunden werden und seriös auftreten', id: 'basis' },
+      { wenn: 'Sie wollen über Google regelmäßig neue Kunden gewinnen', id: 'plus' },
+      { wenn: 'Sie wollen dazu Anfragen, Angebote und Aufträge an einem Ort ordnen', id: 'komplett' },
+    ] as { wenn: string; id: 'basis' | 'plus' | 'komplett' }[],
+  },
 };
 
 /** Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text, Knopf ABSCHLUSS_KNOPF (variante.ts). */

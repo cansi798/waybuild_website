@@ -24,6 +24,8 @@ interface Props {
   thema?: 'besucherreise';
   /** Startseite: jeder Abschnitt eine Bildschirmseite; Stapel-Effekt nur am Hero (Jamil #5146, #5152–#5155; src/scripts/stapel.ts) */
   stapel?: boolean;
+  /** Footer ohne Kontaktkopf (Kontakt- und Danke-Seite, Jamil #6038, Audit H7/D2) */
+  ohneKontaktkopf?: boolean;
 }
 
 const { title, description, schema = [], noindex = false, breadcrumb, hideMobileCta = false, thema } = Astro.props;
@@ -152,7 +154,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
       {breadcrumb && <Breadcrumbs items={breadcrumb} />}
       <slot />
     </main>
-    <Footer thema={thema} />
+    <Footer thema={thema} ohneKontaktkopf={!!Astro.props.ohneKontaktkopf} />
     {!hideMobileCta && <StickyBar thema={thema} nachHero={!!Astro.props.stapel} />}{/* nachHero: nur Startseite, Leiste erst nach dem Hero-Knopf (#5204) */}
     <script data-reveal-script>
       // Reveal beim Scrollen (nur mit JS; ohne JS ist alles sichtbar)

@@ -195,3 +195,5 @@ html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-l
   .gs-angebot .pk, .gs-angebot .pm, .gs-angebot .pm__kombi-liste li { transition: none; }
   .gs-weg:hover { transform: none; }
 }
+/* Tippfläche der Textlinks mind. 44 px hoch, ohne Layoutänderung (Jamil #6038, Audit M4) */
+.gs-mehr a, a.gs-empfehlung__link, .gs-empfehlung__link a { display: inline-block; padding-block: 11px; margin-block: -11px; }

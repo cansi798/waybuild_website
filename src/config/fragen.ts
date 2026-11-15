@@ -24,6 +24,7 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
     'Ich brauche kein Logo. Muss ich das mitbezahlen?',
     'Kann ich über den Preis verhandeln?',
     'Sind die Preise netto?',
+    'Kann ich die Web-App ohne Website buchen?', // Jamil #6038, Audit F3
   ] },
   { id: 'ablauf', titel: 'Ablauf', fragen: [
     'Wie schnell ist meine Website online?',
@@ -33,6 +34,7 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
   { id: 'technik', titel: 'Technik und Betreuung', fragen: [
     'Was ist bei Website as a Service enthalten?',
     'Kann ich meine bestehende Domain mitnehmen?',
+    'Ich habe schon eine Website. Was passiert damit?', // Jamil #6038, Audit F3
     'Bietet webgold auch Software, Cloud und IT an?',
   ] },
   // Jamil #5933 (14.11.2026): Fragen, die Ängste nehmen (Antworten in site.ts → faqs)

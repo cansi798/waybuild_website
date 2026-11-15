@@ -35,7 +35,8 @@ export const company = {
 export const PHONE_IS_PLACEHOLDER = true;
 /** Telefon-Helfer: tel:-Link und WhatsApp-Link (wa.me) aus company.phone. */
 export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/^0/, '');
-export const whatsappLink = (text = 'Hallo webgold, ich interessiere mich für Website as a Service.') =>
+// Vorlagetext wie auf der Startseite (Jamil #6038, Audit K1; vorher „… für Website as a Service.“)
+export const whatsappLink = (text = 'Hallo webgold, ich interessiere mich für eine kostenlose Erstberatung.') =>
   `https://wa.me/${phoneTel().replace('+', '')}?text=${encodeURIComponent(text)}`;
 /** Erreichbarkeit (Footer-Kopf, Kontakt, Menü, llms.txt). 9 bis 17 Uhr: Jamil, Talk qh87y3sj #5322 (Q4). */
 export const HOURS = 'Montag bis Freitag, 9 bis 17 Uhr';
@@ -173,7 +174,7 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei webgold?', // „drei Pakete“: Jamil #6011, Audit #5953 P1 (vorher „zwei feste Monatspakete“)
-    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Auftragsverwaltung. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Web-App für Ihre Aufträge. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
@@ -213,15 +214,24 @@ export const faqs = [
   },
   {
     q: 'Welche Rolle spielt KI?',
-    a: 'Strategie, Positionierung und Inhalte erarbeiten wir persönlich mit Ihnen. Danach setzt unsere KI die Ergebnisse um, und das geht deutlich schneller als von Hand. Die Ideen kommen weiter von Menschen.',
+    a: 'Strategie, Positionierung und Inhalte erarbeiten wir persönlich mit Ihnen. Danach setzt unsere KI die Ergebnisse um, und das geht schneller als von Hand. Die Ideen kommen weiter von Menschen.',
   },
   {
     q: 'Kann ich meine bestehende Domain mitnehmen?',
-    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain ohne Ausfall.',
+    a: 'Ja. Wir übernehmen die Verwaltung Ihrer bestehenden Domain, in der Regel ohne Ausfall.', // „in der Regel“ (Jamil #6038, Audit W4)
   },
   {
     q: 'Bietet webgold auch Software, Cloud und IT an?',
     a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
+  },
+  // Fehlende Einwände (Jamil #6038, Audit F3): nur mit Aussagen, die schon in pakete-abo.ts bzw. den FAQ oben stehen
+  {
+    q: 'Kann ich die Web-App ohne Website buchen?',
+    a: `Im Paket „${KOMPLETTPAKET.name}“ gibt es die Web-App nur zusammen mit ${PAKETE.map((p) => p.name).join(' oder ')}. Individuelle Software ohne Website setzen wir auf Anfrage als eigenes Projekt um.`,
+  },
+  {
+    q: 'Ich habe schon eine Website. Was passiert damit?',
+    a: 'Wir bauen Ihre neue Website im Hintergrund auf. Online geht sie erst nach Ihrer Freigabe, bis dahin kann Ihre bisherige Website online bleiben. Ihre bestehende Domain können Sie mitnehmen.',
   },
   {
     q: 'Sind die Preise netto?',
@@ -240,7 +250,7 @@ export const faqs = [
   },
   {
     q: 'Kann ich während der Umstellung normal weiterarbeiten?', // Jamil #5933 („Werde ich arbeitsunfähig sein für eine Zeit?“)
-    a: 'Das ist unser Ziel. Wir bauen Ihre neue Website im Hintergrund auf, und online geht sie erst nach Ihrer Freigabe. Die Verwaltung Ihrer bestehenden Domain übernehmen wir ohne Ausfall. Den Zeitpunkt für die E-Mail-Umstellung stimmen wir vorab mit Ihnen ab.',
+    a: 'Das ist unser Ziel. Wir bauen Ihre neue Website im Hintergrund auf, und online geht sie erst nach Ihrer Freigabe. Die Verwaltung Ihrer bestehenden Domain übernehmen wir in der Regel ohne Ausfall. Den Zeitpunkt für die E-Mail-Umstellung stimmen wir vorab mit Ihnen ab.',
   },
   {
     q: 'Muss ich mich mit Technik auskennen?', // Jamil #5933

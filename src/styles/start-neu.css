@@ -436,3 +436,13 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 /* Kombipreise auf der Karte „Rundum digital“ (Jamil #6011, Audit #5953 P2) */
 .sn-paket__kombis { list-style: none; margin: 0 0 10px; padding: 0 0 10px; display: grid; gap: 4px; border-bottom: 1px solid var(--sn-linie); font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
 .sn-paket__kombis b { color: var(--ink); font-weight: 700; white-space: nowrap; }
+
+/* Wahlhilfe unter den Paketkarten (Jamil #6038, Audit P5) und Link der kompakten Startseiten-Fassung (Audit P6) */
+.sn-wahlhilfe { max-width: 1040px; margin: 28px auto 0; padding: 20px 24px; border-radius: 24px; background: var(--paper); }
+.sn-wahlhilfe__titel { margin: 0 0 10px; }
+.sn-wahlhilfe__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sn-wahlhilfe__liste li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; line-height: 1.5; color: var(--ink-soft); }
+.sn-wahlhilfe__liste li :global(svg), .sn-wahlhilfe__liste li svg { flex: none; color: var(--sn-tinte); }
+.sn-wahlhilfe__liste a { color: var(--sn-tinte); font-weight: 700; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 32px; }
+.sn-angebot__mehr { margin-top: 24px !important; line-height: 1.8; }
+.sn-angebot__mehr .sn-link { display: inline-flex; min-height: 44px; align-items: center; }

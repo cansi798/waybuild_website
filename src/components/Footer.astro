@@ -10,8 +10,10 @@ import { BEISPIEL_LINK } from '../config/beispiel';
 // Seit 14.11.2026 (#5892) auch ausgeblendet auf jeder Seite mit dem neuen Abschluss SnAbschluss (#kontakt-start), per CSS :has(),
 // damit dort nicht zwei Abschlüsse hintereinander stehen.
 // Logo C (Negativ) auf allen Seiten, auch auf der Startseite (Jamil, Talk qh87y3sj #5226/#5227 „überall“).
-interface Props { thema?: 'besucherreise' }
-const reise = Astro.props.thema === 'besucherreise';
+// ohneKontaktkopf: Kontakt- und Danke-Seite ohne den Block „Kostenlose Erstberatung … anrufen / WhatsApp“ (Jamil #6038, Audit H7/D2):
+// dort steht der Kontakt schon im Inhalt bzw. die Anfrage ist bereits gesendet.
+interface Props { thema?: 'besucherreise'; ohneKontaktkopf?: boolean }
+const reise = Astro.props.thema === 'besucherreise' || !!Astro.props.ohneKontaktkopf;
 
 const year = new Date().getFullYear();
 ---

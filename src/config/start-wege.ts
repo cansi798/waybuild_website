@@ -30,7 +30,7 @@ export const WEGE = {
       text: 'Eine moderne Website sorgt dafür, dass Interessenten verstehen, was Sie anbieten, Vertrauen aufbauen und mit Ihnen Kontakt aufnehmen.',
       ideal: 'Ideal für Unternehmen, die ihre Sichtbarkeit verbessern oder ihren Auftritt modernisieren möchten.',
       icon: 'target',
-      link: { text: 'Mehr zu Websites', pfad: '/leistungen/' },
+      link: { text: 'Mehr zu Websites', pfad: '/leistungen/website/' }, // direkt zur Seite Website (Jamil #6038, Audit L2)
     },
     {
       bild: 'app',

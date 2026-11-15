@@ -209,7 +209,7 @@ export const ANALYSE_ZUSATZ: Zusatz[] = [
 /* ───────────── Säulen ───────────── */
 
 export const SAEULEN: { id: Saeule; title: string; claim: string; icon: IconName; ab: string; head: [string, string] }[] = [
-  { id: 'websites', title: WAAS.name, icon: 'layout', head: ['Was wir damit ', 'bauen'], claim: 'Business-Website, Shop, Landingpage oder Relaunch, alles im selben Modell mit einem festen Preis.', ab: 'Fester Monatspreis · 0 € Einrichtung' },
+  { id: 'websites', title: WAAS.name, icon: 'layout', head: ['Was wir damit ', 'bauen'], claim: 'Business-Website, Landingpage oder Relaunch, alles im selben Modell mit einem festen Monatspreis.' /* „Shop“ raus, in keinem Paket enthalten (Jamil #6038, Audit L7) */, ab: 'Fester Monatspreis · 0 € Einrichtung' },
   { id: 'software', title: 'Software', icon: 'code', head: ['Software, die Ihre Abläufe ', 'vereinfacht'], claim: 'Individuelle Software, Web-Anwendungen und Schnittstellen als eigenes Projekt.', ab: 'Ausbaustufe · auf Anfrage' },
   { id: 'cloud', title: 'Cloud & IT', icon: 'cloud', head: ['IT und Cloud, die einfach ', 'laufen'], claim: 'Eigene Nextcloud und IT-Betreuung mit Servern in Deutschland.', ab: 'Ausbaustufe · auf Anfrage' },
   { id: 'beratung', title: 'Beratung', icon: 'compass', head: ['Entscheidungen auf ', 'fundierter Basis'], claim: 'Wettbewerbsanalyse: Wo stehen Sie im Markt, und wo haben Sie einen Vorsprung?', ab: 'Ausbaustufe · auf Anfrage' },
