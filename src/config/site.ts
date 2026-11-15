@@ -22,8 +22,8 @@ export const company = {
   city: 'Norderstedt',
   country: 'DE',
   managingDirector: 'Can Siebert',
-  registerCourt: 'TODO', // z. B. 'Amtsgericht Berlin-Charlottenburg'
-  registerNumber: 'TODO', // z. B. 'HRB 123456 B'
+  registerCourt: 'Amtsgericht Kiel', // Handelsregister-Auszug vom 15.11.2026 (Can, Talk qh87y3sj #5978)
+  registerNumber: 'HRB 29883 KI', // Handelsregister-Auszug vom 15.11.2026 (Can, Talk qh87y3sj #5978)
   vatId: 'TODO', // z. B. 'DE123456789'
   /** Server-Hoster für die Datenschutzerklärung, z. B. 'IONOS SE, Elgendorfer Str. 57, 56410 Montabaur' */
   hoster: 'TODO',
