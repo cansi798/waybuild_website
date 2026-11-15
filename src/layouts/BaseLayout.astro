@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/start-farben.css'; // QA #5952: Farben + Schrift der Startseite auf allen Seiten (Jamil #5955)
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
@@ -112,7 +113,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={IS_PREVIEW ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-    <meta name="theme-color" content="#004f4c" />
+    <meta name="theme-color" content="#084e4c" />
     <link rel="icon" href={href('/favicon.ico')} sizes="any" />
     <link rel="icon" href={href('/icon-192.png')} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />

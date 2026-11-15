@@ -7,13 +7,12 @@ import Hint from '../components/Hint.astro';
 import Icon from '../components/Icon.astro';
 import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
-import { SAEULEN } from '../config/angebot';
 import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile, komplettPreis, komplettZeile, monatMitKomplett, einzelnMitKomplett } from '../config/pakete-abo';
 
 const interessen = [
-  { value: 'website', label: `Website: ${ABO_PAKETE.map((p) => p.name).join(' oder ')}` },
-  { value: 'rundum', label: `Website + Web-App: ${KOMPLETTPAKET.name}` }, // Jamil #5944 (14.11.2026)
-  ...SAEULEN.filter((s) => s.id !== 'websites').flatMap((s) => leistungen.filter((l) => l.saeule === s.id && l.slug !== 'abo-wartung').map((l) => ({ value: l.slug, label: `Auf Anfrage: ${l.title}` }))),
+  // Jamil #5956–#5958 (15.11.2026): jedes Paket einzeln auswählbar, alle „Auf Anfrage“-Einträge entfernt
+  ...ABO_PAKETE.map((p) => ({ value: p.id, label: `${p.name}: ${euro(p.preis)} im Monat netto` })),
+  { value: 'rundum', label: `${KOMPLETTPAKET.name} (Website + Web-App): ${komplettPreis()} im Monat netto` },
 ];
 const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) => l.slug);
 // Paketwahl (Jamil #5056): ?paket=Plus (auch „Paket Plus“ oder „Plus (149,99 € / Monat)“) wählt das Paket vor,
@@ -155,10 +154,9 @@ import '../styles/seite-kontakt.css';
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
     // ?dazu=… allein (Block „Neu starten oder neu aufstellen?“, Jamil #5283) zeigt ebenfalls die Paket- und Extras-Wahl
-    if (websiteSlugs.includes(leistung) || tarif || params.get('paket') || params.get('dazu') || params.get('komplett')) interesse.value = 'website';
+    const paketKontext = websiteSlugs.includes(leistung) || !!tarif || !!params.get('paket') || !!params.get('dazu') || !!params.get('komplett');
     // ?leistung=rundum bzw. Auswahl „Website + Web-App“ (Jamil #5944): wie Website, mit angehaktem „Rundum digital“
     if (leistung === 'rundum') interesse.value = 'rundum';
-    else if ([...interesse.options].some((o) => o.value === leistung)) interesse.value = leistung;
     // Paketwahl: sichtbar, sobald es um Website as a Service geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
     const wahlSelect = form.elements.namedItem('paket_wahl') as HTMLSelectElement | null;
@@ -174,6 +172,10 @@ import '../styles/seite-kontakt.css';
     const komplettParam = params.get('komplett') === '1' || istKomplett(paket) || interesse.value === 'rundum';
     if (komplettBox && komplettParam) komplettBox.checked = true;
     if (treffer && wahlSelect) wahlSelect.value = treffer.value;
+    // Auswahl „Worum geht es?“ = gewähltes Paket (#5957): Rundum digital, sonst das erkannte Paket
+    if (komplettParam) interesse.value = 'rundum';
+    else if (treffer) interesse.value = treffer.value;
+    else if (paketKontext && !interesse.value) interesse.value = '';
     else if (paket && !istKomplett(paket)) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
     // Komplettpaket nur zusammen mit Online sichtbar oder Online wachsen (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
     // nicht angehakt; ein Wunsch aus dem Link (?komplett=1) wird gemerkt und beim Wählen eines Pakets wieder angehakt.
@@ -229,8 +231,18 @@ import '../styles/seite-kontakt.css';
     const buchen = params.get('buchen') === '1';
     const absenden = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (buchen && absenden) absenden.textContent = 'Buchung anfragen';
-    const mitPaket = () => interesse.value === 'website' || interesse.value === 'rundum'; // „Website + Web-App“ verhält sich wie Website (#5944)
-    const zeigeWahl = () => { if (wahl) wahl.hidden = !mitPaket(); if (interesse.value === 'rundum' && komplettBox) { komplettWunsch = true; komplettPruefen(); } };
+    const paketIds = [...(wahlSelect?.options ?? [])].map((o) => o.value).filter(Boolean);
+    const mitPaket = () => interesse.value === 'rundum' || paketIds.includes(interesse.value);
+    // Auswahl oben ↔ Paketwahl unten abgleichen (#5957): Paket gewählt → Paketwahl setzen, Rundum digital → Haken setzen
+    const zeigeWahl = () => {
+      if (wahl) wahl.hidden = !mitPaket() && !paketKontext; // ?dazu=… (Extras) zeigt die Wahl auch ohne Paket
+      if (!wahlSelect || !komplettBox) return;
+      if (interesse.value === 'rundum') { if (!wahlSelect.value) wahlSelect.value = paketIds[0] ?? ''; komplettWunsch = true; }
+      else if (paketIds.includes(interesse.value)) { wahlSelect.value = interesse.value; komplettWunsch = false; komplettBox.checked = false; }
+      komplettPruefen();
+    };
+    komplettBox?.addEventListener('change', () => { if (komplettBox.checked) interesse.value = 'rundum'; else if (wahlSelect?.value) interesse.value = wahlSelect.value; });
+    wahlSelect?.addEventListener('change', () => { if (interesse.value !== 'rundum' && wahlSelect.value) interesse.value = wahlSelect.value; });
     zeigeWahl();
     interesse.addEventListener('change', zeigeWahl);
 

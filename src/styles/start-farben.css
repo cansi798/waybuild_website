@@ -1,4 +1,6 @@
-/* Neue Farben + Schrift NUR für die Startseite (Jamil Talk qh87y3sj #5899/#5900, 14.11.2026: „bitte erstmal nur für hauptseite
+/* Neue Farben + Schrift – seit QA #5952 (Jamil #5955 „Ja design komplett anpassen“, 15.11.2026) auf ALLEN Seiten: BaseLayout bindet
+   diese Datei global ein, die Variablen stehen zusätzlich in :root von global.css. Nur die Hero-Regeln (.v-*) bleiben auf die Startseite
+   (html[data-thema="besucherreise"]) begrenzt. Ursprünglich: NUR für die Startseite (Jamil Talk qh87y3sj #5899/#5900, 14.11.2026: „bitte erstmal nur für hauptseite
    anpassen“). Greift über html[data-thema="besucherreise"] (setzt nur index.astro), Unterseiten bleiben unverändert.
    Palette: Primär #0B6D6B · dunkle Flächen #084E4C · Gold-Akzent #d4af37 · Hintergrund #FAF8F4 · Karten #FFFFFF · Text #2C3135
    · positive Akzente #2C9A7A. Schrift: Plus Jakarta Sans (seit #5903, vorher Manrope; lokal über @fontsource-variable/plus-jakarta-sans, kein Google-Server):
@@ -18,17 +20,17 @@ html[data-thema='besucherreise'] {
   --gold: #d4af37;
   --line: #e6e0d4;
 }
-html[data-thema='besucherreise'] body { background: var(--white); font-family: var(--font-body); font-weight: 450; color: var(--ink); }
-html[data-thema='besucherreise'] .sn {
+body { background: var(--white); font-family: var(--font-body); font-weight: 450; color: var(--ink); }
+html:root .sn { /* QA #5952: global, html-Präfix hält die Rangfolge über start-neu.css */
   --sn-tinte: #0b6d6b; --sn-tief: #084e4c; --sn-tuerkis: #2c9a7a; --sn-mittel: #2c9a7a; --sn-hauch: #edf4f1;
   --sn-sand: #f3efe6; --sn-linie: #e6e0d4; --sn-linie-t: #cfe3dc;
   --sn-schatten: 0 1px 2px rgb(8 78 76 / 5%), 0 28px 56px -36px rgb(8 78 76 / 34%);
 }
 /* Überschriften 700–800, Buttons 600 */
-html[data-thema='besucherreise'] :is(h1, h2, .sn-h2, .v-titel) { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.035em; }
-html[data-thema='besucherreise'] :is(h3, h4, .sn-h3, .sn-h4) { font-family: var(--font-head); font-weight: 700; }
-html[data-thema='besucherreise'] :is(.btn, button, .sn-pk) { font-family: var(--font-head); font-weight: 600; }
-html[data-thema='besucherreise'] .sn-kenn { font-weight: 700; letter-spacing: 0.01em; }
+html:root :is(h1, h2, .sn-h2, .v-titel) { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.035em; }
+html:root :is(h3, h4, .sn-h3, .sn-h4) { font-family: var(--font-head); font-weight: 700; }
+html:root :is(.btn, button, .sn-pk) { font-family: var(--font-head); font-weight: 600; }
+html:root .sn-kenn { font-weight: 700; letter-spacing: 0.01em; }
 
 /* Hero: Grund in Primär, Farbflächen in Primär / Positiv / Dunkel */
 html[data-thema='besucherreise'] .v-hero { background: #0b6d6b; }
@@ -39,20 +41,22 @@ html[data-thema='besucherreise'] .v-blob--4 { background: radial-gradient(closes
 html[data-thema='besucherreise'] .v-leucht { color: #0b6d6b; }
 
 /* Gold-Akzent sparsam als Zier */
-html[data-thema='besucherreise'] .sn-problem__schluss { border-top-color: var(--gold); }
+html:root .sn-problem__schluss { border-top-color: var(--gold); }
 /* goldener Ring um den letzten Phasen-Punkt leuchtet ständig sanft auf (Jamil #5919) */
-html[data-thema='besucherreise'] .sph-phase:last-child .sph-ico::before { box-shadow: 0 0 0 6px var(--band, var(--paper)), 0 0 0 12px rgb(212 175 55 / 35%);
+html:root .sph-phase:last-child .sph-ico::before { box-shadow: 0 0 0 6px var(--band, var(--paper)), 0 0 0 12px rgb(212 175 55 / 35%);
   animation: gold-leuchten 2.4s ease-in-out infinite; }
 @keyframes gold-leuchten {
   0%, 100% { box-shadow: 0 0 0 6px var(--band, var(--paper)), 0 0 0 12px rgb(212 175 55 / 30%), 0 0 0 12px rgb(212 175 55 / 0%); }
   50% { box-shadow: 0 0 0 6px var(--band, var(--paper)), 0 0 0 13px rgb(212 175 55 / 80%), 0 0 24px 14px rgb(212 175 55 / 42%); }
 }
-@media (prefers-reduced-motion: reduce) { html[data-thema='besucherreise'] .sph-phase:last-child .sph-ico::before { animation: none; } }
+@media (prefers-reduced-motion: reduce) { html:root .sph-phase:last-child .sph-ico::before { animation: none; } }
 /* Goldstrich über der waybuild-Spalte entfernt (Jamil #5907) */
-html[data-thema='besucherreise'] .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(212 175 55 / 45%); }
+html:root .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(212 175 55 / 45%); }
 
 /* Positive Akzente (Haken) in #2C9A7A */
-html[data-thema='besucherreise'] .svg-ja .svg-zeichen { color: #2c9a7a; background: #e4f2ec; }
+html:root .svg-ja .svg-zeichen { color: #2c9a7a; background: #e4f2ec; }
 
 /* Kopf- und Fußzeile in den neuen Grüntönen */
-html[data-thema='besucherreise'] .footer { background: #084e4c; }
+html:root .footer { background: #084e4c; }
+/* Hero-Unterzeile kleiner auf Handy und Desktop (Jamil #5972, 15.11.2026) */
+html[data-thema='besucherreise'] .v-hero .v-unter { font-size: clamp(0.98rem, 0.92rem + 0.45vw, 1.18rem); line-height: 1.55; max-width: 56ch; }

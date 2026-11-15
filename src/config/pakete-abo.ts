@@ -212,7 +212,7 @@ export const gesamtZeile = () => `Alle vier als Gesamtpaket: ${euro(EINMALIG_DAZ
 /** „Direkt buchen“ (Jamil #5085–#5089): Fenster auf den Paketkarten, Hinweis im Fenster und im Kontaktformular. */
 export const BUCHEN = {
   knopf: 'Direkt buchen',
-  titel: 'Für Gründer oder Unternehmen, die sich neu erfinden wollen',
+  titel: 'Ihre Buchung: Paket und Extras', // Audit #5953 H4 (15.11.2026): vorher „Für Gründer …“ – passte nicht über jedes Paket
   weiter: 'Weiter zur Buchung',
   ohne: 'Ohne Extras weiter',
   kaufHinweis: 'Kein Online-Kauf: Wir schicken Ihnen Vertrag und Auftragsbestätigung per E-Mail. Erst damit ist die Buchung verbindlich.',
@@ -250,8 +250,7 @@ export const FAQ_PAKETE: PaketFrage[] = [
     a: 'Offen: Ob sich der Monatspreis nach der Mindestlaufzeit ändert, entscheiden Can und Jamil. Bis dahin machen wir hier keine Aussage.' },
   { q: 'Kann ich das Paket später wechseln?',
     a: 'Ja, ein Wechsel in ein größeres Paket ist möglich. Sagen Sie uns einfach Bescheid, die Einzelheiten besprechen wir mit Ihnen.' },
-  { q: 'Wem gehört das Logo, wenn ich es monatlich bezahle?', platzhalter: true,
-    a: 'Offen: Die Regelung zu Nutzungsrechten am Logo nach Vertragsende legen Can und Jamil fest (mit anwaltlicher Prüfung). Bis dahin machen wir hier keine Aussage.' },
+  // Frage „Wem gehört das Logo …?“ entfernt (Jamil #5975, 15.11.2026)
   { q: 'Sind die Preise netto?',
     a: 'Ja. Alle Preise verstehen sich netto zzgl. der gesetzlichen Umsatzsteuer von 19 %. Unser Angebot richtet sich an Unternehmen und Selbstständige.' },
   { q: 'Kann ich meine bestehende Domain mitnehmen?',

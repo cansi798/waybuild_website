@@ -68,6 +68,7 @@ const pct = Math.round(((total - open) / total) * 100);
   .todo--done .todo__box { border-color: var(--ok); background: var(--ok); }
   .todo__title { font-weight: 700; margin: 0 0 2px; }
   .todo--done .todo__title { text-decoration: line-through; color: var(--ink-soft); }
-  .todo__detail { margin: 0 0 6px; color: var(--ink-soft); }
-  .todo code { font-size: 0.82rem; background: var(--paper-2); padding: 2px 8px; border-radius: 6px; }
+  .todo__detail { overflow-wrap: anywhere; /* QA #5952 */ margin: 0 0 6px; color: var(--ink-soft); }
+  .todo > div { min-width: 0; } /* QA #5952: lange Pfade sprengten 320 px */
+  .todo code { overflow-wrap: anywhere; font-size: 0.82rem; background: var(--paper-2); padding: 2px 8px; border-radius: 6px; }
 </style>

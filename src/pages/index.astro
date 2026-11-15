@@ -10,6 +10,7 @@
 // vor?“ (SnProblem) → Phasen (SnPhasen) → Website + Web-App (SnSystem) → Partner (SnPartner) → Abschluss (SnAbschluss).
 // Jamil #5858/#5859 (14.11.2026) wieder rein (Beispiel-Film SnBeispiel seit #5896 wieder raus, bleibt auf /so-kann-es-laufen/ und /beispiele/): Can + Jamil (SnTeam), Vergleich (SnVergleich),
 // Ablauf (SnAblauf), Preise unten (SnAngebot). Hintergründe im Wechsel: Hauch/Papier/Weiß. Produkte, Kundenreise, Projekte (SnBeweis) bleiben draußen.
+// 15.11.2026 (Jamil #5967–#5969): Vergleich vor Team, Preise vor Ablauf, keine FAQ auf der Startseite (nur /fragen/).
 // Frühere Stände und Entscheidungen: Git-Verlauf und Tags (z. B. vor-startseite-6abschnitte-20261113).
 // WICHTIG: In dieser Datei KEIN <style>-Block (Astro würde sonst data-astro-cid-Attribute an den Hero hängen).
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -40,7 +41,7 @@ const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
 const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
-const V_DESCRIPTION = `Website, E-Mail und Google-Profil in zwei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
+const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Zwei feste Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), optional dazu das ${KOMPLETTPAKET.name} mit Auftragsverwaltung (${komplettPreis()} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
 // FAQPage-JSON-LD nur auf /fragen/ (Jamil #5136–#5138); die sechs Fragen unten im Angebot sind sichtbarer Text ohne Schema.
 ---
@@ -83,10 +84,10 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <SnProblem />
   <SnPhasen />
   <SnSystem />
-  <SnTeam />
   <SnVergleich />
+  <SnTeam />
+  <SnAngebot zeigeFragen={false} />
   <SnAblauf />
-  <SnAngebot />
   <SnAbschluss />
 </BaseLayout>
 

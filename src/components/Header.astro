@@ -96,9 +96,9 @@ const isCurrent = (path?: string) => path && current === href(path);
 
 <style>
   /* Kopfzeile auf ALLEN Seiten gleich (Jamil, Talk qh87y3sj #5072 + Korrektur #5085–#5089, 08.11.2026):
-   * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #3a3a3a, 10,4 : 1),
-   * Hover/aktuelle Seite --paper-2 mit #006b68; Fokusrahmen #006b68. Knopf „Kostenlose Erstberatung“ dunkles
-   * Logo-Türkis #006b68 mit Weiß (6,36 : 1), Hover #004f4c (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
+   * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #2c3135, 10,4 : 1),
+   * Hover/aktuelle Seite --paper-2 mit #0b6d6b; Fokusrahmen #0b6d6b. Knopf „Kostenlose Erstberatung“ dunkles
+   * Logo-Türkis #0b6d6b mit Weiß (6,36 : 1), Hover #084e4c (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
   .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
   /* leicht transparent mit Weichzeichner dahinter (Jamil #5916, 14.11.2026); ohne backdrop-filter fast deckend */
   .hdr::before {
@@ -129,7 +129,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__panel {
     position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);
     min-width: 340px; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: 18px;
-    box-shadow: 0 24px 48px -16px rgb(0 79 76 / 30%); padding: 10px;
+    box-shadow: 0 24px 48px -16px rgb(8 78 76 / 30%); padding: 10px;
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
@@ -152,7 +152,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__groups { columns: 4 200px; column-gap: 12px; }
   .dd--mega .dd__item { align-items: flex-start; }
   .dd--mega .dd__item :global(.dd__icon) { margin-top: 2px; }
-  .dd__tag { justify-self: start; margin-top: 4px; padding: 1px 8px; border-radius: 999px; background: rgb(0 166 161 / 12%); color: var(--dark); font-style: normal; font-size: 0.72rem; font-weight: 650; }
+  .dd__tag { justify-self: start; margin-top: 4px; padding: 1px 8px; border-radius: 999px; background: rgb(44 154 122 / 12%); color: var(--dark); font-style: normal; font-size: 0.72rem; font-weight: 650; }
   .dd__group { break-inside: avoid; margin-bottom: 10px; }
   .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
   .dd--mega .dd__item { padding: 7px 12px; }

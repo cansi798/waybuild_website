@@ -11,7 +11,7 @@
 
 html[data-thema='besucherreise'] {
   /* Rollen der früheren Sonder-Palette, jetzt auf die CI gelegt */
-  --gold: var(--accent);          /* Linien, Ringe, Akzentflächen: Türkis */
+  /* --gold kommt aus global.css/start-farben.css (#d4af37); die alte Umleitung auf Türkis entfernt (QA #5952, war bereits überschrieben) */
   --salbei: var(--accent-mid);    /* kleine Zeichen, Punkte, Balken: Türkis mittel (≥ 3 : 1 auf Weiß) */
   scroll-padding-top: 84px;
 }
@@ -21,7 +21,7 @@ html[data-thema='besucherreise'] .bs--dunkel :focus-visible { outline-color: var
 
 /* Knöpfe wie auf den übrigen Seiten: Türkis-Fläche (Pille); Schrift dunkel (#0b2a29) statt Grau, damit AA erfüllt ist */
 html[data-thema='besucherreise'] .btn--primary, .btn--marke { background: var(--accent); color: var(--on-accent); }
-html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { background: #1fbab5; }
+html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { background: #3fb38f; } /* QA #5952 */
 .btn--umriss { border-color: var(--accent-ink); color: var(--accent-ink); background: transparent; }
 .btn--umriss:hover { background: rgb(0 107 104 / 7%); }
 

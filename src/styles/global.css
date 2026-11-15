@@ -1,30 +1,34 @@
-/* CI waybuild: Montserrat (Überschriften) + Jost (Fließtext), lokal eingebunden */
-@import '@fontsource-variable/montserrat/wght.css';
-@import '@fontsource-variable/jost/wght.css';
+/* Schrift auf allen Seiten einheitlich Plus Jakarta Sans (QA #5952, wie Startseite seit #5903; vorher Montserrat + Jost),
+   lokal über @fontsource-variable/plus-jakarta-sans, kein Google-Server. Gewichte: Überschriften 700–800, Text 400–500, Buttons 600. */
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
 
 :root {
-  --ink: #3a3a3a;       /* Logo-Palette (Wunsch 10.10.2026): dunkles Grau statt Navy */
-  --dark: #004f4c;      /* dunkle Flächen: dunkles Türkis */
-  --dark-line: #1f6b68;
-  --dark-soft: #a9d6d4; /* Nebentext auf dunklem Grund */
+  /* Farbpalette der Startseite auf ALLEN Seiten (QA #5952, Jamil #5955 „Ja design komplett anpassen“; vorher nur
+     html[data-thema='besucherreise'] in start-farben.css): Primär #0B6D6B · dunkle Flächen #084E4C · Gold #d4af37 · Text #2C3135
+     · positive Akzente #2C9A7A. Alte CI-Werte: --ink #3a3a3a, --dark #004f4c, --accent #00a6a1, --accent-ink #006b68, --accent-mid #008f8a. */
+  --ink: #2c3135;       /* 12,6 : 1 auf #FAF8F4 */
+  --dark: #084e4c;      /* dunkle Flächen */
+  --dark-line: #1d6462;
+  --dark-soft: #a9d6d4; /* Nebentext auf dunklem Grund (6,0 : 1 auf #084e4c) */
   --dark-lead: #d2e9e8;
-  --ink-soft: #545454;  /* Logo-Grau (Wunsch 10.10.2026) */
-  --paper: #f7f5f0;
+  --ink-soft: #545b61;  /* 6,4 : 1 auf Creme */
+  --paper: #faf8f4;
   --paper-2: #efebe3;
   --creme: #F8F6F0;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
-  --accent: #00a6a1;  /* waybuild-IT-Türkis (Wunsch 10.10.2026, vorher Orange) */
-  --accent-ink: #006b68;
-  --accent-mid: #008f8a;   /* Türkis für Linien/Zeichen auf Hell (≥ 3 : 1), wie Hauptseite */
-  --accent-light: #5fe0da; /* Türkis als Schrift auf Dunkel (5,9 : 1), wie Hauptseite */
-  --on-accent: #0b2a29;    /* Schrift auf Türkis-Flächen (5,1 : 1), wie Hauptseite */
-  --on-dark-soft: #e6f6f5;  /* Nebentext auf Kopf-/Fußzeile #006b68 (5,7 : 1), Jamil #5072 */
-  --line: #ddd6c9;
+  --accent: #2c9a7a;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
+  --accent-ink: #0b6d6b; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
+  --accent-mid: #2c9a7a;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
+  --accent-light: #5fe0da; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #084e4c) */
+  --on-accent: #051a19;    /* Schrift auf #2c9a7a (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
+  --on-dark-soft: #e6f6f5;  /* Nebentext auf Fußzeile #084e4c (8,6 : 1) */
+  --gold: #d4af37;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
+  --line: #e6e0d4;
   --ok: #177049;
   --radius: 14px;
   --shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 8px 24px rgb(0 79 76 / 8%);
-  --font-head: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Jost Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif; /* QA #5952 */
+  --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1160px;
   color-scheme: light;
 }
@@ -56,9 +60,9 @@ h1, h2, h3 {
   margin: 0 0 0.5em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.1rem, 5.8vw, 3.9rem); font-weight: 700; }
-h2 { font-size: clamp(1.65rem, 3.8vw, 2.6rem); font-weight: 700; }
-h3 { font-size: 1.25rem; font-weight: 650; }
+h1 { font-size: clamp(2.1rem, 5.8vw, 3.9rem); font-weight: 800; } /* QA #5952: wie Startseite 800 */
+h2 { font-size: clamp(1.65rem, 3.8vw, 2.6rem); font-weight: 800; }
+h3 { font-size: 1.25rem; font-weight: 700; } /* QA #5952: Überschriften 700–800 */
 p { margin: 0 0 1em; }
 a { color: inherit; }
 img { max-width: 100%; height: auto; display: block; }
@@ -110,14 +114,14 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
   border-radius: 999px;
   border: 2px solid transparent;
   font: inherit;
-  font-weight: 650;
+  font-weight: 600; /* QA #5952: Buttons 600 */
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .btn:hover { transform: translateY(-1px); }
 .btn--primary { background: var(--accent); color: var(--on-accent); } /* 5,1 : 1 (vorher --ink 3,8 : 1) */
-.btn--primary:hover { background: #1fbab5; }
+.btn--primary:hover { background: #3fb38f; } /* QA #5952: helleres Grün statt altem Türkis, Schrift 6,9 : 1 */
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--dark); color: var(--paper); }
 

@@ -25,7 +25,7 @@
 .sk .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 @media (min-width: 640px) { .sk .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .sk .row > * { min-width: 0; }
-.sk label { display: grid; gap: 8px; min-width: 0; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.sk label { display: grid; grid-template-columns: minmax(0, 1fr); /* QA #5952: Auswahlfeld sprengte in WebKit 320 px (334 px Seitenbreite) */ gap: 8px; min-width: 0; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
 .sk label small, .sk legend small { font-weight: 400; color: var(--ink-soft); }
 .sk input, .sk select, .sk textarea {
   font: inherit; font-weight: 400; color: var(--ink); width: 100%; max-width: 100%;
@@ -35,13 +35,14 @@
 .sk textarea { line-height: 1.6; resize: vertical; }
 .sk input:hover, .sk select:hover, .sk textarea:hover { border-color: #c9c0b0; }
 .sk input:focus, .sk select:focus, .sk textarea:focus { outline: none; border-color: var(--sn-tinte); background: var(--white);
-  box-shadow: 0 0 0 3px rgb(0 107 104 / 18%); }
+  box-shadow: 0 0 0 3px rgb(11 109 107 / 18%); }
 .sk input:focus-visible, .sk select:focus-visible, .sk textarea:focus-visible { outline: 2px solid var(--sn-tinte); outline-offset: 1px; }
 /* Handy: Auswahltexte („Worum geht es?“) passen bei 390 px ganz ins Feld (Jamil #5215) */
 @media (max-width: 480px) {
   .sk .sk-form { padding-left: 16px; padding-right: 16px; border-radius: 22px; }
   .sk select { padding-left: 12px; padding-right: 8px; }
 }
+.sk select { contain: paint; } /* QA #5952: lange Option („Noch unsicher – …“) machte die Seite in WebKit 320 px 334 px breit */
 
 /* Datenschutz-Haken */
 .sk .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
@@ -89,7 +90,7 @@
 
 /* So geht es weiter: drei ruhige Punkte auf einer feinen Linie */
 .sk .after { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); }
-.sk .after li { position: relative; min-width: 0; padding-top: 16px; border-top: 1px solid var(--sn-linie); }
+.sk .after li { position: relative; min-width: 0; overflow-wrap: break-word; hyphens: auto; /* QA #5952 */ padding-top: 16px; border-top: 1px solid var(--sn-linie); }
 .sk .after li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--sn-linie); }
 .sk .after li:first-child::before { background: var(--sn-tuerkis); }
 .sk .after strong { display: block; font-family: var(--font-head); color: var(--ink); font-size: 0.95rem; }

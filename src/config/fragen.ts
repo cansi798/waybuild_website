@@ -24,7 +24,6 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
     'Ich brauche kein Logo. Muss ich das mitbezahlen?',
     'Kann ich über den Preis verhandeln?',
     'Sind die Preise netto?',
-    'Wem gehört das Logo, wenn ich es monatlich bezahle?',
   ] },
   { id: 'ablauf', titel: 'Ablauf', fragen: [
     'Wie schnell ist meine Website online?',

@@ -31,7 +31,7 @@
 }
 
 .sb-projekt__bild { min-width: 0; overflow: hidden; border-radius: 20px; background: var(--white);
-  box-shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 18px 40px -26px rgb(0 79 76 / 42%); }
+  box-shadow: 0 1px 2px rgb(8 78 76 / 6%), 0 18px 40px -26px rgb(8 78 76 / 42%); }
 .sb-projekt__leiste { display: flex; gap: 6px; align-items: center; height: 26px; padding-inline: 14px; background: var(--sn-sand); }
 .sb-projekt__leiste i { width: 8px; height: 8px; border-radius: 50%; background: #cdc6ba; }
 .sb-projekt__bild picture, .sb-projekt__img { display: block; width: 100%; height: auto; }

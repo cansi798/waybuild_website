@@ -1,5 +1,5 @@
 /* Seite /geschichte/ (Entwurf „Startseite als geführte Geschichte“, Jamil, Talk qh87y3sj #5739–#5756, 13.11.2026).
- * Stil der Website (CI-Türkis, Montserrat/Jost, runde Karten), ruhig und klar. Bewegung nur als kurze Übergänge
+ * Stil der Website (CI-Türkis, Plus Jakarta Sans (QA #5952), runde Karten), ruhig und klar. Bewegung nur als kurze Übergänge
  * (transform/opacity/Farbe), bei reduzierter Bewegung aus. Ohne JS: alle Wege untereinander, Formular aus, Sprungmarken an. */
 
 /* ── Wege: nur der gewählte ist sichtbar (html[data-weg] setzt das Inline-Skript vor dem ersten Zeichnen) ── */

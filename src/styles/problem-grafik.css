@@ -1,7 +1,4 @@
 /* Illustrationen im Problem-Abschnitt der Startseite (components/startneu/ProblemGrafik.astro).
    Jamil Talk qh87y3sj #5928–#5930, 14.11.2026: Grafiken „schöner“ und „klarer“, Stil wie der Prozessweg (SnSystem). */
 .pg { display: block; width: 100%; height: auto; max-width: 320px; margin-inline: auto; overflow: visible; }
-/* Schreibmarke im Angebot („abend“) blinkt sanft, ohne Bewegung bei prefers-reduced-motion */
-.pg-marke { animation: pgMarke 1.1s steps(2, jump-none) infinite; }
-@keyframes pgMarke { 0% { opacity: 1; } 100% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .pg-marke { animation: none; } }
+/* blinkende Schreibmarke entfernt (Jamil #5971, 15.11.2026) */

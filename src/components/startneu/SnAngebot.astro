@@ -21,6 +21,8 @@ const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURICo
 const kontaktExtras = `${href('/kontakt/')}?dazu=${encodeURIComponent(E.gesamt.id)}&buchen=1`;
 const kombis = kombiPreise();
 const appText = K.text.replace(/\s*Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '');
+interface Props { zeigeFragen?: boolean }
+const { zeigeFragen = true } = Astro.props; // Startseite ohne FAQ (Jamil #5967)
 const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((f): f is NonNullable<typeof f> => !!f && !f.platzhalter);
 ---
 
@@ -95,6 +97,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
 
     <p class="sn-fein sn-fein--mitte"><a href={href('/preise/')}>{T.allePreise}</a> · {LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>
 
+    {zeigeFragen && (
     <div class="sn-fragen">
       <div class="sn-fragen__kopf">
         <h3 class="sn-h3">{T.fragenTitel}</h3>
@@ -104,6 +107,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
         {fragen.map((f) => (<div><dt>{f.q}</dt><dd>{f.a}</dd></div>))}
       </dl>
     </div>
+    )}
   </div>
   <BuchenDialog />
 </section>

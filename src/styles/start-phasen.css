@@ -33,8 +33,9 @@
 
 /* Handy: senkrechte Zeitleiste */
 @media (max-width: 639px) {
-  .sph-weg::before { content: ''; position: absolute; top: calc(var(--marke) / 2); bottom: calc(var(--marke) / 2);
-    left: calc(var(--marke) / 2 - 1px); width: 2px; border-radius: 2px; background: var(--sn-linie-t); }
+  /* Linie von Punkt zu Punkt, endet genau bei Phase 4 (Jamil #5962, 15.11.2026: „bei 4 ist stop“) */
+  .sph-phase:not(:last-child)::after { content: ''; position: absolute; z-index: 0; top: calc(var(--marke) / 2);
+    bottom: calc(-28px - var(--marke) / 2); left: calc(var(--marke) / 2 - 1px); width: 2px; border-radius: 2px; background: var(--sn-linie-t); }
 }
 
 /* Tablet: 2 × 2 */

@@ -51,3 +51,7 @@
 }
 /* zweite Kopfzeile „/ IT-Dienstleister“ (Jamil #5889) */
 .svg-zusatz { display: block; margin-top: 2px; font-weight: 600; font-size: 0.82em; color: var(--ink-soft); white-space: nowrap; }
+
+/* Nur die Symbole, ohne Kreis-Hintergründe (Jamil #5965, 15.11.2026) */
+.svg-zeichen, .svg-ja .svg-zeichen, .svg-teils .svg-zeichen, .svg-nein .svg-zeichen, .svg-tabelle .svg-wir .svg-zeichen { background: none !important; }
+.svg-zeichen svg { stroke-width: 2.6; }
