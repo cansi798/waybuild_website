@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
 import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile, komplettPreis, komplettZeile, monatMitKomplett, einzelnMitKomplett } from '../config/pakete-abo';
+import { VORSCHAU, vorschauText } from '../config/vorschau';
 
 const interessen = [
   // Jamil #5956–#5958 (15.11.2026): jedes Paket einzeln auswählbar, alle „Auf Anfrage“-Einträge entfernt
@@ -59,6 +60,8 @@ import '../styles/seite-kontakt.css';
         <p class="sn-kenn">Kostenlose Erstberatung</p>
         <h2 id="sk-form-h" class="sn-h2 sn-h2--klein">Erzählen Sie uns kurz, worum es geht.</h2>
         <p class="sk-kopf__text">Ein paar Angaben genügen. Pflichtfelder sind mit * markiert.</p>
+        <!-- Kostenlose Vorschau (Jamil #6061), Text zentral in config/vorschau.ts -->
+        <p class="sk-vorschau"><strong>{VORSCHAU.titel}</strong><span>{vorschauText()}</span></p>
       </div>
       <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?

@@ -467,3 +467,11 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 .sn-pliste__punkt p + p { margin-top: 4px !important; line-height: 1.6; }
 @media (max-width: 999.98px) { .sn-problem .sn-pfeld { display: none; } }
 @media (min-width: 1000px) { .sn-pliste { display: none; } }
+
+/* Kostenlose Vorschau (Jamil #6061): Band über den Paketen (Startseite + /preise/), Zeile im Abschluss */
+.sn-vorschau-band { display: flex; align-items: center; gap: 16px; max-width: 880px; margin: 0 auto clamp(26px, 3.5vw, 40px); padding: 18px 22px; border-radius: 16px; background: var(--sn-hauch); border: 1px solid var(--sn-linie-t); border-left: 4px solid #d4af37; }
+.sn-vorschau-band__ico { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sn-tinte); color: #fff; }
+.sn-vorschau-band p { margin: 0; line-height: 1.6; color: var(--ink-soft, #545b61); }
+.sn-vorschau-band strong { display: block; margin-bottom: 4px; color: var(--sn-tinte); font-size: 1.06rem; }
+@media (max-width: 560px) { .sn-vorschau-band { align-items: flex-start; padding: 16px; gap: 12px; } .sn-vorschau-band__ico { width: 38px; height: 38px; } }
+.sn-abschluss__vorschau { margin: 0 auto 22px; max-width: 58ch; font-weight: 650; color: var(--sn-tinte); line-height: 1.6; }

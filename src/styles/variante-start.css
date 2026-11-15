@@ -181,3 +181,9 @@ html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-
 .v-hero .v-beleg__teil { white-space: nowrap; }
 .v-hero .v-beleg__punkt { color: rgb(255 255 255 / 60%); }
 .v-hero .v-fuer { margin: 22px auto 0; max-width: 52ch; color: rgb(255 255 255 / 82%); font-size: clamp(0.8rem, 0.78rem + 0.12vw, 0.88rem); /* Jamil #5860 „noch kleiner“ */ line-height: 1.55; text-wrap: balance; }
+
+/* Kostenlose Vorschau am Hauptknopf (Jamil #6061): kleine Plakette, weiß auf Türkis, nicht überladen */
+.v-hero .v-vorschau { display: inline-flex; align-items: center; gap: 8px; margin: 18px auto 0; padding: 7px 16px; border-radius: 999px; background: rgb(255 255 255 / 14%); border: 1px solid rgb(255 255 255 / 38%); color: #fff; font-size: clamp(0.84rem, 0.8rem + 0.2vw, 0.95rem); font-weight: 650; line-height: 1.4; }
+.v-hero .v-vorschau svg { flex: none; color: #d4af37; }
+.v-hero .v-knopfe + .v-vorschau { display: flex; width: fit-content; max-width: 100%; }
+@media (max-width: 480px) { .v-hero .v-vorschau { padding: 7px 14px; } }

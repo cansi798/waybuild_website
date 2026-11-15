@@ -15,6 +15,7 @@ import {
 import { alleFragen } from '../../config/fragen';
 import { ANGEBOT as T, nbTeile } from '../../config/startneu';
 import { href } from '../../lib/paths';
+import { VORSCHAU, vorschauText } from '../../config/vorschau';
 
 const kontaktPaket = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&buchen=1`;
 const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&komplett=1&buchen=1`;
@@ -35,6 +36,12 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
       <p class="sn-kenn">{T.kennzeile}</p>
       <h2 id="sn-angebot-h" class="sn-h2">{T.titel}</h2>
       <p class="sn-lead">{T.lead}</p>
+    </div>
+
+    <!-- Kostenlose Vorschau (Jamil #6061): hervorgehobene Zeile über den Paketen, Startseite und /preise/ -->
+    <div class="sn-vorschau-band">
+      <span class="sn-vorschau-band__ico"><Icon name="eye" size={22} /></span>
+      <p><strong>{VORSCHAU.titel}</strong><span>{vorschauText()}</span></p>
     </div>
 
     <div class="sn-pakete">

@@ -130,6 +130,7 @@ export const ANGEBOT = {
 /** Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text, Knopf ABSCHLUSS_KNOPF (variante.ts). */
 export const ABSCHLUSS = {
   titel: 'Die richtige digitale Lösung beginnt mit dem richtigen Gespräch.',
+  vorschau: true, // Jamil #6061: Zusatzzeile „Kostenlose Vorschau“ (Text config/vorschau.ts)
   text: 'Ob neue Website, individuelle Web-App oder die Digitalisierung bestehender Prozesse: Gemeinsam finden wir heraus, welche Lösung Ihr Unternehmen wirklich weiterbringt.',
 };
 

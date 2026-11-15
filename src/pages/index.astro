@@ -32,6 +32,7 @@ import { href } from '../lib/paths';
 import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis } from '../config/pakete-abo';
 import { V_HERO, HERO_KNOPF } from '../config/variante';
 import { ANLIEGEN } from '../config/startseite';
+import { VORSCHAU } from '../config/vorschau';
 import '../styles/startseite.css';
 import '../styles/variante-start.css';
 import '../styles/start-neu.css';
@@ -75,6 +76,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
       <div class="v-knopfe v-ein v-ein--3">
         <a class="btn v-leucht" href={kontakt(ANLIEGEN.erstberatung.paket)}>{HERO_KNOPF}</a>
       </div>
+      <!-- Kostenlose Vorschau direkt am Hauptknopf (Jamil #6061, Text zentral in config/vorschau.ts, keine Zahlungsaussage) -->
+      <p class="v-vorschau v-ein v-ein--4"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg><span>{VORSCHAU.kurz}</span></p>
       <!-- Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) -->
       <p class="v-fuer v-ein v-ein--4">{V_HERO.fuer}</p>
       <!-- Belegzeile aus belegten Fakten, Preis aus pakete-abo.ts (Jamil #6011, Audit #5953 E2) -->

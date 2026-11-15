@@ -8,6 +8,7 @@ import { ANLIEGEN, CLAIM } from '../../config/startseite';
 import { ABSCHLUSS as T, HANDLUNG as H } from '../../config/startneu';
 import { whatsappLink } from '../../config/site';
 import { href } from '../../lib/paths';
+import { VORSCHAU } from '../../config/vorschau';
 
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
@@ -16,6 +17,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
   <div class="wrap sn-abschluss__innen">
     <h2 id="sn-abschluss-h" class="sn-h2 sn-h2--gross">{T.titel}</h2>
     <p class="sn-lead sn-abschluss__text">{T.text}</p>
+    {T.vorschau && <p class="sn-abschluss__vorschau">{VORSCHAU.abschluss}</p>}<!-- Jamil #6061 -->
     <div class="sn-abschluss__knoepfe">
       <a class="btn btn--lg sn-btn sn-btn--gross" href={kontakt}>{ABSCHLUSS_KNOPF}</a>
       <p class="sn-handlung__oder">{H.oder} <a href={whatsappLink(H.waText)} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {H.whatsapp}<span class="sr-only"> (öffnet in neuem Tab)</span></a></p>
