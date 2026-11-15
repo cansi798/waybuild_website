@@ -30,8 +30,11 @@ import Hint from '../components/Hint.astro';
         E-Mail: <a href={`mailto:${company.email}`}>{company.email}</a>
         <br />Telefon: <Val value={company.phone} label="Telefonnummer" where="src/config/site.ts → company.phone" />
       </p>
+      {/* USt-IdNr. nur, sofern vorhanden (§ 5 DDG); derzeit keine (Can, Talk qh87y3sj #5980, 15.11.2026) */}
+      {company.vatId && !isMissing(company.vatId) && (<>
       <h2>Umsatzsteuer-ID</h2>
       <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: <Val value={company.vatId} label="USt-ID" where="src/config/site.ts → company.vatId" /></p>
+      </>)}
       <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
       <p><Val value={company.managingDirector} label="Name Geschäftsführung" where="src/config/site.ts → company.managingDirector" />, Anschrift wie oben</p>
       <h2>EU-Streitschlichtung</h2>

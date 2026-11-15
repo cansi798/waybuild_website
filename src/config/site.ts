@@ -17,16 +17,16 @@ export const company = {
   email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
   /** PLATZHALTER (Wunsch 11.10.2026: „erfundene Nummer“) – vor dem Livegang ersetzen, dann PHONE_IS_PLACEHOLDER auf false. */
   phone: '0151 00000000',
-  street: 'Rathausallee 76',
-  zip: '22846',
+  street: 'Kuno-Liesenberg-Kehre 32a', // laut Handelsregister (Can, Talk qh87y3sj #5978/#5980, 15.11.2026); vorher Rathausallee 76, 22846
+  zip: '22844',
   city: 'Norderstedt',
   country: 'DE',
   managingDirector: 'Can Siebert',
   registerCourt: 'Amtsgericht Kiel', // Handelsregister-Auszug vom 15.11.2026 (Can, Talk qh87y3sj #5978)
   registerNumber: 'HRB 29883 KI', // Handelsregister-Auszug vom 15.11.2026 (Can, Talk qh87y3sj #5978)
-  vatId: 'TODO', // z. B. 'DE123456789'
+  vatId: '', // keine USt-IdNr. vorhanden → Zeile im Impressum ausgeblendet (Can #5980); sobald vorhanden hier eintragen
   /** Server-Hoster für die Datenschutzerklärung, z. B. 'IONOS SE, Elgendorfer Str. 57, 56410 Montabaur' */
-  hoster: 'TODO',
+  hoster: 'ALL-INKL.COM – Neue Medien Münnich, Inhaber René Münnich, Hauptstraße 68, 02742 Friedersdorf', // Webspace ALL-INKL (Can #5980)
   /** Links zu Google-Unternehmensprofil, LinkedIn, Instagram … – stärkt die Marke bei Google (JSON-LD sameAs). */
   sameAs: [] as string[],
 };
