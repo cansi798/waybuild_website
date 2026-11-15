@@ -2,7 +2,7 @@
 // EINE Stelle für alle Texte: Hero, Pakete (Startseite + /preise/), Kontaktseite, Abschluss.
 // WICHTIG: bewusst KEINE Zahlungsaussage („zahlen erst, wenn …“) – das klärt Jamil noch. Kommt sie, wird sie NUR hier in
 // ZAHLUNGS_ZUSATZ eingetragen (Leerstring = nichts sichtbar) und erscheint überall.
-export const ZAHLUNGS_ZUSATZ = '';
+export const ZAHLUNGS_ZUSATZ = 'Sie zahlen erst, wenn Sie sich für uns entscheiden.'; // Jamil #6064 (Variante a)
 
 export const VORSCHAU = {
   /** Kurzform (Hero-Plakette, Paketband) */
