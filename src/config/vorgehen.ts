@@ -25,7 +25,8 @@ export const VORGEHEN = {
   schritte: [
     { phase: 0, wann: 'Tag 1', titel: 'Anfrage', text: 'Per Formular, E-Mail oder WhatsApp.' },
     { phase: 0, wann: 'In der Regel nach 1 Werktag', titel: 'Rückmeldung', text: 'Wir melden uns persönlich und vereinbaren einen Termin.' },
-    { phase: 0, wann: 'Rund 20 Minuten', titel: 'Erstgespräch', text: 'Kostenlos und unverbindlich. Wir empfehlen das passende Paket.', anker: 'erstberatung' },
+    { phase: 0, wann: 'Rund 30 Minuten', titel: 'Erstgespräch', // Jamil #6055 Fr. 15
+      text: 'Kostenlos und unverbindlich. Wir empfehlen das passende Paket.', anker: 'erstberatung' },
     { phase: 1, wann: 'Danach', titel: 'Entwurf und Freigabe', text: 'Wir erarbeiten die Inhalte mit Ihnen und setzen um. Sie geben frei.' },
     { phase: 1, wann: 'Bei Websites in der Regel 14 Tage nach Ihren Inhalten', titel: 'Online', text: 'Ihre Lösung ist eingerichtet und läuft, bei Websites inklusive E-Mail-Postfächern.' },
     { phase: 2, wann: 'Laufend', titel: 'Betreuung', text: 'Kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr).' },

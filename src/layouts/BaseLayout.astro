@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import StickyBar from '../components/StickyBar.astro';
-import { company, isMissing, SHOW_HINTS, PHONE_IS_PLACEHOLDER } from '../config/site';
+import { company, isMissing, SHOW_HINTS, PHONE_IS_PLACEHOLDER, phoneTel } from '../config/site';
 import { launchTodos } from '../config/launch';
 import { href, absolute } from '../lib/paths';
 import { IS_PREVIEW } from '../lib/env';
@@ -48,15 +48,17 @@ const organization = {
   logo: absolute('/icon-512.png', Astro.site),
   image: ogImage,
   slogan: company.slogan,
+  foundingDate: company.foundingYear, // Jamil #6055 Fr. 11
   ...(company.sameAs.length ? { sameAs: company.sameAs } : {}),
   ...(hasAddress ? { priceRange: '€€', areaServed: { '@type': 'Country', name: 'Deutschland' } } : {}),
   email: company.email,
   // Themen, für die waybuild steht – hilft Suchmaschinen und KI-Suchen bei der Einordnung
-  knowsAbout: ['Website as a Service', 'Website-Erstellung', 'Webhosting', 'Website-Betreuung', 'Individuelle Software', 'Nextcloud', 'IT-Betreuung', 'Wettbewerbsanalyse'],
+  knowsAbout: ['Website-Abo', 'Web-App', 'Website-Erstellung', 'Webhosting', 'Website-Betreuung', 'Individuelle Software', 'Nextcloud', 'IT-Betreuung', 'Wettbewerbsanalyse'],
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
     email: company.email,
+    ...(!PHONE_IS_PLACEHOLDER ? { telephone: phoneTel() } : {}), // Jamil #6055 Fr. 1
     availableLanguage: 'German',
     hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00' },
   },
@@ -64,7 +66,7 @@ const organization = {
     ? { openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '17:00' } }
     : {}),
   // Platzhalter-Nummer nie an Google melden
-  ...(!isMissing(company.phone) && !PHONE_IS_PLACEHOLDER ? { telephone: company.phone } : {}),
+  ...(!isMissing(company.phone) && !PHONE_IS_PLACEHOLDER ? { telephone: phoneTel() } : {}), // international, wie tel:-Links (Jamil #6055 Fr. 1)
   // Adresse erst ausgeben, wenn sie vollständig ist – nie Platzhalter an Google melden
   ...(!hasAddress
     ? {}

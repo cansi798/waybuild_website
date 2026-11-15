@@ -17,7 +17,7 @@ const interessen = [
 const websiteSlugs = leistungen.filter((l) => l.saeule === 'websites').map((l) => l.slug);
 // Paketwahl (Jamil #5056): ?paket=Plus (auch „Paket Plus“ oder „Plus (149,99 € / Monat)“) wählt das Paket vor,
 // ?dazu=logo,papiere hakt Einmal-Leistungen an, ?dazu=alle (oder gesamtpaket) das Gesamtpaket „Alle vier Extras“
-// (Jamil #5085–#5089). ?buchen=1 kommt vom Fenster „Direkt buchen“: Knopf „Buchung anfragen“, Betreff „Buchung“.
+// (Jamil #5085–#5089). ?buchen=1 kommt vom Fenster „Paket anfragen“ (vorher „Direkt buchen“): Knopf „Paket anfragen“ (Jamil #6055 Fr. 18), Betreff „Buchung“.
 // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, ?komplett=1 (oder ?paket=Komplettpaket) hakt
 // es an. Monatssumme mit Kombipreis, aber nicht zusammen mit dem Gesamtpaket „Alle vier Extras“ (Gründerpaket, #5464).
 // Beides sichtbar und änderbar, gesendet als Text.
@@ -26,6 +26,8 @@ const kombiDaten = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, {
 }]));
 const paketText = (p: (typeof ABO_PAKETE)[number]) => `${p.name} (${euro(p.preis)} / Monat netto)`;
 
+// Versand: Jamil #6055 Fr. 3 – das Formular wird später mit unserem CRM verbunden. Bis dahin bleibt der Versand wie er ist
+// (Web3Forms, falls ein Key gesetzt ist, sonst E-Mail-Programm). Beim CRM-Anschluss hier endpoint/Versand im Skript unten umstellen.
 // Versand über Web3Forms (kostenlos, ohne eigenen Server). Der Access-Key ist laut Anbieter öffentlich nutzbar.
 // Ohne Key öffnet sich als Rückfall das E-Mail-Programm. Key setzen: GitHub → Settings → Variables → WEB3FORMS_KEY
 // Neues Aussehen im Stil der Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026): Formular funktional unverändert
@@ -38,7 +40,7 @@ import '../styles/seite-kontakt.css';
 
 <BaseLayout
   title="Kontakt & kostenlose Erstberatung"
-  description="Kostenlose Erstberatung zu Website as a Service anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
+  description="Kostenlose Erstberatung zum Website-Abo anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
   ohneKontaktkopf
@@ -58,7 +60,7 @@ import '../styles/seite-kontakt.css';
         <h2 id="sk-form-h" class="sn-h2 sn-h2--klein">Erzählen Sie uns kurz, worum es geht.</h2>
         <p class="sk-kopf__text">Ein paar Angaben genügen. Pflichtfelder sind mit * markiert.</p>
       </div>
-      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
             <option value="">Noch unsicher – bitte beraten Sie mich</option>
@@ -108,10 +110,10 @@ import '../styles/seite-kontakt.css';
         <ol class="after" aria-label="So geht es weiter">
           <li><strong>Heute</strong> Anfrage senden</li>
           <li><strong>1 Werktag</strong> In der Regel melden wir uns</li>
-          <li><strong>20 Min.</strong> Erstberatung</li>
+          <li><strong>30 Min.</strong> Erstberatung</li>{/* Jamil #6055 Fr. 15 */}
         </ol>
         {!endpoint && (
-          <Hint label="Formular-Versand (Web3Forms-Key)" where="GitHub → Settings → Secrets and variables → Actions → Variables → WEB3FORMS_KEY">
+          <Hint label="Formular-Versand (Anbindung an unser CRM folgt, Jamil #6055 Fr. 3)" where="src/pages/kontakt.astro (Versand) bzw. GitHub → Variables → WEB3FORMS_KEY">
             {' '}– aktuell öffnet sich nur das E-Mail-Programm.
           </Hint>
         )}
@@ -158,7 +160,7 @@ import '../styles/seite-kontakt.css';
     const paketKontext = websiteSlugs.includes(leistung) || !!tarif || !!params.get('paket') || !!params.get('dazu') || !!params.get('komplett');
     // ?leistung=rundum bzw. Auswahl „Website + Web-App“ (Jamil #5944): wie Website, mit angehaktem „Rundum digital“
     if (leistung === 'rundum') interesse.value = 'rundum';
-    // Paketwahl: sichtbar, sobald es um Website as a Service geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
+    // Paketwahl: sichtbar, sobald es um das Website-Abo geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
     const wahlSelect = form.elements.namedItem('paket_wahl') as HTMLSelectElement | null;
     const paket = (params.get('paket') ?? '').trim();
@@ -231,7 +233,7 @@ import '../styles/seite-kontakt.css';
     extrasSumme();
     const buchen = params.get('buchen') === '1';
     const absenden = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-    if (buchen && absenden) absenden.textContent = 'Buchung anfragen';
+    if (buchen && absenden) absenden.textContent = form.dataset.absenden ?? 'Paket anfragen'; // Jamil #6055 Fr. 18
     const paketIds = [...(wahlSelect?.options ?? [])].map((o) => o.value).filter(Boolean);
     const mitPaket = () => interesse.value === 'rundum' || paketIds.includes(interesse.value);
     // Auswahl oben ↔ Paketwahl unten abgleichen (#5957): Paket gewählt → Paketwahl setzen, Rundum digital → Haken setzen
@@ -325,7 +327,7 @@ import '../styles/seite-kontakt.css';
         if (data.paket) data.paket = `${data.paket} + ${form.dataset.komplettName}`; // ohne Grundpaket nicht wählbar (#5642)
       }
       const einmalig = !mitPaket() ? [] : alle?.checked ? [alle.dataset.text ?? 'Alle vier Extras'] : extras.filter((c) => c.checked).map((c) => c.dataset.text ?? c.value);
-      if (buchen) data.anliegen = 'Buchung über „Direkt buchen“ (Vertrag und Auftragsbestätigung per E-Mail)';
+      if (buchen) data.anliegen = 'Paketanfrage über „Paket anfragen“ (Vertrag und Auftragsbestätigung per E-Mail)'; // Jamil #6055 Fr. 18
       if (einmalig.length) data.einmalig = einmalig.join(', ');
       // Summen der früheren Zusammenstellung zusätzlich als eigene Felder (nur alter Stand)
       const a = abo as { summeMonat: number; summeEinmalig: number } | null;

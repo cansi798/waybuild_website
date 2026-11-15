@@ -26,6 +26,7 @@ import SnVergleich from '../components/startneu/SnVergleich.astro';
 import SnAblauf from '../components/startneu/SnAblauf.astro';
 import SnAngebot from '../components/startneu/SnAngebot.astro';
 import SnBeweis from '../components/startneu/SnBeweis.astro';
+import SnBewertungen from '../components/startneu/SnBewertungen.astro';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb, euro, komplettPreis } from '../config/pakete-abo';
@@ -43,8 +44,8 @@ const kontakt = (paket: string) => href(`/kontakt/?paket=${encodeURIComponent(pa
 const ab = aboPreisAb();
 /** Hero: Satz in Wörter teilen (je Wort ein span, Jamil #5114) */
 const woerter = (t: string) => t.split(/\s+/).filter(Boolean);
-const V_TITEL = 'Website-Abo: fertig betreut, fester Monatspreis';
-const V_DESCRIPTION = `Website, E-Mail und Google-Profil in drei festen Paketen ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`;
+const V_TITEL = 'Website-Abo und Web-App zum festen Monatspreis'; // Jamil #6055 Fr. 13: Google-Text passt zur H1
+const V_DESCRIPTION = `Ihre Website im Abo, auf Wunsch mit Web-App: feste Pakete ab ${euro(ab)} im Monat netto, ohne Einrichtungskosten. Hosting in Deutschland.`; // Jamil #6055 Fr. 13
 const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstellen die Website, richten E-Mail-Postfächer und Google-Profil ein und betreuen alles danach. Drei Pakete: zwei Website-Pakete (${ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ')} im Monat netto), dazu das ${KOMPLETTPAKET.name} mit Website und Auftragsverwaltung (${komplettPreis()} im Monat netto), keine Einrichtungskosten; Logo, Signatur, Geschäftspapiere und Visitenkarten einmalig dazubuchbar.`;
 // FAQPage-JSON-LD nur auf /fragen/ (Jamil #5136–#5138); die sechs Fragen unten im Angebot sind sichtbarer Text ohne Schema.
 ---
@@ -93,6 +94,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <SnTeam />
   <!-- Echte Projekte vor den Paketen (Jamil #6011, Audit #5953 V1): nur vorhandene Projekte aus /beispiele/, ohne Kundenzitate -->
   <SnBeweis nurProjekte />
+  <!-- Bewertungen Google/Trustpilot: erst mit echten Bewertungen sichtbar, vorher nur Platzhalter in der Vorschau (Jamil #6055 Fr. 6) -->
+  <SnBewertungen />
   <!-- Pakete kompakt: nur Karten + Wahlhilfe + Link auf /preise/ (Jamil #6038, Audit P6/M1) -->
   <SnAngebot zeigeFragen={false} kompakt />
   <SnAblauf />

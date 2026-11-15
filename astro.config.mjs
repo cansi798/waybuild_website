@@ -33,7 +33,7 @@ export default defineConfig({
     sitemap({
       lastmod: new Date(),
       // Rechtstexte, interne Seiten und 404 nicht in die Sitemap
-      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen)\/?$/.test(page)
+      filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen|warum-waybuild)\/?$/.test(page)
         && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/neu/`) // zweite Startseite /neu/: nicht in die Sitemap
         && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/geschichte/`) // Entwurf /geschichte/ (noindex): nicht in die Sitemap
         && !/\/website-fuer\//.test(page)

@@ -115,3 +115,13 @@
   .sab-vorteil { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); column-gap: clamp(32px, 5vw, 80px); align-items: start; }
   .sab-vorteil__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* Kurzfassung in fünf Schritten (Jamil #6055 Fr. 14): 1 · 2 | 3 | DNA | Start; ab 1000 px 1 · 2 · 3 | DNA | Start */
+@media (min-width: 640px) {
+  .sab--kurz .sab-schritt--3, .sab--kurz .sab-schritt--5 { grid-column: 1 / -1; }
+}
+@media (min-width: 1000px) {
+  .sab--kurz .sab-schritt--1, .sab--kurz .sab-schritt--2, .sab--kurz .sab-schritt--3 { grid-column: span 2; }
+  .sab--kurz .sab-schritt--5 { grid-column: 1 / -1; }
+}
+.sab-lang { margin-top: 20px !important; }

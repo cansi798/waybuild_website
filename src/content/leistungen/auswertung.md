@@ -1,6 +1,6 @@
 ---
 title: "Sehen, was Ihre Website bringt"
-menuTitel: "Auswertung"
+menuTitel: "Monatsbericht" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: betreuung
 station: betreuung
 # Korrigiert 14.11.2026 (#5892): „laufende Verbesserungen im Paket Komplett“ entfernt, dieses Paket gibt es seit 10.11.2026 nicht mehr
@@ -32,7 +32,7 @@ umfang:
 umfangHinweis: "Laufende Pflege wie Updates und Änderungswünsche gehört zur [Betreuung](/leistungen/betreuung/). Wie Ihre Seiten auf die Suchen Ihrer Kunden ausgerichtet werden, erklären wir unter [Suchmaschinen-Optimierung](/leistungen/suchmaschinen-optimierung/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, was Ihre Website erreichen soll, zum Beispiel mehr Anfragen oder mehr gebuchte Termine."
+    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, klären wir, was Ihre Website erreichen soll, zum Beispiel mehr Anfragen oder mehr gebuchte Termine."
   - titel: "Verbinden"
     text: "Wir betrachten Besucher, Suchbegriffe und Anfragen zusammen, damit Sie sehen, wie aus einem Besuch ein Kontakt wird und wo dieser Weg abbricht."
   - titel: "Verbessern"

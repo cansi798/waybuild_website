@@ -1,7 +1,7 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
 import type { APIRoute } from 'astro';
-import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, WAAS, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, PREIS_HINWEIS, formatEuro, brutto, HOURS, einmaligZeile } from '../config/site';
+import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, FAKTEN, whatsappLink, WAAS, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, PREIS_HINWEIS, formatEuro, brutto, HOURS, einmaligZeile } from '../config/site';
 import { EINMALIG_DAZU, AUF_ANFRAGE, aboPreisAb, KOMPLETTPAKET, komplettZeile, kombiPreise, kombiZeile } from '../config/pakete-abo';
 import { absolute } from '../lib/paths';
 import { gruppenMitLeistungen } from '../config/leistungen-neu';
@@ -11,6 +11,8 @@ import { CLAIM, BOTSCHAFT, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/sta
 import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
 import { VERGLEICH_START } from '../config/start-vergleich';
 import { VORGEHEN } from '../config/vorgehen';
+import { START_ABLAUF_KURZ } from '../config/start-ablauf';
+import { SEITEN_MAX } from '../config/pakete-abo';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
 
 export const GET: APIRoute = async ({ site }) => {
@@ -23,9 +25,9 @@ export const GET: APIRoute = async ({ site }) => {
   // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, Kombipreise nicht mit dem Gesamtpaket der Extras
   const komplett = `Nur zusammen mit Online sichtbar oder Online wachsen buchbar (einzeln nicht): ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
   const lines = [
-    `# ${company.name} – powered by ${company.legalName}`,
+    `# ${company.name} – ein Angebot der ${company.legalName}`, // Jamil #6055 Fr. 22
     '',
-    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website as a Service: in drei Paketen (${PAKETE.map((p) => p.name).join(', ')} und ${KOMPLETTPAKET.name} mit Website und Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten und ohne Seitenbegrenzung. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website-Abo, auf Wunsch mit Web-App: in drei Paketen (${PAKETE.map((p) => p.name).join(', ')} und ${KOMPLETTPAKET.name} mit Website und Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten, mit bis zu ${SEITEN_MAX} Seiten. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     PREIS_HINWEIS,
     '',
@@ -51,9 +53,9 @@ export const GET: APIRoute = async ({ site }) => {
     // Auftragsverwaltungs-Liste und Ablauf stehen nicht mehr auf der Karte (Jamil #5606/#5610/#5641)
     `- ${KOMPLETTPAKET.name}: ${komplett}`,
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
-    '- Buchung: Auf den Paketkarten führt „Direkt buchen“ zu einem Fenster mit Paketwahl, „Rundum digital“ und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
+    '- Paketanfrage: Auf den Paketkarten führt „Paket anfragen“ zu einem Fenster mit Paketwahl, „Rundum digital“ und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
-    `- Ablauf: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel}`).join(', ')} (siehe „${VORGEHEN.titel}“). Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
+    `- Ablauf in fünf Schritten (Jamil #6055 Fr. 14): ${START_ABLAUF_KURZ.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.zeit}): ${s.text}`).join(' ')} Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',
     `- Arbeitsweise: zuerst persönliche Beratung (${BERATUNG_THEMEN.join(', ')}), danach eine KI-gestützte und deshalb schnelle Umsetzung, anschließend laufende Verbesserung. Strategie und Ideen kommen von Menschen.`,
     `- Zielgruppe: ${ZIELGRUPPEN.map((z) => z.title).join(', ')}.`,
@@ -79,7 +81,7 @@ export const GET: APIRoute = async ({ site }) => {
     `- [Leistungen](${url('/leistungen/')}): alle Leistungen in vier Gruppen (${gruppen.map((g) => g.titel).join(', ')})`,
     `- [Beispiele](${url('/beispiele/')}): echte Projekte unserer Kunden, Bereich Websites`,
     `- [Preise](${url('/preise/')}): ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' / ')} pro Monat, netto zzgl. MwSt., optional ${komplettZeile()}`,
-    `- [Warum webgold](${url('/warum-waybuild/')}): Vergleich der Anbieter-Typen ${VERGLEICH_START.spalten.map((sp) => sp.lang + (sp.zusatz ? ' ' + sp.zusatz : '')).join(', ')}`,
+    `- [Warum webgold](${url('/warum-wir/')}): Vergleich der Anbieter-Typen ${VERGLEICH_START.spalten.map((sp) => sp.lang + (sp.zusatz ? ' ' + sp.zusatz : '')).join(', ')}`,
     `- [Wissen](${url('/wissen/')}): Übersicht über Ratgeber, Häufige Fragen und Blog`,
     `- [Häufige Fragen](${url('/fragen/')}): Pakete und Preise, Ablauf, Technik und Vertrag`,
     `- [Blog](${url('/blog/')}): Beiträge zu Websites, Sichtbarkeit bei Google und KI-Suche`,
@@ -92,8 +94,9 @@ export const GET: APIRoute = async ({ site }) => {
     ...(blog.length ? ['## Blog', ...blog.map((b) => `- [${b.data.title}](${url(`/blog/${b.id}/`)}): ${b.data.description}`), ''] : []),
     '## Kontakt',
     `- E-Mail: ${company.email}`,
-    ...(isMissing(company.phone) || PHONE_IS_PLACEHOLDER ? [] : [`- Telefon: ${company.phone}`]),
+    ...(isMissing(company.phone) || PHONE_IS_PLACEHOLDER ? [] : [`- Telefon: ${company.phone}`, `- WhatsApp: ${whatsappLink().split('?')[0]}`]), // Jamil #6055 Fr. 1/2
     `- Anschrift: ${company.legalName}, ${company.street}, ${company.zip} ${company.city}`,
+    `- Fakten: ${FAKTEN.map((x) => `${x.wert} ${x.text}`).join(', ')}`, // Jamil #6055 Fr. 11
     `- Erreichbar: ${HOURS}`,
     `- Erstberatung: kostenlos und unverbindlich, Anfrage über ${url('/kontakt/')}`,
     '',

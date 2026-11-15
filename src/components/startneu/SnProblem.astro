@@ -40,6 +40,13 @@ const kurz = (t: string) => t.replace(/\.$/, '');
       </div>
     </div>
 
+    <!-- Unter 1000 px: alle fünf Probleme als kurze Liste, ohne Tippen; Grafik-Wechsel (sn-pfeld) nur am PC (Jamil #6055 Fr. 25, Audit PR1) -->
+    <ul class="sn-pliste">
+      {T.punkte.map((p) => (
+        <li class="sn-pliste__punkt"><p class="sn-pliste__titel">{p.titel}</p><p>{p.text}</p></li>
+      ))}
+    </ul>
+
     <p class="sn-problem__schluss">{T.schluss}</p>
   </div>
 </section>

@@ -1,0 +1,40 @@
+---
+// Startseite: Bewertungen von Google und Trustpilot (Jamil #6055 Fr. 6). Der Abschnitt erscheint ERST, wenn in
+// config/startseite.ts → BEWERTUNGEN.liste echte Bewertungen stehen. Vorher nur ein Platzhalter in der Vorschau (SHOW_HINTS + IS_PREVIEW),
+// im Live-Build gar nichts. Nichts erfinden: keine Sterne, Zahlen oder Beispieltexte (UWG). Stil: start-neu.css (.sn-bew*).
+import Hint from '../Hint.astro';
+import Icon from '../Icon.astro';
+import { BEWERTUNGEN as T } from '../../config/startseite';
+import { IS_PREVIEW } from '../../lib/env';
+import { SHOW_HINTS } from '../../config/site';
+const echt = T.liste.length > 0;
+const vorschau = SHOW_HINTS && IS_PREVIEW;
+const profile = T.profile.filter((p) => p.url);
+---
+
+{echt ? (
+  <section class="section sn sn-bew" id="bewertungen" aria-labelledby="sn-bew-h">
+    <div class="wrap">
+      <div class="sn-kopf">
+        <div>
+          <p class="sn-kenn">{T.kennzeile}</p>
+          <h2 id="sn-bew-h" class="sn-h2">{T.titel}</h2>
+        </div>
+      </div>
+      <ul class="sn-bew__liste">
+        {T.liste.map((b) => (
+          <li class="sn-bew__karte">
+            <p class="sn-bew__sterne" aria-label={`${b.sterne} von 5 Sternen`}>{'★'.repeat(b.sterne)}{'☆'.repeat(5 - b.sterne)}</p>
+            <blockquote><p>„{b.text}“</p></blockquote>
+            <p class="sn-bew__wer">{b.name} · {b.quelle} · {b.datum}</p>
+          </li>
+        ))}
+      </ul>
+      {profile.length > 0 && (
+        <p class="sn-fein">{profile.map((p, i) => <>{i > 0 && ' · '}<a href={p.url} target="_blank" rel="noopener">Alle Bewertungen bei {p.quelle}<span class="sr-only"> (öffnet in neuem Tab)</span></a></>)} <Icon name="arrow" size={16} /></p>
+      )}
+    </div>
+  </section>
+) : vorschau && (
+  <div class="wrap sn-bew__platz"><Hint block label={T.platzhalter} where="src/config/startseite.ts → BEWERTUNGEN" /></div>
+)}

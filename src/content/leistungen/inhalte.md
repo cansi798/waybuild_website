@@ -1,6 +1,6 @@
 ---
 title: "Klare Inhalte, die Ihr Angebot erklären"
-menuTitel: "Inhalte"
+menuTitel: "Texte für Ihre Website" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: vertrauen
 station: vertrauen
 kurz: "Verständliche Texte für Ihre Website, gemeinsam mit Ihnen erarbeitet."

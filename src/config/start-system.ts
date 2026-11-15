@@ -11,7 +11,9 @@ export type SystemWerkzeug = 'mail' | 'excel' | 'messenger' | 'manuell';
 export const SYSTEM = {
   /** Kennzeile über der Headline: von uns (aus dem bisherigen Abschnittstitel abgeleitet), nicht Jamils Wortlaut */
   kenn: 'Website und Web-App zusammen',
-  titel: 'Die meisten Unternehmen nutzen zu viele Einzellösungen.',
+  titel: 'Viele Betriebe arbeiten mit zu vielen Einzellösungen.', // Jamil #6055 Fr. 23 (vorher „Die meisten Unternehmen nutzen …“)
+  /** Kleiner Link zum Film (Jamil #6055 Fr. 34: nur als Link, kein Film auf der Startseite) */
+  film: { text: 'Im Film ansehen: So kann es bei Ihnen laufen', pfad: '/so-kann-es-laufen/' },
   problem: [
     'Ihre Website gewinnt Interessenten. Danach beginnen oft E-Mails, Excel-Listen, Messenger-Nachrichten und manuelle Abläufe.',
     'Das kostet Zeit, führt zu Fehlern und sorgt dafür, dass Anfragen oder Informationen verloren gehen.',

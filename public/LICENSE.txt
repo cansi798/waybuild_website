@@ -31,7 +31,7 @@ DEUTSCH (maßgebliche Fassung)
    (siehe die jeweiligen Pakete bzw. Schriftdateien).
 
 5. Lizenzanfragen
-   Anfragen zur Nutzung richten Sie bitte an: kontakt@waybuild.de
+   Anfragen zur Nutzung richten Sie bitte an: service@webgold.io
 
 
 ENGLISH (convenience translation – the German version prevails)
@@ -59,4 +59,4 @@ ENGLISH (convenience translation – the German version prevails)
    (see the respective packages or font files).
 
 5. Licensing requests
-   Please send requests regarding use to: kontakt@waybuild.de
+   Please send requests regarding use to: service@webgold.io

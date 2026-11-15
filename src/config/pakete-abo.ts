@@ -11,6 +11,8 @@
 
 export const MWST_SATZ = 0.19;
 export const LAUFZEIT_MONATE = 24;
+/** Seitengrenze im fairen Rahmen (Jamil #6055 Fr. 30: „15-Seiten-Grenze“; vorher „keine Seitenbegrenzung“). AGB-Fair-Use-Regel bleibt offen (Anwalt). */
+export const SEITEN_MAX = 15;
 
 /** Bruttopreis zu einem Nettopreis (kaufmännisch auf Cent gerundet). */
 export const bruttoVon = (netto: number) => Math.round(netto * (1 + MWST_SATZ) * 100) / 100;
@@ -50,8 +52,8 @@ export const ABO_PAKETE: AboPaket[] = [
     id: 'basis', name: 'Online sichtbar', kurz: 'Professionell online', preis: 79.99,
     fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
     leistungen: [
-      { id: 'website', text: 'Website', zeile: 'Website ohne Seitenbegrenzung',
-        detail: 'Ohne Seitenbegrenzung, für Handy, Tablet und PC, Texte mit Ihnen erarbeitet. Hosting in Deutschland, Updates, Sicherungen, Änderungen per Nachricht im fairen Rahmen.' },
+      { id: 'website', text: 'Website', zeile: `Website mit bis zu ${SEITEN_MAX} Seiten`, // Jamil #6055 Fr. 30
+        detail: `Bis zu ${SEITEN_MAX} Seiten, für Handy, Tablet und PC, Texte mit Ihnen erarbeitet. Hosting in Deutschland, Updates, Sicherungen, Änderungen per Nachricht im fairen Rahmen.` },
       { id: 'seo', text: 'Suchmaschinen-Optimierung beim Erstellen', zeile: 'Suchmaschinen-Optimierung', wert: 'Grundoptimierung beim Erstellen',
         detail: 'Wir richten Ihre Website von Anfang an so ein, dass Google sie gut versteht: klare Seitentitel und Beschreibungen, saubere Überschriften, schnelle Ladezeit, gut auf dem Handy.' },
       { id: 'email', text: 'E-Mail-Postfächer mit Signatur', zeile: 'E-Mail-Postfächer mit Signatur',
@@ -211,11 +213,14 @@ export const gesamtZeile = () => `Alle vier als Gesamtpaket: ${euro(EINMALIG_DAZ
 
 /** „Direkt buchen“ (Jamil #5085–#5089): Fenster auf den Paketkarten, Hinweis im Fenster und im Kontaktformular. */
 export const BUCHEN = {
-  knopf: 'Direkt buchen',
+  knopf: 'Paket anfragen', // Jamil #6055 Fr. 18 (vorher „Direkt buchen“)
   titel: 'Ihre Buchung: Paket und Extras', // Audit #5953 H4 (15.11.2026): vorher „Für Gründer …“ – passte nicht über jedes Paket
-  weiter: 'Weiter zur Buchung',
+  weiter: 'Weiter zur Anfrage', // Jamil #6055 Fr. 18 (vorher „Weiter zur Buchung“)
   ohne: 'Ohne Extras weiter',
-  kaufHinweis: 'Kein Online-Kauf: Wir schicken Ihnen Vertrag und Auftragsbestätigung per E-Mail. Erst damit ist die Buchung verbindlich.',
+  // Jamil #6055 Fr. 18: Satz „Sie erhalten Vertrag und Auftragsbestätigung per E-Mail.“
+  kaufHinweis: 'Kein Online-Kauf: Sie erhalten Vertrag und Auftragsbestätigung per E-Mail. Erst damit ist die Buchung verbindlich.',
+  /** Absende-Knopf im Kontaktformular, wenn man aus dem Fenster kommt (Jamil #6055 Fr. 18, vorher „Buchung anfragen“) */
+  absenden: 'Paket anfragen',
 };
 
 /** Größere Vorhaben: eigenes Angebot. */
@@ -230,8 +235,19 @@ export const LAUFZEIT_HINWEIS = `${LAUFZEIT_MONATE} Monate Mindestlaufzeit, dana
 /** Hinweis zu Rechtstexten. */
 export const RECHT = 'Impressum und Datenschutzerklärung binden wir nach aktuellem Stand ein. Das ersetzt keine Rechtsberatung. Steuer- und Rechtsberatung übernehmen wir nicht.';
 
-/** Nicht im Preis enthalten. PLATZHALTER (nur Vorschau): Liste legen Can und Jamil fest. */
-export const NICHT_ENTHALTEN = ['Fotograf oder Videodreh vor Ort', 'Gekaufte Bildlizenzen', 'Druck von Visitenkarten oder Briefpapier', 'Lizenzen für fremde Programme'];
+/** Nicht im Preis enthalten (Jamil #6055 Fr. 9: „Shop machen wir nicht, Fotos/Shooting nicht im Preis enthalten“).
+ *  Nur bestätigte Punkte bzw. Aussagen, die schon in dieser Datei stehen (Extras einmalig, Web-App als eigenes Paket, Druck nicht enthalten). */
+export const NICHT_ENTHALTEN = [
+  'Fotos und Fotoshooting',
+  'Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur (einmalig dazubuchbar, Festpreise siehe oben)',
+  'Druck von Visitenkarten',
+  `Die Web-App (Paket „${KOMPLETTPAKET.name}“, nur zusammen mit einem Website-Paket)`,
+];
+/** Was wir nicht anbieten (Jamil #6055 Fr. 9) */
+export const NICHT_ANGEBOTEN = 'Einen Online-Shop bieten wir nicht an.';
+
+/** „Warum 24 Monate?“ (Jamil #6055 Fr. 31): Einrichtung ohne Einrichtungsgebühr, Aufwand verteilt sich auf die Laufzeit. */
+export const WARUM_24 = `Weil wir keine Einrichtungsgebühr nehmen. Beratung, Vorschau, Texte und den Aufbau Ihrer Website leisten wir am Anfang, bezahlt wird das nicht auf einmal, sondern verteilt über die ersten ${LAUFZEIT_MONATE} Monatspreise. So bleibt Ihr Monatspreis fest und planbar, ohne hohe Einmalkosten zu Beginn.`;
 
 /** Fragen zu den Paketen (/preise/). platzhalter = offene Entscheidung, nur in der Vorschau rot gezeigt. */
 export type PaketFrage = { q: string; a: string; platzhalter?: boolean };
@@ -246,8 +262,10 @@ export const FAQ_PAKETE: PaketFrage[] = [
     a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Mit dem ${K.name} zusammen: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`${p.name} + ${K.name} ${euroAb(jahresPreis(K.kombiPreis[p.id] as number), K.kombiAb)}`])).join(', ')} netto im Jahr. Abgerechnet wird monatlich.` },
   { q: 'Wie lange läuft der Vertrag?',
     a: `Die Mindestlaufzeit beträgt ${LAUFZEIT_MONATE} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
-  { q: 'Was passiert nach 24 Monaten?', platzhalter: true,
-    a: 'Offen: Ob sich der Monatspreis nach der Mindestlaufzeit ändert, entscheiden Can und Jamil. Bis dahin machen wir hier keine Aussage.' },
+  { q: 'Was passiert nach 24 Monaten?', // Jamil #6055 Fr. 8: Preis bleibt gleich
+    a: 'Der Preis bleibt gleich. Ihre Website läuft mit derselben Betreuung weiter, und Sie können monatlich kündigen, mit einem Monat Frist zum Monatsende.' },
+  { q: 'Warum 24 Monate?', // Jamil #6055 Fr. 31 (transparente Antwort)
+    a: WARUM_24 },
   { q: 'Kann ich das Paket später wechseln?',
     a: 'Ja, ein Wechsel in ein größeres Paket ist möglich. Sagen Sie uns einfach Bescheid, die Einzelheiten besprechen wir mit Ihnen.' },
   // Frage „Wem gehört das Logo …?“ entfernt (Jamil #5975, 15.11.2026)

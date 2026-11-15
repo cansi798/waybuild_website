@@ -14,22 +14,20 @@ import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import SnAngebot from '../components/startneu/SnAngebot.astro';
 import SnAbschluss from '../components/startneu/SnAbschluss.astro';
-import { SHOW_HINTS } from '../config/site';
-import { IS_PREVIEW } from '../lib/env';
 import { SAEULEN } from '../config/angebot';
 import { leistungenNach } from '../config/leistungen';
 import { serviceSchema } from '../lib/schema';
 import { href } from '../lib/paths';
 import {
   ABO_PAKETE, KOMPLETTPAKET, euro, jahresPreis, jahresBrutto, aboPreisAb, komplettPreis, vergleichsZeilen, LAUFZEIT_MONATE, B2B_HINWEIS,
-  AUF_ANFRAGE, NICHT_ENTHALTEN, RECHT,
+  AUF_ANFRAGE, NICHT_ENTHALTEN, NICHT_ANGEBOTEN, RECHT, SEITEN_MAX,
 } from '../config/pakete-abo';
+import { START_ABLAUF_KURZ } from '../config/start-ablauf';
 import '../styles/start-neu.css';
 import '../styles/seite-preise.css';
 
 const ausbau = SAEULEN.filter((s) => s.id !== 'websites');
 const zeilen = vergleichsZeilen();
-const hinweise = SHOW_HINTS && IS_PREVIEW;
 
 /** Für beide Pakete gleich (aus der Leistung „Website“ und den bisherigen Paketinhalten). */
 const GLEICH: { t: string; w: string | true }[] = [
@@ -41,11 +39,8 @@ const GLEICH: { t: string; w: string | true }[] = [
   { t: 'Änderungen per Nachricht, im fairen Rahmen', w: true },
 ];
 
-const START = [
-  { t: 'Erstgespräch', x: 'Kostenlos und unverbindlich. Wir lernen Ihr Unternehmen kennen und empfehlen das passende Paket.' },
-  { t: 'Entwurf und Freigabe', x: 'Wir schreiben die Texte mit Ihnen und setzen die Website KI-gestützt um. Sie prüfen und geben frei.' },
-  { t: 'Live und betreut', x: 'Ihre Website geht online. Danach pflegen wir sie, und Änderungen schicken Sie einfach per Nachricht.' },
-];
+// Derselbe Ablauf in fünf Schritten wie auf der Startseite (Jamil #6055 Fr. 14; vorher drei eigene Schritte)
+const START = START_ABLAUF_KURZ.schritte.map((st) => ({ t: st.titel, x: st.text, z: st.zeit }));
 
 const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
 const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${komplettPreis()}.`; // Web-App einheitlich (Jamil #6038, Audit K2)
@@ -57,7 +52,7 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${ko
   schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
-  <PageHeader eyebrow="Preise" title="Drei Pakete. Feste Monatspreise." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, keine Seitenbegrenzung, alle Kosten auf einen Blick. ${komplettText}`} />
+  <PageHeader eyebrow="Preise" title="Drei Pakete. Feste Monatspreise." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, bis zu ${SEITEN_MAX} Seiten, alle Kosten auf einen Blick. ${komplettText}`} />
 
   <!-- alte Sprungmarken, direkt vor den Paketen -->
   <span id="preise" class="spr-anker" aria-hidden="true"></span>
@@ -101,7 +96,7 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${ko
       <div class="sn-kopf">
         <div class="spr-kopf__titel">
           <p class="sn-kenn">So starten Sie</p>
-          <h2 id="spr-start-h" class="sn-h2">In drei Schritten online.</h2>
+          <h2 id="spr-start-h" class="sn-h2">{START_ABLAUF_KURZ.titel}.</h2>
         </div>
         <!-- von uns ergänzt (#5892) -->
         <p class="sn-lead">Vom ersten Gespräch bis zur fertigen Website begleiten wir Sie persönlich.</p>
@@ -112,6 +107,7 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${ko
             <span class="spr-schritt__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="sn-h4">{st.t}</h3>
             <p>{st.x}</p>
+            <p class="spr-schritt__zeit">{st.z}</p>
           </li>
         ))}
       </ol>
@@ -140,13 +136,12 @@ const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${ko
           </li>
         ))}
       </ul>
-      {hinweise && (
-        <div class="spr-nicht">
-          <span class="spr-nicht__etikett">Platzhalter</span>
-          <h3 class="sn-h4">Nicht im Preis enthalten</h3>
-          <p>Beispiele, die Can und Jamil noch bestätigen: {NICHT_ENTHALTEN.join(', ')}.</p>
-        </div>
-      )}
+      <!-- Nicht im Preis enthalten: bestätigte Liste, ohne Platzhalter (Jamil #6055 Fr. 9) -->
+      <div class="spr-nicht" id="nicht-enthalten">
+        <h3 class="sn-h4">Nicht im Preis enthalten</h3>
+        <ul class="spr-nicht__liste">{NICHT_ENTHALTEN.map((n) => <li>{n}</li>)}</ul>
+        <p>{NICHT_ANGEBOTEN}</p>
+      </div>
       <p class="sn-fein">{RECHT}</p>
       <p class="sn-fein spr-b2b">{B2B_HINWEIS}</p>
     </div>

@@ -1,6 +1,6 @@
 ---
 title: "Freundlich nachfassen"
-menuTitel: "Nachfassen"
+menuTitel: "Angebote nachfassen" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: betreuung
 station: betreuung
 kurz: "Offene Angebote und erledigte Aufträge im Blick behalten, freundlich und planbar."
@@ -35,7 +35,7 @@ umfang:
 umfangHinweis: "Wie wir echte Kundenbewertungen einholen und sichtbar machen, lesen Sie unter [Bewertungen](/leistungen/bewertungen/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, schauen wir uns an, was bei Ihnen nach einem Angebot und nach einem Auftrag passiert."
+    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, schauen wir uns an, was bei Ihnen nach einem Angebot und nach einem Auftrag passiert."
   - titel: "Verbinden"
     text: "Wir sorgen dafür, dass Angebote, Kontakte und Erinnerungen zusammenhängen, statt verteilt in Postfach und Kalender zu liegen."
   - titel: "Verbessern"

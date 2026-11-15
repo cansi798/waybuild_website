@@ -1,6 +1,6 @@
 ---
 title: "Ihre Website laufend betreut"
-menuTitel: "Betreuung"
+menuTitel: "Betreuung & Änderungen" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: betreuung
 station: betreuung
 kurz: "Updates, Sicherungen und Änderungen per Nachricht, mit festem Ansprechpartner."
@@ -35,7 +35,7 @@ umfang:
 umfangHinweis: "Ab Paket Online wachsen halten wir außerdem Ihr Google-Profil aktuell, mehr dazu unter [Google-Profil](/leistungen/google-profil/)."
 schritte:
   - titel: "Verstehen"
-    text: "Schon im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, was sich bei Ihnen häufig ändert und wie Sie uns am liebsten erreichen."
+    text: "Schon im kostenlosen Erstgespräch, rund 30 Minuten, klären wir, was sich bei Ihnen häufig ändert und wie Sie uns am liebsten erreichen."
   - titel: "Verbinden"
     text: "Wir achten darauf, dass Ihre Angaben überall gleich sind, zum Beispiel auf der Website und ab Paket Online wachsen im Google-Profil."
   - titel: "Verbessern"

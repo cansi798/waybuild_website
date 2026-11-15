@@ -3,7 +3,7 @@
 // zeigt die festen Monatspakete Basis · Plus (optional dazu das Komplettpaket, #5450–#5464), ab welchem Paket die Leistung enthalten ist,
 // einzelne Merkmale mit „ab Paket …“ (Leistungs-ids aus config/pakete-abo.ts), die Einmal-Leistungen und den Link zu /preise/.
 // Alle Namen, Preise und Texte kommen aus config/pakete-abo.ts – hier steht kein Preis fest im Text.
-import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, LAUFZEIT_HINWEIS, B2B_HINWEIS, aboPreisAb, bruttoVon, euro, komplettZeile, type AboPaket } from '../config/pakete-abo';
+import { SEITEN_MAX, ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, LAUFZEIT_HINWEIS, B2B_HINWEIS, aboPreisAb, bruttoVon, euro, komplettZeile, type AboPaket } from '../config/pakete-abo';
 import { href } from '../lib/paths';
 import Icon from './Icon.astro';
 
@@ -42,9 +42,9 @@ const hid = `${id}-h`;
 <section class:list={['section', 'pb', { 'section--sand': ton === 'sand', 'section--alt': ton === 'alt' }]} id={id} aria-labelledby={hid}>
   <div class="wrap">
     <div class="pb__kopf">
-      <span class="eyebrow">Preis · Website as a Service</span>
+      <span class="eyebrow">Preis · Website-Abo</span>
       <h2 id={hid}>{abPaket ? <>{thema ? `${thema}: ab Paket ` : 'Enthalten ab Paket '}<span class="accent">{abPaket.name}</span></> : <>Feste <span class="accent">Monatspakete</span></>}</h2>
-      <p class="pb__lead">Ab {euro(aboPreisAb())} im Monat netto. Keine Einrichtungskosten, keine Seitenbegrenzung.{hinweis ? ` ${hinweis}` : ''}</p>
+      <p class="pb__lead">Ab {euro(aboPreisAb())} im Monat netto. Keine Einrichtungskosten, bis zu {SEITEN_MAX} Seiten.{hinweis ? ` ${hinweis}` : ''}</p>
     </div>
 
     <ul class="pb__pakete" role="list" style={`--pb-n: ${ABO_PAKETE.length}`}>

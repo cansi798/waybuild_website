@@ -14,7 +14,7 @@ import { KOMPLETTPAKET as P, EINMALIG_DAZU, euroAb, bruttoVon, kombiPreise, LAUF
 
 const kontakt = (paket: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(paket)}&komplett=1&buchen=1`;
 const kombis = kombiPreise();
-const KOMBI_KNOPF = 'Kombi buchen';
+const KOMBI_KNOPF = 'Kombi anfragen'; // Jamil #6055 Fr. 18 (vorher „Kombi buchen“)
 // günstigste Kombination zuerst (Basis + Komplettpaket)
 const erste = [...kombis].sort((a, b) => a.preis - b.preis)[0];
 ---

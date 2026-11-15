@@ -1,6 +1,6 @@
 ---
 title: "Echte Bewertungen sichtbar machen"
-menuTitel: "Bewertungen"
+menuTitel: "Kundenbewertungen" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: vertrauen
 station: vertrauen
 kurz: "Zufriedene Kunden um eine Bewertung bitten und echte Stimmen sichtbar zeigen."

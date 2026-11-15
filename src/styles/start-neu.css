@@ -446,3 +446,24 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 .sn-wahlhilfe__liste a { color: var(--sn-tinte); font-weight: 700; text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 32px; }
 .sn-angebot__mehr { margin-top: 24px !important; line-height: 1.8; }
 .sn-angebot__mehr .sn-link { display: inline-flex; min-height: 44px; align-items: center; }
+
+/* Jamil #6055 (15.11.2026) ─────────────────────────────────────────────── */
+/* Fr. 19: ein Satz, was die Person tut */
+.sn-person__aufgabe { margin-top: 4px !important; font-size: 0.92rem; line-height: 1.6; color: var(--ink); }
+/* Fr. 4: Kundenzitat auf der Projektkarte (nur echte Zitate) */
+.sn-ref__zitat { margin: 10px 0 0; padding-left: 14px; border-left: 3px solid var(--sn-tinte); font-size: 0.98rem; line-height: 1.6; }
+.sn-ref__zitat footer { margin-top: 4px; font-size: 0.88rem; color: var(--ink-soft); }
+/* Fr. 6: Bewertungen (erst mit echten Bewertungen sichtbar) */
+.sn-bew__liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 760px) { .sn-bew__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.sn-bew__karte { background: #fff; border: 1px solid var(--sn-linie); border-radius: 16px; padding: 20px; }
+.sn-bew__sterne { color: #8a6400; letter-spacing: 2px; }
+.sn-bew__wer { margin-top: 8px !important; font-size: 0.88rem; color: var(--ink-soft); }
+.sn-bew__platz { padding-block: 8px; }
+/* Fr. 25: Probleme unter 1000 px als Liste ohne Tippen, Grafik-Wechsel nur am PC */
+.sn-pliste { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.sn-pliste__punkt { background: #fff; border: 1px solid var(--sn-linie); border-radius: 14px; padding: 16px 18px; }
+.sn-pliste__titel { font-weight: 700; color: var(--sn-tinte); line-height: 1.4; }
+.sn-pliste__punkt p + p { margin-top: 4px !important; line-height: 1.6; }
+@media (max-width: 999.98px) { .sn-problem .sn-pfeld { display: none; } }
+@media (min-width: 1000px) { .sn-pliste { display: none; } }

@@ -33,7 +33,7 @@ export const PROBLEM = {
   // Kopf und Schlusssatz seit Jamil #5849/#5850 (14.11.2026); vorher „Kennen Sie das?“ / „Gute Arbeit allein reicht heute nicht.“
   titel: 'Kommt Ihnen das bekannt vor?',
   lead: 'Viele Unternehmen verlieren täglich Zeit an die gleichen Probleme.',
-  schluss: 'Je größer ein Unternehmen wird, desto wichtiger werden klare digitale Prozesse.',
+  schluss: 'Schon ab dem ersten Mitarbeiter lohnt sich ein klarer Ablauf.', // Jamil #6055 Fr. 24 (vorher „Je größer ein Unternehmen wird, …“)
   // Jamil #5862 (14.11.2026): auf diese fünf Schmerzpunkte reduziert, Reihenfolge und Kerngedanken von ihm (Text 1 wörtlich,
   // 2–5 aus seinen Stichworten: „verlorener Auftrag“, „jeden Tag dieselben Fragen“, „Fehler, Rückfragen, Doppelarbeit“, „abends“).
   punkte: [
@@ -77,8 +77,11 @@ export const REISE = {
 /** Abschnitt 4: Beweis */
 export const BEWEIS = {
   kennzeile: 'Echte Projekte',
-  /** nur diese drei (wie auf /geschichte/): eine online, zwei Vorschau, alle mit eigenen Messwerten */
-  auswahl: ['Bauwelt Handwerk', 'Destar Lackdoktor', 'Funkelfilm'],
+  /** Die drei Kunden, von denen Jamil Zitate einholt (Jamil #6055 Fr. 4: Kerim, Bauwelt, Funkelfilm; vorher Destar statt Kerim).
+   *  Eine online, zwei Vorschau, alle mit eigenen Messwerten. Zitate selbst in REFERENZEN (startseite.ts → zitat), nie erfinden. */
+  auswahl: ['Bauwelt Handwerk', 'Kerim Tanrikulu', 'Funkelfilm'],
+  /** Platzhalter bis zum echten Zitat, nur in der Vorschau (Jamil #6055 Fr. 4) */
+  zitatFehlt: (name: string) => `Kundenzitat von ${name} (Jamil holt es ein, mit Freigabe)`,
   alle: 'Alle Beispiele ansehen',
   vergleich: 'Im Vergleich mit Baukasten und Agentur',
 };
@@ -91,7 +94,7 @@ export const ANGEBOT = {
   appTitel: 'Die Web-App dazu', // Web-App einheitlich (Jamil #5928–#5939; #6038, Audit K2)
   sicherheit: [
     { icon: 'euro', titel: 'Keine Einrichtungsgebühr', text: 'Auch die Einrichtung von Website und Google-Profil ist im Monatspreis enthalten.' },
-    { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 20 Minuten, unverbindlich. Wir empfehlen das passende Paket.' },
+    { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 30 Minuten, unverbindlich. Wir empfehlen das passende Paket.' }, // Jamil #6055 Fr. 15
     { icon: 'server', titel: 'Hosting in Deutschland', text: 'Mit SSL, Domain, Updates und Backups im Monatspreis.' },
     { icon: 'doc', titel: 'Verbindlich erst mit Vertrag', text: 'Kein Online-Kauf: Sie bekommen Vertrag und Auftragsbestätigung per E-Mail.' },
   ] as { icon: IconName; titel: string; text: string }[],

@@ -1,6 +1,6 @@
 ---
 title: "Aus Interesse wird ein Kontakt"
-menuTitel: "Anfragen"
+menuTitel: "Kontaktwege & Anfragen" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: anfragen
 station: anfrage
 kurz: "Einfache Kontaktwege und Anfragen, die geordnet ankommen statt unterzugehen."
@@ -35,7 +35,7 @@ umfang:
 umfangHinweis: "Wenn Ihre Kunden lieber direkt einen Termin wählen, lesen Sie weiter unter [Terminbuchung](/leistungen/terminbuchung/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, schauen wir uns an, wie Interessenten heute Kontakt zu Ihnen aufnehmen und wo es hakt."
+    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, schauen wir uns an, wie Interessenten heute Kontakt zu Ihnen aufnehmen und wo es hakt."
   - titel: "Verbinden"
     text: "Wir sorgen dafür, dass Website, Formular und Postfach zusammenarbeiten und jede Anfrage dort ankommt, wo sie bearbeitet wird."
   - titel: "Verbessern"

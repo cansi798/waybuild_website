@@ -65,3 +65,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .sph-phase { transition-delay: 0s !important; } }
+
+/* Jamil #6055 Fr. 35 („beides bleibt, aber Phasen übereinanderlegen“): unter 1200 px liegen die vier Phasen als Kartenstapel
+   übereinander. Jede Karte bleibt beim Scrollen etwas tiefer oben stehen, die nächste gleitet darüber (nur CSS, position: sticky).
+   Ersetzt die Zeitleiste (Handy) und das 2 × 2-Raster (Tablet). PC (Treppe) unverändert. */
+@media (max-width: 1199px) {
+  .sph-weg { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .sph-phase { --n: 0; position: sticky; top: calc(var(--kopf-gesamt, 73px) + 16px + var(--n) * 14px);
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; row-gap: 0; }
+  .sph-phase:nth-child(2) { --n: 1; }
+  .sph-phase:nth-child(3) { --n: 2; }
+  .sph-phase:nth-child(4) { --n: 3; }
+  .sph-phase::after { display: none !important; }
+  .sph-marke { display: none; }
+  .sph-karte { border: 1px solid var(--sn-linie); box-shadow: 0 -10px 28px -22px rgb(0 79 76 / 45%); min-height: 190px; }
+}
+@media (max-width: 1199px) and (prefers-reduced-motion: reduce) { .sph-phase { position: relative; top: auto; } }

@@ -32,7 +32,7 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
     'Wie viele Seiten bekommt meine Website?',
   ] },
   { id: 'technik', titel: 'Technik und Betreuung', fragen: [
-    'Was ist bei Website as a Service enthalten?',
+    'Was ist im Website-Abo enthalten?', // Jamil #6055 Fr. 21
     'Kann ich meine bestehende Domain mitnehmen?',
     'Ich habe schon eine Website. Was passiert damit?', // Jamil #6038, Audit F3
     'Bietet webgold auch Software, Cloud und IT an?',
@@ -50,6 +50,7 @@ const THEMEN: { id: string; titel: string; fragen: string[] }[] = [
   { id: 'vertrag', titel: 'Vertrag', fragen: [
     'Wie lange läuft der Vertrag?',
     'Was passiert nach 24 Monaten?',
+    'Warum 24 Monate?', // Jamil #6055 Fr. 31
     'Kann ich später in ein größeres Paket wechseln?',
     'Kann ich das Paket später wechseln?',
   ] },

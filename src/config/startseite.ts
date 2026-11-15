@@ -49,7 +49,9 @@ export const HERO = {
  *  keine Porträtfotos von Kunden. Link NUR bei status 'online'; Vorschau-Adressen sind nicht für Besucher gedacht.
  *  bild = Bildschirmfoto der Kunden-Startseite (1440 × 900, 08.11.2026) unter src/assets/bilder/referenzen/.
  *  Ohne name/bild wird die Karte anonym mit stilisierter Vorschau (motiv) gezeigt. */
-export type Referenz = { name?: string; url?: string; urlText?: string; bild?: string; branche: string; ort?: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string };
+export type Referenz = { name?: string; url?: string; urlText?: string; bild?: string; branche: string; ort?: string; status: 'online' | 'vorschau'; motiv: string; ausgang: string; gemacht: string; ergebnis?: string;
+  /** Echtes, freigegebenes Kundenzitat (Jamil #6055 Fr. 4/5). Leer lassen, bis es vorliegt – NIE erfinden. */
+  zitat?: { text: string; person: string } };
 export const REFERENZEN = {
   titel: 'Beispiele aus unserer Arbeit',
   einleitung: 'Echte Projekte unserer Kunden. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.',
@@ -96,9 +98,13 @@ export const TEAM = {
   personen: [
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
     { name: 'Can Siebert', rolle: 'Chief Executive Officer', foto: 'team/can-siebert', alt: 'Can Siebert, Chief Executive Officer von webgold', // Jamil #5869, 14.11.2026 (Impressum bleibt „Geschäftsführer“)
+      // Titel bleiben englisch, dazu ein Satz, was die Person tut (Jamil #6055 Fr. 19: Can im Hintergrund der Techniker)
+      aufgabe: 'Kümmert sich im Hintergrund um die Technik: Website, Web-App, Hosting und Sicherheit.',
       zitat: 'Unsere Kunden sollen sich um ihr Geschäft kümmern. Um alles, was dafür online laufen muss, kümmern wir uns.' },
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)
     { name: 'Jamil Iqbal', rolle: 'Chief Operating Officer', foto: 'team/jamil-iqbal', alt: 'Jamil Iqbal, Chief Operating Officer von webgold',
+      // Jamil #6055 Fr. 19: Jamil für den Kundenkontakt
+      aufgabe: 'Ihr Ansprechpartner im Kundenkontakt: vom Erstgespräch bis zur laufenden Betreuung.',
       zitat: 'Hinter jeder Anfrage steht ein Mensch, der Hilfe sucht. Deshalb sorgen wir dafür, dass möglichst keine verloren geht.' }, // Jamil #6011, Audit #5953 W2
   ],
 };
@@ -111,6 +117,22 @@ export const STIMMEN = {
   platzhalter: 'Platzhalter',
   zitat: 'Beispiel: Hier steht bald ein echtes Zitat unserer Kunden.',
   quellen: ['Kundenstimme folgt (z. B. Handwerk)', 'Kundenstimme folgt (z. B. Dienstleistung)', 'Kundenstimme folgt (z. B. Kreativbranche)'],
+};
+
+/** Bewertungen (Jamil #6055 Fr. 6: Trustpilot und Google; die Profile legen Can und Jamil selbst an). Der Abschnitt erscheint
+ *  auf der Startseite ERST, wenn echte Bewertungen eingetragen sind; vorher nur ein Platzhalter in der Vorschau. Nichts erfinden:
+ *  keine Sterne, keine Zahlen, keine Beispieltexte (UWG). Profil-Adressen zusätzlich in company.sameAs (site.ts) eintragen. */
+export type Bewertung = { quelle: 'Google' | 'Trustpilot'; text: string; name: string; sterne: 1 | 2 | 3 | 4 | 5; datum: string };
+export const BEWERTUNGEN = {
+  kennzeile: 'Bewertungen',
+  titel: 'Das sagen unsere Kunden',
+  profile: [
+    { quelle: 'Google', url: '' },
+    { quelle: 'Trustpilot', url: '' },
+  ] as { quelle: Bewertung['quelle']; url: string }[],
+  /** Nur echte Bewertungen von den Profilen, wörtlich, mit Name wie auf der Plattform */
+  liste: [] as Bewertung[],
+  platzhalter: 'Platz für echte Bewertungen von Google und Trustpilot. Wird erst sichtbar, wenn es echte Bewertungen gibt.',
 };
 
 /* „So läuft die Erstberatung“ (Jamil #4934 Punkt 5): Anker #erstberatung sitzt seit 09.11.2026 auf Schritt 1 („Verstehen“)

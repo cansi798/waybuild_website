@@ -36,7 +36,7 @@ const inhalt = E.gesamt.text.replace(/[.\s]+$/, '');
             <span class="ed__kico" aria-hidden="true"><Icon name={ICONS[e.id] ?? 'spark'} size={16} /></span>
             <span class="ed__kname">{e.name}</span>
             <span class="ed__kpreis"><b>{euro(e.preis)}</b> einmalig, netto</span>
-            <a class="ed__einzeln" href={buchen(e.id)}>Einzeln buchen<span class="sr-only">: {e.name}</span> <Icon name="arrow" size={14} /></a>
+            <a class="ed__einzeln" href={buchen(e.id)}>Einzeln anfragen<span class="sr-only">: {e.name}</span> <Icon name="arrow" size={14} /></a>
           </li>
         ))}
       </ul>

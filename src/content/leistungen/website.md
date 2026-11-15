@@ -1,14 +1,15 @@
 ---
+# Seitengrenze 15 (Jamil #6055 Fr. 30, Wert wie SEITEN_MAX in config/pakete-abo.ts)
 title: "Ihre Website, fertig betreut"
 menuTitel: "Website"
 gruppe: gefunden
 station: aufmerksamkeit
-kurz: "Eine Website ohne Seitenbegrenzung, für Handy, Tablet und PC, von uns betreut."
-description: "Ihre Website mit webgold: ohne Seitenbegrenzung, für Handy, Tablet und PC. Hosting in Deutschland, Updates und Sicherungen sind im Monatspreis enthalten."
+kurz: "Eine Website mit bis zu 15 Seiten, für Handy, Tablet und PC, von uns betreut."
+description: "Ihre Website mit webgold: bis zu 15 Seiten, für Handy, Tablet und PC. Hosting in Deutschland, Updates und Sicherungen sind im Monatspreis enthalten."
 paket: "im Paket Online sichtbar"
 fragen:
   - frage: "Wie viele Seiten bekomme ich?"
-    antwort: "Es gibt keine Seitenbegrenzung. Wir legen gemeinsam mit Ihnen fest, welche Seiten Ihre Kunden wirklich brauchen."
+    antwort: "Bis zu 15 Seiten sind im Monatspreis enthalten. Wir legen gemeinsam mit Ihnen fest, welche Seiten Ihre Kunden wirklich brauchen."
   - frage: "Muss ich mich selbst um die Technik kümmern?"
     antwort: "Nein. Hosting in Deutschland, Updates und Sicherungen übernehmen wir. Das ist im Monatspreis enthalten."
   - frage: "Wann ist meine Website online?"
@@ -20,11 +21,11 @@ probleme:
   - titel: "Die Website wirkt veraltet"
     text: "Besucher sehen auf den ersten Blick, dass lange nichts passiert ist, und fragen sich, ob es Ihr Unternehmen noch gibt."
   - titel: "Auf dem Handy hakt es"
-    text: "Die meisten schauen unterwegs. Lädt die Seite langsam oder ist sie schwer zu bedienen, sind sie schnell wieder weg."
+    text: "Viele schauen unterwegs. Lädt die Seite langsam oder ist sie schwer zu bedienen, sind sie schnell wieder weg."
   - titel: "Die Technik bleibt an Ihnen hängen"
     text: "Updates, Sicherungen und kleine Änderungen kosten Zeit, die im Alltag fehlt."
 umfang:
-  - text: "eine Website ohne Seitenbegrenzung, für Handy, Tablet und PC"
+  - text: "eine Website mit bis zu 15 Seiten, für Handy, Tablet und PC"
   - text: "ein klarer Aufbau, damit Besucher schnell finden, was sie suchen"
   - text: "Hosting in Deutschland, Updates und Sicherungen im Monatspreis"
   - text: "E-Mail-Postfächer mit Ihrer eigenen Adresse und einer einheitlichen Signatur"

@@ -5,13 +5,18 @@
 // Angepasst an das Paketmodell vom 08.11. (#5056): „keine Einmalkosten“ → „keine Einrichtungskosten“, weil Logo,
 // Signatur, Geschäftspapiere und Visitenkarten heute einmalig dazubuchbar sind.
 
+/** EIN Satz zur Positionierung auf allen Seiten (Jamil #6055 Fr. 20 „ok“, gekoppelt an Fr. 13: „nicht nur Website, sondern auch
+ *  Web-App für den digitalen Alltag“). Startseite = H1, Über uns / Warum webgold = Einleitung, JSON-LD/llms.txt = Kurzbeschreibung. */
+export const POSITIONIERUNG = 'Ihre Website im Abo und auf Wunsch eine Web-App für Ihren digitalen Alltag.';
+
 /** Einstieg im ersten Bildschirm (firma.de-Vergleich Punkt 1 + 2). */
 export const V_HERO = {
   /** H1 im Hero, Variante E von Jamil (Talk qh87y3sj #5129). Title und Meta-Description bleiben eigenständig (index.astro). */
-  titel: 'Digitale Lösungen für Unternehmen, die mehr erreichen wollen.', // Jamil Talk qh87y3sj #5845, 14.11.2026 (vorher #5129 „Von der ersten Aufmerksamkeit …“)
+  titel: POSITIONIERUNG, // Jamil #6055 Fr. 13 + 20 (vorher #5845 „Digitale Lösungen für Unternehmen, die mehr erreichen wollen.“)
   /** Unterzeile im Hero: Wortlaut von Jamil (Talk qh87y3sj #5359, 09.11.2026: „beide Sätze beginnen mit von“ – H1 bleibt, Unterzeile ohne „Von …“).
    *  Vorher #5174. Meta-Description/JSON-LD bleiben eigenständig (index.astro). */
-  unter: 'Ob professionelle Website, individuelle Web-App oder beides gemeinsam: Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.', // Jamil #5845, 14.11.2026 (ersetzt #5654 und den Entwurf #5843)
+  // Jamil #6055 Fr. 13: konkret „fertig gebaut, betreut, fester Monatspreis“; zweiter Satz aus Jamils Unterzeile #5845
+  unter: 'Fertig gebaut, laufend betreut, zum festen Monatspreis. Wir entwickeln digitale Lösungen, die Kunden gewinnen, Arbeitsabläufe vereinfachen und mit Ihrem Unternehmen mitwachsen.',
   /** Vertrauenshinweis unter dem Knopf (Jamil #5847, 14.11.2026) */
   fuer: 'Für klein- und mittelständische Unternehmen.', // Jamil #5878, 14.11.2026 (vorher die Aufzählung aus #5847)
   /** Belegzeile unter dem Vertrauenshinweis (Jamil #6011, Audit #5953 E2, 15.11.2026): nur belegte Fakten. Der Preis „ab …“ kommt
@@ -21,9 +26,9 @@ export const V_HERO = {
 };
 
 /** Einziger Knopf im Hero (#5121–#5124, Beschriftung von uns gewählt, Jamil kann sie ändern). Ziel: Kontakt, Erstberatung. */
-export const HERO_KNOPF = 'Kostenlose Beratung'; // Jamil #5846, 14.11.2026 (vorher „Kostenlose Erstberatung“)
+export const HERO_KNOPF = 'Kostenlose Erstberatung'; // Jamil #6055 Fr. 17: ein Name überall (vorher #5846 „Kostenlose Beratung“)
 /** Knopf im Abschluss der Startseite (Jamil #5855, 14.11.2026) */
-export const ABSCHLUSS_KNOPF = 'Kostenlose Beratung vereinbaren';
+export const ABSCHLUSS_KNOPF = 'Kostenlose Erstberatung vereinbaren'; // Jamil #6055 Fr. 17
 
 /** Abschnitt direkt nach dem Hero „Kundenreise“ als Journey-Map (Jamil, Talk qh87y3sj #5181/#5182: „wirkt wie ein Arbeitsprozess,
  *  muss eine Customer Journey sein“, Variante B #5184, Text #5185, Plan „ok“ #5187, 09.11.2026). Ersetzt das „Zusammenspiel“ mit

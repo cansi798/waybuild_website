@@ -7,6 +7,8 @@
 // zur Website (Handy senkrecht mit Rückweg links, ab 760 px 3 × 2 als geschlossene Schleife). Danach fünf Nutzenkarten mit Haken.
 // Lichtpunkt nur ohne prefers-reduced-motion. Texte: config/start-system.ts, Stil: styles/start-system.css.
 import { SYSTEM as T } from '../../config/start-system';
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
 import '../../styles/start-system.css';
 ---
 
@@ -172,6 +174,8 @@ import '../../styles/start-system.css';
             </li>
           ))}
         </ul>
+        <!-- Film nur als Link (Jamil #6055 Fr. 34) -->
+        <p class="ss-film"><a class="sn-link" href={href(T.film.pfad)}>{T.film.text} <Icon name="arrow" size={18} /></a></p>
       </div>
     </div>
   </div>

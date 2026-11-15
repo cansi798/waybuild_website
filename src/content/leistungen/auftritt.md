@@ -1,6 +1,6 @@
 ---
 title: "Ein einheitlicher Auftritt bis zum Brief"
-menuTitel: "Auftritt"
+menuTitel: "Logo & Geschäftspapiere" # Jamil #6055 Fr. 33 (sprechender Name, Gruppen bleiben)
 gruppe: vertrauen
 station: vertrauen
 kurz: "Logo, Geschäftspapiere und Signatur im gleichen Stil wie Ihre Website."

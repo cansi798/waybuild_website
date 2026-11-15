@@ -8,6 +8,7 @@
 // - Team (Fotos + Test-Zitate) NUR in der Vorschau, solange die Zitate nicht bestätigt sind (#5636/#5637). Keine Zitate in JSON-LD.
 import Bild from '../Bild.astro';
 import Icon from '../Icon.astro';
+import Hint from '../Hint.astro';
 import { REFERENZEN, ENTSPANNT, TEAM } from '../../config/startseite';
 import { BEWEIS as T } from '../../config/startneu';
 import { href } from '../../lib/paths';
@@ -44,6 +45,10 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
             <p class="sn-ref__kopf"><span class="sn-ref__name">{r.name}</span><span class:list={['sn-ref__status', `sn-ref__status--${r.status}`]}>{REFERENZEN.etikett[r.status]}</span></p>
             <p class="sn-ref__branche">{r.branche}{r.ort ? `, ${r.ort}` : ''}</p>
             {r.ergebnis && <p class="sn-ref__ergebnis">{r.ergebnis}</p>}
+            {/* Kundenzitat: nur echt und freigegeben; bis dahin Platzhalter NUR in der Vorschau (Jamil #6055 Fr. 4) */}
+            {r.zitat ? (
+              <blockquote class="sn-ref__zitat"><p>„{r.zitat.text}“</p><footer>{r.zitat.person}, {r.name}</footer></blockquote>
+            ) : TEAM_ZEIGEN && <Hint label={T.zitatFehlt(r.name!)} where="src/config/startseite.ts → REFERENZEN.liste[].zitat" />}
             {r.status === 'online' && r.url && (
               <a class="sn-link" href={r.url} target="_blank" rel="noopener">{r.urlText ?? r.url}<span class="sr-only"> (öffnet in neuem Tab)</span> <Icon name="arrow" size={18} /></a>
             )}
@@ -58,7 +63,7 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
       <div class="sn-motto__kopf">
         <h3 class="sn-h2 sn-h2--klein">{ENTSPANNT.titel}</h3>
         <p class="sn-lead">{ENTSPANNT.intro}</p>
-        <a class="sn-link" href={href('/warum-waybuild/')}>{T.vergleich} <Icon name="arrow" size={18} /></a>
+        <a class="sn-link" href={href('/warum-wir/')}>{T.vergleich} <Icon name="arrow" size={18} /></a>
       </div>
       <ul class="sn-motto__liste">
         {ENTSPANNT.karten.map((k) => (

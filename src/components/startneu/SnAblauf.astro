@@ -5,8 +5,18 @@
 // Stil: src/styles/start-ablauf.css (Präfix .sab-). Handy senkrechte Linie, ab 640 px Karten (2 Spalten), ab 1000 px Treppe 2/1/3.
 // Schritt-Anker #erstberatung sitzt auf Schritt 1 (alte Links treffen weiter).
 import Icon from '../Icon.astro';
-import { START_ABLAUF as T } from '../../config/start-ablauf';
+import { START_ABLAUF, START_ABLAUF_KURZ } from '../../config/start-ablauf';
+import { href } from '../../lib/paths';
 import '../../styles/start-ablauf.css';
+
+// Jamil #6055 Fr. 14: Standard = Kurzfassung in fünf Schritten (Startseite) mit Link zur langen Fassung; `lang` = alle acht Schritte
+// („So arbeiten wir“ auf /ueber-uns/, id so-arbeiten-wir, ohne #erstberatung-Anker).
+interface Props { lang?: boolean }
+const { lang = false } = Astro.props;
+const T = lang
+  ? { ...START_ABLAUF, kenn: 'Wie wir arbeiten', titel: 'So arbeiten wir' }
+  : { ...START_ABLAUF, ...START_ABLAUF_KURZ };
+const id = lang ? 'so-arbeiten-wir' : 'ablauf';
 
 // Doppelhelix als feine Linienzeichnung (rein dekorativ): zwei gegenläufige Sinusstränge + Sprossen
 const B = 320, H = 72, M = H / 2, A = 24, W = 2; // Breite, Höhe, Mitte, Ausschlag, Windungen
@@ -18,19 +28,19 @@ const sprossen = Array.from({ length: B / 16 - 1 }, (_, i) => (i + 1) * 16)
   .map((x) => ({ x, y1: y(x, 1).toFixed(1), y2: y(x, -1).toFixed(1) }));
 ---
 
-<section class="section sn sn-ablaufteil sab" id="ablauf" aria-labelledby="sn-ablauf-h">
+<section class:list={['section sn sn-ablaufteil sab', { 'sab--kurz': !lang }]} id={id} aria-labelledby={`${id}-h`}>
   <div class="wrap">
     <div class="sn-kopf">
       <div>
         <p class="sn-kenn">{T.kenn}</p>
-        <h2 id="sn-ablauf-h" class="sn-h2">{T.titel}</h2>
+        <h2 id={`${id}-h`} class="sn-h2">{T.titel}</h2>
       </div>
       <p class="sn-lead">{T.lead}</p>
     </div>
 
     <ol class="sab-schritte">
       {T.schritte.map((s, i) => (
-        <li class:list={['sab-schritt reveal', `sab-schritt--${i + 1}`, { 'sab-schritt--dna': s.dna }]} id={s.anker}>
+        <li class:list={['sab-schritt reveal', `sab-schritt--${i + 1}`, { 'sab-schritt--dna': s.dna }]} id={lang ? undefined : s.anker}>
           <span class="sab-nr" aria-hidden="true">{i + 1}</span>
           <div class="sab-inhalt">
             {s.dna && <p class="sab-dna-marke"><span class="sab-dna-punkt" aria-hidden="true"></span>{T.dnaMarke}</p>}
@@ -90,5 +100,6 @@ const sprossen = Array.from({ length: B / 16 - 1 }, (_, i) => (i + 1) * 16)
         ))}
       </ul>
     </div>
+    {!lang && <p class="sab-lang"><a class="sn-link" href={href(START_ABLAUF.langLink.pfad)}>{START_ABLAUF.langLink.text} <Icon name="arrow" size={18} /></a></p>}
   </div>
 </section>

@@ -39,9 +39,10 @@ export const NAV: NavItem[] = [
   {
     label: 'Unternehmen',
     children: [
-      { label: 'Warum webgold', path: '/warum-waybuild/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' },
+      { label: 'Warum webgold', path: '/warum-wir/', icon: 'compass', desc: 'Was uns von anderen Anbietern unterscheidet' }, // Adresse seit Jamil #6057 Fr. 37 (vorher /warum-waybuild/)
       { label: 'Über uns', path: '/ueber-uns/', icon: 'user', desc: 'Wer hinter webgold steht' },
       { label: 'Beispiele', path: '/beispiele/', icon: 'eye', desc: 'Echte Projekte unserer Kunden' },
+      { label: 'So kann es laufen', path: '/so-kann-es-laufen/', icon: 'rocket', desc: 'Film: Website und Web-App im Alltag' }, // Jamil #6055 Fr. 34
       { label: 'Kontakt', path: '/kontakt/', icon: 'chat', desc: 'Erstberatung, Telefon, WhatsApp' },
     ],
   },

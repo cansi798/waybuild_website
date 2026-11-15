@@ -4,6 +4,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
+import { SEITEN_MAX } from '../../config/pakete-abo';
 import PreisBlock from '../../components/PreisBlock.astro';
 import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
@@ -82,7 +83,7 @@ const schema = [
           <div>
             <p class="art__cta-label">Passend zum Thema</p>
             <h2 id="art-cta-h">{WAAS.name}</h2>
-            <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Keine Seitenbegrenzung</p>
+            <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Bis zu {SEITEN_MAX} Seiten</p>
           </div>
           <div class="art__cta-btns">
             <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenlose Erstberatung</a>

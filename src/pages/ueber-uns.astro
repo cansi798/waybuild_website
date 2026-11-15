@@ -1,6 +1,6 @@
 ---
 // /ueber-uns/ im Stil der neuen Startseite (Jamil, Talk qh87y3sj #5892, 14.11.2026). Inhalte erhalten (Mission, Werte, Fakten),
-// Optik wie src/components/startneu/. Abschnitte: Mission (Weiß) → Team (Papier) → Werte (Weiß) → Arbeitsweise (Papier) → SnAbschluss (Hauch).
+// Optik wie src/components/startneu/. Abschnitte: Mission + Gründung + Fakten (Weiß) → Team (Papier) → Werte (Weiß) → So arbeiten wir (SnAblauf lang) → SnAbschluss (Hauch).
 // Team: TEAM aus config/startseite.ts (Can „Chief Executive Officer“, Jamil „Chief Operating Officer“). Fotos + Test-Zitate NUR unter
 // derselben Bedingung wie SnTeam.astro (SHOW_HINTS && IS_PREVIEW, #5636/#5637); sonst nur Name und Rolle mit Initialen.
 // Zitate NICHT in strukturierte Daten übernehmen. Stil: styles/seite-ueber.css (.su-).
@@ -9,9 +9,12 @@ import PageHeader from '../components/PageHeader.astro';
 import Hint from '../components/Hint.astro';
 import Bild from '../components/Bild.astro';
 import SnAbschluss from '../components/startneu/SnAbschluss.astro';
+import SnAblauf from '../components/startneu/SnAblauf.astro';
 import { TEAM } from '../config/startseite';
 import { IS_PREVIEW } from '../lib/env';
-import { SHOW_HINTS } from '../config/site';
+import { SHOW_HINTS, FAKTEN } from '../config/site';
+import { POSITIONIERUNG } from '../config/variante';
+import { UEBER_KOPF, GRUENDUNG, FAKTEN_TITEL } from '../config/ueber-uns';
 import { href } from '../lib/paths';
 import '../styles/start-neu.css';
 import '../styles/seite-ueber.css';
@@ -26,24 +29,21 @@ const values: { title: string; text: string; link?: { label: string; path: strin
   { title: 'Langfristig', text: 'Wir entwickeln Ihre Website laufend weiter. Kunden sollen bleiben, weil es passt.' },
 ];
 
-// von uns ergänzt (#5892): Arbeitsweise in drei Schritten, Wortlaut aus den bisherigen Texten dieser Seite und /warum-waybuild/
-const arbeitsweise = [
-  { title: 'Menschliche Beratung', text: 'Gemeinsam mit Ihnen entwickeln wir Zielgruppen, Positionierung und Customer Journey.' },
-  { title: 'KI-gestützte Umsetzung', text: 'Danach setzt unsere KI die Ergebnisse schnell um.' },
-  { title: 'Kontinuierliche Verbesserung', text: 'Wir entwickeln Ihre Website laufend weiter, auch nach dem Livegang.' },
-];
+// Die frühere „Arbeitsweise in drei Schritten“ (#5892) ist durch „So arbeiten wir“ in acht Schritten ersetzt (Jamil #6055 Fr. 14, SnAblauf lang).
+// Gründungsgeschichte: Entwurf nur in der Vorschau, bis Can und Jamil bestätigen (Fr. 10).
+const GRUENDUNG_ZEIGEN = GRUENDUNG.bestaetigt || (SHOW_HINTS && IS_PREVIEW);
 const nr = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <BaseLayout
   title="Über uns: wer hinter webgold steht"
-  description="webgold verbindet menschliche Beratung mit KI-gestützter Umsetzung: digitale Unternehmensplattformen für kleine und mittlere Unternehmen."
+  description="webgold verbindet menschliche Beratung mit KI-gestützter Umsetzung: Ihre Website im Abo und auf Wunsch eine Web-App, für kleine und mittlere Unternehmen."
   breadcrumb={[{ name: 'Über uns', path: '/ueber-uns/' }]}
 >
   <PageHeader
     eyebrow="Über uns"
-    title={"Wir bauen digitale Unternehmens­plattformen."}
-    lead="Für kleine und mittlere Unternehmen, ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen."
+    title={UEBER_KOPF.titel}
+    lead={`${POSITIONIERUNG} ${UEBER_KOPF.leadNach}`}
   />
 
   <!-- 1 · Mission (Weiß) -->
@@ -59,9 +59,21 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
           <p>Wir wollen kleinen und mittleren Unternehmen helfen, professioneller aufzutreten, effizienter zu arbeiten und langfristig zu wachsen. Die Website ist dabei nur der erste Schritt.</p>
         </div>
       </div>
-      <Hint block label="Persönliche Gründungsgeschichte" where="src/pages/ueber-uns.astro">
-        Ein, zwei Sätze in eigenen Worten: Wer seid ihr, woher kommt ihr, warum macht ihr das? Das wirkt stärker als jeder Werbetext.
-      </Hint>
+      {GRUENDUNG_ZEIGEN && (
+        <div class:list={['su-gruendung', { 'su-gruendung--entwurf': !GRUENDUNG.bestaetigt }]}>
+          {!GRUENDUNG.bestaetigt && <p class="su-gruendung__etikett">{GRUENDUNG.etikett}</p>}
+          <h3 class="sn-h3">{GRUENDUNG.titel}</h3>
+          {GRUENDUNG.absaetze.map((a) => <p>{a}</p>)}
+          {!GRUENDUNG.bestaetigt && <Hint block label={GRUENDUNG.hinweis} where="src/config/ueber-uns.ts → GRUENDUNG" />}
+        </div>
+      )}
+      <!-- Belegbare Fakten (Jamil #6055 Fr. 11): Gründungsjahr, betreute Websites, keine Tracking-Cookies -->
+      <div class="su-fakten">
+        <h3 class="sr-only">{FAKTEN_TITEL}</h3>
+        <ul class="su-fakten__liste">
+          {FAKTEN.map((f) => <li><strong>{f.wert}</strong><span>{f.text}</span></li>)}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -84,6 +96,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
             <div class="su-person__text">
               <h3 class="sn-h3">{m.name}</h3>
               <p class="su-person__rolle">{m.rolle}</p>
+              <p class="su-person__aufgabe">{m.aufgabe}</p>{/* Jamil #6055 Fr. 19 */}
               {TEAM_ZEIGEN && <blockquote class="su-person__zitat"><p>„{m.zitat}“</p></blockquote>}
             </div>
           </li>
@@ -111,27 +124,8 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
     </div>
   </section>
 
-  <!-- 4 · Arbeitsweise (Papier), von uns ergänzt (#5892) -->
-  <section class="section sn su-weise" aria-labelledby="weise-h">
-    <div class="wrap">
-      <div class="sn-kopf">
-        <div>
-          <p class="sn-kenn">Wie wir arbeiten</p>
-          <h2 id="weise-h" class="sn-h2">Erst verstehen, dann bauen.</h2>
-        </div>
-        <p class="sn-lead">Die Ideen entwickeln wir mit Ihnen. Die KI beschleunigt nur die Umsetzung.</p>
-      </div>
-      <ol class="su-weise__liste">
-        {arbeitsweise.map((a, i) => (
-          <li class="su-schritt reveal">
-            <span class="su-nr" aria-hidden="true">{nr(i)}</span>
-            <h3 class="sn-h4">{a.title}</h3>
-            <p>{a.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
+  <!-- 4 · So arbeiten wir: alle acht Schritte (Jamil #6055 Fr. 14; Kurzfassung in fünf Schritten auf Startseite und /preise/) -->
+  <SnAblauf lang />
 
   <SnAbschluss />
 </BaseLayout>

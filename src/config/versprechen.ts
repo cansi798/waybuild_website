@@ -6,6 +6,7 @@
 // „kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr)“ wie in der Zeitleiste (variante.ts).
 // Jamil, Talk qh87y3sj #5223: Ansprechpartner-Versprechen jetzt „Bei uns antwortet ein Mensch, keine Maschine.“, Siegel „Ein Mensch antwortet“.
 import { WAAS, type IconName } from './site';
+import { SEITEN_MAX } from './pakete-abo';
 export type Versprechen = {
   id: string;
   icon: IconName;
@@ -23,7 +24,7 @@ export const VERSPRECHEN: Versprechen[] = [
     title: 'Bei uns antwortet ein Mensch, keine Maschine',
     zeilen: ['Ein Mensch', 'antwortet'],
     short: 'Ein fester Ansprechpartner.',
-    long: 'Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt. Sie landen weder in einem Callcenter noch in einem Ticketsystem.',
+    long: 'Sie haben einen festen Ansprechpartner, der Ihr Unternehmen kennt, mit Vertretung bei Urlaub oder Krankheit. Sie landen weder in einem Callcenter noch in einem Ticketsystem.', // Jamil #6055 Fr. 29
   },
   {
     id: 'sprache',
@@ -97,10 +98,11 @@ export const GESCHAEFTSMODELL: Versprechen[] = [
   {
     id: 'seiten',
     icon: 'layers',
-    title: 'Keine Seitenbegrenzung',
-    zeilen: ['Keine Seiten-', 'begrenzung'],
-    short: 'So viele Seiten, wie Sie brauchen.',
-    long: 'Ihre Website wächst mit Ihrem Unternehmen. In keinem Paket zählen wir Seiten, und eine neue Seite kostet keinen Aufpreis.',
+    // Jamil #6055 Fr. 30: 15-Seiten-Grenze (vorher „Keine Seitenbegrenzung“)
+    title: `Bis zu ${SEITEN_MAX} Seiten`,
+    zeilen: [`Bis zu ${SEITEN_MAX}`, 'Seiten'],
+    short: `Bis zu ${SEITEN_MAX} Seiten im Monatspreis.`,
+    long: `Ihre Website wächst mit Ihrem Unternehmen. Bis zu ${SEITEN_MAX} Seiten sind in jedem Paket im Monatspreis enthalten.`,
   },
   {
     id: 'transparenz',

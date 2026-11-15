@@ -1,5 +1,5 @@
 // Zentrale Inhalte der Website. Alles mit "TODO" sind Platzhalter, bis die echten Firmendaten vorliegen.
-import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, LAUFZEIT_MONATE, MWST_SATZ, paketById, einmalSumme, komplettZeile, kombiPreise, kombiZeile, type AboPaket } from './pakete-abo';
+import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, LAUFZEIT_MONATE, MWST_SATZ, SEITEN_MAX, WARUM_24, paketById, einmalSumme, komplettZeile, kombiPreise, kombiZeile, type AboPaket } from './pakete-abo';
 
 /**
  * Gelbe "Fehlt: …"-Hinweise auf der Website anzeigen.
@@ -14,9 +14,9 @@ export const company = {
   name: 'webgold',
   legalName: 'Waybuild UG (haftungsbeschränkt)',
   slogan: 'Menschliche Beratung. KI-gestützte Umsetzung. Kontinuierliche Verbesserung.',
-  email: 'kontakt@waybuild.de', // Postfach muss noch eingerichtet werden (siehe Checkliste)
-  /** PLATZHALTER (Wunsch 11.10.2026: „erfundene Nummer“) – vor dem Livegang ersetzen, dann PHONE_IS_PLACEHOLDER auf false. */
-  phone: '0151 00000000',
+  email: 'service@webgold.io', // Jamil #6055 Fr. 12 (vorher kontakt@waybuild.de); auch im Impressum
+  /** Telefon und WhatsApp (Jamil #6055 Fr. 1 + 2: 015156156578, auch WhatsApp). Anzeige gegliedert, tel:/wa.me über phoneTel(). */
+  phone: '0151 56156578',
   street: 'Kuno-Liesenberg-Kehre 32a', // laut Handelsregister (Can, Talk qh87y3sj #5978/#5980, 15.11.2026); vorher Rathausallee 76, 22846
   zip: '22844',
   city: 'Norderstedt',
@@ -29,10 +29,21 @@ export const company = {
   hoster: 'ALL-INKL.COM – Neue Medien Münnich, Inhaber René Münnich, Hauptstraße 68, 02742 Friedersdorf', // Webspace ALL-INKL (Can #5980)
   /** Links zu Google-Unternehmensprofil, LinkedIn, Instagram … – stärkt die Marke bei Google (JSON-LD sameAs). */
   sameAs: [] as string[],
+  /** Gründungsjahr (Jamil #6055 Fr. 11), auch JSON-LD foundingDate */
+  foundingYear: '2026',
 };
 
+/** Belegbare Vertrauens-Fakten (Jamil #6055 Fr. 11: Gründungsjahr 2026, 5 betreute Websites, keine Tracking-Cookies). Keine IHK-Angabe (nicht bestätigt).
+ *  Websites-Zahl bei neuen Kunden hier anpassen. „Keine Tracking-Cookies“ stimmt: die Seite setzt keine Cookies und lädt keine Analyse-Dienste. */
+export const BETREUTE_WEBSITES = 5;
+export const FAKTEN = [
+  { wert: company.foundingYear, text: 'gegründet' },
+  { wert: String(BETREUTE_WEBSITES), text: 'betreute Websites' },
+  { wert: '0', text: 'Tracking-Cookies' },
+];
+
 /** Solange true, gilt company.phone als erfundene Platzhalter-Nummer (Checkliste offen, nicht an Google melden). */
-export const PHONE_IS_PLACEHOLDER = true;
+export const PHONE_IS_PLACEHOLDER = false; // echte Nummer seit Jamil #6055 Fr. 1
 /** Telefon-Helfer: tel:-Link und WhatsApp-Link (wa.me) aus company.phone. */
 export const phoneTel = () => '+49' + company.phone.replace(/\s/g, '').replace(/^0/, '');
 // Vorlagetext wie auf der Startseite (Jamil #6038, Audit K1; vorher „… für Website as a Service.“)
@@ -59,7 +70,7 @@ export const VAT_RATE = MWST_SATZ;
  * (Frühere Pakete Fundament/Wegweiser/Wahrzeichen und der Abo-Baukasten: siehe Git-Historie.)
  * ───────────────────────────────────────────────────────────────────────────── */
 export const WAAS = {
-  name: 'Website as a Service',
+  name: 'Website-Abo', // Jamil #6055 Fr. 21 (vorher „Website as a Service“)
   claim: 'Ein Ansprechpartner, ein System, ein fester Monatspreis.',
   einrichtung: 0,
   laufzeitMonate: LAUFZEIT_MONATE,
@@ -106,7 +117,7 @@ export const einmaligZeile = () => EINMALIG_DAZU.liste.map((e) => `${e.name} ${f
 
 /** In beiden Paketen enthalten (aus den Basis-Leistungen in pakete-abo.ts). */
 export const IN_ALLEN = [
-  'Keine Seitenbegrenzung',
+  `Bis zu ${SEITEN_MAX} Seiten`, // Jamil #6055 Fr. 30 (vorher „Keine Seitenbegrenzung“)
   'Mobilfreundlich für Handy, Tablet und PC',
   '0 € Einrichtung',
   'Bis zu 20 E-Mail-Postfächer',
@@ -154,7 +165,7 @@ export type IconName =
 /** Geschäftsmodell in Stichpunkten (Langfassung als Siegel: config/versprechen.ts). */
 export const MODELL = [
   'Keine Einrichtungskosten',
-  'Keine Seitenbegrenzung',
+  `Bis zu ${SEITEN_MAX} Seiten`, // Jamil #6055 Fr. 30
   'Fester Monatspreis, netto zzgl. MwSt.',
   `${WAAS.laufzeitMonate} Monate Mindestlaufzeit`,
   'Alle Kosten auf einen Blick', // Jamil #6011, Audit #5953 W3
@@ -174,15 +185,15 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei webgold?', // „drei Pakete“: Jamil #6011, Audit #5953 P1 (vorher „zwei feste Monatspakete“)
-    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Web-App für Ihre Aufträge. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und keine Seitenbegrenzung. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Web-App für Ihre Aufträge. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und bis zu ${SEITEN_MAX} Seiten sind im Monatspreis enthalten. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online: Website ohne Seitenbegrenzung, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Online sichtbar oder Online wachsen, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')}`,
+    a: `${PAKETE[0].name} bringt Sie professionell online: Website mit bis zu ${SEITEN_MAX} Seiten, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Online sichtbar oder Online wachsen, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')}`,
   },
   {
-    q: 'Was ist bei Website as a Service enthalten?',
-    a: 'Schon im Paket Online sichtbar: persönliche Beratung, KI-gestützte Erstellung ohne Seitenbegrenzung, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.',
+    q: 'Was ist im Website-Abo enthalten?', // Jamil #6055 Fr. 21 (vorher „… bei Website as a Service …“)
+    a: `Schon im Paket Online sichtbar: persönliche Beratung, KI-gestützte Erstellung von bis zu ${SEITEN_MAX} Seiten, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.`,
   },
   {
     q: 'Wie lange läuft der Vertrag?',
@@ -190,7 +201,11 @@ export const faqs = [
   },
   {
     q: 'Was passiert nach 24 Monaten?',
-    a: 'Ihre Website läuft weiter, mit derselben Betreuung. Ab dann können Sie jeden Monat kündigen, mit einem Monat Frist zum Monatsende.',
+    a: 'Der Preis bleibt gleich. Ihre Website läuft weiter, mit derselben Betreuung. Ab dann können Sie jeden Monat kündigen, mit einem Monat Frist zum Monatsende.', // Jamil #6055 Fr. 8
+  },
+  {
+    q: 'Warum 24 Monate?', // Jamil #6055 Fr. 31
+    a: WARUM_24,
   },
   {
     q: 'Gibt es Einrichtungskosten?',
@@ -201,8 +216,8 @@ export const faqs = [
     a: `${EINMALIG_DAZU.liste.map((e) => `${e.name} für ${formatEuro(e.preis)}`).join(', ')}, oder alle vier zusammen als Gesamtpaket für ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(einmalSumme())}. Das sind einmalige Festpreise netto zzgl. MwSt., ohne monatliche Kosten.`,
   },
   {
-    q: 'Wie viele Seiten bekommt meine Website?',
-    a: 'So viele, wie Ihr Unternehmen braucht. Es gibt in keinem Paket eine Seitenbegrenzung.',
+    q: 'Wie viele Seiten bekommt meine Website?', // Jamil #6055 Fr. 30: 15-Seiten-Grenze
+    a: `Bis zu ${SEITEN_MAX} Seiten sind in jedem Paket im Monatspreis enthalten. Welche Seiten Ihre Kunden wirklich brauchen, legen wir gemeinsam mit Ihnen fest. Brauchen Sie mehr, sprechen Sie uns an.`,
   },
   {
     q: 'Kann ich später in ein größeres Paket wechseln?',
@@ -222,7 +237,7 @@ export const faqs = [
   },
   {
     q: 'Bietet webgold auch Software, Cloud und IT an?',
-    a: 'Unser Angebot startet mit Website as a Service. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
+    a: 'Unser Angebot startet mit dem Website-Abo. Daraus entwickeln wir Schritt für Schritt eine digitale Unternehmensplattform. Individuelle Software, Nextcloud und IT-Betreuung setzen wir schon heute auf Anfrage als eigenes Projekt um.',
   },
   // Fehlende Einwände (Jamil #6038, Audit F3): nur mit Aussagen, die schon in pakete-abo.ts bzw. den FAQ oben stehen
   {
@@ -262,10 +277,10 @@ export const faqs = [
   },
   {
     q: 'Was passiert bei Problemen oder Ausfällen?', // Jamil #5933
-    a: `Sie melden sich bei Ihrem festen Ansprechpartner, ${HOURS}. Sie landen weder in einem Callcenter noch in einem Ticketsystem. Wartung, Sicherheitsupdates und Backups sind im Monatspreis enthalten.`,
+    a: `Sie melden sich bei Ihrem festen Ansprechpartner, mit Vertretung bei Urlaub oder Krankheit, ${HOURS}. Sie landen weder in einem Callcenter noch in einem Ticketsystem. Wartung, Sicherheitsupdates und Backups sind im Monatspreis enthalten.`, // Jamil #6055 Fr. 29 (Vertretung)
   },
   {
     q: 'Ich habe wenig Zeit. Schaffe ich das neben dem Tagesgeschäft?', // Jamil #5933
-    a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 20 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.',
+    a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 30 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.', // Jamil #6055 Fr. 15 (30 Minuten)
   },
 ];

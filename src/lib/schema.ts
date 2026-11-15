@@ -1,6 +1,6 @@
 // JSON-LD für strukturierte Daten (Rich Results bei Google)
 import { company, WAAS, PAKETE, brutto } from '../config/site';
-import { EINMALIG_DAZU, KOMPLETTPAKET as K, kombiPreise } from '../config/pakete-abo';
+import { EINMALIG_DAZU, KOMPLETTPAKET as K, kombiPreise, SEITEN_MAX } from '../config/pakete-abo';
 import { absolute } from './paths';
 
 const eurText = (n: number) => n.toFixed(2).replace('.', ',');
@@ -16,7 +16,7 @@ export function waasOffers(site: URL | undefined, path = '/preise/') {
     url,
     priceCurrency: 'EUR',
     price: p.preis,
-    description: `${p.kurz}. ${p.features.join(', ')}. Keine Einrichtungskosten, keine Seitenbegrenzung, ${WAAS.laufzeit}. Preis netto zzgl. 19 % MwSt. (${eurText(brutto(p.preis))} € inkl. MwSt.).`,
+    description: `${p.kurz}. ${p.features.join(', ')}. Keine Einrichtungskosten, bis zu ${SEITEN_MAX} Seiten, ${WAAS.laufzeit}. Preis netto zzgl. 19 % MwSt. (${eurText(brutto(p.preis))} € inkl. MwSt.).`,
     eligibleCustomerType: 'http://purl.org/goodrelations/v1#Business',
     priceSpecification: {
       '@type': 'UnitPriceSpecification',
@@ -69,7 +69,7 @@ export function serviceSchema(site: URL | undefined, beschreibung?: string) {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: WAAS.name,
-    serviceType: 'Website as a Service: Beratung, KI-gestützte Website-Erstellung, Hosting, Wartung und Betreuung',
+    serviceType: 'Website-Abo: Beratung, KI-gestützte Website-Erstellung, Hosting, Wartung und Betreuung',
     provider: { '@id': `${absolute('/', site)}#organization` },
     areaServed: { '@type': 'Country', name: 'Deutschland' },
     audience: { '@type': 'BusinessAudience', name: 'Kleine und mittlere Unternehmen' },

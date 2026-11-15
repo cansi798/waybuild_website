@@ -4,7 +4,7 @@ description: 'Website im Abo statt Einmalprojekt: feste Monatspakete ohne Einric
 date: 2026-11-09
 # Freigegeben von Jamil (Talk qh87y3sj #5322, „gut“). Preise und Zeiten Stand 09.11.2026 aus src/config/pakete-abo.ts
 # und src/config/variante.ts. Ändern sich dort Preise, diesen Text bitte mit anpassen.
-tags: ['Website as a Service', 'Preise']
+tags: ['Website-Abo', 'Preise']
 ---
 
 Eine Website wird oft wie ein Möbelstück gekauft: einmal bezahlen, aufstellen, fertig. In der Praxis ist sie eher wie ein Schaufenster, das regelmäßig neu dekoriert werden will. Öffnungszeiten ändern sich, neue Leistungen kommen dazu, Technik braucht Updates. Deshalb bieten wir Websites im Abo an. Hier erklären wir, warum.

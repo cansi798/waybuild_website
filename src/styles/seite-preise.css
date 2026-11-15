@@ -41,7 +41,8 @@
 /* ── So starten Sie ── */
 /* .spr-start */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .spr-schritte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; counter-reset: none; }
-@media (min-width: 860px) { .spr-schritte { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
+@media (min-width: 640px) { .spr-schritte { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 1100px) { .spr-schritte { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; } } /* fünf Schritte (Jamil #6055 Fr. 14) */
 .spr-schritt { min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: clamp(24px, 2.6vw, 32px); border-radius: 24px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .spr-schritt__nr { padding-bottom: 14px; margin-bottom: 6px; border-bottom: 1px solid #e6e0d4; font-family: var(--font-head); font-weight: 700;
   font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem); line-height: 1; letter-spacing: -0.03em; color: #0b6d6b; font-variant-numeric: tabular-nums; }
@@ -60,7 +61,9 @@
 .spr-stufe__liste li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; line-height: 1.5; color: var(--ink); min-width: 0; overflow-wrap: break-word; }
 .spr-stufe__liste .sn-punkt { margin-inline: 0 4px; }
 
-.spr-nicht { margin-top: 24px; padding: 20px 24px; border-radius: 20px; border: 2px dashed #b3261e; background: #fffafa; }
+.spr-nicht { margin-top: 24px; padding: 20px 24px; border-radius: 20px; border: 1px solid var(--sn-linie); background: var(--white); } /* Jamil #6055 Fr. 9: echte Liste statt Platzhalter */
+.spr-nicht__liste { margin: 0 0 8px; padding-left: 1.2em; line-height: 1.7; }
+.spr-schritt__zeit { margin-top: 6px !important; font-size: 0.9rem; font-weight: 600; color: var(--sn-tinte); }
 .spr-nicht .sn-h4 { margin: 0 0 6px; }
 .spr-nicht p { line-height: 1.7; }
 .spr-nicht__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }
