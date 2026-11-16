@@ -1,0 +1,25 @@
+---
+// 2. Problem-Section nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_PROBLEM).
+// Überschrift + Unterzeile (Einleitung) wie Jamil #6012, vier Problemkarten, Abschluss-Satz. Stil: start-6176.css (.jp-*).
+import { J_PROBLEM as T } from '../../config/start-6176';
+import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
+---
+
+<section class="section sn jp" id={ALT_ZEIGEN.problemAlt ? undefined : "problem"} aria-labelledby="jp-h">
+  <div class="wrap">
+    <div class="sn-kopf jp__kopf">
+      <h2 id="jp-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.einleitung[0]} <span class="jp__stattdessen">{T.einleitung[1]}</span></p>
+    </div>
+    <ul class="jp-karten">
+      {T.karten.map((k, i) => (
+        <li class="jp-karte">
+          <span class="jp-karte__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="jp-karte__titel">{k.titel}</h3>
+          <p class="jp-karte__text">{k.text}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="jp__abschluss">{T.abschluss}</p>
+  </div>
+</section>

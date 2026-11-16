@@ -1,0 +1,27 @@
+---
+// 6. Prozessberatung (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_PROZESS).
+// Links Überschrift + Text, rechts die vier Fragen als Karten, darunter der Schluss-Satz. Anker #erstberatung (alte Links auf
+// den früheren Ablauf-Schritt 1 treffen weiter). Stil: start-6176.css (.jz-*).
+import J6Icon from './J6Icon.astro';
+import { J_PROZESS as T } from '../../config/start-6176';
+import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
+---
+
+<section class="section sn jz" id="prozessberatung" aria-labelledby="jz-h">
+  <div class="wrap jz__raster" id={ALT_ZEIGEN.ablaufAlt ? undefined : "erstberatung"}>
+    <div class="jz__text">
+      <p class="sn-kenn">{T.kennzeile}</p>
+      <h2 id="jz-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      {T.text.map((t) => <p class="sn-lead">{t}</p>)}
+    </div>
+    <div class="jz__fragen">
+      <p class="jz__einleitung">{T.fragenEinleitung}</p>
+      <ul class="jz-liste">
+        {T.fragen.map((f) => (
+          <li class="jz-frage"><span class="jz-frage__ico"><J6Icon name="frage" size={20} /></span><span>{f}</span></li>
+        ))}
+      </ul>
+      <p class="jz__schluss">{T.schluss}</p>
+    </div>
+  </div>
+</section>

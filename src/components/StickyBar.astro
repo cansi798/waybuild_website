@@ -51,8 +51,8 @@ const reise = Astro.props.thema === 'besucherreise';
   //    (zwei Lageabfragen, kein Schreiben; misst die sichtbare Lage samt Einblenden und Zurücktreten des Heros).
   // Ohne IntersectionObserver: Leiste sofort da.
   const leiste = document.querySelector<HTMLElement>('.sticky-bar[data-nach-hero]');
-  const knopf = document.querySelector<HTMLElement>('.v-hero .v-knopfe');
-  const hero = knopf?.closest<HTMLElement>('.v-hero');
+  const knopf = document.querySelector<HTMLElement>('.v-hero .v-knopfe, .jh .jh-knopfe'); // .jh = Hero nach Jamil #6176
+  const hero = knopf?.closest<HTMLElement>('.v-hero, .jh');
 
   if (leiste && (!knopf || !hero || !('IntersectionObserver' in window))) leiste.classList.add('ist-da');
   else if (leiste && knopf && hero) {

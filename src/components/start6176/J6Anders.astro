@@ -1,0 +1,29 @@
+---
+// 4. Was webgold anders macht (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_ANDERS).
+// Echte Tabelle (Spaltenköpfe, je Zeile Agentur | webgold), Handy zweispaltig schmal, webgold-Spalte hervorgehoben. Stil: start-6176.css (.ja-*).
+import J6Icon from './J6Icon.astro';
+import { J_ANDERS as T } from '../../config/start-6176';
+---
+
+<section class="section sn ja" id="anders" aria-labelledby="ja-h">
+  <div class="wrap">
+    <div class="sn-kopf">
+      <h2 id="ja-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+    </div>
+    <div class="ja-tafel">
+      <table class="ja-tabelle">
+        <thead>
+          <tr><th scope="col">{T.spalten[0]}</th><th scope="col" class="ja-wir">{T.spalten[1]}</th></tr>
+        </thead>
+        <tbody>
+          {T.zeilen.map(([alt, neu]) => (
+            <tr>
+              <td><span class="ja-zelle"><span class="ja-zeichen ja-zeichen--nein"><J6Icon name="kreuz" size={12} /></span>{alt}</span></td>
+              <td class="ja-wir"><span class="ja-zelle"><span class="ja-zeichen ja-zeichen--ja"><J6Icon name="haken" size={12} /></span>{neu}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

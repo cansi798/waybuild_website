@@ -1,0 +1,64 @@
+---
+// 1. Hero nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_HERO).
+// Visual: großes Smartphone als eigenes CSS-Mockup (kein fremdes Bild, keine Gerätemarke) mit den drei Beispielen als Chat-Verlauf.
+// Abfolge-Animation nur CSS (Nachricht erscheint → Häkchen), bei prefers-reduced-motion steht alles sofort da (start-6176.css).
+// Gestaltungsziel (nicht auf der Seite): „Sofort verständlich. Keine Erklärung nötig.“
+// Knopf-Klasse .jh-knopfe: StickyBar.astro zeigt die Leiste erst, wenn diese Knöpfe aus dem Blick sind (wie früher .v-knopfe).
+import J6Icon from './J6Icon.astro';
+import { J_HERO as T } from '../../config/start-6176';
+import { ANLIEGEN } from '../../config/startseite';
+import { company } from '../../config/site';
+import { href } from '../../lib/paths';
+const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<section class="section section--dark jh" aria-labelledby="jh-h1">
+  <div class="wrap jh__raster">
+    <div class="jh__text">
+      <h1 id="jh-h1" class="jh__titel">{T.titel}</h1>
+      <p class="jh__unter">{T.unter}</p>
+      <p class="jh__zeile">{T.zeile}</p>
+      <div class="jh-knopfe">
+        <a class="btn btn--lg jh-btn" href={kontakt}>{T.knopf}</a>
+        <a class="btn btn--lg jh-btn jh-btn--rand" href={href('/beispiele/')}>{T.knopf2}</a>
+      </div>
+    </div>
+
+    <div class="jh__geraet">
+      <div class="jh-handy">
+        <div class="jh-handy__bild">
+          <div class="jh-handy__kopf" aria-hidden="true">
+            <span class="jh-handy__insel"></span>
+          </div>
+          <div class="jh-handy__chatkopf" aria-hidden="true">
+            <span class="jh-handy__avatar">w</span><span class="jh-handy__name">{company.name}</span>
+          </div>
+          <ol class="jh-chat" aria-label="Beispiele">
+            {T.chat.map((c, i) => (
+              <li class="jh-chat__paar" style={`--i:${i}`}>
+                <div class="jh-blase jh-blase--kunde">
+                  <span class="jh-blase__ico"><J6Icon name={c.art} size={18} /></span>
+                  <span class="jh-blase__inhalt">
+                    {c.art === 'sprache' && (
+                      <span class="jh-welle" aria-hidden="true">{[6, 11, 16, 9, 14, 18, 8, 13, 17, 10, 6, 12, 15, 7].map((h) => <i style={`height:${h}px`}></i>)}</span>
+                    )}
+                    {c.art === 'screenshot' && (
+                      <span class="jh-shot" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+                    )}
+                    {'zusatz' in c && <span class="jh-blase__zusatz">{c.zusatz}</span>}
+                    <span>{c.nachricht}</span>
+                  </span>
+                </div>
+                <div class="jh-blase jh-blase--wir">
+                  <span class="jh-haken"><J6Icon name="haken" size={14} /></span>
+                  <span>{c.ergebnis}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div class="jh-handy__eingabe" aria-hidden="true"><span></span><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

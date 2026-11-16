@@ -1,0 +1,219 @@
+/* Startseite, Punkte 1–3 nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026): .jh = Hero, .jp = Problem, .jl = Lösung.
+   Palette/Schrift aus start-farben.css (Primär #0B6D6B, dunkel #084E4C, Gold #d4af37 nur als Zier, Positiv #2C9A7A, Plus Jakarta Sans).
+   Handy zuerst; Hintergründe im Wechsel kommen aus global.css (Hero dunkel, dann Creme/Weiß). Animationen nur opacity/transform,
+   feste Maße für das Smartphone (kein Layout-Sprung), bei prefers-reduced-motion alles sofort sichtbar. */
+
+/* ---------- 1. Hero ---------- */
+.jh { position: relative; isolation: isolate; overflow: hidden; color: var(--white);
+  background: radial-gradient(120% 90% at 85% 10%, #2c9a7a 0%, rgb(44 154 122 / 0) 55%),
+    radial-gradient(90% 80% at 0% 100%, #084e4c 0%, rgb(8 78 76 / 0) 60%), #0b6d6b;
+  padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 104px); }
+.jh__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
+.jh__text { min-width: 0; display: grid; gap: 20px; justify-items: start; }
+.jh__titel { margin: 0; color: var(--white); font-size: clamp(2.3rem, 1.3rem + 4.6vw, 4.6rem); line-height: 1.04; max-width: 14ch; text-wrap: balance; }
+.jh__unter { margin: 0; max-width: 52ch; font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem); line-height: 1.65; color: #dcefea; text-wrap: pretty; }
+.jh__zeile { margin: 0; padding-left: 14px; border-left: 3px solid var(--gold); font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.5; color: var(--white); }
+.jh-knopfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.jh-btn { background: var(--white); color: #0b6d6b; border: 1.5px solid var(--white); box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
+.jh-btn:hover { background: #f1faf7; color: #084e4c; }
+.jh-btn--rand { background: transparent; color: var(--white); border-color: rgb(255 255 255 / 70%); box-shadow: none; }
+.jh-btn--rand:hover { background: rgb(255 255 255 / 10%); color: var(--white); border-color: var(--white); }
+.jh-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+/* Smartphone: eigenes Mockup, feste Breite + Seitenverhältnis (CLS 0) */
+.jh__geraet { min-width: 0; display: grid; justify-items: center; }
+.jh-handy { width: min(100%, 340px); aspect-ratio: 340 / 640; padding: 11px; border-radius: 52px;
+  background: linear-gradient(160deg, #20383a, #0e1d1e); box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 14%),
+    0 40px 80px -30px rgb(0 0 0 / 55%), 0 0 0 1px rgb(0 0 0 / 30%); }
+.jh-handy__bild { position: relative; height: 100%; overflow: hidden; border-radius: 42px; background: #f4f1ea;
+  display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; }
+.jh-handy__eingabe { display: flex; align-items: center; gap: 8px; padding: 10px 12px 18px; background: var(--white); border-top: 1px solid #e6e0d4; }
+.jh-handy__eingabe span { flex: 1; height: 34px; border-radius: 999px; background: #f4f1ea; }
+.jh-handy__eingabe i { width: 34px; height: 34px; border-radius: 50%; background: #0b6d6b; }
+.jh-handy__kopf { height: 34px; display: grid; place-items: center; background: var(--white); }
+.jh-handy__insel { width: 92px; height: 24px; border-radius: 999px; background: #0e1d1e; }
+.jh-handy__chatkopf { display: flex; align-items: center; gap: 10px; padding: 8px 16px 12px; background: var(--white);
+  border-bottom: 1px solid #e6e0d4; }
+.jh-handy__avatar { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
+  font-family: var(--font-head); font-weight: 800; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--white), 0 0 0 3px var(--gold); }
+.jh-handy__name { font-family: var(--font-head); font-weight: 700; color: var(--ink); font-size: 0.98rem; }
+.jh-chat { list-style: none; margin: 0; padding: 14px 12px; display: grid; align-content: start; gap: 12px; overflow: hidden; }
+.jh-chat__paar { display: grid; gap: 6px; }
+.jh-blase { max-width: 88%; display: flex; gap: 8px; align-items: flex-start; padding: 9px 12px; border-radius: 18px;
+  font-size: 0.86rem; line-height: 1.4; color: var(--ink); }
+.jh-blase--kunde { justify-self: end; background: #d9efe7; border-bottom-right-radius: 6px; }
+.jh-blase--wir { justify-self: start; align-items: center; background: var(--white); border-bottom-left-radius: 6px; font-weight: 600;
+  box-shadow: 0 1px 2px rgb(8 78 76 / 8%); }
+.jh-blase__ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--white); color: #0b6d6b; }
+.jh-blase__inhalt { min-width: 0; display: grid; gap: 4px; }
+.jh-blase__zusatz { font-size: 0.76rem; font-weight: 700; color: #0b6d6b; }
+.jh-haken { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white); }
+.jh-haken .j6i { stroke-width: 3; }
+/* Sprachnachricht: kleine Welle */
+.jh-welle { display: flex; align-items: center; gap: 2px; height: 18px; }
+.jh-welle i { display: block; width: 3px; border-radius: 2px; background: #0b6d6b; opacity: 0.7;
+}
+/* Screenshot mit Markierung */
+.jh-shot { position: relative; display: grid; gap: 4px; width: 112px; padding: 8px; border-radius: 8px; background: var(--white); }
+.jh-shot i { display: block; height: 6px; border-radius: 3px; background: #e6e0d4; }
+.jh-shot i:first-child { width: 60%; background: #0b6d6b; opacity: 0.55; }
+.jh-shot i:nth-child(3) { height: 18px; }
+.jh-shot b { position: absolute; right: 6px; bottom: 4px; width: 46px; height: 24px; border: 2px solid var(--gold); border-radius: 50%; transform: rotate(-6deg); }
+
+/* Abfolge: Nachricht erscheint → Häkchen (einmal, ca. 4 s) */
+@media (prefers-reduced-motion: no-preference) {
+  .jh-blase { animation: jh-ein 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+  .jh-blase--kunde { animation-delay: calc(0.5s + var(--i) * 1.3s); }
+  .jh-blase--wir { animation-delay: calc(1.15s + var(--i) * 1.3s); }
+  .jh-blase--wir .jh-haken { animation: jh-haken 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(1.35s + var(--i) * 1.3s); }
+}
+@keyframes jh-ein { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes jh-haken { from { transform: scale(0.3); } to { transform: none; } }
+
+@media (min-width: 960px) {
+  .jh { min-height: calc(100svh - var(--kopf-gesamt, 72px)); display: grid; align-items: center; }
+  .jh__raster { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+  .jh-handy { width: 340px; }
+}
+@media (max-width: 380px) {
+  .jh-blase { font-size: 0.82rem; }
+  .jh-knopfe .btn { flex: 1 1 100%; }
+}
+
+/* ---------- 2. Problem ---------- */
+.jp__kopf .sn-h2 { max-width: 24ch; }
+.jp__kopf .sn-lead { max-width: 52ch; }
+.jp__stattdessen { display: block; margin-top: 6px; font-weight: 600; color: var(--ink); }
+.jp-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.jp-karte { min-width: 0; display: grid; gap: 8px; align-content: start; padding: clamp(20px, 2.4vw, 28px); border-radius: 24px;
+  background: var(--paper); border: 1px solid var(--line); }
+.jp-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #0b6d6b; }
+.jp-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
+.jp-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); }
+.jp-karte__text { margin: 0; line-height: 1.6; color: var(--ink-soft); }
+.jp__abschluss { margin: clamp(32px, 4vw, 56px) 0 0 !important; padding-top: clamp(20px, 3vw, 32px); border-top: 1px solid var(--gold);
+  font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.35; color: #084e4c; max-width: 34ch; text-wrap: balance; }
+@media (min-width: 640px) { .jp-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .jp-karten { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ---------- 3. Lösung ---------- */
+.jl__kopf .sn-lead { max-width: 52ch; }
+.jl-wege { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.jl-wege li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.jl-wege li:last-child { background: #0b6d6b; border-color: #0b6d6b; color: var(--white); }
+.jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #084e4c; }
+.jl-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.jl-erledigt { list-style: none; margin: 0; padding: clamp(14px, 2vw, 20px); display: grid; gap: 10px; border-radius: 28px; background: var(--paper); }
+.jl-fall { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: center; padding: 14px 16px;
+  border-radius: 18px; background: var(--band, var(--white)); box-shadow: 0 1px 2px rgb(8 78 76 / 6%); }
+.jl-fall__ico { grid-row: span 2; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #edf4f1; color: #0b6d6b; }
+.jl-fall__text { min-width: 0; display: grid; gap: 2px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.jl-fall__zusatz { font-size: 0.8rem; font-weight: 700; color: #0b6d6b; }
+.jl-fall__status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700; color: #1f7a5f; }
+.jl-fall__status .j6i { stroke-width: 3; }
+.jl-punkte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.jl-punkt { min-width: 0; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--band, var(--white)); }
+.jl-punkt__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
+  box-shadow: 0 0 0 4px rgb(212 175 55 / 22%); }
+.jl-punkt__text { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; line-height: 1.35; color: var(--ink); }
+@media (min-width: 600px) and (max-width: 899px) { .jl-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) {
+  .jl-raster { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+  .jl-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .jl-punkt { flex-direction: column; align-items: flex-start; padding: 22px; min-height: 150px; }
+}
+
+/* ---------- 4. Was webgold anders macht (Jamil #6179) ---------- */
+.ja .sn-kopf .sn-h2 { max-width: 26ch; }
+.ja-tafel { border-radius: 28px; background: var(--paper); padding: clamp(6px, 1.2vw, 14px); }
+.ja-tabelle { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+.ja-tabelle th, .ja-tabelle td { padding: 14px clamp(10px, 2vw, 24px); text-align: left; vertical-align: top; line-height: 1.45; }
+.ja-tabelle th { font-family: var(--font-head); font-weight: 800; font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.15rem); color: var(--ink-soft); }
+.ja-tabelle td { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1.02rem); }
+.ja-tabelle tbody tr:first-child td { border-top: 0; }
+.ja-tabelle .ja-wir { background: #edf4f1; color: var(--ink); font-weight: 650; }
+.ja-tabelle th.ja-wir { color: #0b6d6b; border-radius: 20px 20px 0 0; }
+.ja-tabelle tbody tr:last-child .ja-wir { border-radius: 0 0 20px 20px; }
+.ja-tabelle td.ja-wir { border-top-color: #cfe3dc; }
+.ja-zelle { display: flex; gap: 10px; align-items: flex-start; }
+.ja-zeichen { flex: none; width: 22px; height: 22px; margin-top: 1px; display: grid; place-items: center; border-radius: 50%; }
+.ja-zeichen .j6i { stroke-width: 3; }
+.ja-zeichen--nein { background: #efe9e0; color: #7a6f62; }
+.ja-zeichen--ja { background: #2c9a7a; color: var(--white); }
+@media (max-width: 420px) { .ja-zeichen { display: none; } }
+
+/* ---------- 5. Website heute. Mehr morgen. ---------- */
+.jw__text { display: grid; gap: 6px; }
+.jw__text .sn-lead { margin: 0; max-width: 56ch; }
+.jw-stufen { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; counter-reset: jw; }
+.jw-stufe { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: var(--paper);
+  border: 1px solid var(--line); }
+.jw-stufe:not(:last-child)::after { content: ''; position: absolute; left: 37px; bottom: -11px; width: 2px; height: 10px; background: var(--gold); }
+.jw-stufe__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px;
+  background: #edf4f1; color: #0b6d6b; }
+.jw-stufe__text { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+.jw-stufe:last-child { background: #0b6d6b; border-color: #0b6d6b; }
+.jw-stufe:last-child .jw-stufe__text { color: var(--white); }
+.jw-stufe:last-child .jw-stufe__ico { background: rgb(255 255 255 / 16%); color: var(--white); box-shadow: inset 0 0 0 1.5px var(--gold); }
+.jw__darunter { margin: clamp(28px, 4vw, 48px) 0 0 !important; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-head);
+  font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem); color: #084e4c; }
+@media (min-width: 900px) {
+  .jw-stufen { grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 12px; }
+  .jw-stufe { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px; padding: 18px 16px;
+    min-height: calc(130px + var(--i) * 34px); }
+  .jw-stufe:not(:last-child)::after { left: auto; right: -11px; bottom: 34px; width: 10px; height: 2px; }
+  .jw-stufe__text { font-size: 1rem; line-height: 1.3; hyphens: manual; } /* Trennstellen per &shy; in J6Wachsen.astro */
+}
+
+/* ---------- 6. Prozessberatung ---------- */
+.jz__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+.jz__text { display: grid; gap: 12px; }
+.jz__text .sn-kenn, .jz__text .sn-h2, .jz__text .sn-lead { margin: 0; }
+.jz__text .sn-h2 { max-width: 20ch; margin-bottom: 6px; }
+.jz__einleitung { margin: 0 0 14px !important; font-weight: 700; color: var(--ink); }
+.jz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.jz-frage { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
+  font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
+.jz-frage__ico { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #edf4f1; color: #0b6d6b; }
+.jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #084e4c; font-size: 1.08rem; }
+@media (min-width: 640px) and (max-width: 899px) { .jz-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .jz__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+
+/* ---------- 7. Referenzen ---------- */
+.jr .sn-kopf .sn-h2 { max-width: 24ch; }
+.jr-kategorien { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 2.4vw, 28px); }
+.jr-kat { min-width: 0; display: grid; gap: 14px; align-content: start; padding: clamp(16px, 2.2vw, 24px); border-radius: 28px; background: var(--paper); }
+.jr-kat__titel { margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.15rem; color: var(--ink); }
+.jr-kat__ico { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #0b6d6b; color: var(--white); }
+.jr-refs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.jr-ref { min-width: 0; display: grid; gap: 10px; padding: clamp(16px, 2vw, 22px); border-radius: 20px; background: var(--band, var(--white)); }
+.jr-ref__kopf { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.jr-ref__name { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--ink); }
+.jr-ref__status { padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+.jr-ref__status--online { background: #0b6d6b; color: var(--white); }
+.jr-ref__status--vorschau { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.jr-ref__branche { margin: -4px 0 0 !important; font-size: 0.92rem; color: var(--ink-soft); }
+.jr-ref__felder { margin: 0; display: grid; gap: 10px; }
+.jr-ref__felder div { display: grid; gap: 2px; }
+.jr-ref__felder dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #0b6d6b; }
+.jr-ref__felder dd { margin: 0; line-height: 1.55; color: var(--ink); font-size: 0.95rem; }
+.jr-ref__link { justify-self: start; font-weight: 700; color: #0b6d6b; }
+.jr-folgt { margin: 0; padding: 18px; border-radius: 20px; border: 1.5px dashed var(--line); color: var(--ink-soft); text-align: center; font-weight: 600; }
+.jr__alle { margin: clamp(24px, 3vw, 40px) 0 0 !important; text-align: center; }
+@media (min-width: 900px) { .jr-kategorien { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- 8. Vertrauen ---------- */
+.jv .sn-kopf .sn-lead { max-width: 52ch; }
+.jv-punkte { list-style: none; margin: 0 auto; padding: 0; max-width: 980px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.jv-punkt { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
+  font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; color: var(--ink); }
+.jv-haken { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white); }
+.jv-haken .j6i { stroke-width: 3; }
+@media (min-width: 600px) { .jv-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .jv-punkte { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* ---------- Abschluss-CTA ---------- */
+.jx-ohne { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.jx-ohne li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.jx .sn-abschluss__text { margin: 0; }

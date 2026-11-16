@@ -1,0 +1,42 @@
+---
+// 3. Die Lösung nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_LOESUNG).
+// Links drei erledigte Beispiele, rechts Jamils „Kurze Statistik“ als kompakte Vorteilsleiste ohne Zahlen. Stil: start-6176.css (.jl-*).
+import J6Icon from './J6Icon.astro';
+import { J_LOESUNG as T } from '../../config/start-6176';
+---
+
+<section class="section sn jl" id="loesung" aria-labelledby="jl-h">
+  <div class="wrap">
+    <div class="sn-kopf jl__kopf">
+      <h2 id="jl-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.text}</p>
+      <ul class="jl-wege">
+        {T.wege.map((w) => <li>{w}</li>)}
+      </ul>
+      <p class="jl__schluss">{T.schluss}</p>
+    </div>
+
+    <div class="jl-raster">
+      <ul class="jl-erledigt" aria-label="Beispiele">
+        {T.erledigt.map((e) => (
+          <li class="jl-fall">
+            <span class="jl-fall__ico"><J6Icon name={e.art} size={20} /></span>
+            <span class="jl-fall__text">
+              {'zusatz' in e && <span class="jl-fall__zusatz">{e.zusatz}</span>}
+              <span>{e.nachricht}</span>
+            </span>
+            <span class="jl-fall__status"><J6Icon name="haken" size={14} />{T.erledigtText}</span>
+          </li>
+        ))}
+      </ul>
+      <ul class="jl-punkte">
+        {T.punkte.map((p) => (
+          <li class="jl-punkt">
+            <span class="jl-punkt__ico"><J6Icon name={p.icon} size={22} /></span>
+            <span class="jl-punkt__text">{p.text}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

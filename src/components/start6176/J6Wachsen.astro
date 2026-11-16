@@ -1,0 +1,30 @@
+---
+// 5. „Website heute. Mehr morgen.“ (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_WACHSEN).
+// Visual: sechs Stufen als aufsteigende Treppe (PC: 6 Spalten, jede etwas höher; Handy: senkrechte Leiter mit Verbindungslinie),
+// darunter „Ohne Neustart. …“. Stil: start-6176.css (.jw-*).
+import J6Icon from './J6Icon.astro';
+import { J_WACHSEN as T } from '../../config/start-6176';
+// weiche Trennstellen nur für die schmalen PC-Spalten (Text bleibt wörtlich, Trennung nur am Zeilenende sichtbar)
+const trenn = (t: string) => t.replace('Automatisierungen', 'Automatisie\u00ADrungen').replace('Mitarbeiterbereich', 'Mitarbeiter\u00ADbereich');
+---
+
+<section class="section sn jw" id="wachsen" aria-labelledby="jw-h">
+  <div class="wrap">
+    <div class="sn-kopf">
+      <div>
+        <p class="sn-kenn">{T.kennzeile}</p>
+        <h2 id="jw-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      </div>
+      <div class="jw__text">{T.text.map((t) => <p class="sn-lead">{t}</p>)}</div>
+    </div>
+    <ol class="jw-stufen">
+      {T.stufen.map((s, i) => (
+        <li class="jw-stufe" style={`--i:${i}`}>
+          <span class="jw-stufe__ico"><J6Icon name={s.icon} size={22} /></span>
+          <span class="jw-stufe__text">{trenn(s.text)}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="jw__darunter">{T.darunter.map((t) => <span>{t}</span>)}</p>
+  </div>
+</section>

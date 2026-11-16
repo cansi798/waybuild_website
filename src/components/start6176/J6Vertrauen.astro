@@ -1,0 +1,20 @@
+---
+// 8. Vertrauen (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_VERTRAUEN): sechs Häkchen-Punkte
+// und Jamils Nutzen-Satz statt ITSM/SLA-Fachbegriffen. Keine konkreten Reaktionszeiten (stehen nirgends in AGB/site.ts). Stil: .jv-*.
+import J6Icon from './J6Icon.astro';
+import { J_VERTRAUEN as T } from '../../config/start-6176';
+---
+
+<section class="section sn jv" id="vertrauen" aria-labelledby="jv-h">
+  <div class="wrap">
+    <div class="sn-kopf sn-kopf--mitte">
+      <h2 id="jv-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.satz}</p>
+    </div>
+    <ul class="jv-punkte">
+      {T.punkte.map((p) => (
+        <li class="jv-punkt"><span class="jv-haken"><J6Icon name="haken" size={16} /></span><span>{p}</span></li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+// Abschluss-CTA (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_ABSCHLUSS), Knopf ABSCHLUSS_KNOPF
+// („Kostenlose Erstberatung vereinbaren“). Beibehalten aus dem alten Abschluss (SnAbschluss): Hinweis kostenlose Vorschau (Jamil #6061/#6064),
+// WhatsApp als Alternative und Claim. Anker #kontakt-start. Stil: start-neu.css (.sn-abschluss*) + start-6176.css (.jx-*).
+import Icon from '../Icon.astro';
+import { J_ABSCHLUSS as T } from '../../config/start-6176';
+import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
+import { ABSCHLUSS_KNOPF } from '../../config/variante';
+import { ANLIEGEN, CLAIM } from '../../config/startseite';
+import { ABSCHLUSS as A, HANDLUNG as H } from '../../config/startneu';
+import { whatsappLink } from '../../config/site';
+import { href } from '../../lib/paths';
+import { VORSCHAU, ZAHLUNGS_ZUSATZ } from '../../config/vorschau';
+const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+---
+
+<section class="section sn sn-abschluss jx" id={ALT_ZEIGEN.abschlussAlt ? undefined : "kontakt-start"} aria-labelledby="jx-h">
+  <div class="wrap sn-abschluss__innen">
+    <h2 id="jx-h" class="sn-h2 sn-h2--gross">{T.titel}</h2>
+    <ul class="jx-ohne">{T.ohne.map((t) => <li>{t}</li>)}</ul>
+    {T.text.map((t) => <p class="sn-lead sn-abschluss__text">{t}</p>)}
+    {A.vorschau && <p class="sn-abschluss__vorschau">{[VORSCHAU.abschluss, ZAHLUNGS_ZUSATZ].filter(Boolean).join(' ')}</p>}
+    <div class="sn-abschluss__knoepfe">
+      <a class="btn btn--lg sn-btn sn-btn--gross" href={kontakt}>{ABSCHLUSS_KNOPF}</a>
+      <p class="sn-handlung__oder">{H.oder} <a href={whatsappLink(H.waText)} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {H.whatsapp}<span class="sr-only"> (öffnet in neuem Tab)</span></a></p>
+    </div>
+    <p class="sn-claim">{CLAIM}</p>
+  </div>
+</section>
