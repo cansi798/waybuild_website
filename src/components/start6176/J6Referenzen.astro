@@ -23,7 +23,7 @@ const kategorien = T.kategorien
     </div>
     <div class="jr-kategorien">
       {kategorien.map((k) => (
-        <div class="jr-kat">
+        <div class="jr-kat j6-ein">
           <h3 class="jr-kat__titel"><span class="jr-kat__ico"><J6Icon name={k.icon as any} size={22} /></span>{k.name}</h3>
           {k.refs.length === 0 ? (
             <p class="jr-folgt">{T.folgt}</p>

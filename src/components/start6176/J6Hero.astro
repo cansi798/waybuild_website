@@ -1,7 +1,8 @@
 ---
 // 1. Hero nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_HERO).
 // Visual: großes Smartphone als eigenes CSS-Mockup (kein fremdes Bild, keine Gerätemarke) mit den drei Beispielen als Chat-Verlauf.
-// Abfolge-Animation nur CSS (Nachricht erscheint → Häkchen), bei prefers-reduced-motion steht alles sofort da (start-6176.css).
+// Abfolge-Animation nur CSS (Jamil #6182: „tippt …“ → Sprachwelle → Nachricht erscheint → Häkchen zeichnet sich, 1→2→3, dann Ruhe),
+// bei prefers-reduced-motion steht alles sofort da (start-6176.css). 3D-Neigung bei Maus + einmal Wiederholung: scripts/start-6182.ts.
 // Gestaltungsziel (nicht auf der Seite): „Sofort verständlich. Keine Erklärung nötig.“
 // Knopf-Klasse .jh-knopfe: StickyBar.astro zeigt die Leiste erst, wenn diese Knöpfe aus dem Blick sind (wie früher .v-knopfe).
 import J6Icon from './J6Icon.astro';
@@ -24,7 +25,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
       </div>
     </div>
 
-    <div class="jh__geraet">
+    <div class="jh__geraet" data-jh-geraet>
       <div class="jh-handy">
         <div class="jh-handy__bild">
           <div class="jh-handy__kopf" aria-hidden="true">
@@ -33,14 +34,15 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
           <div class="jh-handy__chatkopf" aria-hidden="true">
             <span class="jh-handy__avatar">w</span><span class="jh-handy__name">{company.name}</span>
           </div>
-          <ol class="jh-chat" aria-label="Beispiele">
+          <ol class="jh-chat" aria-label="Beispiele" data-jh-chat>
             {T.chat.map((c, i) => (
               <li class="jh-chat__paar" style={`--i:${i}`}>
+                <span class="jh-tippt" aria-hidden="true"><i></i><i></i><i></i></span>
                 <div class="jh-blase jh-blase--kunde">
                   <span class="jh-blase__ico"><J6Icon name={c.art} size={18} /></span>
                   <span class="jh-blase__inhalt">
                     {c.art === 'sprache' && (
-                      <span class="jh-welle" aria-hidden="true">{[6, 11, 16, 9, 14, 18, 8, 13, 17, 10, 6, 12, 15, 7].map((h) => <i style={`height:${h}px`}></i>)}</span>
+                      <span class="jh-welle" aria-hidden="true">{[6, 11, 16, 9, 14, 18, 8, 13, 17, 10, 6, 12, 15, 7].map((h, b) => <i style={`height:${h}px;--b:${b}`}></i>)}</span>
                     )}
                     {c.art === 'screenshot' && (
                       <span class="jh-shot" aria-hidden="true"><i></i><i></i><i></i><b></b></span>

@@ -61,15 +61,49 @@
 .jh-shot i:nth-child(3) { height: 18px; }
 .jh-shot b { position: absolute; right: 6px; bottom: 4px; width: 46px; height: 24px; border: 2px solid var(--gold); border-radius: 50%; transform: rotate(-6deg); }
 
-/* Abfolge: Nachricht erscheint → Häkchen (einmal, ca. 4 s) */
+/* Abfolge (Jamil #6182): je Beispiel „tippt …“ → (Sprachwelle) → Nachricht erscheint → Antwort mit Häkchen, das sich zeichnet.
+   1→2→3 je 1,9 s, danach steht alles ruhig (keine Endlosschleife). Alles hat feste Plätze (Tipp-Anzeige liegt absolut über der
+   Nachricht), also kein Verschieben. Einmal Wiederholung beim erneuten Sichtbarwerden: .jh-neu setzt kurz zurück (start-6182.ts). */
+.jh-chat__paar { position: relative; }
+.jh-tippt { position: absolute; top: 0; right: 0; display: flex; gap: 4px; padding: 12px 14px; border-radius: 18px; border-bottom-right-radius: 6px;
+  background: #d9efe7; opacity: 0; pointer-events: none; }
+.jh-tippt i { display: block; width: 6px; height: 6px; border-radius: 50%; background: #0b6d6b; opacity: 0.55; }
+.jh-welle i { transform-origin: center; }
 @media (prefers-reduced-motion: no-preference) {
-  .jh-blase { animation: jh-ein 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-  .jh-blase--kunde { animation-delay: calc(0.5s + var(--i) * 1.3s); }
-  .jh-blase--wir { animation-delay: calc(1.15s + var(--i) * 1.3s); }
-  .jh-blase--wir .jh-haken { animation: jh-haken 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(1.35s + var(--i) * 1.3s); }
+  .jh-chat { --jh-s: 1.9s; --jh-0: 0.5s; }
+  .jh-tippt { animation: jh-tippt 1s ease both; animation-delay: calc(var(--jh-0) + var(--i) * var(--jh-s)); }
+  .jh-tippt i { animation: jh-punkt 0.5s ease-in-out 2 alternate; animation-delay: calc(var(--jh-0) + var(--i) * var(--jh-s) + var(--p, 0ms)); }
+  .jh-tippt i:nth-child(2) { --p: 120ms; }
+  .jh-tippt i:nth-child(3) { --p: 240ms; }
+  .jh-blase { animation: jh-ein 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+  .jh-blase--kunde { animation-delay: calc(var(--jh-0) + 0.85s + var(--i) * var(--jh-s)); }
+  .jh-welle i { animation: jh-welle 300ms ease-in-out 4 alternate; animation-delay: calc(var(--jh-0) + 0.95s + var(--i) * var(--jh-s) + var(--b) * 35ms); }
+  .jh-blase--wir { animation-delay: calc(var(--jh-0) + 1.45s + var(--i) * var(--jh-s)); }
+  .jh-blase--wir .jh-haken { animation: jh-haken 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--jh-0) + 1.6s + var(--i) * var(--jh-s)); }
+  .jh-haken .j6i path { stroke-dasharray: 24; animation: j6-strich 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: calc(var(--jh-0) + 1.75s + var(--i) * var(--jh-s)); }
+  /* wie ein echter Chat: kommt das dritte Beispiel, rückt der Verlauf so weit nach oben, dass die letzte Antwort ganz zu sehen ist
+     (--jh-hoch misst start-6182.ts; ohne JS 0 = keine Bewegung) */
+  .jh-chat__paar { animation: jh-hoch 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--jh-0) + 2 * var(--jh-s) + 0.8s); }
+  .jh-neu .jh-tippt, .jh-neu .jh-tippt i, .jh-neu .jh-blase, .jh-neu .jh-welle i, .jh-neu .jh-haken, .jh-neu .jh-haken .j6i path,
+  .jh-neu .jh-chat__paar { animation: none; }
+  /* mit JS startet der Ablauf erst, wenn das Handy im Bild ist (Handy: unter dem Text) */
+  html.j6-an .jh-chat:not(.jh-laeuft) *, html.j6-an .jh-chat:not(.jh-laeuft) *::before { animation-play-state: paused; }
+  /* 3D-Neigung bei Maus (nur pointer: fine, gesetzt von start-6182.ts) */
+  .jh-handy--neigen { transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1); will-change: transform; }
 }
+@media (prefers-reduced-motion: reduce) { .jh-chat__paar { translate: 0 var(--jh-hoch, 0px); } }
 @keyframes jh-ein { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
 @keyframes jh-haken { from { transform: scale(0.3); } to { transform: none; } }
+@keyframes jh-tippt { 0% { opacity: 0; transform: translateY(6px); } 18%, 78% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+@keyframes jh-punkt { to { transform: translateY(-4px); opacity: 1; } }
+@keyframes jh-welle { to { transform: scaleY(0.35); } }
+@keyframes jh-hoch { from { translate: 0 0; } to { translate: 0 var(--jh-hoch, 0px); } }
+@keyframes j6-strich { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+/* feiner, statischer Lichtschein hinter dem Handy */
+.jh__geraet { position: relative; }
+.jh__geraet::before { content: ''; position: absolute; z-index: -1; inset: -6% -18%; pointer-events: none;
+  background: radial-gradient(closest-side, rgb(212 175 55 / 30%), rgb(44 154 122 / 16%) 55%, rgb(44 154 122 / 0)); }
 
 @media (min-width: 960px) {
   .jh { min-height: calc(100svh - var(--kopf-gesamt, 72px)); display: grid; align-items: center; }
@@ -149,7 +183,12 @@
 .jw-stufen { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; counter-reset: jw; }
 .jw-stufe { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: var(--paper);
   border: 1px solid var(--line); }
-.jw-stufe:not(:last-child)::after { content: ''; position: absolute; left: 37px; bottom: -11px; width: 2px; height: 10px; background: var(--gold); }
+.jw-stufen { padding-left: 26px; } /* Spur links (Handy), Jamil #6182 */
+.jw-stufen::before { content: ''; position: absolute; left: 7px; top: 28px; bottom: 28px; width: 2px; border-radius: 2px;
+  background: linear-gradient(var(--gold), #0b6d6b); transform-origin: top; }
+.jw-stufe::before { content: ''; position: absolute; left: -24px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 0 3px var(--band, var(--white)); }
+.jw-stufe:last-child::before { background: #0b6d6b; }
 .jw-stufe__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px;
   background: #edf4f1; color: #0b6d6b; }
 .jw-stufe__text { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--ink); }
@@ -162,7 +201,10 @@
   .jw-stufen { grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 12px; }
   .jw-stufe { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px; padding: 18px 16px;
     min-height: calc(130px + var(--i) * 34px); }
-  .jw-stufe:not(:last-child)::after { left: auto; right: -11px; bottom: 34px; width: 10px; height: 2px; }
+  .jw-stufen { padding-left: 0; padding-bottom: 28px; }
+  .jw-stufen::before { top: auto; bottom: 7px; left: calc((100% - 60px) / 12); right: calc((100% - 60px) / 12); width: auto; height: 2px;
+    background: linear-gradient(90deg, var(--gold), #0b6d6b); transform-origin: left; }
+  .jw-stufe::before { left: 50%; top: auto; bottom: -26px; margin: 0 0 0 -6px; }
   .jw-stufe__text { font-size: 1rem; line-height: 1.3; hyphens: manual; } /* Trennstellen per &shy; in J6Wachsen.astro */
 }
 
@@ -217,3 +259,70 @@
 .jx-ohne { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .jx-ohne li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
 .jx .sn-abschluss__text { margin: 0; }
+
+/* ---------- Bewegung (Jamil #6182): wenige, ruhige Bewegungen, 300–700 ms, nur opacity/transform ----------
+   Einblenden: .j6-ein + .ist-da (start-6182.ts). Ohne JS, ohne IntersectionObserver oder mit reduzierter Bewegung fehlt html.j6-an,
+   dann steht alles sofort im Endzustand. Für das Einblenden dient die Eigenschaft translate, für Hover transform (keine Überschneidung). */
+@media (prefers-reduced-motion: no-preference) {
+  html.j6-an .j6-ein { opacity: 0; translate: 0 14px;
+    transition: opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms), translate 560ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms),
+      transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  html.j6-an .j6-ein.ist-da { opacity: 1; translate: 0 0; }
+  /* Häkchen zeichnen sich nach dem Erscheinen (Lösung, Vergleich, Vertrauen) */
+  html.j6-an .j6-ein .j6-strich path { stroke-dasharray: 24; stroke-dashoffset: 24;
+    transition: stroke-dashoffset 440ms cubic-bezier(0.65, 0, 0.35, 1) calc(var(--j6-v, 0ms) + 280ms); }
+  html.j6-an .j6-ein.ist-da .j6-strich path { stroke-dashoffset: 0; }
+  html.j6-an .jl-fall .jl-fall__status { opacity: 0; transition: opacity 400ms ease calc(var(--j6-v, 0ms) + 300ms); }
+  html.j6-an .jl-fall.ist-da .jl-fall__status { opacity: 1; }
+  /* Lösung: die drei „erledigt“ deutlich nacheinander */
+  html.j6-an .jl-fall:nth-child(2) { --j6-n: 1; }
+  html.j6-an .jl-fall:nth-child(3) { --j6-n: 2; }
+  html.j6-an .jl-fall { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms), calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms), 0ms; }
+  html.j6-an .jl-fall .j6-strich path { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms + 300ms); }
+  html.j6-an .jl-fall .jl-fall__status { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms + 320ms); }
+
+  /* Karten-Hover dezent (nur Maus): leicht anheben, Schatten über Deckkraft */
+  .jp-karte, .jz-frage, .jv-punkt, .jr-ref, .jl-punkt { position: relative; }
+  .jp-karte::after, .jz-frage::after, .jv-punkt::after, .jr-ref::after, .jl-punkt::after { content: ''; position: absolute; inset: 0; border-radius: inherit;
+    pointer-events: none; box-shadow: 0 18px 36px -22px rgb(8 78 76 / 38%); opacity: 0; transition: opacity 280ms ease; }
+  .jp-karte, .jz-frage, .jv-punkt, .jr-ref, .jl-punkt { transition: opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms),
+    translate 560ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms), transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+  @media (hover: hover) and (pointer: fine) {
+    .jp-karte:hover, .jz-frage:hover, .jv-punkt:hover, .jr-ref:hover, .jl-punkt:hover { transform: translateY(-3px); }
+    .jp-karte:hover::after, .jz-frage:hover::after, .jv-punkt:hover::after, .jr-ref:hover::after, .jl-punkt:hover::after { opacity: 1; }
+  }
+
+  /* Knöpfe einheitlich: sanft anheben, beim Drücken kurz einsinken */
+  main[data-stapel] .btn { transition: transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1), background-color 220ms ease, color 220ms ease, border-color 220ms ease; }
+  main[data-stapel] .btn:hover { transform: translateY(-2px); }
+  main[data-stapel] .btn:active { transform: translateY(0) scale(0.98); transition-duration: 90ms; }
+}
+
+/* Problem → Lösung: wenn „Eine Nachricht genügt.“ hereinkommt, treten die Problemkarten leicht zurück (scroll-gebunden). */
+@supports (animation-timeline: view()) and (timeline-scope: --a) {
+  @media (prefers-reduced-motion: no-preference) {
+    main:has(> .jl) { timeline-scope: --j6-loesung; }
+    .jl { view-timeline: --j6-loesung block; }
+    .jp-karten { animation: j6-zurueck linear both; animation-timeline: --j6-loesung; animation-range: entry 0% entry 360px; }
+  }
+}
+@keyframes j6-zurueck { from { opacity: 1; transform: none; } to { opacity: 0.5; transform: scale(0.97); } }
+
+/* Stufen „Website → … → Individuelle WebApp“: Spur wächst beim Scrollen, Stufen leuchten nacheinander auf (scroll-gebunden).
+   Ohne Unterstützung (z. B. ältere Safari/Firefox): normales Einblenden wie oben, Spur steht ganz. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .jw-stufen { view-timeline: --j6-stufen block; }
+    .jw-stufen::before { animation: j6-spur-y linear both; animation-timeline: --j6-stufen; animation-range: cover 12% cover 52%; }
+    @media (min-width: 900px) { .jw-stufen::before { animation-name: j6-spur-x; } }
+    html.j6-an .jw-stufe.j6-ein { opacity: 1; translate: none; transition: transform 280ms ease; }
+    .jw-stufe { animation: j6-stufe linear both; animation-timeline: --j6-stufen;
+      animation-range: cover calc(12% + var(--i) * 6.4%) cover calc(20% + var(--i) * 6.4%); }
+    .jw-stufe::before { animation: j6-punkt linear both; animation-timeline: --j6-stufen;
+      animation-range: cover calc(14% + var(--i) * 6.4%) cover calc(20% + var(--i) * 6.4%); }
+  }
+}
+@keyframes j6-spur-y { from { transform: scale(1, 0); } to { transform: none; } }
+@keyframes j6-spur-x { from { transform: scale(0, 1); } to { transform: none; } }
+@keyframes j6-stufe { from { opacity: 0.35; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+@keyframes j6-punkt { from { opacity: 0.2; transform: scale(0.5); } to { opacity: 1; transform: none; } }

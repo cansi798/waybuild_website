@@ -19,19 +19,19 @@ import { J_LOESUNG as T } from '../../config/start-6176';
     <div class="jl-raster">
       <ul class="jl-erledigt" aria-label="Beispiele">
         {T.erledigt.map((e) => (
-          <li class="jl-fall">
+          <li class="jl-fall j6-ein">
             <span class="jl-fall__ico"><J6Icon name={e.art} size={20} /></span>
             <span class="jl-fall__text">
               {'zusatz' in e && <span class="jl-fall__zusatz">{e.zusatz}</span>}
               <span>{e.nachricht}</span>
             </span>
-            <span class="jl-fall__status"><J6Icon name="haken" size={14} />{T.erledigtText}</span>
+            <span class="jl-fall__status"><J6Icon name="haken" size={14} class="j6-strich" />{T.erledigtText}</span>
           </li>
         ))}
       </ul>
       <ul class="jl-punkte">
         {T.punkte.map((p) => (
-          <li class="jl-punkt">
+          <li class="jl-punkt j6-ein">
             <span class="jl-punkt__ico"><J6Icon name={p.icon} size={22} /></span>
             <span class="jl-punkt__text">{p.text}</span>
           </li>

@@ -19,7 +19,7 @@ const trenn = (t: string) => t.replace('Automatisierungen', 'Automatisie\u00ADru
     </div>
     <ol class="jw-stufen">
       {T.stufen.map((s, i) => (
-        <li class="jw-stufe" style={`--i:${i}`}>
+        <li class="jw-stufe j6-ein" style={`--i:${i}`}>
           <span class="jw-stufe__ico"><J6Icon name={s.icon} size={22} /></span>
           <span class="jw-stufe__text">{trenn(s.text)}</span>
         </li>
