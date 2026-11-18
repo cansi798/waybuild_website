@@ -1,6 +1,6 @@
 ---
 // 2. Problem-Section nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_PROBLEM).
-// Überschrift + Unterzeile (Einleitung) wie Jamil #6012, vier Problemkarten, Abschluss-Satz. Stil: start-6176.css (.jp-*).
+// Überschrift + Subheadline (Texte seit Jamil #6198), vier Problemkarten, Abschluss-Satz. Stil: start-6176.css (.jp-*).
 import { J_PROBLEM as T } from '../../config/start-6176';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
@@ -9,7 +9,7 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
   <div class="wrap">
     <div class="sn-kopf jp__kopf">
       <h2 id="jp-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
-      <p class="sn-lead">{T.einleitung[0]} <span class="jp__stattdessen">{T.einleitung[1]}</span></p>
+      <p class="sn-lead">{T.unter}</p>
     </div>
     <ul class="jp-karten">
       {T.karten.map((k, i) => (

@@ -1,14 +1,15 @@
 ---
 // 1. Hero nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_HERO).
-// Visual: großes Smartphone als eigenes CSS-Mockup (kein fremdes Bild, keine Gerätemarke) mit den drei Beispielen als Chat-Verlauf.
-// Abfolge-Animation nur CSS (Jamil #6182: „tippt …“ → Sprachwelle → Nachricht erscheint → Häkchen zeichnet sich, 1→2→3, dann Ruhe),
-// bei prefers-reduced-motion steht alles sofort da (start-6176.css). 3D-Neigung bei Maus + einmal Wiederholung: scripts/start-6182.ts.
-// Gestaltungsziel (nicht auf der Seite): „Sofort verständlich. Keine Erklärung nötig.“
+// Visual seit Jamil #6192 (18.11.2026, „Im Hero sehe ich aktuell ein Handy. Das reicht nicht. Ich würde dort echte Beispiele zeigen.“):
+// drei Beispiel-Karten, je Nachricht (Sprachnachricht / Screenshot / Chat) → Pfeil → sichtbares Ergebnis als eigenes CSS-Mockup
+// (Teamseite mit neuer Personen-Karte, Startseite vorher → nachher, kleine App „Urlaubsverwaltung“ mit Antrag „genehmigt“) → Häkchen.
+// Abfolge nur CSS (1 → 2 → 3, dann bleibt der Endzustand stehen), bei prefers-reduced-motion steht alles sofort da (start-6176.css).
+// Start beim Sichtbarwerden + höchstens eine Wiederholung: scripts/start-6182.ts. Keine echten Personen/Fotos, alles neutrale Platzhalter.
+// Gestaltungsziel (nicht auf der Seite): „Plötzlich versteht jeder sofort: Ahhh. Ich muss kein System bedienen.“
 // Knopf-Klasse .jh-knopfe: StickyBar.astro zeigt die Leiste erst, wenn diese Knöpfe aus dem Blick sind (wie früher .v-knopfe).
 import J6Icon from './J6Icon.astro';
 import { J_HERO as T } from '../../config/start-6176';
 import { ANLIEGEN } from '../../config/startseite';
-import { company } from '../../config/site';
 import { href } from '../../lib/paths';
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
@@ -26,41 +27,51 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
     </div>
 
     <div class="jh__geraet" data-jh-geraet>
-      <div class="jh-handy">
-        <div class="jh-handy__bild">
-          <div class="jh-handy__kopf" aria-hidden="true">
-            <span class="jh-handy__insel"></span>
-          </div>
-          <div class="jh-handy__chatkopf" aria-hidden="true">
-            <span class="jh-handy__avatar">w</span><span class="jh-handy__name">{company.name}</span>
-          </div>
-          <ol class="jh-chat" aria-label="Beispiele" data-jh-chat>
-            {T.chat.map((c, i) => (
-              <li class="jh-chat__paar" style={`--i:${i}`}>
-                <span class="jh-tippt" aria-hidden="true"><i></i><i></i><i></i></span>
-                <div class="jh-blase jh-blase--kunde">
-                  <span class="jh-blase__ico"><J6Icon name={c.art} size={18} /></span>
-                  <span class="jh-blase__inhalt">
-                    {c.art === 'sprache' && (
-                      <span class="jh-welle" aria-hidden="true">{[6, 11, 16, 9, 14, 18, 8, 13, 17, 10, 6, 12, 15, 7].map((h, b) => <i style={`height:${h}px;--b:${b}`}></i>)}</span>
-                    )}
-                    {c.art === 'screenshot' && (
-                      <span class="jh-shot" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
-                    )}
-                    {'zusatz' in c && <span class="jh-blase__zusatz">{c.zusatz}</span>}
-                    <span>{c.nachricht}</span>
-                  </span>
-                </div>
-                <div class="jh-blase jh-blase--wir">
-                  <span class="jh-haken"><J6Icon name="haken" size={14} /></span>
-                  <span>{c.ergebnis}</span>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <div class="jh-handy__eingabe" aria-hidden="true"><span></span><i></i></div>
-        </div>
-      </div>
+      <ol class="jb" aria-label={T.beispieleLabel} data-jh-chat>
+        {T.beispiele.map((c, i) => (
+          <li class={`jb__k jb__k--${c.art}`} style={`--i:${i}`}>
+            <div class="jb__nachricht">
+              <span class="jb__ico"><J6Icon name={c.art} size={17} /></span>
+              <span class="jb__inhalt">
+                <span class="jb__zusatz">{c.zusatz}</span>
+                {c.art === 'sprache' && (
+                  <span class="jh-welle" aria-hidden="true">{[6, 11, 16, 9, 14, 18, 8, 13, 17, 10, 6, 12].map((h, b) => <i style={`height:${h}px;--b:${b}`}></i>)}</span>
+                )}
+                {c.art === 'screenshot' && (
+                  <span class="jh-shot" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+                )}
+                <span class="jb__text">{c.nachricht}</span>
+              </span>
+            </div>
+            <span class="jb__pfeil" aria-hidden="true"><svg viewBox="0 0 24 12" width="24" height="12"><path d="M1 6h20M16 1.5 21.5 6 16 10.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+            <div class="jb__ergebnis">
+              <div class="jb-fenster" aria-hidden="true">
+                <div class="jb-fenster__leiste"><i></i><i></i><i></i><span>{c.bild.titel}</span></div>
+                {c.art === 'sprache' && (
+                  <div class="jb-fenster__inhalt jb-team">
+                    <span class="jb-person"><b><J6Icon name="person" size={14} /></b><i></i><i></i></span>
+                    <span class="jb-person"><b><J6Icon name="person" size={14} /></b><i></i><i></i></span>
+                    <span class="jb-person jb-person--neu"><b><J6Icon name="person" size={14} /></b><em>{'neu' in c.bild && c.bild.neu}</em></span>
+                  </div>
+                )}
+                {c.art === 'screenshot' && (
+                  <div class="jb-fenster__inhalt jb-seite">
+                    <span class="jb-seite__alt"><i></i><i></i><i></i><i></i><b></b></span>
+                    <span class="jb-seite__neu"><span class="jb-seite__held"><i></i><i></i><u></u></span><span class="jb-seite__kacheln"><i></i><i></i><i></i></span><em>{'neu' in c.bild && c.bild.neu}</em></span>
+                  </div>
+                )}
+                {c.art === 'chat' && 'antrag' in c.bild && (
+                  <div class="jb-fenster__inhalt jb-urlaub">
+                    <span class="jb-kal">{[0, 1, 2, 3, 4, 5, 6].map((d) => <i class={d >= 2 && d <= 4 ? 'an' : undefined} style={`--d:${d}`}></i>)}</span>
+                    <span class="jb-antrag"><span>{c.bild.antrag}</span><span class="jb-chip"><em class="jb-chip__vor">{c.bild.vorher}</em><em class="jb-chip__nach">{c.bild.nachher}</em></span></span>
+                  </div>
+                )}
+              </div>
+              <p class="jb__status"><span class="jh-haken"><J6Icon name="haken" size={13} /></span><span>{c.ergebnis}</span></p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
 </section>

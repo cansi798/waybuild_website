@@ -19,6 +19,8 @@ export const ALT_ZEIGEN = {
   bewertungenAlt: false, // Bewertungs-Platzhalter (SnBewertungen, nur Vorschau) → nicht in Jamils Aufbau
   ablaufAlt: false, // „So geht es los“ (SnAblauf) → ersetzt durch 6 Prozessberatung
   abschlussAlt: false, // alter Abschluss (SnAbschluss) → ersetzt durch Abschluss-CTA #6179
+  // ab Jamil #6207/#6208 (18.11.2026): in Abschnitt 4 ersetzt „Zwei Wege“ + 4 Vorteilskarten die Vergleichstabelle (J_ANDERS.zeilen)
+  andersTabelleAlt: false, // Tabelle „Klassische Agentur | webgold“ (#6179) → true = wieder unter den Vorteilen sichtbar
 };
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
 export const PAKETE_ZEIGEN = true;
@@ -30,23 +32,32 @@ export const J_HERO = {
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
-  /** Hero-Visual: großes Smartphone mit drei echten Beispielen als Chat-Verlauf (Emojis als eigene SVG-Icons) */
-  chat: [
-    { art: 'sprache', nachricht: '„Füge unsere neuen Öffnungszeiten hinzu.“', ergebnis: 'Website aktualisiert' },
-    { art: 'screenshot', zusatz: 'Screenshot + Markierung', nachricht: '„So soll die Seite aussehen.“', ergebnis: 'Design umgesetzt' },
-    { art: 'chat', nachricht: '„Wir brauchen eine digitale Urlaubsverwaltung.“', ergebnis: 'WebApp erstellt' },
+  /** Hero-Visual (Jamil #6192, 18.11.2026; Sicherung davor: Tag vor-jamil-6192-20261118): statt nur eines Handys drei echte
+   *  Beispiele, je Nachricht (links) → sichtbares Ergebnis (rechts, eigenes CSS-Mockup) → Häkchen mit Jamils Ergebnis-Text.
+   *  Nachricht + Ergebnis WÖRTLICH von Jamil (#6192); Headline/Subheadline bleiben wie oben (#6194). Emojis 🎙️ 📸 💬 ✅ als eigene
+   *  SVG-Icons (J6Icon). `bild` = Beschriftungen im Ergebnis-Mockup (nur Deko, aria-hidden). Gestaltungsziel (nicht auf der Seite):
+   *  „Plötzlich versteht jeder sofort: Ahhh. Ich muss kein System bedienen.“ */
+  beispiele: [
+    { art: 'sprache', zusatz: 'Sprachnachricht', nachricht: '„Füge bitte einen neuen Mitarbeiter hinzu.“', ergebnis: 'Erledigt',
+      bild: { titel: 'Unser Team', neu: 'Neu im Team' } },
+    { art: 'screenshot', zusatz: 'Screenshot', nachricht: '„So soll die Startseite aussehen.“', ergebnis: 'Änderungen umgesetzt',
+      bild: { titel: 'Startseite', neu: 'Neu' } },
+    { art: 'chat', zusatz: 'Nachricht', nachricht: '„Wir brauchen eine digitale Urlaubsverwaltung.“', ergebnis: 'Neue Funktion verfügbar',
+      bild: { titel: 'Urlaubsverwaltung', antrag: 'Urlaubsantrag', vorher: 'offen', nachher: 'genehmigt' } },
   ],
+  beispieleLabel: 'Drei Beispiele: Nachricht und Ergebnis',
 } as const;
 
-/** 2. Problem-Section (Jamil #6176) */
+/** 2. Problem-Section: Texte seit Jamil #6198 (18.11.2026) WÖRTLICH (Überschrift wie #6176, neue Subheadline, 4 neue Problemkarten,
+ *  Abschlusszeile). Vorher (#6176): Einleitung „Viele Unternehmen möchten … Stattdessen entstehen:“ + kürzere Kartentexte. */
 export const J_PROBLEM = {
   titel: 'Digitale Lösungen sollten Arbeit sparen. Nicht verursachen.',
-  einleitung: ['Viele Unternehmen möchten ihre Website aktualisieren oder Prozesse digitalisieren.', 'Stattdessen entstehen:'],
+  unter: 'Websites, Software und Prozesse sollen Unternehmen entlasten. In der Praxis bedeuten sie oft mehr Aufwand, mehr Abstimmung und mehr Technik.',
   karten: [
-    { titel: 'Änderungen dauern ewig', text: 'Tickets schreiben. Abstimmen. Warten.' },
-    { titel: 'Niemand möchte neue Software lernen', text: 'Noch ein Login. Noch eine Schulung. Noch ein System.' },
-    { titel: 'Gute Ideen bleiben liegen', text: 'Weil die Umsetzung zu aufwendig erscheint.' },
-    { titel: 'Jeder Anbieter macht etwas anderes', text: 'Website hier. Software dort. Support woanders.' },
+    { titel: 'Änderungen dauern zu lange', text: 'Neue Inhalte, Texte oder Seiten benötigen oft Anfragen, Abstimmungen und Wartezeiten.' },
+    { titel: 'Niemand möchte ein CMS lernen', text: 'Eine Website sollte kein weiteres System sein, das Zeit kostet und Schulungen benötigt.' },
+    { titel: 'Gute Ideen bleiben liegen', text: 'Weil die Umsetzung zu kompliziert erscheint oder erst später geplant wird.' },
+    { titel: 'Zu viele Werkzeuge', text: 'Website, Formulare, Excel, E-Mails und verschiedene Anbieter sorgen für unnötige Komplexität.' },
   ],
   abschluss: 'Digitale Lösungen sollten sich Ihrem Unternehmen anpassen. Nicht umgekehrt.',
 } as const;
@@ -73,9 +84,38 @@ export const J_LOESUNG = {
   ],
 } as const;
 
-/** 4. Was webgold anders macht (Jamil #6179) */
+/** 4. Was webgold anders macht (Jamil #6179). Überschrift + Subheadline seit Jamil #6203 (18.11.2026, Tippfehler „ihrem/Bei und“
+ *  korrigiert, sonst wörtlich); vorher: „Die meisten Anbieter liefern Projekte. Wir begleiten die Entwicklung Ihres Unternehmens.“ */
 export const J_ANDERS = {
-  titel: 'Die meisten Anbieter liefern Projekte. Wir begleiten die Entwicklung Ihres Unternehmens.',
+  titel: 'Wir entwickeln uns mit Ihrem Unternehmen weiter.',
+  unter: 'Die meisten Anbieter liefern eine Website oder Software und das Projekt ist abgeschlossen. Bei uns beginnt die Zusammenarbeit dort erst.',
+  /** Visualisierung „zwei Wege“ (Jamil #6207, Texte wörtlich; Emojis als eigene Icons, ❌ gedämpft, ✅/📈 positiv) */
+  wege: [
+    { titel: 'Klassischer Weg', art: 'alt', schritte: [
+      { icon: 'briefing', text: 'Briefing' },
+      { icon: 'pinsel', text: 'Umsetzung' },
+      { icon: 'rakete', text: 'Livegang' },
+      { icon: 'kreuz', text: 'Neue Idee → Neues Projekt', nein: true },
+      { icon: 'kreuz', text: 'Neues Angebot', nein: true },
+      { icon: 'kreuz', text: 'Neue Kosten', nein: true },
+    ] },
+    { titel: 'webgold', art: 'wir', schritte: [
+      { icon: 'briefing', text: 'Start mit Website oder WebApp' },
+      { icon: 'rakete', text: 'Livegang' },
+      { icon: 'chat', text: 'Neue Idee' },
+      { icon: 'sprache', text: 'Kurze Nachricht' },
+      { icon: 'haken', text: 'Umsetzung', ja: true },
+      { icon: 'wachsen', text: 'Lösung wächst mit', ja: true },
+    ] },
+  ],
+  /** Konkrete Vorteile (Jamil #6208, genau 4 Karten, Texte wörtlich) */
+  vorteile: [
+    { icon: 'chat', titel: 'Keine Technik bedienen', text: 'Sagen, schreiben oder zeigen statt CMS lernen.' },
+    { icon: 'preis', titel: 'Planbare Kosten', text: 'Fester Monatspreis statt ständig neuer Projektangebote.' },
+    { icon: 'person', titel: 'Ein Ansprechpartner', text: 'Website, WebApp und Weiterentwicklung aus einer Hand.' },
+    { icon: 'wachsen', titel: 'Mitwachsendes System', text: 'Starten Sie heute klein und erweitern Sie später genau das, was Sie benötigen.' },
+  ],
+  /** bisherige Vergleichstabelle (#6179), seit #6207/#6208 ausgeblendet über ALT_ZEIGEN.andersTabelleAlt */
   spalten: ['Klassische Agentur', 'webgold'],
   zeilen: [
     ['Projekt abgeschlossen', 'Weiterentwicklung inklusive'],

@@ -1,15 +1,43 @@
 ---
 // 4. Was webgold anders macht (Jamil, Talk qh87y3sj #6179, 16.11.2026). Texte wörtlich aus config/start-6176.ts (J_ANDERS).
-// Echte Tabelle (Spaltenköpfe, je Zeile Agentur | webgold), Handy zweispaltig schmal, webgold-Spalte hervorgehoben. Stil: start-6176.css (.ja-*).
+// Seit Jamil #6207/#6208 (18.11.2026): „zwei Wege“ als zwei Spalten (Handy untereinander), Schritte erscheinen gestaffelt beim
+// Sichtbarwerden (.ist-da), danach 4 Vorteilskarten. Die bisherige Tabelle bleibt über ALT_ZEIGEN.andersTabelleAlt abschaltbar erhalten.
+// Tabelle (Spaltenköpfe, je Zeile Agentur | webgold), Handy zweispaltig schmal, webgold-Spalte hervorgehoben. Stil: start-6176.css (.ja-*).
 import J6Icon from './J6Icon.astro';
-import { J_ANDERS as T } from '../../config/start-6176';
+import { J_ANDERS as T, ALT_ZEIGEN } from '../../config/start-6176';
 ---
 
 <section class="section sn ja" id="anders" aria-labelledby="ja-h">
   <div class="wrap">
     <div class="sn-kopf">
       <h2 id="ja-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.unter}</p>
     </div>
+    <div class="ja-wege">
+      {T.wege.map((w, wi) => (
+        <div class={`ja-weg ja-weg--${w.art} j6-ein`} style={`--w:${wi}`}>
+          <h3 class="ja-weg__titel" id={`ja-weg-${wi}`}>{w.titel}</h3>
+          <ol class="ja-schritte" aria-labelledby={`ja-weg-${wi}`}>
+            {w.schritte.map((st, si) => (
+              <li class:list={['ja-schritt', { 'ja-schritt--nein': 'nein' in st, 'ja-schritt--ja': 'ja' in st }]} style={`--s:${si}`}>
+                <span class="ja-schritt__ico"><J6Icon name={st.icon} size={18} /></span>
+                <span class="ja-schritt__text">{st.text}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+    <ul class="ja-vorteile">
+      {T.vorteile.map((v) => (
+        <li class="ja-vorteil j6-ein">
+          <span class="ja-vorteil__ico"><J6Icon name={v.icon} size={22} /></span>
+          <h3 class="ja-vorteil__titel">{v.titel}</h3>
+          <p class="ja-vorteil__text">{v.text}</p>
+        </li>
+      ))}
+    </ul>
+    {ALT_ZEIGEN.andersTabelleAlt && (
     <div class="ja-tafel">
       <table class="ja-tabelle">
         <thead>
@@ -25,5 +53,6 @@ import { J_ANDERS as T } from '../../config/start-6176';
         </tbody>
       </table>
     </div>
+    )}
   </div>
 </section>

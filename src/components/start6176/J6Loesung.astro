@@ -1,6 +1,8 @@
 ---
 // 3. Die Lösung nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_LOESUNG).
-// Links drei erledigte Beispiele, rechts Jamils „Kurze Statistik“ als kompakte Vorteilsleiste ohne Zahlen. Stil: start-6176.css (.jl-*).
+// Links drei erledigte Beispiele (seit Jamil #6199, 18.11.2026: „soll animiert und ansehnlich gestaltet werden“ → Chat-Karten mit
+// Absender-Icon, feinem Verbindungsstrang und Status-Chip; Ablauf je Karte: gleitet ein → „wird bearbeitet“-Strich → Häkchen + „erledigt“,
+// 1 → 2 → 3, dann Ruhe; Screenshot-Karte mit Mini-Vorschau + Markierung), rechts Jamils „Kurze Statistik“ als kompakte Vorteilsleiste ohne Zahlen. Stil: start-6176.css (.jl-*).
 import J6Icon from './J6Icon.astro';
 import { J_LOESUNG as T } from '../../config/start-6176';
 ---
@@ -17,15 +19,21 @@ import { J_LOESUNG as T } from '../../config/start-6176';
     </div>
 
     <div class="jl-raster">
-      <ul class="jl-erledigt" aria-label="Beispiele">
-        {T.erledigt.map((e) => (
-          <li class="jl-fall j6-ein">
+      <ul class="jl-erledigt j6-ein" aria-label="Beispiele">
+        {T.erledigt.map((e, i) => (
+          <li class={`jl-fall jl-fall--${e.art}`} style={`--n:${i}`}>
             <span class="jl-fall__ico"><J6Icon name={e.art} size={20} /></span>
             <span class="jl-fall__text">
               {'zusatz' in e && <span class="jl-fall__zusatz">{e.zusatz}</span>}
+              {e.art === 'screenshot' && (
+                <span class="jh-shot jl-shot" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+              )}
               <span>{e.nachricht}</span>
             </span>
-            <span class="jl-fall__status"><J6Icon name="haken" size={14} class="j6-strich" />{T.erledigtText}</span>
+            <span class="jl-fall__status">
+              <span class="jl-fall__arbeit" aria-hidden="true"><i></i></span>
+              <span class="jl-fall__fertig"><span class="jl-fall__haken"><J6Icon name="haken" size={12} /></span>{T.erledigtText}</span>
+            </span>
           </li>
         ))}
       </ul>

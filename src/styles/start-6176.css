@@ -1,7 +1,7 @@
 /* Startseite, Punkte 1–3 nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026): .jh = Hero, .jp = Problem, .jl = Lösung.
    Palette/Schrift aus start-farben.css (Primär #0B6D6B, dunkel #084E4C, Gold #d4af37 nur als Zier, Positiv #2C9A7A, Plus Jakarta Sans).
-   Handy zuerst; Hintergründe im Wechsel kommen aus global.css (Hero dunkel, dann Creme/Weiß). Animationen nur opacity/transform,
-   feste Maße für das Smartphone (kein Layout-Sprung), bei prefers-reduced-motion alles sofort sichtbar. */
+   Hero-Beispiele (Jamil #6192); Hintergründe im Wechsel kommen aus global.css (Hero dunkel, dann Creme/Weiß). Animationen nur opacity/transform,
+   feste Maße für die Beispiel-Fenster (kein Layout-Sprung), bei prefers-reduced-motion alles sofort sichtbar. */
 
 /* ---------- 1. Hero ---------- */
 .jh { position: relative; isolation: isolate; overflow: hidden; color: var(--white);
@@ -21,104 +21,152 @@
 .jh-btn--rand:hover { background: rgb(255 255 255 / 10%); color: var(--white); border-color: var(--white); }
 .jh-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
-/* Smartphone: eigenes Mockup, feste Breite + Seitenverhältnis (CLS 0) */
+/* Hero-Visual seit Jamil #6192 (18.11.2026): drei Beispiel-Karten statt Handy. Je Karte: Nachricht → Pfeil → Ergebnis-Mockup
+   (Browser-/App-Fensterchen, nur CSS) → Häkchen mit Jamils Ergebnis-Text. Alle Teile haben von Anfang an ihren festen Platz
+   (Vorher/Nachher-Ebenen liegen im selben Rasterfeld übereinander), Bewegung nur über opacity/transform: kein Layout-Sprung.
+   Grundzustand (ohne Animation, reduzierte Bewegung, Druck) = Endzustand. */
 .jh__geraet { min-width: 0; display: grid; justify-items: center; }
-.jh-handy { width: min(100%, 340px); aspect-ratio: 340 / 640; padding: 11px; border-radius: 52px;
-  background: linear-gradient(160deg, #20383a, #0e1d1e); box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 14%),
-    0 40px 80px -30px rgb(0 0 0 / 55%), 0 0 0 1px rgb(0 0 0 / 30%); }
-.jh-handy__bild { position: relative; height: 100%; overflow: hidden; border-radius: 42px; background: #f4f1ea;
-  display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; }
-.jh-handy__eingabe { display: flex; align-items: center; gap: 8px; padding: 10px 12px 18px; background: var(--white); border-top: 1px solid #e6e0d4; }
-.jh-handy__eingabe span { flex: 1; height: 34px; border-radius: 999px; background: #f4f1ea; }
-.jh-handy__eingabe i { width: 34px; height: 34px; border-radius: 50%; background: #0b6d6b; }
-.jh-handy__kopf { height: 34px; display: grid; place-items: center; background: var(--white); }
-.jh-handy__insel { width: 92px; height: 24px; border-radius: 999px; background: #0e1d1e; }
-.jh-handy__chatkopf { display: flex; align-items: center; gap: 10px; padding: 8px 16px 12px; background: var(--white);
-  border-bottom: 1px solid #e6e0d4; }
-.jh-handy__avatar { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
-  font-family: var(--font-head); font-weight: 800; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--white), 0 0 0 3px var(--gold); }
-.jh-handy__name { font-family: var(--font-head); font-weight: 700; color: var(--ink); font-size: 0.98rem; }
-.jh-chat { list-style: none; margin: 0; padding: 14px 12px; display: grid; align-content: start; gap: 12px; overflow: hidden; }
-.jh-chat__paar { display: grid; gap: 6px; }
-.jh-blase { max-width: 88%; display: flex; gap: 8px; align-items: flex-start; padding: 9px 12px; border-radius: 18px;
-  font-size: 0.86rem; line-height: 1.4; color: var(--ink); }
-.jh-blase--kunde { justify-self: end; background: #d9efe7; border-bottom-right-radius: 6px; }
-.jh-blase--wir { justify-self: start; align-items: center; background: var(--white); border-bottom-left-radius: 6px; font-weight: 600;
-  box-shadow: 0 1px 2px rgb(8 78 76 / 8%); }
-.jh-blase__ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--white); color: #0b6d6b; }
-.jh-blase__inhalt { min-width: 0; display: grid; gap: 4px; }
-.jh-blase__zusatz { font-size: 0.76rem; font-weight: 700; color: #0b6d6b; }
-.jh-haken { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white); }
+.jb { list-style: none; margin: 0; padding: 0; width: min(100%, 560px); display: grid; gap: 14px; }
+.jb__k { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1.12fr); align-items: center; gap: 10px;
+  padding: 14px; border-radius: 22px; background: rgb(255 255 255 / 8%); border: 1px solid rgb(255 255 255 / 16%);
+  box-shadow: 0 24px 48px -32px rgb(0 0 0 / 60%); }
+.jb__nachricht { display: flex; gap: 9px; align-items: flex-start; padding: 10px 12px; border-radius: 18px; border-bottom-right-radius: 6px;
+  background: #d9efe7; color: var(--ink); font-size: 0.86rem; line-height: 1.4; }
+.jb__ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--white); color: #0b6d6b; }
+.jb__inhalt { min-width: 0; display: grid; gap: 4px; }
+.jb__zusatz { font-size: 0.74rem; font-weight: 700; color: #0b6d6b; }
+.jb__text { font-weight: 600; text-wrap: pretty; }
+.jb__pfeil { display: grid; place-items: center; color: var(--gold); }
+.jb__pfeil svg { display: block; }
+.jb__ergebnis { min-width: 0; display: grid; gap: 8px; }
+.jb__status { margin: 0; display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
+  line-height: 1.3; color: var(--white); }
+.jh-haken { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 22%); }
 .jh-haken .j6i { stroke-width: 3; }
-/* Sprachnachricht: kleine Welle */
+/* Sprachnachricht: kleine Welle; Screenshot: Mini-Bild mit Gold-Markierung */
 .jh-welle { display: flex; align-items: center; gap: 2px; height: 18px; }
-.jh-welle i { display: block; width: 3px; border-radius: 2px; background: #0b6d6b; opacity: 0.7;
-}
-/* Screenshot mit Markierung */
-.jh-shot { position: relative; display: grid; gap: 4px; width: 112px; padding: 8px; border-radius: 8px; background: var(--white); }
-.jh-shot i { display: block; height: 6px; border-radius: 3px; background: #e6e0d4; }
+.jh-welle i { display: block; width: 3px; border-radius: 2px; background: #0b6d6b; opacity: 0.7; transform-origin: center; }
+.jh-shot { position: relative; display: grid; gap: 4px; width: 96px; padding: 7px; border-radius: 8px; background: var(--white); }
+.jh-shot i { display: block; height: 5px; border-radius: 3px; background: #e6e0d4; }
 .jh-shot i:first-child { width: 60%; background: #0b6d6b; opacity: 0.55; }
-.jh-shot i:nth-child(3) { height: 18px; }
-.jh-shot b { position: absolute; right: 6px; bottom: 4px; width: 46px; height: 24px; border: 2px solid var(--gold); border-radius: 50%; transform: rotate(-6deg); }
+.jh-shot i:nth-child(3) { height: 15px; }
+.jh-shot b { position: absolute; right: 5px; bottom: 3px; width: 40px; height: 21px; border: 2px solid var(--gold); border-radius: 50%; transform: rotate(-6deg); }
 
-/* Abfolge (Jamil #6182): je Beispiel „tippt …“ → (Sprachwelle) → Nachricht erscheint → Antwort mit Häkchen, das sich zeichnet.
-   1→2→3 je 1,9 s, danach steht alles ruhig (keine Endlosschleife). Alles hat feste Plätze (Tipp-Anzeige liegt absolut über der
-   Nachricht), also kein Verschieben. Einmal Wiederholung beim erneuten Sichtbarwerden: .jh-neu setzt kurz zurück (start-6182.ts). */
-.jh-chat__paar { position: relative; }
-.jh-tippt { position: absolute; top: 0; right: 0; display: flex; gap: 4px; padding: 12px 14px; border-radius: 18px; border-bottom-right-radius: 6px;
-  background: #d9efe7; opacity: 0; pointer-events: none; }
-.jh-tippt i { display: block; width: 6px; height: 6px; border-radius: 50%; background: #0b6d6b; opacity: 0.55; }
-.jh-welle i { transform-origin: center; }
+/* Ergebnis-Fenster (feste Höhe) */
+.jb-fenster { overflow: hidden; border-radius: 12px; background: var(--white); color: var(--ink);
+  box-shadow: 0 14px 30px -18px rgb(0 0 0 / 55%), 0 0 0 1px rgb(8 78 76 / 10%); }
+.jb-fenster__leiste { display: flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; background: #f4f1ea; border-bottom: 1px solid #e6e0d4; }
+.jb-fenster__leiste i { width: 6px; height: 6px; border-radius: 50%; background: #d8d1c3; }
+.jb-fenster__leiste span { margin-left: 6px; font-size: 0.68rem; font-weight: 700; color: #3d4a49; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jb-fenster__inhalt { position: relative; height: 74px; padding: 9px; }
+/* (1) Teamseite: zwei Karten da, die dritte gleitet hinein */
+.jb-team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.jb-person { position: relative; display: grid; justify-items: center; align-content: start; gap: 4px; padding: 7px 4px 6px; border-radius: 8px;
+  background: #f4f1ea; }
+.jb-person b { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: #d8d1c3; color: #6b6458; }
+.jb-person i { display: block; width: 70%; height: 4px; border-radius: 2px; background: #d8d1c3; }
+.jb-person i + i { width: 48%; }
+.jb-person--neu { background: #e3f3ec; box-shadow: inset 0 0 0 1.5px #2c9a7a; }
+.jb-person--neu b { background: #0b6d6b; color: var(--white); }
+.jb-person em { font-style: normal; font-size: 0.6rem; font-weight: 700; line-height: 1.15; color: #0b5a58; text-align: center; }
+/* (2) Startseite vorher → nachher: beide Ebenen im selben Feld */
+.jb-seite { display: grid; }
+.jb-seite > span { grid-area: 1 / 1; min-width: 0; }
+.jb-seite__alt { position: relative; display: grid; gap: 5px; align-content: start; opacity: 0; }
+.jb-seite__alt i { display: block; height: 6px; border-radius: 3px; background: #e6e0d4; }
+.jb-seite__alt i:nth-child(1) { width: 40%; }
+.jb-seite__alt i:nth-child(2) { width: 85%; }
+.jb-seite__alt i:nth-child(3) { width: 65%; height: 18px; }
+.jb-seite__alt i:nth-child(4) { width: 30%; }
+.jb-seite__alt b { position: absolute; right: 4%; top: 10px; width: 46%; height: 34px; border: 2px dashed var(--gold); border-radius: 50%; transform: rotate(-5deg); }
+.jb-seite__neu { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 5px; }
+.jb-seite__held { display: grid; align-content: center; gap: 4px; padding: 6px 8px; border-radius: 7px; background: #0b6d6b; }
+.jb-seite__held i { display: block; width: 62%; height: 5px; border-radius: 3px; background: rgb(255 255 255 / 85%); }
+.jb-seite__held i + i { width: 42%; background: rgb(255 255 255 / 50%); }
+.jb-seite__held u { display: block; width: 30%; height: 7px; border-radius: 4px; background: var(--gold); }
+.jb-seite__kacheln { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.jb-seite__kacheln i { display: block; height: 12px; border-radius: 4px; background: #e3f3ec; box-shadow: inset 0 0 0 1px #cfe8de; }
+.jb-seite__neu em { position: absolute; top: 4px; right: 5px; padding: 1px 6px; border-radius: 999px; background: var(--white);
+  font-style: normal; font-size: 0.58rem; font-weight: 800; color: #0b5a58; }
+/* (3) kleine App „Urlaubsverwaltung“: Kalenderzeile + Antrag mit Status offen → genehmigt */
+.jb-urlaub { display: grid; align-content: space-between; }
+.jb-kal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+.jb-kal i { display: block; height: 16px; border-radius: 4px; background: #f4f1ea; }
+.jb-kal i.an { background: #0b6d6b; }
+.jb-antrag { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 0.66rem; font-weight: 700; color: #3d4a49; }
+.jb-antrag > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jb-chip { display: grid; flex: none; }
+.jb-chip em { grid-area: 1 / 1; justify-self: end; padding: 2px 7px; border-radius: 999px; font-style: normal; font-size: 0.62rem; font-weight: 800; }
+.jb-chip__vor { background: #f6ecc8; color: #6b5310; opacity: 0; }
+.jb-chip__nach { background: #dff1e9; color: #1d6b54; }
+
+/* Abfolge: 1 → 2 → 3 je 2,3 s, danach bleibt alles stehen (keine Endlosschleife). Mit JS startet sie erst im Bild
+   (.jh-laeuft) und läuft höchstens ein zweites Mal beim erneuten Sichtbarwerden (.jh-neu, start-6182.ts). */
 @media (prefers-reduced-motion: no-preference) {
-  .jh-chat { --jh-s: 1.9s; --jh-0: 0.5s; }
-  .jh-tippt { animation: jh-tippt 1s ease both; animation-delay: calc(var(--jh-0) + var(--i) * var(--jh-s)); }
-  .jh-tippt i { animation: jh-punkt 0.5s ease-in-out 2 alternate; animation-delay: calc(var(--jh-0) + var(--i) * var(--jh-s) + var(--p, 0ms)); }
-  .jh-tippt i:nth-child(2) { --p: 120ms; }
-  .jh-tippt i:nth-child(3) { --p: 240ms; }
-  .jh-blase { animation: jh-ein 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-  .jh-blase--kunde { animation-delay: calc(var(--jh-0) + 0.85s + var(--i) * var(--jh-s)); }
-  .jh-welle i { animation: jh-welle 300ms ease-in-out 4 alternate; animation-delay: calc(var(--jh-0) + 0.95s + var(--i) * var(--jh-s) + var(--b) * 35ms); }
-  .jh-blase--wir { animation-delay: calc(var(--jh-0) + 1.45s + var(--i) * var(--jh-s)); }
-  .jh-blase--wir .jh-haken { animation: jh-haken 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--jh-0) + 1.6s + var(--i) * var(--jh-s)); }
-  .jh-haken .j6i path { stroke-dasharray: 24; animation: j6-strich 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
-    animation-delay: calc(var(--jh-0) + 1.75s + var(--i) * var(--jh-s)); }
-  /* wie ein echter Chat: kommt das dritte Beispiel, rückt der Verlauf so weit nach oben, dass die letzte Antwort ganz zu sehen ist
-     (--jh-hoch misst start-6182.ts; ohne JS 0 = keine Bewegung) */
-  .jh-chat__paar { animation: jh-hoch 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--jh-0) + 2 * var(--jh-s) + 0.8s); }
-  .jh-neu .jh-tippt, .jh-neu .jh-tippt i, .jh-neu .jh-blase, .jh-neu .jh-welle i, .jh-neu .jh-haken, .jh-neu .jh-haken .j6i path,
-  .jh-neu .jh-chat__paar { animation: none; }
-  /* mit JS startet der Ablauf erst, wenn das Handy im Bild ist (Handy: unter dem Text) */
-  html.j6-an .jh-chat:not(.jh-laeuft) *, html.j6-an .jh-chat:not(.jh-laeuft) *::before { animation-play-state: paused; }
-  /* 3D-Neigung bei Maus (nur pointer: fine, gesetzt von start-6182.ts) */
-  .jh-handy--neigen { transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1); will-change: transform; }
+  .jb { --jb-s: 2.3s; --jb-0: 0.35s; }
+  .jb__k { --t: calc(var(--jb-0) + var(--i) * var(--jb-s)); animation: jh-ein 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: var(--t); }
+  .jb__nachricht { animation: jb-blase 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 0.2s); }
+  .jh-welle i { animation: jh-welle 300ms ease-in-out 4 alternate; animation-delay: calc(var(--t) + 0.35s + var(--b) * 35ms); }
+  .jh-shot b { animation: jb-markieren 420ms ease-out both; animation-delay: calc(var(--t) + 0.55s); }
+  .jb__pfeil svg { animation: jb-pfeil 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 0.75s); }
+  .jb-fenster { animation: jh-ein 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 0.85s); }
+  .jb-person--neu { animation: jb-rein 560ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 1.2s); }
+  .jb-seite__alt { animation: jb-aus 520ms ease both; animation-delay: calc(var(--t) + 1.25s); }
+  .jb-seite__neu { animation: jb-neu 560ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 1.3s); }
+  .jb-kal i.an { animation: jb-tag 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 1.05s + (var(--d) - 2) * 90ms); }
+  .jb-chip__vor { animation: jb-aus 360ms ease both; animation-delay: calc(var(--t) + 1.45s); }
+  .jb-chip__nach { animation: jb-chip 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 1.5s); }
+  .jb__status { animation: jh-ein 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: calc(var(--t) + 1.7s); }
+  .jb__status .jh-haken { animation: jh-haken 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 1.75s); }
+  .jb__status .jh-haken .j6i path { stroke-dasharray: 24; animation: j6-strich 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-delay: calc(var(--t) + 1.9s); }
+  .jh-neu * { animation: none !important; }
+  /* mit JS startet der Ablauf erst, wenn die Beispiele im Bild sind (Handy: unter dem Text) */
+  html.j6-an .jb:not(.jh-laeuft) *, html.j6-an .jb:not(.jh-laeuft) { animation-play-state: paused; }
 }
-@media (prefers-reduced-motion: reduce) { .jh-chat__paar { translate: 0 var(--jh-hoch, 0px); } }
 @keyframes jh-ein { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes jb-blase { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes jb-pfeil { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+@keyframes jb-markieren { from { opacity: 0; transform: rotate(-6deg) scale(0.6); } to { opacity: 1; transform: rotate(-6deg); } }
+@keyframes jb-rein { from { opacity: 0; transform: translateX(18px) scale(0.92); } to { opacity: 1; transform: none; } }
+@keyframes jb-aus { from { opacity: 1; } to { opacity: 0; } }
+@keyframes jb-neu { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes jb-tag { from { opacity: 0.25; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+@keyframes jb-chip { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: none; } }
 @keyframes jh-haken { from { transform: scale(0.3); } to { transform: none; } }
-@keyframes jh-tippt { 0% { opacity: 0; transform: translateY(6px); } 18%, 78% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
-@keyframes jh-punkt { to { transform: translateY(-4px); opacity: 1; } }
 @keyframes jh-welle { to { transform: scaleY(0.35); } }
-@keyframes jh-hoch { from { translate: 0 0; } to { translate: 0 var(--jh-hoch, 0px); } }
 @keyframes j6-strich { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
-/* feiner, statischer Lichtschein hinter dem Handy */
+/* feiner, statischer Lichtschein hinter den Beispielen */
 .jh__geraet { position: relative; }
-.jh__geraet::before { content: ''; position: absolute; z-index: -1; inset: -6% -18%; pointer-events: none;
-  background: radial-gradient(closest-side, rgb(212 175 55 / 30%), rgb(44 154 122 / 16%) 55%, rgb(44 154 122 / 0)); }
+.jh__geraet::before { content: ''; position: absolute; z-index: -1; inset: -6% -12%; pointer-events: none;
+  background: radial-gradient(closest-side, rgb(212 175 55 / 22%), rgb(44 154 122 / 14%) 55%, rgb(44 154 122 / 0)); }
 
 @media (min-width: 960px) {
   .jh { min-height: calc(100svh - var(--kopf-gesamt, 72px)); display: grid; align-items: center; }
-  .jh__raster { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
-  .jh-handy { width: 340px; }
+  .jh__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+/* Handy: Karte kompakt, Nachricht und Ergebnis nebeneinander bleiben, Pfeil schmaler */
+@media (max-width: 559px) {
+  .jb { gap: 10px; }
+  .jb__k { grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr); gap: 6px; padding: 10px; border-radius: 18px; }
+  .jb__nachricht { flex-direction: column; gap: 6px; padding: 9px 10px; font-size: 0.8rem; }
+  .jb__ico { width: 24px; height: 24px; }
+  .jb__pfeil svg { width: 14px; }
+  .jb__status { font-size: 0.8rem; gap: 6px; }
+  .jh-haken { width: 20px; height: 20px; }
+  .jh-shot { width: 84px; }
+  .jb-fenster__inhalt { height: 66px; padding: 7px; }
+  .jb-team { gap: 4px; }
+  .jb-person b { width: 20px; height: 20px; }
 }
 @media (max-width: 380px) {
-  .jh-blase { font-size: 0.82rem; }
   .jh-knopfe .btn { flex: 1 1 100%; }
 }
 
 /* ---------- 2. Problem ---------- */
 .jp__kopf .sn-h2 { max-width: 24ch; }
 .jp__kopf .sn-lead { max-width: 52ch; }
-.jp__stattdessen { display: block; margin-top: 6px; font-weight: 600; color: var(--ink); }
 .jp-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .jp-karte { min-width: 0; display: grid; gap: 8px; align-content: start; padding: clamp(20px, 2.4vw, 28px); border-radius: 24px;
   background: var(--paper); border: 1px solid var(--line); }
@@ -138,14 +186,49 @@
 .jl-wege li:last-child { background: #0b6d6b; border-color: #0b6d6b; color: var(--white); }
 .jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #084e4c; }
 .jl-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
-.jl-erledigt { list-style: none; margin: 0; padding: clamp(14px, 2vw, 20px); display: grid; gap: 10px; border-radius: 28px; background: var(--paper); }
-.jl-fall { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: center; padding: 14px 16px;
-  border-radius: 18px; background: var(--band, var(--white)); box-shadow: 0 1px 2px rgb(8 78 76 / 6%); }
-.jl-fall__ico { grid-row: span 2; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #edf4f1; color: #0b6d6b; }
-.jl-fall__text { min-width: 0; display: grid; gap: 2px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+/* Lösungs-Visual (Jamil #6199): Chat-Karten mit Absender-Icon, Verbindungsstrang zwischen den Karten und Status-Chip.
+   Status „wird bearbeitet“ (Fortschrittsstrich) und „erledigt“ liegen im selben Rasterfeld: kein Layout-Sprung. Grundzustand = Endzustand. */
+.jl-erledigt { list-style: none; margin: 0; padding: clamp(14px, 2vw, 22px); display: grid; gap: 16px; border-radius: 28px; background: var(--paper); }
+.jl-fall { position: relative; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 14px; align-items: center;
+  padding: 14px 16px; border-radius: 20px; border-top-left-radius: 8px; background: var(--band, var(--white));
+  box-shadow: 0 1px 2px rgb(8 78 76 / 6%), 0 12px 28px -22px rgb(8 78 76 / 35%); }
+.jl-fall:not(:last-child)::after { content: ''; position: absolute; left: 35px; top: 100%; width: 2px; height: 16px; border-radius: 2px;
+  background: linear-gradient(#2c9a7a, rgb(44 154 122 / 25%)); transform-origin: top; }
+.jl-fall__ico { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
+  box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); }
+.jl-fall__text { min-width: 0; display: grid; gap: 4px; justify-items: start; font-weight: 600; color: var(--ink); line-height: 1.4; }
 .jl-fall__zusatz { font-size: 0.8rem; font-weight: 700; color: #0b6d6b; }
-.jl-fall__status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700; color: #1f7a5f; }
-.jl-fall__status .j6i { stroke-width: 3; }
+.jl-shot { background: #f4f1ea; }
+.jl-shot i { background: #e1d9c9; }
+.jl-fall__status { display: grid; justify-items: end; align-items: center; }
+.jl-fall__status > * { grid-area: 1 / 1; }
+.jl-fall__arbeit { width: 56px; height: 4px; overflow: hidden; border-radius: 2px; background: #e6e0d4; opacity: 0; }
+.jl-fall__arbeit i { display: block; height: 100%; border-radius: inherit; background: #0b6d6b; transform-origin: left; }
+.jl-fall__fertig { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 6px; border-radius: 999px; background: #e3f3ec;
+  font-size: 0.84rem; font-weight: 700; color: #1d6b54; white-space: nowrap; }
+.jl-fall__haken { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white); }
+.jl-fall__haken .j6i { stroke-width: 3; }
+@media (max-width: 479px) {
+  .jl-fall { grid-template-columns: auto minmax(0, 1fr); padding: 12px 14px; }
+  .jl-fall__status { grid-column: 2; justify-items: start; }
+  .jl-fall:not(:last-child)::after { left: 33px; }
+}
+/* Ablauf beim Sichtbarwerden (.ist-da von start-6182.ts), 1 → 2 → 3 je 1,5 s, danach Ruhe */
+@media (prefers-reduced-motion: no-preference) {
+  .jl-fall { --t: calc(0.25s + var(--n) * 1.5s); animation: jl-rein 560ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: var(--t); }
+  .jl-fall__ico { animation: jb-chip 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 0.1s); }
+  .jl-shot b { animation: jb-markieren 420ms ease-out both; animation-delay: calc(var(--t) + 0.4s); }
+  .jl-fall__arbeit { animation: jl-arbeit 800ms ease both; animation-delay: calc(var(--t) + 0.35s); }
+  .jl-fall__arbeit i { animation: jl-strich 640ms cubic-bezier(0.65, 0, 0.35, 1) both; animation-delay: calc(var(--t) + 0.42s); }
+  .jl-fall__fertig { animation: jb-chip 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 1.12s); }
+  .jl-fall__haken .j6i path { stroke-dasharray: 24; animation: j6-strich 420ms cubic-bezier(0.65, 0, 0.35, 1) both; animation-delay: calc(var(--t) + 1.22s); }
+  .jl-fall:not(:last-child)::after { animation: jl-strang 420ms ease both; animation-delay: calc(var(--t) + 1.3s); }
+  html.j6-an .jl-erledigt:not(.ist-da) *, html.j6-an .jl-erledigt:not(.ist-da) *::after { animation-play-state: paused; }
+}
+@keyframes jl-rein { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes jl-arbeit { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes jl-strich { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes jl-strang { from { transform: scaleY(0); } to { transform: none; } }
 .jl-punkte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .jl-punkt { min-width: 0; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--band, var(--white)); }
 .jl-punkt__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
@@ -160,6 +243,43 @@
 
 /* ---------- 4. Was webgold anders macht (Jamil #6179) ---------- */
 .ja .sn-kopf .sn-h2 { max-width: 26ch; }
+/* Zwei Wege (Jamil #6207): links „Klassischer Weg“ (gedämpft, ❌ als Kreuz in gedämpftem Rot), rechts „webgold“ (✅/📈 positiv).
+   Schritte mit feiner Verbindungslinie; beim Sichtbarwerden erscheinen sie gestaffelt (unten), Grundzustand = Endzustand. */
+.ja-wege { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.ja-weg { min-width: 0; padding: clamp(18px, 2.4vw, 28px); border-radius: 28px; background: var(--paper); }
+.ja-weg--wir { background: #edf4f1; box-shadow: inset 0 0 0 1.5px #b9dccd; }
+.ja .ja-weg__titel { margin: 0 0 18px; font-family: var(--font-head); font-weight: 800; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); color: var(--ink-soft); }
+.ja-weg--wir .ja-weg__titel { color: #0b6d6b; }
+.ja-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.ja-schritt { position: relative; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--ink); line-height: 1.35; }
+.ja-schritt:not(:last-child)::after { content: ''; position: absolute; left: 17px; top: 36px; width: 2px; height: 14px; border-radius: 2px;
+  background: #d8d1c3; transform-origin: top; }
+.ja-weg--wir .ja-schritt:not(:last-child)::after { background: #8cc7b2; }
+.ja-schritt__ico { position: relative; flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--white); color: #0b6d6b; box-shadow: 0 0 0 1px #e6e0d4; }
+.ja-weg--alt .ja-schritt__ico { color: #6b6458; }
+.ja-schritt--nein { color: #8c3d33; }
+.ja-schritt--nein .ja-schritt__ico { background: #f6e3df; color: #b5483a; box-shadow: none; }
+.ja-schritt--nein .j6i { stroke-width: 2.6; }
+.ja-schritt--ja { color: #084e4c; font-weight: 750; }
+.ja-schritt--ja .ja-schritt__ico { background: #2c9a7a; color: var(--white); box-shadow: 0 0 0 3px rgb(44 154 122 / 18%); }
+@media (min-width: 760px) { .ja-wege { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+/* Vorteile (Jamil #6208): genau 4 Karten */
+.ja-vorteile { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.ja-vorteil { min-width: 0; display: grid; align-content: start; gap: 8px; padding: 20px 22px; border-radius: 20px; border: 1px solid var(--line);
+  background: var(--band, var(--white)); }
+.ja-vorteil__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #0b6d6b; color: var(--white);
+  box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); margin-bottom: 4px; }
+.ja-vorteil__titel { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: 1.08rem; line-height: 1.3; color: var(--ink); }
+.ja-vorteil__text { margin: 0; font-size: 0.97rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 600px) { .ja-vorteile { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .ja-vorteile { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .ja-schritt { --t: calc(0.2s + var(--w, 0) * 0.3s + var(--s) * 0.24s); animation: jl-rein 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both; animation-delay: var(--t); }
+  .ja-schritt:not(:last-child)::after { animation: jl-strang 300ms ease both; animation-delay: calc(var(--t) + 0.3s); }
+  .ja-schritt--nein .ja-schritt__ico, .ja-schritt--ja .ja-schritt__ico { animation: jb-chip 420ms cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: calc(var(--t) + 0.15s); }
+  html.j6-an .ja-weg:not(.ist-da) *, html.j6-an .ja-weg:not(.ist-da) *::after { animation-play-state: paused; }
+}
 .ja-tafel { border-radius: 28px; background: var(--paper); padding: clamp(6px, 1.2vw, 14px); }
 .ja-tabelle { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 .ja-tabelle th, .ja-tabelle td { padding: 14px clamp(10px, 2vw, 24px); text-align: left; vertical-align: top; line-height: 1.45; }
@@ -272,14 +392,6 @@
   html.j6-an .j6-ein .j6-strich path { stroke-dasharray: 24; stroke-dashoffset: 24;
     transition: stroke-dashoffset 440ms cubic-bezier(0.65, 0, 0.35, 1) calc(var(--j6-v, 0ms) + 280ms); }
   html.j6-an .j6-ein.ist-da .j6-strich path { stroke-dashoffset: 0; }
-  html.j6-an .jl-fall .jl-fall__status { opacity: 0; transition: opacity 400ms ease calc(var(--j6-v, 0ms) + 300ms); }
-  html.j6-an .jl-fall.ist-da .jl-fall__status { opacity: 1; }
-  /* Lösung: die drei „erledigt“ deutlich nacheinander */
-  html.j6-an .jl-fall:nth-child(2) { --j6-n: 1; }
-  html.j6-an .jl-fall:nth-child(3) { --j6-n: 2; }
-  html.j6-an .jl-fall { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms), calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms), 0ms; }
-  html.j6-an .jl-fall .j6-strich path { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms + 300ms); }
-  html.j6-an .jl-fall .jl-fall__status { transition-delay: calc(var(--j6-v, 0ms) + var(--j6-n, 0) * 260ms + 320ms); }
 
   /* Karten-Hover dezent (nur Maus): leicht anheben, Schatten über Deckkraft */
   .jp-karte, .jz-frage, .jv-punkt, .jr-ref, .jl-punkt { position: relative; }
