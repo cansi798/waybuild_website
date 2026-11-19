@@ -69,7 +69,7 @@ body { --stickybar-h: 0px; }
   /* Rollen je Fläche (hier: hell). Dunkel und Karte setzen sie neu, alles darin folgt von selbst. */
   --neu-text: var(--ink);
   --neu-text-leise: var(--ink-soft);
-  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell: nur das dunklere #B45309 */
+  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell: nur das dunklere #8C6D12 */
   --neu-licht: var(--accent);            /* Punkt und Linie */
   --neu-rand: var(--line);               /* feine Linie */
   --neu-fokus: var(--accent-ink);        /* Fokusrahmen */

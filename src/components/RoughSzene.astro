@@ -103,14 +103,14 @@ const desktop = SZENEN[szene]("desktop");
   /* Technisches Punkteraster hinter der Szene, zum Rand hin ausgeblendet */
   .rszene__bild::before {
     content: ""; position: absolute; inset: -18px -12px; z-index: -1; pointer-events: none;
-    background-image: radial-gradient(circle, rgb(217 119 6 / 0.22) 1.1px, transparent 1.6px);
+    background-image: radial-gradient(circle, rgb(212 175 55 / 0.22) 1.1px, transparent 1.6px);
     background-size: 22px 22px;
     -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 78%);
             mask-image: radial-gradient(ellipse at center, #000 45%, transparent 78%);
   }
   .rszene__svg { display: block; width: 100%; height: auto; overflow: visible; }
   /* Leuchten nur auf Leiterbahnen/Datenringen – Schrift bleibt gestochen scharf */
-  .rs-s--fluss { filter: drop-shadow(0 0 3px rgb(217 119 6 / 0.45)); }
+  .rs-s--fluss { filter: drop-shadow(0 0 3px rgb(212 175 55 / 0.45)); }
   .rszene__svg text { font-family: var(--font-head); stroke: none; }
   .rszene__svg--desktop { display: none; }
   @media (min-width: 768px) {

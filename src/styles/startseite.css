@@ -1,17 +1,17 @@
 /* Startseite „Unternehmensauftritt“ (Jamil, Talk qh87y3sj 4768, 06.11.2026; ersetzt die „Besucherreise“ vom 05.11.).
  * Farben seit 08.11.2026 (Jamil Sprachnachricht #5008: „Farben und Design an die Hauptseite anpassen, Türkis-Grün-Weiß“)
- * wieder die waybuild-CI wie auf allen anderen Seiten: dieselben Tokens aus global.css (--accent #D97706, --accent-ink
- * #B45309, --dark #0F172A, --paper/--paper-2, --ink). Die Sonder-Palette vom 05.11. (Navy/Salbei/Gold) ist entfernt;
- * Sicherung Branch vor-tuerkis-20261108. Kontrast (WCAG AA): Türkis #D97706 NUR für Flächen, Linien und Zeichen (auf
- * Weiß 3,0 : 1); Schrift und Links auf Hell in #B45309 (6,4 : 1) bzw. #0F172A; auf Türkis-Flächen Schrift #0b2a29
- * (5,1 : 1); auf Dunkel Türkis-Hell #FCD34D (5,9 : 1). Bezeichnungen der Hauptseite: --accent-mid / --accent-light / --on-accent.
+ * wieder die waybuild-CI wie auf allen anderen Seiten: dieselben Tokens aus global.css (--accent #D4AF37, --accent-ink
+ * #8C6D12, --dark #0F172A, --paper/--paper-2, --ink). Die Sonder-Palette vom 05.11. (Navy/Salbei/Gold) ist entfernt;
+ * Sicherung Branch vor-tuerkis-20261108. Kontrast (WCAG AA): Türkis #D4AF37 NUR für Flächen, Linien und Zeichen (auf
+ * Weiß 3,0 : 1); Schrift und Links auf Hell in #8C6D12 (6,4 : 1) bzw. #0F172A; auf Türkis-Flächen Schrift #0b2a29
+ * (5,1 : 1); auf Dunkel Türkis-Hell #E6C766 (5,9 : 1). Bezeichnungen der Hauptseite: --accent-mid / --accent-light / --on-accent.
  * html[data-thema='besucherreise'] steuert nur noch Inhalte von Kopf, Fuß und Leiste (Logo C wie auf allen Seiten, Jamil #5226/#5227).
  * Bewegung: src/scripts/startseite.ts am 09.11.2026 entfernt (keine Nutzer mehr: [data-p], [data-fokus], [data-zeichne]).
  * Kundenreise hat ein eigenes Skript (kundenreise.ts), „So gehen wir vor“ misst seinen Kartenstapel selbst (SoGehenWirVor.astro). */
 
 html[data-thema='besucherreise'] {
   /* Rollen der früheren Sonder-Palette, jetzt auf die CI gelegt */
-  /* --gold kommt aus global.css/start-farben.css (#D97706); die alte Umleitung auf Türkis entfernt (QA #5952, war bereits überschrieben) */
+  /* --gold kommt aus global.css/start-farben.css (#D4AF37); die alte Umleitung auf Türkis entfernt (QA #5952, war bereits überschrieben) */
   --salbei: var(--accent-mid);    /* kleine Zeichen, Punkte, Balken: Türkis mittel (≥ 3 : 1 auf Weiß) */
   scroll-padding-top: 84px;
 }
@@ -21,14 +21,14 @@ html[data-thema='besucherreise'] .bs--dunkel :focus-visible { outline-color: var
 
 /* Knöpfe wie auf den übrigen Seiten: Türkis-Fläche (Pille); Schrift dunkel (#0b2a29) statt Grau, damit AA erfüllt ist */
 html[data-thema='besucherreise'] .btn--primary, .btn--marke { background: var(--accent); color: var(--on-accent); }
-html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { background: #F59E0B; } /* Jamil #6431 (vorher #3fb38f) */
+html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { background: #C29F2F; } /* Jamil #6431 (vorher #3fb38f) */
 .btn--umriss { border-color: var(--accent-ink); color: var(--accent-ink); background: transparent; }
 .btn--umriss:hover { background: rgb(0 107 104 / 7%); }
 
 /* Leistung am Handy: Abschnitte unterhalb des ersten Bildschirms erst berechnen, wenn sie in die Nähe kommen. */
 
 /* Kopfzeile: seit 08.11.2026 (Jamil, Talk qh87y3sj #5072/#5085) auf ALLEN Seiten gleich, hell (--paper) mit dunkler Schrift
- * und Knopf #B45309 (Header.astro). Die frühere Startseiten-Sonderregel „Kopfzeile Türkis #D97706 mit dunkler Schrift“
+ * und Knopf #8C6D12 (Header.astro). Die frühere Startseiten-Sonderregel „Kopfzeile Türkis #D4AF37 mit dunkler Schrift“
  * (#5011, Commit 725904a) ist entfernt; Sicherungen vor-header-dunkel-20261108 und vor-direkt-buchen-20261108. */
 .bs { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 

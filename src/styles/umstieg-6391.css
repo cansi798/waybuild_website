@@ -12,11 +12,11 @@
 .ju-antwort { line-height: 1.65; color: var(--ink); text-wrap: pretty; }
 .ju-ico { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; margin-top: 1px; }
 .ju-ico--frage { background: #F1F5F9; color: #64748B; }
-.ju-ico--ok { background: #D97706; color: var(--white); }
+.ju-ico--ok { background: #D4AF37; color: var(--white); }
 
 /* Abschlusszeile mit Link zu den häufigen Fragen (Jamil #6393) */
 .ju-mehr { margin: clamp(28px, 4vw, 44px) 0 0 !important; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; color: var(--ink); font-weight: 600; }
-.ju-mehr__link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #B45309;
-  background: var(--white); color: #B45309; font-weight: 700; text-decoration: none; }
-.ju-mehr__link:hover { background: #B45309; color: var(--white); }
+.ju-mehr__link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #8C6D12;
+  background: var(--white); color: #8C6D12; font-weight: 700; text-decoration: none; }
+.ju-mehr__link:hover { background: #8C6D12; color: var(--white); }
 .ju-mehr__link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }

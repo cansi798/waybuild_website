@@ -22,7 +22,7 @@
 .kr-titel { max-width: 26ch; margin-inline: auto; }
 .kr-intro { margin: 0 auto; max-width: 62ch; text-wrap: pretty; }
 /* Abschluss der Kundenreise (Jamil, Talk qh87y3sj #5211–#5213, 09.11.2026): statt Schlusssatz der Knopf aus dem Hero
- * (HERO_KNOPF, gleiches Ziel), gleiche Form, Größe und Takt (v-glow/v-glanz), nur für den hellen Grund umgekehrt: Türkis #B45309,
+ * (HERO_KNOPF, gleiches Ziel), gleiche Form, Größe und Takt (v-glow/v-glanz), nur für den hellen Grund umgekehrt: Türkis #8C6D12,
  * Schrift weiß (6,36 : 1), Lichtring in Türkis, Glanz weiß 12 % (Schrift darunter ≥ 4,5 : 1). Reduzierte Bewegung: ruhig. */
 /* Schlusszeile davor (#5275): „Wir sind dafür der richtige Ansprechpartner.“ in der Überschriften-Schrift, dann „Jetzt starten“ */
 /* .kr-schluss (Satz + Knopf unter der Kundenreise) seit 12.11.2026 im Ziel der Bühne (.krb-ziel, kundenreise.css; Jamil #5621) */
@@ -34,7 +34,7 @@
   background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 12%) 50%, transparent 70%); transform: translateX(-120%);
   animation: v-glanz 3s ease-in-out 1s infinite; }
 .kr-cta .kr-leucht:hover, .kr-cta .kr-leucht:focus-visible { animation: none; background: var(--accent-ink); color: var(--white);
-  box-shadow: 0 0 0 6px rgb(0 128 123 / 18%), 0 0 36px 6px rgb(217 119 6 / 28%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
+  box-shadow: 0 0 0 6px rgb(0 128 123 / 18%), 0 0 36px 6px rgb(212 175 55 / 28%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
 .kr-cta .kr-leucht:focus-visible { border-radius: 999px; outline-offset: 4px; }
 @keyframes kr-glow {
   0% { box-shadow: 0 0 0 0 rgb(0 128 123 / 35%), 0 12px 30px -14px rgb(0 40 38 / 55%); }
@@ -49,10 +49,10 @@
 /* ERSTER BILDSCHIRM (Jamil, Talk qh87y3sj #5072, #5085–#5114, 08.11.2026; Sicherung vor-hero-firma-20261108):
  * ganz in Türkis bis zur Unterkante des Bildschirms (min-height 100svh minus Kopfzeile bzw. Vorschau-Leiste),
  * Überschrift, Unterzeile und Knöpfe mittig, keine Preise. Schrift Weiß.
- * Ein Knopf „Kostenlose Erstberatung“ (seit #5322 Q2; vorher „Jetzt kostenlos beraten lassen“; weiß, #B45309, Lichtschein, #5121–#5124); der zweite Knopf ist entfallen.
+ * Ein Knopf „Kostenlose Erstberatung“ (seit #5322 Q2; vorher „Jetzt kostenlos beraten lassen“; weiß, #8C6D12, Lichtschein, #5121–#5124); der zweite Knopf ist entfallen.
  * HINTERGRUND (#5114, wie firma.de): weicher Mesh-Verlauf aus 4 großen, weichen Farbflächen (.v-blob, radial-gradient)
- * in #D97706, #FCD34D (Hauch), #B45309 und #00807b auf Grund #00807b; jede bewegt sich SEHR langsam (26–38 s, nur
- * transform, GPU-freundlich). Darüber (::after) eine weiche Abdunklung in #B45309 hinter Unterzeile und Knöpfen und ein
+ * in #D4AF37, #E6C766 (Hauch), #8C6D12 und #00807b auf Grund #00807b; jede bewegt sich SEHR langsam (26–38 s, nur
+ * transform, GPU-freundlich). Darüber (::after) eine weiche Abdunklung in #8C6D12 hinter Unterzeile und Knöpfen und ein
  * feines Korn (SVG-Rauschen, < 3 % Weiß, 0,4 KB). Kontrast per Pixelmessung bei 320–1920 px und mehreren Zeitpunkten der
  * Bewegung: hinter Unterzeile und Knöpfen ≥ 4,5 : 1, H1 ≥ 3 : 1 (siehe Talk/Memory). Bei reduzierter Bewegung steht er still.
  * EINBLENDEN (#5114, wie firma.de): H1 Wort für Wort (.v-wort mit --i): Deckkraft, 0,25 em von unten, Unschärfe 10 px → scharf,
@@ -67,10 +67,10 @@
 .v-mesh { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
 .v-blob { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; will-change: transform;
   animation: v-treiben var(--dauer, 32s) ease-in-out infinite alternate; }
-.v-blob--1 { left: -28vmax; top: -34vmax; background: radial-gradient(closest-side, rgb(217 119 6 / 58%), rgb(217 119 6 / 0)); --dauer: 34s; --dx: 9vmax; --dy: 6vmax; }
+.v-blob--1 { left: -28vmax; top: -34vmax; background: radial-gradient(closest-side, rgb(212 175 55 / 58%), rgb(212 175 55 / 0)); --dauer: 34s; --dx: 9vmax; --dy: 6vmax; }
 .v-blob--2 { right: -30vmax; top: -30vmax; background: radial-gradient(closest-side, rgb(95 224 218 / 16%), rgb(95 224 218 / 0)); --dauer: 38s; --dx: -8vmax; --dy: 9vmax; }
 .v-blob--3 { right: -26vmax; bottom: -38vmax; background: radial-gradient(closest-side, rgb(0 107 104 / 85%), rgb(0 107 104 / 0)); --dauer: 28s; --dx: -10vmax; --dy: -7vmax; }
-.v-blob--4 { left: -24vmax; bottom: -40vmax; background: radial-gradient(closest-side, rgb(217 119 6 / 40%), rgb(217 119 6 / 0)); --dauer: 26s; --dx: 8vmax; --dy: -6vmax; }
+.v-blob--4 { left: -24vmax; bottom: -40vmax; background: radial-gradient(closest-side, rgb(212 175 55 / 40%), rgb(212 175 55 / 0)); --dauer: 26s; --dx: 8vmax; --dy: -6vmax; }
 @keyframes v-treiben { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(var(--dx), var(--dy), 0) scale(1.08); } }
 /* Abdunklung hinter dem Text + Korn */
 .v-hero::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -89,7 +89,7 @@
 .v-hero .v-unter { color: var(--white); max-width: 52ch; text-wrap: balance; margin: 0 auto 34px; font-size: clamp(1.15rem, 2.1vw, 23.2px); line-height: 1.5; } /* höchstens 23,2 px wie bisher: Maßstab, die übrige Schrift bleibt darunter (#5292) */
 .v-hero .v-knopfe { justify-content: center; width: 100%; }
 .v-hero :focus-visible { outline-color: var(--white) !important; }
-/* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #B45309 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring, seit #5204 nur drei Mal
+/* Ein Knopf, der aufleuchtet (#5121–#5124): weiß, Schrift #8C6D12 (6,36 : 1), etwas größer. Alle 3 s ein sanfter Lichtring, seit #5204 nur drei Mal
  * (box-shadow, weiß → durchsichtig) und einmal pro Takt ein heller Türkis-Glanz über den Knopf (Schrift darunter ≥ 5 : 1).
  * Startet nach dem Einblenden. Hover/Fokus: stärkerer, ruhender Schein. Reduzierte Bewegung: nur leichter Schatten. */
 .v-hero .v-leucht { position: relative; isolation: isolate; overflow: hidden; min-height: 60px; padding: 1em 2.3em; font-size: clamp(17.28px, 1.6vw, 19.2px); /* px wie bisher (#5292) */
@@ -184,6 +184,6 @@ html.stapeln .stapel-schatten { display: block; position: absolute; inset: 0; z-
 
 /* Kostenlose Vorschau am Hauptknopf (Jamil #6061): kleine Plakette, weiß auf Türkis, nicht überladen */
 .v-hero .v-vorschau { display: inline-flex; align-items: center; gap: 8px; margin: 18px auto 0; padding: 7px 16px; border-radius: 999px; background: rgb(255 255 255 / 14%); border: 1px solid rgb(255 255 255 / 38%); color: #fff; font-size: clamp(0.84rem, 0.8rem + 0.2vw, 0.95rem); font-weight: 650; line-height: 1.4; }
-.v-hero .v-vorschau svg { flex: none; color: #D97706; }
+.v-hero .v-vorschau svg { flex: none; color: #D4AF37; }
 .v-hero .v-knopfe + .v-vorschau { display: flex; width: fit-content; max-width: 100%; }
 @media (max-width: 480px) { .v-hero .v-vorschau { padding: 7px 14px; } }

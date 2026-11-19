@@ -1,4 +1,5 @@
 ---
+import { OG_BILD } from '../config/site'; // Vorschaubild (Jamil #6437)
 // Kleine Weiterleitungsseite für gelöschte Adressen (Jamil, Talk qh87y3sj #5322, Q6/Q7, 09.11.2026):
 // alte Leistungsseiten und Branchenseiten führen auf die passende neue Seite, damit Links von außen nicht ins Leere zeigen.
 // Eigene Seite statt Astro-redirects, weil diese den Base-Pfad der Vorschau nicht setzen. Ohne Kopf und Fuß,
@@ -14,7 +15,7 @@ interface Props {
 const { ziel, name } = Astro.props;
 const zielHref = href(ziel);
 const zielAbsolut = absolute(ziel, Astro.site);
-const ogImage = absolute('/og-image.png?v=20261109', Astro.site);
+const ogImage = absolute(OG_BILD, Astro.site);
 ---
 
 <!doctype html>
@@ -33,7 +34,7 @@ const ogImage = absolute('/og-image.png?v=20261109', Astro.site);
     <style is:inline>
       body { margin: 0; padding: 48px 16px; font: 18px/1.6 system-ui, sans-serif; color: #10302f; background: #fff; }
       main { max-width: 640px; margin: 0 auto; }
-      a { color: #B45309; }
+      a { color: #8C6D12; }
     </style>
   </head>
   <body>

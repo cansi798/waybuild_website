@@ -1,4 +1,4 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#B45309→#B45309, #0F172A→#0F172A, #D97706→#D97706, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #0F172A→#0F172A, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
 /* /leistungen/ – Übersicht im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026).
  * Baut auf start-neu.css auf (.sn, .sn-kopf, .sn-h2, .sn-lead, .sn-kenn, .sn-link). Präfix .sl-.
  * Ruhig: Zahlen und feine Linien statt Icon-Kacheln; Hintergründe Weiß / Papier im Wechsel, danach SnSystem (Hauch),
@@ -14,9 +14,9 @@
 .sl-sprung__liste li { min-width: 0; }
 .sl-sprung__liste a { display: inline-flex; align-items: baseline; gap: 10px; min-height: 44px; padding-block: 10px; font-weight: 600;
   color: var(--ink); text-decoration: none; overflow-wrap: break-word; }
-.sl-sprung__liste a:hover { color: #B45309; text-decoration: underline; text-underline-offset: 4px; }
-.sl-sprung__liste a:focus-visible { outline: 3px solid #B45309; outline-offset: 3px; border-radius: 6px; }
-.sl-sprung__nr { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: #B45309; font-variant-numeric: tabular-nums; }
+.sl-sprung__liste a:hover { color: #8C6D12; text-decoration: underline; text-underline-offset: 4px; }
+.sl-sprung__liste a:focus-visible { outline: 3px solid #8C6D12; outline-offset: 3px; border-radius: 6px; }
+.sl-sprung__nr { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: #8C6D12; font-variant-numeric: tabular-nums; }
 
 /* ── Gruppen ── */
 .sl-gruppe { padding-block: clamp(64px, 9vw, 120px); scroll-margin-top: calc(var(--header-h, 72px) + 8px); }
@@ -32,18 +32,18 @@
   border-radius: 24px; background: var(--paper); box-shadow: inset 0 0 0 1px transparent;
   transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 /* Karten: var(--paper) = Gegenfarbe des Abschnitts (global.css) */
-.sl-karte:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #FDE68A, 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 38%); }
+.sl-karte:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #EADBA6, 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 38%); }
 .sl-karte__nr { padding-bottom: 14px; border-bottom: 1px solid #E2E8F0; font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
-  letter-spacing: 0.02em; color: #B45309; font-variant-numeric: tabular-nums; }
+  letter-spacing: 0.02em; color: #8C6D12; font-variant-numeric: tabular-nums; }
 .sl-karte__titel { margin-top: 8px !important; overflow-wrap: break-word; hyphens: auto; }
 .sl-karte__titel a { color: inherit; text-decoration: none; }
 /* ganze Karte klickbar, Linkname bleibt der Titel */
 .sl-karte__titel a::after { content: ""; position: absolute; inset: 0; border-radius: 24px; }
 .sl-karte__titel a:focus-visible { outline: none; }
-.sl-karte__titel a:focus-visible::after { outline: 3px solid #B45309; outline-offset: 3px; }
+.sl-karte__titel a:focus-visible::after { outline: 3px solid #8C6D12; outline-offset: 3px; }
 .sl-karte__text { font-size: 0.98rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
-.sl-karte__paket { font-size: 0.86rem; font-weight: 600; color: #B45309; }
-.sl-karte__mehr { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 12px; font-weight: 600; color: #B45309; }
+.sl-karte__paket { font-size: 0.86rem; font-weight: 600; color: #8C6D12; }
+.sl-karte__mehr { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 12px; font-weight: 600; color: #8C6D12; }
 .sl-karte__mehr svg { flex: none; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 .sl-karte:hover .sl-karte__mehr svg, .sl-karte:focus-within .sl-karte__mehr svg { transform: translateX(4px); }
 .sl-karte:hover .sl-karte__mehr { text-decoration: underline; text-underline-offset: 4px; }

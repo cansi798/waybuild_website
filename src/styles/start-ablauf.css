@@ -2,10 +2,10 @@
    Jamil Talk qh87y3sj #5939, 14.11.2026: kürzer, Unternehmens-DNA hervorheben, im Stil der Website.
    Aufbau: Handy = senkrechte Zeitleiste (Linie links, Nummern als Punkte), ab 640 px Karten in 2 Spalten, ab 1000 px Treppe
    (Schritte 1–4 zu zweit, Schritt 5 über die volle Breite als Höhepunkt, 6–8 zu dritt). Schritt 5 dunkel (#0F172A) mit feiner
-   Doppelhelix; Gold (#D97706) nur als Zier (Linie, Punkt), nie als Schrift. Haken in Positiv #D97706.
+   Doppelhelix; Gold (#D4AF37) nur als Zier (Linie, Punkt), nie als Schrift. Haken in Positiv #D4AF37.
    WebKit: Grids nur minmax(0, 1fr), min-width: 0 an Kindern, SVG mit width/height + viewBox, .sr-only in position: relative. */
 
-.sab { --sab-gold: var(--gold, #D97706); --sab-gold-tief: #D97706; --sab-positiv: #D97706; --sab-dunkel: #0F172A; }
+.sab { --sab-gold: var(--gold, #D4AF37); --sab-gold-tief: #D4AF37; --sab-positiv: #D4AF37; --sab-dunkel: #0F172A; }
 
 /* ── Zeitleiste ── */
 .sab-schritte { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }
@@ -42,7 +42,7 @@
 
 /* ── Höhepunkt: Schritt 5, Unternehmens-DNA ── */
 .sab-schritt--dna .sab-nr { background: var(--sab-dunkel); border-color: var(--sab-gold); color: var(--white);
-  box-shadow: 0 0 0 5px rgb(217 119 6 / 18%); }
+  box-shadow: 0 0 0 5px rgb(212 175 55 / 18%); }
 .sab-schritt--dna .sab-inhalt, .sab-schritt--dna .sab-dna { grid-column: 2; }
 .sab-schritt--dna { row-gap: 0; }
 .sab-schritt--dna > .sab-inhalt { padding: 24px 22px 8px; border-radius: 22px 22px 0 0; background: var(--sab-dunkel); color: var(--white); }
@@ -54,14 +54,14 @@
 .sab-dna-marke { display: inline-flex; align-items: center; gap: 10px; justify-self: start; font-size: 0.8rem; font-weight: 700;
   letter-spacing: 0.06em; text-transform: uppercase; color: rgb(255 255 255 / 90%); }
 .sab-dna-marke::after { content: ''; width: 36px; height: 1.5px; border-radius: 2px; background: var(--sab-gold); }
-.sab-dna-punkt { width: 8px; height: 8px; border-radius: 50%; background: var(--sab-gold); box-shadow: 0 0 0 4px rgb(217 119 6 / 22%); }
+.sab-dna-punkt { width: 8px; height: 8px; border-radius: 50%; background: var(--sab-gold); box-shadow: 0 0 0 4px rgb(212 175 55 / 22%); }
 .sab-dna { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-content: center; }
 .sab-helix { display: block; width: 100%; max-width: 420px; height: auto; overflow: visible; }
 .sab-helix__strang { stroke-width: 1.6; stroke-linecap: round; }
 .sab-helix__strang--a { stroke: var(--sab-gold); }
 .sab-helix__strang--b { stroke: rgb(255 255 255 / 55%); }
 .sab-helix__sprosse { stroke: rgb(255 255 255 / 22%); stroke-width: 1.2; stroke-linecap: round; }
-.sab-chips--dna .sab-chip { background: rgb(255 255 255 / 10%); color: var(--white); border: 1px solid rgb(217 119 6 / 45%); }
+.sab-chips--dna .sab-chip { background: rgb(255 255 255 / 10%); color: var(--white); border: 1px solid rgb(212 175 55 / 45%); }
 
 /* Helix: Stränge zeichnen sich beim Einblenden einmal sanft ein (nur mit Bewegung) */
 @media (prefers-reduced-motion: no-preference) {
@@ -79,7 +79,7 @@
 .sab-vorteil__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px 32px; }
 .sab-vorteil__punkt { min-width: 0; display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start;
   font-size: 0.98rem; font-weight: 550; line-height: 1.5; color: var(--ink); overflow-wrap: break-word; }
-.sab-haken { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #FEF3C7; color: var(--sab-positiv); }
+.sab-haken { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #FBF3D5; color: var(--sab-positiv); }
 .sab-haken svg { stroke-width: 2.4; }
 
 /* ── ab 640 px: Karten in zwei Spalten ── */

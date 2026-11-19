@@ -284,3 +284,8 @@ export const faqs = [
     a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 30 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.', // Jamil #6055 Fr. 15 (30 Minuten)
   },
 ];
+
+/** Vorschaubild beim Teilen (og:image/twitter:image). Jamil #6435–#6437: bei jeder Design-Änderung direkt mit anpassen;
+ *  neuer Dateiname = neuer Cache bei WhatsApp/LinkedIn & Co. Vorher: /og-image.png (alte Farben, „waybuild“). */
+export const OG_BILD = '/og-webgold-20261120.png';
+export const OG_BILD_ALT = 'webgold: Stark nach außen. Effizient nach innen. Websites & Software nach Maß';

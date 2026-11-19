@@ -8,33 +8,33 @@
 .js7-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.8vw, 34px); border-radius: 26px;
   background: var(--white); color: var(--ink); box-shadow: 0 30px 60px -40px rgb(0 0 0 / 70%); }
 .js7-karte__art { margin: 0; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
-.js7-badge { align-self: start; padding: 4px 11px; border-radius: 999px; background: #B45309; color: var(--white); font-size: 0.78rem; font-weight: 700; line-height: 1.35; }
-.js7-badge--hell { background: #FEF3C7; color: #92400E; box-shadow: inset 0 0 0 1px #FDE68A; }
+.js7-badge { align-self: start; padding: 4px 11px; border-radius: 999px; background: #8C6D12; color: var(--white); font-size: 0.78rem; font-weight: 700; line-height: 1.35; }
+.js7-badge--hell { background: #FBF3D5; color: #7A5E0E; box-shadow: inset 0 0 0 1px #EADBA6; }
 .js7-karte__titel { margin: 0; font-family: var(--font-head); font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; color: var(--ink); }
 .js7-karte__text { margin: 0 0 4px; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .js7-feld { display: grid; gap: 6px; font-weight: 600; font-size: 0.92rem; color: var(--ink); }
 .js7-feld small, .js7-chips small { font-weight: 500; color: var(--ink-soft); }
 .js7-feld input { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; background: #F8FAFC;
   font: inherit; font-weight: 450; color: var(--ink); }
-.js7-feld input:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; border-color: #B45309; background: var(--white); }
+.js7-feld input:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; border-color: #8C6D12; background: var(--white); }
 .js7-feld input[aria-invalid="true"] { border-color: #b42318; }
 .js7-chips { margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .js7-chips legend { margin-bottom: 8px; padding: 0; font-weight: 600; font-size: 0.92rem; color: var(--ink); }
 .js7-chip { position: relative; }
 .js7-chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .js7-chip span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid #CBD5E1; background: var(--white); font-weight: 600; font-size: 0.9rem; }
-.js7-chip input:checked + span { border-color: #B45309; background: #FEF3C7; color: #B45309; }
+.js7-chip input:checked + span { border-color: #8C6D12; background: #FBF3D5; color: #8C6D12; }
 .js7-chip input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
 .js7-hp { position: absolute; left: -9999px; width: 1px; height: 1px; }
 .js7-check { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; font-size: 0.84rem; line-height: 1.5; color: var(--ink-soft); }
-.js7-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: #B45309; }
-.js7-check a { color: #B45309; font-weight: 600; }
-.js7-btn { margin-top: auto; justify-content: center; width: 100%; background: #B45309; color: var(--white); border: 0; white-space: normal; text-align: center; }
+.js7-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: #8C6D12; }
+.js7-check a { color: #8C6D12; font-weight: 600; }
+.js7-btn { margin-top: auto; justify-content: center; width: 100%; background: #8C6D12; color: var(--white); border: 0; white-space: normal; text-align: center; }
 .js7-btn:hover { background: #0F172A; color: var(--white); }
 .js7-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .js7-btn:disabled { opacity: 0.7; }
 .js7-fehler { display: block; margin-top: -4px; font-size: 0.85rem; font-weight: 600; color: #b42318; }
-.js7-status { margin: 0; min-height: 1.4em; font-size: 0.9rem; font-weight: 600; color: #B45309; }
+.js7-status { margin: 0; min-height: 1.4em; font-size: 0.9rem; font-weight: 600; color: #8C6D12; }
 .js7-vertrauen { margin-top: clamp(24px, 3.5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; text-align: center; }
 .js7-vertrauen p { margin: 0; max-width: 60ch; color: #E2E8F0; line-height: 1.6; }
 .js7-fotos { display: inline-flex; }
@@ -42,4 +42,4 @@
 .js7-foto { display: block; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #0F172A; box-shadow: 0 0 0 1.5px var(--gold); }
 #kontakt-start .js7-karte__titel { color: var(--ink); }
 #kontakt-start .js7-karte__text, #kontakt-start .js7-karte p { color: var(--ink-soft); }
-#kontakt-start .js7-karte .js7-status { color: #B45309; }
+#kontakt-start .js7-karte .js7-status { color: #8C6D12; }

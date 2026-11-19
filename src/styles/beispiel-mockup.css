@@ -11,10 +11,10 @@
  * Gleiche Linienstärke (2 px Kontur) und gleiche Radien-Logik für alle Geräte. Nur transform/opacity werden animiert. */
 
 :root {
-  /* Farben (CI waybuild; Drehbuch: Türkis #D97706/#00807b, dunkel #0F172A, Creme #f6f3ee) */
-  --bsp-tuerkis: #D97706;
+  /* Farben (CI waybuild; Drehbuch: Türkis #D4AF37/#00807b, dunkel #0F172A, Creme #f6f3ee) */
+  --bsp-tuerkis: #D4AF37;
   --bsp-tuerkis-dunkel: #00807b;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
-  --bsp-tinte: #B45309;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
+  --bsp-tinte: #8C6D12;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
   --bsp-nacht: #0F172A;           /* Kontur der Geräte, dunkle Flächen */
   --bsp-creme: #f6f3ee;
   --bsp-papier: #F8FAFC;          /* Hintergrund in App-Bildschirmen */
@@ -118,7 +118,7 @@
 .bm-klein { margin: 0; font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
 .bm-karte { position: relative; padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau);
   box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgb(15 23 42 / 5%); }
-.bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(217 119 6 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(15 23 42 / 35%); }
+.bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(212 175 55 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(15 23 42 / 35%); }
 .bm-knopf { display: inline-flex; align-items: center; justify-content: center; gap: var(--bsp-a1); min-height: calc(36 * var(--px)); padding: 0 var(--bsp-a4);
   border-radius: 99px; background: var(--bsp-tinte); color: var(--bsp-weiss); font-size: var(--bsp-schrift-m); font-weight: 650; white-space: nowrap; }
 .bm-knopf--hell { background: var(--bsp-flaeche); color: var(--bsp-tinte); }
