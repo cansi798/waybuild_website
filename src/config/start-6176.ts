@@ -36,18 +36,35 @@ export const ALT_ZEIGEN = {
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
 export const PAKETE_ZEIGEN = true;
 
+/** Hero-Preiszeile (Jamil #6396, 19.11.2026): Preise hier ändern, Text baut sich in J_HERO.preiszeile daraus. */
+export const HERO_PREISE = {
+  website: 54.99, // „Handprogrammierte Websites ab … / Monat“
+  software: 199.99, // „Individuelle Software ab … / Monat“
+  /** Zusatz hinter den Preisen – Jamil wird gefragt; vorerst ohne. Option: ' zzgl. MwSt.' */
+  mwst: '',
+  // mwst: ' zzgl. MwSt.',
+};
+const preis = (n: number) => `${n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\u00a0€`;
+/** Headline-Wort (Jamil wird gefragt, ob „Reibungslos“ statt „Effizient“): nur dieses eine Wort ändern. */
+const HERO_WORT = 'Effizient'; // Alternative: 'Reibungslos'
+
 /** 1. Hero (Jamil #6176) */
 export const J_HERO = {
   /** Headline + Subheadline seit Jamil #6366/#6368/#6370 (19.11.2026) WÖRTLICH (Variante 1 mit „nahtlos“, freigegeben mit „ok“).
    *  Vorher (#6176): titel 'Sagen Sie einfach, was Sie brauchen.', unter 'Ob Website, Änderung oder individuelle WebApp: Beschreiben Sie
    *  Ihre Idee per Chat, Sprachnachricht oder Screenshot. Wir kümmern uns um die Umsetzung.' */
-  titel: 'Stark nach außen. Effizient nach innen.',
+  titel: `Stark nach außen. ${HERO_WORT} nach innen.`,
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
   unter: 'Standard-Tools passen selten zum echten Arbeitsalltag. Wir entwickeln Ihren Webauftritt und maßgeschneiderte Software, die exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
+  /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
+  preiszeile: [
+    `Handprogrammierte Websites ab ${preis(HERO_PREISE.website)}\u00a0/ Monat${HERO_PREISE.mwst}`,
+    `Individuelle Software ab ${preis(HERO_PREISE.software)}\u00a0/ Monat${HERO_PREISE.mwst} – ohne hohe Einmalkosten. Kostenlose Vorschau vorab.`,
+  ],
   /** Hero-Visual (Jamil #6192, 18.11.2026; Sicherung davor: Tag vor-jamil-6192-20261118): statt nur eines Handys drei echte
    *  Beispiele, je Nachricht (links) → sichtbares Ergebnis (rechts, eigenes CSS-Mockup) → Häkchen mit Jamils Ergebnis-Text.
    *  Nachricht + Ergebnis WÖRTLICH von Jamil (#6192); Headline/Subheadline bleiben wie oben (#6194). Emojis 🎙️ 📸 💬 ✅ als eigene
@@ -124,6 +141,9 @@ export const J_MASS = {
     ],
   },
   tabsLabel: 'Drei Beispiele aus dem Alltag',
+  /** Hinweis unter dem Wechsler (Jamil #6397, wörtlich) */
+  browser: { titel: 'Läuft einfach im Browser – ganz ohne Installation',
+    text: 'Egal ob am Büro-PC, auf dem Tablet in der Werkstatt oder unterwegs am Handy: Ihr Team loggt sich einfach ein und arbeitet sofort. Keine komplizierte Installation, keine nervigen Updates auf einzelnen Rechnern.' },
   // `kurz` = Beschriftung der Segmentleiste auf dem Handy (dort steht das Zitat über dem Mockup). Beschriftungen in den Mockups sind
   // erfundene Beispielwerte für die „Musterfirma GmbH“ (nur Deko, aria-hidden; `zeigt` ist der Text für Screenreader).
   schritte: [

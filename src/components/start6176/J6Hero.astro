@@ -28,6 +28,8 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
         <a class="btn btn--lg jh-btn" href={kontakt}>{T.knopf}</a>
         <a class="btn btn--lg jh-btn jh-btn--rand" href={href('/beispiele/')}>{T.knopf2}</a>
       </div>
+      {/* Preiszeile (Jamil #6396): Preise in config/start-6176.ts → HERO_PREISE */}
+      <p class="jh__preise">{T.preiszeile.map((t, i) => <>{i > 0 && <span class="jh__preise-punkt" aria-hidden="true"> · </span>}<span>{t}</span></>)}</p>
     </div>
 
     <div class="jh__geraet" data-jh-geraet>

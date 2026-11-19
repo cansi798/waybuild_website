@@ -115,3 +115,7 @@
 }
 @keyframes jf-zahl-alt { 0%, 55% { opacity: 1; } 58%, 94% { opacity: 0; } 98%, 100% { opacity: 1; } }
 @keyframes jf-zahl-neu { 0%, 55% { opacity: 0; } 58%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
+
+/* Preiszeile unter den Hero-Knöpfen (Jamil #6396): ruhig, klein */
+.jh__preise { margin: -6px 0 0; max-width: 60ch; font-size: 0.88rem; line-height: 1.6; color: #b9dcd2; text-wrap: pretty; }
+.jh__preise-punkt { color: var(--gold); }
