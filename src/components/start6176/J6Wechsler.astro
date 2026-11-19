@@ -50,14 +50,29 @@ const BW = T.bauwelt;
           <div class={`jm-panel${i === 0 ? ' ist-aktiv' : ''}`} role="tabpanel" id={`jm-panel-${i}`} aria-labelledby={`jm-tab-${i}`} tabindex="0">
             <p class="jm-panel__zitat" aria-hidden="true">{s.problem}</p>
             <div class="jm-geraet">
-              {!MUSTER && (
+              {i === 3 && (
+                <>
+                  <p class="sr-only">{s.titel}: {s.zeigt}</p>
+                  {/* 4. Tab (Jamil #6427): Baukasten aus Modul-Kacheln, die sich zu einem System verbinden (nur HTML/CSS) */}
+                  <div class="jm-mock" aria-hidden="true">
+                    <div class="mk mk--module">
+                      <div class="mk-leiste mk-leiste--app"><b>Ihr System</b><span class="mk-auto">alles verbunden</span></div>
+                      <div class="mk-inhalt mk-module">
+                        <span class="mk-kern">Ihr Betrieb</span>
+                        {T.module.map((m, n) => <span class={`mk-modul mk-modul--${n}`}><i></i>{m}</span>)}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {!MUSTER && i < 3 && (
                 <div class="jm-mock jm-mock--bild">
                   <Bild name={BW.bilder[i].bild} alt={BW.bilder[i].alt} widths={[480, 800, 1200, 1600]}
                     sizes="(min-width: 1200px) 680px, (min-width: 900px) 56vw, calc(100vw - 32px)" />
                 </div>
               )}
-              {MUSTER && <p class="sr-only">{s.titel}: {s.zeigt}</p>}
-              {MUSTER && (
+              {MUSTER && i < 3 && <p class="sr-only">{s.titel}: {s.zeigt}</p>}
+              {MUSTER && i < 3 && (
               <div class="jm-mock" aria-hidden="true">
                 {i === 0 && (
                   <div class="mk mk--rechner">
@@ -109,7 +124,7 @@ const BW = T.bauwelt;
                 )}
               </div>
               )}
-              <p class="jm-label">{MUSTER ? T.labelMuster : T.label}</p>
+              <p class="jm-label">{i === 3 ? T.labelIndividuell : MUSTER ? T.labelMuster : T.label}</p>
               {!MUSTER && i === 0 && (
                 <a class="jm-link" href={BW.link.href} target="_blank" rel="noopener">{BW.link.text}<span class="sr-only"> (öffnet in neuem Tab)</span></a>
               )}

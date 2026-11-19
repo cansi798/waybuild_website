@@ -66,7 +66,8 @@ export const J_HERO = {
   titel: `Stark nach außen. ${HERO_WORT} nach innen.`,
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
-  unter: 'Standard-Tools passen selten zum echten Arbeitsalltag. Wir entwickeln Ihren Webauftritt und maßgeschneiderte Software, die exakt so funktioniert, wie Ihr Betrieb arbeitet.',
+  // Satz 1 seit Jamil #6429 („2a“); vorher 'Standard-Tools passen selten zum echten Arbeitsalltag.'
+  unter: 'Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag. Wir entwickeln Ihren Webauftritt und maßgeschneiderte Software, die exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
@@ -139,6 +140,7 @@ export const J_MASS = {
   titel: 'Websites und Software nach Maß – statt Kompromisse von der Stange',
   unter: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.',
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)
+  labelIndividuell: 'Individuell programmiert für Ihren Betrieb – 100\u00a0% eigene Abläufe', // 4. Tab (#6427), Beispiel-Mockup
   labelMuster: 'Individuell programmiert für Musterfirma GmbH – 100\u00a0% eigene Abläufe', // nur mit ALT_ZEIGEN.musterfirmaMockupsAlt
   /** Echte Referenz Bauwelt Handwerk (Jamil #6384/#6385): Bildschirmfotos in src/assets/bilder/referenzen/ (Herkunft: QUELLEN.md).
    *  `bild` = Name für <Bild>, `alt` = Alt-Text. Link nur beim Kalkulator. */
@@ -150,7 +152,9 @@ export const J_MASS = {
       { bild: 'referenzen/bauwelt-kundenportal', alt: 'Kundenportal von Bauwelt Handwerk mit Testdaten: nächster Termin, ein wartendes Angebot zum Annehmen oder Ablehnen, Fortschritt des Auftrags „Ladenumbau Trockenbau“ und persönlicher Projektbegleiter.' },
     ],
   },
-  tabsLabel: 'Drei Beispiele aus dem Alltag',
+  tabsLabel: 'Vier Beispiele aus dem Alltag', // seit #6427 vier Tabs
+  /** Bausteine im Mockup des 4. Tabs (#6427), nur Deko (aria-hidden; Text für Screenreader = `zeigt`) */
+  module: ['Termine', 'Material', 'Team-App', 'Schnittstellen', 'Auswertungen', 'Dokumente'],
   /** Kleiner Hinweis im Wechsler (Jamil #6424, Wortlaut vom Koordinator vorgeschlagen) */
   browserKurz: 'Läuft im Browser – ohne Installation, auf PC, Tablet und Handy',
   /** Hinweis unter dem Wechsler (Jamil #6397, wörtlich; seit #6424 nur mit ALT_ZEIGEN.browserBox) */
@@ -171,6 +175,11 @@ export const J_MASS = {
       titel: 'Ein eigenes Kundenportal mit Login',
       zeigt: 'Eine aufgeräumte Ansicht für den Endkunden: „Ihr Auftrag ist in Fertigung“, dazu alle Angebote, Pläne und Rechnungen an einem Ort zum Download.',
       warum: 'Ein eigenes Portal im Design der Firma – das gibt es nicht von der Stange und lässt das Unternehmen extrem professionell wirken.' },
+    // 4. Tab (Jamil #6427): nahezu jeder Wunsch umsetzbar – Wortlaut von uns, sachlich formuliert
+    { kurz: 'Individuell', problem: '„Unser Ablauf ist besonders – dafür gibt es keine fertige Lösung.“',
+      titel: 'Software, die sich nach Ihrem Betrieb richtet',
+      zeigt: 'Einzelne Bausteine wie Termine, Material, Team-App, Schnittstellen, Auswertungen und Dokumente, die zu einem gemeinsamen System verbunden sind.',
+      warum: 'Ob Terminbuchung, Materialverwaltung, Mitarbeiter-App oder Schnittstelle zu bestehenden Programmen: Nahezu jede Anforderung lässt sich umsetzen – genau zugeschnitten auf Ihren Betrieb.' },
   ],
 } as const;
 
@@ -178,7 +187,8 @@ export const J_MASS = {
  *  sind nur Deko (aria-hidden) und wiederholen, was im Kartentext steht. Der Blitz (⚡) ist ein eigenes SVG-Icon. */
 export const J_ERST = {
   titel: 'Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.',
-  unter: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.',
+  // seit Jamil #6429 („2a“); vorher: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.'
+  unter: 'Sie benötigen weder ein umfangreiches Konzept noch gehen Sie ein Risiko ein. Wir arbeiten uns in Ihre Abläufe ein und erstellen Ihnen kostenlos einen ersten konkreten Entwurf.',
   karten: [
     { nr: '01', titel: 'Wir verstehen Ihren Betrieb (oder starten direkt)',
       varianten: [

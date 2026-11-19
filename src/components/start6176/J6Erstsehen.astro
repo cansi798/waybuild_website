@@ -4,6 +4,7 @@ import "../../styles/erst-6388.css";
 // src/config/start-6176.ts (J_ERST). Drei Karten 01/02/03 (Desktop nebeneinander, Handy untereinander), je ein kleines UI-Badge:
 // 01 zwei Auswahl-Pills (nur Optik), 02 zwei grüne Zeit-Badges mit Blitz-Icon (SVG), 03 Sprachnachrichten-Blase (Play, Wellenform, 0:12;
 // sanfte Wellen-Animation, bei prefers-reduced-motion statisch). Badges sind Deko (aria-hidden), der Kartentext sagt dasselbe.
+// Seit Jamil #6428: ab 900 px als Kartenstapel (position: sticky, jede Karte schiebt sich über die vorige), links Kopf, rechts Text.
 // Stil: styles/erst-6388.css.
 import { J_ERST as T } from '../../config/start-6176';
 const [k1, k2, k3] = T.karten;
@@ -21,6 +22,7 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
 
     <ol class="je-karten">
       <li class="je-karte j6-ein">
+        <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k1.nr}</span>
         <h3 class="je-karte__titel">{k1.titel}</h3>
         <div class="je-badge je-pills" aria-hidden="true">
@@ -28,12 +30,16 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
           <span class="je-oder">{k1.oder}</span>
           <span class="je-pill">{k1.pills[1]}</span>
         </div>
+        </div>
+        <div class="je-karte__rechts">
         {k1.varianten.map((v) => (
           <p class="je-karte__text"><b>{v.name}</b> {v.text}</p>
         ))}
+        </div>
       </li>
 
       <li class="je-karte j6-ein">
+        <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k2.nr}</span>
         <h3 class="je-karte__titel">{k2.titel}</h3>
         <div class="je-badge je-zeiten" aria-hidden="true">
@@ -41,14 +47,18 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
             <span class="je-zeit"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" focusable="false" set:html={Blitz} />{z}</span>
           ))}
         </div>
+        </div>
+        <div class="je-karte__rechts">
         <p class="je-karte__text">{k2.einleitung}</p>
         <ul class="je-punkte">
           {k2.punkte.map((p) => (<li><b>{p.name}</b> {p.text}</li>))}
         </ul>
         <p class="je-karte__text">{k2.schluss}</p>
+        </div>
       </li>
 
       <li class="je-karte j6-ein">
+        <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k3.nr}</span>
         <h3 class="je-karte__titel">{k3.titel}</h3>
         <div class="je-badge" aria-hidden="true">
@@ -58,7 +68,10 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
             <span class="je-sprache__zeit">{k3.sprache}</span>
           </span>
         </div>
+        </div>
+        <div class="je-karte__rechts">
         <p class="je-karte__text">{k3.text}</p>
+        </div>
       </li>
     </ol>
   </div>

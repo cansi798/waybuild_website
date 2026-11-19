@@ -36,3 +36,19 @@
   .je-sprache__welle i { animation: je-welle 1.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -90ms); }
 }
 @keyframes je-welle { from { transform: scaleY(1); } to { transform: scaleY(0.45); } }
+
+/* Kartenstapel (Jamil #6428): ab 900 px volle Breite, jede Karte bleibt kleben (sticky) und die nächste schiebt sich darüber.
+   Gleich hohe Karten (min-height), deckender Hintergrund, leichter Schatten; Reihenfolge im DOM bleibt (Tastatur/Screenreader normal).
+   Handy und prefers-reduced-motion: normale Liste. */
+.je-karte__links, .je-karte__rechts { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .je-karten { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-bottom: 8px; }
+  .je-karte { --je-top: calc(var(--je-kopf, 96px) + var(--je-n, 0) * 14px); position: sticky; top: var(--je-top);
+    display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px clamp(24px, 4vw, 64px); align-items: start;
+    min-height: min(440px, calc(100vh - var(--je-top) - 40px)); background: var(--white);
+    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(8 78 76 / 45%), 0 1px 2px rgb(8 78 76 / 6%); }
+  .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; }
+  html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; } /* kein Einblenden im Stapel: sonst schimmert die vorige Karte durch */
+  .je-karte__titel { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); }
+}
+@media (min-width: 900px) and (prefers-reduced-motion: reduce) { .je-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
