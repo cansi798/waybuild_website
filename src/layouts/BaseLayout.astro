@@ -137,6 +137,8 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta name="twitter:card" content="summary_large_image" />
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+    {/* Schrift früh laden, damit der Hero beim Schriftwechsel nicht springt (CLS, 19.11.2026); Seiten setzen das über den Slot „head“ */}
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>

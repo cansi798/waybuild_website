@@ -57,6 +57,7 @@ import '../styles/startseite.css';
 import '../styles/variante-start.css';
 import '../styles/start-neu.css';
 import '@fontsource-variable/plus-jakarta-sans/wght.css';
+import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url'; // Preload gegen Hero-CLS
 import '../styles/start-6176.css'; // Jamil #6176: Hero, Problem, Lösung
 import '../styles/start-farben.css'; // neue Farben + Plus Jakarta Sans nur Startseite (Jamil #5899/#5900/#5903)
 
@@ -79,6 +80,7 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   thema="besucherreise"
   stapel
 >
+  <link slot="head" rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
   <!-- Jamil #6176 (16.11.2026): 1 Hero · 2 Problem · 3 Lösung -->
   <J6Hero />
   <J6Problem />
@@ -93,10 +95,11 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <!-- Jamil #6179 (16.11.2026): 4 Anders · 5 Wachsen · 6 Prozessberatung · 7 Referenzen · 8 Vertrauen · Pakete · Abschluss -->
   {/* „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ seit #6388 abschaltbar (ALT_ZEIGEN.weiterentwickelnAbschnitt), seit #6390 hinter Abschnitt 5 */}
   {ALT_ZEIGEN.weiterentwickelnAbschnitt && <J6Anders />}
-  <J6Wachsen />
-  <J6Prozess />
-  <J6Referenzen />
-  <J6Vertrauen />
+  {/* seit Jamil #6408–#6412 ausgeblendet (Schalter in config/start-6176.ts) */}
+  {ALT_ZEIGEN.wachsenAbschnitt && <J6Wachsen />}
+  {ALT_ZEIGEN.prozessAbschnitt && <J6Prozess />}
+  {ALT_ZEIGEN.referenzenAbschnitt && <J6Referenzen />}
+  {ALT_ZEIGEN.vertrauenAbschnitt && <J6Vertrauen />}
   <!-- Pakete kompakt nach „Verlässlichkeit“ (endet mit „Fester Monatspreis“), direkt vor dem Abschluss -->
   {PAKETE_ZEIGEN && <SnAngebot zeigeFragen={false} kompakt />}
   {/* 7. Jamil #6402 (19.11.2026): Abschluss mit zwei Mini-Formularen; alter Abschluss-CTA über ALT_ZEIGEN.abschlussCtaAlt */}

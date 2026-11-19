@@ -24,3 +24,7 @@
 .jpr-btn--voll:hover { background: #084e4c; color: var(--white); }
 .jpr-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .jpr-hinweis { margin: clamp(20px, 3vw, 32px) auto 0 !important; max-width: 70ch; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+/* Hintergrund (Jamil #6412): nach dem Warmgrau von Abschnitt 5 weiß, damit nicht drei getönte Blöcke aufeinanderfolgen */
+#preise-start.jpr { --band: var(--white); background: var(--white); }
+#preise-start .jpr-karte { box-shadow: 0 1px 2px rgb(8 78 76 / 5%), 0 16px 36px -30px rgb(8 78 76 / 40%); }
+#preise-start .jpr-karte--tipp { box-shadow: 0 22px 44px -30px rgb(11 109 107 / 55%); }

@@ -33,8 +33,13 @@ export const ALT_ZEIGEN = {
   // Der bisherige Abschnitt „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J6Anders) bleibt vorerst sichtbar – Jamil wird gefragt:
   // #6390: „erstmal weiter nach unten“ → steht jetzt hinter Abschnitt 5 „Keine Angst vor dem Umstieg“ (#6391, J_UMSTIEG)
   // ab Jamil #6402 (19.11.2026): Abschluss = Abschnitt 7 „Bereit zu sehen …“ mit zwei Mini-Formularen (J_START, J6Start)
-  abschlussCtaAlt: false, // bisheriger Abschluss-CTA #6179 (J6Abschluss, „Kostenlose Erstberatung vereinbaren“) → true = wieder statt Abschnitt 7
-  weiterentwickelnAbschnitt: true, // false = „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J_ANDERS) ausblenden
+  abschlussCtaAlt: false,
+  // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
+  wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
+  prozessAbschnitt: false, // „Bevor wir Software entwickeln, verstehen wir Ihren Arbeitsalltag.“ (J6Prozess)
+  referenzenAbschnitt: false, // „So unterschiedlich unsere Kunden sind, …“ (J6Referenzen)
+  vertrauenAbschnitt: false, // „Verlässlichkeit statt Überraschungen.“ (J6Vertrauen) // bisheriger Abschluss-CTA #6179 (J6Abschluss, „Kostenlose Erstberatung vereinbaren“) → true = wieder statt Abschnitt 7
+  weiterentwickelnAbschnitt: false, // seit Jamil #6412 aus; false = „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J_ANDERS) ausblenden
 };
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
 export const PAKETE_ZEIGEN = false; // seit Jamil #6400 ersetzt durch Abschnitt 6 „Klare Monatspreise“ (J_PREISE, J6Preise); true = alte Paketkarten wieder
