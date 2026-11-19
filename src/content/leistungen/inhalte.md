@@ -5,7 +5,7 @@ gruppe: vertrauen
 station: vertrauen
 kurz: "Verständliche Texte für Ihre Website, gemeinsam mit Ihnen erarbeitet."
 description: "Wir erarbeiten die Texte Ihrer Website gemeinsam mit Ihnen: verständlich, ehrlich und so aufgebaut, dass Ihre Kunden schnell finden, was sie wissen wollen."
-paket: "im Paket Online sichtbar"
+paket: "im Paket Profi-Website"
 fragen:
   - frage: "Muss ich die Texte selbst schreiben?"
     antwort: "Nein. Wir erarbeiten die Texte gemeinsam mit Ihnen. Sie bringen Ihr Wissen ein, wir formulieren es verständlich."
@@ -38,7 +38,7 @@ schritte:
   - titel: "Verbessern"
     text: "Ihr Angebot entwickelt sich weiter, Ihre Inhalte auch. Änderungen schicken Sie uns per Nachricht, mehr dazu unter [Betreuung](/leistungen/betreuung/)."
 pakete: [basis]
-paketText: "Die Texte für Ihre Website erarbeiten wir schon im Paket Online sichtbar gemeinsam mit Ihnen."
+paketText: "Die Texte für Ihre Website erarbeiten wir schon im Paket Profi-Website gemeinsam mit Ihnen."
 passt: "Wenn Sie wissen, was Sie gut können, aber keine Zeit oder Lust haben, es aufzuschreiben, nehmen wir Ihnen diese Arbeit ab. In der kostenlosen Erstberatung sprechen wir darüber, was Ihre Kunden wissen müssen."
 verwandt: [website, suchmaschinen-optimierung, bewertungen]
 ---

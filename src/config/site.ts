@@ -185,15 +185,15 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei webgold?', // „drei Pakete“: Jamil #6011, Audit #5953 P1 (vorher „zwei feste Monatspakete“)
-    a: `Es gibt drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')}. Nur zusammen mit Online sichtbar oder Online wachsen buchbar: ${komplettZeile()}, eine Web-App für Ihre Aufträge. ${kombiPreise().map((k) => `${kombiZeile(k)}.`).join(' ')}${kombiPreise().length && !KOMPLETTPAKET.kombiMitGruenderpaket ? ` Die Kombipreise gelten nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“.` : ''} Einrichtungskosten gibt es nicht, und bis zu ${SEITEN_MAX} Seiten sind im Monatspreis enthalten. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    a: `Es gibt drei Pakete mit festem Monatspreis (seit Jamil #6400): ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')} und ${KOMPLETTPAKET.name} für ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat, kombinierbar oder einzeln. Keine versteckten Einrichtungsgebühren für den Start, die erste Vorschau ist zu 100 % kostenlos und unverbindlich. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
-    a: `${PAKETE[0].name} bringt Sie professionell online: Website mit bis zu ${SEITEN_MAX} Seiten, Suchmaschinen-Optimierung beim Erstellen, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008, eine Aufbereitung für KI-Assistenten und die Einrichtung Ihres Google-Profils. ${PAKETE[1].name} pflegt zusätzlich Ihr Google-Profil, optimiert Ihre Seiten gezielt für die Suchen Ihrer Kunden, ordnet Ihre Postfächer mit Ordnern und Regeln, schickt einen Monatsbericht und prüft monatlich, wie KI-Assistenten Sie beschreiben. Das ${KOMPLETTPAKET.name} buchen Sie nur zusammen mit Online sichtbar oder Online wachsen, einzeln ist es nicht buchbar: ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')}`,
+    a: `${PAKETE[0].name}: ${ABO_PAKETE[0].fuer} ${ABO_PAKETE[0].leistungen.map((l) => l.text).join(', ')}. ${PAKETE[1].name}: ${ABO_PAKETE[1].fuer} Alles aus dem ${PAKETE[0].name}-Paket, dazu ${ABO_PAKETE[1].leistungen.map((l) => l.text).join(', ')}. ${KOMPLETTPAKET.name}: ${KOMPLETTPAKET.kurz} ${KOMPLETTPAKET.software.join(', ')}. Kombinierbar oder einzeln buchbar.`,
   },
   {
     q: 'Was ist im Website-Abo enthalten?', // Jamil #6055 Fr. 21 (vorher „… bei Website as a Service …“)
-    a: `Schon im Paket Online sichtbar: persönliche Beratung, KI-gestützte Erstellung von bis zu ${SEITEN_MAX} Seiten, Hosting in Deutschland, Domainverwaltung, SSL, Wartung, Backups, bis zu 20 E-Mail-Postfächer mit Signatur nach DIN 5008 und laufende Betreuung. Ihre Website wird beim Erstellen für Google optimiert und für KI-Assistenten aufbereitet, und wir erklären in leichter Sprache, was wir dafür tun. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.`,
+    a: `Schon im Paket ${PAKETE[0].name}: ${ABO_PAKETE[0].leistungen.map((l) => l.text).join(', ')}. Sie zahlen einen festen Monatspreis und keine Einrichtungskosten.`, // seit #6400 nur Jamils Wortlaut
   },
   {
     q: 'Wie lange läuft der Vertrag?',
@@ -209,7 +209,7 @@ export const faqs = [
   },
   {
     q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder Ihres Google-Profils sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.',
+    a: 'Nein. Keine versteckten Einrichtungsgebühren für den Start. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.',
   },
   {
     q: 'Was kann ich einmalig dazubuchen?',
@@ -242,7 +242,7 @@ export const faqs = [
   // Fehlende Einwände (Jamil #6038, Audit F3): nur mit Aussagen, die schon in pakete-abo.ts bzw. den FAQ oben stehen
   {
     q: 'Kann ich die Web-App ohne Website buchen?',
-    a: `Im Paket „${KOMPLETTPAKET.name}“ gibt es die Web-App nur zusammen mit ${PAKETE.map((p) => p.name).join(' oder ')}. Individuelle Software ohne Website setzen wir auf Anfrage als eigenes Projekt um.`,
+    a: `Ja. „${KOMPLETTPAKET.name}“ ist kombinierbar oder einzeln buchbar, für ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat.`, // seit #6400
   },
   {
     q: 'Ich habe schon eine Website. Was passiert damit?',

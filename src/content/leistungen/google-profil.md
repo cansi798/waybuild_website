@@ -4,11 +4,11 @@ menuTitel: "Google-Profil"
 gruppe: gefunden
 station: aufmerksamkeit
 kurz: "Ihr Eintrag bei Google und Google Maps, eingerichtet und aktuell gehalten."
-description: "Wir richten Ihr Google-Profil ein und halten Fotos, Leistungen und Öffnungszeiten aktuell. Einrichtung in Online sichtbar, Pflege ab Online wachsen."
-paket: "Online sichtbar, Pflege ab Online wachsen"
+description: "Wir richten Ihr Google-Profil ein und halten Fotos, Leistungen und Öffnungszeiten aktuell. Einrichtung in Profi-Website, Pflege ab Website + Google & KI."
+paket: "Profi-Website, Pflege ab Website + Google & KI"
 fragen:
-  - frage: "Ist das Google-Profil im Paket Online sichtbar enthalten?"
-    antwort: "Ja, die Einrichtung ist schon im Paket Online sichtbar enthalten. Ab Online wachsen halten wir Fotos, Leistungen und Öffnungszeiten zusätzlich laufend aktuell."
+  - frage: "Ist das Google-Profil im Paket Profi-Website enthalten?"
+    antwort: "Ja, die Einrichtung ist schon im Paket Profi-Website enthalten. Ab Website + Google & KI halten wir Fotos, Leistungen und Öffnungszeiten zusätzlich laufend aktuell."
   - frage: "Kostet die Einrichtung extra?"
     antwort: "Nein. Die Einrichtung ist im Monatspreis des Pakets enthalten, es gibt keine Einrichtungskosten."
   - frage: "Ich habe schon einen Google-Eintrag. Was passiert damit?"
@@ -25,13 +25,13 @@ probleme:
     text: "Stehen bei Google andere Angaben als auf Ihrer Website, sind Interessenten unsicher, was gilt."
 umfang:
   - text: "Einrichtung Ihres Google-Profils"
-    gruppe: "Im Paket Online sichtbar"
+    gruppe: "Im Paket Profi-Website"
   - text: "Fotos, Leistungen und Öffnungszeiten eintragen"
-    gruppe: "Im Paket Online sichtbar"
+    gruppe: "Im Paket Profi-Website"
   - text: "laufende Pflege, damit Fotos, Leistungen und Öffnungszeiten aktuell bleiben"
-    gruppe: "Ab Paket Online wachsen"
+    gruppe: "Ab Paket Website + Google & KI"
   - text: "Verknüpfung des Google-Profils mit Ihrer Website, damit Sie vor Ort besser gefunden werden"
-    gruppe: "Ab Paket Online wachsen"
+    gruppe: "Ab Paket Website + Google & KI"
 umfangHinweis: "So passen Eintrag und Website zusammen. Wer Sie bei Google entdeckt, findet auf Ihrer Website dieselben Leistungen und Kontaktdaten wieder."
 schritte:
   - titel: "Verstehen"
@@ -41,7 +41,7 @@ schritte:
   - titel: "Verbessern"
     text: "Ändern sich Leistungen oder Öffnungszeiten, passen wir den Eintrag an. Neue Fotos nehmen wir auf, damit Ihr Profil lebendig bleibt."
 pakete: [basis, plus]
-paketText: "Die Einrichtung ist im Paket Online sichtbar enthalten, die laufende Pflege ab Paket Online wachsen."
+paketText: "Die Einrichtung ist im Paket Profi-Website enthalten, die laufende Pflege ab Paket Website + Google & KI."
 passt: "Wenn Ihre Kunden aus der Umgebung kommen und Sie über Google regelmäßig neue Kunden gewinnen möchten, lohnt sich ein gepflegtes Google-Profil. In der kostenlosen Erstberatung sehen wir uns gemeinsam an, wie Sie heute bei Google erscheinen."
 verwandt: [bewertungen, suchmaschinen-optimierung, auswertung]
 ---

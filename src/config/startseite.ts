@@ -165,7 +165,7 @@ export const VORTEILE = {
     { icon: 'euro', titel: 'Feste Monatspreise', text: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten, ohne Einrichtungsgebühr. Sie wissen vorher, was Sie jeden Monat zahlen.' },
     { icon: 'user', titel: 'Ein fester Ansprechpartner', text: 'Statt einer Hotline haben Sie einen festen Ansprechpartner, der Ihr Projekt kennt. Änderungen schicken Sie einfach per Nachricht, auch als Sprachnachricht.' },
     { icon: 'rocket', titel: 'Schnell online', text: 'Bei Websites in der Regel 14 Tage, nachdem Ihre Inhalte vorliegen. Die Technik richten wir ein, Sie geben frei.' },
-    { icon: 'chart', titel: 'Sehen, was Ihre Website bringt', text: 'Jeden Monat ein kurzer Bericht mit Besuchern, Anfragen und Suchbegriffen, verständlich erklärt. So sehen Sie, was funktioniert.', paket: 'Ab Paket Online wachsen' },
+    { icon: 'chart', titel: 'Sehen, was Ihre Website bringt', text: 'Jeden Monat ein kurzer Bericht mit Besuchern, Anfragen und Suchbegriffen, verständlich erklärt. So sehen Sie, was funktioniert.', paket: 'Ab Paket Website + Google & KI' },
   ] as { icon: IconName; titel: string; text: string; paket?: string }[],
 };
 

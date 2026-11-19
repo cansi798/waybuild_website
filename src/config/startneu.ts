@@ -93,7 +93,7 @@ export const ANGEBOT = {
   lead: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr. So bleiben Ihre Kosten planbar.',
   appTitel: 'Die Web-App dazu', // Web-App einheitlich (Jamil #5928–#5939; #6038, Audit K2)
   sicherheit: [
-    { icon: 'euro', titel: 'Keine Einrichtungsgebühr', text: 'Auch die Einrichtung von Website und Google-Profil ist im Monatspreis enthalten.' },
+    { icon: 'euro', titel: 'Keine Einrichtungsgebühr', text: 'Keine versteckten Einrichtungsgebühren für den Start.' }, // Wortlaut Jamil #6400 (vorher mit Google-Profil)
     { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 30 Minuten, unverbindlich. Wir empfehlen das passende Paket.' }, // Jamil #6055 Fr. 15
     { icon: 'server', titel: 'Hosting in Deutschland', text: 'Mit SSL, Domain, Updates und Backups im Monatspreis.' },
     { icon: 'doc', titel: 'Verbindlich erst mit Vertrag', text: 'Kein Online-Kauf: Sie bekommen Vertrag und Auftragsbestätigung per E-Mail.' },
@@ -120,9 +120,10 @@ export const ANGEBOT = {
   wahlhilfe: {
     titel: 'Welches Paket passt zu mir?',
     zeilen: [
-      { wenn: 'Sie wollen gut gefunden werden und seriös auftreten', id: 'basis' },
-      { wenn: 'Sie wollen über Google regelmäßig neue Kunden gewinnen', id: 'plus' },
-      { wenn: 'Sie wollen dazu Anfragen, Angebote und Aufträge an einem Ort ordnen', id: 'komplett' },
+      // seit #6400 nach Jamils „Ideal für …“-Zeilen
+      { wenn: 'Sie wollen einen modernen, seriösen Webauftritt ohne Baukasten-Optik', id: 'basis' },
+      { wenn: 'Sie wollen aktiv über Google und KI-Suchen neue Kunden gewinnen', id: 'plus' },
+      { wenn: 'Sie wollen interne Abläufe vereinfachen oder brauchen ein Kundenportal', id: 'komplett' },
     ] as { wenn: string; id: 'basis' | 'plus' | 'komplett' }[],
   },
 };

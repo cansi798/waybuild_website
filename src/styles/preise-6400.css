@@ -1,0 +1,26 @@
+/* 6. „Klare Monatspreise“ (Jamil #6400, 19.11.2026). Markup: components/start6176/J6Preise.astro. Ruhig wie eine SaaS-Preisseite:
+   drei gleich hohe Karten, Karte 2 mit Rahmen in der Hauptfarbe (#0b6d6b) und Badge, Karte 3 als „Baustein“ mit Plus-Badge. */
+.jpr .jpr__kopf .sn-h2 { max-width: 22ch; }
+.jpr .jpr__kopf .sn-lead { max-width: 60ch; }
+.jpr-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 960px) { .jpr-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); align-items: stretch; } }
+.jpr-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.6vw, 32px); border-radius: 24px;
+  background: var(--white); border: 1px solid var(--line); }
+.jpr-karte--tipp { border: 2px solid #0b6d6b; box-shadow: 0 22px 44px -30px rgb(11 109 107 / 55%); }
+.jpr-karte__kopf { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
+.jpr-karte__rolle { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+.jpr-badge { padding: 4px 11px; border-radius: 999px; background: #0b6d6b; color: var(--white); font-size: 0.76rem; font-weight: 700; line-height: 1.35; }
+.jpr-badge--plus { background: #f6efd9; color: #6b5310; box-shadow: inset 0 0 0 1px var(--gold); }
+.jpr-karte__name { margin: 0; font-family: var(--font-head); font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; color: var(--ink); }
+.jpr-karte__preis { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--ink-soft); }
+.jpr-karte__preis b { font-family: var(--font-head); font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.jpr-karte__fuer { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.jpr-liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; flex: 1; align-content: start; }
+.jpr-liste li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.5; color: var(--ink); }
+.jpr-liste svg { margin-top: 3px; color: #2c9a7a; }
+.jpr-btn { margin-top: 10px; justify-content: center; text-align: center; white-space: normal; width: 100%; background: var(--white); color: #0b6d6b; border: 1.5px solid #0b6d6b; }
+.jpr-btn:hover { background: #edf4f1; }
+.jpr-btn--voll { background: #0b6d6b; color: var(--white); }
+.jpr-btn--voll:hover { background: #084e4c; color: var(--white); }
+.jpr-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.jpr-hinweis { margin: clamp(20px, 3vw, 32px) auto 0 !important; max-width: 70ch; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }

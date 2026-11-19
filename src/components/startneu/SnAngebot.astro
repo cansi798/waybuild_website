@@ -21,7 +21,9 @@ const kontaktPaket = (name: string) => `${href('/kontakt/')}?paket=${encodeURICo
 const kontaktKombi = (name: string) => `${href('/kontakt/')}?paket=${encodeURIComponent(name)}&komplett=1&buchen=1`;
 const kontaktExtras = `${href('/kontakt/')}?dazu=${encodeURIComponent(E.gesamt.id)}&buchen=1`;
 const kombis = kombiPreise();
-const appText = K.text.replace(/\s*Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '');
+const appText = K.text.replace(/\s*Nur zusammen mit .* buchbar\.$/, '');
+// Seit Jamil #6400: Software einzeln oder kombinierbar, ohne Kombipreise → dritte Karte mit eigenem Monatspreis
+const kontaktSoftware = `${href('/kontakt/')}?leistung=rundum&komplett=1`;
 interface Props { zeigeFragen?: boolean; kompakt?: boolean }
 // Startseite ohne FAQ (Jamil #5967). kompakt (Startseite, Jamil #6038, Audit P6/M1): nur die drei Karten, Wahlhilfe und ein Link
 // auf /preise/; Extras, Sicherheits-Kacheln und Kombi-Hinweis stehen nur auf der Preisseite.
@@ -66,7 +68,29 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
           </div>
         </article>
       ))}
-      {/* Drittes Paket (Jamil #5922/#5923, 14.11.2026): Komplettpaket gleichrangig neben Online sichtbar und Online wachsen; Preis „ab“ inkl. Website-Paket (#5911) */}
+      {/* Drittes Paket (Jamil #5922/#5923, 14.11.2026): Komplettpaket gleichrangig neben Profi-Website und Website + Google & KI; Preis „ab“ inkl. Website-Paket (#5911) */}
+      {kombis.length === 0 && (
+      <article class="sn-paket sn-paket--komplett" id="komplettpaket" aria-labelledby="sn-pk-komplett">
+        <div class="sn-paket__kopf">
+          <h3 id="sn-pk-komplett" class="sn-paket__name">{K.name}</h3>
+          <span class="sn-paket__tipp sn-paket__tipp--gold">{K.label}</span>
+        </div>
+        <p class="sn-paket__kurz">Erweiterung / Maßarbeit</p>
+        <p class="sn-paket__preis"><b>{euroAb(K.preis, K.ab)}</b><span>netto im Monat</span></p>
+        <p class="sn-paket__brutto">{euroAb(bruttoVon(K.preis), K.ab)} inkl. 19 % MwSt.</p>
+        <p class="sn-paket__jahr">{euroAb(K.preis * 12, K.ab)} netto im Jahr</p>
+        <p class="sn-paket__fuer">{K.kurz}</p>
+        <p class="sn-paket__listenkopf">Enthalten:</p>
+        <ul class="sn-paket__liste sn-paket__liste--haken">
+          {K.software.map((t) => <li><Icon name="check" size={18} /><span>{t}</span></li>)}
+        </ul>
+        <div class="sn-paket__fuss">
+          <a class="btn btn--lg sn-btn sn-paket__btn" href={kontaktSoftware}>Software-Idee besprechen<span class="sr-only">: {K.name}</span></a>
+          <p class="sn-paket__laufzeit">{LAUFZEIT_HINWEIS}</p>
+        </div>
+      </article>
+      )}
+      {kombis.length > 0 && (
       <article class="sn-paket sn-paket--komplett" id="komplettpaket" aria-labelledby="sn-pk-komplett">
         <div class="sn-paket__kopf">
           <h3 id="sn-pk-komplett" class="sn-paket__name">{K.name}</h3>
@@ -82,7 +106,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
           <ul class="sn-paket__kombis" aria-label={`Preise ${K.name} je Website-Paket`}>
             {kombis.map((k) => <li>mit {k.paket.name} <b>{euroAb(k.preis, K.kombiAb)}</b> netto im Monat</li>)}
           </ul>
-          <p>Je nach Wahl ist Online sichtbar oder Online wachsen enthalten. {appText}</p>
+          <p>Je nach Wahl ist Profi-Website oder Website + Google & KI enthalten. {appText}</p>
         </div>
         <p class="sn-paket__listenkopf">Alles aus Ihrem gewählten Paket, plus:</p>
         <ul class="sn-paket__liste sn-paket__liste--haken">
@@ -93,6 +117,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
           <p class="sn-paket__laufzeit">{LAUFZEIT_HINWEIS}</p>
         </div>
       </article>
+      )}
     </div>
     {/* Wahlhilfe unter den Karten (Jamil #6038, Audit P5) */}
     <div class="sn-wahlhilfe">
@@ -103,7 +128,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
     </div>
 
     {/* Kombi-Regel in Alltagssprache (Jamil #6038, Audit P3), nur auf der Preisseite */}
-    {!kompakt && !K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Wenn Sie zusätzlich das Gesamtpaket „{E.gesamt.name}“ buchen, entfällt der Kombipreis von „{K.name}“. Dann gelten die Einzelpreise.</p>}
+    {!kompakt && kombis.length > 0 && !K.kombiMitGruenderpaket && <p class="sn-fein sn-fein--mitte sn-pakete__hinweis">Wenn Sie zusätzlich das Gesamtpaket „{E.gesamt.name}“ buchen, entfällt der Kombipreis von „{K.name}“. Dann gelten die Einzelpreise.</p>}
 
     {kompakt ? (
       <p class="sn-fein sn-fein--mitte sn-angebot__mehr"><a class="sn-link" href={href('/preise/')}>{T.alleDetails} <Icon name="arrow" size={18} /></a><br />{LAUFZEIT_HINWEIS} {B2B_HINWEIS}</p>

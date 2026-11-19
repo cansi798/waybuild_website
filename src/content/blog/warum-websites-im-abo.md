@@ -11,7 +11,7 @@ Eine Website wird oft wie ein Möbelstück gekauft: einmal bezahlen, aufstellen,
 
 ## Ein fester Monatspreis statt einer großen Rechnung
 
-Bei uns gibt es drei Pakete, davon zwei Website-Pakete mit festem Monatspreis: **Online sichtbar für 79,99 €** und **Online wachsen für 149,99 €**, jeweils netto zzgl. MwSt. im Monat. Wer zusätzlich eine Auftragsverwaltung möchte, bucht das Paket **Rundum digital** dazu, nur in Kombination: mit Basis ab 419,99 €, mit Plus ab 489,99 € im Monat netto. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
+Bei uns gibt es drei Pakete mit festem Monatspreis: **Profi-Website für 54,99 €**, **Website + Google & KI für 119,99 €** und **Individuelle Software für 199,99 €** (kombinierbar oder einzeln), jeweils netto zzgl. MwSt. im Monat. Einrichtungskosten gibt es nicht. Die Erstellung Ihrer Website ist im Monatspreis enthalten.
 
 Für Sie heißt das: Sie müssen zum Start kein großes Budget freimachen und wissen jeden Monat, was die Website kostet. Wer etwas zusätzlich möchte, etwa ein Logo, bucht das einmalig zum Festpreis dazu. Monatliche Kosten entstehen dadurch nicht.
 

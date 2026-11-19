@@ -1,0 +1,133 @@
+---
+import "../../styles/start-6402.css";
+// 7. Abschluss „Bereit zu sehen, was in Ihrem Betrieb möglich ist?“ (Jamil, Talk qh87y3sj #6402, 19.11.2026). Texte wörtlich (J_START).
+// Dunkle Abschluss-Box, zwei weiße Karten mit Mini-Formular. Versand GENAU wie das Kontaktformular (src/pages/kontakt.astro):
+// Web3Forms mit PUBLIC_WEB3FORMS_KEY, ohne Key öffnet sich das E-Mail-Programm; Honeypot-Feld „website“, Datenschutz-Häkchen,
+// Erfolg → /danke/, Fehler → Meldung mit E-Mail-Adresse. Betreff je Karte („Gespräch anfragen“ / „Website-Vorschau morgen“).
+// Anker #kontakt-start (bisherige Links + Footer-Regel), #start-gespraech, #start-schnell. Fotos Can + Jamil aus src/assets/bilder/team/.
+import { J_START as T } from '../../config/start-6176';
+import { company } from '../../config/site';
+import { href } from '../../lib/paths';
+import Bild from '../Bild.astro';
+const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
+const G = T.gespraech, S = T.schnell;
+const ds = href('/datenschutz/');
+---
+
+<section class="section section--dark sn js7" id="kontakt-start" aria-labelledby="js7-h">
+  <div class="wrap">
+    <div class="sn-kopf js7__kopf">
+      <h2 id="js7-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.unter}</p>
+    </div>
+
+    <div class="js7-karten">
+      <form class="js7-karte" id="start-gespraech" data-js7 data-betreff={G.betreff} data-endpoint={endpoint} data-key={formKey}
+        data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="js7-g-h">
+        <p class="js7-karte__art">{G.art}</p>
+        <span class="js7-badge">{G.badge}</span>
+        <h3 id="js7-g-h" class="js7-karte__titel">{G.titel}</h3>
+        <p class="js7-karte__text">{G.text}</p>
+        <label class="js7-feld"><span>{G.name}*</span><input name="name" autocomplete="name" required /></label>
+        <label class="js7-feld"><span>{G.kontakt}*</span><input name="kontakt" autocomplete="email" inputmode="email" required data-art="kontakt" /></label>
+        <fieldset class="js7-chips">
+          <legend>{G.grob} <small>{G.optional}</small></legend>
+          {G.themen.map((t) => <label class="js7-chip"><input type="radio" name="thema" value={t} /><span>{t}</span></label>)}
+        </fieldset>
+        <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
+        <button class="btn btn--lg js7-btn" type="submit">{G.knopf}</button>
+        <p class="js7-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <form class="js7-karte" id="start-schnell" data-js7 data-betreff={S.betreff} data-endpoint={endpoint} data-key={formKey}
+        data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="js7-s-h">
+        <p class="js7-karte__art">{S.art}</p>
+        <span class="js7-badge js7-badge--hell">{S.badge}</span>
+        <h3 id="js7-s-h" class="js7-karte__titel">{S.titel}</h3>
+        <p class="js7-karte__text">{S.text}</p>
+        {/* type=text statt url: „www.ihre-firma.de“ ohne https:// soll gehen; Prüfung im Skript */}
+        <label class="js7-feld"><span>{S.url}*</span><input name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={S.urlBeispiel} required data-art="url" /></label>
+        <label class="js7-feld"><span>{S.email}* <small>{S.emailZusatz}</small></span><input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
+        <label class="js7-feld"><span>{S.telefon} <small>{S.optional}</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" /></label>
+        <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
+        <button class="btn btn--lg js7-btn" type="submit">{S.knopf}</button>
+        <p class="js7-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="js7-vertrauen">
+      <span class="js7-fotos">
+        <Bild name="team/can-siebert" alt="Can Siebert" widths={[96, 192]} sizes="48px" class="js7-foto" />
+        <Bild name="team/jamil-iqbal" alt="Jamil Iqbal" widths={[96, 192]} sizes="48px" class="js7-foto" />
+      </span>
+      <p>{T.vertrauen}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const TEL = /^[+\d][\d\s/()-]{5,}$/;
+  const URL_OK = (v: string) => { try { const u = new URL(/^https?:\/\//i.test(v) ? v : `https://${v}`); return /\.[a-z]{2,}$/i.test(u.hostname); } catch { return false; } };
+  document.querySelectorAll<HTMLFormElement>('form[data-js7]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.js7-status')!;
+    const felder = [...form.querySelectorAll<HTMLInputElement>('input[required]')];
+    const meldung = (f: HTMLInputElement): string => {
+      const v = f.value.trim();
+      if (f.type === 'checkbox') return f.checked ? '' : 'Bitte stimmen Sie der Datenschutzerklärung zu.';
+      if (!v) return f.name === 'name' ? 'Bitte geben Sie Ihren Namen an.' : f.name === 'website_url' ? 'Bitte geben Sie Ihre Website-Adresse an.' : f.name === 'kontakt' ? 'Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an.' : 'Bitte geben Sie Ihre E-Mail-Adresse an.';
+      if (f.dataset.art === 'kontakt' && !MAIL.test(v) && !TEL.test(v)) return 'Bitte prüfen Sie die Angabe (Telefonnummer oder E-Mail, zum Beispiel name@firma.de).';
+      if (f.dataset.art === 'url' && !URL_OK(v)) return 'Bitte prüfen Sie die Adresse (zum Beispiel www.ihre-firma.de).';
+      if (f.type === 'email' && !MAIL.test(v)) return 'Bitte prüfen Sie die E-Mail-Adresse (zum Beispiel name@firma.de).';
+      return '';
+    };
+    const zeige = (f: HTMLInputElement) => {
+      const id = `${form.id}-fehler-${f.name}`;
+      let el = document.getElementById(id);
+      const text = meldung(f);
+      if (!text) { el?.remove(); f.removeAttribute('aria-invalid'); f.removeAttribute('aria-describedby'); return true; }
+      if (!el) { el = document.createElement('span'); el.id = id; el.className = 'js7-fehler'; (f.type === 'checkbox' ? f.closest('label')! : f).insertAdjacentElement('afterend', el); }
+      el.textContent = text; f.setAttribute('aria-invalid', 'true'); f.setAttribute('aria-describedby', id);
+      return false;
+    };
+    felder.forEach((f) => f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => { if (f.hasAttribute('aria-invalid')) zeige(f); }));
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fehlend = felder.filter((f) => !zeige(f));
+      if (fehlend.length) { fehlend[0].focus(); return; }
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      if (data.website) return; // Honeypot
+      delete data.website; delete data.datenschutz;
+      if (data.kontakt) { if (MAIL.test(data.kontakt.trim())) data.email = data.kontakt.trim(); else data.telefon = data.kontakt.trim(); }
+      if (data.website_url && !/^https?:\/\//i.test(data.website_url.trim())) data.website_url = `https://${data.website_url.trim()}`;
+      const betreff = `${form.dataset.betreff}${data.thema ? ` (${data.thema})` : ''}`;
+      data.anliegen = betreff;
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
+        location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(betreff)}&body=${encodeURIComponent(body)}`;
+        status.textContent = 'Ihr E-Mail-Programm hat sich geöffnet. Bitte senden Sie die Nachricht dort ab.';
+        return;
+      }
+      status.textContent = 'Wird gesendet …';
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      button.disabled = true;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ ...data, access_key: form.dataset.key, subject: betreff, from_name: 'webgold Website', ...(data.email ? { replyto: data.email } : {}) }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error(String(res.status));
+        location.href = `${form.dataset.thanks}${data.name ? `?name=${encodeURIComponent(data.name.split(' ')[0])}` : ''}`;
+      } catch {
+        button.disabled = false;
+        status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${form.dataset.mailto}.`;
+      }
+    });
+  });
+</script>

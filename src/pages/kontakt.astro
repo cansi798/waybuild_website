@@ -63,7 +63,7 @@ import '../styles/seite-kontakt.css';
         <!-- Kostenlose Vorschau (Jamil #6061), Text zentral in config/vorschau.ts -->
         <p class="sk-vorschau"><strong>{VORSCHAU.titel}</strong><span>{vorschauText()}</span></p>
       </div>
-      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-nur-mit-website={KOMPLETTPAKET.nurMitWebsite ? "1" : ""} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
         <label>Worum geht es?
           <select name="interesse">
             <option value="">Noch unsicher – bitte beraten Sie mich</option>
@@ -76,7 +76,7 @@ import '../styles/seite-kontakt.css';
             <option value="">Noch offen, bitte beraten Sie mich</option>
             {ABO_PAKETE.map((p) => <option value={p.id} data-name={p.name} data-text={paketText(p)}>{p.name}: {euro(p.preis)} im Monat netto</option>)}
           </select>
-          <label class="wahl__opt wahl__opt--komplett"><input type="checkbox" name="komplett_wahl" value={KOMPLETTPAKET.id} data-text={komplettZeile()} /> <span>{KOMPLETTPAKET.name} dazu <b>{komplettPreis()}</b> im Monat netto <small>{KOMPLETTPAKET.kurz}</small><small>Nur zusammen mit {ABO_PAKETE.map((p) => p.name).join(' oder ')} buchbar, bitte zuerst ein Paket wählen.</small></span></label>
+          <label class="wahl__opt wahl__opt--komplett"><input type="checkbox" name="komplett_wahl" value={KOMPLETTPAKET.id} data-text={komplettZeile()} /> <span>{KOMPLETTPAKET.name} dazu <b>{komplettPreis()}</b> im Monat netto <small>{KOMPLETTPAKET.kurz}</small>{KOMPLETTPAKET.nurMitWebsite && <small>Nur zusammen mit {ABO_PAKETE.map((p) => p.name).join(' oder ')} buchbar, bitte zuerst ein Paket wählen.</small>}</span></label>
           <p class="wahl__summe" id="wahl-monat" aria-live="polite" hidden>Monatlich: <b id="wahl-monat-b"></b> netto <small id="wahl-monat-statt"></small></p>
           <p class="wahl__kopf">{EINMALIG_DAZU.titel} <small>(optional, Festpreis netto)</small></p>
           <div class="wahl__dazu">
@@ -161,7 +161,7 @@ import '../styles/seite-kontakt.css';
     const leistung = params.get('leistung') ?? '';
     // ?dazu=… allein (Block „Neu starten oder neu aufstellen?“, Jamil #5283) zeigt ebenfalls die Paket- und Extras-Wahl
     const paketKontext = websiteSlugs.includes(leistung) || !!tarif || !!params.get('paket') || !!params.get('dazu') || !!params.get('komplett');
-    // ?leistung=rundum bzw. Auswahl „Website + Web-App“ (Jamil #5944): wie Website, mit angehaktem „Rundum digital“
+    // ?leistung=rundum bzw. Auswahl „Website + Web-App“ (Jamil #5944): wie Website, mit angehaktem „Individuelle Software“
     if (leistung === 'rundum') interesse.value = 'rundum';
     // Paketwahl: sichtbar, sobald es um das Website-Abo geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
@@ -174,21 +174,22 @@ import '../styles/seite-kontakt.css';
     const treffer = wahlSelect ? [...wahlSelect.options].find((o) => (o.dataset.name && norm(paket).startsWith(o.dataset.name.toLowerCase())) || (altId && o.value === altId)) : undefined;
     // ?paket=Komplettpaket (oder Komplett) bzw. ?komplett=1 hakt das Komplettpaket an, Grundpaket bleibt wählbar
     const komplettBox = form.querySelector<HTMLInputElement>('input[name="komplett_wahl"]');
-    const istKomplett = (t: string) => norm(t).startsWith('komplett') || norm(t).startsWith('rundum'); // „Rundum digital“ seit #5936
+    const istKomplett = (t: string) => norm(t).startsWith('komplett') || norm(t).startsWith('rundum'); // „Individuelle Software“ seit #5936
     const komplettParam = params.get('komplett') === '1' || istKomplett(paket) || interesse.value === 'rundum';
     if (komplettBox && komplettParam) komplettBox.checked = true;
     if (treffer && wahlSelect) wahlSelect.value = treffer.value;
-    // Auswahl „Worum geht es?“ = gewähltes Paket (#5957): Rundum digital, sonst das erkannte Paket
+    // Auswahl „Worum geht es?“ = gewähltes Paket (#5957): Individuelle Software, sonst das erkannte Paket
     if (komplettParam) interesse.value = 'rundum';
     else if (treffer) interesse.value = treffer.value;
     else if (paketKontext && !interesse.value) interesse.value = '';
     else if (paket && !istKomplett(paket)) (form.elements.namedItem('paket') as HTMLInputElement).value = paket.slice(0, 60);
-    // Komplettpaket nur zusammen mit Online sichtbar oder Online wachsen (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
+    // Komplettpaket nur zusammen mit Profi-Website oder Website + Google & KI (Jamil, Talk qh87y3sj #5642, 12.11.2026): ohne gewähltes Paket gesperrt und
     // nicht angehakt; ein Wunsch aus dem Link (?komplett=1) wird gemerkt und beim Wählen eines Pakets wieder angehakt.
     let komplettWunsch = komplettParam;
     const komplettPruefen = () => {
       if (!komplettBox || !wahlSelect) return;
-      const ohnePaket = !wahlSelect.value;
+      // seit Jamil #6400 einzeln buchbar: Sperre nur noch, wenn data-nur-mit-website gesetzt ist
+      const ohnePaket = !wahlSelect.value && form.dataset.nurMitWebsite === '1';
       komplettBox.disabled = ohnePaket;
       komplettBox.checked = ohnePaket ? false : komplettBox.checked || komplettWunsch;
     };
@@ -239,7 +240,7 @@ import '../styles/seite-kontakt.css';
     if (buchen && absenden) absenden.textContent = form.dataset.absenden ?? 'Paket anfragen'; // Jamil #6055 Fr. 18
     const paketIds = [...(wahlSelect?.options ?? [])].map((o) => o.value).filter(Boolean);
     const mitPaket = () => interesse.value === 'rundum' || paketIds.includes(interesse.value);
-    // Auswahl oben ↔ Paketwahl unten abgleichen (#5957): Paket gewählt → Paketwahl setzen, Rundum digital → Haken setzen
+    // Auswahl oben ↔ Paketwahl unten abgleichen (#5957): Paket gewählt → Paketwahl setzen, Individuelle Software → Haken setzen
     const zeigeWahl = () => {
       if (wahl) wahl.hidden = !mitPaket() && !paketKontext; // ?dazu=… (Extras) zeigt die Wahl auch ohne Paket
       if (!wahlSelect || !komplettBox) return;

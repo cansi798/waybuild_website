@@ -59,7 +59,7 @@ for (const u of umfang) {
 const verwandt = (d.verwandt ?? []).flatMap((slug) => LEISTUNGEN_META.filter((m) => m.slug === slug && slug !== eintrag.id));
 const pakete = (d.pakete ?? []).map((id) => ABO_PAKETE.find((p) => p.id === id)!).filter(Boolean);
 const extras = d.extras === true;
-const komplett = d.komplett === true; // Kasten „Rundum digital“ (Jamil #6011, Audit #5953 L1)
+const komplett = d.komplett === true; // Kasten „Individuelle Software“ (Jamil #6011, Audit #5953 L1)
 const kombis = kombiPreise();
 const kontaktKombi = href(`/kontakt/?paket=${encodeURIComponent(kombis[0]?.paket.name ?? '')}&komplett=1&buchen=1`);
 const aufAnfrage = pakete.length === 0 && !extras;

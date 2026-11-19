@@ -6,7 +6,7 @@ station: bearbeitung
 kurz: "Klare Zuständigkeiten und weniger Handarbeit, damit Anfragen zügig bearbeitet werden."
 description: "Wir ordnen, was nach einer Anfrage passiert: klare Zuständigkeiten, verbundene Systeme und automatisierte Schritte, wo sie Ihnen Arbeit abnehmen."
 paket: "auf Anfrage"
-# Jamil #6011, Audit #5953 L1: buchbares Paket „Rundum digital“ deutlich zeigen (Kasten im Paketteil, Preise aus pakete-abo.ts)
+# Jamil #6011, Audit #5953 L1: buchbares Paket „Individuelle Software“ deutlich zeigen (Kasten im Paketteil, Preise aus pakete-abo.ts)
 komplett: true
 fragen:
   - frage: "Muss ich dafür neue Software kaufen?"
@@ -44,7 +44,7 @@ schritte:
     text: "Wir sorgen dafür, dass Website, Kommunikation, Prozesse und Systeme zusammenarbeiten. Abstimmungen mit Beteiligten übernehmen wir, damit Ihr Aufwand gering bleibt."
   - titel: "Verbessern"
     text: "Wir beginnen mit dem Schritt, der den größten Einfluss auf Ihre Kunden und Ihren Alltag hat, und entwickeln die Abläufe von dort aus weiter."
-paketText: "Für die Verwaltung von Anfrage, Angebot, Auftrag und Rechnung gibt es das feste Paket „Rundum digital“, immer zusammen mit Online sichtbar oder Online wachsen. Was darüber hinausgeht, zum Beispiel eigene Cloud- oder IT-Lösungen, bieten wir mit einem individuellen Angebot an. Alle Details auf der [Preisseite](/preise/#komplettpaket)."
+paketText: "Für die Verwaltung von Anfrage, Angebot, Auftrag und Rechnung gibt es das feste Paket „Individuelle Software“, immer zusammen mit Profi-Website oder Website + Google & KI. Was darüber hinausgeht, zum Beispiel eigene Cloud- oder IT-Lösungen, bieten wir mit einem individuellen Angebot an. Alle Details auf der [Preisseite](/preise/#komplettpaket)."
 passt: "Wenn Anfragen bei Ihnen schon einmal liegen geblieben sind oder Sie viel Zeit mit Abstimmen und Abtippen verbringen, lohnt sich ein genauer Blick. Der erste Schritt ist die kostenlose Erstberatung."
 verwandt: [anfragen, nachfassen, terminbuchung]
 ---

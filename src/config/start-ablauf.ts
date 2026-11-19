@@ -27,9 +27,9 @@ export interface AblaufSchritt {
 // die acht Schritte ausführlich als „So arbeiten wir“ auf /ueber-uns/ (#so-arbeiten-wir). Fr. 15: ein Gespräch, rund 30 Minuten
 // (vorher 20 bzw. 60). Fr. 16: kostenlose Vorschau für jede Anfrage, Feinschliff am nächsten Werktag (vorher „5 Stunden“).
 // Fr. 26: Fachbegriffe übersetzt, „Unternehmens-DNA“ bleibt und wird kurz erklärt. Fr. 27: „Website und Web-App vom selben Team“.
-// Fr. 28: „messbar“ = Monatsbericht mit Besuchern und Anfragen (ab Online wachsen, pakete-abo.ts).
+// Fr. 28: „messbar“ = Monatsbericht mit Besuchern und Anfragen (ab Website + Google & KI, pakete-abo.ts).
 export const DNA_ERKLAERT = 'Ihre Unternehmens-DNA ist das, was Ihr Unternehmen ausmacht: Ihre Werte, Ihre Art zu arbeiten und das, wofür Kunden Sie schätzen.';
-export const MESSBAR = 'Ab Online wachsen zeigen wir Ihnen jeden Monat Besucher und Anfragen im Monatsbericht.';
+export const MESSBAR = 'Ab Website + Google & KI zeigen wir Ihnen jeden Monat Besucher und Anfragen im Monatsbericht.';
 
 export const START_ABLAUF = {
   kenn: 'So arbeiten wir',

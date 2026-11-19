@@ -8,6 +8,8 @@
 // Diese Datei importiert BEWUSST nichts (auch nicht site.ts), damit site.ts, schema.ts, llms.txt usw. sie ohne
 // Zirkelbezug einbinden können. Preise NIE fest in Texte schreiben, immer von hier holen.
 // Alle Preise NETTO zzgl. 19 % USt (B2B). Mindestlaufzeit 24 Monate (AGB § 5), danach monatlich kündbar.
+// Seit 19.11.2026 (Jamil #6400): Profi-Website 54,99 € · Website + Google & KI 119,99 € · Individuelle Software 199,99 € (einzeln oder
+// kombinierbar, kein Kombipreis). Extras und Mindestlaufzeit unverändert – offene Frage an Jamil.
 
 export const MWST_SATZ = 0.19;
 export const LAUFZEIT_MONATE = 24;
@@ -47,38 +49,28 @@ export type AboPaket = {
   leistungen: Leistung[];
 };
 
+// SEIT 19.11.2026 (Jamil, Talk qh87y3sj #6399/#6400; Sicherung Tag vor-jamil-6384-20261119): neue Preise und Leistungen WÖRTLICH aus #6400.
+// Vorher: „Online sichtbar“ 79,99 € / „Online wachsen“ 149,99 € mit E-Mail-Postfächern, Google-Profil, Monatsbericht, KI-Check (Git-Verlauf).
 export const ABO_PAKETE: AboPaket[] = [
   {
-    id: 'basis', name: 'Online sichtbar', kurz: 'Professionell online', preis: 79.99,
-    fuer: 'Für Selbstständige und kleine Betriebe, die gut gefunden werden und seriös auftreten wollen.',
+    id: 'basis', name: 'Profi-Website', kurz: 'Basis', preis: 54.99,
+    fuer: 'Ideal für einen modernen, seriösen Webauftritt ohne Baukasten-Optik.',
     leistungen: [
-      { id: 'website', text: 'Website', zeile: `Website mit bis zu ${SEITEN_MAX} Seiten`, // Jamil #6055 Fr. 30
-        detail: `Bis zu ${SEITEN_MAX} Seiten, für Handy, Tablet und PC, Texte mit Ihnen erarbeitet. Hosting in Deutschland, Updates, Sicherungen, Änderungen per Nachricht im fairen Rahmen.` },
-      { id: 'seo', text: 'Suchmaschinen-Optimierung beim Erstellen', zeile: 'Suchmaschinen-Optimierung', wert: 'Grundoptimierung beim Erstellen',
-        detail: 'Wir richten Ihre Website von Anfang an so ein, dass Google sie gut versteht: klare Seitentitel und Beschreibungen, saubere Überschriften, schnelle Ladezeit, gut auf dem Handy.' },
-      { id: 'email', text: 'E-Mail-Postfächer mit Signatur', zeile: 'E-Mail-Postfächer mit Signatur',
-        detail: 'Bis zu 20 Postfächer mit Ihrer Adresse, einheitliche Signatur nach DIN 5008.' },
-      { id: 'ki', text: 'Aufbereitung für KI-Assistenten',
-        detail: 'So aufbereitet, dass ChatGPT und andere KI-Assistenten Ihr Angebot richtig verstehen.' },
-      // Google-Profil einrichten seit 12.11.2026 schon in Basis (vorher erst ab Plus; Jamil, Talk qh87y3sj #5644)
-      { id: 'google-profil', text: 'Google-Profil einrichten',
-        detail: 'Ihr Eintrag bei Google und Google Maps, mit Fotos, Leistungen und Öffnungszeiten.' },
+      { id: 'code', text: 'Handprogrammierter Code (kein Baukasten)', detail: 'Handprogrammierter Code (kein Baukasten).' },
+      { id: 'tempo', text: 'Blitzschnelle Ladezeiten & top Design', detail: 'Blitzschnelle Ladezeiten & top Design.' },
+      { id: 'geraete', text: 'Perfekt auf Handy, Tablet & PC', detail: 'Perfekt auf Handy, Tablet & PC.' },
+      { id: 'betreuung', text: 'Inkl. Hosting, Sicherheit & Betreuung', detail: 'Inkl. Hosting, Sicherheit & Betreuung.' },
+      { id: 'vorschau', text: 'Vorschau schon am nächsten Werktag', detail: 'Vorschau schon am nächsten Werktag.' },
     ],
   },
   {
-    id: 'plus', name: 'Online wachsen', kurz: 'Gefunden werden und Anfragen gewinnen', preis: 149.99, empfohlen: true, baut: 'basis',
-    fuer: 'Für Betriebe vor Ort, die über Google regelmäßig neue Kunden gewinnen wollen.',
+    id: 'plus', name: 'Website + Google & KI', kurz: 'Beliebt / Empfehlung', preis: 119.99, empfohlen: true, baut: 'basis',
+    fuer: 'Ideal, wenn Sie aktiv über Google und KI-Suchen neue Kunden gewinnen wollen.',
     leistungen: [
-      { id: 'google-pflege', text: 'Google-Profil pflegen',
-        detail: 'Fotos, Leistungen und Öffnungszeiten bleiben aktuell.' },
-      { id: 'seo', text: 'Erweiterte Suchmaschinen-Optimierung', zeile: 'Suchmaschinen-Optimierung', wert: 'Erweiterte Optimierung',
-        detail: 'Wir finden heraus, wonach Ihre Kunden suchen, und richten Ihre Seiten gezielt darauf aus. Ihr Google-Profil wird mit der Website verknüpft, damit Sie vor Ort besser gefunden werden.' },
-      { id: 'mail-ordner', text: 'E-Mail-Organisation mit Unterordnern', zeile: 'E-Mail-Organisation mit Ordnern',
-        detail: 'Ihre Postfächer werden mit Ordnern und Regeln eingerichtet, damit Anfragen nicht im Posteingang untergehen.' },
-      { id: 'bericht', text: 'Monatsbericht',
-        detail: 'Besucher, Anfragen, Suchbegriffe, kurz und verständlich.' },
-      { id: 'ki-check', text: 'Monatlicher KI-Check',
-        detail: 'Jeden Monat prüfen wir, ob KI-Assistenten wie ChatGPT Ihr Unternehmen richtig nennen und beschreiben.' },
+      { id: 'google', text: 'Gezielte Google-Suchoptimierung', detail: 'Gezielte Google-Suchoptimierung.' },
+      { id: 'ki', text: 'Optimiert für KI-Antworten (ChatGPT & Co.)', detail: 'Optimiert für KI-Antworten (ChatGPT & Co.).' },
+      { id: 'inhalte', text: 'Strukturierte Inhalte für mehr Anfragen', detail: 'Strukturierte Inhalte für mehr Anfragen.' },
+      { id: 'pflege', text: 'Laufende Pflege Ihrer Sichtbarkeit', detail: 'Laufende Pflege Ihrer Sichtbarkeit.' },
     ],
   },
 ];
@@ -124,16 +116,19 @@ export const vergleichsZeilen = () => {
 export type PreisArt = 'zusaetzlich' | 'gesamt';
 export const KOMPLETTPAKET = {
   id: 'komplett' as const,
-  label: 'Optional dazu',
-  name: 'Rundum digital', // Jamil #5936 (14.11.2026), vorher „Komplettpaket“
-  kurz: 'Auftragsverwaltung, individuell an Ihre Abläufe angepasst',
-  /** „Nur zusammen …“ statt „Zusätzlich zu Basis oder Plus buchbar.“ (Jamil, Talk qh87y3sj #5642, 12.11.2026): einzeln nicht buchbar */
-  text: 'Eine Software für Ihre Aufträge, die Anfrage, Angebot, Auftrag und Rechnung miteinander verbindet. Nur zusammen mit Online sichtbar oder Online wachsen buchbar.',
-  preis: 369.99,
-  ab: true,
-  kombiAb: true,
+  label: '+ Kombinierbar oder einzeln', // Jamil #6400 (Badge der Software-Karte)
+  name: 'Individuelle Software', // Jamil #6400 (vorher „Rundum digital“, #5936)
+  kurz: 'Ideal, wenn Sie interne Abläufe vereinfachen oder ein Kundenportal brauchen.',
+  /** Seit #6400 einzeln ODER zusammen mit einer Website buchbar (vorher nur in Kombination, #5642). */
+  text: 'Ideal, wenn Sie interne Abläufe vereinfachen oder ein Kundenportal brauchen. Kombinierbar oder einzeln buchbar.',
+  preis: 199.99,
+  ab: false, // Karte #6400: „199,99 € / Monat (kombinierbar)“; im Hero-Satz steht „ab“ (#6396)
+  kombiAb: false,
+  /** true = nur zusammen mit einem Website-Paket buchbar (bis #6400). Seit #6400: false. */
+  nurMitWebsite: false,
   preisArt: 'zusaetzlich' as PreisArt,
-  kombiPreis: { basis: 419.99, plus: 489.99 } as Record<AboPaket['id'], number | null>,
+  /** Kombipreise Website + Software: seit #6400 keine (offene Frage an Jamil) → es gilt die Summe der Einzelpreise. Vorher 419,99 / 489,99 €. */
+  kombiPreis: { basis: null, plus: null } as Record<AboPaket['id'], number | null>,
   kombiMitGruenderpaket: false,
   /** Ablauf-Grafik (seit #5606/#5610 nicht mehr auf der Karte; nur noch Daten) */
   ablauf: [
@@ -149,27 +144,31 @@ export const KOMPLETTPAKET = {
     { icon: 'eye', text: 'Überblick, welche Aufträge offen sind' },
     { icon: 'book', text: 'Rechnungen können direkt an die Buchhaltung übergeben werden' },
   ] as const,
-  /** Auftragsverwaltung (#5352; seit #5641 nicht mehr auf der Karte) */
+  /** Leistungen der Software-Karte (Jamil #6400, wörtlich) */
   software: [
-    'Individuell für Ihren Betrieb entwickelt, statt Software von der Stange',
-    'Auf Ihre Abläufe abgestimmt, von der Anfrage bis zur Rechnung',
-    'Wächst mit, wenn neue Schritte oder Mitarbeitende dazukommen',
-    'Sie arbeiten in Ihren gewohnten Begriffen, nicht in denen eines fremden Programms',
-    'Schnittstelle zu Lexware Office und sevDesk möglich',
-    'Wiederkehrende Schritte laufen automatisch',
+    'Maßgeschneiderte Web-App nach Ihren Abläufen',
+    'Läuft einfach im Browser (ohne Installation)',
+    'z. B. Kundenportal, Kalkulator, Auftragsplanung',
+    'Wir übernehmen den Daten-Umzug',
+    'Erster Prototyp in 3 Werktagen',
   ],
 };
 const K = KOMPLETTPAKET;
 /** Günstigster Kombipreis netto (Basis + Komplettpaket). Seit Jamil, Talk qh87y3sj #5659/#5660 (12.11.2026) wird das Komplettpaket
  *  NUR noch mit Kombipreisen gezeigt, nie mit seinem Einzelpreis (K.preis bleibt intern für „statt einzeln …“). */
-export const kombiAbPreis = () => Math.min(...ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [K.kombiPreis[p.id] as number])));
-/** „in Kombination ab 419,99 €“ (vorher „zusätzlich ab 369,99 €“) */
-export const komplettPreis = () => `in Kombination ${euroAb(kombiAbPreis(), K.kombiAb)}`;
+export const kombiAbPreis = () => {
+  const k = ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [K.kombiPreis[p.id] as number]));
+  return k.length ? Math.min(...k) : K.preis; // ohne Kombipreise (#6400): Einzelpreis der Software
+};
+/** Mit Kombipreisen „in Kombination ab …“, sonst (#6400) einfach der Monatspreis der Software */
+export const komplettPreis = () => (kombiPreise().length ? `in Kombination ${euroAb(kombiAbPreis(), K.kombiAb)}` : euroAb(K.preis, K.ab));
 /** Erklärung zum Preis, z. B. unter dem Betrag */
-export const komplettPreisArt = () => (K.preisArt === 'zusaetzlich' ? 'zusätzlich zum Monatspreis von Online sichtbar oder Online wachsen' : 'Gesamtpreis, Online sichtbar oder Online wachsen inklusive');
+export const komplettPreisArt = () => (K.nurMitWebsite ? `zusätzlich zum Monatspreis von ${ABO_PAKETE.map((p) => p.name).join(' oder ')}` : 'einzeln oder zusätzlich zu einem Website-Paket');
 /** Eine Zeile für Texte: „Komplettpaket nur in Kombination: mit Basis ab 419,99 € oder mit Plus ab 489,99 € im Monat netto zzgl. MwSt.“ */
 export const komplettZeile = () =>
-  `${K.name} nur in Kombination: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`mit ${p.name} ${euroAb(K.kombiPreis[p.id] as number, K.kombiAb)}`])).join(' oder ')} im Monat netto zzgl. MwSt.`;
+  kombiPreise().length
+    ? `${K.name} nur in Kombination: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`mit ${p.name} ${euroAb(K.kombiPreis[p.id] as number, K.kombiAb)}`])).join(' oder ')} im Monat netto zzgl. MwSt.`
+    : `${K.name}: ${euroAb(K.preis, K.ab)} im Monat netto zzgl. MwSt., kombinierbar oder einzeln buchbar.`;
 /** Summe der Einzelpreise NETTO pro Monat: Grundpaket + Komplettpaket (Ab-Preis). */
 export const einzelnMitKomplett = (paketId: AboPaket['id']) =>
   Math.round(((K.preisArt === 'zusaetzlich' ? paketById(paketId).preis : 0) + K.preis) * 100) / 100;
@@ -241,7 +240,7 @@ export const NICHT_ENTHALTEN = [
   'Fotos und Fotoshooting',
   'Logo, Geschäftspapiere, Visitenkarten und E-Mail-Signatur (einmalig dazubuchbar, Festpreise siehe oben)',
   'Druck von Visitenkarten',
-  `Die Web-App (Paket „${KOMPLETTPAKET.name}“, nur zusammen mit einem Website-Paket)`,
+  `Die Web-App (Paket „${KOMPLETTPAKET.name}“, eigener Monatspreis, einzeln oder zusammen mit einem Website-Paket)`,
 ];
 /** Was wir nicht anbieten (Jamil #6055 Fr. 9) */
 export const NICHT_ANGEBOTEN = 'Einen Online-Shop bieten wir nicht an.';
@@ -257,9 +256,9 @@ export const FAQ_PAKETE: PaketFrage[] = [
   { q: 'Kann ich über den Preis verhandeln?',
     a: 'Bei den Paketen nicht. Jeder Kunde zahlt für dieselbe Leistung denselben Preis, das ist fair und für alle planbar. Bei größeren Vorhaben, etwa mit Kundenverwaltung oder automatisierten Abläufen, erstellen wir ein individuelles Angebot nach Ihrem Bedarf.' },
   { q: 'Gibt es Einrichtungskosten?',
-    a: 'Nein. Auch einmalige Arbeiten wie die Einrichtung Ihrer Website oder Ihres Google-Profils sind im Monatspreis enthalten. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' },
+    a: 'Nein. Keine versteckten Einrichtungsgebühren für den Start. Einen einmaligen Festpreis zahlen Sie nur, wenn Sie etwas zusätzlich dazubuchen, zum Beispiel ein Logo.' }, // #6400
   { q: 'Was kostet ein Paket im Jahr?',
-    a: `${ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`).join(', ')} netto im Jahr, also 12 Monatspreise. Mit dem ${K.name} zusammen: ${ABO_PAKETE.flatMap((p) => (K.kombiPreis[p.id] == null ? [] : [`${p.name} + ${K.name} ${euroAb(jahresPreis(K.kombiPreis[p.id] as number), K.kombiAb)}`])).join(', ')} netto im Jahr. Abgerechnet wird monatlich.` },
+    a: `${[...ABO_PAKETE.map((p) => `${p.name} ${euro(jahresPreis(p.preis))}`), `${K.name} ${euroAb(jahresPreis(K.preis), K.ab)}`].join(', ')} netto im Jahr, also 12 Monatspreise. Abgerechnet wird monatlich.` },
   { q: 'Wie lange läuft der Vertrag?',
     a: `Die Mindestlaufzeit beträgt ${LAUFZEIT_MONATE} Monate. Danach läuft das Abo monatlich weiter und ist mit einem Monat Frist zum Monatsende kündbar.` },
   { q: 'Was passiert nach 24 Monaten?', // Jamil #6055 Fr. 8: Preis bleibt gleich
@@ -277,6 +276,6 @@ export const FAQ_PAKETE: PaketFrage[] = [
 
 /** Kurzfassung für den Preisteil der Startseite: diese Leistungen je Paket (Rest auf /preise/). */
 export const KOMPAKT: Record<AboPaket['id'], string[]> = {
-  basis: ['website', 'seo', 'email', 'ki', 'google-profil'], // Google-Profil einrichten seit #5644 in Basis
-  plus: ['google-pflege', 'seo', 'bericht', 'ki-check'],
+  basis: ['code', 'tempo', 'geraete', 'betreuung', 'vorschau'], // #6400
+  plus: ['google', 'ki', 'inhalte', 'pflege'],
 };

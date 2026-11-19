@@ -12,9 +12,9 @@ fragen:
   - frage: "Brauche ich eine Kundenverwaltung (CRM)?"
     antwort: "Nicht jedes Unternehmen braucht eine. Bei wenigen Anfragen reichen oft gut geordnete Postfächer. Ob sich eine Kundenverwaltung für Sie lohnt, klären wir im Erstgespräch. Dafür erstellen wir ein eigenes Angebot."
   - frage: "Was davon ist in den Paketen enthalten?"
-    antwort: "E-Mail-Postfächer mit Signatur sind im Paket Online sichtbar enthalten, die Organisation mit Ordnern und Regeln ab Paket Online wachsen. Eine Kundenverwaltung bieten wir auf Anfrage an."
+    antwort: "E-Mail-Postfächer mit Signatur sind im Paket Profi-Website enthalten, die Organisation mit Ordnern und Regeln ab Paket Website + Google & KI. Eine Kundenverwaltung bieten wir auf Anfrage an."
   - frage: "Was ist, wenn Besucher die Anfrage abbrechen?"
-    antwort: "Dann suchen wir mit Ihnen die Stelle, an der sie abspringen, und besprechen, wie sie sich verbessern lässt. Ab Paket Online wachsen zeigt der Monatsbericht, wie viele Anfragen ankommen."
+    antwort: "Dann suchen wir mit Ihnen die Stelle, an der sie abspringen, und besprechen, wie sie sich verbessern lässt. Ab Paket Website + Google & KI zeigt der Monatsbericht, wie viele Anfragen ankommen."
 # von uns ergänzt (#5892): probleme
 probleme:
   - titel: "Das Formular schreckt ab"
@@ -29,7 +29,7 @@ umfang:
   - titel: "Formulare, die man gern ausfüllt"
     text: "nur die Fragen, die Sie für eine gute erste Antwort brauchen, verständlich formuliert und gut bedienbar auf dem Handy."
   - titel: "Ordnung im Posteingang"
-    text: "E-Mail-Postfächer mit Ihrer Adresse gehören schon im Paket Online sichtbar zur [Website](/leistungen/website/). Ab Paket Online wachsen richten wir sie zusätzlich mit Ordnern und Regeln ein."
+    text: "E-Mail-Postfächer mit Ihrer Adresse gehören schon im Paket Profi-Website zur [Website](/leistungen/website/). Ab Paket Website + Google & KI richten wir sie zusätzlich mit Ordnern und Regeln ein."
   - titel: "Kundenverwaltung (CRM)"
     text: "Wenn Sie viele Anfragen erhalten oder mehrere Personen daran arbeiten, sammeln wir alle Anfragen an einem Ort. Dafür erstellen wir ein eigenes Angebot."
 umfangHinweis: "Wenn Ihre Kunden lieber direkt einen Termin wählen, lesen Sie weiter unter [Terminbuchung](/leistungen/terminbuchung/)."
@@ -40,7 +40,7 @@ schritte:
     text: "Wir sorgen dafür, dass Website, Formular und Postfach zusammenarbeiten und jede Anfrage dort ankommt, wo sie bearbeitet wird."
   - titel: "Verbessern"
     text: "Wir schauen mit Ihnen, wo Besucher abspringen, und verbessern diese Stellen nach Absprache. Mehr dazu unter [Auswertung](/leistungen/auswertung/)."
-paketText: "Postfächer mit Signatur sind im Paket Online sichtbar enthalten, die Ordnung mit Ordnern und Regeln ab Paket Online wachsen. Formulare nach Maß und eine Kundenverwaltung besprechen wir in der Erstberatung und machen Ihnen ein Angebot."
+paketText: "Postfächer mit Signatur sind im Paket Profi-Website enthalten, die Ordnung mit Ordnern und Regeln ab Paket Website + Google & KI. Formulare nach Maß und eine Kundenverwaltung besprechen wir in der Erstberatung und machen Ihnen ein Angebot."
 passt: "Wenn mehr Menschen Ihre Website besuchen, als sich bei Ihnen melden, oder wenn Anfragen schon einmal liegen geblieben sind, lohnt sich ein genauer Blick. In der kostenlosen Erstberatung sehen wir uns gemeinsam an, wo Sie ansetzen können."
 verwandt: [terminbuchung, ablaeufe, auswertung]
 ---

@@ -9,7 +9,7 @@ description: "Online-Terminbuchung auf Ihrer Website: Kunden wählen selbst eine
 paket: "auf Anfrage"
 fragen:
   - frage: "Ist die Terminbuchung in einem Paket enthalten?"
-    antwort: "Die Terminbuchung ist kein fester Bestandteil der Pakete Online sichtbar und Online wachsen. Was für Ihren Fall sinnvoll ist, klären wir im Erstgespräch und machen Ihnen ein Angebot."
+    antwort: "Die Terminbuchung ist kein fester Bestandteil der Pakete Profi-Website und Website + Google & KI. Was für Ihren Fall sinnvoll ist, klären wir im Erstgespräch und machen Ihnen ein Angebot."
   - frage: "Wer legt fest, welche Termine buchbar sind?"
     antwort: "Sie. Wir stimmen mit Ihnen ab, welche Terminarten, Dauern und Zeiten Ihre Kunden wählen können, und richten die Buchung danach ein."
   - frage: "Bekommen meine Kunden eine Bestätigung?"

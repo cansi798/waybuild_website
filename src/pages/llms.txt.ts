@@ -23,11 +23,14 @@ export const GET: APIRoute = async ({ site }) => {
   const blog = (await getCollection('blog')).filter((b) => !b.data.draft).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
   const url = (p: string) => absolute(p, site);
   // Komplettpaket (Jamil #5450–#5464): optional zusätzlich zu Basis oder Plus, Kombipreise nicht mit dem Gesamtpaket der Extras
-  const komplett = `Nur zusammen mit Online sichtbar oder Online wachsen buchbar (einzeln nicht): ${komplettZeile()}, ${KOMPLETTPAKET.kurz}. ${KOMPLETTPAKET.text.replace(/ Nur zusammen mit Online sichtbar oder Online wachsen buchbar\.$/, '')} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`;
+  // Seit Jamil #6400: Software einzeln oder kombinierbar, ohne Kombipreise
+  const komplett = kombiPreise().length
+    ? `${komplettZeile()} ${KOMPLETTPAKET.kurz} Kombipreise: ${kombiPreise().map(kombiZeile).join('; ')}${KOMPLETTPAKET.kombiMitGruenderpaket ? '' : ` (nicht zusammen mit dem Gesamtpaket „${EINMALIG_DAZU.gesamt.name}“)`}.`
+    : `${komplettZeile()} ${KOMPLETTPAKET.kurz} Enthalten: ${KOMPLETTPAKET.software.join(', ')}.`;
   const lines = [
     `# ${company.name} – ein Angebot der ${company.legalName}`, // Jamil #6055 Fr. 22
     '',
-    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website-Abo, auf Wunsch mit Web-App: in drei Paketen (${PAKETE.map((p) => p.name).join(', ')} und ${KOMPLETTPAKET.name} mit Website und Auftragsverwaltung) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten, mit bis zu ${SEITEN_MAX} Seiten. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
+    `> ${company.name} aus ${company.city} (bei Hamburg) erstellt und betreut Websites für kleine und mittlere Unternehmen (nur B2B) als Website-Abo, auf Wunsch mit Web-App: in drei Paketen (${PAKETE.map((p) => p.name).join(', ')} und ${KOMPLETTPAKET.name}, kombinierbar oder einzeln) ab ${formatEuro(aboPreisAb())} im Monat netto zzgl. MwSt., ohne Einrichtungskosten, mit bis zu ${SEITEN_MAX} Seiten. Langfristig baut ${company.name} daraus digitale Unternehmensplattformen. Leitsatz: ${company.slogan}`,
     '',
     PREIS_HINWEIS,
     '',
@@ -53,7 +56,7 @@ export const GET: APIRoute = async ({ site }) => {
     // Auftragsverwaltungs-Liste und Ablauf stehen nicht mehr auf der Karte (Jamil #5606/#5610/#5641)
     `- ${KOMPLETTPAKET.name}: ${komplett}`,
     `- ${EINMALIG_DAZU.titel} (einmaliger Festpreis netto zzgl. MwSt., keine monatlichen Kosten): ${EINMALIG_DAZU.liste.map((e) => `${e.name} ${formatEuro(e.preis)} (${e.text.replace(/\.$/, '')})`).join('; ')}; Gesamtpaket ${EINMALIG_DAZU.gesamt.name} ${formatEuro(EINMALIG_DAZU.gesamt.preis)} statt ${formatEuro(EINMALIG_DAZU.liste.reduce((s, e) => s + e.preis, 0))}.`,
-    '- Paketanfrage: Auf den Paketkarten führt „Paket anfragen“ zu einem Fenster mit Paketwahl, „Rundum digital“ und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
+    '- Paketanfrage: Auf den Paketkarten führt „Paket anfragen“ zu einem Fenster mit Paketwahl, „Individuelle Software“ und den Extras und dann zum Kontaktformular mit Vorauswahl. Kein Online-Kauf: Vertrag und Auftragsbestätigung kommen per E-Mail, erst damit ist die Buchung verbindlich.',
     `- Laufzeit: ${WAAS.laufzeit} (mit einem Monat Frist zum Monatsende).`,
     `- Ablauf in fünf Schritten (Jamil #6055 Fr. 14): ${START_ABLAUF_KURZ.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.zeit}): ${s.text}`).join(' ')} Websites sind in der Regel innerhalb von 14 Tagen online, nachdem die Inhalte vorliegen.`,
     '- Service-Versprechen: bei uns antwortet ein Mensch, keine Maschine (fester Ansprechpartner), Änderungen per Sprachnachricht, kleine Änderungen in der Regel innerhalb von 1 Stunde (werktags 9 bis 17 Uhr), Antwort in der Regel am nächsten Werktag, Technik (Hosting, Updates, Backups) inklusive, keine Überraschungen auf der Rechnung.',

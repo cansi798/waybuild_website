@@ -1,3 +1,4 @@
+import { ABO_PAKETE, KOMPLETTPAKET, aboPreisAb } from './pakete-abo';
 // STARTSEITE, neues Konzept von Jamil (Talk qh87y3sj #6176, 16.11.2026; Sicherung davor: Tag vor-jamil-6176-20261116).
 // Hier stehen die Punkte 1–3 WÖRTLICH von Jamil (Jamil #6176): 1 Hero, 2 Problem, 3 Lösung. Punkte 4–8 + Abschluss-CTA wörtlich aus
 // Jamil #6179 (16.11.2026), weiter unten. FAQ (9) bleibt unverändert (#6177). Komponenten: src/components/start6176/, Stil: src/styles/start-6176.css.
@@ -31,18 +32,20 @@ export const ALT_ZEIGEN = {
   // ab Jamil #6388 (19.11.2026): neuer Abschnitt 4 „Kein Lastenheft. Kein Risiko. …“ (J_ERST, J6Erstsehen) direkt nach dem Wechsler.
   // Der bisherige Abschnitt „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J6Anders) bleibt vorerst sichtbar – Jamil wird gefragt:
   // #6390: „erstmal weiter nach unten“ → steht jetzt hinter Abschnitt 5 „Keine Angst vor dem Umstieg“ (#6391, J_UMSTIEG)
+  // ab Jamil #6402 (19.11.2026): Abschluss = Abschnitt 7 „Bereit zu sehen …“ mit zwei Mini-Formularen (J_START, J6Start)
+  abschlussCtaAlt: false, // bisheriger Abschluss-CTA #6179 (J6Abschluss, „Kostenlose Erstberatung vereinbaren“) → true = wieder statt Abschnitt 7
   weiterentwickelnAbschnitt: true, // false = „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J_ANDERS) ausblenden
 };
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
-export const PAKETE_ZEIGEN = true;
+export const PAKETE_ZEIGEN = false; // seit Jamil #6400 ersetzt durch Abschnitt 6 „Klare Monatspreise“ (J_PREISE, J6Preise); true = alte Paketkarten wieder
 
 /** Hero-Preiszeile (Jamil #6396, 19.11.2026): Preise hier ändern, Text baut sich in J_HERO.preiszeile daraus. */
+// Seit #6399/#6400: Preise kommen aus pakete-abo.ts (eine Quelle für alle Seiten); „netto“ wie überall auf der Seite (#6399 Punkt 3).
 export const HERO_PREISE = {
-  website: 54.99, // „Handprogrammierte Websites ab … / Monat“
-  software: 199.99, // „Individuelle Software ab … / Monat“
-  /** Zusatz hinter den Preisen – Jamil wird gefragt; vorerst ohne. Option: ' zzgl. MwSt.' */
-  mwst: '',
-  // mwst: ' zzgl. MwSt.',
+  website: aboPreisAb(), // „Handprogrammierte Websites ab … / Monat“ = günstigstes Website-Paket
+  software: KOMPLETTPAKET.preis, // „Individuelle Software ab … / Monat“
+  /** Zusatz hinter den Preisen (Jamil #6399: „netto“). Alternative: ' zzgl. MwSt.' */
+  mwst: ' netto',
 };
 const preis = (n: number) => `${n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\u00a0€`;
 /** Headline-Wort (Jamil wird gefragt, ob „Reibungslos“ statt „Effizient“): nur dieses eine Wort ändern. */
@@ -62,8 +65,8 @@ export const J_HERO = {
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
   /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
   preiszeile: [
-    `Handprogrammierte Websites ab ${preis(HERO_PREISE.website)}\u00a0/ Monat${HERO_PREISE.mwst}`,
-    `Individuelle Software ab ${preis(HERO_PREISE.software)}\u00a0/ Monat${HERO_PREISE.mwst} – ohne hohe Einmalkosten. Kostenlose Vorschau vorab.`,
+    `Handprogrammierte Websites ab ${preis(HERO_PREISE.website)}${HERO_PREISE.mwst}\u00a0/ Monat`,
+    `Individuelle Software ab ${preis(HERO_PREISE.software)}${HERO_PREISE.mwst}\u00a0/ Monat – ohne hohe Einmalkosten. Kostenlose Vorschau vorab.`,
   ],
   /** Hero-Visual (Jamil #6192, 18.11.2026; Sicherung davor: Tag vor-jamil-6192-20261118): statt nur eines Handys drei echte
    *  Beispiele, je Nachricht (links) → sichtbares Ergebnis (rechts, eigenes CSS-Mockup) → Häkchen mit Jamils Ergebnis-Text.
@@ -186,6 +189,55 @@ export const J_ERST = {
       text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zum Go-live oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Chat.',
       sprache: '0:12' },
   ],
+} as const;
+
+/** 7. Abschluss „Bereit zu sehen …“ (Jamil #6402, 19.11.2026). Texte WÖRTLICH. Versand wie das Kontaktformular (Web3Forms-Key
+ *  PUBLIC_WEB3FORMS_KEY, sonst E-Mail-Programm), Honeypot, Datenschutz-Häkchen. `betreff` unterscheidet die Karten im Postfach. */
+export const J_START = {
+  titel: 'Bereit zu sehen, was in Ihrem Betrieb möglich ist?',
+  unter: 'Wählen Sie Ihren Weg zur kostenlosen Vorschau – komplett unverbindlich und ohne Vorbereitung.',
+  gespraech: {
+    art: 'Der persönliche Weg (Website & Software)',
+    badge: 'Empfohlen für individuelle Abläufe',
+    titel: 'Unternehmens-DNA aufnehmen (15–20 Min.)',
+    text: 'Wir lernen Ihren Betrieb in einem lockeren Gespräch kennen, bringen eigene Optimierungsvorschläge ein und bauen Ihnen eine kostenlose Vorschau (Website morgen / Software in 3 Werktagen).',
+    name: 'Ihr Name',
+    kontakt: 'Telefonnummer oder E-Mail',
+    grob: 'Worum geht es grob?',
+    optional: '(optional)',
+    themen: ['Website', 'Software', 'Beides'],
+    knopf: 'Kostenloses Gespräch anfragen',
+    betreff: 'Gespräch anfragen',
+  },
+  schnell: {
+    art: 'Der Schnellstart (Nur Website)',
+    badge: 'Ohne Gespräch vorab',
+    titel: 'Direkte Website-Vorschau für morgen',
+    text: 'Sie möchten erst mal ohne Termin sehen, wie Ihre neue Startseite aussehen könnte? Senden Sie uns einfach Ihre aktuelle Website-Adresse – schon am nächsten Werktag liegt Ihr Entwurf bereit.',
+    url: 'Ihre aktuelle Website-URL',
+    urlBeispiel: 'z. B. www.ihre-firma.de',
+    email: 'Ihre E-Mail-Adresse',
+    emailZusatz: '(für den Vorschau-Link)',
+    telefon: 'Telefonnummer für Rückfragen',
+    optional: '(optional)',
+    knopf: 'Kostenlose Vorschau für morgen anfordern',
+    betreff: 'Website-Vorschau morgen',
+  },
+  vertrauen: 'Kein Callcenter, keine Verkäufer-Floskeln – Sie sprechen direkt mit den Machern. Wir freuen uns auf Ihr Projekt!',
+} as const;
+
+/** 6. „Klare Monatspreise“ (Jamil #6400, 19.11.2026). Texte WÖRTLICH; Preise, Namen, „Ideal für“ und ✓-Listen aus pakete-abo.ts
+ *  (dieselbe Quelle wie /preise/), hier nur Badges, Knöpfe und Hinweis. */
+export const J_PREISE = {
+  titel: 'Klare Monatspreise. Keine bösen Überraschungen.',
+  unter: 'Starten Sie ohne fünfstellige Vorab-Investition. Alle Pakete sind monatlich planbar, flexibel kombinierbar – und Sie entscheiden erst, nachdem Sie unsere kostenlose Vorschau gesehen haben.',
+  rolle: { basis: 'Basis', plus: 'Beliebt / Empfehlung', software: 'Erweiterung / Maßarbeit' },
+  badge: { plus: 'Am beliebtesten', software: '+ Kombinierbar oder einzeln' },
+  alles: 'Alles aus dem Profi-Website-Paket',
+  monat: '/ Monat',
+  kombinierbar: '(kombinierbar)',
+  knopf: { basis: 'Kostenlose Vorschau starten', plus: 'Kostenlose Vorschau starten', software: 'Software-Idee besprechen' },
+  hinweis: 'Alle Preise zzgl. MwSt. Keine versteckten Einrichtungsgebühren für den Start. Die erste Vorschau ist zu 100 % kostenlos und unverbindlich.',
 } as const;
 
 /** 5. „Keine Angst vor dem Umstieg“ (Jamil #6391, 19.11.2026) als ruhige „Sorglos-Matrix“ 2 × 2: Kundenfrage (Einwand) als

@@ -27,6 +27,8 @@ import J6Loesung from '../components/start6176/J6Loesung.astro';
 import J6Wechsler from '../components/start6176/J6Wechsler.astro';
 import J6Erstsehen from '../components/start6176/J6Erstsehen.astro';
 import J6Umstieg from '../components/start6176/J6Umstieg.astro';
+import J6Preise from '../components/start6176/J6Preise.astro';
+import J6Start from '../components/start6176/J6Start.astro';
 import J6Anders from '../components/start6176/J6Anders.astro';
 import J6Wachsen from '../components/start6176/J6Wachsen.astro';
 import J6Prozess from '../components/start6176/J6Prozess.astro';
@@ -86,6 +88,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <J6Erstsehen />
   {/* 5. Jamil #6391 (19.11.2026): „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Sorglos-Matrix) */}
   <J6Umstieg />
+  {/* 6. Jamil #6400 (19.11.2026): „Klare Monatspreise. Keine bösen Überraschungen.“ – ersetzt die Paketkarten (PAKETE_ZEIGEN = false) */}
+  <J6Preise />
   <!-- Jamil #6179 (16.11.2026): 4 Anders · 5 Wachsen · 6 Prozessberatung · 7 Referenzen · 8 Vertrauen · Pakete · Abschluss -->
   {/* „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ seit #6388 abschaltbar (ALT_ZEIGEN.weiterentwickelnAbschnitt), seit #6390 hinter Abschnitt 5 */}
   {ALT_ZEIGEN.weiterentwickelnAbschnitt && <J6Anders />}
@@ -95,7 +99,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <J6Vertrauen />
   <!-- Pakete kompakt nach „Verlässlichkeit“ (endet mit „Fester Monatspreis“), direkt vor dem Abschluss -->
   {PAKETE_ZEIGEN && <SnAngebot zeigeFragen={false} kompakt />}
-  <J6Abschluss />
+  {/* 7. Jamil #6402 (19.11.2026): Abschluss mit zwei Mini-Formularen; alter Abschluss-CTA über ALT_ZEIGEN.abschlussCtaAlt */}
+  {ALT_ZEIGEN.abschlussCtaAlt ? <J6Abschluss /> : <J6Start />}
 
   <!-- Erster Bildschirm (Jamil #5085–#5124): ganz in Türkis, mittig, ohne Preise, ein Knopf, vier kurze Vorteile unten im selben Verlauf; weicher, sehr
        langsam bewegter Mesh-Verlauf (4 Farbflächen, nur CSS) statt Linienmuster; Einblenden Wort für Wort (variante-start.css). -->

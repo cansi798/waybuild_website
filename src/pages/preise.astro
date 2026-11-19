@@ -43,12 +43,12 @@ const GLEICH: { t: string; w: string | true }[] = [
 const START = START_ABLAUF_KURZ.schritte.map((st) => ({ t: st.titel, x: st.text, z: st.zeit }));
 
 const preiseText = ABO_PAKETE.map((p) => `${p.name} ${euro(p.preis)}`).join(', ');
-const komplettText = `Optional dazu: ${KOMPLETTPAKET.name} mit Web-App, nur ${komplettPreis()}.`; // Web-App einheitlich (Jamil #6038, Audit K2)
+const komplettText = `Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()} im Monat, kombinierbar oder einzeln.`; // seit #6400 // Web-App einheitlich (Jamil #6038, Audit K2)
 ---
 
 <BaseLayout
   title={`Preise: Website-Abo ab ${euro(aboPreisAb())} im Monat`}
-  description={`${preiseText} im Monat netto, ohne Einrichtungskosten. Optional: ${KOMPLETTPAKET.name} ${komplettPreis()}.`}
+  description={`${preiseText} im Monat netto, ohne Einrichtungskosten. Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()}, kombinierbar oder einzeln.`}
   schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
