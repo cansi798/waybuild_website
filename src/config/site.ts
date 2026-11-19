@@ -287,5 +287,5 @@ export const faqs = [
 
 /** Vorschaubild beim Teilen (og:image/twitter:image). Jamil #6435–#6437: bei jeder Design-Änderung direkt mit anpassen;
  *  neuer Dateiname = neuer Cache bei WhatsApp/LinkedIn & Co. Vorher: /og-image.png (alte Farben, „waybuild“). */
-export const OG_BILD = '/og-webgold-20261120.png';
+export const OG_BILD = '/og-webgold-20261120-gold.png'; // seit #6442 Gold-Fläche wie Hero (vorher /og-webgold-20261120.png)
 export const OG_BILD_ALT = 'webgold: Stark nach außen. Effizient nach innen. Websites & Software nach Maß';

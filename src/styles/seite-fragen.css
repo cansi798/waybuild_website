@@ -31,7 +31,7 @@
 .sf-gruppen { min-width: 0; display: grid; gap: clamp(48px, 7vw, 88px); }
 .sf-gruppe { min-width: 0; scroll-margin-top: 100px; }
 .sf-gruppe__kopf { display: flex; align-items: baseline; gap: 16px; margin-bottom: clamp(16px, 2.5vw, 24px); }
-.sf-gruppe__nr { flex: none; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-mittel); font-variant-numeric: tabular-nums; }
+.sf-gruppe__nr { flex: none; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
 .sf-gruppe__kopf .sn-h3 { min-width: 0; overflow-wrap: break-word; }
 
 /* Akkordeon */

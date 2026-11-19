@@ -119,3 +119,16 @@
 /* Preiszeile unter den Hero-Knöpfen (Jamil #6396): ruhig, klein */
 .jh__preise { margin: -6px 0 0; max-width: 60ch; font-size: 0.88rem; line-height: 1.6; color: #CBD5E1; text-wrap: pretty; }
 .jh__preise-punkt { color: var(--gold); }
+
+/* Hero in Gold (Jamil #6442, 20.11.2026): Fläche Gold mit dezentem Verlauf, Schrift Slate (#0F172A auf #D4AF37 ≈ 8,5 : 1),
+   Hauptknopf Slate mit weißer Schrift, zweiter Knopf als Slate-Umriss. Die Animation (weiße Karten) bleibt. */
+.jh.jh { background: linear-gradient(135deg, #D4AF37 0%, #DDBA48 55%, #E2C15A 100%); color: #0F172A; }
+.jh .jh__titel { color: #0F172A; }
+.jh .jh__unter, .jh .jh__preise { color: #1E293B; }
+.jh .jh__preise-punkt { color: #0F172A; }
+.jh .jh-btn { background: #0F172A; color: #FFFFFF; border-color: #0F172A; box-shadow: 0 16px 32px -18px rgb(15 23 42 / 60%); }
+.jh .jh-btn:hover { background: #1E293B; border-color: #1E293B; color: #FFFFFF; }
+.jh .jh-btn--rand { background: transparent; color: #0F172A; border-color: #0F172A; box-shadow: none; }
+.jh .jh-btn--rand:hover { background: rgb(15 23 42 / 8%); color: #0F172A; }
+.jh .jh-btn:focus-visible { outline: 3px solid #0F172A; outline-offset: 3px; }
+.jh .jf { box-shadow: 0 30px 60px -36px rgb(15 23 42 / 55%); }

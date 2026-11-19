@@ -17,7 +17,7 @@
   --creme: #F8FAFC;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
   --accent: #D4AF37;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
-  --accent-ink: #8C6D12; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
+  --accent-ink: #7A5E0E; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
   --accent-mid: #D4AF37;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
   --accent-light: #E6C766; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #0F172A) */
   --on-accent: #0F172A;    /* Schrift auf #D4AF37 (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */

@@ -15,7 +15,7 @@ html[data-thema='besucherreise'] {
   --white: #ffffff;
   --dark: #0F172A;
   --accent: #D4AF37;
-  --accent-ink: #8C6D12;
+  --accent-ink: #7A5E0E;
   --accent-mid: #D4AF37;
   --gold: #D4AF37;
   --line: #E2E8F0;
@@ -57,7 +57,7 @@ html:root .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(212 175 55 / 45%); }
 html:root .svg-ja .svg-zeichen { color: #D4AF37; background: #FBF3D5; }
 
 /* Kopf- und Fußzeile in den neuen Grüntönen */
-html:root .footer { background: #0F172A; }
+html:root .footer { background: linear-gradient(160deg, #D4AF37 0%, #E2C15A 100%); color: #0F172A; } /* Jamil #6442 */
 /* Hero-Unterzeile kleiner auf Handy und Desktop (Jamil #5972, 15.11.2026) */
 html[data-thema='besucherreise'] .v-hero .v-unter { font-size: clamp(0.98rem, 0.92rem + 0.45vw, 1.18rem); line-height: 1.55; max-width: 56ch; }
 

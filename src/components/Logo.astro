@@ -5,10 +5,11 @@
 // Inline-SVG: keine Extra-Anfrage, feste Höhe + Seitenverhältnis = kein Layout-Sprung.
 // variante 'positiv' (heller Grund): web #0F172A, gold #D4AF37 · 'negativ' (dunkler Grund): web Weiß, gold #D4AF37.
 // Höhe über --logo-h (Standard 28 px, ab 720 px 32 px), Breite folgt dem Seitenverhältnis 4395 : 1049.
-interface Props { variante?: 'positiv' | 'negativ' }
+interface Props { variante?: 'positiv' | 'negativ' | 'aufgold' }
 const negativ = Astro.props.variante === 'negativ';
-const web = negativ ? '#FFFFFF' : '#0F172A'; // Jamil #6431: „web“ Slate 900, „gold“ Gold
-const gold = negativ ? '#D4AF37' : '#D4AF37';
+const aufGold = Astro.props.variante === 'aufgold'; // Jamil #6442: Fußzeile auf Gold → „web“ Slate, „gold“ Weiß
+const web = aufGold ? '#0F172A' : negativ ? '#FFFFFF' : '#0F172A'; // Jamil #6431: „web“ Slate 900, „gold“ Gold
+const gold = aufGold ? '#FFFFFF' : '#D4AF37';
 ---
 
 <span class="logo">

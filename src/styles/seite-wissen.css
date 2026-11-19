@@ -14,7 +14,7 @@
 /* Bereichs-Karte (/wissen/) */
 .swi-karte { display: flex; flex-direction: column; gap: 14px; width: 100%; min-width: 0; padding: clamp(24px, 3vw, 36px);
   border-radius: 28px; background: var(--white); box-shadow: var(--sn-schatten); }
-.swi-karte__nr { font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-mittel); font-variant-numeric: tabular-nums; }
+.swi-karte__nr { font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-tinte); /* Kontrast (Gold auf Weiß zu hell) */ font-variant-numeric: tabular-nums; }
 .swi-karte .sn-h3 { overflow-wrap: break-word; hyphens: auto; }
 .swi-karte .sn-h3 a { color: inherit; text-decoration: none; }
 .swi-karte .sn-h3 a:hover { color: var(--sn-tinte); }
