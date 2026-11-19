@@ -24,6 +24,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import J6Hero from '../components/start6176/J6Hero.astro';
 import J6Problem from '../components/start6176/J6Problem.astro';
 import J6Loesung from '../components/start6176/J6Loesung.astro';
+import J6Wechsler from '../components/start6176/J6Wechsler.astro';
 import J6Anders from '../components/start6176/J6Anders.astro';
 import J6Wachsen from '../components/start6176/J6Wachsen.astro';
 import J6Prozess from '../components/start6176/J6Prozess.astro';
@@ -77,7 +78,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <!-- Jamil #6176 (16.11.2026): 1 Hero · 2 Problem · 3 Lösung -->
   <J6Hero />
   <J6Problem />
-  <J6Loesung />
+  {/* 3. Lösung: seit Jamil #6378/#6379 (19.11.2026) „Websites und Software nach Maß“ mit Wechsler; alte Fassung über ALT_ZEIGEN.loesungAlt */}
+  {ALT_ZEIGEN.loesungAlt ? <J6Loesung /> : <J6Wechsler />}
   <!-- Jamil #6179 (16.11.2026): 4 Anders · 5 Wachsen · 6 Prozessberatung · 7 Referenzen · 8 Vertrauen · Pakete · Abschluss -->
   <J6Anders />
   <J6Wachsen />

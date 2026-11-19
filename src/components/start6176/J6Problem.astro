@@ -1,25 +1,66 @@
 ---
-// 2. Problem-Section nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_PROBLEM).
-// Überschrift + Subheadline (Texte seit Jamil #6198), vier Problemkarten, Abschluss-Satz. Stil: start-6176.css (.jp-*).
-import { J_PROBLEM as T } from '../../config/start-6176';
+// 2. Problem-Section nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts.
+// Seit Jamil #6372–#6374 + #6377 (19.11.2026): neue Überschrift, vier Textblöcke (J_PROBLEM_NEU) ohne Mockups, je ein schlichtes,
+// einfarbiges Linien-Icon (überfüllter Briefumschlag, verbogenes Puzzleteil, zwei kreuzende Pfeile, Lupe), viel Weißraum; ohne
+// Subheadline und Abschlusszeile. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
+import { J_PROBLEM as T, J_PROBLEM_NEU as N } from '../../config/start-6176';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
 
-<section class="section sn jp" id={ALT_ZEIGEN.problemAlt ? undefined : "problem"} aria-labelledby="jp-h">
+<section class={`section sn jp${ALT_ZEIGEN.problem6198Alt ? '' : ' jp--neu'}`} id={ALT_ZEIGEN.problemAlt ? undefined : "problem"} aria-labelledby="jp-h">
   <div class="wrap">
-    <div class="sn-kopf jp__kopf">
-      <h2 id="jp-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
-      <p class="sn-lead">{T.unter}</p>
-    </div>
-    <ul class="jp-karten">
-      {T.karten.map((k, i) => (
-        <li class="jp-karte j6-ein">
-          <span class="jp-karte__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="jp-karte__titel">{k.titel}</h3>
-          <p class="jp-karte__text">{k.text}</p>
-        </li>
-      ))}
-    </ul>
-    <p class="jp__abschluss">{T.abschluss}</p>
+    {ALT_ZEIGEN.problem6198Alt ? (
+      <>
+        <div class="sn-kopf jp__kopf">
+          <h2 id="jp-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+          <p class="sn-lead">{T.unter}</p>
+        </div>
+        <ul class="jp-karten">
+          {T.karten.map((k, i) => (
+            <li class="jp-karte j6-ein">
+              <span class="jp-karte__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="jp-karte__titel">{k.titel}</h3>
+              <p class="jp-karte__text">{k.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="jp__abschluss">{T.abschluss}</p>
+      </>
+    ) : (
+      <>
+        <div class="sn-kopf jp__kopf">
+          <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+        </div>
+        <ul class="jp-bloecke">
+          {N.karten.map((k) => (
+            <li class="jp-block j6-ein">
+              <svg class="jp-block__ico" viewBox="0 0 48 48" width="44" height="44" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                {k.icon === 'brief' && (<>
+                  {/* überfüllter Briefumschlag: Umschlag + herausquellende Blätter */}
+                  <path d="M15 21V9.5h14l4 4V21" /><path d="M29 9.5v4h4" /><path d="M19 15h7M19 18.5h9" />
+                  <path d="M11.5 16.5 9 8.5l7.5-2" />
+                  <rect x="6" y="21" width="36" height="21" rx="3" /><path d="m6.8 22.5 17.2 11 17.2-11" />
+                </>)}
+                {k.icon === 'puzzle' && (<>
+                  {/* starre Schablone (gestrichelt) und ein Puzzleteil, das schief danebensitzt und nicht hineinpasst */}
+                  <rect x="5" y="19" width="24" height="24" rx="3" stroke-dasharray="3 3.2" />
+                  <path transform="translate(17 3) rotate(14 12 12) scale(1.15)" vector-effect="non-scaling-stroke" d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z" />
+                </>)}
+                {k.icon === 'pfeile' && (<>
+                  {/* zwei kreuzende Pfeile: dieselben Daten hin und her */}
+                  <path d="M7 34h8c6 0 10-20 18-20h8" /><path d="m36 9 5 5-5 5" />
+                  <path d="M7 14h8c6 0 10 20 18 20h8" /><path d="m36 29 5 5-5 5" />
+                </>)}
+                {k.icon === 'lupe' && (<>
+                  <circle cx="21" cy="21" r="12" /><path d="m30 30 11 11" /><path d="M16 18h10M16 23h6" />
+                </>)}
+              </svg>
+              <h3 class="jp-block__titel">{k.titel}</h3>
+              <p class="jp-block__text">{k.text}</p>
+            </li>
+          ))}
+        </ul>
+      </>
+    )}
   </div>
 </section>

@@ -1,0 +1,126 @@
+---
+// Hero-Animation nach Jamil (Talk qh87y3sj #6369, 19.11.2026, freigegeben #6370): links ein Browserfenster mit schlichter
+// Business-Website und blauem Knopf „Anfrage senden“, ein Cursor klickt, eine leuchtende Linie fließt zum Projekt-Dashboard rechts,
+// dort erscheint in der Spalte „Neu“ die Karte „Neue Kundenanfrage“ mit grünem Häkchen. Ruhige, nahtlose Schleife (9 s).
+// Umsetzung: reines SVG + CSS (styles/hero-6369.css), kein Video. Zwei Fassungen derselben Szene: „breit“ (nebeneinander, Linie
+// waagerecht) und „hoch“ (≤ 640 px untereinander, Linie senkrecht); nur eine ist sichtbar. Feste viewBox = festes Seitenverhältnis
+// (kein Layout-Sprung). Bewegt werden nur transform/opacity, die Linie zusätzlich über stroke-dashoffset (pathLength=1).
+// Grundzustand ohne Animation (prefers-reduced-motion, Druck) = Endzustand. Pause außerhalb des Bildes / bei verstecktem Tab:
+// scripts/start-6182.ts (Klasse .jf--laeuft). Grafik ist aria-hidden, Bedeutung steht als sr-only Text daneben.
+import { J_HERO } from '../../config/start-6176';
+const T = J_HERO.fluss;
+
+// Maße der beiden Fenster (eigene Koordinaten): Browser 300 × 220, Dashboard DW × 220, drei Spalten zu je CW
+const DW = 330;
+const CW = (DW - 24 - 17) / 3; // Innenabstand 12 links/rechts, 8,5 zwischen den Spalten
+const spaltenX = [0, 1, 2].map((i) => 12 + i * (CW + 8.5));
+const KB = CW - 12; // Kartenbreite
+const lagen = {
+  breit: { w: 680, h: 258, browser: [10, 22], dash: [340, 22],
+    // vom rechten Rand des Knopfs (lokal 136|161) zur linken Kante der neuen Karte (lokal 18|94)
+    linie: 'M146 183 C 232 183, 272 116, 358 116', start: [146, 183], ende: [358, 116] },
+  hoch: { w: DW + 22, h: 528, browser: [26, 16], dash: [11, 292],
+    // von der Unterkante des Knopfs (lokal 77|176) zur Oberkante der neuen Karte (lokal 18 + KB/2|68)
+    linie: `M103 192 C 103 262, ${11 + 18 + KB / 2} 292, ${11 + 18 + KB / 2} 360`, start: [103, 192], ende: [11 + 18 + KB / 2, 360] },
+} as const;
+const spaltenFarbe = ['#2f6bff', '#e0a526', '#2c9a7a'];
+const spaltenZahl = [1, 2, 1];
+---
+
+<div class="jf" data-jf>
+  <p class="sr-only">{T.sr}</p>
+  {(['breit', 'hoch'] as const).map((lage) => {
+    const L = lagen[lage];
+    return (
+      <svg class={`jf__svg jf__svg--${lage}`} viewBox={`0 0 ${L.w} ${L.h}`} width={L.w} height={L.h} aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={`jf-verlauf-${lage}`} gradientUnits="userSpaceOnUse" x1={L.start[0]} y1={L.start[1]} x2={L.ende[0]} y2={L.ende[1]}>
+            <stop offset="0" stop-color="#2f6bff" />
+            <stop offset="1" stop-color="#5fa8ff" />
+          </linearGradient>
+        </defs>
+
+        {/* ---------- Browserfenster mit schlichter Business-Website ---------- */}
+        <g transform={`translate(${L.browser[0]} ${L.browser[1]})`}>
+          <rect class="jf-schatten" x="6" y="14" width="288" height="210" rx="16" />
+          <rect class="jf-fenster" width="300" height="220" rx="14" />
+          <path class="jf-leiste" d="M14 0H286A14 14 0 0 1 300 14V28H0V14A14 14 0 0 1 14 0Z" />
+          <circle class="jf-punkt" cx="16" cy="14" r="3.5" /><circle class="jf-punkt" cx="28" cy="14" r="3.5" /><circle class="jf-punkt" cx="40" cy="14" r="3.5" />
+          <rect class="jf-adresse" x="62" y="7" width="176" height="14" rx="7" />
+          <text class="jf-t jf-t--adresse" x="150" y="17">{T.adresse}</text>
+          <rect class="jf-dunkel" x="18" y="42" width="40" height="8" rx="4" />
+          <rect class="jf-hell" x="178" y="44" width="26" height="4" rx="2" /><rect class="jf-hell" x="210" y="44" width="26" height="4" rx="2" /><rect class="jf-hell" x="242" y="44" width="40" height="4" rx="2" />
+          <rect class="jf-dunkel" x="18" y="68" width="150" height="11" rx="5.5" />
+          <rect class="jf-dunkel" x="18" y="85" width="112" height="11" rx="5.5" />
+          <rect class="jf-grau" x="18" y="106" width="160" height="5" rx="2.5" /><rect class="jf-grau" x="18" y="116" width="140" height="5" rx="2.5" /><rect class="jf-grau" x="18" y="126" width="118" height="5" rx="2.5" />
+          <rect class="jf-bild" x="196" y="64" width="86" height="74" rx="10" />
+          <circle class="jf-bild2" cx="222" cy="86" r="7" />
+          <path class="jf-bild2" d="M204 130 228 104 244 120 254 112 274 130Z" />
+          <rect class="jf-flaeche" x="18" y="194" width="82" height="12" rx="6" /><rect class="jf-flaeche" x="109" y="194" width="82" height="12" rx="6" /><rect class="jf-flaeche" x="200" y="194" width="82" height="12" rx="6" />
+          <circle class="jf-welle" cx="77" cy="161" r="26" />
+          <g class="jf-knopf">
+            <rect x="18" y="146" width="118" height="30" rx="8" />
+            <text class="jf-t jf-t--knopf" x="77" y="165">{T.knopf}</text>
+          </g>
+          <g class="jf-zeiger">
+            <path d="M0 0V17.5L4.6 13.3 7.7 20.2 10.9 18.8 7.9 12H14Z" />
+          </g>
+        </g>
+
+        {/* ---------- Projekt-Dashboard (Kanban) ---------- */}
+        <g transform={`translate(${L.dash[0]} ${L.dash[1]})`}>
+          <rect class="jf-schatten" x="6" y="14" width={DW - 12} height="210" rx="16" />
+          <rect class="jf-fenster" width={DW} height="220" rx="14" />
+          <text class="jf-t jf-t--titel" x="14" y="21">{T.dashboard}</text>
+          <circle cx={DW - 42} cy="17" r="6.5" fill="#dfe7f7" /><circle cx={DW - 28} cy="17" r="6.5" fill="#dcefe6" /><circle cx={DW - 14} cy="17" r="6.5" fill="#f3e7d2" />
+          <rect class="jf-trenner" x="0" y="32" width={DW} height="1" />
+          {spaltenX.map((x, i) => (
+            <g>
+              <rect class="jf-spalte" x={x} y="42" width={CW} height="166" rx="10" />
+              <circle cx={x + 12} cy="56" r="3.5" fill={spaltenFarbe[i]} />
+              <text class="jf-t jf-t--spalte" x={x + 20} y="59.5">{T.spalten[i]}</text>
+              <rect class="jf-zahlfeld" x={x + CW - 22} y="49.5" width="16" height="13" rx="6.5" />
+              {i === 0 ? (
+                <>
+                  <text class="jf-t jf-t--zahl jf-zahl-alt" x={x + CW - 14} y="59">{spaltenZahl[i]}</text>
+                  <text class="jf-t jf-t--zahl jf-zahl-neu" x={x + CW - 14} y="59">{spaltenZahl[i] + 1}</text>
+                </>
+              ) : (
+                <text class="jf-t jf-t--zahl" x={x + CW - 14} y="59">{spaltenZahl[i]}</text>
+              )}
+            </g>
+          ))}
+          {/* ruhige Platzhalterkarten */}
+          {[[spaltenX[0], 128], [spaltenX[1], 68], [spaltenX[1], 114], [spaltenX[2], 68]].map(([x, y]) => (
+            <g>
+              <rect class="jf-karte0" x={x + 6} y={y} width={KB} height="40" rx="7" />
+              <rect class="jf-grau" x={x + 13} y={y + 11} width="48" height="5" rx="2.5" />
+              <rect class="jf-flaeche" x={x + 13} y={y + 22} width="32" height="4" rx="2" />
+              <circle cx={x + KB - 3} cy={y + 30} r="4" fill="#e4e7ec" />
+            </g>
+          ))}
+          {/* neue Karte „Neue Kundenanfrage“ mit grünem Häkchen */}
+          <g class="jf-karte">
+            <rect class="jf-karte__flaeche" x="18" y="68" width={KB} height="52" rx="7" />
+            <rect x="18" y="74" width="3" height="40" rx="1.5" fill="#2f6bff" />
+            <text class="jf-t jf-t--karte" x="25" y="83">{T.karte[0]}</text>
+            <text class="jf-t jf-t--karte" x="25" y="95">{T.karte[1]}</text>
+            <rect class="jf-flaeche" x="25" y="104" width="34" height="4" rx="2" />
+            <g class="jf-haken">
+              <circle cx={18 + KB - 11} cy="79" r="6.5" fill="#dff3ea" />
+              <path d={`M${18 + KB - 14} 79.2 ${18 + KB - 11.8} 81.4 ${18 + KB - 7.8} 77`} fill="none" stroke="#1f9d6b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </g>
+        </g>
+
+        {/* ---------- leuchtende Linie (über beiden Fenstern) ---------- */}
+        <g class="jf-linie" fill="none" stroke={`url(#jf-verlauf-${lage})`} stroke-linecap="round">
+          <path class="jf-linie__weich" d={L.linie} pathLength="1" stroke-width="12" />
+          <path class="jf-linie__mittel" d={L.linie} pathLength="1" stroke-width="6" />
+          <path class="jf-linie__kern" d={L.linie} pathLength="1" stroke-width="2.4" />
+        </g>
+        <circle class="jf-puls" cx={L.ende[0]} cy={L.ende[1]} r="9" />
+      </svg>
+    );
+  })}
+</div>

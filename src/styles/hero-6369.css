@@ -1,0 +1,117 @@
+/* Hero-Animation nach Jamil #6369 (Talk qh87y3sj, 19.11.2026): „Anfrage senden“ → leuchtende Linie → Karte „Neue Kundenanfrage“.
+   Markup: components/start6176/J6Fluss.astro. Weiche, helle Fläche (off-white) im dunklen Hero, Schrift Plus Jakarta Sans, Radien und
+   Schatten wie die übrigen Karten. Schleife 9 s; nur transform/opacity (+ stroke-dashoffset der Linie). Ohne Animation = Endzustand. */
+
+.jh--fluss .jh__geraet { justify-items: stretch; }
+.jf { position: relative; width: 100%; max-width: 720px; margin-inline: auto; padding: clamp(4px, 0.8vw, 8px);
+  border-radius: 28px; background: #f7f6f2; box-shadow: 0 30px 60px -30px rgb(0 0 0 / 45%), 0 0 0 1px rgb(255 255 255 / 55%) inset; }
+.jf__svg { display: block; width: 100%; height: auto; overflow: visible; }
+.jf__svg--hoch { display: none; }
+@media (max-width: 640px) {
+  .jf__svg--breit { display: none; }
+  .jf__svg--hoch { display: block; }
+  .jf { max-width: 420px; border-radius: 24px; }
+}
+@media (min-width: 960px) {
+  .jh--fluss .jh__raster { grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr); gap: clamp(32px, 4vw, 56px); }
+  .jh--fluss .jh__titel { max-width: 18ch; }
+  .jh--fluss .jh__titel { font-size: clamp(2.6rem, 1.2rem + 3.2vw, 4.2rem); }
+}
+
+/* Zeichnung */
+.jf-t { font-family: var(--font-head); fill: #1f2937; }
+.jf-t--adresse { font-size: 8.5px; font-weight: 500; fill: #8a8f98; text-anchor: middle; }
+.jf-t--knopf { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; letter-spacing: 0.01em; }
+.jf-t--titel { font-size: 12px; font-weight: 800; letter-spacing: -0.01em; }
+.jf-t--spalte { font-size: 10px; font-weight: 700; fill: #374151; }
+.jf-t--zahl { font-size: 8px; font-weight: 700; fill: #6b7280; text-anchor: middle; }
+.jf-t--karte { font-size: 9.5px; font-weight: 750; letter-spacing: -0.005em; }
+.jf-schatten { fill: #1f2937; opacity: 0.09; filter: blur(9px); }
+.jf-fenster { fill: #fff; stroke: #e7e5df; stroke-width: 1; }
+.jf-leiste { fill: #f4f3ef; }
+.jf-punkt { fill: #e3e0d8; }
+.jf-adresse { fill: #fff; stroke: #e7e5df; }
+.jf-dunkel { fill: #1f2937; opacity: 0.88; }
+.jf-hell { fill: #d6d8dc; }
+.jf-grau { fill: #d3d7dd; }
+.jf-flaeche { fill: #eef0f3; }
+.jf-bild { fill: #eaf1ff; }
+.jf-bild2 { fill: #cddcfb; }
+.jf-knopf rect { fill: #2f6bff; }
+.jf-knopf { transform-box: fill-box; transform-origin: center; }
+.jf-zeiger { transform: translate(86px, 164px); }
+.jf-zeiger path { fill: #111827; stroke: #fff; stroke-width: 1.3; stroke-linejoin: round; }
+.jf-welle { fill: none; stroke: #2f6bff; stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.jf-trenner { fill: #eeede8; }
+.jf-spalte { fill: #f5f5f1; }
+.jf-zahlfeld { fill: #e9e8e2; }
+.jf-zahl-alt { opacity: 0; }
+.jf-karte0 { fill: #fff; stroke: #e8e7e2; }
+.jf-karte { transform-box: fill-box; transform-origin: center; }
+.jf-karte__flaeche { fill: #fff; stroke: #bcd0ff; stroke-width: 1.2; filter: drop-shadow(0 6px 8px rgb(47 107 255 / 18%)); }
+.jf-haken { transform-box: fill-box; transform-origin: center; }
+.jf-linie path { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+.jf-linie__weich { opacity: 0.12; }
+.jf-linie__mittel { opacity: 0.26; }
+.jf-puls { fill: #5fa8ff; opacity: 0; transform-box: fill-box; transform-origin: center; }
+
+/* Bewegung: 9-s-Schleife. 0–26 % Cursor gleitet zum Knopf, ~30 % Klick + Welle, 32–54 % Linie fließt, 54–66 % Karte + Häkchen,
+   72–82 % Linie verblasst, 88–96 % Karte blendet weich aus (Reset unauffällig), Cursor kehrt unsichtbar zurück. */
+@media (prefers-reduced-motion: no-preference) {
+  .jf { --jf-dauer: 9s; }
+  .jf :is(.jf-zeiger, .jf-knopf, .jf-welle, .jf-linie path, .jf-puls, .jf-karte, .jf-haken, .jf-zahl-alt, .jf-zahl-neu) {
+    animation-duration: var(--jf-dauer); animation-iteration-count: infinite; animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
+  .jf-zeiger { animation-name: jf-zeiger; }
+  .jf-knopf { animation-name: jf-knopf; }
+  .jf-welle { animation-name: jf-welle; }
+  .jf-linie path { animation-name: jf-linie; }
+  .jf-puls { animation-name: jf-puls; }
+  .jf-karte { animation-name: jf-karte; }
+  .jf-haken { animation-name: jf-haken; }
+  .jf-zahl-alt { animation-name: jf-zahl-alt; }
+  .jf-zahl-neu { animation-name: jf-zahl-neu; }
+  /* mit JS: läuft nur, solange die Grafik im Bild und der Tab sichtbar ist (start-6182.ts) */
+  html.j6-an .jf:not(.jf--laeuft) * { animation-play-state: paused; }
+}
+@keyframes jf-zeiger {
+  0% { opacity: 0; transform: translate(236px, 206px); }
+  6% { opacity: 1; transform: translate(236px, 206px); }
+  26% { opacity: 1; transform: translate(86px, 164px) scale(1); }
+  30% { transform: translate(86px, 164px) scale(0.86); }
+  34% { transform: translate(86px, 164px) scale(1); }
+  46% { opacity: 1; transform: translate(104px, 182px); }
+  56%, 100% { opacity: 0; transform: translate(112px, 190px); }
+}
+@keyframes jf-knopf { 0%, 28% { transform: none; } 31% { transform: scale(0.95); } 36%, 100% { transform: none; } }
+@keyframes jf-welle {
+  0%, 29% { opacity: 0; transform: scale(0.45); }
+  31% { opacity: 0.55; transform: scale(0.5); }
+  44%, 100% { opacity: 0; transform: scale(1.45); }
+}
+@keyframes jf-linie {
+  0%, 32% { stroke-dashoffset: 1; opacity: var(--jf-o, 1); }
+  54% { stroke-dashoffset: 0; }
+  72% { opacity: var(--jf-o, 1); }
+  82%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.jf-linie__weich { --jf-o: 0.12; }
+.jf-linie__mittel { --jf-o: 0.26; }
+@keyframes jf-puls {
+  0%, 52% { opacity: 0; transform: scale(0.3); }
+  55% { opacity: 0.55; transform: scale(0.6); }
+  68%, 100% { opacity: 0; transform: scale(2.4); }
+}
+@keyframes jf-karte {
+  0%, 53% { opacity: 0; transform: translateY(6px) scale(0.86); }
+  59% { opacity: 1; transform: translateY(0) scale(1.035); }
+  63%, 88% { opacity: 1; transform: none; }
+  96%, 100% { opacity: 0; transform: translateY(-2px) scale(0.98); }
+}
+@keyframes jf-haken {
+  0%, 60% { opacity: 0; transform: scale(0.2); }
+  66% { opacity: 1; transform: scale(1.18); }
+  70%, 88% { opacity: 1; transform: none; }
+  96%, 100% { opacity: 0; transform: none; }
+}
+@keyframes jf-zahl-alt { 0%, 55% { opacity: 1; } 58%, 94% { opacity: 0; } 98%, 100% { opacity: 1; } }
+@keyframes jf-zahl-neu { 0%, 55% { opacity: 0; } 58%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }

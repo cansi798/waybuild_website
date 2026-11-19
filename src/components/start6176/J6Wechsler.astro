@@ -1,0 +1,133 @@
+---
+import "../../styles/mass-6379.css";
+// 3. Lösung als „Maßarbeit“ (Jamil, Talk qh87y3sj #6378/#6379, 19.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_MASS).
+// Interaktiver 3-Schritte-Wechsler: links klickbare Tabs mit dem Kundenproblem (Zitat), rechts das passende Mockup (nur HTML/CSS,
+// kein Bild) mit dezentem Eck-Label „Individuell programmiert für Musterfirma GmbH – 100 % eigene Abläufe“, darunter die Begründung.
+// Barrierefrei: role=tablist/tab/tabpanel, aria-selected, Pfeiltasten ←/→ (+ Pos1/Ende), nur der aktive Tab im Tab-Fokus.
+// Handy: Tabs als Segmentleiste oben (Kurzname), Zitat über dem Mockup. Alle Panels liegen im selben Rasterfeld (kein Höhensprung),
+// Wechsel weich über opacity/transform; prefers-reduced-motion ohne Animation und ohne Auto-Weiterschalten. Auto-Weiterschalten (7 s)
+// nur, solange der Wechsler im Bild ist, und nur bis zur ersten Interaktion. Stil: styles/mass-6379.css.
+import { J_MASS as T } from '../../config/start-6176';
+const S = T.schritte;
+---
+
+<section class="section sn jms" id="loesung" aria-labelledby="jm-h">
+  <div class="wrap">
+    <div class="sn-kopf jm__kopf">
+      <h2 id="jm-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.unter}</p>
+    </div>
+
+    <div class="jm" data-jm>
+      <div class="jm__tabs" role="tablist" aria-label={T.tabsLabel}>
+        {S.map((s, i) => (
+          <button class="jm-tab" type="button" role="tab" id={`jm-tab-${i}`} aria-controls={`jm-panel-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? undefined : '-1'}>
+            <span class="jm-tab__nr" aria-hidden="true">{i + 1}</span>
+            <span class="jm-tab__kurz">{s.kurz}</span>
+            <span class="jm-tab__zitat">{s.problem}</span>
+            <span class="jm-tab__balken" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+
+      <div class="jm__panels">
+        {S.map((s, i) => (
+          <div class={`jm-panel${i === 0 ? ' ist-aktiv' : ''}`} role="tabpanel" id={`jm-panel-${i}`} aria-labelledby={`jm-tab-${i}`} tabindex="0">
+            <p class="jm-panel__zitat" aria-hidden="true">{s.problem}</p>
+            <div class="jm-geraet">
+              <p class="sr-only">{s.titel}: {s.zeigt}</p>
+              <div class="jm-mock" aria-hidden="true">
+                {i === 0 && (
+                  <div class="mk mk--rechner">
+                    <div class="mk-leiste"><i></i><i></i><i></i><span>musterfirma.de/preisrechner</span></div>
+                    <div class="mk-inhalt">
+                      <p class="mk-h">Ihr Terrassendach in 3 Schritten</p>
+                      <p class="mk-l">1 · Maße</p>
+                      <div class="mk-reihe"><span class="mk-feld">Breite <b>4,0 m</b></span><span class="mk-feld">Tiefe <b>3,0 m</b></span></div>
+                      <p class="mk-l">2 · Material</p>
+                      <div class="mk-reihe mk-wahl"><span>Holz</span><span class="an">Aluminium</span><span>Glas</span></div>
+                      <p class="mk-l">3 · Leistung</p>
+                      <div class="mk-reihe"><span class="mk-check an">Montage</span><span class="mk-check">Fundament</span></div>
+                      <div class="mk-preis"><span>Grobe Preisspanne</span><b>4.200 – 5.100 €</b></div>
+                      <span class="mk-knopf">Anfrage senden</span>
+                    </div>
+                  </div>
+                )}
+                {i === 1 && (
+                  <div class="mk mk--auftrag">
+                    <div class="mk-leiste mk-leiste--app"><b>Aufträge</b><span class="mk-auto">aus Website-Anfrage erstellt</span></div>
+                    <div class="mk-inhalt">
+                      <p class="mk-h">Auftrag A-1042 <span class="mk-ampel"><i class="r"></i><i class="g an"></i><i class="gr"></i><em>In Planung</em></span></p>
+                      <dl class="mk-felder">
+                        <div><dt>Kunde</dt><dd>M. Muster</dd></div>
+                        <div><dt>Status</dt><dd>Material bestellt</dd></div>
+                        <div><dt>Leistung</dt><dd>Terrassendach Alu, 4 × 3 m</dd></div>
+                        <div><dt>Termin</dt><dd>KW 49</dd></div>
+                        <div><dt>Team</dt><dd>Montage 2</dd></div>
+                      </dl>
+                      <p class="mk-l">Materialliste (automatisch)</p>
+                      <ul class="mk-liste"><li><span>Alu-Profile 4 m</span><b>6 ×</b></li><li><span>Glasplatten 8 mm</span><b>5 ×</b></li><li><span>Befestigungs-Set</span><b>1 ×</b></li></ul>
+                    </div>
+                  </div>
+                )}
+                {i === 2 && (
+                  <div class="mk mk--portal">
+                    <div class="mk-leiste mk-leiste--marke"><b><i></i>Musterfirma</b><span>Kundenportal · M. Muster</span></div>
+                    <div class="mk-inhalt">
+                      <div class="mk-stand">
+                        <span class="mk-stand__ico"></span>
+                        <span><b>Ihr Auftrag ist in Fertigung</b><small>Voraussichtliche Montage: KW 49</small></span>
+                      </div>
+                      <ol class="mk-schritte"><li class="ok">Angebot</li><li class="ok">Planung</li><li class="jetzt">Fertigung</li><li>Montage</li></ol>
+                      <p class="mk-l">Ihre Unterlagen</p>
+                      <ul class="mk-doks"><li><span>Angebot</span><em>PDF</em></li><li><span>Pläne</span><em>PDF</em></li><li><span>Rechnungen</span><em>PDF</em></li></ul>
+                      <div class="mk-frage"><span>Frage zu Ihrem Auftrag …</span><b>Senden</b></div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <p class="jm-label">{T.label}</p>
+            </div>
+            <p class="jm-panel__warum"><b>{s.titel}.</b> {s.warum}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const wurzel = document.querySelector<HTMLElement>('[data-jm]');
+  if (wurzel) {
+    const tabs = [...wurzel.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...wurzel.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let aktiv = 0;
+    let auto: number | undefined;
+    let benutzt = false;
+    const zeigen = (n: number, fokus = false) => {
+      aktiv = (n + tabs.length) % tabs.length;
+      tabs.forEach((t, i) => { const an = i === aktiv; t.setAttribute('aria-selected', String(an)); t.tabIndex = an ? 0 : -1; });
+      panels.forEach((p, i) => p.classList.toggle('ist-aktiv', i === aktiv));
+      if (fokus) tabs[aktiv].focus();
+    };
+    const stopp = () => { benutzt = true; wurzel.classList.remove('jm--auto'); if (auto) clearInterval(auto); auto = undefined; };
+    tabs.forEach((t, i) => t.addEventListener('click', () => { stopp(); zeigen(i); }));
+    wurzel.querySelector('[role="tablist"]')!.addEventListener('keydown', (e) => {
+      const k = (e as KeyboardEvent).key;
+      const ziel = k === 'ArrowRight' || k === 'ArrowDown' ? aktiv + 1 : k === 'ArrowLeft' || k === 'ArrowUp' ? aktiv - 1 : k === 'Home' ? 0 : k === 'End' ? tabs.length - 1 : null;
+      if (ziel === null) return;
+      e.preventDefault(); stopp(); zeigen(ziel, true);
+    });
+    wurzel.addEventListener('pointerdown', stopp, { once: true });
+    wurzel.addEventListener('focusin', stopp, { once: true });
+    if (!ruhig && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => {
+        if (benutzt) return;
+        if (e.isIntersecting && !auto) { wurzel.classList.add('jm--auto'); auto = window.setInterval(() => { if (!document.hidden) zeigen(aktiv + 1); }, 7000); }
+        else if (!e.isIntersecting && auto) { clearInterval(auto); auto = undefined; wurzel.classList.remove('jm--auto'); }
+      }, { threshold: 0.4 }).observe(wurzel);
+    }
+  }
+</script>

@@ -438,3 +438,13 @@
 @keyframes j6-spur-x { from { transform: scale(0, 1); } to { transform: none; } }
 @keyframes j6-stufe { from { opacity: 0.35; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
 @keyframes j6-punkt { from { opacity: 0.2; transform: scale(0.5); } to { opacity: 1; transform: none; } }
+
+/* ---------- 2. Problem NEU (Jamil #6372–#6374 + #6377, 19.11.2026): Text wirkt, Linien-Icons, viel Weißraum, 2 × 2 / mobil 1 Spalte ---------- */
+.jp--neu .jp__kopf .sn-h2 { max-width: 22ch; }
+.jp-bloecke { list-style: none; margin: clamp(32px, 5vw, 64px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr);
+  gap: clamp(40px, 5vw, 64px) clamp(40px, 7vw, 112px); }
+.jp-block { min-width: 0; display: grid; gap: 12px; align-content: start; max-width: 52ch; }
+.jp-block__ico { width: 44px; height: 44px; color: #0b6d6b; margin-bottom: 6px; }
+.jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.jp-block__text { margin: 0; font-size: clamp(1rem, 0.97rem + 0.2vw, 1.1rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+@media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -4,6 +4,8 @@
 //   erscheint gestaffelt (--j6-v). Nur mit JS + IntersectionObserver + ohne reduzierte Bewegung (html.j6-an), sonst alles sofort da.
 // - Hero: Beispiel-Ablauf (Jamil #6192: Nachricht → Ergebnis → Häkchen, 1 → 2 → 3) läuft per CSS einmal; kommt der Hero später
 //   erneut ins Bild, läuft er genau ein weiteres Mal. (Handy-Mockup, Chat-Hochrücken und 3D-Neigung entfallen seit #6192.)
+// - Seit Jamil #6369 (19.11.2026): Hero-Animation „Anfrage senden → Dashboard“ (J6Fluss) als Schleife, pausiert außerhalb des Bildes
+//   und bei verstecktem Tab (Klasse .jf--laeuft). Die Beispiele oben sind dann ausgeblendet (ALT_ZEIGEN.heroBeispieleAlt).
 const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 if (!ruhig.matches && 'IntersectionObserver' in window) {
@@ -40,6 +42,20 @@ if (!ruhig.matches && 'IntersectionObserver' in window) {
       chat.classList.remove('jh-neu');
     }, { threshold: 0.3 });
     beob.observe(chat);
+  }
+
+  // Hero-Animation (Jamil #6369): Endlosschleife läuft nur, solange sie im Bild und der Tab sichtbar ist (spart Akku/CPU).
+  const fluss = document.querySelector<HTMLElement>('[data-jf]');
+  // Start erst kurz nach dem Laden (die Schleife soll den Seitenaufbau nicht belasten); bis dahin steht sie still am Anfang.
+  if (fluss) {
+    const los = () => {
+      let imBild = false;
+      const setzen = () => fluss.classList.toggle('jf--laeuft', imBild && !document.hidden);
+      new IntersectionObserver(([e]) => { imBild = e.isIntersecting; setzen(); }, { threshold: 0.1 }).observe(fluss);
+      document.addEventListener('visibilitychange', setzen);
+    };
+    const spaeter = () => window.setTimeout(los, 900);
+    if (document.readyState === 'complete') spaeter(); else window.addEventListener('load', spaeter, { once: true });
   }
 }
 

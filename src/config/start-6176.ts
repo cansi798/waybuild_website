@@ -21,14 +21,24 @@ export const ALT_ZEIGEN = {
   abschlussAlt: false, // alter Abschluss (SnAbschluss) → ersetzt durch Abschluss-CTA #6179
   // ab Jamil #6207/#6208 (18.11.2026): in Abschnitt 4 ersetzt „Zwei Wege“ + 4 Vorteilskarten die Vergleichstabelle (J_ANDERS.zeilen)
   andersTabelleAlt: false, // Tabelle „Klassische Agentur | webgold“ (#6179) → true = wieder unter den Vorteilen sichtbar
+  // ab Jamil #6369/#6370 (19.11.2026, Sicherung davor: Tag vor-jamil-6366-20261119): Hero-Visual = Animation „Anfrage → Dashboard“
+  heroBeispieleAlt: false, // drei Beispiel-Karten im Hero (#6192, J_HERO.beispiele) → true = statt der Animation wieder sichtbar
+  // ab Jamil #6372–#6379 (19.11.2026): Abschnitt 2 + 3 neu (J_PROBLEM_NEU, J_MASS); die bisherigen Inhalte bleiben abrufbar:
+  problem6198Alt: false, // Problem-Abschnitt #6198 (J_PROBLEM: Überschrift, Subheadline, 4 Karten, Abschlusszeile) → true = statt der neuen Fassung
+  loesungAlt: false, // Lösung #6176/#6199 (J_LOESUNG: „Eine Nachricht genügt.“, erledigt-Karten, Vorteilsleiste) → true = statt „Websites und Software nach Maß“
 };
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
 export const PAKETE_ZEIGEN = true;
 
 /** 1. Hero (Jamil #6176) */
 export const J_HERO = {
-  titel: 'Sagen Sie einfach, was Sie brauchen.',
-  unter: 'Ob Website, Änderung oder individuelle WebApp: Beschreiben Sie Ihre Idee per Chat, Sprachnachricht oder Screenshot. Wir kümmern uns um die Umsetzung.',
+  /** Headline + Subheadline seit Jamil #6366/#6368/#6370 (19.11.2026) WÖRTLICH (Variante 1 mit „nahtlos“, freigegeben mit „ok“).
+   *  Vorher (#6176): titel 'Sagen Sie einfach, was Sie brauchen.', unter 'Ob Website, Änderung oder individuelle WebApp: Beschreiben Sie
+   *  Ihre Idee per Chat, Sprachnachricht oder Screenshot. Wir kümmern uns um die Umsetzung.' */
+  titel: 'Stark nach außen. Effizient nach innen.',
+  // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
+  // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
+  unter: 'Standard-Tools passen selten zum echten Arbeitsalltag. Wir entwickeln Ihren Webauftritt und maßgeschneiderte Software, die exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
@@ -46,6 +56,18 @@ export const J_HERO = {
       bild: { titel: 'Urlaubsverwaltung', antrag: 'Urlaubsantrag', vorher: 'offen', nachher: 'genehmigt' } },
   ],
   beispieleLabel: 'Drei Beispiele: Nachricht und Ergebnis',
+  /** Hero-Animation nach Jamil #6369 (19.11.2026): Browserfenster mit Business-Website und blauem Knopf „Anfrage senden“, Cursor klickt,
+   *  leuchtende Linie zum Projekt-Dashboard, Karte „Neue Kundenanfrage“ erscheint in „Neu“ mit grünem Häkchen. Ruhige Endlosschleife,
+   *  eigenes SVG/CSS (J6Fluss.astro, styles/hero-6369.css), kein Video. Beschriftungen in der Grafik (nur Deko, aria-hidden): */
+  fluss: {
+    adresse: 'www.ihre-firma.de',
+    knopf: 'Anfrage senden',
+    dashboard: 'Projekte',
+    spalten: ['Neu', 'In Arbeit', 'Erledigt'],
+    karte: ['Neue', 'Kundenanfrage'], // Titel „Neue Kundenanfrage“, in der Karte zweizeilig
+    /** kurzer Text für Screenreader (die Grafik selbst ist aria-hidden) */
+    sr: 'Animation: Auf einer Website klickt jemand auf „Anfrage senden“. Die Anfrage erscheint sofort als neue Karte „Neue Kundenanfrage“ in der Spalte „Neu“ des Projekt-Dashboards.',
+  },
 } as const;
 
 /** 2. Problem-Section: Texte seit Jamil #6198 (18.11.2026) WÖRTLICH (Überschrift wie #6176, neue Subheadline, 4 neue Problemkarten,
@@ -60,6 +82,47 @@ export const J_PROBLEM = {
     { titel: 'Zu viele Werkzeuge', text: 'Website, Formulare, Excel, E-Mails und verschiedene Anbieter sorgen für unnötige Komplexität.' },
   ],
   abschluss: 'Digitale Lösungen sollten sich Ihrem Unternehmen anpassen. Nicht umgekehrt.',
+} as const;
+
+/** 2. Problem-Section NEU (Jamil #6372–#6374 + #6377, 19.11.2026), Texte WÖRTLICH. Ohne Subheadline und Abschlusszeile (Jamil nennt
+ *  keine). Gestaltung #6374: keine Mockups, je Karte ein schlichtes einfarbiges Linien-Icon, viel Weißraum. Karte 2 aus #6377 eingefügt,
+ *  die bisherigen Karten 2/3 rücken auf 3/4 (Auslegung, im Talk gefragt). Icons: J6Problem.astro. */
+export const J_PROBLEM_NEU = {
+  titel: 'Wo im Arbeitsalltag oft unnötig Zeit liegen bleibt',
+  karten: [
+    { icon: 'brief', titel: 'Die Website ist nur eine digitale Visitenkarte', text: 'Kunden finden zwar Ihre Telefonnummer, aber Anfragen landen als unvollständige E-Mails im Postfach oder gehen im Trubel unter.' },
+    { icon: 'puzzle', titel: 'Sie verbiegen Ihren Alltag für fertige Programme', text: 'Standard-Software zwingt Sie in starre Abläufe. Was das Programm nicht kann, wird am Ende doch wieder mit Excel-Listen und Notizzetteln irgendwie drumherum gebastelt.' },
+    { icon: 'pfeile', titel: 'Alles wird doppelt und dreifach abgetippt', text: 'Kundendaten wandern von der E-Mail in eine Excel-Liste, von dort in den Kalender und irgendwann ins Rechnungsprogramm – das kostet Nerven und führt zu Fehlern.' },
+    { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeitende brauchen Wochen, um durchzublicken.' },
+  ],
+} as const;
+
+/** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus
+ *  #6378 („Ob Kundenportal, Kalkulator …“) steht bewusst NICHT auf der Seite, weil er die Subheadline fast doppelt (im Talk gefragt):
+ *  'Ob Kundenportal, Kalkulator auf der Website oder ein internes System für Ihre Aufträge: Wir programmieren genau die Werkzeuge, die Ihrem
+ *  Team wirklich Arbeit abnehmen. Ohne überflüssigen Ballast, dafür zu 100 % auf Ihre Abläufe zugeschnitten.'
+ *  Darunter der 3-Schritte-Wechsler (J6Wechsler.astro): Tab = Kundenproblem (Zitat), Panel = Mockup (nur HTML/CSS) + Begründungszeile. */
+export const J_MASS = {
+  titel: 'Websites und Software nach Maß – statt Kompromisse von der Stange',
+  unter: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.',
+  label: 'Individuell programmiert für Musterfirma GmbH – 100 % eigene Abläufe',
+  tabsLabel: 'Drei Beispiele aus dem Alltag',
+  // `kurz` = Beschriftung der Segmentleiste auf dem Handy (dort steht das Zitat über dem Mockup). Beschriftungen in den Mockups sind
+  // erfundene Beispielwerte für die „Musterfirma GmbH“ (nur Deko, aria-hidden; `zeigt` ist der Text für Screenreader).
+  schritte: [
+    { kurz: 'Kalkulator', problem: '„Kunden fragen immer das Gleiche – und wir rechnen alles per Hand aus.“',
+      titel: 'Ein individueller Online-Kalkulator auf der Website',
+      zeigt: 'Der Kunde wählt auf der Website Maße, Material oder Leistung aus, sieht sofort eine grobe Preisspanne und schickt die Anfrage ab.',
+      warum: 'Kein Standard-Kontaktformular! Ein interaktives Werkzeug, das genau nach den Regeln und Preisen des Betriebs rechnet.' },
+    { kurz: 'Auftrag', problem: '„Standard-Programme passen nicht zu unseren Aufträgen.“',
+      titel: 'Eine maßgeschneiderte Auftrags-Maske',
+      zeigt: 'Genau 5 relevante Felder statt 50 überladene Reiter. Aus der Website-Anfrage entsteht automatisch ein Auftrag mit passender Materialliste und Status-Ampel.',
+      warum: 'Man sieht sofort: Hier gibt es keinen überflüssigen Ballast wie in großen Standard-CRMs – nur exakt das, was dieses Team braucht.' },
+    { kurz: 'Portal', problem: '„Kunden rufen ständig an, um nach dem Stand zu fragen.“',
+      titel: 'Ein eigenes Kundenportal mit Login',
+      zeigt: 'Eine aufgeräumte Ansicht für den Endkunden: „Ihr Auftrag ist in Fertigung“, dazu alle Angebote, Pläne und Rechnungen an einem Ort zum Download.',
+      warum: 'Ein eigenes Portal im Design der Firma – das gibt es nicht von der Stange und lässt das Unternehmen extrem professionell wirken.' },
+  ],
 } as const;
 
 /** 3. Die Lösung (Jamil #6176). „Kurze Statistik“ rechts = kompakte Vorteilsleiste, bewusst ohne Zahlen (keine erfundenen Werte). */

@@ -7,14 +7,18 @@
 // Start beim Sichtbarwerden + höchstens eine Wiederholung: scripts/start-6182.ts. Keine echten Personen/Fotos, alles neutrale Platzhalter.
 // Gestaltungsziel (nicht auf der Seite): „Plötzlich versteht jeder sofort: Ahhh. Ich muss kein System bedienen.“
 // Knopf-Klasse .jh-knopfe: StickyBar.astro zeigt die Leiste erst, wenn diese Knöpfe aus dem Blick sind (wie früher .v-knopfe).
+// Seit Jamil #6369/#6370 (19.11.2026): statt der drei Beispiele die Animation „Anfrage senden → Dashboard“ (J6Fluss.astro);
+// die Beispiele sind nur ausgeblendet (ALT_ZEIGEN.heroBeispieleAlt = true holt sie zurück). Headline/Subheadline seit #6366.
 import J6Icon from './J6Icon.astro';
-import { J_HERO as T } from '../../config/start-6176';
+import J6Fluss from './J6Fluss.astro';
+import { J_HERO as T, ALT_ZEIGEN } from '../../config/start-6176';
+import '../../styles/hero-6369.css';
 import { ANLIEGEN } from '../../config/startseite';
 import { href } from '../../lib/paths';
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
 
-<section class="section section--dark jh" aria-labelledby="jh-h1">
+<section class={`section section--dark jh${ALT_ZEIGEN.heroBeispieleAlt ? '' : ' jh--fluss'}`} aria-labelledby="jh-h1">
   <div class="wrap jh__raster">
     <div class="jh__text">
       <h1 id="jh-h1" class="jh__titel">{T.titel}</h1>
@@ -27,6 +31,8 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
     </div>
 
     <div class="jh__geraet" data-jh-geraet>
+      {!ALT_ZEIGEN.heroBeispieleAlt && <J6Fluss />}
+      {ALT_ZEIGEN.heroBeispieleAlt && (
       <ol class="jb" aria-label={T.beispieleLabel} data-jh-chat>
         {T.beispiele.map((c, i) => (
           <li class={`jb__k jb__k--${c.art}`} style={`--i:${i}`}>
@@ -72,6 +78,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
           </li>
         ))}
       </ol>
+      )}
     </div>
   </div>
 </section>
