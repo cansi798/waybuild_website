@@ -34,6 +34,7 @@ export const ALT_ZEIGEN = {
   // #6390: „erstmal weiter nach unten“ → steht jetzt hinter Abschnitt 5 „Keine Angst vor dem Umstieg“ (#6391, J_UMSTIEG)
   // ab Jamil #6402 (19.11.2026): Abschluss = Abschnitt 7 „Bereit zu sehen …“ mit zwei Mini-Formularen (J_START, J6Start)
   abschlussCtaAlt: false,
+  browserBox: false, // separate Box „Läuft einfach im Browser“ unter dem Wechsler (#6397) – seit Jamil #6424 kleiner Hinweis im Wechsler; true = Box wieder
   heroZeile: false, // „Keine Tickets. Kein CMS. Keine Technikkenntnisse.“ im Hero – seit Jamil #6417 aus; true = wieder sichtbar
   // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
   wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
@@ -150,7 +151,9 @@ export const J_MASS = {
     ],
   },
   tabsLabel: 'Drei Beispiele aus dem Alltag',
-  /** Hinweis unter dem Wechsler (Jamil #6397, wörtlich) */
+  /** Kleiner Hinweis im Wechsler (Jamil #6424, Wortlaut vom Koordinator vorgeschlagen) */
+  browserKurz: 'Läuft im Browser – ohne Installation, auf PC, Tablet und Handy',
+  /** Hinweis unter dem Wechsler (Jamil #6397, wörtlich; seit #6424 nur mit ALT_ZEIGEN.browserBox) */
   browser: { titel: 'Läuft einfach im Browser – ganz ohne Installation',
     text: 'Egal ob am Büro-PC, auf dem Tablet in der Werkstatt oder unterwegs am Handy: Ihr Team loggt sich einfach ein und arbeitet sofort. Keine komplizierte Installation, keine nervigen Updates auf einzelnen Rechnern.' },
   // `kurz` = Beschriftung der Segmentleiste auf dem Handy (dort steht das Zitat über dem Mockup). Beschriftungen in den Mockups sind

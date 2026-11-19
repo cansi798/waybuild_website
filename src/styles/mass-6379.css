@@ -138,3 +138,14 @@
 .jm-browser__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: #edf4f1; color: #0b6d6b; }
 .jm-browser__text { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .jm-browser__text b { display: block; margin-bottom: 2px; font-family: var(--font-head); font-size: 1.05rem; color: var(--ink); }
+
+/* Kleiner Hinweis im Wechsler (Jamil #6424): Desktop links unter den Tabs, Handy unter dem Mockup */
+.jm-hinweis { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); }
+.jm-hinweis svg { flex: none; color: #0b6d6b; }
+@media (min-width: 900px) {
+  .jm { grid-template-rows: auto 1fr; }
+  .jm__tabs { grid-column: 1; grid-row: 1; }
+  .jm-hinweis { grid-column: 1; grid-row: 2; align-self: start; padding-left: 6px; margin-top: -14px; }
+  .jm__panels { grid-column: 2; grid-row: 1 / span 2; }
+}
+@media (max-width: 899px) { .jm-hinweis { order: 3; } .jm__panels { order: 2; } .jm__tabs { order: 1; } }

@@ -11,6 +11,7 @@ import "../../styles/mass-6379.css";
 // Auftragsübersicht und Kundenportal aus dem CRM, nur Testdaten) – optimiert über <Bild> (AVIF/WebP, feste Maße, lazy).
 // Die Musterfirma-Mockups bleiben über ALT_ZEIGEN.musterfirmaMockupsAlt abrufbar.
 import { J_MASS as T, ALT_ZEIGEN } from '../../config/start-6176';
+// Seit Jamil #6424: statt der Box unter dem Wechsler ein kleiner Hinweis im Wechsler (Desktop unter den Tabs, Handy unter dem Mockup)
 import Bild from '../Bild.astro';
 const S = T.schritte;
 const MUSTER = ALT_ZEIGEN.musterfirmaMockupsAlt;
@@ -36,6 +37,13 @@ const BW = T.bauwelt;
           </button>
         ))}
       </div>
+
+      <p class="jm-hinweis">
+        <svg viewBox="0 0 32 32" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <rect x="3" y="6" width="20" height="14" rx="2" /><path d="M10 25h6M13 20v5" /><rect x="21" y="13" width="8" height="14" rx="1.6" fill="var(--white, #fff)" />
+        </svg>
+        <span>{T.browserKurz}</span>
+      </p>
 
       <div class="jm__panels">
         {S.map((s, i) => (
@@ -112,15 +120,15 @@ const BW = T.bauwelt;
       </div>
     </div>
 
-    {/* Hinweis unter dem Wechsler (Jamil #6397): kleines Geräte-Icon (Monitor + Handy) */}
-    <div class="jm-browser">
+    {/* Hinweis unter dem Wechsler (Jamil #6397): kleines Geräte-Icon (Monitor + Handy); seit #6424 nur mit ALT_ZEIGEN.browserBox */}
+    {ALT_ZEIGEN.browserBox && <div class="jm-browser">
       <span class="jm-browser__ico" aria-hidden="true">
         <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
           <rect x="3" y="6" width="20" height="14" rx="2" /><path d="M3 10h20M10 25h6M13 20v5" /><rect x="21" y="13" width="8" height="14" rx="1.6" fill="var(--paper, #fff)" /><path d="M24 24h2" />
         </svg>
       </span>
       <p class="jm-browser__text"><b>{T.browser.titel}</b> <span>{T.browser.text}</span></p>
-    </div>
+    </div>}
   </div>
 </section>
 
