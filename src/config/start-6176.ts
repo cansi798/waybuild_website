@@ -48,7 +48,7 @@ export const PAKETE_ZEIGEN = false; // seit Jamil #6400 ersetzt durch Abschnitt 
 /** Hero-Preiszeile (Jamil #6396, 19.11.2026): Preise hier ändern, Text baut sich in J_HERO.preiszeile daraus. */
 // Seit #6399/#6400: Preise kommen aus pakete-abo.ts (eine Quelle für alle Seiten); „netto“ wie überall auf der Seite (#6399 Punkt 3).
 export const HERO_PREISE = {
-  website: aboPreisAb(), // „Handprogrammierte Websites ab … / Monat“ = günstigstes Website-Paket
+  website: aboPreisAb(), // „Websites ab … / Monat“ = günstigstes Website-Paket
   software: KOMPLETTPAKET.preis, // „Individuelle Software ab … / Monat“
   /** Zusatz hinter den Preisen (Jamil #6399: „netto“). Alternative: ' zzgl. MwSt.' */
   mwst: ' netto',
@@ -71,7 +71,7 @@ export const J_HERO = {
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
   /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
   preiszeile: [
-    `Handprogrammierte Websites ab ${preis(HERO_PREISE.website)}${HERO_PREISE.mwst}\u00a0/ Monat`,
+    `Websites ab ${preis(HERO_PREISE.website)}${HERO_PREISE.mwst}\u00a0/ Monat`,
     `Individuelle Software ab ${preis(HERO_PREISE.software)}${HERO_PREISE.mwst}\u00a0/ Monat – ohne hohe Einmalkosten. Kostenlose Vorschau vorab.`,
   ],
   /** Hero-Visual (Jamil #6192, 18.11.2026; Sicherung davor: Tag vor-jamil-6192-20261118): statt nur eines Handys drei echte
