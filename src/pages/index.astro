@@ -25,6 +25,8 @@ import J6Hero from '../components/start6176/J6Hero.astro';
 import J6Problem from '../components/start6176/J6Problem.astro';
 import J6Loesung from '../components/start6176/J6Loesung.astro';
 import J6Wechsler from '../components/start6176/J6Wechsler.astro';
+import J6Erstsehen from '../components/start6176/J6Erstsehen.astro';
+import J6Umstieg from '../components/start6176/J6Umstieg.astro';
 import J6Anders from '../components/start6176/J6Anders.astro';
 import J6Wachsen from '../components/start6176/J6Wachsen.astro';
 import J6Prozess from '../components/start6176/J6Prozess.astro';
@@ -80,8 +82,13 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <J6Problem />
   {/* 3. Lösung: seit Jamil #6378/#6379 (19.11.2026) „Websites und Software nach Maß“ mit Wechsler; alte Fassung über ALT_ZEIGEN.loesungAlt */}
   {ALT_ZEIGEN.loesungAlt ? <J6Loesung /> : <J6Wechsler />}
+  {/* 4. Jamil #6388 (19.11.2026): „Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.“ direkt nach dem Wechsler */}
+  <J6Erstsehen />
+  {/* 5. Jamil #6391 (19.11.2026): „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Sorglos-Matrix) */}
+  <J6Umstieg />
   <!-- Jamil #6179 (16.11.2026): 4 Anders · 5 Wachsen · 6 Prozessberatung · 7 Referenzen · 8 Vertrauen · Pakete · Abschluss -->
-  <J6Anders />
+  {/* „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ seit #6388 abschaltbar (ALT_ZEIGEN.weiterentwickelnAbschnitt), seit #6390 hinter Abschnitt 5 */}
+  {ALT_ZEIGEN.weiterentwickelnAbschnitt && <J6Anders />}
   <J6Wachsen />
   <J6Prozess />
   <J6Referenzen />

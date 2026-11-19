@@ -1,0 +1,34 @@
+---
+import "../../styles/umstieg-6391.css";
+// 5. „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Jamil, Talk qh87y3sj #6391, 19.11.2026). Texte wörtlich aus
+// src/config/start-6176.ts (J_UMSTIEG). „Sorglos-Matrix“: ruhiges 2 × 2-Raster (Handy 1 Spalte) auf leicht abgetöntem Warmgrau,
+// je Karte Kundenfrage gedimmt mit kleinem Fragezeichen-Icon, darunter die Lösung mit grünem Häkchen (Einwand → gelöst).
+// Bewusst ohne Foto und ohne Animation. Stil: styles/umstieg-6391.css.
+import { J_UMSTIEG as T } from '../../config/start-6176';
+import { href } from '../../lib/paths';
+// #6393: Zeile + Link zu den häufigen Fragen (/fragen/) am Ende
+---
+
+<section class="section sn ju" id="umstieg" aria-labelledby="ju-h">
+  <div class="wrap">
+    <div class="sn-kopf ju__kopf">
+      <h2 id="ju-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <p class="sn-lead">{T.unter}</p>
+    </div>
+    <ul class="ju-raster">
+      {T.karten.map((k) => (
+        <li class="ju-karte">
+          <h3 class="ju-frage">
+            <span class="ju-ico ju-ico--frage" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.6-3 4.4" /><path d="M12 18h.01" /></svg></span>
+            <span>{k.frage}</span>
+          </h3>
+          <p class="ju-antwort">
+            <span class="ju-ico ju-ico--ok" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5" /></svg></span>
+            <span>{k.antwort}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+    <p class="ju-mehr"><span>{T.mehr}</span> <a class="ju-mehr__link" href={href(T.mehrLink.pfad)}>{T.mehrLink.text}</a></p>
+  </div>
+</section>

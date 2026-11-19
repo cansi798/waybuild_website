@@ -28,6 +28,10 @@ export const ALT_ZEIGEN = {
   loesungAlt: false, // Lösung #6176/#6199 (J_LOESUNG: „Eine Nachricht genügt.“, erledigt-Karten, Vorteilsleiste) → true = statt „Websites und Software nach Maß“
   // ab Jamil #6384/#6385 (19.11.2026, Sicherung davor: Tag vor-jamil-6384-20261119): im Wechsler echte Bauwelt-Handwerk-Bildschirmfotos
   musterfirmaMockupsAlt: false, // HTML/CSS-Mockups „Musterfirma GmbH“ (#6379) → true = statt der Bauwelt-Bilder wieder sichtbar
+  // ab Jamil #6388 (19.11.2026): neuer Abschnitt 4 „Kein Lastenheft. Kein Risiko. …“ (J_ERST, J6Erstsehen) direkt nach dem Wechsler.
+  // Der bisherige Abschnitt „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J6Anders) bleibt vorerst sichtbar – Jamil wird gefragt:
+  // #6390: „erstmal weiter nach unten“ → steht jetzt hinter Abschnitt 5 „Keine Angst vor dem Umstieg“ (#6391, J_UMSTIEG)
+  weiterentwickelnAbschnitt: true, // false = „Wir entwickeln uns mit Ihrem Unternehmen weiter.“ (J_ANDERS) ausblenden
 };
 /** Pakete kompakt (SnAngebot) bleiben sichtbar, zwischen 8 Vertrauen und Abschluss-CTA (Vertrauen endet mit „Fester Monatspreis“). */
 export const PAKETE_ZEIGEN = true;
@@ -136,6 +140,52 @@ export const J_MASS = {
       zeigt: 'Eine aufgeräumte Ansicht für den Endkunden: „Ihr Auftrag ist in Fertigung“, dazu alle Angebote, Pläne und Rechnungen an einem Ort zum Download.',
       warum: 'Ein eigenes Portal im Design der Firma – das gibt es nicht von der Stange und lässt das Unternehmen extrem professionell wirken.' },
   ],
+} as const;
+
+/** 4. „Erst sehen, dann entscheiden“ (Jamil #6388, 19.11.2026). Texte WÖRTLICH. Badges in den Karten (`pills`, `zeiten`, `sprache`)
+ *  sind nur Deko (aria-hidden) und wiederholen, was im Kartentext steht. Der Blitz (⚡) ist ein eigenes SVG-Icon. */
+export const J_ERST = {
+  titel: 'Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.',
+  unter: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.',
+  karten: [
+    { nr: '01', titel: 'Wir verstehen Ihren Betrieb (oder starten direkt)',
+      varianten: [
+        { name: 'Für Website & Software:', text: 'In einem lockeren Gespräch nehmen wir Ihre Unternehmens-DNA auf. Als Prozess-Experten hören wir nicht nur zu, sondern bringen direkt eigene Ideen und Verbesserungsvorschläge für Ihren Alltag ein.' },
+        { name: 'Nur für Ihre Website (Schnellstart):', text: 'Sie wollen erst mal unverbindlich schauen? Schicken Sie uns einfach Ihre aktuelle Website-Adresse und Kontaktdaten – das reicht für den Start.' },
+      ],
+      pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder' },
+    { nr: '02', titel: 'Kostenlose Vorschau in Rekordzeit',
+      einleitung: 'Statt trockener Theorie liefern wir Ihnen greifbare Ergebnisse zum Durchklicken:',
+      punkte: [
+        { name: 'Neue Website-Startseite:', text: 'bereits am nächsten Werktag' },
+        { name: 'Erster Software-Prototyp:', text: 'bereits 3 Werktage später' },
+      ],
+      schluss: 'Komplett kostenlos und unverbindlich – Sie sehen sofort, wie Ihr Betrieb digital aussehen und laufen kann.',
+      zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'] },
+    { nr: '03', titel: 'Wenn es passt: Feinschliff in Ihrem Tempo',
+      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zum Go-live oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Chat.',
+      sprache: '0:12' },
+  ],
+} as const;
+
+/** 5. „Keine Angst vor dem Umstieg“ (Jamil #6391, 19.11.2026) als ruhige „Sorglos-Matrix“ 2 × 2: Kundenfrage (Einwand) als
+ *  Kartenüberschrift, darunter die Lösung mit grünem Häkchen. Texte WÖRTLICH. Kein Foto, keine Animation. */
+export const J_UMSTIEG = {
+  titel: 'Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit',
+  unter: 'Viele Unternehmen schieben Verbesserungen jahrelang auf, weil sie Chaos beim Wechsel befürchten. Als Prozess-Experten sorgen wir dafür, dass Ihre neuen Lösungen reibungslos in den Alltag einziehen – ohne Stillstand und ohne Frust.',
+  karten: [
+    { frage: '„Wir haben uns gerade erst an unsere jetzigen Programme gewöhnt.“',
+      antwort: 'Sie müssen nicht alles über Bord werfen. Was bei Ihnen gut läuft, binden wir einfach an. Und alles, was wir neu bauen, richten wir exakt nach der Arbeitsweise Ihres Teams aus – damit sich die Oberfläche vom ersten Klick an vertraut anfühlt.' },
+    { frage: '„Meine Mitarbeitenden haben keine Zeit für lange Schulungen.“',
+      antwort: 'Brauchen sie auch nicht. Weil wir überflüssige Funktionen weglassen und Ihre echten Abläufe abbilden, ist das System selbsterklärend. Jeder sieht nur das, was er für seine Aufgabe braucht – und für den Start zeigen wir alles in wenigen Minuten.' },
+    { frage: '„Was passiert mit unseren bestehenden Kundendaten und Listen?“',
+      antwort: 'Nichts geht verloren und niemand muss etwas mühsam abtippen. Wir übernehmen den kompletten Umzug Ihrer bestehenden Daten, Kontakte und Inhalte, damit Ihr Team ab Tag 1 nahtlos weiterarbeiten kann.' },
+    { frage: '„Was, wenn im laufenden Betrieb Fragen auftauchen?“',
+      antwort: 'Wir lassen Sie nach dem Start nicht allein. Wir testen alles gemeinsam in Ruhe vorab, stellen im laufenden Betrieb um und sind bei Fragen oder kleinen Anpassungswünschen direkt per Chat oder Telefon für Sie da.' },
+  ],
+  /** Abschlusszeile + Link zu den häufigen Fragen (Jamil #6393, wörtlich); Ziel: /fragen/ (FAQ-Seite, auf der Startseite gibt es keine FAQ) */
+  mehr: 'Haben Sie noch weitere Fragen zu unserer Arbeitsweise?',
+  mehrLink: { text: 'Antworten im Überblick ansehen →', pfad: '/fragen/' },
 } as const;
 
 /** 3. Die Lösung (Jamil #6176). „Kurze Statistik“ rechts = kompakte Vorteilsleiste, bewusst ohne Zahlen (keine erfundenen Werte). */
