@@ -121,3 +121,13 @@
 .mk-frage { margin-top: 0.5em; display: flex; justify-content: space-between; align-items: center; gap: 0.6em; padding: 0.35em 0.35em 0.35em 0.9em;
   border-radius: 0.7em; border: 1px solid #dfe3ea; color: #9ca3af; }
 .mk-frage b { padding: 0.45em 1em; border-radius: 0.5em; background: var(--mk-blau); color: var(--white); }
+
+/* Echte Referenz Bauwelt Handwerk (Jamil #6384/#6385): Bildschirmfoto im selben Rahmen, überall 16:11 (Bilder sind so zugeschnitten) */
+.jm-mock.jm-mock--bild { aspect-ratio: 16 / 11; background: #f4f2ee; }
+.jm-mock--bild picture, .jm-mock--bild img { display: block; width: 100%; height: 100%; }
+.jm-mock--bild img { object-fit: cover; object-position: top left; }
+.jm-link { display: inline-block; margin: 10px 0 0 4px; font-size: 0.85rem; font-weight: 600; color: #0b6d6b; text-decoration: underline; text-underline-offset: 3px; }
+.jm-link::after { content: ' ↗'; }
+.jm-link:hover { color: var(--ink); }
+.jm-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+@media (max-width: 899px) { .jm-link { display: block; margin: 8px 0 0; } }

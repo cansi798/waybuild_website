@@ -39,3 +39,14 @@ Kassen-Logo (Square), Kreditkarten-Logos und gestellte Studiofotos vor farbigem 
 
 Neues Stockfoto: Datei nach `stock/` legen, in `src/config/bilder.ts` eintragen (Alt-Text „Symbolfoto: …“) und hier
 eine Zeile mit Quelle, Fotograf, Lizenz und Datum ergänzen.
+
+# Bildschirmfotos Referenz Bauwelt Handwerk (Jamil #6384/#6385, 19.11.2026)
+
+Im Wechsler „Websites und Software nach Maß“ der Startseite (`components/start6176/J6Wechsler.astro`, Alt-Texte in
+`config/start-6176.ts` → `J_MASS.bauwelt`). Eigene Arbeit von waybuild/webgold für Bauwelt Handwerk; Nennung nur mit Zustimmung von Bauwelt.
+
+| Datei | Herkunft |
+|---|---|
+| `referenzen/bauwelt-kalkulator.png` | Neu aufgenommen 19.11.2026 (Playwright, 960 × 660 px, 2×) von https://www.bauwelt-handwerk.de/rechner/ – Badsanierung 8 m², nur angesehen, nichts abgeschickt |
+| `referenzen/bauwelt-auftrag.png` | Vorhandenes Bildschirmfoto aus der CRM-Testumgebung (Nextcloud Team/CRM System/Screenshots Kontaktweg 02.11.2026, `4-auftrag-desktop.png`), nur Testdaten; Einsatzort-Adresse unscharf gemacht |
+| `referenzen/bauwelt-kundenportal.png` | Vorhandenes Bildschirmfoto aus einem CRM-Testlauf (27.10.2026, Testdaten), oberer Teil; Fußzeile mit Kontaktdaten abgeschnitten |

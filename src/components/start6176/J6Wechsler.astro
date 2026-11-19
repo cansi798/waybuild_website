@@ -7,8 +7,14 @@ import "../../styles/mass-6379.css";
 // Handy: Tabs als Segmentleiste oben (Kurzname), Zitat über dem Mockup. Alle Panels liegen im selben Rasterfeld (kein Höhensprung),
 // Wechsel weich über opacity/transform; prefers-reduced-motion ohne Animation und ohne Auto-Weiterschalten. Auto-Weiterschalten (7 s)
 // nur, solange der Wechsler im Bild ist, und nur bis zur ersten Interaktion. Stil: styles/mass-6379.css.
-import { J_MASS as T } from '../../config/start-6176';
+// Seit Jamil #6384/#6385 (19.11.2026): statt der Mockups echte Bildschirmfotos von Bauwelt Handwerk (Kalkulator der Website,
+// Auftragsübersicht und Kundenportal aus dem CRM, nur Testdaten) – optimiert über <Bild> (AVIF/WebP, feste Maße, lazy).
+// Die Musterfirma-Mockups bleiben über ALT_ZEIGEN.musterfirmaMockupsAlt abrufbar.
+import { J_MASS as T, ALT_ZEIGEN } from '../../config/start-6176';
+import Bild from '../Bild.astro';
 const S = T.schritte;
+const MUSTER = ALT_ZEIGEN.musterfirmaMockupsAlt;
+const BW = T.bauwelt;
 ---
 
 <section class="section sn jms" id="loesung" aria-labelledby="jm-h">
@@ -36,7 +42,14 @@ const S = T.schritte;
           <div class={`jm-panel${i === 0 ? ' ist-aktiv' : ''}`} role="tabpanel" id={`jm-panel-${i}`} aria-labelledby={`jm-tab-${i}`} tabindex="0">
             <p class="jm-panel__zitat" aria-hidden="true">{s.problem}</p>
             <div class="jm-geraet">
-              <p class="sr-only">{s.titel}: {s.zeigt}</p>
+              {!MUSTER && (
+                <div class="jm-mock jm-mock--bild">
+                  <Bild name={BW.bilder[i].bild} alt={BW.bilder[i].alt} widths={[480, 800, 1200, 1600]}
+                    sizes="(min-width: 1200px) 680px, (min-width: 900px) 56vw, calc(100vw - 32px)" />
+                </div>
+              )}
+              {MUSTER && <p class="sr-only">{s.titel}: {s.zeigt}</p>}
+              {MUSTER && (
               <div class="jm-mock" aria-hidden="true">
                 {i === 0 && (
                   <div class="mk mk--rechner">
@@ -87,7 +100,11 @@ const S = T.schritte;
                   </div>
                 )}
               </div>
-              <p class="jm-label">{T.label}</p>
+              )}
+              <p class="jm-label">{MUSTER ? T.labelMuster : T.label}</p>
+              {!MUSTER && i === 0 && (
+                <a class="jm-link" href={BW.link.href} target="_blank" rel="noopener">{BW.link.text}<span class="sr-only"> (öffnet in neuem Tab)</span></a>
+              )}
             </div>
             <p class="jm-panel__warum"><b>{s.titel}.</b> {s.warum}</p>
           </div>
