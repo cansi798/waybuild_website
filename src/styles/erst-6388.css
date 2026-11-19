@@ -52,3 +52,15 @@
   .je-karte__titel { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); }
 }
 @media (min-width: 900px) and (prefers-reduced-motion: reduce) { .je-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Jamil #6440: Stapel auch auf dem Handy. Höhe und top rechnet scripts in J6Erstsehen.astro (--je-min, --je-top):
+   alle Karten gleich hoch (höchste Karte), top so, dass jede Karte ganz lesbar ist (Kopfleiste oben, Knopfleiste unten);
+   ist eine Karte höher als der freie Platz, wird top negativ → erst bis zum Kartenende scrollen, dann deckt die nächste sie ab. */
+@media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
+  .je-karten { gap: 20px; }
+  .je-karte { position: sticky; top: var(--je-top, calc(84px + var(--je-n, 0) * 10px)); min-height: var(--je-min, 0px); background: var(--white);
+    padding: 20px 20px 24px; gap: 10px; box-shadow: 0 18px 40px -28px rgb(15 23 42 / 45%), 0 1px 2px rgb(15 23 42 / 6%); }
+  .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; }
+  html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; }
+  .je-karte__text, .je-punkte { font-size: 0.97rem; line-height: 1.55; }
+}

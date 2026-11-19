@@ -76,3 +76,33 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
     </ol>
   </div>
 </section>
+
+<script>
+  // Kartenstapel (Jamil #6428/#6440): gleiche Höhe aller Karten (--je-min) und top je Karte (--je-top), damit jede Karte vollständig
+  // lesbar ist, bevor die nächste sie abdeckt. Rechnet bei Größenänderung neu; nur Breitenänderungen zählen (iOS-Leisten sollen nichts springen lassen).
+  const liste = document.querySelector<HTMLElement>('.je-karten');
+  const ruhig = matchMedia('(prefers-reduced-motion: reduce)');
+  if (liste && !ruhig.matches) {
+    const karten = [...liste.querySelectorAll<HTMLElement>('.je-karte')];
+    let breite = 0;
+    const rechnen = () => {
+      if (innerWidth === breite) return;
+      breite = innerWidth;
+      karten.forEach((k) => { k.style.removeProperty('--je-min'); k.style.removeProperty('--je-top'); });
+      const hoch = Math.max(...karten.map((k) => k.getBoundingClientRect().height));
+      const kopf = document.querySelector('header')?.getBoundingClientRect().height ?? 72;
+      const leiste = document.querySelector<HTMLElement>('.sticky-bar');
+      const unten = leiste && getComputedStyle(leiste).display !== 'none' ? leiste.getBoundingClientRect().height : 0;
+      const sicht = document.documentElement.clientHeight; // Layout-Viewport (wie svh), ändert sich nicht mit der iOS-Adressleiste
+      const handy = innerWidth < 900;
+      karten.forEach((k, n) => {
+        if (handy) k.style.setProperty('--je-min', `${Math.ceil(hoch)}px`);
+        const top = Math.min(kopf + 12 + n * 10, sicht - unten - (handy ? hoch : k.getBoundingClientRect().height) - 12);
+        k.style.setProperty('--je-top', `${Math.round(top)}px`);
+      });
+    };
+    rechnen();
+    addEventListener('resize', rechnen, { passive: true });
+    document.fonts?.ready.then(() => { breite = 0; rechnen(); });
+  }
+</script>
