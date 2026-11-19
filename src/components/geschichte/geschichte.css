@@ -15,19 +15,19 @@ html.js .gs-weglabel { display: none; }
 
 /* ── Hero ── */
 .gs-hero { position: relative; overflow: hidden; isolation: isolate; color: var(--white); text-align: center;
-  background: linear-gradient(165deg, #004f4c 0%, #006b68 48%, #00a6a1 100%);
+  background: linear-gradient(165deg, #0F172A 0%, #B45309 48%, #D97706 100%);
   padding: clamp(48px, 7vw, 88px) 0 clamp(116px, 11vw, 150px); }
 .gs-hero__flaeche { position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(60% 70% at 85% 10%, rgb(95 224 218 / 30%), transparent 70%), radial-gradient(50% 60% at 8% 95%, rgb(0 166 161 / 45%), transparent 70%); }
+  background: radial-gradient(60% 70% at 85% 10%, rgb(95 224 218 / 30%), transparent 70%), radial-gradient(50% 60% at 8% 95%, rgb(217 119 6 / 45%), transparent 70%); }
 .gs-hero__kennzeile { margin: 0 0 18px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #bff0ec; }
 .gs-hero__titel { margin: 0 auto; font-size: clamp(2.35rem, 7.6vw, 4.9rem); line-height: 1.02; letter-spacing: -0.035em; color: var(--white); }
 .gs-hero__titel span { display: block; }
 .gs-hero__titel span + span { color: #a6f2ec; }
-.gs-hero__unter { max-width: 620px; margin: clamp(18px, 3vw, 28px) auto 0; font-size: clamp(1.08rem, 1rem + 0.5vw, 1.32rem); line-height: 1.6; color: #e6f6f5; }
+.gs-hero__unter { max-width: 620px; margin: clamp(18px, 3vw, 28px) auto 0; font-size: clamp(1.08rem, 1rem + 0.5vw, 1.32rem); line-height: 1.6; color: #F1F5F9; }
 
 /* ── Auswahl „Wie sähe das bei Ihnen aus?“ ── */
 .gs-wahl { position: relative; margin-top: clamp(-130px, -9vw, -84px); padding-bottom: clamp(44px, 8vw, 96px); }
-.gs-wahl__karte { background: var(--white); border-radius: 28px; padding: clamp(20px, 4.4vw, 52px); box-shadow: 0 2px 4px rgb(0 79 76 / 6%), 0 32px 64px -32px rgb(0 79 76 / 35%); }
+.gs-wahl__karte { background: var(--white); border-radius: 28px; padding: clamp(20px, 4.4vw, 52px); box-shadow: 0 2px 4px rgb(15 23 42 / 6%), 0 32px 64px -32px rgb(15 23 42 / 35%); }
 .gs-wahl__kopf { text-align: center; margin-bottom: clamp(20px, 3.5vw, 34px); }
 .gs-wahl__titel { margin: 0 0 8px; font-size: clamp(1.6rem, 3.8vw, 2.4rem); }
 .gs-wahl__unter { margin: 0 auto; max-width: 780px; color: var(--ink-soft); }
@@ -52,7 +52,7 @@ html.js .gs-weglabel { display: none; }
 .gs-weg__text span { font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); }
 .gs-weg__haken { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); color: transparent; transition: inherit; }
 @media (min-width: 900px) { .gs-weg__haken { position: absolute; top: 18px; right: 18px; } }
-.gs-weg:has(input:checked) { border-color: var(--accent); background: #f0faf9; box-shadow: 0 0 0 4px rgb(0 166 161 / 14%); }
+.gs-weg:has(input:checked) { border-color: var(--accent); background: #f0faf9; box-shadow: 0 0 0 4px rgb(217 119 6 / 14%); }
 .gs-weg:has(input:checked) .gs-weg__symbol { background: var(--accent-ink); color: var(--white); }
 .gs-weg:has(input:checked) .gs-weg__haken { border-color: var(--accent-ink); background: var(--accent-ink); color: var(--white); }
 .gs-weg:has(input:focus-visible), html.gs-tastatur .gs-weg:focus-within { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
@@ -149,14 +149,14 @@ html.js .gs-empfehlung__weg { display: none; }
 .gs-angebot .pk, .gs-angebot .pm, .gs-angebot .pm__kombi-liste li { transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; }
 html.js[data-weg="website"] .gs-angebot .pk[aria-labelledby="pk-basis"],
 html.js[data-weg="anfragen"] .gs-angebot .pk[aria-labelledby="pk-plus"] {
-  border: 2px solid var(--accent); box-shadow: 0 0 0 6px rgb(0 166 161 / 18%), 0 24px 48px -24px rgb(0 79 76 / 40%); }
+  border: 2px solid var(--accent); box-shadow: 0 0 0 6px rgb(217 119 6 / 18%), 0 24px 48px -24px rgb(15 23 42 / 40%); }
 html.js[data-weg="website"] .gs-angebot .pk[aria-labelledby="pk-plus"],
 html.js[data-weg="betrieb"] .gs-angebot .pk[aria-labelledby="pk-plus"] { border: 1px solid var(--line); box-shadow: none; }
 html.js[data-weg="website"] .gs-angebot .pk__badge,
 html.js[data-weg="betrieb"] .gs-angebot .pk__badge { display: none; }
 html.js[data-weg="anfragen"] .gs-angebot .pm__kombi-liste li:has([data-buchen="plus"]),
 html.js[data-weg="betrieb"] .gs-angebot .pm__kombi-liste li { border-color: var(--accent); background: #f0faf9; }
-html.js[data-weg="betrieb"] .gs-angebot .pm { border-color: var(--accent); box-shadow: 0 0 0 6px rgb(0 166 161 / 18%), 0 24px 48px -24px rgb(0 79 76 / 40%); }
+html.js[data-weg="betrieb"] .gs-angebot .pm { border-color: var(--accent); box-shadow: 0 0 0 6px rgb(217 119 6 / 18%), 0 24px 48px -24px rgb(15 23 42 / 40%); }
 
 .gs-wachsen { display: grid; gap: 18px; margin-top: clamp(30px, 4vw, 44px); padding: clamp(20px, 3.4vw, 34px); border-radius: 22px; background: var(--paper-2); }
 @media (min-width: 900px) { .gs-wachsen { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 36px; align-items: center; } }

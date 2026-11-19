@@ -1,37 +1,37 @@
 /* 4. „Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.“ (Jamil #6388, 19.11.2026). Markup: components/start6176/J6Erstsehen.astro.
-   Palette wie start-6176.css (Primär #0b6d6b, Grün #2c9a7a, Gold nur Zier). Karten wie .jp-karte (Papier, Linie, Nummer mit Goldstrich). */
+   Palette wie start-6176.css (Primär #B45309, Grün #D97706, Gold nur Zier). Karten wie .jp-karte (Papier, Linie, Nummer mit Goldstrich). */
 .je .je__kopf .sn-h2 { max-width: 22ch; }
 .je .je__kopf .sn-lead { max-width: 58ch; }
 .je-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; counter-reset: none; }
 @media (min-width: 900px) { .je-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); } }
 .je-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.4vw, 30px); border-radius: 24px;
   background: var(--paper); border: 1px solid var(--line); }
-.je-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #0b6d6b; }
+.je-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #B45309; }
 .je-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
 .je-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
 .je-karte__text { margin: 0; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 .je-karte__text b, .je-punkte b { color: var(--ink); font-weight: 650; }
 .je-punkte { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; line-height: 1.55; color: var(--ink-soft); }
 .je-punkte li { position: relative; padding-left: 18px; }
-.je-punkte li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 7px; height: 7px; border-radius: 50%; background: #2c9a7a; }
+.je-punkte li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 7px; height: 7px; border-radius: 50%; background: #D97706; }
 
 /* Badges (nur Optik) */
 .je-badge { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 2px 0 4px; }
-.je-pill { display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 999px; border: 1px solid #cfdcd6; background: var(--white);
+.je-pill { display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 999px; border: 1px solid #CBD5E1; background: var(--white);
   font-size: 0.78rem; font-weight: 600; line-height: 1.3; color: var(--ink-soft); }
-.je-pill--an { border-color: #0b6d6b; background: #edf4f1; color: #0b6d6b; }
-.je-pill--an::before { content: ''; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #0b6d6b; }
+.je-pill--an { border-color: #B45309; background: #FEF3C7; color: #B45309; }
+.je-pill--an::before { content: ''; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #B45309; }
 .je-oder { font-size: 0.76rem; color: var(--ink-soft); }
-.je-zeit { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px 5px 8px; border-radius: 999px; background: #e3f3ec;
-  box-shadow: inset 0 0 0 1px #b9dccd; font-size: 0.78rem; font-weight: 700; line-height: 1.3; color: #1d6b52; }
-.je-zeit svg { flex: none; color: #2c9a7a; }
+.je-zeit { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px 5px 8px; border-radius: 999px; background: #FEF3C7;
+  box-shadow: inset 0 0 0 1px #FDE68A; font-size: 0.78rem; font-weight: 700; line-height: 1.3; color: #92400E; }
+.je-zeit svg { flex: none; color: #D97706; }
 .je-sprache { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 18px 18px 18px 6px;
-  background: #dcf5e6; box-shadow: 0 6px 14px -12px rgb(0 0 0 / 45%); }
-.je-sprache__play { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: #2c9a7a; color: var(--white); }
+  background: #FEF3C7; box-shadow: 0 6px 14px -12px rgb(0 0 0 / 45%); }
+.je-sprache__play { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: #D97706; color: var(--white); }
 .je-sprache__play svg { margin-left: 2px; }
 .je-sprache__welle { display: flex; align-items: center; gap: 2px; height: 22px; }
-.je-sprache__welle i { display: block; width: 3px; height: var(--h); border-radius: 2px; background: #1d6b52; opacity: 0.75; transform-origin: center; }
-.je-sprache__zeit { font-size: 0.75rem; font-weight: 600; color: #2f5d4c; font-variant-numeric: tabular-nums; }
+.je-sprache__welle i { display: block; width: 3px; height: var(--h); border-radius: 2px; background: #92400E; opacity: 0.75; transform-origin: center; }
+.je-sprache__zeit { font-size: 0.75rem; font-weight: 600; color: #92400E; font-variant-numeric: tabular-nums; }
 @media (prefers-reduced-motion: no-preference) {
   .je-sprache__welle i { animation: je-welle 1.4s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -90ms); }
 }
@@ -46,7 +46,7 @@
   .je-karte { --je-top: calc(var(--je-kopf, 96px) + var(--je-n, 0) * 14px); position: sticky; top: var(--je-top);
     display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px clamp(24px, 4vw, 64px); align-items: start;
     min-height: min(440px, calc(100vh - var(--je-top) - 40px)); background: var(--white);
-    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(8 78 76 / 45%), 0 1px 2px rgb(8 78 76 / 6%); }
+    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(15 23 42 / 45%), 0 1px 2px rgb(15 23 42 / 6%); }
   .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; }
   html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; } /* kein Einblenden im Stapel: sonst schimmert die vorige Karte durch */
   .je-karte__titel { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); }

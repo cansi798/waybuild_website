@@ -43,7 +43,7 @@ html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px
 .sw-liste { position: relative; }
 .sw-plus { position: relative; display: grid; place-items: center; height: 0; margin: -10px 0; z-index: 2; }
 .sw-plus span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--sn-tinte); color: #fff;
-  font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; line-height: 1; box-shadow: 0 0 0 6px var(--band, #fff), 0 0 0 7px rgb(212 175 55 / 70%); }
+  font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; line-height: 1; box-shadow: 0 0 0 6px var(--band, #fff), 0 0 0 7px rgb(217 119 6 / 70%); }
 @media (min-width: 900px) {
   .sw-plus { position: absolute; left: 50%; top: 50%; width: 0; height: 0; margin: 0; }
   .sw-plus span { transform: translate(-50%, -50%); }

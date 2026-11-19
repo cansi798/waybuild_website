@@ -3,19 +3,19 @@
  * Der Hero (.v-hero, variante-start.css) und der Stapel-Effekt (stapel.ts) sind unverändert.
  *
  * Gestaltung: unsere Marke, ruhig und hochwertig.
- * - Farben nur aus der CI: Türkis #00a6a1 (Flächen, Zeichen), Tinte #006b68 (Schrift, Knöpfe), Tief #004f4c, Hauch #eaf5f4,
- *   Papier #f7f5f0, Sand #efebe3, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
+ * - Farben nur aus der CI: Türkis #D97706 (Flächen, Zeichen), Tinte #B45309 (Schrift, Knöpfe), Tief #0F172A, Hauch #eaf5f4,
+ *   Papier #f7f5f0, Sand #F1F5F9, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
  * - Schrift: Plus Jakarta Sans für Überschriften und Text (QA #5952, vorher Montserrat/Jost), Zeilenabstand 1,7.
  * - Überschriften links, Unterzeile/Lead immer direkt darunter (Jamil #6012, 15.11.2026: „Subheadline immer unter Headline, auf der
  *   gesamten Website“; der frühere Modifier .sn-kopf--zweispaltig ist entfernt); Karten nur, wo sie etwas zusammenfassen.
  * - Eine Sache darf auffallen: der stehende Bildrahmen der Kundenreise (Teil 3). Alles andere bleibt still.
  * - Hintergründe im Wechsel: Produkte Papier → Problem Weiß → Lösung Papier → Beweis Weiß → Angebot Sand → Handlung Hauch.
- * Kontraste (WCAG AA): Schrift Türkis nur #006b68 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
- * Knöpfe Weiß auf #006b68 (6,4 : 1). Grid-Spalten immer minmax(0, 1fr) bzw. min-width: 0 (WebKit, Querscrollen). */
+ * Kontraste (WCAG AA): Schrift Türkis nur #B45309 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
+ * Knöpfe Weiß auf #B45309 (6,4 : 1). Grid-Spalten immer minmax(0, 1fr) bzw. min-width: 0 (WebKit, Querscrollen). */
 
-.sn { --sn-tinte: #0b6d6b; --sn-tief: #084e4c; --sn-tuerkis: #2c9a7a; --sn-mittel: #0b6d6b; --sn-hauch: #edf4f1; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */
-  --sn-sand: #efebe3; --sn-linie: #ddd6c9; --sn-linie-t: #cfe6e3;
-  --sn-schatten: 0 1px 2px rgb(0 79 76 / 5%), 0 28px 56px -36px rgb(0 79 76 / 38%);
+.sn { --sn-tinte: #B45309; --sn-tief: #0F172A; --sn-tuerkis: #D97706; --sn-mittel: #B45309; --sn-hauch: #FEF3C7; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */
+  --sn-sand: #F1F5F9; --sn-linie: #ddd6c9; --sn-linie-t: #cfe6e3;
+  --sn-schatten: 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 38%);
   --sn-kurve: cubic-bezier(0.22, 1, 0.36, 1);
   padding-block: clamp(72px, 11vw, 144px); }
 .sn p { margin: 0; }
@@ -225,7 +225,7 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
   .sn-ref--gross .sn-ref__name { font-size: 1.6rem; }
 }
 .sn-ref { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 16px; padding: clamp(12px, 1.6vw, 16px); border-radius: 28px; background: var(--paper); }
-.sn-ref__bild { position: relative; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 14px 30px -22px rgb(0 79 76 / 40%); }
+.sn-ref__bild { position: relative; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 14px 30px -22px rgb(15 23 42 / 40%); }
 .sn-ref__leiste { display: flex; gap: 5px; align-items: center; height: 22px; padding-inline: 12px; background: var(--sn-sand); }
 .sn-ref__leiste i { width: 7px; height: 7px; border-radius: 50%; background: #cdc6ba; }
 .sn-ref__bild picture, .sn-ref__img { display: block; width: 100%; height: auto; }
@@ -298,14 +298,14 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
 .sn-app .sn-kenn { color: #9fe3df; margin-bottom: 8px !important; }
 .sn-app .sn-h3 { color: var(--white); }
 .sn-app__text { display: grid; gap: 8px; min-width: 0; }
-.sn-app__text > p:not(.sn-kenn) { line-height: 1.7; color: #d2e9e8; max-width: 52ch; }
+.sn-app__text > p:not(.sn-kenn) { line-height: 1.7; color: #E2E8F0; max-width: 52ch; }
 .sn-app__text .sn-app__kurz { color: var(--white); font-weight: 600; }
 .sn-app__kombis { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 @media (min-width: 640px) { .sn-app__kombis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .sn-app { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 40px; align-items: center; } .sn-app__hinweis { grid-column: 1 / -1; } }
 .sn-kombi { min-width: 0; display: grid; gap: 4px; align-content: start; padding: 18px 20px; border-radius: 20px; background: rgb(255 255 255 / 8%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 16%); }
 .sn-kombi__name { font-family: var(--font-head); font-weight: 700; color: var(--white); }
-.sn-kombi__preis { color: #d2e9e8; }
+.sn-kombi__preis { color: #E2E8F0; }
 .sn-kombi__preis b { font-family: var(--font-head); font-size: 1.6rem; letter-spacing: -0.02em; color: var(--white); font-variant-numeric: tabular-nums; }
 .sn-kombi__statt { font-size: 0.86rem; line-height: 1.5; color: #c4e2e0; }
 .sn-kombi__btn { justify-self: start; min-height: 44px; margin-top: 10px; padding: 0.55em 1.3em; border: 0; }
@@ -403,8 +403,8 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 @media (min-width: 1200px) { .sn-pakete { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1180px; gap: 20px; } }
 @media (min-width: 900px) and (max-width: 1199px) { .sn-paket--komplett { grid-column: 1 / -1; } } /* unter 1200 px: zwei Karten + Komplettpaket volle Breite */
 .sn-paket__tipp { max-width: 100%; overflow-wrap: break-word; }
-.sn-paket--komplett { box-shadow: inset 0 0 0 2px var(--gold, #d4af37), var(--sn-schatten); }
-.sn-paket__tipp--gold { background: #d4af37; color: #2c3135; } /* dunkle Schrift auf Gold (8 : 1) */
+.sn-paket--komplett { box-shadow: inset 0 0 0 2px var(--gold, #D97706), var(--sn-schatten); }
+.sn-paket__tipp--gold { background: #D97706; color: #0F172A; } /* dunkle Schrift auf Gold (8 : 1) */
 .sn-paket__brutto { margin-bottom: 0 !important; }
 .sn-paket .sn-paket__jahr { margin-top: -6px !important; font-size: 0.76rem; line-height: 1.3; color: var(--ink-soft); }
 .sn-pakete__hinweis { margin-top: 16px !important; }
@@ -469,9 +469,9 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 @media (min-width: 1000px) { .sn-pliste { display: none; } }
 
 /* Kostenlose Vorschau (Jamil #6061): Band über den Paketen (Startseite + /preise/), Zeile im Abschluss */
-.sn-vorschau-band { display: flex; align-items: center; gap: 16px; max-width: 880px; margin: 0 auto clamp(26px, 3.5vw, 40px); padding: 18px 22px; border-radius: 16px; background: var(--sn-hauch); border: 1px solid var(--sn-linie-t); border-left: 4px solid #d4af37; }
+.sn-vorschau-band { display: flex; align-items: center; gap: 16px; max-width: 880px; margin: 0 auto clamp(26px, 3.5vw, 40px); padding: 18px 22px; border-radius: 16px; background: var(--sn-hauch); border: 1px solid var(--sn-linie-t); border-left: 4px solid #D97706; }
 .sn-vorschau-band__ico { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--sn-tinte); color: #fff; }
-.sn-vorschau-band p { margin: 0; line-height: 1.6; color: var(--ink-soft, #545b61); }
+.sn-vorschau-band p { margin: 0; line-height: 1.6; color: var(--ink-soft, #475569); }
 .sn-vorschau-band strong { display: block; margin-bottom: 4px; color: var(--sn-tinte); font-size: 1.06rem; }
 @media (max-width: 560px) { .sn-vorschau-band { align-items: flex-start; padding: 16px; gap: 12px; } .sn-vorschau-band__ico { width: 38px; height: 38px; } }
 .sn-abschluss__vorschau { margin: 0 auto 22px; max-width: 58ch; font-weight: 650; color: var(--sn-tinte); line-height: 1.6; }

@@ -3,12 +3,12 @@
 // Plus Jakarta Sans Bold 700 als Pfade (fontTools), „web“ Türkis + „gold“ Gold. Gleiche Pfade wie public/logo-webgold(-negativ).svg.
 // Die alte waybuild-Wortmarke liegt weiter in public/logo-waybuild(-negativ).svg.
 // Inline-SVG: keine Extra-Anfrage, feste Höhe + Seitenverhältnis = kein Layout-Sprung.
-// variante 'positiv' (heller Grund): web #0B6D6B, gold #d4af37 · 'negativ' (dunkler Grund): web Weiß, gold #d4af37.
+// variante 'positiv' (heller Grund): web #0F172A, gold #D97706 · 'negativ' (dunkler Grund): web Weiß, gold #D97706.
 // Höhe über --logo-h (Standard 28 px, ab 720 px 32 px), Breite folgt dem Seitenverhältnis 4395 : 1049.
 interface Props { variante?: 'positiv' | 'negativ' }
 const negativ = Astro.props.variante === 'negativ';
-const web = negativ ? '#FFFFFF' : '#0B6D6B';
-const gold = negativ ? '#d4af37' : '#d4af37';
+const web = negativ ? '#FFFFFF' : '#0F172A'; // Jamil #6431: „web“ Slate 900, „gold“ Amber 600
+const gold = negativ ? '#D97706' : '#D97706';
 ---
 
 <span class="logo">

@@ -40,7 +40,7 @@ body { --stickybar-h: 0px; }
 
 .neu {
   /* Farben: eine Akzentfarbe (Türkis), Flächen Weiß, Sand, Dunkel */
-  --neu-nacht: #002e2c;                 /* dunkles Ende des Dunkel-Verlaufs (von --dark #004f4c) */
+  --neu-nacht: #002e2c;                 /* dunkles Ende des Dunkel-Verlaufs (von --dark #0F172A) */
 
   /* Schrift (1rem = 16,5 px am Telefon … 18 px ab 1280 px, siehe global.css) */
   /* h1 rund 36 … 72 px, aber nie breiter als das längste Wort der Überschrift: „Aufmerksamkeit“ misst 8,6 × Schriftgröße,
@@ -69,7 +69,7 @@ body { --stickybar-h: 0px; }
   /* Rollen je Fläche (hier: hell). Dunkel und Karte setzen sie neu, alles darin folgt von selbst. */
   --neu-text: var(--ink);
   --neu-text-leise: var(--ink-soft);
-  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell: nur das dunklere #006b68 */
+  --neu-akzent-text: var(--accent-ink);  /* Türkis als Schrift auf Hell: nur das dunklere #B45309 */
   --neu-licht: var(--accent);            /* Punkt und Linie */
   --neu-rand: var(--line);               /* feine Linie */
   --neu-fokus: var(--accent-ink);        /* Fokusrahmen */
@@ -83,7 +83,7 @@ body { --stickybar-h: 0px; }
 .neu .neu-abschnitt--sand { background: var(--paper); }
 /* Dunkel nur für Hero und Schluss: Verlauf von --dark nach --neu-nacht; Schrift und Fokusrahmen hell */
 .neu .neu-abschnitt--dunkel {
-  --neu-text: var(--white);              /* 9,6 : 1 auf #004f4c */
+  --neu-text: var(--white);              /* 9,6 : 1 auf #0F172A */
   --neu-text-leise: var(--dark-lead);    /* 7,5 : 1 */
   --neu-akzent-text: var(--accent-light); /* 5,9 : 1 */
   --neu-licht: var(--accent-light);

@@ -1,6 +1,6 @@
 ---
 // Kleine Strichgrafiken zu den Schmerzpunkten (/geschichte/). Nur Schmuck (aria-hidden), der Inhalt steht im Text daneben.
-// Farben der CI: Türkis #00a6a1 / dunkel #004f4c, Papier #f7f5f0, Linie #ddd6c9, Warnton #c2410c (nur kleine Zeichen).
+// Farben der CI: Türkis #D97706 / dunkel #0F172A, Papier #f7f5f0, Linie #ddd6c9, Warnton #c2410c (nur kleine Zeichen).
 // 'aenderung' + 'kosten' für die Startseite (Jamil #5826, 13.11.2026)
 // Grafik „suche“ zeigt den Suchbegriff der gewählten Branche (data-g="suchNaehe", Text setzt geschichte.ts per textContent).
 interface Props { name: string; suche?: string }
@@ -10,35 +10,35 @@ const { name, suche = 'Maler in der Nähe' } = Astro.props;
 <svg class="gg" viewBox="0 0 160 110" width="160" height="110" aria-hidden="true" focusable="false">
   {name === 'suche' && (<>
     <rect x="12" y="10" width="136" height="24" rx="12" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <circle cx="28" cy="22" r="5" fill="none" stroke="#004f4c" stroke-width="2" /><path d="M32 26l4 4" stroke="#004f4c" stroke-width="2" stroke-linecap="round" />
+    <circle cx="28" cy="22" r="5" fill="none" stroke="#0F172A" stroke-width="2" /><path d="M32 26l4 4" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
     <text x="42" y="26.5" font-size="11" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#3a3a3a" data-g="suchNaehe">{suche}</text>
-    <rect x="12" y="44" width="136" height="16" rx="6" fill="#efebe3" /><rect x="20" y="49" width="60" height="6" rx="3" fill="#cdc6ba" />
-    <rect x="12" y="66" width="136" height="16" rx="6" fill="#efebe3" /><rect x="20" y="71" width="76" height="6" rx="3" fill="#cdc6ba" />
+    <rect x="12" y="44" width="136" height="16" rx="6" fill="#F1F5F9" /><rect x="20" y="49" width="60" height="6" rx="3" fill="#cdc6ba" />
+    <rect x="12" y="66" width="136" height="16" rx="6" fill="#F1F5F9" /><rect x="20" y="71" width="76" height="6" rx="3" fill="#cdc6ba" />
     <rect x="12" y="88" width="136" height="16" rx="6" fill="none" stroke="#c2410c" stroke-width="1.6" stroke-dasharray="4 4" />
     <text x="80" y="99.5" font-size="9.5" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#c2410c">Ihr Betrieb? Fehlt.</text>
   </>)}
   {name === 'alt' && (<>
     <rect x="14" y="12" width="132" height="88" rx="10" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <rect x="14" y="12" width="132" height="16" rx="10" fill="#efebe3" /><rect x="14" y="20" width="132" height="8" fill="#efebe3" />
+    <rect x="14" y="12" width="132" height="16" rx="10" fill="#F1F5F9" /><rect x="14" y="20" width="132" height="8" fill="#F1F5F9" />
     <circle cx="24" cy="20" r="2.5" fill="#cdc6ba" /><circle cx="32" cy="20" r="2.5" fill="#cdc6ba" /><circle cx="40" cy="20" r="2.5" fill="#cdc6ba" />
-    <rect x="24" y="38" width="48" height="34" rx="3" fill="#e4dfd5" /><path d="M24 64l14-12 10 8 8-6 16 14" fill="none" stroke="#cdc6ba" stroke-width="2" />
+    <rect x="24" y="38" width="48" height="34" rx="3" fill="#E2E8F0" /><path d="M24 64l14-12 10 8 8-6 16 14" fill="none" stroke="#cdc6ba" stroke-width="2" />
     <rect x="80" y="40" width="54" height="6" rx="3" fill="#cdc6ba" /><rect x="80" y="52" width="44" height="6" rx="3" fill="#cdc6ba" /><rect x="80" y="64" width="50" height="6" rx="3" fill="#cdc6ba" />
     <text x="80" y="92" font-size="9.5" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#8a8275">© 2014</text>
     <path d="M118 30 q10 4 20 0 M128 30 v12 M121 36 h14" fill="none" stroke="#cdc6ba" stroke-width="1.2" />
   </>)}
   {name === 'telefon' && (<>
-    <rect x="56" y="8" width="48" height="94" rx="10" fill="#fff" stroke="#004f4c" stroke-width="2" />
+    <rect x="56" y="8" width="48" height="94" rx="10" fill="#fff" stroke="#0F172A" stroke-width="2" />
     <rect x="72" y="14" width="16" height="4" rx="2" fill="#ddd6c9" />
     <rect x="62" y="28" width="36" height="14" rx="5" fill="#fdeee6" /><rect x="62" y="48" width="36" height="14" rx="5" fill="#fdeee6" /><rect x="62" y="68" width="36" height="14" rx="5" fill="#fdeee6" />
     <path d="M66 35h18 M66 55h14 M66 75h20" stroke="#c2410c" stroke-width="2" stroke-linecap="round" />
     <circle cx="104" cy="12" r="10" fill="#c2410c" /><text x="104" y="16" font-size="11" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#fff">3</text>
-    <path d="M30 40 q-8 15 0 30 M40 46 q-5 9 0 18 M130 40 q8 15 0 30 M120 46 q5 9 0 18" fill="none" stroke="#00a6a1" stroke-width="2" stroke-linecap="round" />
+    <path d="M30 40 q-8 15 0 30 M40 46 q-5 9 0 18 M130 40 q8 15 0 30 M120 46 q5 9 0 18" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" />
   </>)}
   {name === 'abend' && (<>
-    <path d="M128 14a14 14 0 1 0 12 22a11 11 0 0 1-12-22z" fill="#004f4c" />
-    <circle cx="104" cy="16" r="1.6" fill="#00a6a1" /><circle cx="146" cy="52" r="1.6" fill="#00a6a1" /><circle cx="114" cy="40" r="1.2" fill="#00a6a1" />
+    <path d="M128 14a14 14 0 1 0 12 22a11 11 0 0 1-12-22z" fill="#0F172A" />
+    <circle cx="104" cy="16" r="1.6" fill="#D97706" /><circle cx="146" cy="52" r="1.6" fill="#D97706" /><circle cx="114" cy="40" r="1.2" fill="#D97706" />
     <rect x="22" y="24" width="72" height="80" rx="6" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <rect x="32" y="36" width="40" height="6" rx="3" fill="#004f4c" />
+    <rect x="32" y="36" width="40" height="6" rx="3" fill="#0F172A" />
     <path d="M32 52h52 M32 62h44 M32 72h48 M32 82h30" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
     <text x="120" y="88" font-size="16" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#c2410c">22:47</text>
   </>)}
@@ -58,28 +58,28 @@ const { name, suche = 'Maler in der Nähe' } = Astro.props;
     <path d="M72 38h32 M72 48h26" stroke="#cdc6ba" stroke-width="2" stroke-linecap="round" transform="rotate(6 90 51)" />
     <circle cx="70" cy="20" r="3" fill="#c2410c" />
     <rect x="86" y="44" width="54" height="56" rx="3" fill="#e9f6f5" stroke="#9fd3d0" stroke-width="1.5" transform="rotate(-4 113 72)" />
-    <text x="113" y="84" font-size="30" font-weight="700" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#004f4c" transform="rotate(-4 113 72)">?</text>
+    <text x="113" y="84" font-size="30" font-weight="700" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#0F172A" transform="rotate(-4 113 72)">?</text>
   </>)}
   {name === 'plan' && (<>
     <rect x="14" y="10" width="132" height="92" rx="8" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <path d="M14 28h132 M47 28v74 M80 28v74 M113 28v74" stroke="#efebe3" stroke-width="2" />
-    <rect x="20" y="34" width="54" height="14" rx="4" fill="#9fd3d0" /><rect x="40" y="42" width="54" height="14" rx="4" fill="#00a6a1" opacity="0.75" />
+    <path d="M14 28h132 M47 28v74 M80 28v74 M113 28v74" stroke="#F1F5F9" stroke-width="2" />
+    <rect x="20" y="34" width="54" height="14" rx="4" fill="#9fd3d0" /><rect x="40" y="42" width="54" height="14" rx="4" fill="#D97706" opacity="0.75" />
     <rect x="86" y="36" width="50" height="14" rx="4" fill="#cdc6ba" /><rect x="96" y="44" width="44" height="14" rx="4" fill="#f4c7ad" />
     <rect x="24" y="70" width="40" height="14" rx="4" fill="#cdc6ba" /><rect x="70" y="66" width="56" height="14" rx="4" fill="#9fd3d0" /><rect x="60" y="76" width="40" height="14" rx="4" fill="#f4c7ad" />
     <text x="80" y="23" font-size="9.5" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#545454">Montag</text>
     <circle cx="140" cy="14" r="9" fill="#c2410c" /><text x="140" y="18" font-size="11" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#fff">!</text>
   </>)}
   {name === 'papier' && (<>
-    <rect x="40" y="14" width="80" height="90" rx="6" fill="#fff" stroke="#004f4c" stroke-width="2" />
-    <rect x="62" y="8" width="36" height="12" rx="4" fill="#004f4c" />
+    <rect x="40" y="14" width="80" height="90" rx="6" fill="#fff" stroke="#0F172A" stroke-width="2" />
+    <rect x="62" y="8" width="36" height="12" rx="4" fill="#0F172A" />
     <path d="M52 34h18 M78 34h30 M52 48h18 M78 48h24 M52 62h18 M78 62h28 M52 76h18 M78 76h20" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
     <path d="M56 88 c6 -6 10 6 16 0 s10 6 16 0" fill="none" stroke="#545454" stroke-width="1.6" stroke-linecap="round" />
-    <path d="M126 30 l12 -6 M128 44 l14 0 M126 58 l12 6" stroke="#00a6a1" stroke-width="2" stroke-linecap="round" />
-    <ellipse cx="106" cy="92" rx="10" ry="6" fill="#e4dfd5" opacity="0.9" />
+    <path d="M126 30 l12 -6 M128 44 l14 0 M126 58 l12 6" stroke="#D97706" stroke-width="2" stroke-linecap="round" />
+    <ellipse cx="106" cy="92" rx="10" ry="6" fill="#E2E8F0" opacity="0.9" />
   </>)}
   {name === 'rechnung' && (<>
     <path d="M30 12h66v92l-8-6-8 6-8-6-8 6-8-6-8 6-8-6-10 6z" fill="#fff" stroke="#ddd6c9" stroke-width="2" stroke-linejoin="round" />
-    <rect x="40" y="24" width="30" height="7" rx="3" fill="#004f4c" />
+    <rect x="40" y="24" width="30" height="7" rx="3" fill="#0F172A" />
     <path d="M40 44h44 M40 54h36 M40 64h40" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
     <rect x="58" y="74" width="28" height="9" rx="3" fill="#e9f6f5" />
     <circle cx="118" cy="58" r="26" fill="#fff" stroke="#c2410c" stroke-width="2.5" />
@@ -87,32 +87,32 @@ const { name, suche = 'Maler in der Nähe' } = Astro.props;
   </>)}
   {name === 'aenderung' && (<>
     <rect x="10" y="14" width="90" height="72" rx="9" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <rect x="10" y="14" width="90" height="14" rx="9" fill="#efebe3" /><rect x="10" y="21" width="90" height="7" fill="#efebe3" />
+    <rect x="10" y="14" width="90" height="14" rx="9" fill="#F1F5F9" /><rect x="10" y="21" width="90" height="7" fill="#F1F5F9" />
     <circle cx="19" cy="21" r="2.3" fill="#cdc6ba" /><circle cx="26" cy="21" r="2.3" fill="#cdc6ba" /><circle cx="33" cy="21" r="2.3" fill="#cdc6ba" />
-    <rect x="18" y="36" width="28" height="14" rx="3" fill="#e4dfd5" />
+    <rect x="18" y="36" width="28" height="14" rx="3" fill="#E2E8F0" />
     <rect x="52" y="37" width="38" height="5" rx="2.5" fill="#cdc6ba" /><rect x="52" y="46" width="28" height="5" rx="2.5" fill="#cdc6ba" />
-    <rect x="32" y="58" width="70" height="30" rx="5" fill="#fff" stroke="#004f4c" stroke-width="2" />
-    <path d="M44 90l-4 8 12-8" fill="#fff" stroke="#004f4c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+    <rect x="32" y="58" width="70" height="30" rx="5" fill="#fff" stroke="#0F172A" stroke-width="2" />
+    <path d="M44 90l-4 8 12-8" fill="#fff" stroke="#0F172A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
     <path d="M42 67h24" stroke="#cdc6ba" stroke-width="3" stroke-linecap="round" />
-    <text x="67" y="82" font-size="11" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#004f4c">Änderung?</text>
-    <path d="M117 26h24 M117 72h24" stroke="#004f4c" stroke-width="2" stroke-linecap="round" />
-    <path d="M120 26v5c0 9 9 14 9 18c0 4-9 9-9 18v5 M138 26v5c0 9-9 14-9 18c0 4 9 9 9 18v5" fill="none" stroke="#004f4c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M123 32h12q-2 7-6 9q-4-2-6-9z" fill="#00a6a1" opacity="0.55" />
-    <path d="M123 68q6-9 12 0z" fill="#00a6a1" />
+    <text x="67" y="82" font-size="11" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#0F172A">Änderung?</text>
+    <path d="M117 26h24 M117 72h24" stroke="#0F172A" stroke-width="2" stroke-linecap="round" />
+    <path d="M120 26v5c0 9 9 14 9 18c0 4-9 9-9 18v5 M138 26v5c0 9-9 14-9 18c0 4 9 9 9 18v5" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M123 32h12q-2 7-6 9q-4-2-6-9z" fill="#D97706" opacity="0.55" />
+    <path d="M123 68q6-9 12 0z" fill="#D97706" />
     <rect x="112" y="82" width="40" height="16" rx="8" fill="#c2410c" />
     <text x="132" y="93.5" font-size="9.5" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#fff">3 Wo.</text>
   </>)}
   {name === 'kosten' && (<>
     <rect x="14" y="10" width="88" height="94" rx="6" fill="#fff" stroke="#ddd6c9" stroke-width="2" />
-    <text x="24" y="28" font-size="11" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#004f4c">Angebot</text>
+    <text x="24" y="28" font-size="11" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#0F172A">Angebot</text>
     <path d="M24 34h68" stroke="#ddd6c9" stroke-width="2" stroke-linecap="round" />
     <rect x="24" y="42" width="38" height="5" rx="2.5" fill="#cdc6ba" /><rect x="72" y="42" width="20" height="5" rx="2.5" fill="#cdc6ba" />
     <rect x="20" y="54" width="76" height="17" rx="4" fill="#fdeee6" />
     <text x="26" y="66" font-size="9.5" font-family="Plus Jakarta Sans Variable, sans-serif" fill="#c2410c">Sonderwunsch</text>
     <path d="M24 80h68" stroke="#ddd6c9" stroke-width="2" stroke-linecap="round" />
     <text x="94" y="97" font-size="14" text-anchor="end" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#c2410c">+ 2.400 €</text>
-    <circle cx="130" cy="26" r="14" fill="#fff" stroke="#004f4c" stroke-width="2" />
-    <text x="130" y="32" font-size="16" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#004f4c">€</text>
+    <circle cx="130" cy="26" r="14" fill="#fff" stroke="#0F172A" stroke-width="2" />
+    <text x="130" y="32" font-size="16" text-anchor="middle" font-family="Plus Jakarta Sans Variable, sans-serif" font-weight="700" fill="#0F172A">€</text>
     <path d="M112 96l10-10l8 6l18-34" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M140.2 62.9L148 58l.2 9.1" fill="none" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
   </>)}

@@ -4,29 +4,29 @@
 
 :root {
   /* Farbpalette der Startseite auf ALLEN Seiten (QA #5952, Jamil #5955 „Ja design komplett anpassen“; vorher nur
-     html[data-thema='besucherreise'] in start-farben.css): Primär #0B6D6B · dunkle Flächen #084E4C · Gold #d4af37 · Text #2C3135
-     · positive Akzente #2C9A7A. Alte CI-Werte: --ink #3a3a3a, --dark #004f4c, --accent #00a6a1, --accent-ink #006b68, --accent-mid #008f8a. */
-  --ink: #2c3135;       /* 12,6 : 1 auf #FAF8F4 */
-  --dark: #084e4c;      /* dunkle Flächen */
-  --dark-line: #1d6462;
-  --dark-soft: #a9d6d4; /* Nebentext auf dunklem Grund (6,0 : 1 auf #084e4c) */
-  --dark-lead: #d2e9e8;
-  --ink-soft: #545b61;  /* 6,4 : 1 auf Creme */
-  --paper: #faf8f4;
-  --paper-2: #efebe3;
-  --creme: #F8F6F0;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
+     html[data-thema='besucherreise'] in start-farben.css): Primär #B45309 · dunkle Flächen #0F172A · Gold #D97706 · Text #0F172A
+     · positive Akzente #D97706. Alte CI-Werte: --ink #3a3a3a, --dark #0F172A, --accent #D97706, --accent-ink #B45309, --accent-mid #B45309. */
+  --ink: #0F172A;       /* 12,6 : 1 auf #F8FAFC */
+  --dark: #0F172A;      /* dunkle Flächen */
+  --dark-line: #334155;
+  --dark-soft: #CBD5E1; /* Nebentext auf dunklem Grund (6,0 : 1 auf #0F172A) */
+  --dark-lead: #E2E8F0;
+  --ink-soft: #475569;  /* 6,4 : 1 auf Creme */
+  --paper: #F8FAFC;
+  --paper-2: #F1F5F9;
+  --creme: #F8FAFC;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
-  --accent: #2c9a7a;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
-  --accent-ink: #0b6d6b; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
-  --accent-mid: #2c9a7a;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
-  --accent-light: #5fe0da; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #084e4c) */
-  --on-accent: #051a19;    /* Schrift auf #2c9a7a (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
-  --on-dark-soft: #e6f6f5;  /* Nebentext auf Fußzeile #084e4c (8,6 : 1) */
-  --gold: #d4af37;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
-  --line: #e6e0d4;
+  --accent: #D97706;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
+  --accent-ink: #B45309; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
+  --accent-mid: #D97706;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
+  --accent-light: #FCD34D; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #0F172A) */
+  --on-accent: #0F172A;    /* Schrift auf #D97706 (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
+  --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #0F172A (8,6 : 1) */
+  --gold: #D97706;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
+  --line: #E2E8F0;
   --ok: #177049;
   --radius: 14px;
-  --shadow: 0 1px 2px rgb(0 79 76 / 6%), 0 8px 24px rgb(0 79 76 / 8%);
+  --shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 8px 24px rgb(15 23 42 / 8%);
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif; /* QA #5952 */
   --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1160px;
@@ -121,7 +121,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 }
 .btn:hover { transform: translateY(-1px); }
 .btn--primary { background: var(--accent); color: var(--on-accent); } /* 5,1 : 1 (vorher --ink 3,8 : 1) */
-.btn--primary:hover { background: #3fb38f; } /* QA #5952: helleres Grün statt altem Türkis, Schrift 6,9 : 1 */
+.btn--primary:hover { background: #F59E0B; } /* Jamil #6431: Amber 500, Schrift #0F172A */
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--dark); color: var(--paper); }
 

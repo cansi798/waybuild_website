@@ -11,13 +11,13 @@
  * Gleiche Linienstärke (2 px Kontur) und gleiche Radien-Logik für alle Geräte. Nur transform/opacity werden animiert. */
 
 :root {
-  /* Farben (CI waybuild; Drehbuch: Türkis #00a6a1/#00807b, dunkel #004f4c, Creme #f6f3ee) */
-  --bsp-tuerkis: #00a6a1;
+  /* Farben (CI waybuild; Drehbuch: Türkis #D97706/#00807b, dunkel #0F172A, Creme #f6f3ee) */
+  --bsp-tuerkis: #D97706;
   --bsp-tuerkis-dunkel: #00807b;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
-  --bsp-tinte: #006b68;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
-  --bsp-nacht: #004f4c;           /* Kontur der Geräte, dunkle Flächen */
+  --bsp-tinte: #B45309;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
+  --bsp-nacht: #0F172A;           /* Kontur der Geräte, dunkle Flächen */
   --bsp-creme: #f6f3ee;
-  --bsp-papier: #fbfaf7;          /* Hintergrund in App-Bildschirmen */
+  --bsp-papier: #F8FAFC;          /* Hintergrund in App-Bildschirmen */
   --bsp-weiss: #ffffff;
   --bsp-text: #2f3a39;
   --bsp-text-leise: #5b6766;
@@ -41,7 +41,7 @@
   --gr-kontur: var(--bsp-nacht);
   --gr-strich: 2px;
   --gr-gehaeuse: #ffffff;
-  --gr-schatten: 0 2px 4px rgb(0 79 76 / 6%), 0 28px 60px -28px rgb(0 79 76 / 38%);
+  --gr-schatten: 0 2px 4px rgb(15 23 42 / 6%), 0 28px 60px -28px rgb(15 23 42 / 38%);
 }
 
 /* ── Szenen-Wurzel (SzeneRahmen.astro): füllt die Bildfläche, Gerät(e) mittig ── */
@@ -55,7 +55,7 @@
  * das Handy fiel auf Breite 0 zusammen (nur ein senkrechter Strich). Mit fester Breite ist die Inhaltsbreite bekannt. */
 .gr-gehaeuse { position: absolute; inset: 0; background: var(--gr-gehaeuse); border: var(--gr-strich) solid var(--gr-kontur); box-shadow: var(--gr-schatten); }
 .gr-schirm { position: absolute; overflow: hidden; container-type: inline-size; background: var(--bsp-papier);
-  box-shadow: inset 0 0 0 1px rgb(0 79 76 / 10%);
+  box-shadow: inset 0 0 0 1px rgb(15 23 42 / 10%);
   display: flex; flex-direction: column; color: var(--bsp-text); font-family: var(--font-body); line-height: 1.35; text-align: left;
   /* Größen-Tokens (in Mockup-Pixeln, siehe oben) */
   --bsp-schrift-xs: calc(10 * var(--px));
@@ -117,8 +117,8 @@
 .bm-titel { margin: 0; font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--bsp-text); }
 .bm-klein { margin: 0; font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
 .bm-karte { position: relative; padding: var(--bsp-a3); border-radius: var(--bsp-r-m); background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau);
-  box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgb(0 79 76 / 5%); }
-.bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(0 166 161 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(0 79 76 / 35%); }
+  box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgb(15 23 42 / 5%); }
+.bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(217 119 6 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(15 23 42 / 35%); }
 .bm-knopf { display: inline-flex; align-items: center; justify-content: center; gap: var(--bsp-a1); min-height: calc(36 * var(--px)); padding: 0 var(--bsp-a4);
   border-radius: 99px; background: var(--bsp-tinte); color: var(--bsp-weiss); font-size: var(--bsp-schrift-m); font-weight: 650; white-space: nowrap; }
 .bm-knopf--hell { background: var(--bsp-flaeche); color: var(--bsp-tinte); }

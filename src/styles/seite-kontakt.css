@@ -35,7 +35,7 @@
 .sk textarea { line-height: 1.6; resize: vertical; }
 .sk input:hover, .sk select:hover, .sk textarea:hover { border-color: #c9c0b0; }
 .sk input:focus, .sk select:focus, .sk textarea:focus { outline: none; border-color: var(--sn-tinte); background: var(--white);
-  box-shadow: 0 0 0 3px rgb(11 109 107 / 18%); }
+  box-shadow: 0 0 0 3px rgb(180 83 9 / 18%); }
 .sk input:focus-visible, .sk select:focus-visible, .sk textarea:focus-visible { outline: 2px solid var(--sn-tinte); outline-offset: 1px; }
 /* Handy: Auswahltexte („Worum geht es?“) passen bei 390 px ganz ins Feld (Jamil #5215) */
 @media (max-width: 480px) {
@@ -129,5 +129,5 @@
 .sk input[aria-invalid='true'] { border-color: #b42318; }
 
 /* Kostenlose Vorschau über dem Formular (Jamil #6061) */
-.sk-vorschau { margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: var(--sn-hauch, #edf4f1); border: 1px solid var(--sn-linie-t, #cfe3dc); border-left: 4px solid #d4af37; line-height: 1.6; color: var(--ink-soft, #545b61); }
-.sk-vorschau strong { display: block; margin-bottom: 2px; color: var(--sn-tinte, #0b6d6b); }
+.sk-vorschau { margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: var(--sn-hauch, #FEF3C7); border: 1px solid var(--sn-linie-t, #FDE68A); border-left: 4px solid #D97706; line-height: 1.6; color: var(--ink-soft, #475569); }
+.sk-vorschau strong { display: block; margin-bottom: 2px; color: var(--sn-tinte, #B45309); }
