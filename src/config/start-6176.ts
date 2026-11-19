@@ -34,6 +34,7 @@ export const ALT_ZEIGEN = {
   // #6390: „erstmal weiter nach unten“ → steht jetzt hinter Abschnitt 5 „Keine Angst vor dem Umstieg“ (#6391, J_UMSTIEG)
   // ab Jamil #6402 (19.11.2026): Abschluss = Abschnitt 7 „Bereit zu sehen …“ mit zwei Mini-Formularen (J_START, J6Start)
   abschlussCtaAlt: false,
+  heroZeile: false, // „Keine Tickets. Kein CMS. Keine Technikkenntnisse.“ im Hero – seit Jamil #6417 aus; true = wieder sichtbar
   // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
   wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
   prozessAbschnitt: false, // „Bevor wir Software entwickeln, verstehen wir Ihren Arbeitsalltag.“ (J6Prozess)
@@ -191,7 +192,7 @@ export const J_ERST = {
       schluss: 'Komplett kostenlos und unverbindlich – Sie sehen sofort, wie Ihr Betrieb digital aussehen und laufen kann.',
       zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'] },
     { nr: '03', titel: 'Wenn es passt: Feinschliff in Ihrem Tempo',
-      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zum Go-live oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Chat.',
+      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zum Go-live oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Textnachricht.',
       sprache: '0:12' },
   ],
 } as const;
@@ -240,7 +241,7 @@ export const J_PREISE = {
   badge: { plus: 'Am beliebtesten', software: '+ Kombinierbar oder einzeln' },
   alles: 'Alles aus dem Profi-Website-Paket',
   monat: '/ Monat',
-  kombinierbar: '(kombinierbar)',
+  kombinierbar: '', // seit Jamil #6415 weg: „kombinierbar“ steht schon im Badge (vorher '(kombinierbar)')
   knopf: { basis: 'Kostenlose Vorschau starten', plus: 'Kostenlose Vorschau starten', software: 'Software-Idee besprechen' },
   hinweis: 'Alle Preise zzgl. MwSt. Keine versteckten Einrichtungsgebühren für den Start. Die erste Vorschau ist zu 100 % kostenlos und unverbindlich.',
 } as const;

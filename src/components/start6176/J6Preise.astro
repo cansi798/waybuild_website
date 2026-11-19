@@ -27,6 +27,7 @@ const Haken = '<path d="M20 6 9 17l-5-5" />';
     <ul class="jpr-karten">
       {karten.map((k) => (
         <li class:list={['jpr-karte', { 'jpr-karte--tipp': k.tipp, 'jpr-karte--plus': k.plus }]} aria-labelledby={`jpr-${k.id}`}>
+          {/* Kicker + Badge in EINER Zeile (Jamil #6415), damit Name und Preis in allen Karten auf gleicher Höhe stehen */}
           <div class="jpr-karte__kopf">
             <span class="jpr-karte__rolle">{k.rolle}</span>
             {k.badge && <span class:list={['jpr-badge', { 'jpr-badge--plus': k.plus }]}>{k.badge}</span>}
