@@ -18,7 +18,8 @@ import { href } from '../../lib/paths';
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
 
-<section class={`section section--dark jh${ALT_ZEIGEN.heroBeispieleAlt ? '' : ' jh--fluss'}`} aria-labelledby="jh-h1">
+{/* Seit Jamil #6478: ohne Animation einspaltig und mittig (jh--mitte), Inhalte blenden dezent ein (hero-6369.css) */}
+<section class={`section section--dark jh${ALT_ZEIGEN.heroBeispieleAlt ? '' : ' jh--fluss'}${!ALT_ZEIGEN.heroAnimation && !ALT_ZEIGEN.heroBeispieleAlt ? ' jh--mitte' : ''}`} aria-labelledby="jh-h1">
   <div class="wrap jh__raster">
     <div class="jh__text">
       <h1 id="jh-h1" class="jh__titel">{T.titel}</h1>
@@ -32,6 +33,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
       <p class="jh__preise">{T.preiszeile.map((t, i) => <>{i > 0 && <span class="jh__preise-punkt" aria-hidden="true"> · </span>}<span>{t}</span></>)}</p>
     </div>
 
+    {(ALT_ZEIGEN.heroAnimation || ALT_ZEIGEN.heroBeispieleAlt) && (
     <div class="jh__geraet" data-jh-geraet>
       {!ALT_ZEIGEN.heroBeispieleAlt && <J6Fluss />}
       {ALT_ZEIGEN.heroBeispieleAlt && (
@@ -82,5 +84,6 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
       </ol>
       )}
     </div>
+    )}
   </div>
 </section>
