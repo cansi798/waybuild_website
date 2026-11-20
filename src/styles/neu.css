@@ -269,3 +269,17 @@ html.js .neu .reveal:focus-within { opacity: 1; transform: none; transition-dura
   .neu .neu-link--ab::after,
   .neu .neu-link--ab:hover::after { transform: rotate(90deg); }
 }
+
+/* Interne Vorschau /neu/ (noindex): nur Farben an die Startseite angeglichen (Jamil #6521, 20.11.2026) – keine dunklen Flächen mehr.
+   Hero und Schluss in Goldstich #FEFCF7 mit zartem Gold-Schimmer, Schrift Anthrazit, Akzente Gold. */
+.neu .neu-abschnitt--dunkel {
+  --neu-text: #111827;
+  --neu-text-leise: #374151;
+  --neu-akzent-text: #7A5E0E;
+  --neu-licht: #D4AF37;
+  --neu-rand: #ECE7DA;
+  --neu-fokus: #8C6D12;
+  background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FEFCF7;
+}
+.neu .nh-bild::before { background: radial-gradient(rgb(17 24 39 / 8%) 1px, transparent 1.6px) 0 0 / 22px 22px; }
+.neu .nh-knopf3d::before { background: rgb(255 255 255 / 80%); }

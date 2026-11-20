@@ -11,9 +11,9 @@
  * Gleiche Linienstärke (2 px Kontur) und gleiche Radien-Logik für alle Geräte. Nur transform/opacity werden animiert. */
 
 :root {
-  /* Farben (CI waybuild; Drehbuch: Türkis #D4AF37/#00807b, dunkel #111827, Creme #f6f3ee) */
+  /* Farben (CI waybuild; Drehbuch: Türkis #D4AF37/#8C6D12, dunkel #111827, Creme #f6f3ee) */
   --bsp-tuerkis: #D4AF37;
-  --bsp-tuerkis-dunkel: #00807b;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
+  --bsp-tuerkis-dunkel: #8C6D12;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
   --bsp-tinte: #8C6D12;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
   --bsp-nacht: #111827;           /* Kontur der Geräte, dunkle Flächen */
   --bsp-creme: #f6f3ee;

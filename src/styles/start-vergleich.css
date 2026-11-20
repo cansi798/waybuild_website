@@ -16,7 +16,7 @@
 .svg-tabelle thead .svg-wir { color: var(--sn-tinte); font-size: 1.05rem; }
 .svg-zeichen { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; vertical-align: middle; }
 .svg-zeichen svg { stroke-width: 2.4; }
-.svg-ja .svg-zeichen { background: #e3f4f2; color: #00807b; }
+.svg-ja .svg-zeichen { background: #FBF3D5; color: #8C6D12; }
 .svg-teils .svg-zeichen { background: #fdf3dc; color: #a16207; }
 .svg-nein .svg-zeichen { background: #fdecea; color: #c2410c; }
 .svg-tabelle .svg-wir .svg-zeichen { background: var(--white); }

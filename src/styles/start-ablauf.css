@@ -125,3 +125,20 @@
   .sab--kurz .sab-schritt--5 { grid-column: 1 / -1; }
 }
 .sab-lang { margin-top: 20px !important; }
+
+/* Seit 20.11.2026 hell (Jamil #6521, keine dunklen Flächen mehr): Schritt 5 als Goldstich-Karte mit Goldrand oben, Schrift Anthrazit,
+   Helix Gold + Anthrazit-Hauch. Vorher dunkle Fläche #111827. */
+.sab-schritt--dna .sab-nr { background: #D4AF37; border-color: #D4AF37; color: #111827; }
+.sab-schritt--dna > .sab-inhalt, .sab-schritt--dna > .sab-dna { background: #FEFCF7; color: #111827; }
+.sab-schritt--dna > .sab-inhalt { border: 1px solid #ECE7DA; border-bottom: 0; border-top: 3px solid #D4AF37; }
+.sab-schritt--dna > .sab-dna { border: 1px solid #ECE7DA; border-top: 0; }
+.sab-schritt--dna .sab-titel, .sab-schritt--dna .sab-zeit { color: #111827; }
+.sab-schritt--dna .sab-text { color: #374151; }
+.sab-dna-marke { color: #7A5E0E; }
+.sab-helix__strang--b { stroke: rgb(17 24 39 / 35%); }
+.sab-helix__sprosse { stroke: rgb(17 24 39 / 14%); }
+.sab-chips--dna .sab-chip { background: #FFFFFF; color: #111827; border: 1px solid #EADBA6; }
+@media (min-width: 640px) {
+  .sab-schritt--dna { background: #FEFCF7; border-color: #ECE7DA; border-top-color: #D4AF37; }
+  .sab-schritt--dna > .sab-inhalt, .sab-schritt--dna > .sab-dna { border: 0; }
+}

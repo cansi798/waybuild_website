@@ -23,7 +23,7 @@
   border: 1px solid var(--bsp-rand); box-shadow: 0 1px 2px rgb(17 24 39 / 4%), 0 18px 40px -30px rgb(17 24 39 / 35%); }
 /* Bildfläche = Größen-Container für die Geräte (container-type: size): feste Höhe, Gerät passt sich an */
 .bsp-szene__bild { position: relative; container-type: size; height: clamp(380px, 128vw, 560px); padding: clamp(16px, 4vw, 28px);
-  padding-top: 52px; border-radius: 18px; background: radial-gradient(120% 80% at 50% 42%, #e4f3f1 0%, #f2f8f7 46%, var(--bsp-creme) 100%); }
+  padding-top: 52px; border-radius: 18px; background: radial-gradient(120% 80% at 50% 42%, #FBF3D5 0%, #FEFCF7 46%, var(--bsp-creme) 100%); }
 .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: clamp(230px, 72vw, 460px); }
 .bsp-szene__etikett { position: absolute; z-index: 5; left: 12px; top: 12px; }
 .bsp-szene__text { min-width: 0; padding: 0 4px 4px; }
@@ -38,7 +38,7 @@
   .bsp-szene:has(.sz[data-format="quer"]) .bsp-szene__bild { height: 420px; }
 }
 /* Schluss: „So kann es bei Ihnen laufen. Wir bauen es für Sie.“ + „Jetzt starten“ */
-.bsp-schluss { padding: clamp(32px, 7vw, 72px) clamp(18px, 4vw, 48px); border-radius: 24px; background: #eaf5f4; border: 1px solid var(--bsp-rand); text-align: center; }
+.bsp-schluss { padding: clamp(32px, 7vw, 72px) clamp(18px, 4vw, 48px); border-radius: 24px; background: #FEFCF7; border: 1px solid var(--bsp-rand); text-align: center; }
 .bsp-schluss__innen { max-width: 40rem; margin-inline: auto; }
 .bsp .bsp-schluss__titel { margin: 0 0 clamp(18px, 3vh, 28px); font-size: clamp(1.8rem, 1.2rem + 2.4vw, 3rem); line-height: 1.15; letter-spacing: -0.025em; color: var(--ink); }
 .bsp-schluss__unter { display: block; margin-top: 0.2em; color: var(--accent-ink); }
@@ -48,9 +48,9 @@
 /* Baustein-Einblendung (weitere Möglichkeiten, Jamil #5709–#5715) */
 .bsp-szene__kopf { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 6px; }
 .bsp-szene__kopf .bsp-szene__zaehler { margin: 0; }
-.bsp-baustein { display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 3px 12px 3px 4px; border-radius: 99px; background: #e4f3f1; color: var(--bsp-tinte, #8C6D12);
+.bsp-baustein { display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 3px 12px 3px 4px; border-radius: 99px; background: #FBF3D5; color: var(--bsp-tinte, #8C6D12);
   font-family: var(--font-body); font-size: 0.8rem; font-weight: 650; line-height: 1.4; }
-.bsp-baustein__plus { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #00807b; color: #fff; font-weight: 700; line-height: 1; }
+.bsp-baustein__plus { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #D4AF37; color: #111827; font-weight: 700; line-height: 1; }
 
 /* ── 2. Film ── */
 .bsp--film {
@@ -97,13 +97,13 @@
 .bsp-chip span { display: inline-flex; align-items: center; min-height: 36px; padding: 4px 14px; border-radius: 99px; border: 1.5px solid var(--bsp-rand); background: var(--white);
   color: var(--ink); font-size: 0.92rem; font-weight: 600; line-height: 1.2; transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
 .bsp-chip input:hover + span { border-color: #D4AF37; }
-.bsp-chip input:checked + span { background: #00807b; border-color: #00807b; color: #fff; }
+.bsp-chip input:checked + span { background: #D4AF37; border-color: #D4AF37; color: #111827; }
 .bsp-chip input:focus-visible + span { outline: 3px solid #D4AF37; outline-offset: 2px; }
 .bsp-name { display: grid; gap: 4px; width: min(100%, 22rem); text-align: left; }
 .bsp-name__titel { font-size: 0.85rem; font-weight: 650; color: var(--ink-soft); }
 .bsp-name__eingabe { width: 100%; min-height: 44px; padding: 8px 14px; border-radius: 12px; border: 1.5px solid var(--bsp-rand); background: var(--white); color: var(--ink);
   font: inherit; font-size: 1rem; } /* 16 px: Safari zoomt beim Tippen nicht */
-.bsp-name__eingabe:focus-visible { outline: 3px solid #D4AF37; outline-offset: 1px; border-color: #00807b; }
+.bsp-name__eingabe:focus-visible { outline: 3px solid #D4AF37; outline-offset: 1px; border-color: #8C6D12; }
 .bsp-start__knopf { display: grid; justify-items: center; gap: 6px; margin: 0; }
 .bsp-start__los { position: relative; overflow: hidden; }
 .bsp-start__uhr { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgb(255 255 255 / 70%); transform-origin: left; transform: scaleX(0); }
@@ -148,12 +148,12 @@
 /* Steuerleiste */
 .bsp--film .bsp-steuerung { display: flex; flex: none; align-items: center; gap: 6px; width: min(100% - 24px, var(--wrap)); margin: 0 auto; padding: 4px 0 8px; }
 .bsp-taste { flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1.5px solid var(--bsp-rand); background: var(--white);
-  color: #00807b; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+  color: #8C6D12; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
 .bsp-taste:hover { border-color: #D4AF37; background: #eef7f6; }
 .bsp-taste:focus-visible, .bsp-segment:focus-visible { outline: 3px solid #D4AF37; outline-offset: 2px; }
 .bsp-taste svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.bsp-taste--haupt { background: #00807b; border-color: #00807b; color: #fff; }
-.bsp-taste--haupt:hover { background: #8C6D12; border-color: #8C6D12; }
+.bsp-taste--haupt { background: #D4AF37; border-color: #D4AF37; color: #111827; }
+.bsp-taste--haupt:hover { background: #C29F2F; border-color: #C29F2F; }
 .bsp-taste--haupt .bsp-taste__spielen { fill: currentColor; stroke-width: 1.5; }
 .bsp-taste__spielen, .bsp-taste--haupt.ist-pause .bsp-taste__pause { display: none; }
 .bsp-taste--haupt.ist-pause .bsp-taste__spielen { display: block; }
@@ -161,7 +161,7 @@
 .bsp-leiste { flex: 1; min-width: 0; display: flex; gap: 3px; margin: 0 4px; }
 .bsp-segment { flex: 1; min-width: 0; height: 44px; padding: 0; border: 0; border-radius: 4px; background: none; cursor: pointer; display: grid; align-items: center; }
 .bsp-segment i { position: relative; display: block; height: 4px; border-radius: 2px; background: var(--bsp-rand); overflow: hidden; transition: height 0.15s ease; }
-.bsp-segment i::after { content: ''; position: absolute; inset: 0; background: #00807b; transform-origin: left; transform: scaleX(0); }
+.bsp-segment i::after { content: ''; position: absolute; inset: 0; background: #8C6D12; transform-origin: left; transform: scaleX(0); }
 .bsp-segment:hover i, .bsp-segment[aria-current] i { height: 7px; }
 .bsp-segment.ist-voll i::after { transform: none; }
 .bsp-segment.ist-jetzt i::after { animation: bsp-fuellen var(--bsp-segment-dauer, 3s) linear both; }

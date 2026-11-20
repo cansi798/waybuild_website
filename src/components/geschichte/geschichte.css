@@ -45,7 +45,7 @@ html.js .gs-weglabel { display: none; }
   padding: 18px 18px; border: 2px solid var(--line); border-radius: 20px; background: var(--white); color: var(--ink); text-decoration: none; cursor: pointer;
   transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; }
 @media (min-width: 900px) { .gs-weg { grid-template-columns: 1fr; align-content: start; gap: 12px; padding: 26px 24px 24px; } }
-.gs-weg:hover { border-color: #9fd3d0; transform: translateY(-2px); }
+.gs-weg:hover { border-color: #EADBA6; transform: translateY(-2px); }
 .gs-weg__symbol { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: #e9f6f5; color: var(--accent-ink); }
 .gs-weg__text { display: grid; gap: 4px; min-width: 0; }
 .gs-weg__text strong { font-family: var(--font-head); font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem); line-height: 1.3; overflow-wrap: break-word; hyphens: auto; }
@@ -64,7 +64,7 @@ a.gs-weg { grid-template-columns: auto minmax(0, 1fr); }
 .gs-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .gs-chip { position: relative; cursor: pointer; }
 .gs-chip span { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 99px; background: var(--white); font-size: 0.93rem; line-height: 1.25; transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
-.gs-chip:hover span { border-color: #9fd3d0; }
+.gs-chip:hover span { border-color: #EADBA6; }
 .gs-chip input:checked + span { background: var(--dark); border-color: var(--dark); color: var(--white); }
 .gs-chip input:focus-visible + span, html.gs-tastatur .gs-chip input:focus + span { outline: 3px solid var(--accent-ink); outline-offset: 2px; }
 .gs-form__rechts { display: grid; gap: 14px; }
@@ -111,7 +111,7 @@ html.js .gs-film .bsp-wahl__feld, html.js .gs-film .bsp-name, html.js .gs-film .
 .gs-film .wrap.gs-weglabel { display: block; text-align: center; }
 html.js .gs-film .wrap.gs-weglabel { display: none; }
 .gs-film__folgt { display: grid; place-items: center; align-content: center; gap: 6px; min-height: 320px; padding: 32px 20px; text-align: center;
-  border: 2px dashed #9fd3d0; border-radius: 24px; background: var(--white); color: var(--ink-soft); }
+  border: 2px dashed #EADBA6; border-radius: 24px; background: var(--white); color: var(--ink-soft); }
 .gs-film__folgt p { margin: 0; }
 .gs-film__folgt-titel { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--accent-ink); }
 
@@ -137,7 +137,7 @@ html.js .gs-film .wrap.gs-weglabel { display: none; }
 /* ── Angebot ── */
 .gs-angebot .lead { margin-inline: auto; }
 .gs-empfehlung { display: grid; gap: 6px; max-width: 760px; margin: 0 auto clamp(30px, 4vw, 44px); padding: clamp(18px, 3vw, 26px) clamp(18px, 3vw, 30px);
-  border-radius: 20px; background: #e9f6f5; border-left: 5px solid var(--accent-ink); }
+  border-radius: 20px; background: #FEFCF7; border-left: 5px solid #D4AF37; }
 .gs-empfehlung p { margin: 0; }
 .gs-empfehlung__kopf { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-ink); }
 .gs-empfehlung__satz { font-family: var(--font-head); font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); font-weight: 700; line-height: 1.35; color: var(--ink); }
@@ -197,3 +197,25 @@ html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-l
 }
 /* Tippfläche der Textlinks mind. 44 px hoch, ohne Layoutänderung (Jamil #6038, Audit M4) */
 .gs-mehr a, a.gs-empfehlung__link, .gs-empfehlung__link a { display: inline-block; padding-block: 11px; margin-block: -11px; }
+
+/* Interne Seite /geschichte/ (noindex, nicht verlinkt): nur Farben an die Startseite angeglichen (Jamil #6521, 20.11.2026).
+   Hero und Handlung hell (Goldstich, Anthrazit, Gold-Akzent), keine Türkis-Reste. */
+.gs-hero { color: #111827; background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FEFCF7; }
+.gs-hero__flaeche { display: none; }
+.gs-hero__kennzeile { color: #7A5E0E; }
+.gs-hero__titel { color: #111827; }
+.gs-hero__titel span + span { color: #7A5E0E; }
+.gs-hero__unter { color: #374151; }
+.gs-weg__symbol, .gs-person__foto { background: #FBF3D5; }
+.gs-weg:has(input:checked), html.js[data-weg="betrieb"] .gs-angebot .pm__kombi-liste li { background: #FEFCF7; }
+.gs-wegwahl__knopf:hover { background: #FBF3D5; }
+.gs-chip input:checked + span, .gs-wegwahl__knopf[aria-pressed="true"] { background: #D4AF37; border-color: #D4AF37; color: #111827; }
+html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] { background: #FBF3D5; border-color: #D4AF37; color: #111827; }
+html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: #374151; }
+.gs-handlung.section--dark { background: #FEFCF7; color: #111827; border-top: 2px solid #D4AF37; }
+.gs-handlung.section--dark h2 { color: #111827; }
+.gs-handlung.section--dark .eyebrow { color: #7A5E0E; }
+.gs-handlung.section--dark .lead, .gs-handlung .gs-handlung__text { color: #4B5563; }
+.gs-handlung .gs-handlung__wa { color: #111827; }
+.gs-handlung .gs-handlung__wa:hover { background: #FBF3D5; }
+.gs-handlung :focus-visible { outline-color: #8C6D12; }

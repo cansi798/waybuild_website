@@ -60,10 +60,10 @@ const erste = [...kombis].sort((a, b) => a.preis - b.preis)[0];
 
 
 <style>
-  /* Ruhig, aber eigen: weiße Karte, dünner Rand, oben ein schmaler türkiser Streifen. Band in zartem Türkis #eaf5f4.
-     Kontraste: --ink 10,4 : 1, --ink-soft 6,9 : 1, --accent-ink #8C6D12 5,9 : 1 auf #eaf5f4 (auf Weiß 6,4 : 1);
-     Etikett Weiß auf --accent-ink 6,4 : 1; Knopf Weiß auf #00807b 4,8 : 1. */
-  .pm { margin-top: clamp(28px, 4vw, 40px); display: grid; gap: clamp(18px, 3vw, 26px); padding: clamp(20px, 3.4vw, 36px); background: var(--white); border: 1px solid #cfe6e3; border-top: 4px solid #00807b; border-radius: 22px; scroll-margin-top: 120px; }
+  /* Ruhig, aber eigen: weiße Karte, dünner Rand, oben ein schmaler türkiser Streifen. Band in zartem Türkis #FEFCF7.
+     Kontraste: --ink 10,4 : 1, --ink-soft 6,9 : 1, --accent-ink #8C6D12 5,9 : 1 auf #FEFCF7 (auf Weiß 6,4 : 1);
+     Etikett Weiß auf --accent-ink 6,4 : 1; Knopf Weiß auf #8C6D12 4,8 : 1. */
+  .pm { margin-top: clamp(28px, 4vw, 40px); display: grid; gap: clamp(18px, 3vw, 26px); padding: clamp(20px, 3.4vw, 36px); background: var(--white); border: 1px solid #ECE7DA; border-top: 4px solid #D4AF37; border-radius: 22px; scroll-margin-top: 120px; }
   .pm p, .pm h3, .pm h4 { margin: 0; }
 
   .pm__oben { display: grid; gap: 18px; }
@@ -81,15 +81,15 @@ const erste = [...kombis].sort((a, b) => a.preis - b.preis)[0];
   .pm__betrag span { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
   .pm__brutto { font-size: 0.85rem; color: var(--ink-soft); }
   .pm__brutto--weitere { margin-top: -4px; font-weight: 600; color: var(--ink); }
-  .pm__btn { justify-self: start; min-height: 44px; margin-top: 10px; background: #00807b; color: var(--white); border-color: transparent; }
-  .pm__btn:hover { background: var(--accent-ink); color: var(--white); }
+  .pm__btn { justify-self: start; min-height: 44px; margin-top: 10px; background: #D4AF37; color: #111827; border-color: transparent; }
+  .pm__btn:hover { background: #C29F2F; color: #111827; }
   .pm__laufzeit { font-size: 0.82rem; line-height: 1.5; color: var(--ink-soft); }
 
   /* Kombipreise: Paketpreis gegenüber der Summe der Einzelpreise (kein Streichpreis) */
   .pm__kombi { display: grid; gap: 10px; }
   .pm__kombi-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   @media (min-width: 760px) { .pm__kombi-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
-  .pm__kombi-liste li { display: grid; gap: 2px; min-width: 0; padding: 12px 16px; border: 1.5px solid #cfe6e3; border-radius: 14px; line-height: 1.5; }
+  .pm__kombi-liste li { display: grid; gap: 2px; min-width: 0; padding: 12px 16px; border: 1.5px solid #ECE7DA; border-radius: 14px; line-height: 1.5; }
   .pm__kombi-name { font-family: var(--font-head); font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
   .pm__kombi-preis { color: var(--ink); }
   .pm__kombi-preis b { font-family: var(--font-head); font-size: 1.3rem; }

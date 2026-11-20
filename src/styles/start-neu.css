@@ -3,18 +3,18 @@
  * Der Hero (.v-hero, variante-start.css) und der Stapel-Effekt (stapel.ts) sind unverändert.
  *
  * Gestaltung: unsere Marke, ruhig und hochwertig.
- * - Farben nur aus der CI: Türkis #D4AF37 (Flächen, Zeichen), Tinte #8C6D12 (Schrift, Knöpfe), Tief #111827, Hauch #eaf5f4,
+ * - Farben nur aus der CI: Türkis #D4AF37 (Flächen, Zeichen), Tinte #8C6D12 (Schrift, Knöpfe), Tief #111827, Hauch #FEFCF7,
  *   Papier #f7f5f0, Sand #F1F5F9, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
  * - Schrift: Plus Jakarta Sans für Überschriften und Text (QA #5952, vorher Montserrat/Jost), Zeilenabstand 1,7.
  * - Überschriften links, Unterzeile/Lead immer direkt darunter (Jamil #6012, 15.11.2026: „Subheadline immer unter Headline, auf der
  *   gesamten Website“; der frühere Modifier .sn-kopf--zweispaltig ist entfernt); Karten nur, wo sie etwas zusammenfassen.
  * - Eine Sache darf auffallen: der stehende Bildrahmen der Kundenreise (Teil 3). Alles andere bleibt still.
  * - Hintergründe im Wechsel: Produkte Papier → Problem Weiß → Lösung Papier → Beweis Weiß → Angebot Sand → Handlung Hauch.
- * Kontraste (WCAG AA): Schrift Türkis nur #8C6D12 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
+ * Kontraste (WCAG AA): Schrift Türkis nur #8C6D12 (6,4 : 1 auf Weiß, 5,7 : 1 auf #FEFCF7, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
  * Knöpfe Weiß auf #8C6D12 (6,4 : 1). Grid-Spalten immer minmax(0, 1fr) bzw. min-width: 0 (WebKit, Querscrollen). */
 
 .sn { --sn-tinte: #7A5E0E; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #111827; --sn-tuerkis: #D4AF37; --sn-mittel: #8C6D12; --sn-hauch: #FBF3D5; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */
-  --sn-sand: #F1F5F9; --sn-linie: #ddd6c9; --sn-linie-t: #cfe6e3;
+  --sn-sand: #F1F5F9; --sn-linie: #ddd6c9; --sn-linie-t: #ECE7DA;
   --sn-schatten: 0 1px 2px rgb(17 24 39 / 5%), 0 28px 56px -36px rgb(17 24 39 / 38%);
   --sn-kurve: cubic-bezier(0.22, 1, 0.36, 1);
   padding-block: clamp(72px, 11vw, 144px); }
@@ -295,7 +295,7 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
 
 .sn-app { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; max-width: 1040px; margin: 24px auto 0; padding: clamp(24px, 3vw, 36px);
   border-radius: 32px; background: var(--sn-tief); color: var(--white); scroll-margin-top: 100px; }
-.sn-app .sn-kenn { color: #9fe3df; margin-bottom: 8px !important; }
+.sn-app .sn-kenn { color: #E6C766; margin-bottom: 8px !important; }
 .sn-app .sn-h3 { color: var(--white); }
 .sn-app__text { display: grid; gap: 8px; min-width: 0; }
 .sn-app__text > p:not(.sn-kenn) { line-height: 1.7; color: #E2E8F0; max-width: 52ch; }
@@ -307,10 +307,10 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
 .sn-kombi__name { font-family: var(--font-head); font-weight: 700; color: var(--white); }
 .sn-kombi__preis { color: #E2E8F0; }
 .sn-kombi__preis b { font-family: var(--font-head); font-size: 1.6rem; letter-spacing: -0.02em; color: var(--white); font-variant-numeric: tabular-nums; }
-.sn-kombi__statt { font-size: 0.86rem; line-height: 1.5; color: #c4e2e0; }
+.sn-kombi__statt { font-size: 0.86rem; line-height: 1.5; color: #E2E8F0; }
 .sn-kombi__btn { justify-self: start; min-height: 44px; margin-top: 10px; padding: 0.55em 1.3em; border: 0; }
 .sn-app .sn-kombi__btn:focus-visible { outline-color: var(--white); }
-.sn-app__hinweis { font-size: 0.86rem; color: #c4e2e0; }
+.sn-app__hinweis { font-size: 0.86rem; color: #E2E8F0; }
 
 .sn-extras { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; max-width: 1040px; margin: 24px auto 0; padding: 20px 24px; border-radius: 24px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .sn-extras__text { flex: 1 1 420px; min-width: 0; display: grid; gap: 4px; }

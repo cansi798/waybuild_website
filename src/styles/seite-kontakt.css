@@ -81,9 +81,9 @@
 .sk .check-mit .btn { justify-self: start; }
 
 /* Absenden: gleicher Knopf wie auf der Startseite */
-.sk .sk-form button[type="submit"] { justify-self: stretch; min-height: 56px; background: var(--sn-tinte); color: var(--white); border-color: transparent;
-  box-shadow: 0 14px 30px -18px rgb(0 47 45 / 60%); transition: transform 0.4s var(--sn-kurve), background-color 0.3s ease; }
-.sk .sk-form button[type="submit"]:hover { background: var(--sn-tief); transform: translateY(-2px); }
+.sk .sk-form button[type="submit"] { justify-self: stretch; min-height: 56px; background: #D4AF37; color: #111827; border-color: transparent; /* Gold mit dunkler Schrift wie Startseite (Jamil #6521) */
+  box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); transition: transform 0.4s var(--sn-kurve), background-color 0.3s ease; }
+.sk .sk-form button[type="submit"]:hover { background: #C29F2F; transform: translateY(-2px); }
 .sk .sk-form button[type="submit"]:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 3px; }
 .sk .sk-form button[type="submit"]:disabled { opacity: 0.7; transform: none; cursor: progress; }
 @media (min-width: 640px) { .sk .sk-form button[type="submit"] { justify-self: start; } }
@@ -100,7 +100,7 @@
 /* ── Kontaktwege (ruhige Karte) ── */
 .sk-seite { display: grid; gap: 24px; }
 @media (min-width: 960px) { .sk-seite { position: sticky; top: 112px; } }
-.sk .sk-karte { display: grid; gap: 14px; padding: clamp(22px, 3vw, 32px); border: 0; border-radius: 24px; background: var(--sn-hauch); }
+.sk .sk-karte { display: grid; gap: 14px; padding: clamp(22px, 3vw, 32px); border: 1px solid #ECE7DA; border-radius: 24px; background: #FEFCF7; box-shadow: 0 18px 40px -32px rgb(17 24 39 / 30%); } /* hell mit feinem Rand (Jamil #6521) */
 .sk-karte__text { color: var(--ink-soft); line-height: 1.6; }
 .sk-wege { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 8px; }
 .sk-weg { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 16px; border-radius: 16px; background: var(--white);

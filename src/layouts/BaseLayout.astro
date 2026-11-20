@@ -1,5 +1,6 @@
 ---
 import { OG_BILD, OG_BILD_ALT, HERO_STIL } from '../config/site'; // Vorschaubild (Jamil #6437)
+import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url'; // Schrift-Preload auch auf Unterseiten gegen CLS (Jamil #6521)
 import '../styles/global.css';
 import '../styles/start-farben.css'; // QA #5952: Farben + Schrift der Startseite auf allen Seiten (Jamil #5955)
 import Header from '../components/Header.astro';
@@ -141,6 +142,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
 
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
     {/* Schrift früh laden, damit der Hero beim Schriftwechsel nicht springt (CLS, 19.11.2026); Seiten setzen das über den Slot „head“ */}
+    {thema !== 'besucherreise' && <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />}
     <slot name="head" />
   </head>
   <body>

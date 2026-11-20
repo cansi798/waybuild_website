@@ -1,5 +1,5 @@
 ---
-// Seitenkopf der Unterseiten. Seit 14.11.2026 im Stil des Startseiten-Heros (Jamil Talk qh87y3sj #5892: „Unterseiten im selben Stil
+// Seitenkopf der Unterseiten. Seit 20.11.2026 hell wie der Startseiten-Hero (Jamil #6521). Vorher seit 14.11.2026 im Stil des Startseiten-Heros (Jamil Talk qh87y3sj #5892: „Unterseiten im selben Stil
 // wie die Hauptseite“): türkiser Verlauf mit weichen Farbflächen, weiße Schrift, links ausgerichtet. Optional ein Stockfoto (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts;
 // Handy Foto unter dem Text. Ohne `foto` bleibt der Kopf wie bisher.
 import Foto from './Foto.astro';
@@ -28,28 +28,37 @@ const { eyebrow, title, lead, foto } = Astro.props;
 </section>
 
 <style>
+  /* Seit 20.11.2026 hell wie der Startseiten-Hero (Jamil Talk qh87y3sj #6521: „Passe alle Unterseiten an Design und Stil der Hauptseite an“,
+     Sicherung Tag vor-unterseiten-20261120): Goldstich #FEFCF7 mit zartem Gold-Schimmer oben rechts, Schrift Anthrazit, Eyebrow in Text-Gold,
+     feine Goldlinie unter der Eyebrow. Vorher dunkler Verlauf #8C6D12 → #111827 mit treibenden Farbflächen (Markup .ph__flaechen bleibt, ausgeblendet).
+     Einblenden wie im Hero: Überschrift sofort sichtbar (nur 8 px Gleiten), Text und Knöpfe weich nach; reduced-motion = keine Bewegung. */
   .ph {
-    position: relative; overflow: hidden; overflow: clip; contain: paint; isolation: isolate; color: #fff; /* QA #5952: clip + contain, WebKit 320 px zählte die treibenden Farbflächen als Überbreite (/kontakt/ 334 px) */
-    padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px);
-    background: linear-gradient(160deg, #8C6D12 0%, #0a5e5c 50%, #111827 100%); /* QA #5952: Primär #8C6D12 → #111827 wie Startseiten-Hero (Jamil #5955), vorher Türkis #0a9a94 → #00605d */
+    position: relative; overflow: hidden; overflow: clip; contain: paint; isolation: isolate; color: #111827;
+    padding-block: clamp(48px, 8vw, 104px) clamp(44px, 6vw, 80px);
+    background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FEFCF7;
+    border-bottom: 1px solid #F1ECE0;
   }
-  /* weiche, sehr langsam treibende Farbflächen wie im Startseiten-Hero (nur CSS) */
-  .ph__flaechen { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-  .ph__flaechen span { position: absolute; width: 520px; height: 520px; border-radius: 50%; filter: blur(70px); opacity: 0.55; }
-  .ph__flaechen span:nth-child(1) { background: #D4AF37; opacity: 0.38; top: -220px; left: -140px; animation: ph-treib 26s ease-in-out infinite alternate; }
-  .ph__flaechen span:nth-child(2) { background: #D4AF37; opacity: 0.12; bottom: -260px; right: -120px; animation: ph-treib 32s ease-in-out infinite alternate-reverse; }
-  .ph__flaechen span:nth-child(3) { background: #111827; top: 20%; right: 25%; width: 340px; height: 340px; opacity: 0.6; animation: ph-treib 38s ease-in-out infinite alternate; }
-  @keyframes ph-treib { to { transform: translate(60px, 40px) scale(1.08); } }
-  @media (prefers-reduced-motion: reduce) { .ph__flaechen span { animation: none; } }
+  .ph__flaechen { display: none; }
   .ph .wrap { position: relative; }
-  .ph .eyebrow { color: #c6f1ec; }
-  .ph .eyebrow::before { background: #c6f1ec; }
-  .ph h1 { color: #fff; font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem); line-height: 1.06; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
-  .ph .lead { color: rgb(255 255 255 / 90%); max-width: 56ch; text-wrap: pretty; }
-  .ph :global(a:not(.btn)) { color: #fff; }
-  .ph :global(.btn) { background: #fff; color: var(--accent-ink); border-color: #fff; } /* QA #5952 */
+  .ph .eyebrow { color: #7A5E0E; display: inline-flex; align-items: center; gap: 10px; }
+  .ph .eyebrow::before { content: ''; width: 28px; height: 2px; border-radius: 2px; background: #D4AF37; }
+  .ph h1 { color: #111827; font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem); line-height: 1.06; letter-spacing: -0.035em; max-width: 18ch; text-wrap: balance; }
+  .ph .lead { color: #374151; max-width: 56ch; text-wrap: pretty; }
+  .ph :global(a:not(.btn)) { color: #7A5E0E; text-decoration-color: #D4AF37; text-underline-offset: 4px; }
+  .ph :global(a:not(.btn):hover) { color: #111827; }
+  .ph :global(.btn) { background: #D4AF37; color: #111827; border-color: #D4AF37; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
+  .ph :global(.btn:hover) { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+  .ph :global(.btn--ghost) { background: transparent; border-color: #111827; color: #111827; box-shadow: none; }
+  .ph :global(.btn--ghost:hover) { background: #FBF3D5; border-color: #111827; }
+  .ph :global(:focus-visible) { outline-color: #8C6D12; }
   .ph__text { min-width: 0; }
   .ph__raster { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
-  .ph__raster :global(.ph__foto) { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -30px rgb(0 0 0 / 45%); }
+  .ph__raster :global(.ph__foto) { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -36px rgb(17 24 39 / 35%); }
   @media (min-width: 900px) { .ph__raster { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .ph h1 { animation: ph-titel 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .ph__text > :not(h1), .ph__raster :global(.ph__foto) { animation: ph-ein 1100ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both; }
+  }
+  @keyframes ph-titel { from { transform: translateY(8px); } to { transform: none; } }
+  @keyframes ph-ein { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 </style>

@@ -20,7 +20,7 @@
   --accent-ink: #7A5E0E; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
   --accent-mid: #D4AF37;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
   --accent-light: #E6C766; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #111827) */
-  --on-accent: #111827;    /* Schrift auf #D4AF37 (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
+  --on-accent: #111827;    /* Schrift auf #D4AF37 (8,5 : 1) */
   --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #111827 (8,6 : 1) */
   --gold: #D4AF37;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
   --line: #E2E8F0;
@@ -179,7 +179,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 .btn--sm { min-height: 40px; padding: 0.5em 1.1em; font-size: 0.9rem; }
 .btn .icon { flex: none; }
 a.card { color: inherit; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-a.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--dark); }
+a.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
 
 /* Slider (scroll-snap, Pfeile per JS) */
 .slider { position: relative; }
@@ -211,3 +211,6 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html.js .reveal { opacity: 1; transform: none; }
 }
+
+/* Unterseiten im Stil der Startseite (Jamil #6521, 20.11.2026): Brotkrumen über dem hellen Seitenkopf im selben Goldstich */
+body:has(.ph) .crumbs { background: #FEFCF7; border-bottom-color: #F1ECE0; }
