@@ -25,10 +25,10 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k1.nr}</span>
         <h3 class="je-karte__titel">{k1.titel}</h3>
-        <div class="je-badge je-pills" aria-hidden="true">
-          <span class="je-pill je-pill--an">{k1.pills[0]}</span>
-          <span class="je-oder">{k1.oder}</span>
-          <span class="je-pill">{k1.pills[1]}</span>
+        {/* Seit Jamil #6500: zwei echte Knöpfe statt Auswahl-Pills, Sprung zu den Formularen in Abschnitt 7 (Fokus aufs erste Feld) */}
+        <div class="je-ctas">
+          <a class="btn je-btn je-btn--voll" href="#start-gespraech" data-je-ziel="start-gespraech">{k1.knoepfe[0]}</a>
+          <a class="btn je-btn je-btn--rand" href="#start-schnell" data-je-ziel="start-schnell">{k1.knoepfe[1]}</a>
         </div>
         </div>
         <div class="je-karte__rechts">
@@ -105,4 +105,18 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
     addEventListener('resize', rechnen, { passive: true });
     document.fonts?.ready.then(() => { breite = 0; rechnen(); });
   }
+</script>
+
+<script>
+  // Knöpfe in Karte 01 (Jamil #6500): weich zum Formular scrollen und das erste Feld fokussieren
+  document.querySelectorAll<HTMLAnchorElement>('[data-je-ziel]').forEach((a) => a.addEventListener('click', (e) => {
+    const form = document.getElementById(a.dataset.jeZiel ?? '');
+    const feld = form?.querySelector<HTMLInputElement>('input:not([type=hidden]):not(.js7-hp)');
+    if (!form || !feld) return;
+    e.preventDefault();
+    const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    form.scrollIntoView({ behavior: ruhig ? 'auto' : 'smooth', block: 'start' });
+    history.replaceState(null, '', `#${form.id}`);
+    setTimeout(() => feld.focus({ preventScroll: true }), ruhig ? 0 : 650);
+  }));
 </script>

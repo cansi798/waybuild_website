@@ -200,7 +200,8 @@ export const J_ERST = {
         { name: '', text: 'In einem lockeren Gespräch nehmen wir Ihre Unternehmens-DNA auf. Als Prozess-Experten hören wir nicht nur zu, sondern bringen direkt eigene Ideen und Verbesserungsvorschläge für Ihren Alltag ein.' },
         { name: '', text: 'Sie wollen erst mal unverbindlich schauen, wie Ihre Website aussehen könnte? Schicken Sie uns einfach Ihre aktuelle Website-Adresse und Kontaktdaten – das reicht für den Start.' },
       ],
-      pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder' },
+      pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder', // Pills seit #6500 ersetzt durch:
+      knoepfe: ['Kostenloses Erstgespräch vereinbaren', 'Website-Vorschau anfordern'] }, // Jamil #6500
     { nr: '02', titel: 'Kostenlose Vorschau in Rekordzeit',
       einleitung: 'Statt trockener Theorie liefern wir Ihnen greifbare Ergebnisse zum Durchklicken:',
       punkte: [
