@@ -190,7 +190,7 @@ export const J_MASS = {
 /** 4. „Erst sehen, dann entscheiden“ (Jamil #6388, 19.11.2026). Texte WÖRTLICH. Badges in den Karten (`pills`, `zeiten`, `sprache`)
  *  sind nur Deko (aria-hidden) und wiederholen, was im Kartentext steht. Der Blitz (⚡) ist ein eigenes SVG-Icon. */
 export const J_ERST = {
-  titel: 'Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.',
+  titel: 'Keine Vorarbeit. Kein Risiko. Erst sehen, dann entscheiden.', // Jamil #6491 (vorher „Kein Lastenheft. …“)
   // seit Jamil #6429 („2a“); vorher: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.'
   unter: 'Sie benötigen weder ein umfangreiches Konzept noch gehen Sie ein Risiko ein. Wir arbeiten uns in Ihre Abläufe ein und erstellen Ihnen kostenlos einen ersten konkreten Entwurf.',
   karten: [
