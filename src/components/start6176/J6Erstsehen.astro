@@ -33,7 +33,7 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         </div>
         <div class="je-karte__rechts">
         {k1.varianten.map((v) => (
-          <p class="je-karte__text"><b>{v.name}</b> {v.text}</p>
+          <p class="je-karte__text">{v.name && <><b>{v.name}</b> </>}{v.text}</p>
         ))}
         </div>
       </li>

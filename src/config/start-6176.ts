@@ -190,14 +190,15 @@ export const J_MASS = {
 /** 4. „Erst sehen, dann entscheiden“ (Jamil #6388, 19.11.2026). Texte WÖRTLICH. Badges in den Karten (`pills`, `zeiten`, `sprache`)
  *  sind nur Deko (aria-hidden) und wiederholen, was im Kartentext steht. Der Blitz (⚡) ist ein eigenes SVG-Icon. */
 export const J_ERST = {
-  titel: 'Keine Vorarbeit. Kein Risiko. Erst sehen, dann entscheiden.', // Jamil #6491 (vorher „Kein Lastenheft. …“)
+  titel: 'Kein Aufwand vorab. Kein Risiko. Erst sehen, dann entscheiden.', // Jamil #6494 „C“ (davor #6491 „Keine Vorarbeit …“, ursprünglich „Kein Lastenheft …“)
   // seit Jamil #6429 („2a“); vorher: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.'
   unter: 'Sie benötigen weder ein umfangreiches Konzept noch gehen Sie ein Risiko ein. Wir arbeiten uns in Ihre Abläufe ein und erstellen Ihnen kostenlos einen ersten konkreten Entwurf.',
   karten: [
-    { nr: '01', titel: 'Wir verstehen Ihren Betrieb (oder starten direkt)',
+    { nr: '01', titel: 'Wir verstehen Ihren Betrieb', // Zusatz „(oder starten direkt)“ seit Jamil #6495 entfernt
       varianten: [
-        { name: 'Für Website & Software:', text: 'In einem lockeren Gespräch nehmen wir Ihre Unternehmens-DNA auf. Als Prozess-Experten hören wir nicht nur zu, sondern bringen direkt eigene Ideen und Verbesserungsvorschläge für Ihren Alltag ein.' },
-        { name: 'Nur für Ihre Website (Schnellstart):', text: 'Sie wollen erst mal unverbindlich schauen? Schicken Sie uns einfach Ihre aktuelle Website-Adresse und Kontaktdaten – das reicht für den Start.' },
+        // Labels „Für Website & Software:“ (#6496) und „Nur für Ihre Website (Schnellstart):“ (#6498) entfernt, Absatz 2 neu (#6498)
+        { name: '', text: 'In einem lockeren Gespräch nehmen wir Ihre Unternehmens-DNA auf. Als Prozess-Experten hören wir nicht nur zu, sondern bringen direkt eigene Ideen und Verbesserungsvorschläge für Ihren Alltag ein.' },
+        { name: '', text: 'Sie wollen erst mal unverbindlich schauen, wie Ihre Website aussehen könnte? Schicken Sie uns einfach Ihre aktuelle Website-Adresse und Kontaktdaten – das reicht für den Start.' },
       ],
       pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder' },
     { nr: '02', titel: 'Kostenlose Vorschau in Rekordzeit',
