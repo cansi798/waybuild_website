@@ -2,18 +2,18 @@
    diese Datei global ein, die Variablen stehen zusätzlich in :root von global.css. Nur die Hero-Regeln (.v-*) bleiben auf die Startseite
    (html[data-thema="besucherreise"]) begrenzt. Ursprünglich: NUR für die Startseite (Jamil Talk qh87y3sj #5899/#5900, 14.11.2026: „bitte erstmal nur für hauptseite
    anpassen“). Greift über html[data-thema="besucherreise"] (setzt nur index.astro), Unterseiten bleiben unverändert.
-   Palette: Primär #8C6D12 · dunkle Flächen #0F172A · Gold-Akzent #D4AF37 · Hintergrund #F8FAFC · Karten #FFFFFF · Text #0F172A
+   Palette: Primär #8C6D12 · dunkle Flächen #111827 · Gold-Akzent #D4AF37 · Hintergrund #F8FAFC · Karten #FFFFFF · Text #111827
    · positive Akzente #D4AF37. Schrift: Plus Jakarta Sans (seit #5903, vorher Manrope; lokal über @fontsource-variable/plus-jakarta-sans, kein Google-Server):
    Überschriften 700–800, Text 400–500, Buttons 600.
-   Kontrast: #8C6D12 auf Weiß 6,4 : 1, #0F172A auf #F8FAFC 12,6 : 1; Gold nur als Zier (Linien, Punkte), nie als kleine Schrift. */
+   Kontrast: #8C6D12 auf Weiß 6,4 : 1, #111827 auf #F8FAFC 12,6 : 1; Gold nur als Zier (Linien, Punkte), nie als kleine Schrift. */
 html[data-thema='besucherreise'] {
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --ink: #0F172A;
+  --ink: #111827;
   --ink-soft: #475569;
-  --paper: #F8FAFC;
+  --paper: #FAFAFA; /* Karten (Jamil #6448) */
   --white: #ffffff;
-  --dark: #0F172A;
+  --dark: #111827;
   --accent: #D4AF37;
   --accent-ink: #7A5E0E;
   --accent-mid: #D4AF37;
@@ -22,9 +22,9 @@ html[data-thema='besucherreise'] {
 }
 body { background: var(--white); font-family: var(--font-body); font-weight: 450; color: var(--ink); }
 html:root .sn { /* QA #5952: global, html-Präfix hält die Rangfolge über start-neu.css */
-  --sn-tinte: #7A5E0E; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #0F172A; --sn-tuerkis: #D4AF37; --sn-mittel: #D4AF37; --sn-hauch: #FBF3D5;
+  --sn-tinte: #7A5E0E; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #111827; --sn-tuerkis: #D4AF37; --sn-mittel: #D4AF37; --sn-hauch: #FBF3D5;
   --sn-sand: #F1F5F9; --sn-linie: #E2E8F0; --sn-linie-t: #EADBA6;
-  --sn-schatten: 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 34%);
+  --sn-schatten: 0 1px 2px rgb(17 24 39 / 5%), 0 28px 56px -36px rgb(17 24 39 / 34%);
 }
 /* Überschriften 700–800, Buttons 600 */
 html:root :is(h1, h2, .sn-h2, .v-titel) { font-family: var(--font-head); font-weight: 800; letter-spacing: -0.035em; }
@@ -36,7 +36,7 @@ html:root .sn-kenn { font-weight: 700; letter-spacing: 0.01em; }
 html[data-thema='besucherreise'] .v-hero { background: #8C6D12; }
 html[data-thema='besucherreise'] .v-blob--1 { background: radial-gradient(closest-side, rgb(212 175 55 / 55%), rgb(212 175 55 / 0)); }
 html[data-thema='besucherreise'] .v-blob--2 { background: radial-gradient(closest-side, rgb(212 175 55 / 16%), rgb(212 175 55 / 0)); }
-html[data-thema='besucherreise'] .v-blob--3 { background: radial-gradient(closest-side, rgb(15 23 42 / 90%), rgb(15 23 42 / 0)); }
+html[data-thema='besucherreise'] .v-blob--3 { background: radial-gradient(closest-side, rgb(17 24 39 / 90%), rgb(17 24 39 / 0)); }
 html[data-thema='besucherreise'] .v-blob--4 { background: radial-gradient(closest-side, rgb(212 175 55 / 38%), rgb(212 175 55 / 0)); }
 html[data-thema='besucherreise'] .v-leucht { color: #8C6D12; }
 
@@ -57,12 +57,17 @@ html:root .sn-pk.ist-aktiv { box-shadow: 0 0 0 3px rgb(212 175 55 / 45%); }
 html:root .svg-ja .svg-zeichen { color: #D4AF37; background: #FBF3D5; }
 
 /* Kopf- und Fußzeile in den neuen Grüntönen */
-html:root .footer { background: linear-gradient(160deg, #D4AF37 0%, #E2C15A 100%); color: #0F172A; } /* Jamil #6442 */
+html:root .footer { background: linear-gradient(160deg, #D4AF37 0%, #E2C15A 100%); color: #111827; } /* Jamil #6442 */
 /* Hero-Unterzeile kleiner auf Handy und Desktop (Jamil #5972, 15.11.2026) */
 html[data-thema='besucherreise'] .v-hero .v-unter { font-size: clamp(0.98rem, 0.92rem + 0.45vw, 1.18rem); line-height: 1.55; max-width: 56ch; }
 
-/* Farbpalette Jamil #6431 (20.11.2026): Primär #0F172A (Slate 900), Akzent #D4AF37 (Gold), zweiter Akzent #FBF3D5 (Champagner),
-   Hintergründe #FFFFFF / #F8FAFC. Kontrast: Weiß auf #D4AF37 nur ~3,2 : 1 → Knöpfe mit Amber-Fläche haben dunkle Schrift #0F172A
+/* Farbpalette Jamil #6431 (20.11.2026): Primär #111827 (Slate 900), Akzent #D4AF37 (Gold), zweiter Akzent #FBF3D5 (Champagner),
+   Hintergründe #FFFFFF / #F8FAFC. Kontrast: Weiß auf #D4AF37 nur ~3,2 : 1 → Knöpfe mit Amber-Fläche haben dunkle Schrift #111827
    (≈ 6,6 : 1); Links/kleine Schrift auf Hell in dunkles Gold #8C6D12 (≈ 5,0 : 1). Grün nur noch für echte Erfolgs-/Status-Zeichen. */
-html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta) { background: #D4AF37; border-color: #D4AF37; color: #0F172A; }
-html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta):hover { background: #C29F2F; border-color: #C29F2F; color: #0F172A; }
+html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta) { background: #D4AF37; border-color: #D4AF37; color: #111827; }
+html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta):hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+
+/* 60/30/10 (Jamil #6448/#6449, 20.11.2026): Seite durchgehend Weiß, Karten #FAFAFA, Text/Struktur Anthrazit #111827, Gold nur Akzent.
+   Abschnitte trennt eine feine Linie statt eines Farbwechsels (nicht zwischen Hero/dunklen Flächen). */
+/* feine Trennlinie entfällt seit #6453 (Weiß/Goldstich im Wechsel) */
+html[data-hero-stil='weiss']:root .footer { background: #111827; color: #FFFFFF; }

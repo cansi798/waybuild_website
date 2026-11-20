@@ -1,4 +1,4 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #0F172A→#0F172A, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
 /* Referenzen-Karten „Beispiele aus unserer Arbeit“ (Komponente src/components/referenzen/ReferenzKarten.astro).
  * Gemeinsam genutzt von Startseite, /leistungen/website/ und /referenzen/ (Jamil, Talk qh87y3sj #5288, 09.11.2026). */
 /* ── Referenzen (08.11.2026 mit Namen, Jamil #4932): Karte mit Bild der Kunden-Website oben, Etikett Online/Vorschau ── */
@@ -8,8 +8,8 @@
 .ref4 { display: flex; flex-direction: column; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); overflow: hidden; box-shadow: var(--shadow); }
 .ref4__bild { position: relative; padding: 14px 14px 0; background: var(--paper-2); }
 .ref4__bild svg, .ref4__bild img, .ref4__bild picture { display: block; width: 100%; height: auto; border-radius: 10px 10px 0 0; }
-.ref4__bild img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; box-shadow: 0 1px 0 var(--line), 0 6px 18px rgb(15 23 42 / 10%); }
-.ref4__etikett { position: absolute; bottom: 12px; left: 24px; padding: 3px 11px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 8px rgb(15 23 42 / 18%); }
+.ref4__bild img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; box-shadow: 0 1px 0 var(--line), 0 6px 18px rgb(17 24 39 / 10%); }
+.ref4__etikett { position: absolute; bottom: 12px; left: 24px; padding: 3px 11px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; box-shadow: 0 2px 8px rgb(17 24 39 / 18%); }
 .ref4__etikett--online { background: var(--accent-ink); color: #ffffff; }
 .ref4__etikett--vorschau { background: #ffffff; color: var(--dark); border: 1px solid var(--line); }
 .ref4__inhalt { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }

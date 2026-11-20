@@ -5,7 +5,7 @@
 .jpr-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 @media (min-width: 960px) { .jpr-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); align-items: stretch; } }
 .jpr-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.6vw, 32px); border-radius: 24px;
-  background: var(--white); border: 1px solid var(--line); }
+  background: #FAFAFA; border: 1px solid var(--line); }
 .jpr-karte--tipp { border-color: #8C6D12; box-shadow: 0 0 0 1px #8C6D12, 0 22px 44px -30px rgb(140 109 18 / 55%); }
 .jpr-karte__kopf { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
 .jpr-karte__rolle { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
@@ -21,12 +21,12 @@
 .jpr-btn { margin-top: 10px; justify-content: center; text-align: center; white-space: normal; width: 100%; background: var(--white); color: #8C6D12; border: 1.5px solid #8C6D12; }
 .jpr-btn:hover { background: #FBF3D5; }
 .jpr-btn--voll { background: #8C6D12; color: var(--white); }
-.jpr-btn--voll:hover { background: #0F172A; color: var(--white); }
+.jpr-btn--voll:hover { background: #111827; color: var(--white); }
 .jpr-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .jpr-hinweis { margin: clamp(20px, 3vw, 32px) auto 0 !important; max-width: 70ch; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
 /* Hintergrund (Jamil #6412): nach dem Warmgrau von Abschnitt 5 weiß, damit nicht drei getönte Blöcke aufeinanderfolgen */
-#preise-start.jpr { --band: var(--white); background: var(--white); }
-#preise-start .jpr-karte { box-shadow: 0 1px 2px rgb(15 23 42 / 5%), 0 16px 36px -30px rgb(15 23 42 / 40%); }
+/* seit Jamil #6453: Hintergrund aus dem Weiß/Goldstich-Wechsel */
+#preise-start .jpr-karte { box-shadow: 0 1px 2px rgb(17 24 39 / 5%), 0 16px 36px -30px rgb(17 24 39 / 40%); }
 #preise-start .jpr-karte--tipp { box-shadow: 0 0 0 1px #8C6D12, 0 22px 44px -30px rgb(140 109 18 / 55%); }
 
 /* Jamil #6415: Badge sitzt oben rechts auf dem Kartenrand (in Höhe der Kicker-Zeile), die Kicker-Zeile ist überall einzeilig →

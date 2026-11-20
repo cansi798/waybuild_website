@@ -103,7 +103,7 @@
 
 /* Handy: Segmentleiste, Zitat über dem Mockup, höheres Mockup mit größerer Schrift */
 @media (max-width: 899px) {
-  .jm__tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 16px; background: var(--paper-2, #F1F5F9); }
+  .jm__tabs { grid-template-columns: repeat(var(--jm-n, 3), minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 16px; background: var(--paper-2, #F1F5F9); }
   .jm-tab { display: flex; justify-content: center; gap: 6px; padding: 10px 6px; border: 0; border-radius: 12px; background: transparent; text-align: center; }
   .jm-tab[aria-selected="true"] { background: var(--white); box-shadow: 0 6px 16px -10px rgb(0 0 0 / 35%); }
   .jm-tab__nr { display: none; }
@@ -170,3 +170,6 @@
   .jm .jm-tab__kurz { font-size: 0.8rem; overflow-wrap: normal; word-break: normal; letter-spacing: 0; }
 }
 @media (max-width: 380px) { .jm .jm-tab__kurz { font-size: 0.7rem; } }
+
+/* Jamil #6461: Tab-Kacheln mittig zum Bild (Versatz rechnet das Skript in J6Wechsler.astro) */
+@media (min-width: 900px) { .jm__tabs { margin-top: var(--jm-tabs-top, 0px); align-self: start; } }

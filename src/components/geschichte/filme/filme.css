@@ -15,7 +15,7 @@
 /* ── Grundform (ohne JS): Karten untereinander ── */
 .gf-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(16px, 3vw, 28px); }
 .gf-schritt { margin: 0; display: grid; gap: clamp(12px, 2.6vw, 24px); padding: clamp(12px, 2.4vw, 22px); border-radius: 22px; background: var(--white, #fff);
-  border: 1px solid var(--gf-rand); box-shadow: 0 1px 2px rgb(15 23 42 / 4%), 0 18px 40px -30px rgb(15 23 42 / 35%); }
+  border: 1px solid var(--gf-rand); box-shadow: 0 1px 2px rgb(17 24 39 / 4%), 0 18px 40px -30px rgb(17 24 39 / 35%); }
 .gf-bild { position: relative; container-type: size; height: clamp(360px, 120vw, 520px); padding: clamp(14px, 3vw, 24px); border-radius: 16px;
   background: radial-gradient(120% 80% at 50% 42%, #e4f3f1 0%, #f2f8f7 46%, var(--bsp-creme, #f6f3ee) 100%); }
 .gf-schritt:has(.gf-sz[data-format="quer"]) .gf-bild { height: clamp(240px, 72vw, 440px); }

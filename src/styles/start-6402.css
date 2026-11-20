@@ -1,6 +1,6 @@
 /* 7. Abschluss „Bereit zu sehen …“ (Jamil #6402, 19.11.2026). Markup: components/start6176/J6Start.astro.
    Dunkle Box (tiefes Anthrazit-Türkis aus der Palette), zwei weiße Karten mit Mini-Formular, darunter Vertrauenszeile mit Fotos. */
-#kontakt-start.js7 { --band: #0F172A; background: #0F172A; color: var(--white); }
+#kontakt-start.js7 { --band: #111827; background: #111827; color: var(--white); }
 .js7 .js7__kopf .sn-h2 { max-width: 22ch; color: var(--white); }
 .js7 .js7__kopf .sn-lead { max-width: 56ch; color: #CBD5E1; }
 .js7-karten { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -30,7 +30,7 @@
 .js7-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: #8C6D12; }
 .js7-check a { color: #8C6D12; font-weight: 600; }
 .js7-btn { margin-top: auto; justify-content: center; width: 100%; background: #8C6D12; color: var(--white); border: 0; white-space: normal; text-align: center; }
-.js7-btn:hover { background: #0F172A; color: var(--white); }
+.js7-btn:hover { background: #111827; color: var(--white); }
 .js7-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .js7-btn:disabled { opacity: 0.7; }
 .js7-fehler { display: block; margin-top: -4px; font-size: 0.85rem; font-weight: 600; color: #b42318; }
@@ -39,7 +39,7 @@
 .js7-vertrauen p { margin: 0; max-width: 60ch; color: #E2E8F0; line-height: 1.6; }
 .js7-fotos { display: inline-flex; }
 .js7-fotos picture + picture { margin-left: -10px; }
-.js7-foto { display: block; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #0F172A; box-shadow: 0 0 0 1.5px var(--gold); }
+.js7-foto { display: block; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #111827; box-shadow: 0 0 0 1.5px var(--gold); }
 #kontakt-start .js7-karte__titel { color: var(--ink); }
 #kontakt-start .js7-karte__text, #kontakt-start .js7-karte p { color: var(--ink-soft); }
 #kontakt-start .js7-karte .js7-status { color: #8C6D12; }

@@ -40,7 +40,7 @@ body { --stickybar-h: 0px; }
 
 .neu {
   /* Farben: eine Akzentfarbe (Türkis), Flächen Weiß, Sand, Dunkel */
-  --neu-nacht: #002e2c;                 /* dunkles Ende des Dunkel-Verlaufs (von --dark #0F172A) */
+  --neu-nacht: #002e2c;                 /* dunkles Ende des Dunkel-Verlaufs (von --dark #111827) */
 
   /* Schrift (1rem = 16,5 px am Telefon … 18 px ab 1280 px, siehe global.css) */
   /* h1 rund 36 … 72 px, aber nie breiter als das längste Wort der Überschrift: „Aufmerksamkeit“ misst 8,6 × Schriftgröße,
@@ -83,7 +83,7 @@ body { --stickybar-h: 0px; }
 .neu .neu-abschnitt--sand { background: var(--paper); }
 /* Dunkel nur für Hero und Schluss: Verlauf von --dark nach --neu-nacht; Schrift und Fokusrahmen hell */
 .neu .neu-abschnitt--dunkel {
-  --neu-text: var(--white);              /* 9,6 : 1 auf #0F172A */
+  --neu-text: var(--white);              /* 9,6 : 1 auf #111827 */
   --neu-text-leise: var(--dark-lead);    /* 7,5 : 1 */
   --neu-akzent-text: var(--accent-light); /* 5,9 : 1 */
   --neu-licht: var(--accent-light);

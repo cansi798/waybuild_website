@@ -97,7 +97,7 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
 
   /* Suchfeld */
   .sz01-suche { position: relative; display: flex; align-items: center; gap: var(--bsp-a2); height: calc(46 * var(--px)); padding: 0 calc(6 * var(--px)) 0 var(--bsp-a3);
-    border-radius: 99px; background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-10 * var(--px)) rgb(15 23 42 / 30%); }
+    border-radius: 99px; background: var(--bsp-weiss); border: calc(1 * var(--px)) solid var(--bsp-linie-grau); box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-10 * var(--px)) rgb(17 24 39 / 30%); }
   .sz01-lupe { flex: none; width: calc(18 * var(--px)); height: calc(18 * var(--px)); fill: none; stroke: var(--bsp-text-leise); stroke-width: 2.2; stroke-linecap: round; }
   .sz01-feld { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; height: 100%; font-size: var(--bsp-schrift-m); white-space: nowrap; overflow: hidden; }
   .sz01-text { color: var(--bsp-text); font-weight: 500; }
@@ -119,7 +119,7 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01-pin--1 { left: 38%; top: 34%; }
   .sz01-pin--1 i { width: calc(22 * var(--px)); height: calc(22 * var(--px)); background: var(--bsp-tinte); }
   .sz01-pin--1 b { padding: calc(2 * var(--px)) var(--bsp-a2); border-radius: var(--bsp-r-s); background: var(--bsp-weiss); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700;
-    box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgb(15 23 42 / 20%); }
+    box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgb(17 24 39 / 20%); }
   .sz01-pin--2 { left: 14%; top: 58%; transition-delay: calc(0.1s * var(--bsp-t, 1)); }
   .sz01-pin--3 { left: 78%; top: 62%; transition-delay: calc(0.2s * var(--bsp-t, 1)); }
 
@@ -134,7 +134,7 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01-aktionen { display: flex; gap: var(--bsp-a2); margin-top: var(--bsp-a1) !important; }
   .sz01-mini-knopf { min-height: calc(28 * var(--px)); padding: 0 var(--bsp-a3); font-size: var(--bsp-schrift-s); }
   .sz01-ring { position: absolute; inset: calc(-1 * var(--px)); border-radius: inherit; pointer-events: none; border: calc(2 * var(--px)) solid var(--bsp-tuerkis);
-    box-shadow: 0 0 0 calc(4 * var(--px)) rgb(212 175 55 / 16%), 0 calc(14 * var(--px)) calc(26 * var(--px)) calc(-14 * var(--px)) rgb(15 23 42 / 45%); }
+    box-shadow: 0 0 0 calc(4 * var(--px)) rgb(212 175 55 / 16%), 0 calc(14 * var(--px)) calc(26 * var(--px)) calc(-14 * var(--px)) rgb(17 24 39 / 45%); }
   .sz01-treffer--rest { display: flex; flex-direction: column; gap: calc(6 * var(--px)); opacity: 0.5; }
   .sz01-sterne-leer { font-size: var(--bsp-schrift-xs); color: #c9d2d0; letter-spacing: calc(1 * var(--px)); line-height: 1; }
 
@@ -170,7 +170,7 @@ const zeichen = [...SUCHE].map((z) => (z === ' ' ? ' ' : z));
   .sz01-zeiger { position: absolute; z-index: 6; left: var(--ziel-x, 74%); top: var(--ziel-y, 64%); width: 0; height: 0; opacity: 0; pointer-events: none;
     --sz01-fb: calc(min(100cqh * 0.4615, 100cqw) * 0.15); }
   .sz01-finger { position: absolute; left: calc(var(--sz01-fb) * -0.4375); top: calc(var(--sz01-fb) * -0.02); width: var(--sz01-fb); height: auto; overflow: visible;
-    fill: var(--bsp-weiss); stroke: var(--bsp-nacht); stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgb(15 23 42 / 30%)); }
+    fill: var(--bsp-weiss); stroke: var(--bsp-nacht); stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgb(17 24 39 / 30%)); }
   .sz01-ring-tipp { position: absolute; left: calc(var(--sz01-fb) * -0.6); top: calc(var(--sz01-fb) * -0.6); width: calc(var(--sz01-fb) * 1.2); height: calc(var(--sz01-fb) * 1.2);
     border-radius: 50%; background: rgb(0 128 123 / 28%); border: 2px solid rgb(0 128 123 / 55%); opacity: 0; }
   .sz01[data-aktiv][data-phase="3"] .sz01-zeiger { animation: sz01-hinein calc(0.55s * var(--bsp-t, 1)) var(--bsp-ease) calc(0.2s * var(--bsp-t, 1)) both; }

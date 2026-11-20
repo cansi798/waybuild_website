@@ -5,7 +5,7 @@
 .je-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; counter-reset: none; }
 @media (min-width: 900px) { .je-karten { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); } }
 .je-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.4vw, 30px); border-radius: 24px;
-  background: var(--paper); border: 1px solid var(--line); }
+  background: #FAFAFA; border: 1px solid var(--line); }
 .je-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #8C6D12; }
 .je-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
 .je-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
@@ -45,8 +45,8 @@
   .je-karten { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-bottom: 8px; }
   .je-karte { --je-top: calc(var(--je-kopf, 96px) + var(--je-n, 0) * 14px); position: sticky; top: var(--je-top);
     display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px clamp(24px, 4vw, 64px); align-items: start;
-    min-height: min(440px, calc(100vh - var(--je-top) - 40px)); background: var(--white);
-    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(15 23 42 / 45%), 0 1px 2px rgb(15 23 42 / 6%); }
+    min-height: min(440px, calc(100vh - var(--je-top) - 40px)); background: #FAFAFA;
+    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(17 24 39 / 45%), 0 1px 2px rgb(17 24 39 / 6%); }
   .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; }
   html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; } /* kein Einblenden im Stapel: sonst schimmert die vorige Karte durch */
   .je-karte__titel { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); }
@@ -58,8 +58,8 @@
    ist eine Karte höher als der freie Platz, wird top negativ → erst bis zum Kartenende scrollen, dann deckt die nächste sie ab. */
 @media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
   .je-karten { gap: 20px; }
-  .je-karte { position: sticky; top: var(--je-top, calc(84px + var(--je-n, 0) * 10px)); min-height: var(--je-min, 0px); background: var(--white);
-    padding: 20px 20px 24px; gap: 10px; box-shadow: 0 18px 40px -28px rgb(15 23 42 / 45%), 0 1px 2px rgb(15 23 42 / 6%); }
+  .je-karte { position: sticky; top: var(--je-top, calc(84px + var(--je-n, 0) * 10px)); min-height: var(--je-min, 0px); background: #FAFAFA;
+    padding: 20px 20px 24px; gap: 10px; box-shadow: 0 18px 40px -28px rgb(17 24 39 / 45%), 0 1px 2px rgb(17 24 39 / 6%); }
   .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; }
   html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; }
   .je-karte__text, .je-punkte { font-size: 0.97rem; line-height: 1.55; }

@@ -132,3 +132,15 @@
 .jh .jh-btn--rand:hover { background: rgb(15 23 42 / 8%); color: #0F172A; }
 .jh .jh-btn:focus-visible { outline: 3px solid #0F172A; outline-offset: 3px; }
 .jh .jf { box-shadow: 0 30px 60px -36px rgb(15 23 42 / 55%); }
+
+/* Variante „Hero weiß mit Gold-Akzenten“ (vorbereitet, Jamil #6448): html[data-hero-stil="weiss"] über HERO_STIL in config/site.ts */
+html[data-hero-stil='weiss'] .jh.jh { background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 16%) 0%, rgb(212 175 55 / 0) 60%), #FFFFFF; color: #111827; }
+html[data-hero-stil='weiss'] .jh .jh__titel { color: #111827; }
+html[data-hero-stil='weiss'] .jh .jh__unter, html[data-hero-stil='weiss'] .jh .jh__preise { color: #374151; }
+html[data-hero-stil='weiss'] .jh .jh__preise-punkt { color: #D4AF37; }
+html[data-hero-stil='weiss'] .jh .jh-btn { background: #D4AF37; border-color: #D4AF37; color: #111827; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
+html[data-hero-stil='weiss'] .jh .jh-btn:hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+html[data-hero-stil='weiss'] .jh .jh-btn--rand { background: transparent; border-color: #111827; color: #111827; box-shadow: none; }
+html[data-hero-stil='weiss'] .jh .jh-btn--rand:hover { background: #FBF3D5; }
+html[data-hero-stil='weiss'] .jh .jh-btn:focus-visible { outline-color: #8C6D12; }
+html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 39 / 35%); }

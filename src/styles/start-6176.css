@@ -1,5 +1,5 @@
 /* Startseite, Punkte 1–3 nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026): .jh = Hero, .jp = Problem, .jl = Lösung.
-   Palette/Schrift aus start-farben.css (Primär #8C6D12, dunkel #0F172A, Gold #D4AF37 nur als Zier, Positiv #D4AF37, Plus Jakarta Sans).
+   Palette/Schrift aus start-farben.css (Primär #8C6D12, dunkel #111827, Gold #D4AF37 nur als Zier, Positiv #D4AF37, Plus Jakarta Sans).
    Hero-Beispiele (Jamil #6192); Hintergründe im Wechsel kommen aus global.css (Hero dunkel, dann Creme/Weiß). Animationen nur opacity/transform,
    feste Maße für die Beispiel-Fenster (kein Layout-Sprung), bei prefers-reduced-motion alles sofort sichtbar. */
 
@@ -7,7 +7,7 @@
 .jh { position: relative; isolation: isolate; overflow: hidden; color: var(--white);
   /* Jamil #6431: Slate 900 mit leichtem Amber-Schein oben rechts */
   background: radial-gradient(120% 90% at 85% 10%, rgb(212 175 55 / 22%) 0%, rgb(212 175 55 / 0) 55%),
-    radial-gradient(90% 80% at 0% 100%, #020617 0%, rgb(2 6 23 / 0) 60%), #0F172A;
+    radial-gradient(90% 80% at 0% 100%, #020617 0%, rgb(2 6 23 / 0) 60%), #111827;
   padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 104px); }
 .jh__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
 .jh__text { min-width: 0; display: grid; gap: 20px; justify-items: start; }
@@ -16,8 +16,8 @@
 .jh__zeile { margin: 0; padding-left: 14px; border-left: 3px solid var(--gold); font-family: var(--font-head); font-weight: 700;
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.5; color: var(--white); }
 .jh-knopfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-.jh-btn { background: #D4AF37; color: #0F172A; border: 1.5px solid #D4AF37; /* Jamil #6431: CTA Amber, dunkle Schrift */ box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
-.jh-btn:hover { background: #C29F2F; border-color: #C29F2F; color: #0F172A; }
+.jh-btn { background: #D4AF37; color: #111827; border: 1.5px solid #D4AF37; /* Jamil #6431: CTA Amber, dunkle Schrift */ box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
+.jh-btn:hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }
 .jh-btn--rand { background: transparent; color: var(--white); border-color: rgb(255 255 255 / 70%); box-shadow: none; }
 .jh-btn--rand:hover { background: rgb(255 255 255 / 10%); color: var(--white); border-color: var(--white); }
 .jh-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
@@ -56,7 +56,7 @@
 
 /* Ergebnis-Fenster (feste Höhe) */
 .jb-fenster { overflow: hidden; border-radius: 12px; background: var(--white); color: var(--ink);
-  box-shadow: 0 14px 30px -18px rgb(0 0 0 / 55%), 0 0 0 1px rgb(15 23 42 / 10%); }
+  box-shadow: 0 14px 30px -18px rgb(0 0 0 / 55%), 0 0 0 1px rgb(17 24 39 / 10%); }
 .jb-fenster__leiste { display: flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; background: #f4f1ea; border-bottom: 1px solid #E2E8F0; }
 .jb-fenster__leiste i { width: 6px; height: 6px; border-radius: 50%; background: #d8d1c3; }
 .jb-fenster__leiste span { margin-left: 6px; font-size: 0.68rem; font-weight: 700; color: #3d4a49; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -176,7 +176,7 @@
 .jp-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); }
 .jp-karte__text { margin: 0; line-height: 1.6; color: var(--ink-soft); }
 .jp__abschluss { margin: clamp(32px, 4vw, 56px) 0 0 !important; padding-top: clamp(20px, 3vw, 32px); border-top: 1px solid var(--gold);
-  font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.35; color: #0F172A; max-width: 34ch; text-wrap: balance; }
+  font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.35; color: #111827; max-width: 34ch; text-wrap: balance; }
 @media (min-width: 640px) { .jp-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1100px) { .jp-karten { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
@@ -185,14 +185,14 @@
 .jl-wege { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .jl-wege li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
 .jl-wege li:last-child { background: #8C6D12; border-color: #8C6D12; color: var(--white); }
-.jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #0F172A; }
+.jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #111827; }
 .jl-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
 /* Lösungs-Visual (Jamil #6199): Chat-Karten mit Absender-Icon, Verbindungsstrang zwischen den Karten und Status-Chip.
    Status „wird bearbeitet“ (Fortschrittsstrich) und „erledigt“ liegen im selben Rasterfeld: kein Layout-Sprung. Grundzustand = Endzustand. */
 .jl-erledigt { list-style: none; margin: 0; padding: clamp(14px, 2vw, 22px); display: grid; gap: 16px; border-radius: 28px; background: var(--paper); }
 .jl-fall { position: relative; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 14px; align-items: center;
   padding: 14px 16px; border-radius: 20px; border-top-left-radius: 8px; background: var(--band, var(--white));
-  box-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 12px 28px -22px rgb(15 23 42 / 35%); }
+  box-shadow: 0 1px 2px rgb(17 24 39 / 6%), 0 12px 28px -22px rgb(17 24 39 / 35%); }
 .jl-fall:not(:last-child)::after { content: ''; position: absolute; left: 35px; top: 100%; width: 2px; height: 16px; border-radius: 2px;
   background: linear-gradient(#D4AF37, rgb(212 175 55 / 25%)); transform-origin: top; }
 .jl-fall__ico { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #8C6D12; color: var(--white);
@@ -262,7 +262,7 @@
 .ja-schritt--nein { color: #8c3d33; }
 .ja-schritt--nein .ja-schritt__ico { background: #f6e3df; color: #b5483a; box-shadow: none; }
 .ja-schritt--nein .j6i { stroke-width: 2.6; }
-.ja-schritt--ja { color: #0F172A; font-weight: 750; }
+.ja-schritt--ja { color: #111827; font-weight: 750; }
 .ja-schritt--ja .ja-schritt__ico { background: #D4AF37; color: var(--white); box-shadow: 0 0 0 3px rgb(212 175 55 / 18%); }
 @media (min-width: 760px) { .ja-wege { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
 /* Vorteile (Jamil #6208): genau 4 Karten */
@@ -317,7 +317,7 @@
 .jw-stufe:last-child .jw-stufe__text { color: var(--white); }
 .jw-stufe:last-child .jw-stufe__ico { background: rgb(255 255 255 / 16%); color: var(--white); box-shadow: inset 0 0 0 1.5px var(--gold); }
 .jw__darunter { margin: clamp(28px, 4vw, 48px) 0 0 !important; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-head);
-  font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem); color: #0F172A; }
+  font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem); color: #111827; }
 @media (min-width: 900px) {
   .jw-stufen { grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 12px; }
   .jw-stufe { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px; padding: 18px 16px;
@@ -339,7 +339,7 @@
 .jz-frage { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
   font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
 .jz-frage__ico { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #FBF3D5; color: #8C6D12; }
-.jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #0F172A; font-size: 1.08rem; }
+.jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #111827; font-size: 1.08rem; }
 @media (min-width: 640px) and (max-width: 899px) { .jz-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .jz__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
@@ -397,7 +397,7 @@
   /* Karten-Hover dezent (nur Maus): leicht anheben, Schatten über Deckkraft */
   .jp-karte, .jz-frage, .jv-punkt, .jr-ref, .jl-punkt { position: relative; }
   .jp-karte::after, .jz-frage::after, .jv-punkt::after, .jr-ref::after, .jl-punkt::after { content: ''; position: absolute; inset: 0; border-radius: inherit;
-    pointer-events: none; box-shadow: 0 18px 36px -22px rgb(15 23 42 / 38%); opacity: 0; transition: opacity 280ms ease; }
+    pointer-events: none; box-shadow: 0 18px 36px -22px rgb(17 24 39 / 38%); opacity: 0; transition: opacity 280ms ease; }
   .jp-karte, .jz-frage, .jv-punkt, .jr-ref, .jl-punkt { transition: opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms),
     translate 560ms cubic-bezier(0.22, 0.61, 0.36, 1) var(--j6-v, 0ms), transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1); }
   @media (hover: hover) and (pointer: fine) {

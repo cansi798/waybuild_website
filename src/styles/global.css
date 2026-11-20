@@ -4,29 +4,29 @@
 
 :root {
   /* Farbpalette der Startseite auf ALLEN Seiten (QA #5952, Jamil #5955 „Ja design komplett anpassen“; vorher nur
-     html[data-thema='besucherreise'] in start-farben.css): Primär #8C6D12 · dunkle Flächen #0F172A · Gold #D4AF37 · Text #0F172A
-     · positive Akzente #D4AF37. Alte CI-Werte: --ink #3a3a3a, --dark #0F172A, --accent #D4AF37, --accent-ink #8C6D12, --accent-mid #8C6D12. */
-  --ink: #0F172A;       /* 12,6 : 1 auf #F8FAFC */
-  --dark: #0F172A;      /* dunkle Flächen */
+     html[data-thema='besucherreise'] in start-farben.css): Primär #8C6D12 · dunkle Flächen #111827 · Gold #D4AF37 · Text #111827
+     · positive Akzente #D4AF37. Alte CI-Werte: --ink #3a3a3a, --dark #111827, --accent #D4AF37, --accent-ink #8C6D12, --accent-mid #8C6D12. */
+  --ink: #111827;       /* 12,6 : 1 auf #F8FAFC */
+  --dark: #111827;      /* dunkle Flächen */
   --dark-line: #334155;
-  --dark-soft: #CBD5E1; /* Nebentext auf dunklem Grund (6,0 : 1 auf #0F172A) */
+  --dark-soft: #CBD5E1; /* Nebentext auf dunklem Grund (6,0 : 1 auf #111827) */
   --dark-lead: #E2E8F0;
   --ink-soft: #475569;  /* 6,4 : 1 auf Creme */
-  --paper: #F8FAFC;
+  --paper: #FAFAFA; /* Karten (Jamil #6448: 60/30/10) */
   --paper-2: #F1F5F9;
-  --creme: #F8FAFC;     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
+  --creme: #FDFAF1; /* Weiß mit Goldstich im Wechsel mit Weiß (Jamil #6453, 20.11.2026; davor #6448 alles weiß) */     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
   --accent: #D4AF37;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
   --accent-ink: #7A5E0E; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
   --accent-mid: #D4AF37;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
-  --accent-light: #E6C766; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #0F172A) */
-  --on-accent: #0F172A;    /* Schrift auf #D4AF37 (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
-  --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #0F172A (8,6 : 1) */
+  --accent-light: #E6C766; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #111827) */
+  --on-accent: #111827;    /* Schrift auf #D4AF37 (5,1 : 1; vorher #0b2a29 = nur 4,4 : 1 auf dem neuen Grün, QA #5952) */
+  --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #111827 (8,6 : 1) */
   --gold: #D4AF37;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
   --line: #E2E8F0;
   --ok: #177049;
   --radius: 14px;
-  --shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 8px 24px rgb(15 23 42 / 8%);
+  --shadow: 0 1px 2px rgb(17 24 39 / 6%), 0 8px 24px rgb(17 24 39 / 8%);
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif; /* QA #5952 */
   --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1160px;
@@ -121,7 +121,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 }
 .btn:hover { transform: translateY(-1px); }
 .btn--primary { background: var(--accent); color: var(--on-accent); } /* 5,1 : 1 (vorher --ink 3,8 : 1) */
-.btn--primary:hover { background: #C29F2F; } /* Jamil #6431: Gold dunkler, Schrift #0F172A */
+.btn--primary:hover { background: #C29F2F; } /* Jamil #6431: Gold dunkler, Schrift #111827 */
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--dark); color: var(--paper); }
 

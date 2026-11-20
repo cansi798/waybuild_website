@@ -1,11 +1,11 @@
 /* Startseite: Abschnitt „So geht es los“ (#ablauf), Komponente src/components/startneu/SnAblauf.astro, Texte src/config/start-ablauf.ts.
    Jamil Talk qh87y3sj #5939, 14.11.2026: kürzer, Unternehmens-DNA hervorheben, im Stil der Website.
    Aufbau: Handy = senkrechte Zeitleiste (Linie links, Nummern als Punkte), ab 640 px Karten in 2 Spalten, ab 1000 px Treppe
-   (Schritte 1–4 zu zweit, Schritt 5 über die volle Breite als Höhepunkt, 6–8 zu dritt). Schritt 5 dunkel (#0F172A) mit feiner
+   (Schritte 1–4 zu zweit, Schritt 5 über die volle Breite als Höhepunkt, 6–8 zu dritt). Schritt 5 dunkel (#111827) mit feiner
    Doppelhelix; Gold (#D4AF37) nur als Zier (Linie, Punkt), nie als Schrift. Haken in Positiv #D4AF37.
    WebKit: Grids nur minmax(0, 1fr), min-width: 0 an Kindern, SVG mit width/height + viewBox, .sr-only in position: relative. */
 
-.sab { --sab-gold: var(--gold, #D4AF37); --sab-gold-tief: #D4AF37; --sab-positiv: #D4AF37; --sab-dunkel: #0F172A; }
+.sab { --sab-gold: var(--gold, #D4AF37); --sab-gold-tief: #D4AF37; --sab-positiv: #D4AF37; --sab-dunkel: #111827; }
 
 /* ── Zeitleiste ── */
 .sab-schritte { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 36px; }

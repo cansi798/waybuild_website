@@ -16,7 +16,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
 <svg class="gg pg" viewBox="0 0 320 220" width="320" height="220" aria-hidden="true" focusable="false">
   <defs>
     <filter id={id('schatten')} x="-20%" y="-20%" width="140%" height="160%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.12" />
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#111827" flood-opacity="0.12" />
     </filter>
     <radialGradient id={id('hof')} cx="50%" cy="50%" r="50%">
       <stop offset="0" stop-color="#8C6D12" stop-opacity="0.09" />
@@ -27,7 +27,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
       <stop offset="1" stop-color="#8C6D12" stop-opacity="0.05" />
     </linearGradient>
     <linearGradient id={id('nacht')} x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0F172A" />
+      <stop offset="0" stop-color="#111827" />
       <stop offset="1" stop-color="#8C6D12" />
     </linearGradient>
     <radialGradient id={id('licht')} cx="50%" cy="50%" r="50%">
@@ -42,7 +42,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
     <rect x="16" y="14" width="288" height="46" rx="23" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" filter={url('schatten')} />
     <circle cx="42" cy="36" r="8" fill="none" stroke="#8C6D12" stroke-width="2" />
     <path d="M48 42l5.5 5.5" stroke="#8C6D12" stroke-width="2" stroke-linecap="round" />
-    <text x="64" y="42" font-size="16" font-weight="500" font-family={schrift} fill="#0F172A" data-g="suchNaehe">{suche}</text>
+    <text x="64" y="42" font-size="16" font-weight="500" font-family={schrift} fill="#111827" data-g="suchNaehe">{suche}</text>
     {/* Zwei Treffer (Wettbewerber) */}
     {[72, 120].map((y, i) => (<>
       <rect x="16" y={y} width="288" height="40" rx="12" fill="#fff" stroke="#E2E8F0" stroke-width="1.5" filter={url('schatten')} />
@@ -80,7 +80,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
     <rect x="267" y="152" width="18" height="20" rx="2.5" fill="none" stroke="#8C6D12" stroke-width="1.5" />
     <path d="M271 158h10M271 162.5h10M271 167h6" stroke="#8C6D12" stroke-width="1.5" stroke-linecap="round" />
     {/* Telefon mit ungelesenen Nachrichten */}
-    <rect x="112" y="12" width="96" height="196" rx="20" fill="#fff" stroke="#0F172A" stroke-width="2" filter={url('schatten')} />
+    <rect x="112" y="12" width="96" height="196" rx="20" fill="#fff" stroke="#111827" stroke-width="2" filter={url('schatten')} />
     <rect x="120" y="32" width="80" height="162" rx="10" fill={url('zart')} />
     <rect x="146" y="19" width="28" height="6" rx="3" fill="#E2E8F0" />
     {[42, 86, 130].map((y, i) => (<>
@@ -104,19 +104,19 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
     <circle cx="30" cy="35" r="5" fill="none" stroke="#8C6D12" stroke-width="1.5" />
     <path d="M21 50c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#8C6D12" stroke-width="1.5" stroke-linecap="round" />
     <path d="M70 20H226A18 18 0 0 1 244 38V42A18 18 0 0 1 226 60H70A18 18 0 0 1 56 54L50 46L58 43A18 18 0 0 1 52 38A18 18 0 0 1 70 20Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
-    <text x="148" y="45.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#0F172A">Wann geht es los?</text>
+    <text x="148" y="45.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#111827">Wann geht es los?</text>
     {/* Kunde 2 (rechts, Gold) */}
     <circle cx="290" cy="110" r="17" fill="#D4AF37" fill-opacity="0.14" stroke="#D4AF37" stroke-width="1.5" />
     <circle cx="290" cy="105" r="5" fill="none" stroke="#D4AF37" stroke-width="1.5" />
     <path d="M281 120c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" />
     <path d="M94 90H250A18 18 0 0 1 264 96L270 104L262 107A18 18 0 0 1 268 112A18 18 0 0 1 250 130H94A18 18 0 0 1 76 112V108A18 18 0 0 1 94 90Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
-    <text x="172" y="115.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#0F172A">Gibt es was Neues?</text>
+    <text x="172" y="115.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#111827">Gibt es was Neues?</text>
     {/* Kunde 3 (links, Positiv-Grün) */}
     <circle cx="30" cy="180" r="17" fill="#D4AF37" fill-opacity="0.12" stroke="#D4AF37" stroke-width="1.5" />
     <circle cx="30" cy="175" r="5" fill="none" stroke="#D4AF37" stroke-width="1.5" />
     <path d="M21 190c1.4-4.8 5-7.4 9-7.4s7.6 2.6 9 7.4" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" />
     <path d="M70 160H226A18 18 0 0 1 244 178V182A18 18 0 0 1 226 200H70A18 18 0 0 1 56 194L50 186L58 183A18 18 0 0 1 52 178A18 18 0 0 1 70 160Z" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" stroke-linejoin="round" filter={url('schatten')} />
-    <text x="148" y="185.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#0F172A">Wie weit sind Sie?</text>
+    <text x="148" y="185.5" font-size="16" font-weight="600" text-anchor="middle" font-family={schrift} fill="#111827">Wie weit sind Sie?</text>
   </>)}
 
   {name === 'zettel' && (<>
@@ -129,7 +129,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
       <rect x="40" y="72" width="96" height="96" rx="6" fill="#D4AF37" fill-opacity="0.18" stroke="#D4AF37" stroke-width="1.5" />
       <path d="M56 102h52M56 118h60M56 134h40" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" opacity="0.7" />
     </g>
-    <circle cx="86" cy="76" r="4" fill="#0F172A" />
+    <circle cx="86" cy="76" r="4" fill="#111827" />
     {/* Tabelle (Excel) */}
     <g transform="rotate(6 214 100)">
       <rect x="160" y="40" width="110" height="120" rx="8" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" filter={url('schatten')} />
@@ -150,7 +150,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
     <g transform="rotate(-3 168 168)">
       <rect x="124" y="128" width="88" height="80" rx="12" fill="#fff" filter={url('schatten')} />
       <rect x="124" y="128" width="88" height="80" rx="12" fill={url('zart')} stroke="#8C6D12" stroke-width="1.5" />
-      <text x="168" y="186" font-size="52" font-weight="700" text-anchor="middle" font-family={schrift} fill="#0F172A">?</text>
+      <text x="168" y="186" font-size="52" font-weight="700" text-anchor="middle" font-family={schrift} fill="#111827">?</text>
     </g>
   </>)}
 
@@ -165,7 +165,7 @@ const schrift = 'Plus Jakarta Sans Variable, sans-serif';
     <circle cx="284" cy="96" r="1.4" fill="#fff" fill-opacity="0.7" />
     {/* Angebot, noch nicht fertig */}
     <rect x="40" y="34" width="136" height="170" rx="10" fill="#fff" stroke="#CFC8BB" stroke-width="1.5" filter={url('schatten')} />
-    <text x="56" y="63" font-size="15" font-weight="700" font-family={schrift} fill="#0F172A">Angebot</text>
+    <text x="56" y="63" font-size="15" font-weight="700" font-family={schrift} fill="#111827">Angebot</text>
     <path d="M56 74h104" stroke="#E2E8F0" stroke-width="1.5" stroke-linecap="round" />
     {[[86, 60], [102, 72], [118, 52], [134, 66]].map(([y, w]) => (<>
       <rect x="56" y={y} width={w} height="6" rx="3" fill="#CFC8BB" />

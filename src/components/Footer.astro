@@ -2,6 +2,7 @@
 import { company } from '../config/site';
 import { href } from '../lib/paths';
 import Logo from './Logo.astro';
+import { HERO_STIL } from '../config/site';
 import { GRUPPEN } from '../config/leistungen-neu';
 import FooterKontakt from './FooterKontakt.astro';
 import { BEISPIEL_LINK } from '../config/beispiel';
@@ -22,7 +23,7 @@ const year = new Date().getFullYear();
   {!reise && <div class="footer__kontaktkopf"><FooterKontakt /></div>}
   <div class:list={['wrap footer__grid', { 'footer__grid--ohne-kopf': reise }]}>
     <div>
-      <Logo variante="aufgold" />
+      <Logo variante={HERO_STIL === 'weiss' ? 'negativ' : 'aufgold'} />
       <p class="footer__claim">{company.slogan}</p>
     </div>
     <nav aria-label="Footer">
@@ -99,4 +100,11 @@ const year = new Date().getFullYear();
   .footer li a { display: inline-block; padding: 6px 0; color: #0F172A; text-decoration: underline; text-decoration-color: rgb(15 23 42 / 35%); text-underline-offset: 4px; }
   .footer li a:hover { color: #0F172A; text-decoration-color: #0F172A; }
   .footer__bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgb(15 23 42 / 22%); color: #1E293B; }
+  /* Variante Fußzeile Anthrazit (vorbereitet, Jamil #6448): html[data-hero-stil="weiss"] */
+  :global(html[data-hero-stil='weiss']) .footer { background: #111827; color: #FFFFFF; }
+  :global(html[data-hero-stil='weiss']) .footer :global(:focus-visible) { outline-color: #D4AF37; }
+  :global(html[data-hero-stil='weiss']) .footer__claim, :global(html[data-hero-stil='weiss']) .footer__h, :global(html[data-hero-stil='weiss']) .footer__bottom { color: #D1D5DB; }
+  :global(html[data-hero-stil='weiss']) .footer li a { color: #FFFFFF; text-decoration-color: rgb(255 255 255 / 35%); }
+  :global(html[data-hero-stil='weiss']) .footer li a:hover { color: #FFFFFF; text-decoration-color: #D4AF37; }
+  :global(html[data-hero-stil='weiss']) .footer__grid, :global(html[data-hero-stil='weiss']) .footer__bottom { border-color: rgb(255 255 255 / 18%); }
 </style>

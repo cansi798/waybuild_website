@@ -1,4 +1,4 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #0F172A→#0F172A, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
 /* /preise/ im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026). Wird NUR von src/pages/preise.astro geladen.
  * Baut auf start-neu.css auf (.sn-Bausteine, SnAngebot). Präfix .spr-.
  * Hintergründe: Pakete Sand (SnAngebot) → Vergleich Weiß → Start Papier → Ausbaustufen Weiß → Abschluss Hauch (SnAbschluss).

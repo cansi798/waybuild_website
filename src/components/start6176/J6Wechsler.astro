@@ -13,7 +13,8 @@ import "../../styles/mass-6379.css";
 import { J_MASS as T, ALT_ZEIGEN } from '../../config/start-6176';
 // Seit Jamil #6424: statt der Box unter dem Wechsler ein kleiner Hinweis im Wechsler (Desktop unter den Tabs, Handy unter dem Mockup)
 import Bild from '../Bild.astro';
-const S = T.schritte;
+// 4. Tab „Individuell“ seit Jamil #6460 per ALT_ZEIGEN.individuellTab aus
+const S = T.schritte.filter((_, i) => i < 3 || ALT_ZEIGEN.individuellTab);
 const MUSTER = ALT_ZEIGEN.musterfirmaMockupsAlt;
 const BW = T.bauwelt;
 ---
@@ -25,7 +26,7 @@ const BW = T.bauwelt;
       <p class="sn-lead">{T.unter}</p>
     </div>
 
-    <div class="jm" data-jm>
+    <div class="jm" data-jm style={`--jm-n:${S.length}`}>
       <div class="jm__tabs" role="tablist" aria-label={T.tabsLabel}>
         {S.map((s, i) => (
           <button class="jm-tab" type="button" role="tab" id={`jm-tab-${i}`} aria-controls={`jm-panel-${i}`}
@@ -171,6 +172,19 @@ const BW = T.bauwelt;
       e.preventDefault(); stopp(); zeigen(ziel, true);
     });
     wurzel.addEventListener('pointerdown', stopp, { once: true });
+    // Desktop (Jamil #6461): Tab-Kacheln vertikal mittig zum Bild rechts; alle Bilder gleich hoch → kein Springen beim Wechsel
+    const mitte = () => {
+      if (innerWidth < 900) { wurzel.style.removeProperty('--jm-tabs-top'); return; }
+      const geraet = panels[0].querySelector<HTMLElement>('.jm-mock'); // Bildfläche (in allen Tabs gleich hoch; der Link unter Tab 1 zählt nicht)
+      const liste = wurzel.querySelector<HTMLElement>('.jm__tabs');
+      if (!geraet || !liste) return;
+      const oben = geraet.getBoundingClientRect().top - panels[0].getBoundingClientRect().top;
+      const versatz = Math.max(0, oben + geraet.offsetHeight / 2 - liste.offsetHeight / 2);
+      wurzel.style.setProperty('--jm-tabs-top', `${Math.round(versatz)}px`);
+    };
+    mitte();
+    addEventListener('resize', mitte, { passive: true });
+    document.fonts?.ready.then(mitte);
     wurzel.addEventListener('focusin', stopp, { once: true });
     if (!ruhig && 'IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => {

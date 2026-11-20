@@ -1,4 +1,4 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #0F172A→#0F172A, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
 /* „Was wir für Ihre Sichtbarkeit tun.“ (.sb-*, Jamil, Talk qh87y3sj #5363, 10.11.2026). Drei Felder mit gezeichneten Beispiel-Ansichten.
  * Startseite (.sb--start): Hintergrund Sand (--paper-2) zwischen „So gehen wir vor“ (Weiß) und „So arbeiten wir.“ (#FBF3D5), mindestens
  * eine Bildschirmseite. Leistungsseiten (.sb--leistung): Weiß zwischen Text (Papier) und „Häufige Fragen“ (Sand).
@@ -23,7 +23,7 @@
 }
 
 .sb-panel { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border-radius: 18px; background: var(--white);
-  border: 1px solid #EADBA6; box-shadow: 0 1px 2px rgb(15 23 42 / 4%), 0 14px 36px -26px rgb(15 23 42 / 40%); }
+  border: 1px solid #EADBA6; box-shadow: 0 1px 2px rgb(17 24 39 / 4%), 0 14px 36px -26px rgb(17 24 39 / 40%); }
 .sb-buehne { display: flex; flex-direction: column; gap: 10px; padding: 16px clamp(14px, 2vw, 20px) 20px; background: #FBF3D5; border-bottom: 1px solid #EADBA6; }
 .sb-etikett { align-self: flex-start; margin: 0; padding: 2px 10px; border-radius: 999px; background: var(--white); border: 1px solid #cfe5e3;
   font-size: 0.74rem; font-weight: 650; letter-spacing: 0.02em; line-height: 1.6; color: var(--ink-soft); }
@@ -37,7 +37,7 @@
 
 /* ── Ansicht (Fenster) ── */
 .sb-mock { min-height: 236px; border-radius: 12px; background: var(--white); border: 1px solid #cfe0de;
-  box-shadow: 0 1px 2px rgb(15 23 42 / 5%), 0 10px 24px -18px rgb(15 23 42 / 45%); overflow: hidden; font-family: var(--font-body);
+  box-shadow: 0 1px 2px rgb(17 24 39 / 5%), 0 10px 24px -18px rgb(17 24 39 / 45%); overflow: hidden; font-family: var(--font-body);
   font-size: 0.8rem; line-height: 1.45; color: var(--ink); }
 .sb-mock__innen { display: flex; flex-direction: column; height: 100%; }
 .sb-fkopf { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid #e4ecea; background: #fafcfb; }

@@ -3,7 +3,7 @@
  * Der Hero (.v-hero, variante-start.css) und der Stapel-Effekt (stapel.ts) sind unverändert.
  *
  * Gestaltung: unsere Marke, ruhig und hochwertig.
- * - Farben nur aus der CI: Türkis #D4AF37 (Flächen, Zeichen), Tinte #8C6D12 (Schrift, Knöpfe), Tief #0F172A, Hauch #eaf5f4,
+ * - Farben nur aus der CI: Türkis #D4AF37 (Flächen, Zeichen), Tinte #8C6D12 (Schrift, Knöpfe), Tief #111827, Hauch #eaf5f4,
  *   Papier #f7f5f0, Sand #F1F5F9, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
  * - Schrift: Plus Jakarta Sans für Überschriften und Text (QA #5952, vorher Montserrat/Jost), Zeilenabstand 1,7.
  * - Überschriften links, Unterzeile/Lead immer direkt darunter (Jamil #6012, 15.11.2026: „Subheadline immer unter Headline, auf der
@@ -13,9 +13,9 @@
  * Kontraste (WCAG AA): Schrift Türkis nur #8C6D12 (6,4 : 1 auf Weiß, 5,7 : 1 auf #eaf5f4, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
  * Knöpfe Weiß auf #8C6D12 (6,4 : 1). Grid-Spalten immer minmax(0, 1fr) bzw. min-width: 0 (WebKit, Querscrollen). */
 
-.sn { --sn-tinte: #7A5E0E; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #0F172A; --sn-tuerkis: #D4AF37; --sn-mittel: #8C6D12; --sn-hauch: #FBF3D5; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */
+.sn { --sn-tinte: #7A5E0E; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #111827; --sn-tuerkis: #D4AF37; --sn-mittel: #8C6D12; --sn-hauch: #FBF3D5; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */
   --sn-sand: #F1F5F9; --sn-linie: #ddd6c9; --sn-linie-t: #cfe6e3;
-  --sn-schatten: 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 38%);
+  --sn-schatten: 0 1px 2px rgb(17 24 39 / 5%), 0 28px 56px -36px rgb(17 24 39 / 38%);
   --sn-kurve: cubic-bezier(0.22, 1, 0.36, 1);
   padding-block: clamp(72px, 11vw, 144px); }
 .sn p { margin: 0; }
@@ -225,7 +225,7 @@ html.js .sn-pd.ist-aktiv .gg { animation: snPpEin 0.6s cubic-bezier(0.22, 1, 0.3
   .sn-ref--gross .sn-ref__name { font-size: 1.6rem; }
 }
 .sn-ref { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 16px; padding: clamp(12px, 1.6vw, 16px); border-radius: 28px; background: var(--paper); }
-.sn-ref__bild { position: relative; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 14px 30px -22px rgb(15 23 42 / 40%); }
+.sn-ref__bild { position: relative; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: 0 1px 2px rgb(17 24 39 / 6%), 0 14px 30px -22px rgb(17 24 39 / 40%); }
 .sn-ref__leiste { display: flex; gap: 5px; align-items: center; height: 22px; padding-inline: 12px; background: var(--sn-sand); }
 .sn-ref__leiste i { width: 7px; height: 7px; border-radius: 50%; background: #cdc6ba; }
 .sn-ref__bild picture, .sn-ref__img { display: block; width: 100%; height: auto; }
@@ -404,7 +404,7 @@ html.js .sn li.reveal:nth-child(6) { transition-delay: 450ms; }
 @media (min-width: 900px) and (max-width: 1199px) { .sn-paket--komplett { grid-column: 1 / -1; } } /* unter 1200 px: zwei Karten + Komplettpaket volle Breite */
 .sn-paket__tipp { max-width: 100%; overflow-wrap: break-word; }
 .sn-paket--komplett { box-shadow: inset 0 0 0 2px var(--gold, #D4AF37), var(--sn-schatten); }
-.sn-paket__tipp--gold { background: #D4AF37; color: #0F172A; } /* dunkle Schrift auf Gold (8 : 1) */
+.sn-paket__tipp--gold { background: #D4AF37; color: #111827; } /* dunkle Schrift auf Gold (8 : 1) */
 .sn-paket__brutto { margin-bottom: 0 !important; }
 .sn-paket .sn-paket__jahr { margin-top: -6px !important; font-size: 0.76rem; line-height: 1.3; color: var(--ink-soft); }
 .sn-pakete__hinweis { margin-top: 16px !important; }

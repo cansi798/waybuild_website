@@ -1,5 +1,5 @@
 ---
-import { OG_BILD, OG_BILD_ALT } from '../config/site'; // Vorschaubild (Jamil #6437)
+import { OG_BILD, OG_BILD_ALT, HERO_STIL } from '../config/site'; // Vorschaubild (Jamil #6437)
 import '../styles/global.css';
 import '../styles/start-farben.css'; // QA #5952: Farben + Schrift der Startseite auf allen Seiten (Jamil #5955)
 import Header from '../components/Header.astro';
@@ -109,7 +109,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
 ---
 
 <!doctype html>
-<html lang="de" data-thema={thema}>
+<html lang="de" data-thema={thema} data-hero-stil={HERO_STIL}>
   <head>
     <meta charset="utf-8" />
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -118,7 +118,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={IS_PREVIEW ? 'noindex, nofollow' : noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
-    <meta name="theme-color" content="#0F172A" />
+    <meta name="theme-color" content="#111827" />
     <link rel="icon" href={href('/favicon.ico')} sizes="any" />
     <link rel="icon" href={href('/icon-192.png')} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />

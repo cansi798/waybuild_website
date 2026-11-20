@@ -1,4 +1,4 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #0F172A→#0F172A, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
 /* /leistungen/ – Übersicht im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026).
  * Baut auf start-neu.css auf (.sn, .sn-kopf, .sn-h2, .sn-lead, .sn-kenn, .sn-link). Präfix .sl-.
  * Ruhig: Zahlen und feine Linien statt Icon-Kacheln; Hintergründe Weiß / Papier im Wechsel, danach SnSystem (Hauch),
@@ -32,7 +32,7 @@
   border-radius: 24px; background: var(--paper); box-shadow: inset 0 0 0 1px transparent;
   transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
 /* Karten: var(--paper) = Gegenfarbe des Abschnitts (global.css) */
-.sl-karte:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #EADBA6, 0 1px 2px rgb(15 23 42 / 5%), 0 28px 56px -36px rgb(15 23 42 / 38%); }
+.sl-karte:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #EADBA6, 0 1px 2px rgb(17 24 39 / 5%), 0 28px 56px -36px rgb(17 24 39 / 38%); }
 .sl-karte__nr { padding-bottom: 14px; border-bottom: 1px solid #E2E8F0; font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
   letter-spacing: 0.02em; color: #8C6D12; font-variant-numeric: tabular-nums; }
 .sl-karte__titel { margin-top: 8px !important; overflow-wrap: break-word; hyphens: auto; }

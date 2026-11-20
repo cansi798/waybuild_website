@@ -12,7 +12,7 @@ export const GET: APIRoute = () =>
         scope: href('/'),
         display: 'browser',
         background_color: '#F8FAFC',
-        theme_color: "#0F172A",
+        theme_color: "#111827",
         icons: [
           { src: href('/icon-192.png'), sizes: '192x192', type: 'image/png' },
           { src: href('/icon-512.png'), sizes: '512x512', type: 'image/png' },

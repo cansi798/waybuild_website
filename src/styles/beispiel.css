@@ -20,7 +20,7 @@
 .bsp-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(18px, 4vw, 36px); }
 .bsp-schritt { margin: 0; }
 .bsp-szene { display: grid; gap: clamp(14px, 3vw, 28px); padding: clamp(12px, 2.6vw, 26px); border-radius: 24px; background: var(--white);
-  border: 1px solid var(--bsp-rand); box-shadow: 0 1px 2px rgb(15 23 42 / 4%), 0 18px 40px -30px rgb(15 23 42 / 35%); }
+  border: 1px solid var(--bsp-rand); box-shadow: 0 1px 2px rgb(17 24 39 / 4%), 0 18px 40px -30px rgb(17 24 39 / 35%); }
 /* Bildfläche = Größen-Container für die Geräte (container-type: size): feste Höhe, Gerät passt sich an */
 .bsp-szene__bild { position: relative; container-type: size; height: clamp(380px, 128vw, 560px); padding: clamp(16px, 4vw, 28px);
   padding-top: 52px; border-radius: 18px; background: radial-gradient(120% 80% at 50% 42%, #e4f3f1 0%, #f2f8f7 46%, var(--bsp-creme) 100%); }
