@@ -42,16 +42,14 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k2.nr}</span>
         <h3 class="je-karte__titel">{k2.titel}</h3>
-        <div class="je-badge je-zeiten" aria-hidden="true">
-          {k2.zeiten.map((z) => (
-            <span class="je-zeit"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" focusable="false" set:html={Blitz} />{z}</span>
-          ))}
-        </div>
         </div>
         <div class="je-karte__rechts">
         <p class="je-karte__text">{k2.einleitung}</p>
-        <ul class="je-punkte">
-          {k2.punkte.map((p) => (<li><b>{p.name}</b> {p.text}</li>))}
+        {/* Kennzahl-Leiste (Jamil #6502) statt Zeit-Badges und Aufzählung */}
+        <ul class="je-kennzahlen">
+          {k2.kennzahlen.map((z) => (
+            <li><span class="je-kennzahl__wert">{z.wert}</span><span class="je-kennzahl__text">{z.text}</span></li>
+          ))}
         </ul>
         <p class="je-karte__text">{k2.schluss}</p>
         </div>
@@ -61,12 +59,12 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k3.nr}</span>
         <h3 class="je-karte__titel">{k3.titel}</h3>
-        <div class="je-badge" aria-hidden="true">
-          <span class="je-sprache">
-            <span class="je-sprache__play"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" focusable="false"><path d="M8 5.5v13l10.5-6.5L8 5.5Z" /></svg></span>
-            <span class="je-sprache__welle">{WELLE.map((h, i) => <i style={`--h:${h}%;--i:${i}`}></i>)}</span>
-            <span class="je-sprache__zeit">{k3.sprache}</span>
-          </span>
+        {/* Chat-Grafik (Jamil #6503): Sprachnachricht, Screenshot, Textnachricht → „Umgesetzt“; nur Deko */}
+        <div class="je-chat" aria-hidden="true">
+          <span class="je-msg je-msg--sprache"><span class="je-sprache__play"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" focusable="false"><path d="M8 5.5v13l10.5-6.5L8 5.5Z" /></svg></span><span class="je-sprache__welle">{WELLE.slice(0, 16).map((h, i) => <i style={`--h:${h}%;--i:${i}`}></i>)}</span><span class="je-sprache__zeit">{k3.sprache}</span></span>
+          <span class="je-msg je-msg--bild"><span class="je-shot"><i></i><i></i><i></i></span><small>Screenshot</small></span>
+          <span class="je-msg je-msg--text">{k3.chat.text}</span>
+          <span class="je-status"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5" /></svg>{k3.chat.status}</span>
         </div>
         </div>
         <div class="je-karte__rechts">
@@ -96,8 +94,8 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
       const sicht = document.documentElement.clientHeight; // Layout-Viewport (wie svh), ändert sich nicht mit der iOS-Adressleiste
       const handy = innerWidth < 900;
       karten.forEach((k, n) => {
-        if (handy) k.style.setProperty('--je-min', `${Math.ceil(hoch)}px`);
-        const top = Math.min(kopf + 12 + n * 10, sicht - unten - (handy ? hoch : k.getBoundingClientRect().height) - 12);
+        k.style.setProperty('--je-min', `${Math.ceil(hoch)}px`); // #6505: auch am PC gleich hoch nach der längsten Karte
+        const top = Math.min(kopf + 12 + n * 10, sicht - unten - hoch - 12);
         k.style.setProperty('--je-top', `${Math.round(top)}px`);
       });
     };

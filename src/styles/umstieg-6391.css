@@ -20,3 +20,16 @@
   background: var(--white); color: #8C6D12; font-weight: 700; text-decoration: none; }
 .ju-mehr__link:hover { background: #8C6D12; color: var(--white); }
 .ju-mehr__link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* Ruhigere Gestaltung (Jamil #6507): kein „?“-Kreis, kein Häkchen-Kreis; Zitat gedämpft mit Gold-Anführungszeichen, Antwort mit Goldlinie */
+.ju-raster { align-items: stretch; }
+.ju-karte { gap: 14px; padding: clamp(24px, 2.6vw, 32px); border: 1px solid #ECE7DA; box-shadow: none; background: #FFFFFF; }
+.ju-thema { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #FBF3D5; color: #7A5E0E; }
+.ju-karte .ju-frage { display: block; position: relative; padding-left: 0; font-family: var(--font-body); font-weight: 500; font-style: italic;
+  font-size: 1.02rem; line-height: 1.5; color: #4B5563; text-wrap: pretty; }
+.ju-karte .ju-antwort { display: block; padding-left: 16px; border-left: 2px solid #D4AF37; line-height: 1.65; color: #374151; }
+.ju-antwort b { color: #111827; font-weight: 700; }
+.ju-mehr { display: block; color: var(--ink-soft); font-weight: 500; }
+.ju-mehr__link { display: inline; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; color: #7A5E0E; font-weight: 700;
+  text-decoration: underline; text-decoration-color: #D4AF37; text-underline-offset: 4px; }
+.ju-mehr__link:hover { background: none; color: #111827; }

@@ -14,7 +14,7 @@
   --ink-soft: #475569;  /* 6,4 : 1 auf Creme */
   --paper: #FAFAFA; /* Karten (Jamil #6448: 60/30/10) */
   --paper-2: #F1F5F9;
-  --creme: #FDFAF1; /* Weiß mit Goldstich im Wechsel mit Weiß (Jamil #6453, 20.11.2026; davor #6448 alles weiß) */     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
+  --creme: #FEFCF7; /* Jamil #6508: dezenter (vorher #FDFAF1) */ --creme-alt: #FDFAF1; /* Weiß mit Goldstich im Wechsel mit Weiß (Jamil #6453, 20.11.2026; davor #6448 alles weiß) */     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
   --accent: #D4AF37;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
   --accent-ink: #7A5E0E; /* Primär: Schrift/Links auf Hell (6,2 : 1) */

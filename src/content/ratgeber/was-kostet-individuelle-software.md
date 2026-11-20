@@ -39,7 +39,7 @@ Am Ende zählen die benötigten Stunden und der Stundensatz. Freiberufliche Soft
 
 ## Laufende Kosten: Wartung gehört dazu
 
-Software ist nach dem Livegang nicht „fertig“. Betriebssysteme, Browser, Bibliotheken und angebundene Dienste ändern sich, außerdem werden Sicherheitslücken bekannt. Als Faustregel nennen mehrere Quellen jährlich etwa **15–25 % der Entwicklungskosten** für Betrieb, Wartung und Weiterentwicklung ([alloq.digital](https://alloq.digital/de/blog/software-entwickeln-lassen/), [erp-software.org](https://erp-software.org/glossar/individualsoftware/)).
+Software ist nach der Inbetriebnahme nicht „fertig“. Betriebssysteme, Browser, Bibliotheken und angebundene Dienste ändern sich, außerdem werden Sicherheitslücken bekannt. Als Faustregel nennen mehrere Quellen jährlich etwa **15–25 % der Entwicklungskosten** für Betrieb, Wartung und Weiterentwicklung ([alloq.digital](https://alloq.digital/de/blog/software-entwickeln-lassen/), [erp-software.org](https://erp-software.org/glossar/individualsoftware/)).
 
 Ein Rechenbeispiel: Bei 40.000 € Entwicklungskosten entspricht das 6.000 bis 10.000 € pro Jahr. Darin stecken typischerweise:
 

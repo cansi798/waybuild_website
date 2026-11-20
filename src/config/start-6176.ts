@@ -209,10 +209,14 @@ export const J_ERST = {
         { name: 'Erster Software-Prototyp:', text: 'bereits 3 Werktage später' },
       ],
       schluss: 'Komplett kostenlos und unverbindlich – Sie sehen sofort, wie Ihr Betrieb digital aussehen und laufen kann.',
-      zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'] },
+      zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'],
+      /** Kennzahl-Leiste statt Zeit-Badges und Aufzählung (Jamil #6502); Inhalt wie vorher „bereits am nächsten Werktag / 3 Werktage später“ */
+      kennzahlen: [{ wert: '1 Werktag', text: 'bis zur neuen Website-Startseite' }, { wert: '3 Werktage', text: 'bis zum ersten Software-Prototyp' }] },
     { nr: '03', titel: 'Wenn es passt: Feinschliff in Ihrem Tempo',
-      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zum Go-live oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Textnachricht.',
-      sprache: '0:12' },
+      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zur Veröffentlichung oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Textnachricht.',
+      sprache: '0:12',
+      /** Chat-Grafik statt Sprachnachrichten-Blase (Jamil #6503), nur Deko (aria-hidden) */
+      chat: { text: 'Bitte Telefonnummer oben ergänzen', status: 'Umgesetzt' } },
   ],
 } as const;
 
