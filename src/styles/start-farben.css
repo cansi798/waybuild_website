@@ -71,3 +71,12 @@ html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta):h
    Abschnitte trennt eine feine Linie statt eines Farbwechsels (nicht zwischen Hero/dunklen Flächen). */
 /* feine Trennlinie entfällt seit #6453 (Weiß/Goldstich im Wechsel) */
 html[data-hero-stil='weiss']:root .footer { background: #111827; color: #FFFFFF; }
+
+/* Jamil #6470/#6471: Startseite beginnt mit Goldstich im Hero (#FDFAF1), danach fortlaufend Weiß / #FDFAF1 (Abschnitt 2 weiß, 3 Goldstich …) */
+html[data-thema='besucherreise'] main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--white); --paper: #FAFAFA; background: var(--band); }
+html[data-thema='besucherreise'] main[data-stapel] > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--creme); --paper: #FAFAFA; background: var(--band); }
+html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr { background: #FDFAF1; } /* Kopfleiste wie der Hero, kein harter Bruch */
+html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr::before { background: rgb(253 250 241 / 82%); }
+/* Header-CTA in Gold (Jamil #6475): #D4AF37, Schrift #111827 (≈ 8,5 : 1), Hover #C29F2F – auch mobil/Knopfleiste */
+html:root .hdr .hdr__cta, html:root .sticky-bar .btn--primary { background: #D4AF37; border-color: #D4AF37; color: #111827; }
+html:root .hdr .hdr__cta:hover, html:root .sticky-bar .btn--primary:hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }

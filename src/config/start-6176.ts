@@ -68,7 +68,7 @@ export const J_HERO = {
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
   // Satz 1 seit Jamil #6429 („2a“); vorher 'Standard-Tools passen selten zum echten Arbeitsalltag.'
-  unter: 'Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag. Wir entwickeln Ihren Webauftritt und maßgeschneiderte Software, die exakt so funktioniert, wie Ihr Betrieb arbeitet.',
+  unter: 'Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag. Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
