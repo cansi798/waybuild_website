@@ -217,6 +217,15 @@ export const J_ERST = {
       sprache: '0:12',
       /** Chat-Grafik statt Sprachnachrichten-Blase (Jamil #6503), nur Deko (aria-hidden) */
       chat: { text: 'Bitte Telefonnummer oben ergänzen', status: 'Umgesetzt' } },
+    // 4. Karte (Jamil #6518), Text wörtlich; Verlauf-Grafik nur Deko (aria-hidden)
+    { nr: '04', titel: 'Danach: Ihre Lösung wächst mit',
+      text: 'Nach der Veröffentlichung geht es weiter: Wir optimieren, passen an und entwickeln Ihre Website oder Software laufend weiter – genau dann, wenn Sie etwas brauchen. Auch hier genügt eine Sprachnachricht, eine Textnachricht oder ein Screenshot.',
+      verlauf: { titel: 'Weiterentwicklung', eintraege: [
+        { datum: '03.02.', text: 'Neue Leistungsseite ergänzt' },
+        { datum: '17.03.', text: 'Online-Terminbuchung hinzugefügt' },
+        { datum: '08.05.', text: 'Preise aktualisiert' },
+        { datum: '22.06.', text: 'Kundenportal erweitert' },
+      ] } },
   ],
 } as const;
 

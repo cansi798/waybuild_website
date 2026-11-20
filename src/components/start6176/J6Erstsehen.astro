@@ -7,7 +7,7 @@ import "../../styles/erst-6388.css";
 // Seit Jamil #6428: ab 900 px als Kartenstapel (position: sticky, jede Karte schiebt sich über die vorige), links Kopf, rechts Text.
 // Stil: styles/erst-6388.css.
 import { J_ERST as T } from '../../config/start-6176';
-const [k1, k2, k3] = T.karten;
+const [k1, k2, k3, k4] = T.karten;
 // Wellenform: feste Balkenhöhen (in %), wie eine kurze Sprachnachricht
 const WELLE = [30, 55, 80, 45, 65, 95, 60, 35, 70, 50, 85, 40, 60, 75, 45, 30, 55, 70, 40, 25, 45, 30];
 const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
@@ -69,6 +69,25 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         </div>
         <div class="je-karte__rechts">
         <p class="je-karte__text">{k3.text}</p>
+        </div>
+      </li>
+
+      {/* 4. Karte (Jamil #6518): Verlauf der Weiterentwicklung */}
+      <li class="je-karte j6-ein">
+        <div class="je-karte__links">
+        <span class="je-karte__nr" aria-hidden="true">{k4.nr}</span>
+        <h3 class="je-karte__titel">{k4.titel}</h3>
+        <div class="je-verlauf" aria-hidden="true">
+          <span class="je-verlauf__titel">{k4.verlauf.titel}</span>
+          <ul>
+            {k4.verlauf.eintraege.map((e) => (
+              <li><span class="je-verlauf__haken"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5" /></svg></span><span class="je-verlauf__text">{e.text}</span><span class="je-verlauf__datum">{e.datum}</span></li>
+            ))}
+          </ul>
+        </div>
+        </div>
+        <div class="je-karte__rechts">
+        <p class="je-karte__text">{k4.text}</p>
         </div>
       </li>
     </ol>
