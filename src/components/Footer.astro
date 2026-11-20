@@ -101,7 +101,7 @@ const year = new Date().getFullYear();
   .footer li a:hover { color: #0F172A; text-decoration-color: #0F172A; }
   .footer__bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgb(15 23 42 / 22%); color: #1E293B; }
   /* Variante „weiss“ (Jamil #6509): Fußzeile hell im Goldstich-Ton, feine Linie oben, Schrift/Links Anthrazit, Gold beim Überfahren */
-  :global(html[data-hero-stil='weiss']) .footer { background: #FEFCF7; color: #111827; border-top: 1px solid #F1ECE0; }
+  :global(html[data-hero-stil='weiss']) .footer { background: #FFFFFF; color: #111827; border-top: 1px solid #F1ECE0; } /* weiß, weil die Abschluss-Box davor Goldstich hat (#6515) */
   :global(html[data-hero-stil='weiss']) .footer :global(:focus-visible) { outline-color: #8C6D12; }
   :global(html[data-hero-stil='weiss']) .footer__claim, :global(html[data-hero-stil='weiss']) .footer__h, :global(html[data-hero-stil='weiss']) .footer__bottom { color: #4B5563; }
   :global(html[data-hero-stil='weiss']) .footer li a { color: #111827; text-decoration-color: rgb(17 24 39 / 25%); }

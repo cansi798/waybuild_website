@@ -70,7 +70,7 @@ html:root :is(.sn-btn:not(.sn-btn--rand), .jpr-btn--voll, .js7-btn, .hdr__cta):h
 /* 60/30/10 (Jamil #6448/#6449, 20.11.2026): Seite durchgehend Weiß, Karten #FAFAFA, Text/Struktur Anthrazit #111827, Gold nur Akzent.
    Abschnitte trennt eine feine Linie statt eines Farbwechsels (nicht zwischen Hero/dunklen Flächen). */
 /* feine Trennlinie entfällt seit #6453 (Weiß/Goldstich im Wechsel) */
-html[data-hero-stil='weiss']:root .footer { background: #FEFCF7; color: #111827; } /* Jamil #6509: Fußzeile hell */
+html[data-hero-stil='weiss']:root .footer { background: #FFFFFF; color: #111827; } /* Jamil #6509: Fußzeile hell */
 
 /* Jamil #6470/#6471: Startseite beginnt mit Goldstich im Hero (#FDFAF1), danach fortlaufend Weiß / #FDFAF1 (Abschnitt 2 weiß, 3 Goldstich …) */
 html[data-thema='besucherreise'] main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--white); --paper: #FAFAFA; background: var(--band); }
