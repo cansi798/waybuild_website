@@ -141,7 +141,8 @@ export const J_PROBLEM_NEU = {
  *  Darunter der 3-Schritte-Wechsler (J6Wechsler.astro): Tab = Kundenproblem (Zitat), Panel = Mockup (nur HTML/CSS) + Begründungszeile. */
 export const J_MASS = {
   titel: 'Websites und Software nach Maß – statt Kompromisse von der Stange',
-  unter: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.',
+  // seit Jamil #6488 (passt auch auf Websites); vorher: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.'
+  unter: 'Ob Website oder Software: Wir bauen genau das, was Ihr Betrieb wirklich braucht – ohne unnötige Funktionen, dafür exakt auf Ihre Kunden und Ihre Abläufe zugeschnitten.',
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)
   labelIndividuell: 'Individuell programmiert für Ihren Betrieb – 100\u00a0% eigene Abläufe', // 4. Tab (#6427), Beispiel-Mockup
   labelMuster: 'Individuell programmiert für Musterfirma GmbH – 100\u00a0% eigene Abläufe', // nur mit ALT_ZEIGEN.musterfirmaMockupsAlt
