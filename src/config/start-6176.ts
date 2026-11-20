@@ -69,7 +69,8 @@ export const J_HERO = {
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
   // Satz 1 seit Jamil #6429 („2a“); vorher 'Standard-Tools passen selten zum echten Arbeitsalltag.'
-  unter: 'Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag. Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
+  // seit Jamil #6485 nur noch Satz 2 (Satz 1 „Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag.“ entfernt)
+  unter: 'Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
@@ -124,7 +125,7 @@ export const J_PROBLEM = {
  *  keine). Gestaltung #6374: keine Mockups, je Karte ein schlichtes einfarbiges Linien-Icon, viel Weißraum. Karte 2 aus #6377 eingefügt,
  *  die bisherigen Karten 2/3 rücken auf 3/4 (Auslegung, im Talk gefragt). Icons: J6Problem.astro. */
 export const J_PROBLEM_NEU = {
-  titel: 'Wo im Arbeitsalltag oft unnötig Zeit liegen bleibt',
+  titel: 'Wo Betriebe heute Kunden und Zeit verlieren', // Jamil #6483 „A“ (vorher „Wo im Arbeitsalltag oft unnötig Zeit liegen bleibt“)
   karten: [
     { icon: 'brief', titel: 'Die Website ist nur eine digitale Visitenkarte', text: 'Kunden finden zwar Ihre Telefonnummer, aber Anfragen landen als unvollständige E-Mails im Postfach oder gehen im Trubel unter.' },
     { icon: 'puzzle', titel: 'Sie verbiegen Ihren Alltag für fertige Programme', text: 'Standard-Software zwingt Sie in starre Abläufe. Was das Programm nicht kann, wird am Ende doch wieder mit Excel-Listen und Notizzetteln irgendwie drumherum gebastelt.' },
