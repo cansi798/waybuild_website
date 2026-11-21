@@ -76,6 +76,7 @@ const ds = href('/datenschutz/');
   const URL_OK = (v: string) => { try { const u = new URL(/^https?:\/\//i.test(v) ? v : `https://${v}`); return /\.[a-z]{2,}$/i.test(u.hostname); } catch { return false; } };
   // Paket-Knöpfe aus Abschnitt 6 (J6Preise, data-paket): gewähltes Paket ins Ziel-Formular übernehmen (MKT-002)
   document.querySelectorAll<HTMLAnchorElement>('a[data-paket][href^="#start-"]').forEach((a) => a.addEventListener('click', () => {
+    document.querySelectorAll<HTMLInputElement>('form[data-js7] input[name="paket"]').forEach((f) => { f.value = ''; }); // nur das zuletzt gewählte Paket
     const ziel = document.querySelector<HTMLFormElement>(a.getAttribute('href')!);
     const feld = ziel?.querySelector<HTMLInputElement>('input[name="paket"]');
     if (feld) feld.value = a.dataset.paket ?? '';

@@ -27,3 +27,8 @@
 ## Runde 6 – Erwartung nach der Paketanfrage, 404 (00:30–00:37)
 - MKT-013: kontakt.astro (&weg=buchung nach ?buchen=1), danke.astro (Schritt 3 „Vertrag per E-Mail“), 404.astro (dritter Knopf Erstberatung).
 - Prüfung: check, build, seo, axe 404 + Danke-Buchung, Buchungsweg inkl. Danke, E2E 24/24.
+## Runde 7 – Handy: Leiste über den Formularen, unabhängiges Review (00:28–00:35)
+- Sichtprüfung Startseite 390 je Abschnitt: Leiste verdeckt Felder im Formular-Abschnitt.
+- MKT-014: StickyBar.astro (IntersectionObserver auf #kontakt-start). J6Start.astro: Paketfeld vor dem Setzen in beiden Formularen leeren (Review-Hinweis).
+- Unabhängiges Review (Subagent, nur lesend) von kontakt/danke/J6Start/J6Preise: keine Fehler mit hoher Sicherheit, XSS-frei (nur textContent/value), HTML-Struktur ok.
+- Prüfung: check, build, seo, axe Kernseiten, Leisten-Test Chromium + WebKit, E2E 24/24.

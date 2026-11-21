@@ -61,7 +61,12 @@ interface Props { thema?: 'besucherreise'; nachHero?: boolean }
     let vorbei = false;
     let verdeckt = false;
     let beobachter: IntersectionObserver | null = null;
-    const zeigen = () => leiste.classList.toggle('ist-da', vorbei || verdeckt);
+    // Formular-Abschnitt unten (#kontakt-start, J6Start): dort ist die Leiste überflüssig und verdeckt Felder am Handy → ausblenden
+    // (Loop 22.11.2026, MKT-014)
+    let amFormular = false;
+    const zeigen = () => leiste.classList.toggle('ist-da', (vorbei || verdeckt) && !amFormular);
+    const formular = document.getElementById('kontakt-start');
+    if (formular) new IntersectionObserver(([e]) => { amFormular = e.isIntersecting; zeigen(); }).observe(formular);
 
     const decke = () => {
       const v = imBild && !!naechster && naechster.getBoundingClientRect().top <= knopf.getBoundingClientRect().top;

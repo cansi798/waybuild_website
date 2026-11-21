@@ -20,3 +20,4 @@
 - D5: axe-Funde nach WCAG 2.2/Best Practice behoben (MKT-009). Ausnahme bewusst gelassen: die 13 schmalen Szenen-Striche im Beispiel-Film am Handy (target-size) – dieselbe Funktion haben die großen Knöpfe „zurück/weiter“ (WCAG 2.5.8, Ausnahme „gleichwertige Bedienung“).
 - D6: Alle Knöpfe „Kostenlose Erstberatung“ (Kopfzeile, Leiste, Handy-Menü auf allen Seiten, Ratgeber, Blog, Warum webgold) führen zum selben schlanken Formular mit Anliegen (MKT-011). Der Preis-Block in Ratgebern bleibt beim Paket-Formular.
 - D7: Danke-Seite nach „Paket anfragen“ zeigt „Vertrag per E-Mail – mit Auftragsbestätigung, erst damit verbindlich“ (Inhalt wie BUCHEN.kaufHinweis); 404 bekommt den Knopf „Kostenlose Erstberatung“ (MKT-013).
+- D8: Leiste am Handy blendet sich auf der Startseite aus, solange der Formular-Abschnitt unten im Bild ist (MKT-014). Hinweis aus dem Review umgesetzt: Paket aus Preis-Karte steht nur im zuletzt gewählten Formular.
