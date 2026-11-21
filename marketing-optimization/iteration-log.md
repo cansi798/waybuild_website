@@ -12,3 +12,7 @@
 - MKT-003: src/pages/llms.txt.ts – Abschnitt Startseite aus config/start-6176.ts (J_HERO, J_PROBLEM_NEU, J_MASS, J_ERST, J_UMSTIEG, J_PREISE, J_START) und Vergleich aus start-vergleich.ts.
 - MKT-004: J6Start.astro (data-weg, ?weg=…), danke.astro (Schritte 3–4 je Weg aus J_START/J_ERST).
 - Prüfung: check 0, build, seo 61 ok, axe/Querscroll 390/1440 ok, E2E 24/24, Sichtprüfung Danke 390/1440. Gate PASS_WITH_LIMITATIONS.
+## Runde 3 – Barrierefreiheit WCAG 2.2 und Tempo (00:25–00:35)
+- Tempo gemessen (lokal, ohne Drosselung): / LCP 0,6–0,7 s, CLS 0, 5 Anfragen, HTML 272 KB roh/63 KB gzip; /kontakt/ 0,2–0,3 s; /preise/ 0,25–0,4 s; /beispiele/ 0,8–0,9 s. Kein akuter Engpass → MKT-008 zurückgestellt.
+- MKT-009: start-vergleich.css (Spaltenkopf am Handy nur optisch versteckt), kontakt.astro (div statt aside), BaseLayout.astro (Vorschau-Leiste als aside mit Namen).
+- Prüfung: check 0, build, seo 61, axe WCAG 2.2 + Best Practice 10 Seiten × 2, E2E Chromium + WebKit je 24/24, Sichtprüfung Vergleich 390 und Kontakt 1440 unverändert.

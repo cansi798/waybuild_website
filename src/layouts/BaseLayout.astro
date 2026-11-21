@@ -148,7 +148,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
     {IS_PREVIEW && (
-      <div class="preview-bar">
+      <aside class="preview-bar" aria-label="Vorschau-Hinweis">{/* Landmark (axe region), nur Vorschau */}
         <span class="preview-bar__text">Vorschau, noch nicht veröffentlicht</span>
         {/* Offene Startpunkte: sitzt in der Leiste (nicht fest am Bildrand), damit nichts verdeckt wird */}
         {SHOW_HINTS && openTodos > 0 && (
@@ -156,7 +156,7 @@ const jsonLd = [organization, website, ...(breadcrumbSchema ? [breadcrumbSchema]
             <span aria-hidden="true">!</span> {openTodos}<em> Punkte offen bis zum Start</em>
           </a>
         )}
-      </div>
+      </aside>
     )}
     <Header thema={thema} />
     <main id="main" data-stapel={Astro.props.stapel ? "" : undefined}>

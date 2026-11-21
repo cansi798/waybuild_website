@@ -7,3 +7,4 @@ Werkzeuge: Build wie CI im node:22-Container (`npm run check`, `npm run build`, 
 | 0 Baseline | 0 Fehler | ok | 61 Seiten ok | 57 Seiten × 2 ok | 4 FAIL (MKT-001) | – |
 | 1 | 0 Fehler | ok | 61 Seiten ok | Kernseiten (/, /kontakt/, /danke/, /preise/) × 2 ok | 20/20 ok (inkl. Rückfall E-Mail-Programm) | PASS_WITH_LIMITATIONS (nur Chromium, kein echter Versand) |
 | 2 | 0 Fehler | ok | 61 Seiten ok | /, /kontakt/, /danke/?weg=schnell, /danke/?weg=gespraech × 2 ok | 24/24 ok (inkl. Danke je Weg) | PASS_WITH_LIMITATIONS |
+| 3 | 0 Fehler | ok | 61 Seiten ok | 10 Seiten × 2 mit WCAG 2.2 + Best Practice: nur target-size /beispiele/ 390 (Ausnahme) | Chromium 24/24, WebKit 24/24 | PASS_WITH_LIMITATIONS |

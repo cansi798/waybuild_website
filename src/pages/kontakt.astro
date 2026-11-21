@@ -128,7 +128,8 @@ import '../styles/seite-kontakt.css';
       </form>
       </div>
 
-      <aside class="side sk-seite" aria-labelledby="sk-draht-h">
+      <!-- div statt aside: lag in einer section (axe landmark-complementary-is-top-level, Loop 22.11.2026) -->
+      <div class="side sk-seite">
         <div class="card side__card sk-karte">
           <h2 id="sk-draht-h" class="sn-h4">Direkter Draht</h2>
           <p class="sk-karte__text">Lieber gleich sprechen? Erreichen Sie uns auch so.</p><!-- von uns ergänzt (#5892) -->
@@ -145,7 +146,7 @@ import '../styles/seite-kontakt.css';
           <li><strong>Kostenlos & unverbindlich</strong>Die Erstberatung kostet nichts.</li>
           <li><strong>Ehrliche Beratung</strong>Wir empfehlen, was Sie wirklich brauchen.</li>
         </ul>
-      </aside>
+      </div>
     </div>
   </section>
 </BaseLayout>
