@@ -78,7 +78,7 @@ Für die Software selbst fallen keine Lizenzkosten pro Nutzer an. Die Kosten ent
 
 - Sie selbst bestimmen wollen, in welchem Rechenzentrum Ihre Daten liegen,
 - Sie die Abhängigkeit von einem einzelnen Anbieter verringern möchten,
-- Sie mit sensiblen Daten arbeiten, etwa von Mandanten, Patienten oder Mitarbeitenden, und Ihnen die Kontrolle darüber wichtig ist,
+- Sie mit sensiblen Daten arbeiten, etwa von Mandanten, Patienten oder Mitarbeitern, und Ihnen die Kontrolle darüber wichtig ist,
 - im Alltag Dateiablage, Kalender und Videocalls im Vordergrund stehen und keine komplexen Office-Automatisierungen.
 
 ### Beides kombinieren

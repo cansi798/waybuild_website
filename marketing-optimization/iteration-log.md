@@ -32,3 +32,6 @@
 - MKT-014: StickyBar.astro (IntersectionObserver auf #kontakt-start). J6Start.astro: Paketfeld vor dem Setzen in beiden Formularen leeren (Review-Hinweis).
 - Unabhängiges Review (Subagent, nur lesend) von kontakt/danke/J6Start/J6Preise: keine Fehler mit hoher Sicherheit, XSS-frei (nur textContent/value), HTML-Struktur ok.
 - Prüfung: check, build, seo, axe Kernseiten, Leisten-Test Chromium + WebKit, E2E 24/24.
+## Runde 8 – Hausregeln und Handy-Eingabe (00:35–00:42)
+- MKT-015: kontakt.astro (Platzhalter), ratgeber nextcloud-statt-microsoft-365.md + it-wartungsvertrag-worauf-achten.md, J6Start.astro (kontakt-Feld ohne inputmode=email). UWG-Suche (rechtssicher, unbegrenzt, Superlative, garantiert) in eigenen Texten: ohne Fund; Funde nur in Jamils Texten (Fragen 1, 3, 4).
+- Prüfung: check, build, seo, axe 4 Seiten × 2, E2E 24/24.

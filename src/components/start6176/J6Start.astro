@@ -30,7 +30,7 @@ const ds = href('/datenschutz/');
         <h3 id="js7-g-h" class="js7-karte__titel">{G.titel}</h3>
         <p class="js7-karte__text">{G.text}</p>
         <label class="js7-feld"><span>{G.name}*</span><input name="name" autocomplete="name" required /></label>
-        <label class="js7-feld"><span>{G.kontakt}*</span><input name="kontakt" autocomplete="email" inputmode="email" required data-art="kontakt" /></label>
+        <label class="js7-feld"><span>{G.kontakt}*</span><input name="kontakt" autocomplete="email" required data-art="kontakt" />{/* ohne inputmode=email: Telefonnummer muss am Handy genauso leicht gehen (Loop 22.11.2026) */}</label>
         <fieldset class="js7-chips">
           <legend>{G.grob} <small>{G.optional}</small></legend>
           {G.themen.map((t) => <label class="js7-chip"><input type="radio" name="thema" value={t} /><span>{t}</span></label>)}

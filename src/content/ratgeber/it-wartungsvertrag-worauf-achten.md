@@ -78,7 +78,7 @@ Regeln Sie außerdem den **Ausstieg**, solange das Verhältnis gut ist:
 Hat Ihr IT-Dienstleister Zugriff auf personenbezogene Daten, etwa über Fernwartung, Postfächer oder Backups, liegt in der Regel eine **Auftragsverarbeitung** nach Art. 28 DSGVO vor. Dafür ist ein Vertrag vorgeschrieben, der schriftlich abzufassen ist. Das elektronische Format ist zulässig ([Art. 28 DSGVO](https://dsgvo-gesetz.de/art-28-dsgvo/)). Er regelt unter anderem:
 
 - dass Daten nur auf Ihre dokumentierte Weisung verarbeitet werden,
-- die Vertraulichkeit der eingesetzten Mitarbeitenden,
+- die Vertraulichkeit der eingesetzten Mitarbeiter,
 - die technischen und organisatorischen Schutzmaßnahmen,
 - den Einsatz von Unterauftragnehmern,
 - Löschung oder Rückgabe der Daten nach Vertragsende,
