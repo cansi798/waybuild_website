@@ -9,6 +9,7 @@ import { SEITEN_MAX } from '../../config/pakete-abo';
 import PreisBlock from '../../components/PreisBlock.astro';
 import { leistungBySlug, leistungAb } from '../../config/leistungen';
 import { href, absolute } from '../../lib/paths';
+import { ERSTBERATUNG_PFAD } from '../../config/startseite';
 import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
 import '../../styles/start-neu.css';
 import '../../styles/seite-wissen.css';
@@ -74,7 +75,7 @@ const schema = [
             <p>{leistungPreis ? `${leistungPreis} · netto · ` : ''}{leistung.teaser}</p>
           </div>
           <div class="art__cta-btns">
-            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=${leistung.slug}`}>Kostenlose Erstberatung</a>
+            <a class="btn btn--primary" href={href(ERSTBERATUNG_PFAD)}>Kostenlose Erstberatung</a>
             {/* Alte Leistungsseiten sind seit 09.11.2026 unverlinkt (noindex); stattdessen die neue Übersicht (Jamil #5274/#5276) */}
             <a class="btn btn--ghost" href={href('/leistungen/')}>Alle Leistungen</a>
           </div>
@@ -87,7 +88,7 @@ const schema = [
             <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Bis zu {SEITEN_MAX} Seiten</p>
           </div>
           <div class="art__cta-btns">
-            <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenlose Erstberatung</a>
+            <a class="btn btn--primary" href={href(ERSTBERATUNG_PFAD)}>Kostenlose Erstberatung</a>
             <a class="btn btn--ghost" href={href('/preise/')}>Preis & Details</a>
           </div>
         </aside>

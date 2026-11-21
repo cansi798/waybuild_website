@@ -7,6 +7,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { company, WAAS, PAKETE, formatEuro } from '../../config/site';
 import { SEITEN_MAX } from '../../config/pakete-abo';
 import { href, absolute } from '../../lib/paths';
+import { ERSTBERATUNG_PFAD } from '../../config/startseite';
 import SnAbschluss from '../../components/startneu/SnAbschluss.astro';
 import '../../styles/start-neu.css';
 import '../../styles/seite-wissen.css';
@@ -67,7 +68,7 @@ const schema = [
           <p>{PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(' · ')} im Monat netto · Keine Einrichtungskosten · Bis zu {SEITEN_MAX} Seiten</p>
         </div>
         <div class="post__cta-btns">
-          <a class="btn btn--primary" href={`${href('/kontakt/')}?leistung=business-website`}>Kostenlose Erstberatung</a>
+          <a class="btn btn--primary" href={href(ERSTBERATUNG_PFAD)}>Kostenlose Erstberatung</a>
           <a class="btn btn--ghost" href={href('/preise/')}>Preis & Details</a>
         </div>
       </aside>

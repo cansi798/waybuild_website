@@ -19,6 +19,9 @@ export const ANLIEGEN = {
   erstberatung: { label: 'Kostenlose Erstberatung', paket: 'Kostenlose Erstberatung' },
   bewerten: { label: 'Unternehmensauftritt bewerten lassen', paket: 'Unternehmensauftritt bewerten lassen' },
 };
+/** Pfad des Haupt-Knopfs „Kostenlose Erstberatung“ (überall gleich, Jamil #5322 Q2): /kontakt/ erkennt das Anliegen, zeigt keine
+ *  Paketwahl und sendet „Kostenlose Erstberatung“ mit (Loop 22.11.2026, MKT-001/MKT-011). Mit href() verwenden. */
+export const ERSTBERATUNG_PFAD = `/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`;
 
 export const HERO = {
   /* Zielgruppenzeile „Für kleine und mittlere Unternehmen“ im Hero entfernt (Jamil #4984/#4985, 08.11.2026) */

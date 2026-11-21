@@ -6,15 +6,14 @@ import { NAV } from '../config/nav';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import MobileMenu from './MobileMenu.astro';
-import { ANLIEGEN } from '../config/startseite';
+import { ANLIEGEN, ERSTBERATUNG_PFAD } from '../config/startseite';
 
 // thema 'besucherreise' (neue Startseite, Jamil Talk 4753): Knopf mit Jamils Wortlaut „Kostenlose Erstberatung“.
 // Logo C auf allen Seiten, auch auf der Startseite statt der Text-Marke „rethink.website“
 // (Jamil, Talk qh87y3sj #5226/#5227 „Ja logo c auf der seite überall“).
 interface Props { thema?: 'besucherreise' }
 const { thema } = Astro.props;
-const reise = thema === 'besucherreise';
-const ctaHref = reise ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : href('/kontakt/');
+const ctaHref = href(ERSTBERATUNG_PFAD); // überall mit Anliegen (MKT-011)
 const ctaText = ANLIEGEN.erstberatung.label;
 
 const current = Astro.url.pathname;

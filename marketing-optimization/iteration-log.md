@@ -16,3 +16,8 @@
 - Tempo gemessen (lokal, ohne Drosselung): / LCP 0,6–0,7 s, CLS 0, 5 Anfragen, HTML 272 KB roh/63 KB gzip; /kontakt/ 0,2–0,3 s; /preise/ 0,25–0,4 s; /beispiele/ 0,8–0,9 s. Kein akuter Engpass → MKT-008 zurückgestellt.
 - MKT-009: start-vergleich.css (Spaltenkopf am Handy nur optisch versteckt), kontakt.astro (div statt aside), BaseLayout.astro (Vorschau-Leiste als aside mit Namen).
 - Prüfung: check 0, build, seo 61, axe WCAG 2.2 + Best Practice 10 Seiten × 2, E2E Chromium + WebKit je 24/24, Sichtprüfung Vergleich 390 und Kontakt 1440 unverändert.
+## Runde 4 – ein Haupt-Knopf, ein Verhalten (00:21–00:30)
+- Neuer Buchungstest: /preise/ → Fenster „Paket anfragen“ (Extra Logo) → /kontakt/?paket=…&buchen=1 → Versand „Buchung: …“ mit Extras: grün, keine JS-Fehler.
+- Fund: Ratgeber/Blog „Kostenlose Erstberatung“ öffnete die Paketwahl ohne Vorauswahl; Kopfzeile/Leiste/Menü auf Unterseiten ohne Anliegen.
+- MKT-011: ERSTBERATUNG_PFAD in config/startseite.ts; Header, StickyBar, MobileMenu, warum-wir, blog/[id], ratgeber/[id].
+- Prüfung: check 0, build, seo 61, axe 4 Seiten × 2, Buchungs-/Link-Test 390/1440, E2E 24/24.
