@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { href } from '../lib/paths';
+import { ANLIEGEN, ERSTBERATUNG_PFAD } from '../config/startseite';
 ---
 
 <BaseLayout title="Seite nicht gefunden" description="Diese Seite existiert nicht." noindex>
@@ -12,6 +13,7 @@ import { href } from '../lib/paths';
       <div class="nf__actions">
         <a class="btn btn--primary" href={href('/')}>Zur Startseite</a>
         <a class="btn btn--ghost" href={href('/preise/')}>Preise ansehen</a>
+        <a class="btn btn--ghost" href={href(ERSTBERATUNG_PFAD)}>{ANLIEGEN.erstberatung.label}</a>{/* Loop 22.11.2026: Sackgasse vermeiden */}
       </div>
     </div>
   </section>

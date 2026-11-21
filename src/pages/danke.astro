@@ -17,6 +17,10 @@ const WEGE = {
     { strong: 'Gespräch', span: J_START.gespraech.titel.replace(/^.*\((.*)\)$/, '$1, kostenlos') },
     { strong: 'Ihre Vorschau', span: zeiten.join(' · ') },
   ],
+  // Paketanfrage über „Paket anfragen“ (/kontakt/?buchen=1, MKT-013): Inhalt aus BUCHEN.kaufHinweis (config/pakete-abo.ts)
+  buchung: [
+    { strong: 'Vertrag per E-Mail', span: 'mit Auftragsbestätigung, erst damit verbindlich' }, // Inhalt wie BUCHEN.kaufHinweis
+  ],
   schnell: [
     { strong: 'Ihre Website-Vorschau', span: 'am nächsten Werktag, Link per E-Mail' },
     { strong: 'Wenn es passt', span: 'Feinschliff in Ihrem Tempo' },

@@ -24,3 +24,6 @@
 ## Runde 5 – strukturierte Daten (00:25–00:30)
 - MKT-012: seitenSchema() in src/lib/schema.ts; ContactPage auf /kontakt/, AboutPage auf /ueber-uns/ (Name/Beschreibung = Title/Description der Seite, @id-Verweise auf #organization/#website).
 - Geprüft: alle 147 JSON-LD-Blöcke im Build parsen; check, build, seo, axe, E2E grün.
+## Runde 6 – Erwartung nach der Paketanfrage, 404 (00:30–00:37)
+- MKT-013: kontakt.astro (&weg=buchung nach ?buchen=1), danke.astro (Schritt 3 „Vertrag per E-Mail“), 404.astro (dritter Knopf Erstberatung).
+- Prüfung: check, build, seo, axe 404 + Danke-Buchung, Buchungsweg inkl. Danke, E2E 24/24.

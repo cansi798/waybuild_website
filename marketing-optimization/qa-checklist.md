@@ -10,3 +10,4 @@ Werkzeuge: Build wie CI im node:22-Container (`npm run check`, `npm run build`, 
 | 3 | 0 Fehler | ok | 61 Seiten ok | 10 Seiten × 2 mit WCAG 2.2 + Best Practice: nur target-size /beispiele/ 390 (Ausnahme) | Chromium 24/24, WebKit 24/24 | PASS_WITH_LIMITATIONS |
 | 4 | 0 Fehler | ok | 61 Seiten ok | Ratgeber, Blog, Warum webgold, / × 2 ok | Buchung (Preise → Fenster → Kontakt → Versand) + Leistung/Ratgeber/Warum-wir je 390/1440 ok; E2E 24/24 | PASS_WITH_LIMITATIONS |
 | 5 | 0 Fehler | ok | 61 Seiten ok; 147 JSON-LD-Blöcke gültig | /kontakt/, /ueber-uns/ × 2 ok | E2E 24/24 | PASS_WITH_LIMITATIONS (Rich-Results-Test von Google nicht verfügbar) |
+| 6 | 0 Fehler | ok | 61 Seiten ok | /404.html, /danke/?weg=buchung × 2 ok | Buchungsweg inkl. Danke 390/1440 ok, E2E 24/24 | PASS_WITH_LIMITATIONS |

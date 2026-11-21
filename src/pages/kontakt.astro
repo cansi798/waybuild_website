@@ -376,7 +376,7 @@ import '../styles/seite-kontakt.css';
         if (!res.ok || json.success === false) throw new Error(String(res.status));
         // Abschluss der Journey: Danke-Seite mit nächsten Schritten
         try { ueber.forEach(([k]) => sessionStorage.removeItem(k)); } catch { /* egal */ }
-        location.href = `${form.dataset.thanks}?name=${encodeURIComponent(data.name.split(' ')[0])}`;
+        location.href = `${form.dataset.thanks}?name=${encodeURIComponent(data.name.split(' ')[0])}${buchen ? '&weg=buchung' : ''}`; // Danke je Weg (MKT-013)
       } catch {
         button.disabled = false;
         status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${form.dataset.mailto}.`;
