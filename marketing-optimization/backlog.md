@@ -17,3 +17,4 @@
 | MKT-013 | Retention | /danke/, /404 | Nach „Paket anfragen“ sagte die Danke-Seite „Erstgespräch 30 Min.“ statt Vertrag per E-Mail; 404 ohne Weg zur Beratung | passende Erwartung nach Paketanfrage; keine Sackgasse | 2 | 4 | 1 | 1 | 8 | erledigt R6 |
 | MKT-014 | Decision | / (Handy) | Leiste „Kostenlose Erstberatung + WhatsApp“ blieb über den Formularen unten sichtbar, verdeckte Felder und konkurrierte mit den Formular-Knöpfen | Leiste dort aus → ungestörtes Ausfüllen | 3 | 3 | 1 | 1 | 9 | erledigt R7 |
 | MKT-015 | Decision/Content | /kontakt/, Ratgeber, Startseite-Formular | Gendern („Mitarbeitende“) entgegen Hausregel; Feld Telefon-oder-E-Mail öffnete am Handy die E-Mail-Tastatur | Hausregel einhalten; leichtere Eingabe der Telefonnummer | 2 | 4 | 1 | 1 | 8 | erledigt R8 (Jamils Texte: Frage 7) |
+| MKT-016 | Consideration/SEO | /preise/ | H1 und erste H2 wortgleich | eindeutige Gliederung | 1 | 4 | 1 | 1 | 4 | Frage 8 an Jamil |

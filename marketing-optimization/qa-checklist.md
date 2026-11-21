@@ -13,3 +13,4 @@ Werkzeuge: Build wie CI im node:22-Container (`npm run check`, `npm run build`, 
 | 6 | 0 Fehler | ok | 61 Seiten ok | /404.html, /danke/?weg=buchung × 2 ok | Buchungsweg inkl. Danke 390/1440 ok, E2E 24/24 | PASS_WITH_LIMITATIONS |
 | 7 | 0 Fehler | ok | 61 Seiten ok | Kernseiten × 2 ok | Leisten-Test Chromium + WebKit 5/5, E2E 24/24; unabhängiger Code-Review (Subagent): keine Befunde mit hoher Sicherheit | PASS_WITH_LIMITATIONS |
 | 8 | 0 Fehler | ok | 61 Seiten ok | /, /kontakt/, 2 Ratgeber × 2 ok | E2E 24/24 | PASS_WITH_LIMITATIONS |
+| Ende (e87e76f) | 0 Fehler | ok | 61 Seiten ok | ALLE 57 Seiten × 390/1440: 114/114 ok (WCAG 2.1 AA, kein Querscrollen, keine JS-Fehler) | Formular-Wege, Buchungsweg, Leiste je Chromium + WebKit: 6/6 Läufe ohne Fehler | PASS_WITH_LIMITATIONS (kein echter Versand, keine echten Geräte) |
