@@ -23,7 +23,7 @@ const ds = href('/datenschutz/');
     </div>
 
     <div class="js7-karten">
-      <form class="js7-karte" id="start-gespraech" data-js7 data-betreff={G.betreff} data-endpoint={endpoint} data-key={formKey}
+      <form class="js7-karte" id="start-gespraech" data-js7 data-betreff={G.betreff} data-weg="gespraech" data-endpoint={endpoint} data-key={formKey}
         data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="js7-g-h">
         <p class="js7-karte__art">{G.art}</p>
         <span class="js7-badge">{G.badge}</span>
@@ -42,7 +42,7 @@ const ds = href('/datenschutz/');
         <p class="js7-status" role="status" aria-live="polite"></p>
       </form>
 
-      <form class="js7-karte" id="start-schnell" data-js7 data-betreff={S.betreff} data-endpoint={endpoint} data-key={formKey}
+      <form class="js7-karte" id="start-schnell" data-js7 data-betreff={S.betreff} data-weg="schnell" data-endpoint={endpoint} data-key={formKey}
         data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="js7-s-h">
         <p class="js7-karte__art">{S.art}</p>
         <span class="js7-badge js7-badge--hell">{S.badge}</span>
@@ -132,7 +132,10 @@ const ds = href('/datenschutz/');
         });
         const json = await res.json().catch(() => ({}));
         if (!res.ok || json.success === false) throw new Error(String(res.status));
-        location.href = `${form.dataset.thanks}${data.name ? `?name=${encodeURIComponent(data.name.split(' ')[0])}` : ''}`;
+        // Danke-Seite mit passenden nächsten Schritten je Weg (?weg=gespraech|schnell, Loop 22.11.2026, MKT-004)
+        const q = new URLSearchParams({ weg: form.dataset.weg ?? '' });
+        if (data.name) q.set('name', data.name.split(' ')[0]);
+        location.href = `${form.dataset.thanks}?${q}`;
       } catch {
         button.disabled = false;
         status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${form.dataset.mailto}.`;

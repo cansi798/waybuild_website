@@ -8,3 +8,7 @@
 - MKT-002: Preis-Knöpfe (J6Preise data-paket) → verstecktes Feld paket im Mini-Formular (J6Start), Betreff „… – Paket: X“. Dateien: J6Preise.astro, J6Start.astro
 - Prüfung: check 0 Fehler, build ok, seo 61 ok, axe/Querscroll Kernseiten 390/1440 ok, E2E 20/20. Gate PASS_WITH_LIMITATIONS.
 - Wirkung: unverified (keine Messdaten), Hypothese.
+## Runde 2 – KI-Suche und Danke-Seite (00:15–00:30)
+- MKT-003: src/pages/llms.txt.ts – Abschnitt Startseite aus config/start-6176.ts (J_HERO, J_PROBLEM_NEU, J_MASS, J_ERST, J_UMSTIEG, J_PREISE, J_START) und Vergleich aus start-vergleich.ts.
+- MKT-004: J6Start.astro (data-weg, ?weg=…), danke.astro (Schritte 3–4 je Weg aus J_START/J_ERST).
+- Prüfung: check 0, build, seo 61 ok, axe/Querscroll 390/1440 ok, E2E 24/24, Sichtprüfung Danke 390/1440. Gate PASS_WITH_LIMITATIONS.

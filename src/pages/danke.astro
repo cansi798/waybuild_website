@@ -7,10 +7,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { company } from '../config/site';
 import { href } from '../lib/paths';
+import { J_START, J_ERST } from '../config/start-6176';
+// Nächste Schritte je Weg (Loop 22.11.2026, MKT-004): ?weg=gespraech|schnell von den Formularen der Startseite (J6Start).
+// Nur Angaben, die dort schon stehen (Jamils Texte in config/start-6176.ts); ohne ?weg bleibt alles wie bisher.
+const vorschau = J_ERST.karten[1];
+const zeiten = 'zeiten' in vorschau ? vorschau.zeiten : []; // „Website: Nächster Werktag“, „Software: In 3 Werktagen“
+const WEGE = {
+  gespraech: [
+    { strong: 'Gespräch', span: J_START.gespraech.titel.replace(/^.*\((.*)\)$/, '$1, kostenlos') },
+    { strong: 'Ihre Vorschau', span: zeiten.join(' · ') },
+  ],
+  schnell: [
+    { strong: 'Ihre Website-Vorschau', span: 'am nächsten Werktag, Link per E-Mail' },
+    { strong: 'Wenn es passt', span: 'Feinschliff in Ihrem Tempo' },
+  ],
+};
 ---
 
 <BaseLayout title="Vielen Dank für Ihre Anfrage" description="Ihre Anfrage ist bei uns angekommen." noindex hideMobileCta ohneKontaktkopf>
-  <section class="section thanks">
+  <section class="section thanks" data-wege={JSON.stringify(WEGE)}>
     <div class="wrap">
       <span class="thanks__icon" aria-hidden="true">✓</span>
       <h1>Danke<span data-name></span>! Ihre Anfrage ist da.</h1>
@@ -19,8 +34,8 @@ import { href } from '../lib/paths';
       <ol class="next">
         <li class="is-done"><Icon name="mail" /><strong>Anfrage gesendet</strong><span>Erledigt</span></li>
         <li><Icon name="chat" /><strong>Wir melden uns</strong><span>per E-Mail oder Telefon</span></li>
-        <li><Icon name="calendar" /><strong>Erstgespräch</strong><span>30 Min., kostenlos</span>{/* Jamil #6055 Fr. 15 */}</li>
-        <li><Icon name="rocket" /><strong>In der Regel 14 Tage</strong><span>nach Ihren Inhalten online</span></li>
+        <li data-schritt="0"><Icon name="calendar" /><strong>Erstgespräch</strong><span>30 Min., kostenlos</span>{/* Jamil #6055 Fr. 15 */}</li>
+        <li data-schritt="1"><Icon name="rocket" /><strong>In der Regel 14 Tage</strong><span>nach Ihren Inhalten online</span></li>
       </ol>
 
       <div class="prep card">
@@ -51,7 +66,18 @@ import { href } from '../lib/paths';
 </BaseLayout>
 
 <script>
-  const name = new URLSearchParams(location.search).get('name');
+  const params = new URLSearchParams(location.search);
+  const name = params.get('name');
+  // Schritte 3 und 4 je Weg (MKT-004)
+  try {
+    const wege = JSON.parse(document.querySelector<HTMLElement>('[data-wege]')?.dataset.wege ?? '{}') as Record<string, { strong: string; span: string }[]>;
+    (wege[params.get('weg') ?? ''] ?? []).forEach((s, i) => {
+      const li = document.querySelector(`[data-schritt="${i}"]`);
+      if (!li) return;
+      li.querySelector('strong')!.textContent = s.strong;
+      li.querySelector('span')!.textContent = s.span;
+    });
+  } catch { /* bleibt Standard */ }
   if (name) document.querySelector('[data-name]')!.textContent = `, ${name.slice(0, 30)}`;
   // Nächsten Werktag berechnen (Sa/So überspringen)
   const d = new Date();

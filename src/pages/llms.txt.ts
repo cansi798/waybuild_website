@@ -7,10 +7,9 @@ import { absolute } from '../lib/paths';
 import { gruppenMitLeistungen } from '../config/leistungen-neu';
 import { ZIELGRUPPEN, PLATTFORM } from '../config/home';
 import { getCollection } from 'astro:content';
-import { CLAIM, BOTSCHAFT, ABSCHLUSS, UMSETZUNG, ENTSPANNT } from '../config/startseite';
-import { V_HERO, KUNDENREISE, VERGLEICH } from '../config/variante';
+import { CLAIM } from '../config/startseite';
+import { J_HERO, J_PROBLEM_NEU, J_MASS, J_ERST, J_UMSTIEG, J_PREISE, J_START, ALT_ZEIGEN } from '../config/start-6176';
 import { VERGLEICH_START } from '../config/start-vergleich';
-import { VORGEHEN } from '../config/vorgehen';
 import { START_ABLAUF_KURZ } from '../config/start-ablauf';
 import { SEITEN_MAX } from '../config/pakete-abo';
 import { SICHTBARKEIT, PANELS } from '../config/sichtbarkeit';
@@ -34,18 +33,18 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     PREIS_HINWEIS,
     '',
-    `## Startseite: ${V_HERO.titel.replace(/\.$/, '')}`,
-    `${V_HERO.titel} ${V_HERO.unter}`,
-    `- ${BOTSCHAFT.service}`,
-    `- ${KUNDENREISE.titel.replace(/\u00AD/g, '')} ${KUNDENREISE.intro} Die Kundenreise in fünf Stationen: ${KUNDENREISE.stationen.map((st) => `${st.name} (${st.frage} ${KUNDENREISE.antwortTitel}: ${st.antwort})`).join('; ')}. Ziel: ${KUNDENREISE.ziel} – ${KUNDENREISE.zielUnter} ${KUNDENREISE.schluss}`,
-    // Zwei Abschnitte nach der Kundenreise (Jamil #5664–#5672)
-    ...[UMSETZUNG, ENTSPANNT].map((a) => `- ${a.titel} ${a.intro} ${a.karten.map((k) => `${k.titel}: ${k.text}`).join(' ')}`),
-    // „Was Sie davon haben.“ von der Startseite entfernt (Jamil #5633); „Was wir für Ihre Sichtbarkeit tun.“ jetzt bei den Leistungen (#5634)
-    `- Drei Pakete, davon zwei Website-Pakete: ${PAKETE.map((p) => `${p.name} ${formatEuro(p.preis)}`).join(', ')} im Monat netto zzgl. MwSt., ohne Einrichtungskosten. ${komplett} Einmalig dazubuchbar: ${einmaligZeile()} (Festpreis netto). Auf Anfrage: ${AUF_ANFRAGE.join(', ')}.`,
-    // Phasen (Verstehen/Verbinden/Verbessern) und „So arbeiten wir.“ von der Startseite entfernt (Jamil, Talk qh87y3sj #5606/#5610, 12.11.2026); seit #5612 nach den Preisen
-    `- ${VORGEHEN.titel}: ${VORGEHEN.unter} ${VORGEHEN.intro} Ablauf von der Anfrage bis online in sechs Schritten: ${VORGEHEN.schritte.map((s, i) => `${i + 1}. ${s.titel} (${s.wann}): ${s.text}`).join(' ')}`,
-    `- Vergleich nach Anbieter-Art (${VERGLEICH.spalten.join(', ')}): ${VERGLEICH.zeilen.map((z) => `${z.frage} webgold: ${z.werte[3]}`).join('; ')}. ${VERGLEICH.hinweis}`,
-    `- ${ABSCHLUSS.warumTitel} ${ABSCHLUSS.warum.join(' ')}`,
+    // Startseite (Loop 22.11.2026, MKT-003): aktuelle Abschnitte nach Jamil #6176–#6518, Texte wörtlich aus config/start-6176.ts.
+    // Vorher standen hier Kundenreise, „Umsetzung“, „Ganz entspannt“ und Vorgehen der früheren Startseite (nicht mehr sichtbar).
+    `## Startseite: ${J_HERO.titel}`,
+    J_HERO.unter,
+    `- ${J_HERO.preiszeile.join(' · ')}`,
+    `- ${J_PROBLEM_NEU.titel}: ${J_PROBLEM_NEU.karten.map((k) => `${k.titel} (${k.text})`).join('; ')}.`,
+    `- ${J_MASS.titel}. ${J_MASS.unter} Beispiele aus dem Alltag: ${J_MASS.schritte.slice(0, ALT_ZEIGEN.individuellTab ? 4 : 3).map((st) => `${st.titel}: ${st.zeigt}`).join(' ')} ${J_MASS.browserKurz}.`,
+    `- ${J_ERST.titel} ${J_ERST.unter} ${J_ERST.karten.map((k) => `${k.nr} ${k.titel}: ${'varianten' in k ? k.varianten.map((v) => v.text).join(' ') : 'punkte' in k ? `${k.einleitung} ${k.punkte.map((pk) => `${pk.name} ${pk.text}`).join('; ')}. ${k.schluss}` : k.text}`).join(' ')}`,
+    `- ${J_UMSTIEG.titel}. ${J_UMSTIEG.unter} ${J_UMSTIEG.karten.map((k) => `${k.frage} ${k.antwort}`).join(' ')}`,
+    `- ${J_PREISE.titel} ${J_PREISE.unter} ${J_PREISE.hinweis}`,
+    `- ${J_START.titel} ${J_START.unter} Weg 1: ${J_START.gespraech.art}, ${J_START.gespraech.titel}: ${J_START.gespraech.text} Weg 2: ${J_START.schnell.art}, ${J_START.schnell.titel}: ${J_START.schnell.text} Beide Wege über das Formular unten auf der Startseite (${url('/#kontakt-start')}) oder über ${url('/kontakt/')}.`,
+    `- ${VERGLEICH_START.titel} Vergleich mit ${VERGLEICH_START.spalten.slice(0, 2).map((sp) => sp.lang).join(' und ')} (${url('/warum-wir/')}): ${VERGLEICH_START.zeilen.map((z) => `${z.punkt}: ${z.werte.map((w, i) => `${VERGLEICH_START.spalten[i].kurz} ${VERGLEICH_START.stufen[w.s]}`).join(', ')}`).join('; ')}.`,
     `- Leitsatz: ${CLAIM}`,
     '',
     `## Das Angebot: ${WAAS.name}`,
