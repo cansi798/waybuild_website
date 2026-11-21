@@ -16,6 +16,9 @@ import { SHOW_HINTS, FAKTEN } from '../config/site';
 import { POSITIONIERUNG } from '../config/variante';
 import { UEBER_KOPF, GRUENDUNG, FAKTEN_TITEL } from '../config/ueber-uns';
 import { href } from '../lib/paths';
+import { seitenSchema } from '../lib/schema';
+const U_TITEL = 'Über uns: wer hinter webgold steht';
+const U_TEXT = 'webgold verbindet menschliche Beratung mit KI-gestützter Umsetzung: Ihre Website im Abo und auf Wunsch eine Web-App, für kleine und mittlere Unternehmen.';
 import '../styles/start-neu.css';
 import '../styles/seite-ueber.css';
 
@@ -36,8 +39,9 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <BaseLayout
-  title="Über uns: wer hinter webgold steht"
-  description="webgold verbindet menschliche Beratung mit KI-gestützter Umsetzung: Ihre Website im Abo und auf Wunsch eine Web-App, für kleine und mittlere Unternehmen."
+  title={U_TITEL}
+  description={U_TEXT}
+  schema={[seitenSchema(Astro.site, 'AboutPage', '/ueber-uns/', U_TITEL, U_TEXT)]}
   breadcrumb={[{ name: 'Über uns', path: '/ueber-uns/' }]}
 >
   <PageHeader

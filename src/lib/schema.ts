@@ -80,3 +80,21 @@ export function serviceSchema(site: URL | undefined, beschreibung?: string) {
     offers: waasOffers(site),
   };
 }
+
+/** Seiten-Typ für Kontakt- und Über-uns-Seite (ContactPage/AboutPage), verknüpft mit Organisation und Website über die @id
+ *  aus BaseLayout. Nur Angaben, die ohnehin auf der Seite stehen (Loop 22.11.2026, MKT-012). */
+export function seitenSchema(site: URL | undefined, typ: 'ContactPage' | 'AboutPage', pfad: string, name: string, beschreibung: string) {
+  const root = absolute('/', site);
+  return {
+    '@context': 'https://schema.org',
+    '@type': typ,
+    '@id': `${absolute(pfad, site)}#webpage`,
+    url: absolute(pfad, site),
+    name,
+    description: beschreibung,
+    inLanguage: 'de-DE',
+    isPartOf: { '@id': `${root}#website` },
+    about: { '@id': `${root}#organization` },
+    mainEntity: { '@id': `${root}#organization` },
+  };
+}

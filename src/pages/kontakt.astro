@@ -6,6 +6,9 @@ import Val from '../components/Val.astro';
 import Hint from '../components/Hint.astro';
 import Icon from '../components/Icon.astro';
 import { href } from '../lib/paths';
+import { seitenSchema } from '../lib/schema';
+const K_TITEL = 'Kontakt & kostenlose Erstberatung';
+const K_TEXT = 'Kostenlose Erstberatung zum Website-Abo anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck.';
 import { leistungen } from '../config/leistungen';
 import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile, komplettPreis, komplettZeile, monatMitKomplett, einzelnMitKomplett } from '../config/pakete-abo';
 import { VORSCHAU, vorschauText } from '../config/vorschau';
@@ -44,8 +47,9 @@ import '../styles/seite-kontakt.css';
 ---
 
 <BaseLayout
-  title="Kontakt & kostenlose Erstberatung"
-  description="Kostenlose Erstberatung zum Website-Abo anfragen: persönliche Beratung, Antwort in der Regel am nächsten Werktag, unverbindlich und ohne Verkaufsdruck."
+  title={K_TITEL}
+  description={K_TEXT}
+  schema={[seitenSchema(Astro.site, 'ContactPage', '/kontakt/', K_TITEL, K_TEXT)]}
   breadcrumb={[{ name: 'Kontakt', path: '/kontakt/' }]}
   hideMobileCta
   ohneKontaktkopf

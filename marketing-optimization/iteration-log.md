@@ -21,3 +21,6 @@
 - Fund: Ratgeber/Blog „Kostenlose Erstberatung“ öffnete die Paketwahl ohne Vorauswahl; Kopfzeile/Leiste/Menü auf Unterseiten ohne Anliegen.
 - MKT-011: ERSTBERATUNG_PFAD in config/startseite.ts; Header, StickyBar, MobileMenu, warum-wir, blog/[id], ratgeber/[id].
 - Prüfung: check 0, build, seo 61, axe 4 Seiten × 2, Buchungs-/Link-Test 390/1440, E2E 24/24.
+## Runde 5 – strukturierte Daten (00:25–00:30)
+- MKT-012: seitenSchema() in src/lib/schema.ts; ContactPage auf /kontakt/, AboutPage auf /ueber-uns/ (Name/Beschreibung = Title/Description der Seite, @id-Verweise auf #organization/#website).
+- Geprüft: alle 147 JSON-LD-Blöcke im Build parsen; check, build, seo, axe, E2E grün.
