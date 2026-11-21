@@ -36,6 +36,7 @@ const ds = href('/datenschutz/');
           {G.themen.map((t) => <label class="js7-chip"><input type="radio" name="thema" value={t} /><span>{t}</span></label>)}
         </fieldset>
         <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="paket" value="" />
         <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
         <button class="btn btn--lg js7-btn" type="submit">{G.knopf}</button>
         <p class="js7-status" role="status" aria-live="polite"></p>
@@ -52,6 +53,7 @@ const ds = href('/datenschutz/');
         <label class="js7-feld"><span>{S.email}* <small>{S.emailZusatz}</small></span><input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
         <label class="js7-feld"><span>{S.telefon} <small>{S.optional}</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" /></label>
         <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="paket" value="" />
         <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
         <button class="btn btn--lg js7-btn" type="submit">{S.knopf}</button>
         <p class="js7-status" role="status" aria-live="polite"></p>
@@ -72,6 +74,12 @@ const ds = href('/datenschutz/');
   const MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const TEL = /^[+\d][\d\s/()-]{5,}$/;
   const URL_OK = (v: string) => { try { const u = new URL(/^https?:\/\//i.test(v) ? v : `https://${v}`); return /\.[a-z]{2,}$/i.test(u.hostname); } catch { return false; } };
+  // Paket-Knöpfe aus Abschnitt 6 (J6Preise, data-paket): gewähltes Paket ins Ziel-Formular übernehmen (MKT-002)
+  document.querySelectorAll<HTMLAnchorElement>('a[data-paket][href^="#start-"]').forEach((a) => a.addEventListener('click', () => {
+    const ziel = document.querySelector<HTMLFormElement>(a.getAttribute('href')!);
+    const feld = ziel?.querySelector<HTMLInputElement>('input[name="paket"]');
+    if (feld) feld.value = a.dataset.paket ?? '';
+  }));
   document.querySelectorAll<HTMLFormElement>('form[data-js7]').forEach((form) => {
     const status = form.querySelector<HTMLElement>('.js7-status')!;
     const felder = [...form.querySelectorAll<HTMLInputElement>('input[required]')];
@@ -103,7 +111,8 @@ const ds = href('/datenschutz/');
       delete data.website; delete data.datenschutz;
       if (data.kontakt) { if (MAIL.test(data.kontakt.trim())) data.email = data.kontakt.trim(); else data.telefon = data.kontakt.trim(); }
       if (data.website_url && !/^https?:\/\//i.test(data.website_url.trim())) data.website_url = `https://${data.website_url.trim()}`;
-      const betreff = `${form.dataset.betreff}${data.thema ? ` (${data.thema})` : ''}`;
+      if (!data.paket) delete data.paket;
+      const betreff = `${form.dataset.betreff}${data.thema ? ` (${data.thema})` : ''}${data.paket ? ` – Paket: ${data.paket}` : ''}`;
       data.anliegen = betreff;
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {

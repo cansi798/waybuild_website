@@ -9,6 +9,10 @@ import { href } from '../lib/paths';
 import { leistungen } from '../config/leistungen';
 import { ABO_PAKETE, KOMPLETTPAKET, EINMALIG_DAZU, BUCHEN, euro, einmalSumme, gesamtZeile, komplettPreis, komplettZeile, monatMitKomplett, einzelnMitKomplett } from '../config/pakete-abo';
 import { VORSCHAU, vorschauText } from '../config/vorschau';
+import { ANLIEGEN } from '../config/startseite';
+// Anliegen ohne Paketbezug (Haupt-Knopf „Kostenlose Erstberatung“ in Hero, Kopfzeile, Leiste: ?paket=Kostenlose%20Erstberatung).
+// Sie öffnen KEINE Paket-/Extras-Wahl und werden als „anliegen“ mitgesendet (Loop 22.11.2026, MKT-001).
+const anliegenWerte = Object.values(ANLIEGEN).map((a) => a.paket);
 
 const interessen = [
   // Jamil #5956–#5958 (15.11.2026): jedes Paket einzeln auswählbar, alle „Auf Anfrage“-Einträge entfernt
@@ -63,7 +67,7 @@ import '../styles/seite-kontakt.css';
         <!-- Kostenlose Vorschau (Jamil #6061), Text zentral in config/vorschau.ts -->
         <p class="sk-vorschau"><strong>{VORSCHAU.titel}</strong><span>{vorschauText()}</span></p>
       </div>
-      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-nur-mit-website={KOMPLETTPAKET.nurMitWebsite ? "1" : ""} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} novalidate>
+      <form class="form card sk-form" id="contact-form" data-kombi={JSON.stringify(kombiDaten)} data-nur-mit-website={KOMPLETTPAKET.nurMitWebsite ? "1" : ""} data-ab={KOMPLETTPAKET.kombiAb ? '1' : ''} data-kombi-gruender={KOMPLETTPAKET.kombiMitGruenderpaket ? '1' : ''} data-komplett-name={KOMPLETTPAKET.name} data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-absenden={BUCHEN.absenden} data-thanks={href('/danke/')} data-website-slugs={websiteSlugs.join(',')} data-anliegen={JSON.stringify(anliegenWerte)} novalidate>
         <label>Worum geht es?
           <select name="interesse">
             <option value="">Noch unsicher – bitte beraten Sie mich</option>
@@ -160,13 +164,16 @@ import '../styles/seite-kontakt.css';
     const websiteSlugs = (form.dataset.websiteSlugs ?? '').split(',');
     const leistung = params.get('leistung') ?? '';
     // ?dazu=… allein (Block „Neu starten oder neu aufstellen?“, Jamil #5283) zeigt ebenfalls die Paket- und Extras-Wahl
-    const paketKontext = websiteSlugs.includes(leistung) || !!tarif || !!params.get('paket') || !!params.get('dazu') || !!params.get('komplett');
+    // ?paket=Kostenlose Erstberatung (Haupt-Knopf) ist ein Anliegen, kein Paket: keine Paketwahl, Anliegen wird mitgesendet (MKT-001)
+    const paketRoh = (params.get('paket') ?? '').trim();
+    const anliegen = (JSON.parse(form.dataset.anliegen ?? '[]') as string[]).find((a) => a.toLowerCase() === paketRoh.toLowerCase()) ?? '';
+    const paketKontext = websiteSlugs.includes(leistung) || !!tarif || (!!paketRoh && !anliegen) || !!params.get('dazu') || !!params.get('komplett');
     // ?leistung=rundum bzw. Auswahl „Website + Web-App“ (Jamil #5944): wie Website, mit angehaktem „Individuelle Software“
     if (leistung === 'rundum') interesse.value = 'rundum';
     // Paketwahl: sichtbar, sobald es um das Website-Abo geht; ?paket=… wählt vor (Groß-/Kleinschreibung egal).
     const wahl = document.getElementById('wahl') as HTMLFieldSetElement | null;
     const wahlSelect = form.elements.namedItem('paket_wahl') as HTMLSelectElement | null;
-    const paket = (params.get('paket') ?? '').trim();
+    const paket = anliegen ? '' : paketRoh;
     const norm = (t: string) => t.toLowerCase().replace(/^paket\s+/, '');
     // alte Werte (Basis/Plus, vor der Umbenennung am 14.11.2026) werden weiter akzeptiert
     const alt: Record<string, string> = { basis: 'basis', plus: 'plus' };
@@ -289,7 +296,7 @@ import '../styles/seite-kontakt.css';
     }
     const mitCheck = (nachricht: string) => (checkText ? `${nachricht ? `${nachricht}\n\n` : ''}${checkText}` : nachricht);
 
-    const interessText = (d: Record<string, string>) => interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
+    const interessText = (d: Record<string, string>) => (!d.interesse && anliegen ? anliegen : null) ?? interesse.querySelector<HTMLOptionElement>(`option[value="${CSS.escape(d.interesse ?? '')}"]`)?.textContent ?? 'Beratung';
     const status = form.querySelector<HTMLElement>('.form__status')!;
     // Eigene Fehlermeldungen unter JEDEM fehlenden Pflichtfeld statt nur der Browser-Blase am ersten (Jamil #6038, Audit B4).
     // Verknüpft per aria-describedby + aria-invalid, verschwindet beim Korrigieren; Fokus auf das erste fehlende Feld.
@@ -331,6 +338,7 @@ import '../styles/seite-kontakt.css';
         if (data.paket) data.paket = `${data.paket} + ${form.dataset.komplettName}`; // ohne Grundpaket nicht wählbar (#5642)
       }
       const einmalig = !mitPaket() ? [] : alle?.checked ? [alle.dataset.text ?? 'Alle vier Extras'] : extras.filter((c) => c.checked).map((c) => c.dataset.text ?? c.value);
+      if (anliegen) data.anliegen = anliegen; // MKT-001: z. B. „Kostenlose Erstberatung“ vom Haupt-Knopf
       if (buchen) data.anliegen = 'Paketanfrage über „Paket anfragen“ (Vertrag und Auftragsbestätigung per E-Mail)'; // Jamil #6055 Fr. 18
       if (einmalig.length) data.einmalig = einmalig.join(', ');
       // Summen der früheren Zusammenstellung zusätzlich als eigene Felder (nur alter Stand)
@@ -339,7 +347,7 @@ import '../styles/seite-kontakt.css';
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
-        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.monatlich ? `\nMonatlich: ${data.monatlich}` : ''}${data.einmalig ? `\nEinmalig dazu: ${data.einmalig}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
+        const body = `Name: ${data.name}\nUnternehmen: ${data.firma}\nE-Mail: ${data.email}\nTelefon: ${data.telefon}\nInteresse: ${interessText(data)}${data.anliegen && data.anliegen !== interessText(data) ? `\nAnliegen: ${data.anliegen}` : ''}${data.paket ? `\nPaket: ${data.paket}` : ''}${data.monatlich ? `\nMonatlich: ${data.monatlich}` : ''}${data.einmalig ? `\nEinmalig dazu: ${data.einmalig}` : ''}${data.branche ? `\nBranche: ${data.branche}` : ''}\n\n${data.nachricht}`;
         location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(`${buchen ? 'Buchung' : 'Anfrage'}: ${interessText(data)}`)}&body=${encodeURIComponent(body)}`;
         status.textContent = 'Ihr E-Mail-Programm hat sich geöffnet. Bitte senden Sie die Nachricht dort ab.';
         return;

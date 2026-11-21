@@ -4,6 +4,7 @@ import "../../styles/preise-6400.css";
 // Preise, Namen, „Ideal für“ und ✓-Listen aus config/pakete-abo.ts (dieselbe Quelle wie /preise/, Schema und llms.txt).
 // Drei Karten nebeneinander (Handy untereinander), Fokus auf Karte 2 (Rahmen Hauptfarbe + Badge „Am beliebtesten“),
 // Karte 3 als Baustein (Badge „+ Kombinierbar oder einzeln“). Kein Foto, keine Animation. Knöpfe führen zu Abschnitt 7.
+// data-paket: J6Start übernimmt das gewählte Paket als verstecktes Feld ins Ziel-Formular (Loop 22.11.2026, MKT-002).
 import { J_PREISE as T } from '../../config/start-6176';
 import { ABO_PAKETE, KOMPLETTPAKET as K, euro } from '../../config/pakete-abo';
 const [basis, plus] = ABO_PAKETE;
@@ -40,7 +41,7 @@ const Haken = '<path d="M20 6 9 17l-5-5" />';
               <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={Haken} /><span>{t}</span></li>
             ))}
           </ul>
-          <a class:list={['btn btn--lg jpr-btn', { 'jpr-btn--voll': k.tipp }]} href={k.ziel}>{k.knopf}<span class="sr-only">: {k.name}</span></a>
+          <a class:list={['btn btn--lg jpr-btn', { 'jpr-btn--voll': k.tipp }]} href={k.ziel} data-paket={k.name}>{k.knopf}<span class="sr-only">: {k.name}</span></a>
         </li>
       ))}
     </ul>
