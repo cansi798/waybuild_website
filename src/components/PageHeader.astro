@@ -29,13 +29,13 @@ const { eyebrow, title, lead, foto } = Astro.props;
 
 <style>
   /* Seit 20.11.2026 hell wie der Startseiten-Hero (Jamil Talk qh87y3sj #6521: „Passe alle Unterseiten an Design und Stil der Hauptseite an“,
-     Sicherung Tag vor-unterseiten-20261120): Goldstich #FEFCF7 mit zartem Gold-Schimmer oben rechts, Schrift Anthrazit, Eyebrow in Text-Gold,
+     Sicherung Tag vor-unterseiten-20261120): Goldstich #FFFEFB mit zartem Gold-Schimmer oben rechts, Schrift Anthrazit, Eyebrow in Text-Gold,
      feine Goldlinie unter der Eyebrow. Vorher dunkler Verlauf #EFBF04 → #111827 mit treibenden Farbflächen (Markup .ph__flaechen bleibt, ausgeblendet).
      Einblenden wie im Hero: Überschrift sofort sichtbar (nur 8 px Gleiten), Text und Knöpfe weich nach; reduced-motion = keine Bewegung. */
   .ph {
     position: relative; overflow: hidden; overflow: clip; contain: paint; isolation: isolate; color: #111827;
     padding-block: clamp(48px, 8vw, 104px) clamp(44px, 6vw, 80px);
-    background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FEFCF7;
+    background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FFFEFB;
     border-bottom: 1px solid #F1ECE0;
   }
   .ph__flaechen { display: none; }

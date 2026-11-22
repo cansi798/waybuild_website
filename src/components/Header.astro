@@ -98,7 +98,7 @@ const isCurrent = (path?: string) => path && current === href(path);
    * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #111827, 10,4 : 1),
    * Hover/aktuelle Seite --paper-2 mit #EFBF04; Fokusrahmen #EFBF04. Knopf „Kostenlose Erstberatung“ dunkles
    * Logo-Türkis #EFBF04 mit Weiß (6,36 : 1), Hover #111827 (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
-  .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
+  .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid rgb(0 0 0 / 6%); } /* Jamil #6973: kein Schatten, nur feine neutrale Linie */
   /* leicht transparent mit Weichzeichner dahinter (Jamil #5916, 14.11.2026); ohne backdrop-filter fast deckend */
   .hdr::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
@@ -110,7 +110,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
   .hdr .hdr__cta { background: #EFBF04; border-color: #EFBF04; color: #111827; } /* Jamil #6475: Gold, Schrift Anthrazit (≈ 8,5 : 1) */
   .hdr .hdr__cta:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
-  .hdr.is-scrolled { box-shadow: var(--shadow); }
+  .hdr.is-scrolled { box-shadow: none; } /* Jamil #6973: auch beim Scrollen kein Schatten */
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
 

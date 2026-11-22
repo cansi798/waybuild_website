@@ -75,7 +75,7 @@ html[data-hero-stil='weiss']:root .footer { background: #FFFFFF; color: #111827;
 /* Jamil #6470/#6471: Startseite beginnt mit Goldstich im Hero (#FDFAF1), danach fortlaufend Weiß / #FDFAF1 (Abschnitt 2 weiß, 3 Goldstich …) */
 html[data-thema='besucherreise'] main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--white); --paper: #FAFAFA; background: var(--band); }
 html[data-thema='besucherreise'] main[data-stapel] > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--creme); --paper: #FAFAFA; background: var(--band); }
-html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr { background: transparent; } /* Kopfleiste wie der Hero, kein harter Bruch; Deckkraft steckt in ::before (vorher deckend #FEFCF7 → Transparenz unsichtbar, Jamil #6941) */
+html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr { background: transparent; } /* Kopfleiste wie der Hero, kein harter Bruch; Deckkraft steckt in ::before (vorher deckend #FFFEFB → Transparenz unsichtbar, Jamil #6941) */
 html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr::before { background: rgb(254 252 247 / 80%); }
 /* Header-CTA in Gold (Jamil #6475): #EFBF04, Schrift #111827 (≈ 8,5 : 1), Hover #EFBF04 – auch mobil/Knopfleiste */
 html:root .hdr .hdr__cta, html:root .sticky-bar .btn--primary { background: #EFBF04; border-color: #EFBF04; color: #111827; }

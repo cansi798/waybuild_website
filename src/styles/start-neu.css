@@ -3,14 +3,14 @@
  * Der Hero (.v-hero, variante-start.css) und der Stapel-Effekt (stapel.ts) sind unverändert.
  *
  * Gestaltung: unsere Marke, ruhig und hochwertig.
- * - Farben nur aus der CI: Türkis #EFBF04 (Flächen, Zeichen), Tinte #EFBF04 (Schrift, Knöpfe), Tief #111827, Hauch #FEFCF7,
+ * - Farben nur aus der CI: Türkis #EFBF04 (Flächen, Zeichen), Tinte #EFBF04 (Schrift, Knöpfe), Tief #111827, Hauch #FFFEFB,
  *   Papier #f7f5f0, Sand #F1F5F9, Linie #ddd6c9, Text #3a3a3a / #545454. Keine Verläufe.
  * - Schrift: Plus Jakarta Sans für Überschriften und Text (QA #5952, vorher Montserrat/Jost), Zeilenabstand 1,7.
  * - Überschriften links, Unterzeile/Lead immer direkt darunter (Jamil #6012, 15.11.2026: „Subheadline immer unter Headline, auf der
  *   gesamten Website“; der frühere Modifier .sn-kopf--zweispaltig ist entfernt); Karten nur, wo sie etwas zusammenfassen.
  * - Eine Sache darf auffallen: der stehende Bildrahmen der Kundenreise (Teil 3). Alles andere bleibt still.
  * - Hintergründe im Wechsel: Produkte Papier → Problem Weiß → Lösung Papier → Beweis Weiß → Angebot Sand → Handlung Hauch.
- * Kontraste (WCAG AA): Schrift Türkis nur #EFBF04 (6,4 : 1 auf Weiß, 5,7 : 1 auf #FEFCF7, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
+ * Kontraste (WCAG AA): Schrift Türkis nur #EFBF04 (6,4 : 1 auf Weiß, 5,7 : 1 auf #FFFEFB, 5,6 : 1 auf Sand), Text --ink-soft ≥ 6,9 : 1;
  * Knöpfe Weiß auf #EFBF04 (6,4 : 1). Grid-Spalten immer minmax(0, 1fr) bzw. min-width: 0 (WebKit, Querscrollen). */
 
 .sn { --sn-tinte: #EFBF04; /* dunkles Gold, ≥ 4,5 : 1 auch auf Champagner (Jamil #6435) */ --sn-tief: #111827; --sn-tuerkis: #EFBF04; --sn-mittel: #EFBF04; --sn-hauch: #FBF3D5; /* neue Palette als Grundwert (QA #5952, 15.11.2026) */

@@ -137,7 +137,7 @@ html.js .gs-film .wrap.gs-weglabel { display: none; }
 /* ── Angebot ── */
 .gs-angebot .lead { margin-inline: auto; }
 .gs-empfehlung { display: grid; gap: 6px; max-width: 760px; margin: 0 auto clamp(30px, 4vw, 44px); padding: clamp(18px, 3vw, 26px) clamp(18px, 3vw, 30px);
-  border-radius: 20px; background: #FEFCF7; border-left: 5px solid #EFBF04; }
+  border-radius: 20px; background: #FFFEFB; border-left: 5px solid #EFBF04; }
 .gs-empfehlung p { margin: 0; }
 .gs-empfehlung__kopf { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
 .gs-empfehlung__satz { font-family: var(--font-head); font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); font-weight: 700; line-height: 1.35; color: var(--ink); }
@@ -200,19 +200,19 @@ html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-l
 
 /* Interne Seite /geschichte/ (noindex, nicht verlinkt): nur Farben an die Startseite angeglichen (Jamil #6521, 20.11.2026).
    Hero und Handlung hell (Goldstich, Anthrazit, Gold-Akzent), keine Türkis-Reste. */
-.gs-hero { color: #111827; background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FEFCF7; }
+.gs-hero { color: #111827; background: radial-gradient(90% 80% at 90% 0%, rgb(212 175 55 / 10%) 0%, rgb(212 175 55 / 0) 60%), #FFFEFB; }
 .gs-hero__flaeche { display: none; }
 .gs-hero__kennzeile { color: #111827; }
 .gs-hero__titel { color: #111827; }
 .gs-hero__titel span + span { color: #111827; }
 .gs-hero__unter { color: #374151; }
 .gs-weg__symbol, .gs-person__foto { background: #FBF3D5; }
-.gs-weg:has(input:checked), html.js[data-weg="betrieb"] .gs-angebot .pm__kombi-liste li { background: #FEFCF7; }
+.gs-weg:has(input:checked), html.js[data-weg="betrieb"] .gs-angebot .pm__kombi-liste li { background: #FFFEFB; }
 .gs-wegwahl__knopf:hover { background: #FBF3D5; }
 .gs-chip input:checked + span, .gs-wegwahl__knopf[aria-pressed="true"] { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] { background: #FBF3D5; border-color: #EFBF04; color: #111827; }
 html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: #374151; }
-.gs-handlung.section--dark { background: #FEFCF7; color: #111827; }
+.gs-handlung.section--dark { background: #FFFEFB; color: #111827; }
 .gs-handlung.section--dark h2 { color: #111827; }
 .gs-handlung.section--dark .eyebrow { color: #111827; }
 .gs-handlung.section--dark .lead, .gs-handlung .gs-handlung__text { color: #4B5563; }

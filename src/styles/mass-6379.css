@@ -9,11 +9,11 @@
 /* Tabs: Desktop Liste links, Handy Segmentleiste */
 .jm__tabs { display: grid; gap: 10px; }
 .jm-tab { position: relative; overflow: hidden; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: start; width: 100%;
-  padding: 18px 20px; border-radius: 20px; border: 1.5px solid var(--line); background: var(--white); color: var(--ink); text-align: left; cursor: pointer;
+  padding: 18px 20px; border-radius: 20px; border: 1px solid var(--line); background: var(--white); color: var(--ink); text-align: left; cursor: pointer;
   font: inherit; transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
 .jm-tab:hover { border-color: #FFDE21; }
 .jm-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.jm-tab[aria-selected="true"] { border-color: #EFBF04; } /* Jamil #6931: nur dünne Goldlinie, kein Schatten, keine andere Hintergrundfarbe */
+.jm-tab[aria-selected="true"] { border-color: #EFBF04; } /* Jamil #6931: nur dünne Goldlinie, kein Schatten, keine andere Hintergrundfarbe; seit #6971 1 px statt 1,5 px */
 .jm-tab__nr { grid-row: span 2; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--paper-2, #F1F5F9);
   font-family: var(--font-head); font-weight: 800; font-size: 0.9rem; color: #111827; }
 .jm-tab[aria-selected="true"] .jm-tab__nr { background: #EFBF04; color: #111827; }
@@ -99,7 +99,7 @@
 /* Handy: Segmentleiste, Zitat über dem Mockup, höheres Mockup mit größerer Schrift */
 @media (max-width: 899px) {
   .jm__tabs { grid-template-columns: repeat(var(--jm-n, 3), minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 16px; background: var(--paper-2, #F1F5F9); }
-  .jm-tab { display: flex; justify-content: center; gap: 6px; padding: 10px 6px; border: 1.5px solid transparent; border-radius: 12px; background: transparent; text-align: center; }
+  .jm-tab { display: flex; justify-content: center; gap: 6px; padding: 10px 6px; border: 1px solid transparent; border-radius: 12px; background: transparent; text-align: center; }
   .jm-tab[aria-selected="true"] { background: var(--white); box-shadow: none; border-color: #EFBF04; }
   .jm-tab__nr { display: none; }
   .jm-tab__zitat { display: none; }

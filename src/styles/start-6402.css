@@ -45,9 +45,9 @@
 #kontakt-start .js7-karte .js7-status { color: #111827; }
 
 /* Seit Jamil #6515 hell: Goldstich-Fläche, feine Goldlinie oben, Karten weiß mit feinem Rand, Texte Anthrazit */
-#kontakt-start.js7 { --band: #FEFCF7; background: #FEFCF7; color: #111827; padding-block: clamp(64px, 9vw, 120px); }
+#kontakt-start.js7 { --band: #FFFEFB; background: #FFFEFB; color: #111827; padding-block: clamp(64px, 9vw, 120px); }
 #kontakt-start.js7 .js7__kopf .sn-h2 { color: #111827; }
 #kontakt-start.js7 .js7__kopf .sn-lead { color: #4B5563; }
 #kontakt-start .js7-karte { border: 1px solid #ECE7DA; box-shadow: 0 18px 40px -32px rgb(17 24 39 / 30%); }
 #kontakt-start .js7-vertrauen p { color: #374151; }
-#kontakt-start .js7-foto { border-color: #FEFCF7; }
+#kontakt-start .js7-foto { border-color: #FFFEFB; }

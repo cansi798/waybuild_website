@@ -20,7 +20,9 @@ import SchnellFelder from './SchnellFelder.astro';
 const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 const zeigeSchnell = ALT_ZEIGEN.heroSchnell && !ALT_ZEIGEN.abschlussCtaAlt; // Absende-Skript steckt in J6Start
-const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
+// Jamil #6968: Knopf springt zum Abschluss „Bereit zu sehen …“ (#kontakt-start, J6Start) – sanft per scroll-behavior: smooth (global.css),
+// ohne JS normaler Anker. Nur wenn der alte Abschluss-CTA aktiv ist, wie früher zur Kontaktseite.
+const kontakt = ALT_ZEIGEN.abschlussCtaAlt ? href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`) : '#kontakt-start';
 ---
 
 {/* Seit Jamil #6478: ohne Animation einspaltig und mittig (jh--mitte), Inhalte blenden dezent ein (hero-6369.css) */}
