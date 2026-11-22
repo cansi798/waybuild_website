@@ -449,25 +449,3 @@
 .jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
 .jp-block__text { margin: 0; font-size: clamp(1rem, 0.97rem + 0.2vw, 1.1rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-
-/* Jamil #6917/#6918: Scroll-Bühne im Abschnitt „Wo Betriebe heute …“. Grundzustand (ohne JS, Handy, reduzierte Bewegung): beide Stufen untereinander. */
-.jp__stufen { display: grid; gap: clamp(48px, 8vw, 96px); }
-.jp__lead { margin: 14px 0 0; max-width: 60ch; }
-.jp__fortschritt { display: none; }
-.jp--buehne .jp__buehne { height: calc(100svh + (var(--jp-n, 2) - 1) * 80svh); }
-.jp--buehne .jp__stufe .sn-h2 { font-size: clamp(1.7rem, 1.1rem + 1.7vw, 2.6rem); max-width: 26ch; }
-.jp--buehne .jp__lead { font-size: 1.05rem; line-height: 1.55; margin-top: 10px; }
-.jp--buehne .jp__fest { padding-bottom: 56px; position: sticky; top: var(--kopf-gesamt, 73px); height: calc(100svh - var(--kopf-gesamt, 73px)); box-sizing: border-box; display: grid; align-content: center; }
-.jp--buehne .jp__stufen { gap: 0; }
-.jp--buehne .jp__stufe { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity 520ms ease, transform 520ms ease; }
-.jp--buehne .jp__stufe.is-aktiv { opacity: 1; transform: none; pointer-events: auto; }
-.jp--buehne .jp-bloecke { margin-top: clamp(24px, 4vh, 48px); gap: clamp(20px, 3.5vh, 40px) clamp(24px, 3vw, 56px); }
-.jp--buehne .jp-bloecke { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.jp--buehne .jp-block { max-width: none; }
-.jp--buehne .jp__fortschritt { display: flex; align-items: center; gap: 14px; position: absolute; left: 0; right: 0; bottom: clamp(12px, 3vh, 28px);
-  justify-content: center; margin: 0; font-size: 0.85rem; font-weight: 700; color: #111827; font-variant-numeric: tabular-nums; }
-.jp__punkte { display: inline-flex; gap: 6px; }
-.jp__punkte i { width: 26px; height: 4px; border-radius: 4px; background: #E2E8F0; transition: background 300ms ease; }
-.jp__punkte i.is-aktiv { background: var(--gold); }
-@media (min-width: 1100px) { .jp-bloecke--loesung { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (max-height: 760px) { .jp--buehne .jp-block__text { font-size: 0.95rem; line-height: 1.55; } }

@@ -37,8 +37,6 @@ export const ALT_ZEIGEN = {
   heroAnimation: false, // Hero-Animation Browser → Dashboard (#6369) – seit Jamil #6478 aus, Hero einspaltig mittig; true = wieder da
   individuellTab: false, // 4. Tab „Individuell“ im Wechsler (#6427) – seit Jamil #6460 aus; true = wieder da
   browserBox: false, // separate Box „Läuft einfach im Browser“ unter dem Wechsler (#6397) – seit Jamil #6424 kleiner Hinweis im Wechsler; true = Box wieder
-  heroChips: true, // Jamil #6916: vier Problem-Chips unter der Hero-Unterzeile; false = wieder weg
-  problemBuehne: true, // Jamil #6917/#6918: Abschnitt „Wo Betriebe …“ als Scroll-Bühne (Stufe 1 Problem → Stufe 2 Lösung); false = wie vorher, einfach untereinander
   heroZeile: false, // „Keine Tickets. Kein CMS. Keine Technikkenntnisse.“ im Hero – seit Jamil #6417 aus; true = wieder sichtbar
   // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
   wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
@@ -134,25 +132,6 @@ export const J_PROBLEM_NEU = {
     { icon: 'pfeile', titel: 'Alles wird doppelt und dreifach abgetippt', text: 'Kundendaten wandern von der E-Mail in eine Excel-Liste, von dort in den Kalender und irgendwann ins Rechnungsprogramm – das kostet Nerven und führt zu Fehlern.' },
     { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeiter brauchen Wochen, um durchzublicken.' },
   ],
-} as const;
-
-/** Jamil #6916: vier Chips im Hero (Icon + Kurzwort), springen zum Abschnitt „Wo Betriebe heute Kunden und Zeit verlieren“ (#problem, Stufe 1).
- *  Reihenfolge und Icons wie J_PROBLEM_NEU.karten. Zum Entfernen: ALT_ZEIGEN.heroChips = false. */
-export const J_HERO_CHIPS = {
-  label: 'Typische Probleme im Arbeitsalltag – zum Abschnitt springen',
-  chips: [
-    { icon: 'brief', kurz: 'Nur Visitenkarte' },
-    { icon: 'puzzle', kurz: 'Starre Programme' },
-    { icon: 'pfeile', kurz: 'Doppelt abtippen' },
-    { icon: 'lupe', kurz: 'Infos verstreut' },
-  ],
-} as const;
-
-/** Jamil #6917/#6918: Abschnitt „Wo Betriebe …“ als Scroll-Bühne mit 2 Stufen (Problem → Lösung). Stufe 2 nimmt NUR vorhandene Texte
- *  aus J_MASS (Überschrift, Unterzeile, Titel + `zeigt` der Schritte 1–4); `schritt` = Index in J_MASS.schritte, passend zur Karte der Stufe 1. */
-export const J_PROBLEM_STUFEN = {
-  label: 'Stufe',
-  lösung: [0, 3, 1, 2], // Visitenkarte → Kalkulator · verbiegen → Software nach Betrieb · doppelt abtippen → Auftrags-Maske · Info suchen → Portal
 } as const;
 
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus

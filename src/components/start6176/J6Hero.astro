@@ -11,8 +11,7 @@
 // die Beispiele sind nur ausgeblendet (ALT_ZEIGEN.heroBeispieleAlt = true holt sie zurück). Headline/Subheadline seit #6366.
 import J6Icon from './J6Icon.astro';
 import J6Fluss from './J6Fluss.astro';
-import ProblemIcon from './ProblemIcon.astro';
-import { J_HERO as T, J_HERO_CHIPS as HC, ALT_ZEIGEN } from '../../config/start-6176';
+import { J_HERO as T, ALT_ZEIGEN } from '../../config/start-6176';
 import '../../styles/hero-6369.css';
 import { ANLIEGEN } from '../../config/startseite';
 import { href } from '../../lib/paths';
@@ -25,14 +24,6 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
     <div class="jh__text">
       <h1 id="jh-h1" class="jh__titel">{T.titel}</h1>
       <p class="jh__unter">{T.unter}</p>
-      {/* Jamil #6916: vier Problem-Chips (Icon + Kurzwort), Tipp springt zum Abschnitt „Wo Betriebe heute …“; abschaltbar: ALT_ZEIGEN.heroChips */}
-      {ALT_ZEIGEN.heroChips && (
-        <ul class="jh-chips" aria-label={HC.label}>
-          {HC.chips.map((c) => (
-            <li><a class="jh-chip" href="#problem"><ProblemIcon icon={c.icon} size={20} class="jh-chip__ico" /><span>{c.kurz}</span></a></li>
-          ))}
-        </ul>
-      )}
       {ALT_ZEIGEN.heroZeile && <p class="jh__zeile">{T.zeile}</p>}{/* Jamil #6417: ausgeblendet */}
       <div class="jh-knopfe">
         <a class="btn btn--lg jh-btn" href={kontakt}>{T.knopf}</a>

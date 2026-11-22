@@ -167,16 +167,3 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 }
 @keyframes jh-dezent { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes jh-titel-gleiten { from { transform: translateY(8px); } to { transform: none; } }
-
-/* Jamil #6916: Problem-Chips unter der Unterzeile. Handy: eine wischbare Zeile (nur die Zeile scrollt, nicht die Seite). */
-.jh-chips { width: 100%; list-style: none; margin: clamp(14px, 2.4vw, 22px) 0 0; padding: 4px 2px; display: flex; flex-wrap: nowrap; gap: 10px; max-width: 100%; min-width: 0;
-  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.jh-chips::-webkit-scrollbar { display: none; }
-.jh--mitte .jh-chips { justify-content: flex-start; }
-@media (min-width: 760px) { .jh--mitte .jh-chips { justify-content: center; flex-wrap: wrap; overflow: visible; } }
-.jh-chips li { flex: 0 0 auto; scroll-snap-align: start; }
-.jh-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 12px; border-radius: 999px; border: 1.5px solid #EFBF04;
-  background: #FFFFFF; color: #111827; font-size: 0.92rem; font-weight: 650; text-decoration: none; white-space: nowrap; transition: background 200ms ease, border-color 200ms ease; }
-.jh-chip__ico { width: 20px; height: 20px; color: #EFBF04; flex: none; }
-.jh-chip:hover { background: #FBF3D5; }
-.jh-chip:focus-visible { outline: 3px solid #EFBF04; outline-offset: 2px; }

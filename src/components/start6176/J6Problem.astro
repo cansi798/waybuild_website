@@ -3,7 +3,7 @@
 // Seit Jamil #6372–#6374 + #6377 (19.11.2026): neue Überschrift, vier Textblöcke (J_PROBLEM_NEU) ohne Mockups, je ein schlichtes,
 // einfarbiges Linien-Icon (überfüllter Briefumschlag, verbogenes Puzzleteil, zwei kreuzende Pfeile, Lupe), viel Weißraum; ohne
 // Subheadline und Abschlusszeile. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
-import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_MASS as M, J_PROBLEM_STUFEN as ST } from '../../config/start-6176';
+import { J_PROBLEM as T, J_PROBLEM_NEU as N } from '../../config/start-6176';
 import ProblemIcon from './ProblemIcon.astro';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
@@ -29,90 +29,20 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       </>
     ) : (
       <>
-        {/* Jamil #6917/#6918: zwei Stufen (1 Problem, 2 Lösung). Mit JS auf großen Bildschirmen bleibt der Abschnitt stehen und die Stufen
-            blenden über (Skript unten); sonst (Handy, reduzierte Bewegung, ohne JS) stehen beide untereinander. Alles bleibt im DOM. */}
-        <div class="jp__buehne" data-jp-buehne style="--jp-n:2">
-          <div class="jp__fest">
-            <div class="jp__stufen">
-              <div class="jp__stufe is-aktiv" data-jp-stufe="1">
-                <div class="sn-kopf jp__kopf">
-                  <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
-                </div>
-                <ul class="jp-bloecke">
-                  {N.karten.map((k) => (
-                    <li class="jp-block j6-ein">
-                      <ProblemIcon icon={k.icon} class="jp-block__ico" />
-                      <h3 class="jp-block__titel">{k.titel}</h3>
-                      <p class="jp-block__text">{k.text}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {ALT_ZEIGEN.problemBuehne && (
-              <div class="jp__stufe" data-jp-stufe="2" role="group" aria-labelledby="jp-h2">
-                <div class="sn-kopf jp__kopf">
-                  <h2 id="jp-h2" class="sn-h2 sn-h2--klein">{M.titel}</h2>
-                  <p class="sn-lead jp__lead">{M.unter}</p>
-                </div>
-                <ul class="jp-bloecke jp-bloecke--loesung">
-                  {N.karten.map((k, i) => {
-                    const sch = M.schritte[ST['lösung'][i]];
-                    return (
-                      <li class="jp-block">
-                        <ProblemIcon icon={k.icon} class="jp-block__ico" />
-                        <h3 class="jp-block__titel">{sch.titel}</h3>
-                        <p class="jp-block__text">{sch.zeigt}</p>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              )}
-            </div>
-            {ALT_ZEIGEN.problemBuehne && <p class="jp__fortschritt" aria-hidden="true"><span data-jp-zaehler>1</span> / 2<span class="jp__punkte"><i class="is-aktiv"></i><i></i></span></p>}
-          </div>
+        <div class="sn-kopf jp__kopf">
+          <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
         </div>
+        <ul class="jp-bloecke">
+          {N.karten.map((k) => (
+            <li class="jp-block j6-ein">
+              <ProblemIcon icon={k.icon} class="jp-block__ico" />
+              <h3 class="jp-block__titel">{k.titel}</h3>
+              <p class="jp-block__text">{k.text}</p>
+            </li>
+          ))}
+        </ul>
       </>
     )}
   </div>
 </section>
 
-<script>
-  // Scroll-Bühne (Jamil #6917/#6918): nur Großbild (≥ 900 × 600), ohne reduzierte Bewegung. Pro Scroll-Schritt genau eine Änderung:
-  // der Abschnitt bleibt stehen (position: sticky, CSS in start-6176.css unter .jp--buehne), die Stufe richtet sich nach dem Scrollfortschritt.
-  // Ohne JS, auf dem Handy oder bei reduzierter Bewegung bleibt alles untereinander (Klasse jp--buehne wird dann nicht gesetzt).
-  const sektion = document.querySelector<HTMLElement>('section.jp--neu');
-  const buehne = sektion?.querySelector<HTMLElement>('[data-jp-buehne]');
-  const stufen = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-stufe]')] : [];
-  if (sektion && buehne && stufen.length > 1) {
-    const punkte = [...buehne.querySelectorAll<HTMLElement>('.jp__punkte i')];
-    const zaehler = buehne.querySelector<HTMLElement>('[data-jp-zaehler]');
-    const mq = window.matchMedia('(min-width: 900px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)');
-    let aktiv = -1;
-    let geplant = false;
-    const setze = (n: number) => {
-      if (n === aktiv) return;
-      aktiv = n;
-      stufen.forEach((st, i) => st.classList.toggle('is-aktiv', i === n));
-      punkte.forEach((p, i) => p.classList.toggle('is-aktiv', i === n));
-      if (zaehler) zaehler.textContent = String(n + 1);
-    };
-    const rechne = () => {
-      geplant = false;
-      if (!sektion.classList.contains('jp--buehne')) return;
-      const r = buehne.getBoundingClientRect();
-      const weg = buehne.offsetHeight - window.innerHeight; // Scrollstrecke, solange die Bühne steht
-      const f = weg > 0 ? Math.min(1, Math.max(0, -r.top / weg)) : 0;
-      setze(Math.min(stufen.length - 1, Math.floor(f * stufen.length * 0.999)));
-    };
-    const plane = () => { if (!geplant) { geplant = true; requestAnimationFrame(rechne); } };
-    const an = () => {
-      sektion.classList.toggle('jp--buehne', mq.matches);
-      if (!mq.matches) { aktiv = -1; stufen.forEach((st) => st.classList.add('is-aktiv')); } else { aktiv = -2; plane(); }
-    };
-    mq.addEventListener('change', an);
-    window.addEventListener('scroll', plane, { passive: true });
-    window.addEventListener('resize', plane, { passive: true });
-    an();
-  }
-</script>
