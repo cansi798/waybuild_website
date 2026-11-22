@@ -178,7 +178,8 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 .jh-schnell__knopf { min-height: 48px; padding: 0 22px; border-radius: 999px; background: #EFBF04; color: #111827; font-weight: 700; border: 0; cursor: pointer; white-space: nowrap; }
 .jh-schnell__knopf:hover { background: #FFDE21; }
 .jh-schnell__knopf:focus-visible { outline: 3px solid #111827; outline-offset: 2px; }
-.jh-schnell__klein { margin: 0; font-size: 0.82rem; color: #475569; }
+.jh-schnell__kopf { margin: 0; font-size: 1rem; font-weight: 700; color: #111827; }
+.jh-schnell__klein { margin: 0 auto; max-width: 52ch; font-size: 0.85rem; line-height: 1.5; color: #475569; }
 .jh-schnell .js7-fehler { text-align: left; }
 .jh-schnell__mehr { display: grid; gap: 14px; text-align: left; margin-top: 8px; padding: clamp(16px, 3vw, 22px); border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 14px 30px -20px rgb(31 41 55 / 35%); }
 .jh-schnell__mehr[hidden] { display: none; }

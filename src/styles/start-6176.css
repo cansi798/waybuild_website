@@ -447,5 +447,5 @@
 .jp-block { min-width: 0; display: grid; gap: 12px; align-content: start; max-width: 52ch; }
 .jp-block__ico { width: 44px; height: 44px; color: var(--gold); margin-bottom: 6px; } /* einheitliches Gold (Jamil #6915) */
 .jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
-.jp-block__text { margin: 0; font-size: clamp(1rem, 0.97rem + 0.2vw, 1.1rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.jp-block__text { margin: 0; font-size: clamp(1rem, 0.93rem + 0.2vw, 1.04rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

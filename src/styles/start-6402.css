@@ -12,9 +12,9 @@
 .js7-badge--hell { background: #FBF3D5; color: #111827; box-shadow: inset 0 0 0 1px #EADBA6; }
 .js7-karte__titel { margin: 0; font-family: var(--font-head); font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; color: var(--ink); }
 .js7-karte__text { margin: 0 0 4px; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
-.js7-feld { display: grid; gap: 6px; font-weight: 600; font-size: 0.92rem; color: var(--ink); }
+.js7-feld { display: grid; gap: 6px; font-weight: 600; font-size: 0.9rem; color: var(--ink); }
 .js7-feld small, .js7-chips small { font-weight: 500; color: var(--ink-soft); }
-.js7-feld input { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; background: #F8FAFC;
+.js7-feld input { font-size: max(16px, 1rem); width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #CBD5E1; background: #F8FAFC;
   font: inherit; font-weight: 450; color: var(--ink); }
 .js7-feld input:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; border-color: #EFBF04; background: var(--white); }
 .js7-feld input[aria-invalid="true"] { border-color: #b42318; }

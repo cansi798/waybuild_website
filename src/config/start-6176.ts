@@ -140,7 +140,8 @@ export const J_HERO_SCHNELL = {
   label: 'Ihre Website-Adresse für die kostenlose Vorschau',
   platzhalter: 'Ihre Website, z. B. www.ihre-firma.de',
   knopf: 'Vorschau für morgen',
-  klein: 'Kostenlos · ohne Gespräch vorab',
+  kopf: 'Kostenlose Vorschau Ihrer neuen Startseite', // Jamil #6948: Zeile über dem Feld
+  klein: 'Sie geben Ihre Website ein – wir schicken Ihnen bis zum nächsten Werktag einen Link zu Ihrer neuen Startseite. Kostenlos und unverbindlich, ohne Gespräch vorab.',
 } as const;
 
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus

@@ -36,7 +36,8 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
       {/* Jamil #6927: Schnellstart als schlanke Zeile. Ohne JS: GET zum großen Formular (#start-schnell). Mit JS: Skript in J6Start (data-js7, data-mehr) */}
       {zeigeSchnell && (
         <form class="jh-schnell" id="hero-schnell" action={`${href('/')}#start-schnell`} method="get" data-js7 data-betreff={JS.schnell.betreff} data-weg="schnell"
-          data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-label={HS.label}>
+          data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="hero-schnell-kopf">
+          <p class="jh-schnell__kopf" id="hero-schnell-kopf">{HS.kopf}</p>
           <div class="jh-schnell__zeile">
             <input class="jh-schnell__url" name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={HS.platzhalter} aria-label={HS.label} required data-art="url" />
             <button class="btn jh-schnell__knopf" type="submit">{HS.knopf}</button>

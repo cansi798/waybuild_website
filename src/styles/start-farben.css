@@ -82,3 +82,6 @@ html:root .hdr .hdr__cta, html:root .sticky-bar .btn--primary { background: #EFB
 html:root .hdr .hdr__cta:hover, html:root .sticky-bar .btn--primary:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 /* Jamil #6508: feine Trennlinie zwischen den Abschnitten der Startseite (Weiß/Goldstich ist bewusst sehr zart) */
 html[data-thema='besucherreise'] main[data-stapel] > section.section:not(.section--dark) + section.section:not(.section--dark) { border-top: 1px solid #F1ECE0; }
+
+/* Jamil #6950: Hauptmenü nicht fett (die Regel oben macht sonst alle Buttons, also auch die Menü-Schalter, 600) */
+html:root .hdr .hdr__link { font-weight: 500; }
