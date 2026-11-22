@@ -47,6 +47,6 @@ Im Wechsler „Websites und Software nach Maß“ der Startseite (`components/st
 
 | Datei | Herkunft |
 |---|---|
-| `referenzen/bauwelt-kalkulator.png` | Neu aufgenommen 19.11.2026 (Playwright, 960 × 660 px, 2×) von https://www.bauwelt-handwerk.de/rechner/ – Badsanierung 8 m², nur angesehen, nichts abgeschickt |
+| `referenzen/bauwelt-kalkulator.png` | Seit Jamil #6922 ersetzt durch Bildschirmfoto 1280×754 des Ergebnisses „Ihre erste Preisspanne“ (Badsanierung 8 m², Bauwelt-Kalkulator, Testeingabe). Vorher: neu aufgenommen 19.11.2026 (Playwright, 960 × 660 px, 2×) von https://www.bauwelt-handwerk.de/rechner/ – Badsanierung 8 m², nur angesehen, nichts abgeschickt |
 | `referenzen/bauwelt-auftrag.png` | Vorhandenes Bildschirmfoto aus der CRM-Testumgebung (Nextcloud Team/CRM System/Screenshots Kontaktweg 02.11.2026, `4-auftrag-desktop.png`), nur Testdaten; Einsatzort-Adresse unscharf gemacht; seit #6427 ohne linke Menüleiste zugeschnitten; seit Jamil #6900 ersetzt durch hellen CRM-Screenshot „Badsanierung“ (1280×765, Testdaten, ungekürzt) |
 | `referenzen/bauwelt-kundenportal.png` | (seit Jamil #6906: heller Portal-Screenshot „Badsanierung“, Team auf Jürgen und Sabine gekürzt, Termin Mo 22.11. mit Jürgen – nachbearbeitet)  Vorhandenes Bildschirmfoto aus einem CRM-Testlauf (27.10.2026, Testdaten), oberer Teil; Fußzeile mit Kontaktdaten abgeschnitten |

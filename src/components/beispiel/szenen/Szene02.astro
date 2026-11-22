@@ -48,7 +48,7 @@ const PREISE = [0, 1, 2];
               <rect x="122" y="34" width="44" height="32" rx="2" fill="#f6f3ee" stroke="#00807b" stroke-width="2" />
               <path d="M128 60l10-12 8 8 6-6 8 10z" fill="#9ccfc9" />
               <path d="M110 108c0-14 6-20 20-20h70c14 0 20 6 20 20z" fill="#00807b" />
-              <rect x="104" y="96" width="122" height="18" rx="7" fill="#8C6D12" />
+              <rect x="104" y="96" width="122" height="18" rx="7" fill="#EFBF04" />
               <rect x="108" y="112" width="6" height="8" fill="#111827" /><rect x="216" y="112" width="6" height="8" fill="#111827" />
               <rect x="128" y="86" width="22" height="14" rx="5" fill="#f6f3ee" />
               <path d="M244 112V60" stroke="#5b6766" stroke-width="2" />
@@ -86,7 +86,7 @@ const PREISE = [0, 1, 2];
                 <path d="M14 38l51-30 51 30" fill="none" stroke="#b45b3e" stroke-width="5" stroke-linejoin="round" />
                 <rect x="34" y="46" width="16" height="18" fill="#ffffff" stroke="#00807b" stroke-width="2" />
                 <rect x="80" y="46" width="16" height="18" fill="#ffffff" stroke="#00807b" stroke-width="2" />
-                <rect x="57" y="66" width="16" height="26" fill="#8C6D12" />
+                <rect x="57" y="66" width="16" height="26" fill="#EFBF04" />
               </svg>
               <b data-p="arbeit1">{W.arbeit1}</b>
             </span>
@@ -164,7 +164,7 @@ const PREISE = [0, 1, 2];
   .sz02-foto { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
   .sz02-gerippe { position: absolute; inset: 0; background: var(--bsp-gerippe); opacity: 0; }
   .sz02-bildchip { position: absolute; left: var(--bsp-a2); bottom: var(--bsp-a2); padding: calc(3 * var(--px)) var(--bsp-a2); border-radius: 99px; background: rgb(255 255 255 / 92%);
-    color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 650; }
+    color: #111827; font-size: var(--bsp-schrift-xs); font-weight: 650; }
   .sz02-titel-block { position: relative; }
   .sz02-gerippe-zeile { position: absolute; left: 0; opacity: 0; height: calc(14 * var(--px)); }
   .sz02-gerippe-zeile:first-child { top: calc(4 * var(--px)); }
@@ -182,12 +182,12 @@ const PREISE = [0, 1, 2];
   .sz02-kachel { position: relative; display: block; height: calc(92 * var(--px)); border-radius: var(--bsp-r-m); overflow: hidden; background: var(--bsp-gerippe); }
   .sz02-kachel svg { display: block; width: 100%; height: 100%; }
   .sz02-kachel b { position: absolute; left: calc(6 * var(--px)); bottom: calc(6 * var(--px)); padding: calc(2 * var(--px)) calc(6 * var(--px)); border-radius: 99px; background: rgb(255 255 255 / 92%);
-    color: var(--bsp-tinte); font-size: calc(9 * var(--px)); font-weight: 650; }
+    color: #111827; font-size: calc(9 * var(--px)); font-weight: 650; }
 
   /* Bewertungen */
   .sz02-stimme { display: flex; align-items: center; gap: var(--bsp-a3); padding: var(--bsp-a3); }
   .sz02-kuerzel { flex: none; display: grid; place-items: center; width: calc(34 * var(--px)); height: calc(34 * var(--px)); border-radius: 50%; background: var(--bsp-flaeche);
-    color: var(--bsp-tinte); font-family: var(--font-head); font-size: var(--bsp-schrift-s); font-weight: 700; }
+    color: #111827; font-family: var(--font-head); font-size: var(--bsp-schrift-s); font-weight: 700; }
   .sz02-kuerzel--2 { background: #f5ecdc; color: #7a5a2c; }
   .sz02-stimme-text { display: flex; flex-direction: column; gap: calc(2 * var(--px)); min-width: 0; font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
   .sz02-stimme-text .bm-sterne { font-size: var(--bsp-schrift-xs); }
@@ -196,7 +196,7 @@ const PREISE = [0, 1, 2];
   .sz02-preise { display: flex; flex-direction: column; padding: calc(4 * var(--px)) var(--bsp-a3); }
   .sz02-preis { display: flex; justify-content: space-between; align-items: center; gap: var(--bsp-a2); height: calc(38 * var(--px)); font-size: var(--bsp-schrift-s); color: var(--bsp-text); }
   .sz02-preis + .sz02-preis { border-top: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
-  .sz02-preis strong { color: var(--bsp-tinte); font-weight: 700; white-space: nowrap; }
+  .sz02-preis strong { color: #111827; font-weight: 700; white-space: nowrap; }
   .sz02-hinweis { margin-top: calc(-4 * var(--px)) !important; font-size: var(--bsp-schrift-xs); }
   .sz02-rechnen { align-self: stretch; min-height: calc(40 * var(--px)); }
 

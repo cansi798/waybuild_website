@@ -47,23 +47,23 @@ const inhalt = E.gesamt.text.replace(/[.\s]+$/, '');
 
 <style>
   /* Zartes Türkis #FEFCF7 mit dünnem Rand #ECE7DA. Texte darauf: --ink 10,4 : 1, --ink-soft 6,9 : 1, --accent-ink 5,9 : 1.
-     Knopf wie „Direkt buchen“ auf den Paketkarten: #8C6D12 mit Weiß (4,8 : 1), Hover #8C6D12. */
+     Knopf wie „Direkt buchen“ auf den Paketkarten: #EFBF04 mit Weiß (4,8 : 1), Hover #EFBF04. */
   .ed { margin: 0 0 clamp(22px, 3.5vw, 36px); padding: 12px clamp(14px, 2.4vw, 22px); border: 1px solid #ECE7DA; border-radius: 16px; background: #FEFCF7; scroll-margin-top: 120px; }
   .ed p, .ed h3 { margin: 0; }
 
   .ed__zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
-  .ed__ico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: var(--white); color: var(--accent-ink); }
+  .ed__ico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: var(--white); color: #111827; }
   .ed__satz { flex: 1 1 260px; min-width: 0; line-height: 1.55; color: var(--ink-soft); font-size: 0.97rem; }
   .ed__titel, .ed__text { display: inline; }
   .ed__titel { margin-right: 0.35em !important; font-family: var(--font-head); font-size: 1rem; font-weight: 700; line-height: inherit; color: var(--ink); }
-  .ed__text b { color: var(--accent-ink); }
-  .ed__btn { flex: none; min-height: 44px; padding: 0.45em 1.15em; font-size: 0.95rem; background: #D4AF37; color: #111827; border-color: transparent; }
-  .ed__btn:hover { background: #C29F2F; color: #111827; }
+  .ed__text b { color: #111827; }
+  .ed__btn { flex: none; min-height: 44px; padding: 0.45em 1.15em; font-size: 0.95rem; background: #EFBF04; color: #111827; border-color: transparent; }
+  .ed__btn:hover { background: #EFBF04; color: #111827; }
   @media (max-width: 559px) { .ed__btn { flex: 1 1 100%; } .ed__ico { display: none; } .ed__satz { flex-basis: 100%; font-size: 0.94rem; } }
 
   .ed__unten { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0 12px; margin-top: 6px; border-top: 1px solid #ECE7DA; }
   .ed__mehr { flex: 1 1 auto; min-width: 0; }
-  .ed__mehr summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; list-style: none; color: var(--accent-ink); font-weight: 650; font-size: 0.92rem; }
+  .ed__mehr summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; list-style: none; color: #111827; font-weight: 650; font-size: 0.92rem; }
   .ed__mehr summary::-webkit-details-marker { display: none; }
   .ed__mehr summary :global(svg) { transition: transform 0.15s ease; }
   .ed__mehr[open] summary :global(svg) { transform: rotate(180deg); }
@@ -74,12 +74,12 @@ const inhalt = E.gesamt.text.replace(/[.\s]+$/, '');
   @media (min-width: 560px) { .ed__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 1000px) { .ed__liste { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .ed__k { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 8px; align-items: center; min-width: 0; padding: 10px 12px 4px; background: var(--white); border: 1px solid #ECE7DA; border-radius: 12px; font-size: 0.9rem; line-height: 1.45; }
-  .ed__kico { display: inline-flex; color: var(--accent-ink); }
+  .ed__kico { display: inline-flex; color: #111827; }
   .ed__kname { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; hyphens: auto; }
   .ed__kpreis, .ed__einzeln { grid-column: 2; }
   .ed__kpreis { color: var(--ink-soft); }
   .ed__kpreis b { color: var(--ink); }
-  .ed__einzeln { display: inline-flex; align-items: center; gap: 5px; justify-self: start; min-height: 36px; color: var(--accent-ink); font-weight: 650; text-underline-offset: 3px; }
+  .ed__einzeln { display: inline-flex; align-items: center; gap: 5px; justify-self: start; min-height: 36px; color: #111827; font-weight: 650; text-underline-offset: 3px; }
   .ed__einzeln:hover { text-decoration-thickness: 2px; }
   .ed a:focus-visible, .ed__mehr summary:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; border-radius: 6px; }
   @media (prefers-reduced-motion: reduce) { .ed__btn { transition: none; transform: none !important; } .ed__mehr summary :global(svg) { transition: none; } }

@@ -96,8 +96,8 @@ const isCurrent = (path?: string) => path && current === href(path);
 <style>
   /* Kopfzeile auf ALLEN Seiten gleich (Jamil, Talk qh87y3sj #5072 + Korrektur #5085–#5089, 08.11.2026):
    * heller Seitenhintergrund --paper #f7f5f0 deckend, Schrift und Zeichen dunkel (--ink #111827, 10,4 : 1),
-   * Hover/aktuelle Seite --paper-2 mit #8C6D12; Fokusrahmen #8C6D12. Knopf „Kostenlose Erstberatung“ dunkles
-   * Logo-Türkis #8C6D12 mit Weiß (6,36 : 1), Hover #111827 (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
+   * Hover/aktuelle Seite --paper-2 mit #EFBF04; Fokusrahmen #EFBF04. Knopf „Kostenlose Erstberatung“ dunkles
+   * Logo-Türkis #EFBF04 mit Weiß (6,36 : 1), Hover #111827 (9,5 : 1). Dropdown und Handy-Menü hell wie bisher. */
   .hdr { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); transition: box-shadow 0.2s ease; }
   /* leicht transparent mit Weichzeichner dahinter (Jamil #5916, 14.11.2026); ohne backdrop-filter fast deckend */
   .hdr::before {
@@ -108,8 +108,8 @@ const isCurrent = (path?: string) => path && current === href(path);
     .hdr::before { background: rgb(255 255 255 / 72%); -webkit-backdrop-filter: saturate(170%) blur(16px); backdrop-filter: saturate(170%) blur(16px); }
   }
   .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
-  .hdr .hdr__cta { background: #D4AF37; border-color: #D4AF37; color: #111827; } /* Jamil #6475: Gold, Schrift Anthrazit (≈ 8,5 : 1) */
-  .hdr .hdr__cta:hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+  .hdr .hdr__cta { background: #EFBF04; border-color: #EFBF04; color: #111827; } /* Jamil #6475: Gold, Schrift Anthrazit (≈ 8,5 : 1) */
+  .hdr .hdr__cta:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
   .hdr.is-scrolled { box-shadow: var(--shadow); }
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
@@ -122,7 +122,7 @@ const isCurrent = (path?: string) => path && current === href(path);
     font: inherit; font-weight: 600; font-size: 0.95rem; color: var(--ink); text-decoration: none;
     transition: background 0.2s ease;
   }
-  .hdr__link:hover, .hdr__link[aria-current='page'] { background: var(--paper-2); color: var(--accent-ink); }
+  .hdr__link:hover, .hdr__link[aria-current='page'] { background: var(--paper-2); color: #111827; }
   .dd { position: relative; }
   .dd :global(.dd__chev) { transition: transform 0.2s ease; }
   .dd__panel {
@@ -137,7 +137,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
   .dd__item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; text-decoration: none; transition: background 0.2s ease; }
   .dd__item:hover, .dd__item[aria-current='page'] { background: var(--paper-2); }
-  .dd__item :global(.dd__icon) { color: var(--accent-ink); flex: none; }
+  .dd__item :global(.dd__icon) { color: #111827; flex: none; }
   .dd__text { display: grid; line-height: 1.35; }
   .dd__text strong { font-weight: 650; font-size: 0.95rem; }
   .dd__text small { color: var(--ink-soft); font-size: 0.8rem; }
@@ -153,10 +153,10 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd--mega .dd__item :global(.dd__icon) { margin-top: 2px; }
   .dd__tag { justify-self: start; margin-top: 4px; padding: 1px 8px; border-radius: 999px; background: rgb(212 175 55 / 12%); color: var(--dark); font-style: normal; font-size: 0.72rem; font-weight: 650; }
   .dd__group { break-inside: avoid; margin-bottom: 10px; }
-  .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-ink); }
+  .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #111827; }
   .dd--mega .dd__item { padding: 7px 12px; }
   .dd--mega .dd__text strong { font-size: 0.92rem; }
-  .dd__all { justify-content: center; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 4px; padding-top: 12px !important; font-weight: 650; color: var(--accent-ink); }
+  .dd__all { justify-content: center; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 4px; padding-top: 12px !important; font-weight: 650; color: #111827; }
 
   .hdr__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
   .hdr__iconbtn {

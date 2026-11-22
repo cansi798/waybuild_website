@@ -100,7 +100,7 @@ const pakete = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, {
   .bd__name { flex: 1; display: grid; gap: 2px; }
   .bd__name small { font-size: 0.85rem; color: var(--ink-soft); }
   .bd__opt b { font-family: var(--font-head); white-space: nowrap; }
-  .bd__opt--alle { margin-top: 8px; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 14px; font-weight: 650; color: var(--accent-ink); }
+  .bd__opt--alle { margin-top: 8px; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 14px; font-weight: 650; color: #111827; }
   .bd__opt--alle small { font-weight: 400; }
   .bd__opt[hidden] { display: none; }
   .bd__opt:has(input:disabled) { cursor: default; color: var(--ink-soft); }
@@ -109,9 +109,9 @@ const pakete = Object.fromEntries(ABO_PAKETE.map((p) => [p.id, {
   .bd__hinweis { padding: 12px 14px; border-left: 4px solid var(--accent-ink); background: var(--paper); font-size: 0.92rem; line-height: 1.6; }
   .bd__knoepfe { display: grid; gap: 10px; }
   @media (min-width: 600px) { .bd__knoepfe { grid-template-columns: 1fr 1fr; } }
-  .bd__weiter { background: var(--accent-ink); color: var(--white); }
+  .bd__weiter { background: var(--accent-ink); color: #111827; }
   .bd__weiter:hover { background: var(--dark); }
-  .bd__ohne { border-color: var(--accent-ink); color: var(--accent-ink); background: transparent; }
+  .bd__ohne { border-color: var(--accent-ink); color: #111827; background: transparent; }
   .bd__ohne:hover { background: rgb(140 109 18 / 7%); }
   /* Handy: Vollbild-Blatt */
   @media (max-width: 599px) {

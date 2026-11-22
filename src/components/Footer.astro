@@ -71,11 +71,11 @@ const year = new Date().getFullYear();
 
 <style>
   :global(body:has(#kontakt-start)) .footer__kontaktkopf { display: none; }
-  /* Fußzeile dunkles Logo-Türkis #8C6D12 auf der ganzen Website (Jamil, Talk qh87y3sj #5072, 08.11.2026):
+  /* Fußzeile dunkles Logo-Türkis #EFBF04 auf der ganzen Website (Jamil, Talk qh87y3sj #5072, 08.11.2026):
    * Überschriften, Links und Text Weiß (6,36 : 1) bzw. #F1F5F9 (5,7 : 1, auch Kleintext), Hover unterstrichen,
    * Linien Weiß 22 %, Fokusrahmen Weiß. Gilt auch für den Kontaktkopf (FooterKontakt) der übrigen Seiten. */
-  /* Seit Jamil #6442 (20.11.2026): Fußzeile in Gold mit Slate-Schrift (#0F172A auf #D4AF37 ≈ 8,5 : 1), Links unterstrichen */
-  .footer { padding-block: 0 calc(28px + env(safe-area-inset-bottom)); background: linear-gradient(160deg, #D4AF37 0%, #E2C15A 100%); color: #0F172A; }
+  /* Seit Jamil #6442 (20.11.2026): Fußzeile in Gold mit Slate-Schrift (#0F172A auf #EFBF04 ≈ 8,5 : 1), Links unterstrichen */
+  .footer { padding-block: 0 calc(28px + env(safe-area-inset-bottom)); background: linear-gradient(160deg, #EFBF04 0%, #FFDE21 100%); color: #0F172A; }
   .footer :global(:focus-visible) { outline: 3px solid #0F172A; outline-offset: 3px; }
   .footer__grid { padding-top: clamp(32px, 5vw, 48px); border-top: 1px solid rgb(15 23 42 / 22%); }
   .footer__grid--ohne-kopf { border-top: 0; padding-top: clamp(44px, 6vw, 64px); }
@@ -102,9 +102,9 @@ const year = new Date().getFullYear();
   .footer__bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid rgb(15 23 42 / 22%); color: #1E293B; }
   /* Variante „weiss“ (Jamil #6509): Fußzeile hell im Goldstich-Ton, feine Linie oben, Schrift/Links Anthrazit, Gold beim Überfahren */
   :global(html[data-hero-stil='weiss']) .footer { background: #FFFFFF; color: #111827; border-top: 1px solid #F1ECE0; } /* weiß, weil die Abschluss-Box davor Goldstich hat (#6515) */
-  :global(html[data-hero-stil='weiss']) .footer :global(:focus-visible) { outline-color: #8C6D12; }
+  :global(html[data-hero-stil='weiss']) .footer :global(:focus-visible) { outline-color: #EFBF04; }
   :global(html[data-hero-stil='weiss']) .footer__claim, :global(html[data-hero-stil='weiss']) .footer__h, :global(html[data-hero-stil='weiss']) .footer__bottom { color: #4B5563; }
   :global(html[data-hero-stil='weiss']) .footer li a { color: #111827; text-decoration-color: rgb(17 24 39 / 25%); }
-  :global(html[data-hero-stil='weiss']) .footer li a:hover { color: #7A5E0E; text-decoration-color: #D4AF37; }
+  :global(html[data-hero-stil='weiss']) .footer li a:hover { color: #111827; text-decoration-color: #EFBF04; }
   :global(html[data-hero-stil='weiss']) .footer__grid, :global(html[data-hero-stil='weiss']) .footer__bottom { border-color: #F1ECE0; }
 </style>

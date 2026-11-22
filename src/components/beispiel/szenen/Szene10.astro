@@ -127,13 +127,13 @@ const haken = '<path d="M5 12.5l4.2 4.2L19 7" />';
   .sz10-haken { position: relative; }
   .sz10-stapel { display: grid; justify-items: end; }
   .sz10-stapel > * { grid-area: 1 / 1; }
-  .sz10-wann-offen { color: var(--bsp-tinte); font-weight: 650; opacity: 0; }
+  .sz10-wann-offen { color: #111827; font-weight: 650; opacity: 0; }
   .sz10-wann-an { color: var(--bsp-ok); font-weight: 650; }
   /* Ausführung ist jetzt „als Nächstes“: zarte Fläche + Türkis-Ring */
   .sz10-schritt--naechst { color: var(--bsp-text); font-weight: 600; }
   .sz10-schritt--naechst::before { content: ''; position: absolute; inset: calc(2 * var(--px)) calc(-6 * var(--px)); z-index: -1; border-radius: var(--bsp-r-s); background: var(--bsp-flaeche); }
   .sz10-schritt--naechst .sz10-punkt { box-shadow: inset 0 0 0 calc(2 * var(--px)) var(--bsp-tuerkis); }
-  .sz10-schritt--naechst .sz10-wann { color: var(--bsp-tinte); font-weight: 650; }
+  .sz10-schritt--naechst .sz10-wann { color: #111827; font-weight: 650; }
   .sz10-liste { position: relative; z-index: 0; }
 
   /* Angebot */

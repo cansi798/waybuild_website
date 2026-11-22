@@ -1,5 +1,5 @@
 /* Startseite, Punkte 1–3 nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026): .jh = Hero, .jp = Problem, .jl = Lösung.
-   Palette/Schrift aus start-farben.css (Primär #8C6D12, dunkel #111827, Gold #D4AF37 nur als Zier, Positiv #D4AF37, Plus Jakarta Sans).
+   Palette/Schrift aus start-farben.css (Primär #EFBF04, dunkel #111827, Gold #EFBF04 nur als Zier, Positiv #EFBF04, Plus Jakarta Sans).
    Hero-Beispiele (Jamil #6192); Hintergründe im Wechsel kommen aus global.css (Hero dunkel, dann Creme/Weiß). Animationen nur opacity/transform,
    feste Maße für die Beispiel-Fenster (kein Layout-Sprung), bei prefers-reduced-motion alles sofort sichtbar. */
 
@@ -16,8 +16,8 @@
 .jh__zeile { margin: 0; padding-left: 14px; border-left: 3px solid var(--gold); font-family: var(--font-head); font-weight: 700;
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.5; color: var(--white); }
 .jh-knopfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-.jh-btn { background: #D4AF37; color: #111827; border: 1.5px solid #D4AF37; /* Jamil #6431: CTA Amber, dunkle Schrift */ box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
-.jh-btn:hover { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+.jh-btn { background: #EFBF04; color: #111827; border: 1.5px solid #EFBF04; /* Jamil #6431: CTA Amber, dunkle Schrift */ box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
+.jh-btn:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 .jh-btn--rand { background: transparent; color: var(--white); border-color: rgb(255 255 255 / 70%); box-shadow: none; }
 .jh-btn--rand:hover { background: rgb(255 255 255 / 10%); color: var(--white); border-color: var(--white); }
 .jh-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
@@ -33,24 +33,24 @@
   box-shadow: 0 24px 48px -32px rgb(0 0 0 / 60%); }
 .jb__nachricht { display: flex; gap: 9px; align-items: flex-start; padding: 10px 12px; border-radius: 18px; border-bottom-right-radius: 6px;
   background: #FBF3D5; color: var(--ink); font-size: 0.86rem; line-height: 1.4; }
-.jb__ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--white); color: #8C6D12; }
+.jb__ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--white); color: #111827; }
 .jb__inhalt { min-width: 0; display: grid; gap: 4px; }
-.jb__zusatz { font-size: 0.74rem; font-weight: 700; color: #8C6D12; }
+.jb__zusatz { font-size: 0.74rem; font-weight: 700; color: #111827; }
 .jb__text { font-weight: 600; text-wrap: pretty; }
-.jb__pfeil { display: grid; place-items: center; color: var(--gold); }
+.jb__pfeil { display: grid; place-items: center; color: #111827; }
 .jb__pfeil svg { display: block; }
 .jb__ergebnis { min-width: 0; display: grid; gap: 8px; }
 .jb__status { margin: 0; display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
   line-height: 1.3; color: var(--white); }
-.jh-haken { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #D4AF37; color: var(--white);
+.jh-haken { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 2px rgb(255 255 255 / 22%); }
 .jh-haken .j6i { stroke-width: 3; }
 /* Sprachnachricht: kleine Welle; Screenshot: Mini-Bild mit Gold-Markierung */
 .jh-welle { display: flex; align-items: center; gap: 2px; height: 18px; }
-.jh-welle i { display: block; width: 3px; border-radius: 2px; background: #8C6D12; opacity: 0.7; transform-origin: center; }
+.jh-welle i { display: block; width: 3px; border-radius: 2px; background: #EFBF04; opacity: 0.7; transform-origin: center; }
 .jh-shot { position: relative; display: grid; gap: 4px; width: 96px; padding: 7px; border-radius: 8px; background: var(--white); }
 .jh-shot i { display: block; height: 5px; border-radius: 3px; background: #E2E8F0; }
-.jh-shot i:first-child { width: 60%; background: #8C6D12; opacity: 0.55; }
+.jh-shot i:first-child { width: 60%; background: #EFBF04; opacity: 0.55; }
 .jh-shot i:nth-child(3) { height: 15px; }
 .jh-shot b { position: absolute; right: 5px; bottom: 3px; width: 40px; height: 21px; border: 2px solid var(--gold); border-radius: 50%; transform: rotate(-6deg); }
 
@@ -68,8 +68,8 @@
 .jb-person b { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: #d8d1c3; color: #6b6458; }
 .jb-person i { display: block; width: 70%; height: 4px; border-radius: 2px; background: #d8d1c3; }
 .jb-person i + i { width: 48%; }
-.jb-person--neu { background: #FBF3D5; box-shadow: inset 0 0 0 1.5px #D4AF37; }
-.jb-person--neu b { background: #8C6D12; color: var(--white); }
+.jb-person--neu { background: #FBF3D5; box-shadow: inset 0 0 0 1.5px #EFBF04; }
+.jb-person--neu b { background: #EFBF04; color: #111827; }
 .jb-person em { font-style: normal; font-size: 0.6rem; font-weight: 700; line-height: 1.15; color: #0b5a58; text-align: center; }
 /* (2) Startseite vorher → nachher: beide Ebenen im selben Feld */
 .jb-seite { display: grid; }
@@ -82,7 +82,7 @@
 .jb-seite__alt i:nth-child(4) { width: 30%; }
 .jb-seite__alt b { position: absolute; right: 4%; top: 10px; width: 46%; height: 34px; border: 2px dashed var(--gold); border-radius: 50%; transform: rotate(-5deg); }
 .jb-seite__neu { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 5px; }
-.jb-seite__held { display: grid; align-content: center; gap: 4px; padding: 6px 8px; border-radius: 7px; background: #8C6D12; }
+.jb-seite__held { display: grid; align-content: center; gap: 4px; padding: 6px 8px; border-radius: 7px; background: #EFBF04; }
 .jb-seite__held i { display: block; width: 62%; height: 5px; border-radius: 3px; background: rgb(255 255 255 / 85%); }
 .jb-seite__held i + i { width: 42%; background: rgb(255 255 255 / 50%); }
 .jb-seite__held u { display: block; width: 30%; height: 7px; border-radius: 4px; background: var(--gold); }
@@ -94,12 +94,12 @@
 .jb-urlaub { display: grid; align-content: space-between; }
 .jb-kal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
 .jb-kal i { display: block; height: 16px; border-radius: 4px; background: #f4f1ea; }
-.jb-kal i.an { background: #8C6D12; }
+.jb-kal i.an { background: #EFBF04; }
 .jb-antrag { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 0.66rem; font-weight: 700; color: #3d4a49; }
 .jb-antrag > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .jb-chip { display: grid; flex: none; }
 .jb-chip em { grid-area: 1 / 1; justify-self: end; padding: 2px 7px; border-radius: 999px; font-style: normal; font-size: 0.62rem; font-weight: 800; }
-.jb-chip__vor { background: #f6ecc8; color: #7A5E0E; opacity: 0; }
+.jb-chip__vor { background: #f6ecc8; color: #111827; opacity: 0; }
 .jb-chip__nach { background: #dff1e9; color: #1d6b54; }
 
 /* Abfolge: 1 → 2 → 3 je 2,3 s, danach bleibt alles stehen (keine Endlosschleife). Mit JS startet sie erst im Bild
@@ -171,7 +171,7 @@
 .jp-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .jp-karte { min-width: 0; display: grid; gap: 8px; align-content: start; padding: clamp(20px, 2.4vw, 28px); border-radius: 24px;
   background: var(--paper); border: 1px solid var(--line); }
-.jp-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #8C6D12; }
+.jp-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #111827; }
 .jp-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
 .jp-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); }
 .jp-karte__text { margin: 0; line-height: 1.6; color: var(--ink-soft); }
@@ -184,7 +184,7 @@
 .jl__kopf .sn-lead { max-width: 52ch; }
 .jl-wege { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .jl-wege li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
-.jl-wege li:last-child { background: #8C6D12; border-color: #8C6D12; color: var(--white); }
+.jl-wege li:last-child { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 .jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #111827; }
 .jl-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
 /* Lösungs-Visual (Jamil #6199): Chat-Karten mit Absender-Icon, Verbindungsstrang zwischen den Karten und Status-Chip.
@@ -194,20 +194,20 @@
   padding: 14px 16px; border-radius: 20px; border-top-left-radius: 8px; background: var(--band, var(--white));
   box-shadow: 0 1px 2px rgb(17 24 39 / 6%), 0 12px 28px -22px rgb(17 24 39 / 35%); }
 .jl-fall:not(:last-child)::after { content: ''; position: absolute; left: 35px; top: 100%; width: 2px; height: 16px; border-radius: 2px;
-  background: linear-gradient(#D4AF37, rgb(212 175 55 / 25%)); transform-origin: top; }
-.jl-fall__ico { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #8C6D12; color: var(--white);
+  background: linear-gradient(#EFBF04, rgb(212 175 55 / 25%)); transform-origin: top; }
+.jl-fall__ico { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); }
 .jl-fall__text { min-width: 0; display: grid; gap: 4px; justify-items: start; font-weight: 600; color: var(--ink); line-height: 1.4; }
-.jl-fall__zusatz { font-size: 0.8rem; font-weight: 700; color: #8C6D12; }
+.jl-fall__zusatz { font-size: 0.8rem; font-weight: 700; color: #111827; }
 .jl-shot { background: #f4f1ea; }
 .jl-shot i { background: #e1d9c9; }
 .jl-fall__status { display: grid; justify-items: end; align-items: center; }
 .jl-fall__status > * { grid-area: 1 / 1; }
 .jl-fall__arbeit { width: 56px; height: 4px; overflow: hidden; border-radius: 2px; background: #E2E8F0; opacity: 0; }
-.jl-fall__arbeit i { display: block; height: 100%; border-radius: inherit; background: #8C6D12; transform-origin: left; }
+.jl-fall__arbeit i { display: block; height: 100%; border-radius: inherit; background: #EFBF04; transform-origin: left; }
 .jl-fall__fertig { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 6px; border-radius: 999px; background: #FBF3D5;
   font-size: 0.84rem; font-weight: 700; color: #1d6b54; white-space: nowrap; }
-.jl-fall__haken { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: #D4AF37; color: var(--white); }
+.jl-fall__haken { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827; }
 .jl-fall__haken .j6i { stroke-width: 3; }
 @media (max-width: 479px) {
   .jl-fall { grid-template-columns: auto minmax(0, 1fr); padding: 12px 14px; }
@@ -232,7 +232,7 @@
 @keyframes jl-strang { from { transform: scaleY(0); } to { transform: none; } }
 .jl-punkte { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .jl-punkt { min-width: 0; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--band, var(--white)); }
-.jl-punkt__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #8C6D12; color: var(--white);
+.jl-punkt__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 4px rgb(212 175 55 / 22%); }
 .jl-punkt__text { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; line-height: 1.35; color: var(--ink); }
 @media (min-width: 600px) and (max-width: 899px) { .jl-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -250,26 +250,26 @@
 .ja-weg { min-width: 0; padding: clamp(18px, 2.4vw, 28px); border-radius: 28px; background: var(--paper); }
 .ja-weg--wir { background: #FBF3D5; box-shadow: inset 0 0 0 1.5px #EADBA6; }
 .ja .ja-weg__titel { margin: 0 0 18px; font-family: var(--font-head); font-weight: 800; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); color: var(--ink-soft); }
-.ja-weg--wir .ja-weg__titel { color: #8C6D12; }
+.ja-weg--wir .ja-weg__titel { color: #111827; }
 .ja-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .ja-schritt { position: relative; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--ink); line-height: 1.35; }
 .ja-schritt:not(:last-child)::after { content: ''; position: absolute; left: 17px; top: 36px; width: 2px; height: 14px; border-radius: 2px;
   background: #d8d1c3; transform-origin: top; }
-.ja-weg--wir .ja-schritt:not(:last-child)::after { background: #E6C766; }
+.ja-weg--wir .ja-schritt:not(:last-child)::after { background: #FFDE21; }
 .ja-schritt__ico { position: relative; flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
-  background: var(--white); color: #8C6D12; box-shadow: 0 0 0 1px #E2E8F0; }
+  background: var(--white); color: #111827; box-shadow: 0 0 0 1px #E2E8F0; }
 .ja-weg--alt .ja-schritt__ico { color: #6b6458; }
 .ja-schritt--nein { color: #8c3d33; }
 .ja-schritt--nein .ja-schritt__ico { background: #f6e3df; color: #b5483a; box-shadow: none; }
 .ja-schritt--nein .j6i { stroke-width: 2.6; }
 .ja-schritt--ja { color: #111827; font-weight: 750; }
-.ja-schritt--ja .ja-schritt__ico { background: #D4AF37; color: var(--white); box-shadow: 0 0 0 3px rgb(212 175 55 / 18%); }
+.ja-schritt--ja .ja-schritt__ico { background: #EFBF04; color: #111827; box-shadow: 0 0 0 3px rgb(212 175 55 / 18%); }
 @media (min-width: 760px) { .ja-wege { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
 /* Vorteile (Jamil #6208): genau 4 Karten */
 .ja-vorteile { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .ja-vorteil { min-width: 0; display: grid; align-content: start; gap: 8px; padding: 20px 22px; border-radius: 20px; border: 1px solid var(--line);
   background: var(--band, var(--white)); }
-.ja-vorteil__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #8C6D12; color: var(--white);
+.ja-vorteil__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); margin-bottom: 4px; }
 .ja-vorteil__titel { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: 1.08rem; line-height: 1.3; color: var(--ink); }
 .ja-vorteil__text { margin: 0; font-size: 0.97rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
@@ -288,14 +288,14 @@
 .ja-tabelle td { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1.02rem); }
 .ja-tabelle tbody tr:first-child td { border-top: 0; }
 .ja-tabelle .ja-wir { background: #FBF3D5; color: var(--ink); font-weight: 650; }
-.ja-tabelle th.ja-wir { color: #8C6D12; border-radius: 20px 20px 0 0; }
+.ja-tabelle th.ja-wir { color: #111827; border-radius: 20px 20px 0 0; }
 .ja-tabelle tbody tr:last-child .ja-wir { border-radius: 0 0 20px 20px; }
 .ja-tabelle td.ja-wir { border-top-color: #EADBA6; }
 .ja-zelle { display: flex; gap: 10px; align-items: flex-start; }
 .ja-zeichen { flex: none; width: 22px; height: 22px; margin-top: 1px; display: grid; place-items: center; border-radius: 50%; }
 .ja-zeichen .j6i { stroke-width: 3; }
 .ja-zeichen--nein { background: #efe9e0; color: #7a6f62; }
-.ja-zeichen--ja { background: #D4AF37; color: var(--white); }
+.ja-zeichen--ja { background: #EFBF04; color: #111827; }
 @media (max-width: 420px) { .ja-zeichen { display: none; } }
 
 /* ---------- 5. Website heute. Mehr morgen. ---------- */
@@ -306,14 +306,14 @@
   border: 1px solid var(--line); }
 .jw-stufen { padding-left: 26px; } /* Spur links (Handy), Jamil #6182 */
 .jw-stufen::before { content: ''; position: absolute; left: 7px; top: 28px; bottom: 28px; width: 2px; border-radius: 2px;
-  background: linear-gradient(var(--gold), #8C6D12); transform-origin: top; }
+  background: linear-gradient(var(--gold), #EFBF04); transform-origin: top; }
 .jw-stufe::before { content: ''; position: absolute; left: -24px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%;
   background: var(--gold); box-shadow: 0 0 0 3px var(--band, var(--white)); }
-.jw-stufe:last-child::before { background: #8C6D12; }
+.jw-stufe:last-child::before { background: #EFBF04; }
 .jw-stufe__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px;
-  background: #FBF3D5; color: #8C6D12; }
+  background: #FBF3D5; color: #111827; }
 .jw-stufe__text { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--ink); }
-.jw-stufe:last-child { background: #8C6D12; border-color: #8C6D12; }
+.jw-stufe:last-child { background: #EFBF04; border-color: #EFBF04; }
 .jw-stufe:last-child .jw-stufe__text { color: var(--white); }
 .jw-stufe:last-child .jw-stufe__ico { background: rgb(255 255 255 / 16%); color: var(--white); box-shadow: inset 0 0 0 1.5px var(--gold); }
 .jw__darunter { margin: clamp(28px, 4vw, 48px) 0 0 !important; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-head);
@@ -324,7 +324,7 @@
     min-height: calc(130px + var(--i) * 34px); }
   .jw-stufen { padding-left: 0; padding-bottom: 28px; }
   .jw-stufen::before { top: auto; bottom: 7px; left: calc((100% - 60px) / 12); right: calc((100% - 60px) / 12); width: auto; height: 2px;
-    background: linear-gradient(90deg, var(--gold), #8C6D12); transform-origin: left; }
+    background: linear-gradient(90deg, var(--gold), #EFBF04); transform-origin: left; }
   .jw-stufe::before { left: 50%; top: auto; bottom: -26px; margin: 0 0 0 -6px; }
   .jw-stufe__text { font-size: 1rem; line-height: 1.3; hyphens: manual; } /* Trennstellen per &shy; in J6Wachsen.astro */
 }
@@ -338,7 +338,7 @@
 .jz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .jz-frage { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
   font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
-.jz-frage__ico { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #FBF3D5; color: #8C6D12; }
+.jz-frage__ico { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #FBF3D5; color: #111827; }
 .jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #111827; font-size: 1.08rem; }
 @media (min-width: 640px) and (max-width: 899px) { .jz-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .jz__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
@@ -348,20 +348,20 @@
 .jr-kategorien { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 2.4vw, 28px); }
 .jr-kat { min-width: 0; display: grid; gap: 14px; align-content: start; padding: clamp(16px, 2.2vw, 24px); border-radius: 28px; background: var(--paper); }
 .jr-kat__titel { margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.15rem; color: var(--ink); }
-.jr-kat__ico { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #8C6D12; color: var(--white); }
+.jr-kat__ico { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #EFBF04; color: #111827; }
 .jr-refs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .jr-ref { min-width: 0; display: grid; gap: 10px; padding: clamp(16px, 2vw, 22px); border-radius: 20px; background: var(--band, var(--white)); }
 .jr-ref__kopf { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
 .jr-ref__name { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--ink); }
 .jr-ref__status { padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
-.jr-ref__status--online { background: #8C6D12; color: var(--white); }
+.jr-ref__status--online { background: #EFBF04; color: #111827; }
 .jr-ref__status--vorschau { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
 .jr-ref__branche { margin: -4px 0 0 !important; font-size: 0.92rem; color: var(--ink-soft); }
 .jr-ref__felder { margin: 0; display: grid; gap: 10px; }
 .jr-ref__felder div { display: grid; gap: 2px; }
-.jr-ref__felder dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #8C6D12; }
+.jr-ref__felder dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #111827; }
 .jr-ref__felder dd { margin: 0; line-height: 1.55; color: var(--ink); font-size: 0.95rem; }
-.jr-ref__link { justify-self: start; font-weight: 700; color: #8C6D12; }
+.jr-ref__link { justify-self: start; font-weight: 700; color: #111827; }
 .jr-folgt { margin: 0; padding: 18px; border-radius: 20px; border: 1.5px dashed var(--line); color: var(--ink-soft); text-align: center; font-weight: 600; }
 .jr__alle { margin: clamp(24px, 3vw, 40px) 0 0 !important; text-align: center; }
 @media (min-width: 900px) { .jr-kategorien { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -371,7 +371,7 @@
 .jv-punkte { list-style: none; margin: 0 auto; padding: 0; max-width: 980px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .jv-punkt { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
   font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; color: var(--ink); }
-.jv-haken { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #D4AF37; color: var(--white); }
+.jv-haken { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827; }
 .jv-haken .j6i { stroke-width: 3; }
 @media (min-width: 600px) { .jv-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 960px) { .jv-punkte { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -445,7 +445,29 @@
 .jp-bloecke { list-style: none; margin: clamp(32px, 5vw, 64px) 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr);
   gap: clamp(40px, 5vw, 64px) clamp(40px, 7vw, 112px); }
 .jp-block { min-width: 0; display: grid; gap: 12px; align-content: start; max-width: 52ch; }
-.jp-block__ico { width: 44px; height: 44px; color: #8C6D12; margin-bottom: 6px; }
+.jp-block__ico { width: 44px; height: 44px; color: var(--gold); margin-bottom: 6px; } /* einheitliches Gold (Jamil #6915) */
 .jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
 .jp-block__text { margin: 0; font-size: clamp(1rem, 0.97rem + 0.2vw, 1.1rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Jamil #6917/#6918: Scroll-Bühne im Abschnitt „Wo Betriebe heute …“. Grundzustand (ohne JS, Handy, reduzierte Bewegung): beide Stufen untereinander. */
+.jp__stufen { display: grid; gap: clamp(48px, 8vw, 96px); }
+.jp__lead { margin: 14px 0 0; max-width: 60ch; }
+.jp__fortschritt { display: none; }
+.jp--buehne .jp__buehne { height: calc(100svh + (var(--jp-n, 2) - 1) * 80svh); }
+.jp--buehne .jp__stufe .sn-h2 { font-size: clamp(1.7rem, 1.1rem + 1.7vw, 2.6rem); max-width: 26ch; }
+.jp--buehne .jp__lead { font-size: 1.05rem; line-height: 1.55; margin-top: 10px; }
+.jp--buehne .jp__fest { padding-bottom: 56px; position: sticky; top: var(--kopf-gesamt, 73px); height: calc(100svh - var(--kopf-gesamt, 73px)); box-sizing: border-box; display: grid; align-content: center; }
+.jp--buehne .jp__stufen { gap: 0; }
+.jp--buehne .jp__stufe { grid-area: 1 / 1; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity 520ms ease, transform 520ms ease; }
+.jp--buehne .jp__stufe.is-aktiv { opacity: 1; transform: none; pointer-events: auto; }
+.jp--buehne .jp-bloecke { margin-top: clamp(24px, 4vh, 48px); gap: clamp(20px, 3.5vh, 40px) clamp(24px, 3vw, 56px); }
+.jp--buehne .jp-bloecke { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.jp--buehne .jp-block { max-width: none; }
+.jp--buehne .jp__fortschritt { display: flex; align-items: center; gap: 14px; position: absolute; left: 0; right: 0; bottom: clamp(12px, 3vh, 28px);
+  justify-content: center; margin: 0; font-size: 0.85rem; font-weight: 700; color: #111827; font-variant-numeric: tabular-nums; }
+.jp__punkte { display: inline-flex; gap: 6px; }
+.jp__punkte i { width: 26px; height: 4px; border-radius: 4px; background: #E2E8F0; transition: background 300ms ease; }
+.jp__punkte i.is-aktiv { background: var(--gold); }
+@media (min-width: 1100px) { .jp-bloecke--loesung { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-height: 760px) { .jp--buehne .jp-block__text { font-size: 0.95rem; line-height: 1.55; } }

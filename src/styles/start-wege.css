@@ -32,7 +32,7 @@ html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px
 .sw-ideal { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-top: 4px !important; padding: 14px 16px;
   border-radius: 16px; background: var(--sn-hauch); color: var(--sn-tief); font-weight: 500; line-height: 1.55; overflow-wrap: break-word; }
 .sw-ideal > span:last-child { min-width: 0; }
-.sw-ideal .sn-ico { width: 32px; height: 32px; margin-top: -3px; border-radius: 10px; background: var(--white); color: var(--sn-tinte); }
+.sw-ideal .sn-ico { width: 32px; height: 32px; margin-top: -3px; border-radius: 10px; background: var(--white); color: #111827; }
 .sw-karte--app .sw-ideal { background: var(--paper); }
 
 .sw-link { margin-top: auto; padding-top: 4px; }
@@ -42,7 +42,7 @@ html.stapeln .stapel-paar > .v-hero + .sw { z-index: 1; border-radius: 28px 28px
 /* „+“ zwischen den Karten und Hinweis „Einzeln oder zusammen“ (Jamil #5927, 14.11.2026) */
 .sw-liste { position: relative; }
 .sw-plus { position: relative; display: grid; place-items: center; height: 0; margin: -10px 0; z-index: 2; }
-.sw-plus span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--sn-tinte); color: #fff;
+.sw-plus span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--sn-tinte); color: #111827;
   font-family: var(--font-head); font-weight: 700; font-size: 1.6rem; line-height: 1; box-shadow: 0 0 0 6px var(--band, #fff), 0 0 0 7px rgb(212 175 55 / 70%); }
 @media (min-width: 900px) {
   .sw-plus { position: absolute; left: 50%; top: 50%; width: 0; height: 0; margin: 0; }

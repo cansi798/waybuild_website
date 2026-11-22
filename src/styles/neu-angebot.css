@@ -67,7 +67,7 @@
   border-bottom: 1px solid var(--neu-rand);
   text-wrap: balance;
 }
-.neu .na-vgl__karte--wir .na-vgl__name { color: var(--neu-akzent-text); }
+.neu .na-vgl__karte--wir .na-vgl__name { color: #111827; }
 .neu .na-vgl__liste { margin: 0; padding: 0; }
 .neu .na-vgl__paar { padding-block: 15px; border-bottom: 1px solid var(--neu-rand); }
 .neu .na-vgl__paar:last-child { padding-bottom: 0; border-bottom: 0; }
@@ -156,7 +156,7 @@
     border-top: 1px solid var(--accent-mid);
     border-radius: var(--neu-radius) var(--neu-radius) 0 0;
     font-size: 1.12rem;
-    color: var(--neu-akzent-text);
+    color: #111827;
   }
   .neu .na-vgl__tabelle tbody td.na-vgl__wir { font-weight: 600; color: var(--neu-text); }
   .neu .na-vgl__tabelle tbody tr:last-child .na-vgl__wir {

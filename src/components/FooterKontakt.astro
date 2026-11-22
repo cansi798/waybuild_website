@@ -29,8 +29,8 @@ import Icon from './Icon.astro';
 <style>
   /* Seit 20.11.2026 hell wie die Abschluss-Box der Startseite (Jamil #6515/#6521): Goldstich #FEFCF7, feine Goldlinie oben,
      Schrift Anthrazit, Hauptknopf Gold mit dunkler Schrift, Nebenknöpfe mit Anthrazit-Rand. Vorher weiße Schrift auf dunkler/goldener Fläche. */
-  .fkontakt { padding-block: clamp(56px, 8vw, 96px); background: #FEFCF7; color: #111827; border-top: 2px solid #D4AF37; }
-  .fkontakt :global(.accent) { color: #7A5E0E; }
+  .fkontakt { padding-block: clamp(56px, 8vw, 96px); background: #FEFCF7; color: #111827; border-top: 2px solid #EFBF04; }
+  .fkontakt :global(.accent) { color: #111827; }
   .fkontakt__inner { display: grid; justify-items: center; text-align: center; gap: 12px; }
   .fkontakt__inner h2, .fkontakt__inner h3, .fkontakt__inner p { margin: 0; color: #111827; }
   .fkontakt__inner .fkontakt__sub { font-family: var(--font-head); font-weight: 650; font-size: 1.2rem; color: #374151; }
@@ -39,10 +39,10 @@ import Icon from './Icon.astro';
   .fkontakt__actions { display: grid; gap: 10px; width: 100%; max-width: 22rem; margin-top: 6px; }
   @media (min-width: 960px) { .fkontakt__actions { grid-template-columns: auto auto; justify-content: center; max-width: 48rem; } .fkontakt__actions .btn { white-space: nowrap; } }
   .fkontakt__actions .btn { justify-content: center; padding: 0.7em 1.4em; font-size: 0.95rem; gap: 8px; }
-  .fkontakt__actions .btn--primary { background: #D4AF37; border-color: #D4AF37; color: #111827; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
-  .fkontakt__actions .btn--primary:hover { background: #C29F2F; border-color: #C29F2F; }
+  .fkontakt__actions .btn--primary { background: #EFBF04; border-color: #EFBF04; color: #111827; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
+  .fkontakt__actions .btn--primary:hover { background: #EFBF04; border-color: #EFBF04; }
   .fkontakt__ghost { background: #FFFFFF; border-color: #111827; color: #111827; }
   .fkontakt__ghost:hover { background: #FBF3D5; border-color: #111827; }
   .fkontakt__inner .fkontakt__zeiten { color: #4B5563; font-size: 0.9rem; margin-top: 4px !important; }
-  .fkontakt :global(:focus-visible) { outline-color: #8C6D12; }
+  .fkontakt :global(:focus-visible) { outline-color: #EFBF04; }
 </style>

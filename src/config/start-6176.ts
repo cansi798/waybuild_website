@@ -37,6 +37,8 @@ export const ALT_ZEIGEN = {
   heroAnimation: false, // Hero-Animation Browser → Dashboard (#6369) – seit Jamil #6478 aus, Hero einspaltig mittig; true = wieder da
   individuellTab: false, // 4. Tab „Individuell“ im Wechsler (#6427) – seit Jamil #6460 aus; true = wieder da
   browserBox: false, // separate Box „Läuft einfach im Browser“ unter dem Wechsler (#6397) – seit Jamil #6424 kleiner Hinweis im Wechsler; true = Box wieder
+  heroChips: true, // Jamil #6916: vier Problem-Chips unter der Hero-Unterzeile; false = wieder weg
+  problemBuehne: true, // Jamil #6917/#6918: Abschnitt „Wo Betriebe …“ als Scroll-Bühne (Stufe 1 Problem → Stufe 2 Lösung); false = wie vorher, einfach untereinander
   heroZeile: false, // „Keine Tickets. Kein CMS. Keine Technikkenntnisse.“ im Hero – seit Jamil #6417 aus; true = wieder sichtbar
   // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
   wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
@@ -134,6 +136,25 @@ export const J_PROBLEM_NEU = {
   ],
 } as const;
 
+/** Jamil #6916: vier Chips im Hero (Icon + Kurzwort), springen zum Abschnitt „Wo Betriebe heute Kunden und Zeit verlieren“ (#problem, Stufe 1).
+ *  Reihenfolge und Icons wie J_PROBLEM_NEU.karten. Zum Entfernen: ALT_ZEIGEN.heroChips = false. */
+export const J_HERO_CHIPS = {
+  label: 'Typische Probleme im Arbeitsalltag – zum Abschnitt springen',
+  chips: [
+    { icon: 'brief', kurz: 'Nur Visitenkarte' },
+    { icon: 'puzzle', kurz: 'Starre Programme' },
+    { icon: 'pfeile', kurz: 'Doppelt abtippen' },
+    { icon: 'lupe', kurz: 'Infos verstreut' },
+  ],
+} as const;
+
+/** Jamil #6917/#6918: Abschnitt „Wo Betriebe …“ als Scroll-Bühne mit 2 Stufen (Problem → Lösung). Stufe 2 nimmt NUR vorhandene Texte
+ *  aus J_MASS (Überschrift, Unterzeile, Titel + `zeigt` der Schritte 1–4); `schritt` = Index in J_MASS.schritte, passend zur Karte der Stufe 1. */
+export const J_PROBLEM_STUFEN = {
+  label: 'Stufe',
+  lösung: [0, 3, 1, 2], // Visitenkarte → Kalkulator · verbiegen → Software nach Betrieb · doppelt abtippen → Auftrags-Maske · Info suchen → Portal
+} as const;
+
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus
  *  #6378 („Ob Kundenportal, Kalkulator …“) steht bewusst NICHT auf der Seite, weil er die Subheadline fast doppelt (im Talk gefragt):
  *  'Ob Kundenportal, Kalkulator auf der Website oder ein internes System für Ihre Aufträge: Wir programmieren genau die Werkzeuge, die Ihrem
@@ -151,7 +172,7 @@ export const J_MASS = {
   bauwelt: {
     link: { text: 'bauwelt-handwerk.de ansehen', href: 'https://www.bauwelt-handwerk.de/rechner/' },
     bilder: [
-      { bild: 'referenzen/bauwelt-kalkulator', alt: 'Projekt-Rechner auf bauwelt-handwerk.de: Ergebnis „Ihre erste Preisspanne“ für eine Badsanierung mit 8 m², 14.340 bis 19.500 Euro inklusive Mehrwertsteuer, darunter der Knopf „Angaben ändern“.' },
+      { bild: 'referenzen/bauwelt-kalkulator', alt: 'Projekt-Rechner auf bauwelt-handwerk.de, Schritt 3 von 3: Ergebnis „Ihre erste Preisspanne“ für eine Badsanierung mit 8 m², 14.340 bis 19.500 Euro, darunter ein Hinweis zur Berechnung, der Knopf „Angaben ändern“ und der Knopf „Rückruf anfordern“.' },
       { bild: 'referenzen/bauwelt-auftrag', alt: 'Auftragsübersicht im CRM mit Testdaten: Auftrag „Badsanierung“ mit Status-Leiste von Anfrage bis Abgerechnet, Zeiterfassung mit Start und Abfahrt, Aufgabenliste mit Zuständigen sowie Kunde und Einsatzort.' },
       { bild: 'referenzen/bauwelt-kundenportal', alt: 'Kundenportal von Bauwelt Handwerk mit Testdaten: Auftrag „Badsanierung“ mit Projekt-Verlauf von Anfrage bis Fertigstellung, nächster Termin, Arbeitsschritte, persönlicher Projektbegleiter und Team.' },
     ],

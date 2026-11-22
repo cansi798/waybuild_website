@@ -41,10 +41,10 @@ export const FOOTER_KONTAKT = {
 /** Muster-Referenzen (Wunsch 11.10.2026: „Muster“) – klar als Beispiele gekennzeichnet,
  *  keine erfundenen Kundennamen oder Zitate. Werden ersetzt, sobald echte Projekte freigegeben sind. */
 export const MUSTER: { branche: string; typ: string; farbe: string; hinweis: string }[] = [
-  { branche: 'Handwerksbetrieb', typ: 'Business-Website', farbe: '#D4AF37', hinweis: 'Leistungen, Referenzen, Anfrage mit Foto-Upload' },
-  { branche: 'Steuerkanzlei', typ: 'Business-Website', farbe: '#8C6D12', hinweis: 'Team, Leistungen, Mandanten-Login-Verlinkung' },
+  { branche: 'Handwerksbetrieb', typ: 'Business-Website', farbe: '#EFBF04', hinweis: 'Leistungen, Referenzen, Anfrage mit Foto-Upload' },
+  { branche: 'Steuerkanzlei', typ: 'Business-Website', farbe: '#EFBF04', hinweis: 'Team, Leistungen, Mandanten-Login-Verlinkung' },
   { branche: 'Arztpraxis', typ: 'Business-Website', farbe: '#4fd1cb', hinweis: 'Sprechzeiten, Online-Termine, barrierearm' },
   { branche: 'B2B-Dienstleister', typ: 'Landingpage', farbe: '#545454', hinweis: 'Ein Angebot, ein Ziel: Anfragen' },
-  { branche: 'Fachhandel', typ: 'Online-Shop', farbe: '#D4AF37', hinweis: 'Katalog, Warenkorb, Bezahlung' },
-  { branche: 'Immobilienbüro', typ: 'Website-Relaunch', farbe: '#8C6D12', hinweis: 'Alte WordPress-Seite abgelöst, schneller und sicherer' },
+  { branche: 'Fachhandel', typ: 'Online-Shop', farbe: '#EFBF04', hinweis: 'Katalog, Warenkorb, Bezahlung' },
+  { branche: 'Immobilienbüro', typ: 'Website-Relaunch', farbe: '#EFBF04', hinweis: 'Alte WordPress-Seite abgelöst, schneller und sicherer' },
 ];

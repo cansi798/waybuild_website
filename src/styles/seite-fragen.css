@@ -13,12 +13,12 @@
 
 /* Themen */
 .sf-themen { min-width: 0; }
-.sf-themen__kopf { margin-bottom: 12px !important; font-weight: 600; font-size: 0.95rem; color: var(--sn-tinte); }
+.sf-themen__kopf { margin-bottom: 12px !important; font-weight: 600; font-size: 0.95rem; color: #111827; }
 .sf-themen ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .sf-themen a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 16px; border: 1px solid var(--sn-linie);
   border-radius: 999px; background: var(--white); color: var(--ink); font-family: var(--font-head); font-weight: 600; font-size: 0.92rem;
   text-decoration: none; transition: border-color 0.25s ease, color 0.25s ease; }
-.sf-themen a:hover { border-color: var(--sn-tinte); color: var(--sn-tinte); }
+.sf-themen a:hover { border-color: var(--sn-tinte); color: #111827; }
 .sf-themen__zahl { font-family: var(--font-body); font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
 @media (min-width: 960px) {
   .sf-themen { position: sticky; top: 112px; }
@@ -31,7 +31,7 @@
 .sf-gruppen { min-width: 0; display: grid; gap: clamp(48px, 7vw, 88px); }
 .sf-gruppe { min-width: 0; scroll-margin-top: 100px; }
 .sf-gruppe__kopf { display: flex; align-items: baseline; gap: 16px; margin-bottom: clamp(16px, 2.5vw, 24px); }
-.sf-gruppe__nr { flex: none; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
+.sf-gruppe__nr { flex: none; font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; color: #111827; font-variant-numeric: tabular-nums; }
 .sf-gruppe__kopf .sn-h3 { min-width: 0; overflow-wrap: break-word; }
 
 /* Akkordeon */
@@ -43,7 +43,7 @@
 .sf-frage summary:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; }
 .sf-frage h3 { margin: 0; min-width: 0; font-family: var(--font-head); font-weight: 600; font-size: clamp(1.02rem, 0.98rem + 0.2vw, 1.12rem);
   line-height: 1.45; letter-spacing: -0.01em; color: var(--ink); overflow-wrap: break-word; text-wrap: pretty; transition: color 0.25s ease; }
-.sf-frage summary:hover h3 { color: var(--sn-tinte); }
+.sf-frage summary:hover h3 { color: #111827; }
 /* Plus/Minus aus zwei feinen Linien in einem Kreis */
 .sf-frage__zeichen { position: relative; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--sn-hauch);
   transition: background-color 0.3s ease, transform 0.4s var(--sn-kurve); }

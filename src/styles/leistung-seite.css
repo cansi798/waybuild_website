@@ -16,18 +16,18 @@
 /* .ls-problem */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-intro { min-width: 0; display: grid; gap: 14px; font-size: 1.05rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
 .ls-intro p { margin: 0; }
-.ls-intro a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+.ls-intro a { color: #111827; font-weight: 600; text-underline-offset: 3px; }
 .ls-probleme { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 @media (min-width: 800px) { .ls-probleme { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; } }
 .ls-problem-karte { min-width: 0; display: grid; gap: 10px; align-content: start; padding: clamp(22px, 3vw, 32px);
   border-radius: 24px; background: var(--paper); border-top: 3px solid var(--sn-tuerkis); overflow-wrap: break-word; }
 .ls-problem-karte p { line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
-.ls-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sn-tinte); font-variant-numeric: tabular-nums; }
+.ls-nr { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: #111827; font-variant-numeric: tabular-nums; }
 
 /* ── 3 · Was Sie bekommen ── */
 /* .ls-umfang */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .ls-umfang__gruppe + .ls-umfang__gruppe { margin-top: clamp(28px, 4vw, 44px); }
-.ls-umfang__zwischen { margin-bottom: 14px !important; color: var(--sn-tinte); }
+.ls-umfang__zwischen { margin-bottom: 14px !important; color: #111827; }
 .ls-umfang__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 @media (min-width: 760px) { .ls-umfang__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
 .ls-punkt { min-width: 0; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 16px; align-items: start;
@@ -35,11 +35,11 @@
 .ls-punkt__zeichen { width: 10px; height: 10px; margin-top: 0.55em; border-radius: 50%; background: var(--sn-tuerkis); }
 .ls-punkt__text { display: grid; gap: 4px; line-height: 1.6; color: var(--ink-soft); overflow-wrap: break-word; text-wrap: pretty; }
 .ls-punkt__text strong { font-family: var(--font-head); font-weight: 650; color: var(--ink); }
-.ls-punkt__text a, .ls-umfang__hinweis a, .ls-problem-karte a, .ls-paket a:not(.btn):not(.sn-link), .sn-schritt__text a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+.ls-punkt__text a, .ls-umfang__hinweis a, .ls-problem-karte a, .ls-paket a:not(.btn):not(.sn-link), .sn-schritt__text a { color: #111827; font-weight: 600; text-underline-offset: 3px; }
 .ls-umfang__hinweis { margin-top: 24px !important; font-size: 0.98rem; }
 
 .ls-verwandt { margin-top: clamp(40px, 6vw, 64px); padding-top: 28px; border-top: 1px solid var(--sn-linie); }
-.ls-verwandt__titel { margin-bottom: 16px !important; font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: var(--sn-tinte); }
+.ls-verwandt__titel { margin-bottom: 16px !important; font-family: var(--font-body); font-weight: 600; font-size: 1rem; color: #111827; }
 .ls-verwandt__liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
 @media (min-width: 760px) { .ls-verwandt__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; } }
 @media (min-width: 1100px) { .ls-verwandt__liste { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -48,7 +48,7 @@
   padding: 16px 0; min-height: 44px; text-decoration: none; color: var(--ink); }
 .ls-verwandt__link strong { font-family: var(--font-head); font-weight: 650; }
 .ls-verwandt__link span { grid-column: 1; font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); overflow-wrap: break-word; }
-.ls-verwandt__link svg { grid-column: 2; grid-row: 1 / span 2; color: var(--sn-tinte); transition: transform 0.4s var(--sn-kurve); }
+.ls-verwandt__link svg { grid-column: 2; grid-row: 1 / span 2; color: #111827; transition: transform 0.4s var(--sn-kurve); }
 .ls-verwandt__link:hover strong { text-decoration: underline; text-underline-offset: 4px; }
 .ls-verwandt__link:hover svg, .ls-verwandt__link:focus-visible svg { transform: translateX(4px); }
 
@@ -78,7 +78,7 @@
   border-radius: 24px; background: var(--paper); overflow-wrap: break-word; }
 .ls-paketkarte--tipp { background: var(--sn-hauch); }
 .ls-paketkarte--anfrage { background: var(--white); border: 1.5px dashed var(--sn-linie); }
-.ls-paketkarte__label { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sn-tinte); }
+.ls-paketkarte__label { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
 .ls-paketkarte__name { font-family: var(--font-head); font-weight: 700; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem); letter-spacing: -0.02em; color: var(--ink); }
 .ls-paketkarte__kurz { color: var(--ink-soft); }
 .ls-paketkarte__preis { margin-top: 10px !important; color: var(--ink-soft); }
@@ -125,7 +125,7 @@
 .ls-kombis b { font-family: var(--font-head); font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem); color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
 .ls-komplett__liste { list-style: none; margin: 8px 0 4px; padding: 0; display: grid; gap: 8px; }
 .ls-komplett__liste li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.6; color: var(--ink-soft); }
-.ls-komplett__liste svg { margin-top: 4px; color: var(--sn-tinte); }
+.ls-komplett__liste svg { margin-top: 4px; color: #111827; }
 /* Einleitung unter „Kennen Sie das?“ steht seit Jamil #6012 unter der Überschrift: Zeilenlänge begrenzen */
 .ls-problem .ls-intro { max-width: 72ch; }
 /* Neben dem Kasten „Rundum digital“ auch das individuelle Angebot über die ganze Breite (Jamil #6011, Audit #5953 L1) */

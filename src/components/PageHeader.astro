@@ -30,7 +30,7 @@ const { eyebrow, title, lead, foto } = Astro.props;
 <style>
   /* Seit 20.11.2026 hell wie der Startseiten-Hero (Jamil Talk qh87y3sj #6521: „Passe alle Unterseiten an Design und Stil der Hauptseite an“,
      Sicherung Tag vor-unterseiten-20261120): Goldstich #FEFCF7 mit zartem Gold-Schimmer oben rechts, Schrift Anthrazit, Eyebrow in Text-Gold,
-     feine Goldlinie unter der Eyebrow. Vorher dunkler Verlauf #8C6D12 → #111827 mit treibenden Farbflächen (Markup .ph__flaechen bleibt, ausgeblendet).
+     feine Goldlinie unter der Eyebrow. Vorher dunkler Verlauf #EFBF04 → #111827 mit treibenden Farbflächen (Markup .ph__flaechen bleibt, ausgeblendet).
      Einblenden wie im Hero: Überschrift sofort sichtbar (nur 8 px Gleiten), Text und Knöpfe weich nach; reduced-motion = keine Bewegung. */
   .ph {
     position: relative; overflow: hidden; overflow: clip; contain: paint; isolation: isolate; color: #111827;
@@ -40,17 +40,17 @@ const { eyebrow, title, lead, foto } = Astro.props;
   }
   .ph__flaechen { display: none; }
   .ph .wrap { position: relative; }
-  .ph .eyebrow { color: #7A5E0E; display: inline-flex; align-items: center; gap: 10px; }
-  .ph .eyebrow::before { content: ''; width: 28px; height: 2px; border-radius: 2px; background: #D4AF37; }
+  .ph .eyebrow { color: #111827; display: inline-flex; align-items: center; gap: 10px; }
+  .ph .eyebrow::before { content: ''; width: 28px; height: 2px; border-radius: 2px; background: #EFBF04; }
   .ph h1 { color: #111827; font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem); line-height: 1.06; letter-spacing: -0.035em; max-width: 18ch; text-wrap: balance; }
   .ph .lead { color: #374151; max-width: 56ch; text-wrap: pretty; }
-  .ph :global(a:not(.btn)) { color: #7A5E0E; text-decoration-color: #D4AF37; text-underline-offset: 4px; }
+  .ph :global(a:not(.btn)) { color: #111827; text-decoration-color: #EFBF04; text-underline-offset: 4px; }
   .ph :global(a:not(.btn):hover) { color: #111827; }
-  .ph :global(.btn) { background: #D4AF37; color: #111827; border-color: #D4AF37; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
-  .ph :global(.btn:hover) { background: #C29F2F; border-color: #C29F2F; color: #111827; }
+  .ph :global(.btn) { background: #EFBF04; color: #111827; border-color: #EFBF04; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }
+  .ph :global(.btn:hover) { background: #EFBF04; border-color: #EFBF04; color: #111827; }
   .ph :global(.btn--ghost) { background: transparent; border-color: #111827; color: #111827; box-shadow: none; }
   .ph :global(.btn--ghost:hover) { background: #FBF3D5; border-color: #111827; }
-  .ph :global(:focus-visible) { outline-color: #8C6D12; }
+  .ph :global(:focus-visible) { outline-color: #EFBF04; }
   .ph__text { min-width: 0; }
   .ph__raster { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
   .ph__raster :global(.ph__foto) { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -36px rgb(17 24 39 / 35%); }

@@ -1,8 +1,8 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#EFBF04→#EFBF04, #111827→#111827, #EFBF04→#EFBF04, #ddd6c9→#E2E8F0) */
 /* /preise/ im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892, 14.11.2026). Wird NUR von src/pages/preise.astro geladen.
  * Baut auf start-neu.css auf (.sn-Bausteine, SnAngebot). Präfix .spr-.
  * Hintergründe: Pakete Sand (SnAngebot) → Vergleich Weiß → Start Papier → Ausbaustufen Weiß → Abschluss Hauch (SnAbschluss).
- * Kontraste: Schrift Türkis nur #8C6D12; Grids minmax(0, 1fr) + min-width: 0 (WebKit). */
+ * Kontraste: Schrift Türkis nur #EFBF04; Grids minmax(0, 1fr) + min-width: 0 (WebKit). */
 
 .spr-anker { display: block; position: relative; height: 0; scroll-margin-top: 100px; }
 
@@ -21,20 +21,20 @@
 /* .spr-vgl */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .spr-vgl__tafel { position: relative; max-width: 980px; margin-inline: auto; overflow-x: auto; border-radius: 24px; background: var(--paper);
   padding: clamp(8px, 1.6vw, 20px); }
-.spr-vgl__tafel:focus-visible { outline: 3px solid #8C6D12; outline-offset: 3px; }
+.spr-vgl__tafel:focus-visible { outline: 3px solid #EFBF04; outline-offset: 3px; }
 .spr-vgl__tabelle { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.95rem; }
 .spr-vgl__tabelle th, .spr-vgl__tabelle td { padding: 14px 14px; border-bottom: 1px solid #E2E8F0; text-align: center; vertical-align: middle; line-height: 1.5; }
-.spr-vgl__tabelle thead th { padding-block: 18px 16px; border-bottom: 1.5px solid #8C6D12; font-family: var(--font-head); font-weight: 700;
+.spr-vgl__tabelle thead th { padding-block: 18px 16px; border-bottom: 1.5px solid #EFBF04; font-family: var(--font-head); font-weight: 700;
   font-size: 1.15rem; letter-spacing: -0.01em; color: var(--ink); }
 .spr-vgl__tabelle thead th:first-child { font-size: 0.86rem; font-weight: 600; color: var(--ink-soft); letter-spacing: 0; }
 .spr-vgl__tabelle thead th span, .spr-vgl__summe td span { display: block; margin-top: 2px; font-family: var(--font-body, inherit); font-size: 0.8rem;
   font-weight: 500; color: var(--ink-soft); letter-spacing: 0; }
-.spr-vgl__tabelle thead th.spr-vgl__tipp { color: #8C6D12; }
+.spr-vgl__tabelle thead th.spr-vgl__tipp { color: #111827; }
 .spr-vgl__tabelle thead th:first-child, .spr-vgl__tabelle tbody th { text-align: left; }
 .spr-vgl__tabelle tbody th { font-weight: 500; color: var(--ink); overflow-wrap: break-word; }
-.spr-vgl__ja { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #FBF3D5; color: #8C6D12; }
+.spr-vgl__ja { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #FBF3D5; color: #111827; }
 .spr-vgl__nein { color: var(--ink-soft); }
-.spr-vgl__wert { display: inline-block; max-width: 18ch; font-size: 0.88rem; font-weight: 600; line-height: 1.4; color: #8C6D12; }
+.spr-vgl__wert { display: inline-block; max-width: 18ch; font-size: 0.88rem; font-weight: 600; line-height: 1.4; color: #111827; }
 .spr-vgl__summe th, .spr-vgl__summe td { border-bottom: 0; padding-top: 18px; font-family: var(--font-head); font-weight: 700; color: var(--ink); }
 .spr-vgl__summe td { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
 
@@ -45,7 +45,7 @@
 @media (min-width: 1100px) { .spr-schritte { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; } } /* fünf Schritte (Jamil #6055 Fr. 14) */
 .spr-schritt { min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: clamp(24px, 2.6vw, 32px); border-radius: 24px; background: var(--paper); } /* Gegenfarbe des Abschnitts (global.css, Jamil #5915) */
 .spr-schritt__nr { padding-bottom: 14px; margin-bottom: 6px; border-bottom: 1px solid #E2E8F0; font-family: var(--font-head); font-weight: 700;
-  font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem); line-height: 1; letter-spacing: -0.03em; color: #8C6D12; font-variant-numeric: tabular-nums; }
+  font-size: clamp(1.8rem, 1.4rem + 1.2vw, 2.4rem); line-height: 1; letter-spacing: -0.03em; color: #111827; font-variant-numeric: tabular-nums; }
 .spr-schritt p { font-size: 0.98rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
 
 /* ── Ausbaustufen ── */
@@ -54,7 +54,7 @@
 @media (min-width: 900px) { .spr-stufen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
 .spr-stufe { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(24px, 2.6vw, 32px); border-radius: 24px;
   background: var(--paper); scroll-margin-top: 100px; }
-.spr-stufe__tag { padding-bottom: 14px; border-bottom: 1px solid #E2E8F0; font-size: 0.86rem; font-weight: 600; color: #8C6D12; }
+.spr-stufe__tag { padding-bottom: 14px; border-bottom: 1px solid #E2E8F0; font-size: 0.86rem; font-weight: 600; color: #111827; }
 .spr-stufe .sn-h3 { margin-top: 6px !important; overflow-wrap: break-word; }
 .spr-stufe__text { font-size: 0.98rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
 .spr-stufe__liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
@@ -63,7 +63,7 @@
 
 .spr-nicht { margin-top: 24px; padding: 20px 24px; border-radius: 20px; border: 1px solid var(--sn-linie); background: var(--white); } /* Jamil #6055 Fr. 9: echte Liste statt Platzhalter */
 .spr-nicht__liste { margin: 0 0 8px; padding-left: 1.2em; line-height: 1.7; }
-.spr-schritt__zeit { margin-top: 6px !important; font-size: 0.9rem; font-weight: 600; color: var(--sn-tinte); }
+.spr-schritt__zeit { margin-top: 6px !important; font-size: 0.9rem; font-weight: 600; color: #111827; }
 .spr-nicht .sn-h4 { margin: 0 0 6px; }
 .spr-nicht p { line-height: 1.7; }
 .spr-nicht__etikett { display: inline-block; margin-bottom: 8px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #fff; font-size: 0.75rem; font-weight: 700; }

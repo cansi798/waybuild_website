@@ -89,7 +89,7 @@ const sterne = [1, 2, 3, 4, 5];
   .sz13-handy { --gr-hoehe: calc(var(--sz13-b) * 2.1667); }
   .sz13-rueck { position: relative; container-type: size; width: var(--sz13-b); height: calc(var(--sz13-b) * 2.1667); }
   .sz13-wer { display: inline-flex; align-items: center; padding: 0.4em 1em; border-radius: 99px; background: var(--bsp-weiss); border: 1px solid var(--bsp-linie);
-    color: var(--bsp-tinte); font-family: var(--font-body); font-size: clamp(10px, 2.6cqh, 14px); font-weight: 650; line-height: 1.2; white-space: nowrap; }
+    color: #111827; font-family: var(--font-body); font-size: clamp(10px, 2.6cqh, 14px); font-weight: 650; line-height: 1.2; white-space: nowrap; }
   /* Schimmer um die Rückblende (Szene 1) */
   .sz13-glanz { position: absolute; inset: -1.6cqw; border-radius: 17cqw; pointer-events: none;
     box-shadow: 0 0 0 0.9cqw rgb(212 175 55 / 55%), 0 0 7cqw 1cqw rgb(212 175 55 / 40%); opacity: 0.75; }
@@ -99,12 +99,12 @@ const sterne = [1, 2, 3, 4, 5];
   .sz13-kreis-zeichen { display: grid; place-items: center; width: min(13cqw, 15cqh); height: min(13cqw, 15cqh); border-radius: 50%; background: var(--bsp-weiss);
     box-shadow: 0 0 0 2px var(--bsp-tuerkis), 0 12px 28px -14px rgb(17 24 39 / 50%); }
   .sz13-kreis-zeichen svg { width: 70%; height: 70%; fill: none; stroke: var(--bsp-tinte); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; }
-  .sz13-kreis-text { max-width: 100%; font-family: var(--font-head); font-size: clamp(9px, min(2.5cqh, 3.6cqw), 15px); font-weight: 700; line-height: 1.25; color: var(--bsp-tinte); text-wrap: balance; }
+  .sz13-kreis-text { max-width: 100%; font-family: var(--font-head); font-size: clamp(9px, min(2.5cqh, 3.6cqw), 15px); font-weight: 700; line-height: 1.25; color: #111827; text-wrap: balance; }
 
   /* Mail */
   .sz13-app { gap: var(--bsp-a3); padding-top: var(--bsp-a1); }
   .sz13-app p { margin: 0; }
-  .sz13-zurueck { display: flex; align-items: center; gap: calc(2 * var(--px)); font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-tinte); }
+  .sz13-zurueck { display: flex; align-items: center; gap: calc(2 * var(--px)); font-size: var(--bsp-schrift-s); font-weight: 600; color: #111827; }
   .sz13-zurueck svg { width: calc(16 * var(--px)); height: calc(16 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
   .sz13-mail { display: flex; flex-direction: column; gap: var(--bsp-a2); }
   .sz13-absender { display: flex; align-items: center; gap: var(--bsp-a2); }

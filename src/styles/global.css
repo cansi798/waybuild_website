@@ -4,8 +4,8 @@
 
 :root {
   /* Farbpalette der Startseite auf ALLEN Seiten (QA #5952, Jamil #5955 „Ja design komplett anpassen“; vorher nur
-     html[data-thema='besucherreise'] in start-farben.css): Primär #8C6D12 · dunkle Flächen #111827 · Gold #D4AF37 · Text #111827
-     · positive Akzente #D4AF37. Alte CI-Werte: --ink #3a3a3a, --dark #111827, --accent #D4AF37, --accent-ink #8C6D12, --accent-mid #8C6D12. */
+     html[data-thema='besucherreise'] in start-farben.css): Primär #EFBF04 · dunkle Flächen #111827 · Gold #EFBF04 · Text #111827
+     · positive Akzente #EFBF04. Alte CI-Werte: --ink #3a3a3a, --dark #111827, --accent #EFBF04, --accent-ink #EFBF04, --accent-mid #EFBF04. */
   --ink: #111827;       /* 12,6 : 1 auf #F8FAFC */
   --dark: #111827;      /* dunkle Flächen */
   --dark-line: #334155;
@@ -16,13 +16,14 @@
   --paper-2: #F1F5F9;
   --creme: #FEFCF7; /* Jamil #6508: dezenter (vorher #FDFAF1) */ --creme-alt: #FDFAF1; /* Weiß mit Goldstich im Wechsel mit Weiß (Jamil #6453, 20.11.2026; davor #6448 alles weiß) */     /* blasses Creme für Abschnitte im Wechsel mit Weiß (Jamil #5915, 14.11.2026); 1,04 : 1 zu Weiß, auf vollen Flächen sichtbar */
   --white: #ffffff;
-  --accent: #D4AF37;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
-  --accent-ink: #7A5E0E; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
-  --accent-mid: #D4AF37;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
-  --accent-light: #E6C766; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #111827) */
-  --on-accent: #111827;    /* Schrift auf #D4AF37 (8,5 : 1) */
+  --accent: #EFBF04;    /* positive Akzente / Knopfflächen (nur Flächen, Linien, Zeichen: 3,5 : 1 auf Weiß) */
+  --accent-ink: #EFBF04; /* Primär: Schrift/Links auf Hell (6,2 : 1) */
+  --accent-mid: #EFBF04;   /* Linien/Zeichen auf Hell (≥ 3 : 1) */
+  --accent-light: #FFDE21; /* Türkis als Schrift auf Dunkel (6,0 : 1 auf #111827) */
+  --on-accent: #111827;    /* Schrift auf #EFBF04 (8,5 : 1) */
   --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #111827 (8,6 : 1) */
-  --gold: #D4AF37;         /* nur Zier (Linien, Punkte, Ringe), nie als kleine Schrift */
+  --gold: #EFBF04;         /* Hauptgold (Jamil #6915): nur Flächen, Linien, Icons, Knöpfe mit dunkler Schrift; Schrift darauf #111827 */
+  --gold-hell: #FFDE21;    /* helleres Gold, erlaubt */
   --line: #E2E8F0;
   --ok: #177049;
   --radius: 14px;
@@ -95,7 +96,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-ink);
+  color: #111827;
   margin-bottom: 0.9rem;
 }
 .section--dark .eyebrow { color: var(--accent-light); } /* kleine Schrift auf Dunkel: 5,9 : 1 */
@@ -121,7 +122,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 }
 .btn:hover { transform: translateY(-1px); }
 .btn--primary { background: var(--accent); color: var(--on-accent); } /* 5,1 : 1 (vorher --ink 3,8 : 1) */
-.btn--primary:hover { background: #C29F2F; } /* Jamil #6431: Gold dunkler, Schrift #111827 */
+.btn--primary:hover { background: #EFBF04; } /* Jamil #6431: Gold dunkler, Schrift #111827 */
 .btn--ghost { border-color: currentColor; background: transparent; }
 .btn--dark { background: var(--dark); color: var(--paper); }
 
@@ -156,8 +157,8 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 
 /* ---------- Umbau nach Bauwelt-Muster (11.10.2026): Sektions-Köpfe, Häkchen, Slider, Reveal ---------- */
 :root { --header-h: 72px; --stickybar-h: 64px; --vorschau-h: 30px; } /* --vorschau-h = feste Höhe der Vorschau-Leiste */
-.accent { color: var(--accent-ink); }
-.section--dark .accent { color: var(--accent); }
+.accent { color: #111827; }
+.section--dark .accent { color: #111827; }
 .section--dark .eyebrow { color: var(--accent-light); }
 .section--dark h2, .section--dark h3 { color: var(--white); }
 .section--sand { background: var(--paper-2); }
@@ -170,8 +171,8 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 }
 .check-row { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 0; margin: 0; list-style: none; }
 .check-row li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
-.check-row .icon { color: var(--accent-ink); flex: none; }
-.section--dark .check-row .icon, .on-dark .check-row .icon { color: var(--accent); }
+.check-row .icon { color: #111827; flex: none; }
+.section--dark .check-row .icon, .on-dark .check-row .icon { color: #111827; }
 .check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .check-list li { display: flex; align-items: flex-start; gap: 12px; }
 .check-list .icon { color: var(--ok); flex: none; margin-top: 3px; }
@@ -214,3 +215,6 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 
 /* Unterseiten im Stil der Startseite (Jamil #6521, 20.11.2026): Brotkrumen über dem hellen Seitenkopf im selben Goldstich */
 body:has(.ph) .crumbs { background: #FEFCF7; border-bottom-color: #F1ECE0; }
+
+/* Jamil #6915: Gold nur als Fläche/Linie; Links sind dunkel mit Gold-Unterstreichung (Kontrast) */
+html a:not(.btn) { text-decoration-color: #EFBF04; text-decoration-thickness: 2px; }

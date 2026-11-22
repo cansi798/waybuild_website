@@ -1,9 +1,9 @@
-/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#8C6D12→#8C6D12, #111827→#111827, #D4AF37→#D4AF37, #ddd6c9→#E2E8F0) */
+/* QA #5952: Farbwerte auf die Startseiten-Palette umgestellt (#EFBF04→#EFBF04, #111827→#111827, #EFBF04→#EFBF04, #ddd6c9→#E2E8F0) */
 /* „Was wir für Ihre Sichtbarkeit tun.“ (.sb-*, Jamil, Talk qh87y3sj #5363, 10.11.2026). Drei Felder mit gezeichneten Beispiel-Ansichten.
  * Startseite (.sb--start): Hintergrund Sand (--paper-2) zwischen „So gehen wir vor“ (Weiß) und „So arbeiten wir.“ (#FBF3D5), mindestens
  * eine Bildschirmseite. Leistungsseiten (.sb--leistung): Weiß zwischen Text (Papier) und „Häufige Fragen“ (Sand).
- * Kontrast (WCAG AA): Schrift Türkis #8C6D12 (6,4 : 1 auf Weiß), Nebentext --ink-soft #475569 (7,5 : 1 auf Weiß, 6,6 : 1 auf #FBF3D5),
- * Grün #177049 (6,3 : 1). Linien/Balken #8C6D12 (4,8 : 1). Bewegung nur transform/opacity/stroke-dashoffset. */
+ * Kontrast (WCAG AA): Schrift Türkis #EFBF04 (6,4 : 1 auf Weiß), Nebentext --ink-soft #475569 (7,5 : 1 auf Weiß, 6,6 : 1 auf #FBF3D5),
+ * Grün #177049 (6,3 : 1). Linien/Balken #EFBF04 (4,8 : 1). Bewegung nur transform/opacity/stroke-dashoffset. */
 
 .section.sb--start { background: var(--paper-2); min-height: calc(100vh - var(--kopf-gesamt, 73px)); min-height: calc(100svh - var(--kopf-gesamt, 73px));
   display: flex; flex-direction: column; justify-content: center; }
@@ -28,11 +28,11 @@
 .sb-etikett { align-self: flex-start; margin: 0; padding: 2px 10px; border-radius: 999px; background: var(--white); border: 1px solid #cfe5e3;
   font-size: 0.74rem; font-weight: 650; letter-spacing: 0.02em; line-height: 1.6; color: var(--ink-soft); }
 .sb-text { display: flex; flex-direction: column; flex: 1; gap: 10px; padding: clamp(22px, 2.6vw, 30px); }
-.sb-titel { margin: 0; font-size: clamp(1.3rem, 1.9vw, 1.5rem) !important; line-height: 1.2; letter-spacing: -0.015em; color: var(--accent-ink); overflow-wrap: break-word; }
+.sb-titel { margin: 0; font-size: clamp(1.3rem, 1.9vw, 1.5rem) !important; line-height: 1.2; letter-spacing: -0.015em; color: #111827; overflow-wrap: break-word; }
 .sb-satz { margin: 0; font-size: 1.02rem; line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 .sb-paket { align-self: flex-start; margin: 2px 0 0; padding: 3px 12px; border-radius: 999px; background: rgb(212 175 55 / 12%);
   font-size: 0.82rem; font-weight: 650; line-height: 1.5; color: var(--dark); }
-.sb-link { margin-top: auto; padding-top: 6px; font-weight: 650; color: var(--accent-ink); text-underline-offset: 3px; }
+.sb-link { margin-top: auto; padding-top: 6px; font-weight: 650; color: #111827; text-underline-offset: 3px; }
 .sb-link::after { content: ' →'; }
 
 /* ── Ansicht (Fenster) ── */
@@ -53,12 +53,12 @@
 .sb-kwert { font-size: 0.74rem; font-weight: 650; color: #177049; }
 .sb-verlauf { display: block; width: 100%; height: 54px; overflow: visible; }
 .sb-flaeche { fill: rgb(212 175 55 / 14%); }
-.sb-linie { fill: none; stroke: #8C6D12; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.sb-linie { fill: none; stroke: #EFBF04; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .sb-balken-reihe { display: flex; align-items: flex-end; gap: 5px; height: 56px; }
-.sb-balken { flex: 1; height: var(--h); border-radius: 4px 4px 1px 1px; background: #8C6D12; transform-origin: bottom; }
+.sb-balken { flex: 1; height: var(--h); border-radius: 4px 4px 1px 1px; background: #EFBF04; transform-origin: bottom; }
 .sb-balken:last-child { background: var(--accent-ink); }
 .sb-tacho { position: relative; display: block; height: 10px; margin-top: auto; border-radius: 999px; background: #e4ecea; overflow: hidden; }
-.sb-tacho__fuell { position: absolute; inset: 0 22% 0 0; border-radius: 999px; background: linear-gradient(90deg, #D4AF37, #177049); transform-origin: left; }
+.sb-tacho__fuell { position: absolute; inset: 0 22% 0 0; border-radius: 999px; background: linear-gradient(90deg, #EFBF04, #177049); transform-origin: left; }
 
 /* b) lokale Suche (ohne Logos und Markenfarben einer Suchmaschine) */
 .sb-suche { display: flex; align-items: center; gap: 8px; margin: 10px 10px 0; padding: 7px 12px; border-radius: 999px; border: 1px solid #dfe5e3;
@@ -67,7 +67,7 @@
 .sb-suche span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sb-karte { position: relative; height: 104px; margin: 10px 10px 0; border-radius: 10px; overflow: hidden; border: 1px solid #e4ecea; }
 .sb-karte__bild { display: block; width: 100%; height: 100%; }
-.sb-pin { position: absolute; left: 50%; top: 50%; width: 26px; height: 34px; margin: -32px 0 0 -13px; fill: #8C6D12; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 18%)); }
+.sb-pin { position: absolute; left: 50%; top: 50%; width: 26px; height: 34px; margin: -32px 0 0 -13px; fill: #EFBF04; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 18%)); }
 .sb-pin svg { display: block; }
 .sb-pin-schatten { position: absolute; left: 50%; top: 50%; width: 16px; height: 6px; margin: 0 0 0 -8px; border-radius: 50%; background: rgb(0 0 0 / 18%); }
 .sb-eintrag { display: flex; flex-direction: column; gap: 1px; padding: 10px 12px 12px; }
@@ -75,7 +75,7 @@
 .sb-eintrag__art { color: var(--ink-soft); }
 .sb-eintrag__offen { font-weight: 650; color: #177049; }
 .sb-knoepfe { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
-.sb-knoepfe span { padding: 2px 10px; border-radius: 999px; border: 1px solid #b9d6d3; font-size: 0.74rem; font-weight: 650; color: var(--accent-ink); }
+.sb-knoepfe span { padding: 2px 10px; border-radius: 999px; border: 1px solid #b9d6d3; font-size: 0.74rem; font-weight: 650; color: #111827; }
 
 /* c) KI-Assistent (ohne Namen oder Logos echter Anbieter) */
 .sb-funke { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--dark); }
@@ -101,7 +101,7 @@
 .sb-bereit .sb-blase--frage { opacity: 0; transform: translateY(8px); }
 .sb-bereit .sb-w, .sb-bereit .sb-quelle { opacity: 0; }
 .sb-bereit .sb-tippen { position: absolute; left: 12px; top: 12px; display: inline-flex; gap: 4px; }
-.sb-bereit .sb-tippen i { width: 6px; height: 6px; border-radius: 50%; background: #8C6D12; animation: sb-tippen 0.9s ease-in-out infinite; }
+.sb-bereit .sb-tippen i { width: 6px; height: 6px; border-radius: 50%; background: #EFBF04; animation: sb-tippen 0.9s ease-in-out infinite; }
 .sb-bereit .sb-tippen i:nth-child(2) { animation-delay: 0.15s; }
 .sb-bereit .sb-tippen i:nth-child(3) { animation-delay: 0.3s; }
 @keyframes sb-tippen { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }

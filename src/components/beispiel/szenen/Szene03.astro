@@ -118,7 +118,7 @@ const ZW = [0, 1, 2, 3];
   .sz03-schritt { display: flex; flex-direction: column; gap: var(--bsp-a2); padding: calc(10 * var(--px)) var(--bsp-a3); }
   .sz03-frage { display: flex; align-items: center; gap: calc(6 * var(--px)); font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text); }
   .sz03-nr { flex: none; display: grid; place-items: center; width: calc(18 * var(--px)); height: calc(18 * var(--px)); border-radius: 50%; background: var(--bsp-flaeche);
-    color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 700; }
+    color: #111827; font-size: var(--bsp-schrift-xs); font-weight: 700; }
 
   /* 1 Raum: Chips; der gewählte hat eine gefüllte Ebene darüber (ein-/ausgeblendet) */
   .sz03-chips { display: flex; flex-wrap: wrap; gap: calc(5 * var(--px)); }
@@ -128,7 +128,7 @@ const ZW = [0, 1, 2, 3];
   .sz03-tipp--raum { left: calc(44 * var(--px)); top: calc(50 * var(--px)); }
 
   /* 2 Fläche: Wert + Regler */
-  .sz03-wert { margin-left: auto; display: inline-flex; align-items: baseline; gap: calc(3 * var(--px)); font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-tinte); }
+  .sz03-wert { margin-left: auto; display: inline-flex; align-items: baseline; gap: calc(3 * var(--px)); font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: #111827; }
   .sz03-stapel { display: inline-grid; justify-items: end; }
   .sz03-m { grid-area: 1 / 1; }
   .sz03-m--start, .sz03-m--zw { opacity: 0; }
@@ -145,7 +145,7 @@ const ZW = [0, 1, 2, 3];
   .sz03-opt { position: relative; display: grid; place-items: center; height: calc(34 * var(--px)); border-radius: var(--bsp-r-s); background: var(--bsp-weiss);
     box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie-grau); color: var(--bsp-text-leise); font-size: var(--bsp-schrift-s); font-weight: 600; white-space: nowrap; }
   .sz03-opt-an { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: calc(4 * var(--px)); border-radius: inherit; background: var(--bsp-flaeche);
-    box-shadow: inset 0 0 0 calc(2 * var(--px)) var(--bsp-tuerkis-dunkel); color: var(--bsp-tinte); font-weight: 700; }
+    box-shadow: inset 0 0 0 calc(2 * var(--px)) var(--bsp-tuerkis-dunkel); color: #111827; font-weight: 700; }
   .sz03-opt-an svg { width: calc(14 * var(--px)); height: calc(14 * var(--px)); fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
   .sz03-tipp--umfang { left: 68%; top: calc(56 * var(--px)); }
 
@@ -158,7 +158,7 @@ const ZW = [0, 1, 2, 3];
   .sz03-warte { position: absolute; left: 0; right: 0; top: 50%; display: flex; flex-direction: column; gap: calc(5 * var(--px)); margin-top: calc(-13 * var(--px)); opacity: 0; }
   .sz03-warte .bm-balken { width: 55%; height: calc(10 * var(--px)); }
   .sz03-warte .bm-klein { font-size: var(--bsp-schrift-xs); }
-  .sz03-preis { display: flex; align-items: baseline; gap: calc(5 * var(--px)); font-family: var(--font-head); font-weight: 750; color: var(--bsp-tinte); letter-spacing: -0.02em; white-space: nowrap; }
+  .sz03-preis { display: flex; align-items: baseline; gap: calc(5 * var(--px)); font-family: var(--font-head); font-weight: 750; color: #111827; letter-spacing: -0.02em; white-space: nowrap; }
   .sz03-ca { font-size: var(--bsp-schrift-m); font-weight: 650; }
   .sz03-zahl { display: inline-grid; font-size: calc(25 * var(--px)); line-height: 1.15; }
   .sz03-z { grid-area: 1 / 1; }

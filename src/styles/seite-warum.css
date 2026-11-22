@@ -5,7 +5,7 @@
 .sw2-ph-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
 
 /* gemeinsame Bausteine */
-.sw2-nr { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: var(--sn-tinte); }
+.sw2-nr { display: block; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em; color: #111827; }
 .sw2-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
 .sw2-liste li { min-width: 0; display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid var(--sn-linie);
   line-height: 1.6; color: var(--ink); overflow-wrap: break-word; }
@@ -13,7 +13,7 @@
 .sw2-liste li > span:last-child { min-width: 0; }
 .sw2-punktzeichen { flex: none; width: 8px; height: 8px; margin-top: 0.62em; border-radius: 50%; background: var(--sn-tuerkis); }
 .sw2-zeichen { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; margin-top: 0.05em; border-radius: 50%; }
-.sw2-zeichen--ja { background: var(--sn-hauch); color: var(--sn-tinte); }
+.sw2-zeichen--ja { background: var(--sn-hauch); color: #111827; }
 .sw2-zeichen--nein { background: var(--sn-sand); color: var(--ink-soft); }
 
 /* 1 · Was uns unterscheidet */
@@ -59,7 +59,7 @@
 .sw2-saeule:hover { transform: translateY(-3px); box-shadow: var(--sn-schatten); }
 .sw2-saeule h3 { overflow-wrap: break-word; hyphens: auto; }
 .sw2-saeule__text { line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; overflow-wrap: break-word; }
-.sw2-saeule__ab { padding-top: 10px; border-top: 1px solid var(--sn-linie); font-size: 0.9rem; font-weight: 600; color: var(--sn-tinte); }
+.sw2-saeule__ab { padding-top: 10px; border-top: 1px solid var(--sn-linie); font-size: 0.9rem; font-weight: 600; color: #111827; }
 .sw2-saeule .sn-link { justify-self: start; }
 
 @media (prefers-reduced-motion: reduce) { .sw2-saeule { transition: none; } .sw2-saeule:hover { transform: none; } }

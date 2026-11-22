@@ -13,10 +13,10 @@
 .svg-tabelle tbody th { font-weight: 600; font-size: 0.98rem; line-height: 1.4; color: var(--ink); padding-left: clamp(14px, 3vw, 28px); }
 .svg-tabelle thead td { width: 38%; }
 .svg-tabelle .svg-wir { background: var(--sn-hauch); }
-.svg-tabelle thead .svg-wir { color: var(--sn-tinte); font-size: 1.05rem; }
+.svg-tabelle thead .svg-wir { color: #111827; font-size: 1.05rem; }
 .svg-zeichen { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; vertical-align: middle; }
 .svg-zeichen svg { stroke-width: 2.4; }
-.svg-ja .svg-zeichen { background: #FBF3D5; color: #8C6D12; }
+.svg-ja .svg-zeichen { background: #FBF3D5; color: #111827; }
 .svg-teils .svg-zeichen { background: #fdf3dc; color: #a16207; }
 .svg-nein .svg-zeichen { background: #fdecea; color: #c2410c; }
 .svg-tabelle .svg-wir .svg-zeichen { background: var(--white); }

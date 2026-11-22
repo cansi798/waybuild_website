@@ -81,7 +81,7 @@
   line-height: 1.4;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--neu-akzent-text);
+  color: #111827;
 }
 .neu .nr-reise .nr-reise__ziel .neu-punkt { position: absolute; left: calc(-1 * var(--nr-rand)); top: 50%; margin-top: -6px; }
 /* Ziel nur einblenden, nicht verschieben: der Punkt sitzt fest auf der Linie */
@@ -174,7 +174,7 @@ html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
   list-style: none;
 }
 .neu .nr-vorteile .nr-vorteil { display: flex; flex-direction: column; min-width: 0; }
-.neu .nr-vorteil__symbol { flex: none; margin-bottom: 22px; color: var(--neu-akzent-text); }
+.neu .nr-vorteil__symbol { flex: none; margin-bottom: 22px; color: #111827; }
 .neu .nr-vorteil__titel {
   margin: 0 0 10px;
   font-family: var(--font-head);
@@ -204,7 +204,7 @@ html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: 0.03em;
-  color: var(--neu-akzent-text);
+  color: #111827;
 }
 /* Abstand über dem Etikett, auch wenn die Karte die höchste der Reihe ist */
 .neu .nr-vorteil__text:not(:last-child) { margin-bottom: 22px; }
@@ -274,7 +274,7 @@ html.js .neu .nr-reise .nr-reise__ziel.reveal { transform: none; }
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--neu-akzent-text);
+  color: #111827;
 }
 .neu .nr-phase__text {
   max-width: var(--neu-mass);
@@ -322,7 +322,7 @@ html.js .neu .nr-ablauf .nr-schritt.reveal { transform: none; }
   font-weight: 650;
   line-height: 1.4;
   letter-spacing: 0.02em;
-  color: var(--neu-akzent-text);
+  color: #111827;
   text-wrap: balance;                    /* lange Zeitangabe: kein einzelnes Wort in der zweiten Zeile */
 }
 .neu .nr-schritt__titel {
@@ -404,7 +404,7 @@ html.js .neu .nr-ablauf .nr-schritt.reveal { transform: none; }
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.015em;
-  color: var(--neu-akzent-text);
+  color: #111827;
   overflow-wrap: break-word;
 }
 .neu .nr-grund .nr-grundsatz__mehr { border: 0; }

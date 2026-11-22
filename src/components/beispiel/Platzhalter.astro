@@ -39,7 +39,7 @@ const quer = geraet !== 'handy';
 <style is:global>
   /* Gerippe: blasse Balken, Titel in Türkis, beim Erscheinen sanft eingeblendet (Phase 1) */
   .sz-platzhalter .ph-gerippe { justify-content: flex-start; padding-top: var(--bsp-a6); }
-  .sz-platzhalter .bm-titel { color: var(--bsp-tinte); }
+  .sz-platzhalter .bm-titel { color: #111827; }
   .sz-platzhalter .ph-flaeche { display: block; flex: 1; max-height: calc(220 * var(--px)); border-radius: var(--bsp-r-l); background: var(--bsp-gerippe); opacity: 0.7; }
   .sz-platzhalter[data-phase]:not([data-erreicht~="1"]) .ph-gerippe > * { opacity: 0; transform: translateY(calc(10 * var(--px))); }
   .sz-platzhalter .ph-gerippe > * { transition: opacity var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt), transform var(--bsp-dauer) var(--bsp-ease) var(--bsp-auftritt); }

@@ -116,7 +116,7 @@ const ZEITEN = [
   .sz04-wt { padding-bottom: calc(2 * var(--px)); font-size: calc(9 * var(--px)); font-weight: 650; color: var(--bsp-text-leise); text-transform: uppercase; letter-spacing: 0.04em; }
   .sz04-tag { position: relative; display: grid; place-items: center; width: calc(32 * var(--px)); height: calc(32 * var(--px)); border-radius: 50%; font-size: var(--bsp-schrift-s); font-weight: 600; color: var(--bsp-text); }
   .sz04-tag--vorbei, .sz04-tag--zu { color: #b3bcba; font-weight: 500; }
-  .sz04-tag--heute { box-shadow: inset 0 0 0 calc(1.5 * var(--px)) var(--bsp-linie); color: var(--bsp-tinte); }
+  .sz04-tag--heute { box-shadow: inset 0 0 0 calc(1.5 * var(--px)) var(--bsp-linie); color: #111827; }
   .sz04-tag--frei::after, .sz04-tag--ziel::after { content: ''; position: absolute; bottom: calc(3 * var(--px)); left: 50%; width: calc(4 * var(--px)); height: calc(4 * var(--px)); margin-left: calc(-2 * var(--px));
     border-radius: 50%; background: var(--bsp-tuerkis); }
   .sz04-tag--ziel { color: var(--bsp-text); font-weight: 700; }
@@ -129,7 +129,7 @@ const ZEITEN = [
   .sz04-zeiten-titel { font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-text); }
   .sz04-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(6 * var(--px)); }
   .sz04-slot { position: relative; display: grid; place-items: center; height: calc(34 * var(--px)); border-radius: var(--bsp-r-s); background: var(--bsp-weiss);
-    box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); color: var(--bsp-tinte); font-size: var(--bsp-schrift-s); font-weight: 650; }
+    box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie); color: #111827; font-size: var(--bsp-schrift-s); font-weight: 650; }
   .sz04-slot--zu { background: transparent; box-shadow: inset 0 0 0 calc(1 * var(--px)) var(--bsp-linie-grau); color: #b3bcba; text-decoration: line-through; font-weight: 500; }
   .sz04-slot-an { position: absolute; inset: 0; display: grid; place-items: center; border-radius: inherit; background: var(--bsp-tinte); color: var(--bsp-weiss); }
   .sz04-tipp--zeit { left: 50%; top: 50%; }
@@ -152,7 +152,7 @@ const ZEITEN = [
     box-shadow: 0 0 0 calc(7 * var(--px)) var(--bsp-ok-flaeche); }
   .sz04-haken svg { width: 56%; height: 56%; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
   .sz04-blatt-titel { margin-top: calc(8 * var(--px)) !important; font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 750; letter-spacing: -0.02em; color: var(--bsp-text); }
-  .sz04-blatt-termin { font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-tinte); }
+  .sz04-blatt-termin { font-family: var(--font-head); font-size: var(--bsp-schrift-m); font-weight: 700; color: #111827; }
   .sz04-blatt-info { font-size: var(--bsp-schrift-xs); line-height: 1.5; }
   .sz04-blatt-chip { margin-top: calc(4 * var(--px)); }
 

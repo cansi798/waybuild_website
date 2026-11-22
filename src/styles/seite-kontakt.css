@@ -47,7 +47,7 @@
 /* Datenschutz-Haken */
 .sk .check { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); }
 .sk .check input { width: 20px; min-height: 20px; height: 20px; margin-top: 3px; padding: 0; flex: none; accent-color: var(--sn-tinte); box-shadow: none; }
-.sk .check a { color: var(--sn-tinte); font-weight: 600; text-underline-offset: 3px; }
+.sk .check a { color: #111827; font-weight: 600; text-underline-offset: 3px; }
 /* Spam-Schutz (Honeypot): bleibt unsichtbar */
 .sk .hp { position: absolute; left: -9999px; }
 
@@ -64,7 +64,7 @@
 .sk .wahl__opt { display: flex; gap: 10px; align-items: center; min-width: 0; min-height: 44px; font-weight: 400; overflow-wrap: break-word; }
 .sk .wahl__opt input { width: 20px; min-height: 20px; height: 20px; padding: 0; flex: none; accent-color: var(--sn-tinte); box-shadow: none; }
 .sk .wahl__opt b { font-weight: 650; white-space: nowrap; }
-.sk .wahl__opt--alle { grid-column: 1 / -1; padding: 10px 14px; border: 1.5px solid var(--sn-tinte); border-radius: 14px; background: var(--white); font-weight: 650; color: var(--sn-tinte); }
+.sk .wahl__opt--alle { grid-column: 1 / -1; padding: 10px 14px; border: 1.5px solid var(--sn-tinte); border-radius: 14px; background: var(--white); font-weight: 650; color: #111827; }
 .sk .wahl__opt--komplett { padding: 10px 14px; border: 1px solid var(--sn-linie-t); border-radius: 14px; background: var(--white); }
 .sk .wahl__opt--komplett small { display: block; font-size: 0.85rem; line-height: 1.5; color: var(--ink-soft); }
 .sk .wahl__summe { font-size: 0.95rem; }
@@ -81,9 +81,9 @@
 .sk .check-mit .btn { justify-self: start; }
 
 /* Absenden: gleicher Knopf wie auf der Startseite */
-.sk .sk-form button[type="submit"] { justify-self: stretch; min-height: 56px; background: #D4AF37; color: #111827; border-color: transparent; /* Gold mit dunkler Schrift wie Startseite (Jamil #6521) */
+.sk .sk-form button[type="submit"] { justify-self: stretch; min-height: 56px; background: #EFBF04; color: #111827; border-color: transparent; /* Gold mit dunkler Schrift wie Startseite (Jamil #6521) */
   box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); transition: transform 0.4s var(--sn-kurve), background-color 0.3s ease; }
-.sk .sk-form button[type="submit"]:hover { background: #C29F2F; transform: translateY(-2px); }
+.sk .sk-form button[type="submit"]:hover { background: #EFBF04; transform: translateY(-2px); }
 .sk .sk-form button[type="submit"]:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 3px; }
 .sk .sk-form button[type="submit"]:disabled { opacity: 0.7; transform: none; cursor: progress; }
 @media (min-width: 640px) { .sk .sk-form button[type="submit"] { justify-self: start; } }
@@ -94,7 +94,7 @@
 .sk .after li::before { content: ''; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--sn-linie); }
 .sk .after li:first-child::before { background: var(--sn-tuerkis); }
 .sk .after strong { display: block; font-family: var(--font-head); color: var(--ink); font-size: 0.95rem; }
-.sk .form__status { font-weight: 600; color: var(--sn-tinte); }
+.sk .form__status { font-weight: 600; color: #111827; }
 .sk .form__status:empty { display: none; }
 
 /* ── Kontaktwege (ruhige Karte) ── */
@@ -105,11 +105,11 @@
 .sk-wege { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 8px; }
 .sk-weg { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 16px; border-radius: 16px; background: var(--white);
   color: var(--ink); text-decoration: none; min-width: 0; transition: transform 0.35s var(--sn-kurve), box-shadow 0.35s var(--sn-kurve); }
-.sk-weg svg { flex: none; color: var(--sn-tinte); }
+.sk-weg svg { flex: none; color: #111827; }
 .sk-weg > span { display: grid; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
 .sk-weg small { font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
 .sk-weg:hover { transform: translateY(-2px); box-shadow: var(--sn-schatten); }
-.sk-weg:hover > span { color: var(--sn-tinte); }
+.sk-weg:hover > span { color: #111827; }
 .sk .sk-weg:focus-visible { outline: 3px solid var(--sn-tinte); outline-offset: 2px; border-radius: 16px; }
 .sk .muted { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; overflow-wrap: break-word; }
 .sk-adresse { padding-top: 14px; border-top: 1px solid var(--sn-linie-t); }
@@ -129,8 +129,8 @@
 .sk input[aria-invalid='true'] { border-color: #b42318; }
 
 /* Kostenlose Vorschau über dem Formular (Jamil #6061) */
-.sk-vorschau { margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: var(--sn-hauch, #FBF3D5); border: 1px solid var(--sn-linie-t, #EADBA6); border-left: 4px solid #D4AF37; line-height: 1.6; color: var(--ink-soft, #475569); }
-.sk-vorschau strong { display: block; margin-bottom: 2px; color: var(--sn-tinte, #8C6D12); }
+.sk-vorschau { margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: var(--sn-hauch, #FBF3D5); border: 1px solid var(--sn-linie-t, #EADBA6); border-left: 4px solid #EFBF04; line-height: 1.6; color: var(--ink-soft, #475569); }
+.sk-vorschau strong { display: block; margin-bottom: 2px; color: #111827; }
 
 /* Seitenkopf der Kontaktseite ungefähr halb so hoch (Jamil #6891), damit das Formular am Handy früher kommt. */
 .sk-kopfband section.ph { padding-block: clamp(24px, 4vw, 52px) clamp(20px, 3vw, 40px); }

@@ -21,10 +21,13 @@ const BW = T.bauwelt;
 
 <section class="section sn jms" id="loesung" aria-labelledby="jm-h">
   <div class="wrap">
+    {/* Jamil #6917/#6918: Überschrift + Unterzeile stehen jetzt als Stufe 2 oben im Abschnitt „Wo Betriebe …“ (J6Problem); hier nur noch unsichtbar für Screenreader */}
+    {ALT_ZEIGEN.problemBuehne ? <h2 id="jm-h" class="sr-only">{T.label}</h2> : (
     <div class="sn-kopf jm__kopf">
       <h2 id="jm-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
+    )}
 
     <div class="jm" data-jm style={`--jm-n:${S.length}`}>
       <div class="jm__tabs" role="tablist" aria-label={T.tabsLabel}>
@@ -67,7 +70,7 @@ const BW = T.bauwelt;
                 </>
               )}
               {!MUSTER && i < 3 && (
-                <div class={`jm-mock jm-mock--bild${i === 1 ? ' jm-mock--breit' : i === 2 ? ' jm-mock--portal' : ''}`}>
+                <div class={`jm-mock jm-mock--bild${i === 0 ? ' jm-mock--kalk' : i === 1 ? ' jm-mock--breit' : i === 2 ? ' jm-mock--portal' : ''}`}>
                   <Bild name={BW.bilder[i].bild} alt={BW.bilder[i].alt} widths={[480, 800, 1200, 1600]}
                     sizes="(min-width: 1200px) 680px, (min-width: 900px) 56vw, calc(100vw - 32px)" />
                 </div>

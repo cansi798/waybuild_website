@@ -87,7 +87,7 @@ const BOGEN = [[-60, -24], [24, 60], [120, 156], [204, 240]].map(([a, b]) => {
         <figure class="je-kreis">
           <svg viewBox="0 0 400 300" aria-hidden="true" focusable="false">
             <defs>
-              <marker id="je-kreis-pfeil" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#8C6D12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
+              <marker id="je-kreis-pfeil" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#EFBF04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
             </defs>
             {BOGEN.map((d) => <path class="je-kreis__bogen" d={d} marker-end="url(#je-kreis-pfeil)" />)}
             {k4.kreis.stationen.map((t, n) => (

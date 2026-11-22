@@ -119,7 +119,7 @@ const POSTEN = [
 
   /* Aufnahme (links) */
   .sz07-aufnahme { display: flex; flex-direction: column; gap: calc(5 * var(--px)); padding: var(--bsp-a3); }
-  .sz07-ueber { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bsp-tinte); }
+  .sz07-ueber { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
   .sz07-name { font-family: var(--font-head); font-size: var(--bsp-schrift-l); font-weight: 700; color: var(--bsp-text); }
   .sz07-ort { margin-top: calc(-4 * var(--px)); }
   .sz07-mini { display: flex; justify-content: space-between; font-size: var(--bsp-schrift-s); color: var(--bsp-text-leise); }
@@ -144,7 +144,7 @@ const POSTEN = [
   .sz07-ki-ok { position: absolute; right: calc(-6 * var(--px)); bottom: calc(-6 * var(--px)); display: grid; place-items: center; width: calc(20 * var(--px)); height: calc(20 * var(--px));
     border-radius: 50%; background: var(--bsp-ok); box-shadow: 0 0 0 calc(2 * var(--px)) var(--bsp-weiss); }
   .sz07-ki-ok svg { width: 64%; height: 64%; fill: none; stroke: var(--bsp-weiss); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
-  .sz07-ki-text { font-family: var(--font-head); font-size: var(--bsp-schrift-s); font-weight: 700; letter-spacing: 0.1em; color: var(--bsp-tinte); }
+  .sz07-ki-text { font-family: var(--font-head); font-size: var(--bsp-schrift-s); font-weight: 700; letter-spacing: 0.1em; color: #111827; }
 
   /* Vorschlagsblatt (rechts) */
   .sz07-blatt { display: flex; flex-direction: column; gap: var(--bsp-a2); padding: var(--bsp-a4); border-radius: var(--bsp-r-m); background: var(--bsp-weiss);
@@ -152,7 +152,7 @@ const POSTEN = [
   .sz07-blatt-kopf { display: flex; flex-direction: column; gap: calc(1 * var(--px)); }
   .sz07-blatt-titel { font-family: var(--font-head); font-size: var(--bsp-schrift-xl); font-weight: 700; letter-spacing: -0.01em; color: var(--bsp-text); line-height: 1.15; }
   .sz07-vorschlag { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--bsp-a1); padding: calc(4 * var(--px)) var(--bsp-a3); border-radius: 99px;
-    background: var(--bsp-flaeche); border: calc(1.5 * var(--px)) dashed var(--bsp-tuerkis-dunkel); color: var(--bsp-tinte); font-size: var(--bsp-schrift-s); font-weight: 700; white-space: nowrap; }
+    background: var(--bsp-flaeche); border: calc(1.5 * var(--px)) dashed var(--bsp-tuerkis-dunkel); color: #111827; font-size: var(--bsp-schrift-s); font-weight: 700; white-space: nowrap; }
   .sz07-vorschlag svg { width: calc(13 * var(--px)); height: calc(13 * var(--px)); fill: currentColor; }
   .sz07-posten-liste { display: flex; flex-direction: column; }
   .sz07-posten { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bsp-a3); padding: calc(6 * var(--px)) 0; border-bottom: calc(1 * var(--px)) solid var(--bsp-linie-grau); }
@@ -162,8 +162,8 @@ const POSTEN = [
   .sz07-summe { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bsp-a3); padding-top: var(--bsp-a1); }
   .sz07-summe-text { font-size: var(--bsp-schrift-m); font-weight: 700; color: var(--bsp-text); }
   .sz07-summe-text span { font-size: var(--bsp-schrift-xs); font-weight: 500; color: var(--bsp-text-leise); }
-  .sz07-summe-preis { font-family: var(--font-head); font-size: var(--bsp-schrift-xxl); font-weight: 700; letter-spacing: -0.02em; color: var(--bsp-tinte); font-variant-numeric: tabular-nums; }
-  .sz07-weiter { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-s); font-weight: 650; color: var(--bsp-tinte); }
+  .sz07-summe-preis { font-family: var(--font-head); font-size: var(--bsp-schrift-xxl); font-weight: 700; letter-spacing: -0.02em; color: #111827; font-variant-numeric: tabular-nums; }
+  .sz07-weiter { display: flex; align-items: center; gap: var(--bsp-a1); font-size: var(--bsp-schrift-s); font-weight: 650; color: #111827; }
   .sz07-weiter svg { width: calc(14 * var(--px)); height: calc(14 * var(--px)); fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
   /* Übergänge (gelten in beide Richtungen) */

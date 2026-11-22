@@ -1,5 +1,5 @@
 /* 3. Lösung „Websites und Software nach Maß“ (Jamil #6378/#6379, 19.11.2026): 3-Schritte-Wechsler. Markup: components/start6176/J6Wechsler.astro.
-   Palette wie start-6176.css (Primär #8C6D12, Gold nur Zier); die Mockups zeigen bewusst eine eigene Beispielmarke („Musterfirma“, Blau/Orange),
+   Palette wie start-6176.css (Primär #EFBF04, Gold nur Zier); die Mockups zeigen bewusst eine eigene Beispielmarke („Musterfirma“, Blau/Orange),
    damit sichtbar wird: im Design des Kunden. Mockups skalieren wie ein Bild (container query units), feste Seitenverhältnisse. */
 .jms .jm__kopf .sn-h2 { max-width: 24ch; }
 .jms .jm__kopf .sn-lead { max-width: 56ch; }
@@ -11,13 +11,13 @@
 .jm-tab { position: relative; overflow: hidden; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: start; width: 100%;
   padding: 18px 20px; border-radius: 20px; border: 1.5px solid var(--line); background: var(--white); color: var(--ink); text-align: left; cursor: pointer;
   font: inherit; transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
-.jm-tab:hover { border-color: #E6C766; }
+.jm-tab:hover { border-color: #FFDE21; }
 .jm-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.jm-tab[aria-selected="true"] { border-color: #8C6D12; background: #FDF9EC; box-shadow: 0 14px 30px -22px rgb(140 109 18 / 60%); }
+.jm-tab[aria-selected="true"] { border-color: #EFBF04; background: #FDF9EC; box-shadow: 0 14px 30px -22px rgb(140 109 18 / 60%); }
 .jm-tab__nr { grid-row: span 2; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--paper-2, #F1F5F9);
-  font-family: var(--font-head); font-weight: 800; font-size: 0.9rem; color: #8C6D12; }
-.jm-tab[aria-selected="true"] .jm-tab__nr { background: #8C6D12; color: var(--white); }
-.jm-tab__kurz { font-family: var(--font-head); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #8C6D12; }
+  font-family: var(--font-head); font-weight: 800; font-size: 0.9rem; color: #111827; }
+.jm-tab[aria-selected="true"] .jm-tab__nr { background: #EFBF04; color: #111827; }
+.jm-tab__kurz { font-family: var(--font-head); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
 .jm-tab__zitat { font-family: var(--font-head); font-weight: 650; font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem); line-height: 1.45; text-wrap: pretty; }
 .jm-tab__balken { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
 @media (prefers-reduced-motion: no-preference) {
@@ -42,7 +42,7 @@
 .jm-geraet { position: relative; padding: clamp(10px, 1.6vw, 18px); border-radius: 28px; background: var(--paper); border: 1px solid var(--line); }
 .jm-geraet { margin-top: 14px; }
 .jm-label { position: absolute; right: clamp(18px, 2.6vw, 32px); top: 0; transform: translateY(-50%); margin: 0; max-width: calc(100% - 36px);
-  padding: 5px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--gold); color: #7A5E0E;
+  padding: 5px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--gold); color: #111827;
   font-size: 0.74rem; font-weight: 650; line-height: 1.35; box-shadow: 0 6px 14px -10px rgb(0 0 0 / 35%); }
 .jm-mock { container-type: inline-size; aspect-ratio: 16 / 11; border-radius: 18px; overflow: hidden; background: var(--white);
   box-shadow: 0 24px 48px -30px rgb(31 41 55 / 45%), 0 0 0 1px rgb(31 41 55 / 6%); }
@@ -78,7 +78,7 @@
 
 .mk-ampel { display: inline-flex; align-items: center; gap: 0.3em; padding: 0.25em 0.7em; border-radius: 999px; background: #f6f7f9; font-size: 0.62em; font-weight: 700; }
 .mk-ampel i { width: 0.8em; height: 0.8em; border-radius: 50%; opacity: 0.25; }
-.mk-ampel .r { background: #dc4c3f; } .mk-ampel .g { background: #e7a92a; } .mk-ampel .gr { background: #D4AF37; }
+.mk-ampel .r { background: #dc4c3f; } .mk-ampel .g { background: #e7a92a; } .mk-ampel .gr { background: #EFBF04; }
 .mk-ampel i.an { opacity: 1; box-shadow: 0 0 0 0.2em rgb(231 169 42 / 25%); }
 .mk-ampel em { font-style: normal; margin-left: 0.2em; color: #8a5a06; }
 .mk-felder { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5em; }
@@ -109,7 +109,7 @@
   .jm-tab__nr { display: none; }
   .jm-tab__zitat { display: none; }
   .jm-tab__kurz { letter-spacing: 0.02em; text-transform: none; font-size: 0.9rem; color: var(--ink); overflow-wrap: anywhere; }
-  .jm-tab[aria-selected="true"] .jm-tab__kurz { color: #8C6D12; }
+  .jm-tab[aria-selected="true"] .jm-tab__kurz { color: #111827; }
   .jm-panel__zitat { display: block; }
   .jm-mock { aspect-ratio: 4 / 4.3; }
   .mk { font-size: 3.4cqw; }
@@ -124,11 +124,12 @@
 
 /* Echte Referenz Bauwelt Handwerk (Jamil #6384/#6385): Bildschirmfoto im selben Rahmen, überall 16:11 (Bilder sind so zugeschnitten) */
 .jm-mock.jm-mock--bild { aspect-ratio: 16 / 11; background: #f4f2ee; }
+.jm-mock.jm-mock--kalk { aspect-ratio: 1280 / 754; } /* Kalkulator-Screenshot (Jamil #6922) */
 .jm-mock.jm-mock--portal { aspect-ratio: 1280 / 759; } /* Portal-Screenshot (Jamil #6906) */
 .jm-mock.jm-mock--breit { aspect-ratio: 1280 / 765; } /* Auftrags-Screenshot (Jamil #6900) ungekürzt im Originalformat */
 .jm-mock--bild picture, .jm-mock--bild img { display: block; width: 100%; height: 100%; }
 .jm-mock--bild img { object-fit: cover; object-position: top left; }
-.jm-link { display: inline-block; margin: 10px 0 0 4px; font-size: 0.85rem; font-weight: 600; color: #8C6D12; text-decoration: underline; text-underline-offset: 3px; }
+.jm-link { display: inline-block; margin: 10px 0 0 4px; font-size: 0.85rem; font-weight: 600; color: #111827; text-decoration: underline; text-underline-offset: 3px; }
 .jm-link::after { content: ' ↗'; }
 .jm-link:hover { color: var(--ink); }
 .jm-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
@@ -137,13 +138,13 @@
 /* Hinweis „Läuft einfach im Browser“ unter dem Wechsler (Jamil #6397) */
 .jm-browser { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; margin-top: clamp(28px, 4vw, 48px);
   padding: 18px 20px; border-radius: 20px; border: 1px solid var(--line); background: var(--white); max-width: 880px; }
-.jm-browser__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: #FBF3D5; color: #8C6D12; }
+.jm-browser__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: #FBF3D5; color: #111827; }
 .jm-browser__text { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .jm-browser__text b { display: block; margin-bottom: 2px; font-family: var(--font-head); font-size: 1.05rem; color: var(--ink); }
 
 /* Kleiner Hinweis im Wechsler (Jamil #6424): Desktop links unter den Tabs, Handy unter dem Mockup */
 .jm-hinweis { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); }
-.jm-hinweis svg { flex: none; color: #8C6D12; }
+.jm-hinweis svg { flex: none; color: #111827; }
 @media (min-width: 900px) {
   .jm { grid-template-rows: auto 1fr; }
   .jm__tabs { grid-column: 1; grid-row: 1; }
@@ -156,12 +157,12 @@
 .mk-module { position: relative; height: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1fr auto 1fr;
   gap: 1.1em 1.2em; align-items: center; padding: 1.6em 1.8em; }
 .mk-module::before { content: ''; position: absolute; inset: 22% 18%; border: 0.12em dashed #EADBA6; border-radius: 1.2em; }
-.mk-kern { grid-column: 2; grid-row: 2; z-index: 1; justify-self: center; padding: 0.8em 1.2em; border-radius: 0.9em; background: #8C6D12; color: var(--white);
+.mk-kern { grid-column: 2; grid-row: 2; z-index: 1; justify-self: center; padding: 0.8em 1.2em; border-radius: 0.9em; background: #EFBF04; color: #111827;
   font-weight: 800; font-size: 1.05em; text-align: center; box-shadow: 0 0.6em 1.4em -0.8em rgb(140 109 18 / 70%); }
 .mk-modul { z-index: 1; display: flex; align-items: center; gap: 0.5em; padding: 0.75em 0.9em; border-radius: 0.8em; background: var(--white);
   border: 1px solid #dfe6e3; box-shadow: 0 0.4em 1em -0.7em rgb(31 41 55 / 35%); font-weight: 700; font-size: 0.95em; color: #1f2937; min-width: 0; }
-.mk-modul i { flex: none; width: 0.85em; height: 0.85em; border-radius: 0.25em; background: #D4AF37; }
-.mk-modul--1 i { background: #e7a92a; } .mk-modul--2 i { background: #2f5fd0; } .mk-modul--3 i { background: #8C6D12; }
+.mk-modul i { flex: none; width: 0.85em; height: 0.85em; border-radius: 0.25em; background: #EFBF04; }
+.mk-modul--1 i { background: #e7a92a; } .mk-modul--2 i { background: #2f5fd0; } .mk-modul--3 i { background: #EFBF04; }
 .mk-modul--4 i { background: #b5483a; } .mk-modul--5 i { background: #7a6f62; }
 .mk-modul--0 { grid-column: 1; grid-row: 1; } .mk-modul--1 { grid-column: 2; grid-row: 1; } .mk-modul--2 { grid-column: 3; grid-row: 1; }
 .mk-modul--3 { grid-column: 1; grid-row: 3; } .mk-modul--4 { grid-column: 2; grid-row: 3; } .mk-modul--5 { grid-column: 3; grid-row: 3; }

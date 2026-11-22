@@ -11,10 +11,10 @@
  * Gleiche Linienstärke (2 px Kontur) und gleiche Radien-Logik für alle Geräte. Nur transform/opacity werden animiert. */
 
 :root {
-  /* Farben (CI waybuild; Drehbuch: Türkis #D4AF37/#8C6D12, dunkel #111827, Creme #f6f3ee) */
-  --bsp-tuerkis: #D4AF37;
-  --bsp-tuerkis-dunkel: #8C6D12;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
-  --bsp-tinte: #8C6D12;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
+  /* Farben (CI waybuild; Drehbuch: Türkis #EFBF04/#EFBF04, dunkel #111827, Creme #f6f3ee) */
+  --bsp-tuerkis: #EFBF04;
+  --bsp-tuerkis-dunkel: #EFBF04;  /* Zeichen/Linien auf Hell, 4,6 : 1 */
+  --bsp-tinte: #EFBF04;           /* Schrift in Türkis auf Hell, 6,4 : 1 */
   --bsp-nacht: #111827;           /* Kontur der Geräte, dunkle Flächen */
   --bsp-creme: #f6f3ee;
   --bsp-papier: #F8FAFC;          /* Hintergrund in App-Bildschirmen */
@@ -121,9 +121,9 @@
 .bm-karte--marke { border-color: var(--bsp-tuerkis); box-shadow: 0 0 0 calc(3 * var(--px)) rgb(212 175 55 / 16%), 0 calc(10 * var(--px)) calc(24 * var(--px)) calc(-12 * var(--px)) rgb(17 24 39 / 35%); }
 .bm-knopf { display: inline-flex; align-items: center; justify-content: center; gap: var(--bsp-a1); min-height: calc(36 * var(--px)); padding: 0 var(--bsp-a4);
   border-radius: 99px; background: var(--bsp-tinte); color: var(--bsp-weiss); font-size: var(--bsp-schrift-m); font-weight: 650; white-space: nowrap; }
-.bm-knopf--hell { background: var(--bsp-flaeche); color: var(--bsp-tinte); }
+.bm-knopf--hell { background: var(--bsp-flaeche); color: #111827; }
 .bm-chip { display: inline-flex; align-items: center; gap: var(--bsp-a1); padding: calc(3 * var(--px)) var(--bsp-a2); border-radius: 99px;
-  background: var(--bsp-flaeche); color: var(--bsp-tinte); font-size: var(--bsp-schrift-xs); font-weight: 650; white-space: nowrap; }
+  background: var(--bsp-flaeche); color: #111827; font-size: var(--bsp-schrift-xs); font-weight: 650; white-space: nowrap; }
 .bm-chip--ok { background: var(--bsp-ok-flaeche); color: var(--bsp-ok); }
 .bm-balken { display: block; height: calc(8 * var(--px)); border-radius: 99px; background: var(--bsp-gerippe); }
 .bm-balken--kurz { width: 40%; } .bm-balken--mittel { width: 65%; } .bm-balken--lang { width: 88%; }
@@ -146,7 +146,7 @@
 
 /* Etikett „Beispielhafte Darstellung“ (Drehbuch: überall klein) */
 .bsp-etikett { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; background: rgb(255 255 255 / 88%);
-  border: 1px solid var(--bsp-linie); color: var(--bsp-tinte); font-family: var(--font-body); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap; }
+  border: 1px solid var(--bsp-linie); color: #111827; font-family: var(--font-body); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap; }
 .bsp-etikett::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--bsp-tuerkis-dunkel); }
 
 @media (prefers-reduced-motion: reduce) {

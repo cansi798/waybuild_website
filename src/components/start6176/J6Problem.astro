@@ -3,7 +3,8 @@
 // Seit Jamil #6372–#6374 + #6377 (19.11.2026): neue Überschrift, vier Textblöcke (J_PROBLEM_NEU) ohne Mockups, je ein schlichtes,
 // einfarbiges Linien-Icon (überfüllter Briefumschlag, verbogenes Puzzleteil, zwei kreuzende Pfeile, Lupe), viel Weißraum; ohne
 // Subheadline und Abschlusszeile. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
-import { J_PROBLEM as T, J_PROBLEM_NEU as N } from '../../config/start-6176';
+import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_MASS as M, J_PROBLEM_STUFEN as ST } from '../../config/start-6176';
+import ProblemIcon from './ProblemIcon.astro';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
 
@@ -28,39 +29,90 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       </>
     ) : (
       <>
-        <div class="sn-kopf jp__kopf">
-          <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+        {/* Jamil #6917/#6918: zwei Stufen (1 Problem, 2 Lösung). Mit JS auf großen Bildschirmen bleibt der Abschnitt stehen und die Stufen
+            blenden über (Skript unten); sonst (Handy, reduzierte Bewegung, ohne JS) stehen beide untereinander. Alles bleibt im DOM. */}
+        <div class="jp__buehne" data-jp-buehne style="--jp-n:2">
+          <div class="jp__fest">
+            <div class="jp__stufen">
+              <div class="jp__stufe is-aktiv" data-jp-stufe="1">
+                <div class="sn-kopf jp__kopf">
+                  <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+                </div>
+                <ul class="jp-bloecke">
+                  {N.karten.map((k) => (
+                    <li class="jp-block j6-ein">
+                      <ProblemIcon icon={k.icon} class="jp-block__ico" />
+                      <h3 class="jp-block__titel">{k.titel}</h3>
+                      <p class="jp-block__text">{k.text}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {ALT_ZEIGEN.problemBuehne && (
+              <div class="jp__stufe" data-jp-stufe="2" role="group" aria-labelledby="jp-h2">
+                <div class="sn-kopf jp__kopf">
+                  <h2 id="jp-h2" class="sn-h2 sn-h2--klein">{M.titel}</h2>
+                  <p class="sn-lead jp__lead">{M.unter}</p>
+                </div>
+                <ul class="jp-bloecke jp-bloecke--loesung">
+                  {N.karten.map((k, i) => {
+                    const sch = M.schritte[ST['lösung'][i]];
+                    return (
+                      <li class="jp-block">
+                        <ProblemIcon icon={k.icon} class="jp-block__ico" />
+                        <h3 class="jp-block__titel">{sch.titel}</h3>
+                        <p class="jp-block__text">{sch.zeigt}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              )}
+            </div>
+            {ALT_ZEIGEN.problemBuehne && <p class="jp__fortschritt" aria-hidden="true"><span data-jp-zaehler>1</span> / 2<span class="jp__punkte"><i class="is-aktiv"></i><i></i></span></p>}
+          </div>
         </div>
-        <ul class="jp-bloecke">
-          {N.karten.map((k) => (
-            <li class="jp-block j6-ein">
-              <svg class="jp-block__ico" viewBox="0 0 48 48" width="44" height="44" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                {k.icon === 'brief' && (<>
-                  {/* überfüllter Briefumschlag: Umschlag + herausquellende Blätter */}
-                  <path d="M15 21V9.5h14l4 4V21" /><path d="M29 9.5v4h4" /><path d="M19 15h7M19 18.5h9" />
-                  <path d="M11.5 16.5 9 8.5l7.5-2" />
-                  <rect x="6" y="21" width="36" height="21" rx="3" /><path d="m6.8 22.5 17.2 11 17.2-11" />
-                </>)}
-                {k.icon === 'puzzle' && (<>
-                  {/* starre Schablone (gestrichelt) und ein Puzzleteil, das schief danebensitzt und nicht hineinpasst */}
-                  <rect x="5" y="19" width="24" height="24" rx="3" stroke-dasharray="3 3.2" />
-                  <path transform="translate(17 3) rotate(14 12 12) scale(1.15)" vector-effect="non-scaling-stroke" d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z" />
-                </>)}
-                {k.icon === 'pfeile' && (<>
-                  {/* zwei kreuzende Pfeile: dieselben Daten hin und her */}
-                  <path d="M7 34h8c6 0 10-20 18-20h8" /><path d="m36 9 5 5-5 5" />
-                  <path d="M7 14h8c6 0 10 20 18 20h8" /><path d="m36 29 5 5-5 5" />
-                </>)}
-                {k.icon === 'lupe' && (<>
-                  <circle cx="21" cy="21" r="12" /><path d="m30 30 11 11" /><path d="M16 18h10M16 23h6" />
-                </>)}
-              </svg>
-              <h3 class="jp-block__titel">{k.titel}</h3>
-              <p class="jp-block__text">{k.text}</p>
-            </li>
-          ))}
-        </ul>
       </>
     )}
   </div>
 </section>
+
+<script>
+  // Scroll-Bühne (Jamil #6917/#6918): nur Großbild (≥ 900 × 600), ohne reduzierte Bewegung. Pro Scroll-Schritt genau eine Änderung:
+  // der Abschnitt bleibt stehen (position: sticky, CSS in start-6176.css unter .jp--buehne), die Stufe richtet sich nach dem Scrollfortschritt.
+  // Ohne JS, auf dem Handy oder bei reduzierter Bewegung bleibt alles untereinander (Klasse jp--buehne wird dann nicht gesetzt).
+  const sektion = document.querySelector<HTMLElement>('section.jp--neu');
+  const buehne = sektion?.querySelector<HTMLElement>('[data-jp-buehne]');
+  const stufen = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-stufe]')] : [];
+  if (sektion && buehne && stufen.length > 1) {
+    const punkte = [...buehne.querySelectorAll<HTMLElement>('.jp__punkte i')];
+    const zaehler = buehne.querySelector<HTMLElement>('[data-jp-zaehler]');
+    const mq = window.matchMedia('(min-width: 900px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)');
+    let aktiv = -1;
+    let geplant = false;
+    const setze = (n: number) => {
+      if (n === aktiv) return;
+      aktiv = n;
+      stufen.forEach((st, i) => st.classList.toggle('is-aktiv', i === n));
+      punkte.forEach((p, i) => p.classList.toggle('is-aktiv', i === n));
+      if (zaehler) zaehler.textContent = String(n + 1);
+    };
+    const rechne = () => {
+      geplant = false;
+      if (!sektion.classList.contains('jp--buehne')) return;
+      const r = buehne.getBoundingClientRect();
+      const weg = buehne.offsetHeight - window.innerHeight; // Scrollstrecke, solange die Bühne steht
+      const f = weg > 0 ? Math.min(1, Math.max(0, -r.top / weg)) : 0;
+      setze(Math.min(stufen.length - 1, Math.floor(f * stufen.length * 0.999)));
+    };
+    const plane = () => { if (!geplant) { geplant = true; requestAnimationFrame(rechne); } };
+    const an = () => {
+      sektion.classList.toggle('jp--buehne', mq.matches);
+      if (!mq.matches) { aktiv = -1; stufen.forEach((st) => st.classList.add('is-aktiv')); } else { aktiv = -2; plane(); }
+    };
+    mq.addEventListener('change', an);
+    window.addEventListener('scroll', plane, { passive: true });
+    window.addEventListener('resize', plane, { passive: true });
+    an();
+  }
+</script>
