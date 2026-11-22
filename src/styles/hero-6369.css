@@ -15,7 +15,7 @@
 @media (min-width: 960px) {
   .jh--fluss .jh__raster { grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr); gap: clamp(32px, 4vw, 56px); }
   .jh--fluss .jh__titel { max-width: 18ch; }
-  .jh--fluss .jh__titel { font-size: clamp(2.6rem, 1.2rem + 3.2vw, 4.2rem); }
+  .jh--fluss .jh__titel { font-size: var(--fs-display); }
 }
 
 /* Zeichnung */
@@ -117,7 +117,7 @@
 @keyframes jf-zahl-neu { 0%, 55% { opacity: 0; } 58%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
 
 /* Preiszeile unter den Hero-Knöpfen (Jamil #6396): ruhig, klein */
-.jh__preise { margin: -6px 0 0; max-width: 60ch; font-size: 0.88rem; line-height: 1.6; color: #CBD5E1; text-wrap: pretty; }
+.jh__preise { margin: -6px 0 0; max-width: 60ch; font-size: var(--fs-small); line-height: 1.6; color: #CBD5E1; text-wrap: pretty; }
 .jh__preise-punkt { color: #111827; }
 
 /* Hero in Gold (Jamil #6442, 20.11.2026): Fläche Gold mit dezentem Verlauf, Schrift Slate (#0F172A auf #EFBF04 ≈ 8,5 : 1),
@@ -150,7 +150,7 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 .jh.jh--mitte { padding-block: clamp(72px, 12vw, 152px) clamp(72px, 11vw, 136px); }
 .jh--mitte .jh__raster { grid-template-columns: minmax(0, 1fr); justify-items: center; }
 .jh--mitte .jh__text { max-width: 820px; justify-items: center; text-align: center; margin-inline: auto; }
-.jh--mitte .jh__titel { max-width: 16ch; margin-inline: auto; font-size: clamp(2.5rem, 1.3rem + 4.4vw, 4.8rem); }
+.jh--mitte .jh__titel { max-width: 16ch; margin-inline: auto; font-size: var(--fs-display); }
 .jh--mitte .jh__unter { max-width: 62ch; margin-inline: auto; }
 .jh--mitte .jh-knopfe { justify-content: center; }
 .jh--mitte .jh__preise { max-width: 64ch; margin-inline: auto; }
@@ -168,10 +168,10 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 }
 /* Jamil #6959: dezente Zeile über der H1 – kleine Pille, Goldpunkt (#EFBF04), dunkle Schrift; blendet als Erstes mit ein */
 .jh__hinweis { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 -4px; padding: 6px 14px; border-radius: 999px;
-  background: rgb(255 255 255 / 72%); border: 1px solid rgb(17 24 39 / 10%); color: #111827; font-size: 0.88rem; font-weight: 600; line-height: 1.4; text-wrap: balance; }
+  background: rgb(255 255 255 / 72%); border: 1px solid rgb(17 24 39 / 10%); color: #111827; font-size: var(--fs-small); font-weight: 600; line-height: 1.4; text-wrap: balance; }
 .jh__hinweis-punkt { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #EFBF04; box-shadow: 0 0 0 3px rgb(239 191 4 / 22%); }
 .jh--mitte .jh__hinweis { margin-inline: auto; }
-@media (max-width: 599px) { .jh__hinweis { font-size: 0.8rem; padding: 6px 14px; border-radius: 16px; text-align: center; } .jh__hinweis-punkt { display: none; } }
+@media (max-width: 599px) { .jh__hinweis { font-size: var(--fs-small); padding: 6px 14px; border-radius: 16px; text-align: center; } .jh__hinweis-punkt { display: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .jh__hinweis { animation: jh-dezent 1100ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both; }
 }
@@ -179,16 +179,17 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 @keyframes jh-titel-gleiten { from { transform: translateY(8px); } to { transform: none; } }
 
 /* Jamil #6927: Schnellstart-Zeile im Hero – ein Feld + kleiner Knopf, danach klappt der Rest auf. Handy: untereinander. */
-.jh-schnell { width: 100%; max-width: 660px; min-width: 0; display: grid; gap: 8px; margin: 0; }
+.jh-schnell { width: 100%; max-width: 780px; /* Jamil #7012: längerer Knopftext, Feld bleibt breit genug */ min-width: 0; display: grid; gap: 8px; margin: 0; }
 .jh-schnell__zeile { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
-.jh-schnell__url { width: 100%; min-height: 48px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid #CBD5E1; background: #FFFFFF; color: #111827; font: inherit; font-size: 1rem; }
+.jh-schnell__url { width: 100%; min-height: 48px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid #CBD5E1; background: #FFFFFF; color: #111827; font: inherit; font-size: var(--fs-body); }
 .jh-schnell__url:focus-visible { outline: 3px solid #EFBF04; outline-offset: 1px; border-color: #EFBF04; }
 .jh-schnell__url[aria-invalid="true"] { border-color: #b42318; }
 .jh-schnell__knopf { min-height: 48px; padding: 0 22px; border-radius: 999px; background: #EFBF04; color: #111827; font-weight: 700; border: 0; cursor: pointer; white-space: nowrap; }
 .jh-schnell__knopf:hover { background: #FFDE21; }
+@media (max-width: 599px) { .jh-schnell__knopf { white-space: normal; min-height: 52px; padding: 8px 20px; line-height: 1.25; } } /* schmale Handys: Knopftext darf umbrechen */
 .jh-schnell__knopf:focus-visible { outline: 3px solid #111827; outline-offset: 2px; }
-.jh-schnell__kopf { margin: 0; font-size: 1rem; font-weight: 700; color: #111827; }
-.jh-schnell__klein { margin: 0 auto; max-width: 52ch; font-size: 0.85rem; line-height: 1.5; color: #475569; }
+.jh-schnell__kopf { margin: 0; font-size: var(--fs-body); font-weight: 700; color: #111827; }
+.jh-schnell__klein { margin: 0 auto; max-width: 52ch; font-size: var(--fs-small); line-height: 1.5; color: #475569; }
 .jh-schnell .js7-fehler { text-align: left; }
 .jh-schnell__mehr { display: grid; gap: 14px; text-align: left; margin-top: 8px; padding: clamp(16px, 3vw, 22px); border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 14px 30px -20px rgb(31 41 55 / 35%); }
 .jh-schnell__mehr[hidden] { display: none; }

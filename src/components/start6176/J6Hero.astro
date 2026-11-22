@@ -9,6 +9,7 @@
 // Knopf-Klasse .jh-knopfe: StickyBar.astro zeigt die Leiste erst, wenn diese Knöpfe aus dem Blick sind (wie früher .v-knopfe).
 // Seit Jamil #6369/#6370 (19.11.2026): statt der drei Beispiele die Animation „Anfrage senden → Dashboard“ (J6Fluss.astro);
 // die Beispiele sind nur ausgeblendet (ALT_ZEIGEN.heroBeispieleAlt = true holt sie zurück). Headline/Subheadline seit #6366.
+import { hl } from '../../lib/hl';
 import J6Icon from './J6Icon.astro';
 import J6Fluss from './J6Fluss.astro';
 import { J_HERO as T, J_HERO_SCHNELL as HS, J_START as JS, ALT_ZEIGEN } from '../../config/start-6176';
@@ -31,7 +32,7 @@ const kontakt = ALT_ZEIGEN.abschlussCtaAlt ? href(`/kontakt/?paket=${encodeURICo
     <div class="jh__text">
       {/* Jamil #6959: dezente Zeile über der H1 (blendet mit dem Hero ein, hero-6369.css) */}
       <p class="jh__hinweis"><span class="jh__hinweis-punkt" aria-hidden="true"></span>{T.hinweis}</p>
-      <h1 id="jh-h1" class="jh__titel">{T.titel.split(/(?<=\.)\s+/).map((z, i) => <>{i > 0 && ' '}<span class="jh__satz">{z}</span></>)}</h1>
+      <h1 id="jh-h1" class="jh__titel">{T.titel.split(/(?<=\.)\s+/).map((z, i) => <>{i > 0 && ' '}<span class="jh__satz" set:html={hl(z)} /></>)}</h1>
       <p class="jh__unter">{T.unter}</p>
       {ALT_ZEIGEN.heroZeile && <p class="jh__zeile">{T.zeile}</p>}{/* Jamil #6417: ausgeblendet */}
       <div class="jh-knopfe">
@@ -40,13 +41,12 @@ const kontakt = ALT_ZEIGEN.abschlussCtaAlt ? href(`/kontakt/?paket=${encodeURICo
       {/* Jamil #6927: Schnellstart als schlanke Zeile. Ohne JS: GET zum großen Formular (#start-schnell). Mit JS: Skript in J6Start (data-js7, data-mehr) */}
       {zeigeSchnell && (
         <form class="jh-schnell" id="hero-schnell" action={`${href('/')}#start-schnell`} method="get" data-js7 data-betreff={JS.schnell.betreff} data-weg="schnell"
-          data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="hero-schnell-kopf">
-          <p class="jh-schnell__kopf" id="hero-schnell-kopf">{HS.kopf}</p>
+          data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-label={HS.formular}>
+          {/* Zeile über dem Feld (#7011) und Kleinschrift darunter (#7010) seit Jamil 22.11.2026 entfernt */}
           <div class="jh-schnell__zeile">
             <input class="jh-schnell__url" name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={HS.platzhalter} aria-label={HS.label} required data-art="url" />
             <button class="btn jh-schnell__knopf" type="submit">{HS.knopf}</button>
           </div>
-          <p class="jh-schnell__klein">{HS.klein}</p>
           <div class="jh-schnell__mehr" data-mehr hidden>
             <SchnellFelder />
             <button class="btn btn--lg js7-btn" type="submit">{JS.schnell.knopf}</button>

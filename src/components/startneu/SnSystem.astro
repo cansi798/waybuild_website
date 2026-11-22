@@ -6,6 +6,7 @@
 // in Medaillons. Eine dünne Ringlinie mit goldenem Lichtpunkt verbindet alle Stationen; der Folgeauftrag führt per Pfeil zurück
 // zur Website (Handy senkrecht mit Rückweg links, ab 760 px 3 × 2 als geschlossene Schleife). Danach fünf Nutzenkarten mit Haken.
 // Lichtpunkt nur ohne prefers-reduced-motion. Texte: config/start-system.ts, Stil: styles/start-system.css.
+import { hl } from '../../lib/hl';
 import { SYSTEM as T } from '../../config/start-system';
 import Icon from '../Icon.astro';
 import { href } from '../../lib/paths';
@@ -17,7 +18,7 @@ import '../../styles/start-system.css';
     <div class="sn-kopf">
       <div class="ss-kopf-links">
         <p class="sn-kenn">{T.kenn}</p>
-        <h2 id="ss-h" class="sn-h2">{T.titel}</h2>
+        <h2 id="ss-h" class="sn-h2" set:html={hl(T.titel)}></h2>
       </div>
       <div class="ss-problem">
         {T.problem.map((s) => <p>{s}</p>)}

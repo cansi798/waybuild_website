@@ -56,7 +56,7 @@ export type Referenz = { name?: string; url?: string; urlText?: string; bild?: s
   /** Echtes, freigegebenes Kundenzitat (Jamil #6055 Fr. 4/5). Leer lassen, bis es vorliegt – NIE erfinden. */
   zitat?: { text: string; person: string } };
 export const REFERENZEN = {
-  titel: 'Beispiele aus unserer Arbeit',
+  titel: 'Beispiele aus unserer Arbeit', // ohne Marker: auch /neu/ nutzt diesen Titel
   einleitung: 'Echte Projekte unserer Kunden. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.',
   etikett: { online: 'Online', vorschau: 'Vorschau' } as Record<Referenz['status'], string>,
   /** Erklärung der Messwerte unter den Karten */
@@ -96,7 +96,7 @@ export const PREIS_FRUEH = { vor: 'Ihre Website ab', nach: 'im Monat', zusatz: '
  *  Wird nur in der Vorschau gezeigt (SHOW_HINTS + PUBLIC_PREVIEW, index.astro), solange die Zitate Test-Zitate sind.
  *  Die Zitate NICHT in strukturierte Daten übernehmen. */
 export const TEAM = {
-  titel: 'Wer hinter webgold steht',
+  titel: 'Wer hinter ==webgold== steht', // Marker: Jamil #7016
   einleitung: 'Sie sprechen mit Menschen, nicht mit einer Hotline.',
   personen: [
     // Test-Zitat, vor Livegang von Can/Jamil bestätigen lassen (Jamil #5636/#5637: „erfinden, nur für den Test“)

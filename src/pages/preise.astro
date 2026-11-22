@@ -9,6 +9,8 @@
 // #vergleich, #start, #stundensaetze, #software, #cloud, #beratung – alle erhalten.
 // SnVergleich (Anbieter-Vergleich der Startseite) bewusst NICHT eingebunden: es trägt ebenfalls id="vergleich" (doppelte ID).
 // Vorher (Fundament/Wegweiser/Wahrzeichen aus site.ts PAKETE): Sicherung Branch vor-pakete-live-20261108.
+import { PREIS_WERT } from '../config/start-6176'; // Jamil #7019
+import { hl } from '../lib/hl';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
@@ -52,21 +54,21 @@ const komplettText = `Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()} im Monat, k
   schema={[serviceSchema(Astro.site)]}
   breadcrumb={[{ name: 'Preise', path: '/preise/' }]}
 >
-  <PageHeader eyebrow="Preise" title="Drei Pakete. Feste Monatspreise." lead={`${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, bis zu ${SEITEN_MAX} Seiten, alle Kosten auf einen Blick. ${komplettText}`} />
+  <PageHeader eyebrow="Preise" title="Drei Pakete. ==Feste Monatspreise==." lead={`${PREIS_WERT} ${preiseText} im Monat, netto zzgl. MwSt. Keine Einrichtungskosten, bis zu ${SEITEN_MAX} Seiten, alle Kosten auf einen Blick. ${komplettText}`} />
 
   <!-- alte Sprungmarken, direkt vor den Paketen -->
   <span id="preise" class="spr-anker" aria-hidden="true"></span>
   <span id="websites" class="spr-anker" aria-hidden="true"></span>
 
   <!-- Pakete · Komplettpaket · Einmalig dazu · Sicherheit (Hintergrund Sand), Anker #pakete -->
-  <SnAngebot titel="Die Pakete im Überblick" /> {/* Jamil #6891: H2 nicht wortgleich mit H1 */}
+  <SnAngebot titel="Die Pakete ==im Überblick==" /> {/* Jamil #6891: H2 nicht wortgleich mit H1 */}
 
   <!-- Hintergründe: Pakete Sand → Vergleich Weiß → Start Papier → Ausbaustufen Weiß → Abschluss Hauch -->
   <section class="section sn spr-vgl" id="vergleich" aria-labelledby="spr-vgl-h">
     <div class="wrap">
       <div class="sn-kopf sn-kopf--mitte">
         <p class="sn-kenn">Im Überblick</p>
-        <h2 id="spr-vgl-h" class="sn-h2">Welches Paket passt?</h2>
+        <h2 id="spr-vgl-h" class="sn-h2">Welches Paket <mark class="hl">passt</mark>?</h2>
         <p class="sn-lead">Ein Haken heißt: im Paket inklusive. Wo sich der Umfang unterscheidet, steht er dabei.</p>
       </div>
       <div class="spr-vgl__tafel" role="region" aria-label="Paketvergleich" tabindex="0">
@@ -96,7 +98,7 @@ const komplettText = `Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()} im Monat, k
       <div class="sn-kopf">
         <div class="spr-kopf__titel">
           <p class="sn-kenn">So starten Sie</p>
-          <h2 id="spr-start-h" class="sn-h2">{START_ABLAUF_KURZ.titel}.</h2>
+          <h2 id="spr-start-h" class="sn-h2" set:html={hl(START_ABLAUF_KURZ.titel) + '.'}></h2>
         </div>
         <!-- von uns ergänzt (#5892) -->
         <p class="sn-lead">Vom ersten Gespräch bis zur fertigen Website begleiten wir Sie persönlich.</p>
@@ -119,7 +121,7 @@ const komplettText = `Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()} im Monat, k
       <div class="sn-kopf">
         <div class="spr-kopf__titel">
           <p class="sn-kenn">Mehr als eine Website?</p>
-          <h2 id="spr-ausbau-h" class="sn-h2">Ausbaustufen auf Anfrage</h2>
+          <h2 id="spr-ausbau-h" class="sn-h2">Ausbaustufen <mark class="hl">auf Anfrage</mark></h2>
         </div>
         <p class="sn-lead">{`Die Website ist der erste Schritt. Für größere Vorhaben, zum Beispiel ${AUF_ANFRAGE.slice(0, 2).join(' oder ')}, erstellen wir ein individuelles Angebot.`}</p>
       </div>

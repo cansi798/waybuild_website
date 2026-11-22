@@ -7,6 +7,7 @@
 // Am PC (≥ 900 × 700, ohne reduzierte Bewegung, mit JS) bleibt der Abschnitt stehen; pro Scroll-Schritt dreht genau EINE Karte (1 → 4),
 // erst danach geht es weiter (gemeinsamer Kern scripts/buehne-kern.ts). Sonst (Handy, reduzierte Bewegung, ohne JS): Problem und Lösung
 // je Karte untereinander. Beide Seiten bleiben immer im DOM und für Screenreader lesbar. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
+import { hl } from '../../lib/hl';
 import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_PROBLEM_WEG as W } from '../../config/start-6176';
 import J6Icon from './J6Icon.astro';
 import ProblemIcon from './ProblemIcon.astro';
@@ -36,22 +37,24 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       <>
         <div class="jp__fest" data-jp-buehne>
           <div class="sn-kopf jp__kopf">
-            <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+            <h2 id="jp-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(N.titel)} /></h2>
           </div>
           <ul class="jp-bloecke jp-bloecke--weg">
             {N.karten.map((k, i) => {
               const l = W.loesungen[i];
               return (
                 <li class="jp-block jp-wandel j6-ein" data-jp-karte>
-                  <div class="jp-seite jp-seite--problem">
+                  <div class="jp-dreh">
+                  <div class="jp-seite jp-seite--problem" data-jp-vorne>
                     <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
                     <h3 class="jp-block__titel">{k.titel}</h3>
                     <p class="jp-block__text">{k.text}</p>
                   </div>
-                  <div class="jp-seite jp-seite--loesung">
+                  <div class="jp-seite jp-seite--loesung" data-jp-hinten>
                     <p class="jp-marke"><span class="jp-marke__haken" aria-hidden="true"><J6Icon name="haken" size={22} /></span><span class="jp-marke__text">{W.marke}</span></p>
-                    <h4 class="jp-block__titel">{l.titel}</h4>
+                    <h3 class="jp-block__titel">{l.titel}</h3>{/* h3 statt h4 (Jamil #7006): nach dem Flip ist nur diese Seite sichtbar, axe heading-order */}
                     <p class="jp-block__text">{l.inhalt}</p>
+                  </div>
                   </div>
                 </li>
               );
@@ -76,14 +79,20 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
     const setze = (n: number) => {
       if (n === stand) return;
       stand = n;
-      karten.forEach((k, i) => k.classList.toggle('ist-geloest', i < n));
+      karten.forEach((k, i) => {
+        const geloest = i < n;
+        k.classList.toggle('ist-geloest', geloest);
+        // Jamil #7006: nur die sichtbare Seite ist für Screenreader da (beide bleiben im DOM)
+        k.querySelector('[data-jp-vorne]')?.setAttribute('aria-hidden', String(geloest));
+        k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', String(!geloest));
+      });
     };
     erstelleBuehne({
       bereich, buehne, schritte: karten, stuecke: karten.length + 1,
       klassen: { buehne: 'jp--weg', gleiten: 'jp--gleiten' },
       // Jamil #7000: 4 Spalten ab 1100 px; 2 × 2 nur als Bühne, wenn genug Höhe da ist (sonst normale Liste, nichts wird abgeschnitten)
       mqBuehne: '(min-width: 1100px) and (min-height: 700px), (min-width: 900px) and (min-height: 900px)',
-      aufModus: () => { stand = -1; karten.forEach((k) => k.classList.remove('ist-geloest')); },
+      aufModus: () => { stand = -1; karten.forEach((k) => { k.classList.remove('ist-geloest'); k.querySelectorAll('[data-jp-vorne], [data-jp-hinten]').forEach((e) => e.removeAttribute('aria-hidden')); }); },
       aufStueck: (stueck) => setze(stueck),
     });
   }

@@ -8,5 +8,5 @@ import { REFERENZEN, type Referenz } from './startseite';
 export type ReferenzBereich = { id: string; titel: string; text: string; liste: Referenz[] };
 
 export const REFERENZ_BEREICHE: ReferenzBereich[] = [
-  { id: 'websites', titel: 'Websites', text: REFERENZEN.einleitung, liste: REFERENZEN.liste },
+  { id: 'websites', titel: '==Websites==', text: REFERENZEN.einleitung, liste: REFERENZEN.liste },
 ];

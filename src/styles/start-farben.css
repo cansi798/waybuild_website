@@ -59,7 +59,7 @@ html:root .svg-ja .svg-zeichen { color: #111827; background: #FBF3D5; }
 /* Kopf- und Fußzeile in den neuen Grüntönen */
 html:root .footer { background: linear-gradient(160deg, #EFBF04 0%, #FFDE21 100%); color: #111827; } /* Jamil #6442 */
 /* Hero-Unterzeile kleiner auf Handy und Desktop (Jamil #5972, 15.11.2026) */
-html[data-thema='besucherreise'] .v-hero .v-unter { font-size: clamp(0.98rem, 0.92rem + 0.45vw, 1.18rem); line-height: 1.55; max-width: 56ch; }
+html[data-thema='besucherreise'] .v-hero .v-unter { font-size: var(--fs-lead); line-height: 1.55; max-width: 56ch; }
 
 /* Farbpalette Jamil #6431 (20.11.2026): Primär #111827 (Slate 900), Akzent #EFBF04 (Gold), zweiter Akzent #FBF3D5 (Champagner),
    Hintergründe #FFFFFF / #F8FAFC. Kontrast: Weiß auf #EFBF04 nur ~3,2 : 1 → Knöpfe mit Amber-Fläche haben dunkle Schrift #111827

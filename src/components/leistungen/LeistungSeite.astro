@@ -12,6 +12,7 @@
 //   7 <SnAbschluss />
 // Inhalte: src/content/leistungen/<slug>.md, Schema src/content.config.ts, Stil src/styles/leistung-seite.css (Präfix .ls-).
 // Strukturierte Daten: Service (ohne Preise) + FAQPage; Brotkrumen über BaseLayout. Weiterleitungen: pages/leistungen/[slug].astro.
+import { hl } from '../../lib/hl';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../PageHeader.astro';
@@ -108,7 +109,7 @@ const schema = [
       <div class="sn-kopf">
         <div>
           <p class="sn-kenn">Ausgangslage</p>
-          <h2 id="ls-problem-h" class="sn-h2">Kennen Sie das?</h2>
+          <h2 id="ls-problem-h" class="sn-h2"><mark class="hl">Kennen</mark> Sie das?</h2>
         </div>
         <div class="ls-intro"><Content /></div>
       </div>
@@ -132,7 +133,7 @@ const schema = [
       <div class="wrap">
         <div class="sn-kopf">
           <p class="sn-kenn">Leistungsumfang</p>
-          <h2 id="ls-umfang-h" class="sn-h2">Was Sie bekommen</h2>
+          <h2 id="ls-umfang-h" class="sn-h2">Was Sie <mark class="hl">bekommen</mark></h2>
         </div>
         {umfangGruppen.map((g) => (
           <div class="ls-umfang__gruppe">
@@ -177,7 +178,7 @@ const schema = [
     <section class="section sn ls-referenzen" id="referenzen" aria-labelledby="ls-ref-h">
       <div class="wrap">
         <div class="sn-kopf">
-          <h2 id="ls-ref-h" class="sn-h2 sn-h2--klein">{REFERENZEN.titel}</h2>
+          <h2 id="ls-ref-h" class="sn-h2 sn-h2--klein" set:html={hl(REFERENZEN.titel.replace('unserer Arbeit', '==unserer Arbeit=='))}></h2>
           <p class="sn-lead">{REFERENZEN.einleitung}</p>
         </div>
         <ReferenzKarten />
@@ -192,7 +193,7 @@ const schema = [
       <div class="wrap">
         <div class="sn-kopf">
           <p class="sn-kenn">Ablauf</p>
-          <h2 id="ls-ablauf-h" class="sn-h2">So läuft es ab</h2>
+          <h2 id="ls-ablauf-h" class="sn-h2">So <mark class="hl">läuft</mark> es ab</h2>
         </div>
         <ol class:list={['sn-ablauf', `ls-ablauf--${d.schritte.length}`]}>
           {d.schritte.map((s, i) => (
@@ -212,7 +213,7 @@ const schema = [
     <div class="wrap ls-paket__raster">
       <div class="ls-paket__text">
         <p class="sn-kenn">Paket und Preis</p>
-        <h2 id="ls-paket-h" class="sn-h2 sn-h2--klein">Passendes Paket</h2>
+        <h2 id="ls-paket-h" class="sn-h2 sn-h2--klein"><mark class="hl">Passendes</mark> Paket</h2>
         {d.passt && (
           <>
             <h3 class="sn-h4 ls-paket__frage">Passt das zu Ihnen?</h3>
@@ -286,7 +287,7 @@ const schema = [
     <div class="wrap ls-fragen__raster">
       <div>
         <p class="sn-kenn">Fragen</p>
-        <h2 id="ls-fragen-h" class="sn-h2 sn-h2--klein">Häufige Fragen</h2>
+        <h2 id="ls-fragen-h" class="sn-h2 sn-h2--klein">Häufige <mark class="hl">Fragen</mark></h2>
         <p class="ls-fragen__mehr"><a class="sn-link" href={href('/fragen/')}>Alle Fragen ansehen <Icon name="arrow" size={18} /></a></p>
       </div>
       <div class="ls-faq">

@@ -6,6 +6,7 @@
 //   (fester Ansprechpartner, im Monatspreis) und im Abschluss („Warum waybuild?“) doppelt stand. Der ausführliche Vergleich nach
 //   Anbieter-Art steht auf /warum-waybuild/ (Link).
 // - Team (Fotos + Test-Zitate) NUR in der Vorschau, solange die Zitate nicht bestätigt sind (#5636/#5637). Keine Zitate in JSON-LD.
+import { hl } from '../../lib/hl';
 import Bild from '../Bild.astro';
 import Icon from '../Icon.astro';
 import Hint from '../Hint.astro';
@@ -28,7 +29,7 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
     <div class="sn-kopf">
       <div>
         <p class="sn-kenn">{T.kennzeile}</p>
-        <h2 id="sn-beweis-h" class="sn-h2">{REFERENZEN.titel}</h2>
+        <h2 id="sn-beweis-h" class="sn-h2" set:html={hl(REFERENZEN.titel)}></h2>
       </div>
       <p class="sn-lead">{REFERENZEN.einleitung}</p>
     </div>
@@ -81,7 +82,7 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
     {!nurProjekte && TEAM_ZEIGEN && (
       <div class="sn-team" id="team">
         <div class="sn-team__kopf">
-          <h3 class="sn-h3">{TEAM.titel}</h3>
+          <h3 class="sn-h3" set:html={hl(TEAM.titel)}></h3>
           <p>{TEAM.einleitung}</p>
         </div>
         <ul class="sn-team__liste">

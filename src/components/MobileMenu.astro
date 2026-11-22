@@ -54,7 +54,7 @@ import Icon from './Icon.astro';
   .mm__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
   .mm__top, .mm__group summary {
     display: flex; align-items: center; justify-content: space-between; padding: 14px 6px;
-    font-family: var(--font-head); font-weight: 650; font-size: 1.25rem; text-decoration: none;
+    font-family: var(--font-head); font-weight: 650; font-size: var(--fs-h3); text-decoration: none;
     border-bottom: 1px solid var(--line); cursor: pointer; list-style: none;
   }
   .mm__group summary::-webkit-details-marker { display: none; }
@@ -64,10 +64,10 @@ import Icon from './Icon.astro';
   .mm__sub a { display: flex; align-items: center; gap: 12px; padding: 11px 8px; text-decoration: none; border-radius: 10px; color: var(--ink-soft); }
   .mm__sub a:active { background: var(--paper-2); }
   .mm__sub a :global(.mm__icon) { color: #111827; flex: none; }
-  .mm__gh { padding: 12px 8px 2px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #111827; }
+  .mm__gh { padding: 12px 8px 2px; font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #111827; }
   .mm__footer { display: grid; gap: 14px; margin-top: auto; }
   .mm__cta { width: 100%; }
   .mm__contact { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .mm__contact .btn { font-size: 0.92rem; padding-inline: 0.8em; }
-  .mm__hours { text-align: center; margin: 0; font-size: 0.85rem; color: var(--ink-soft); }
+  .mm__contact .btn { font-size: var(--fs-body); padding-inline: 0.8em; }
+  .mm__hours { text-align: center; margin: 0; font-size: var(--fs-small); color: var(--ink-soft); }
 </style>

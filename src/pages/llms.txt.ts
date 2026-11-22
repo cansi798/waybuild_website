@@ -1,5 +1,6 @@
 // /llms.txt – kompakte Zusammenfassung für KI-Suchen (ChatGPT, Perplexity, Gemini …).
 // Wird beim Build aus der Konfiguration erzeugt, damit Angebot & Leistungen immer aktuell sind.
+import { ohneHl } from '../lib/hl';
 import type { APIRoute } from 'astro';
 import { company, faqs, isMissing, PHONE_IS_PLACEHOLDER, FAKTEN, whatsappLink, WAAS, MODELL, OFFER, BERATUNG_THEMEN, PAKETE, IN_ALLEN, PREIS_HINWEIS, formatEuro, brutto, HOURS, einmaligZeile } from '../config/site';
 import { EINMALIG_DAZU, AUF_ANFRAGE, aboPreisAb, KOMPLETTPAKET, komplettZeile, kombiPreise, kombiZeile } from '../config/pakete-abo';
@@ -105,5 +106,6 @@ export const GET: APIRoute = async ({ site }) => {
     '## Für wen nicht',
     '- Privatpersonen: Das Angebot richtet sich ausschließlich an Unternehmen, Selbstständige und Institutionen.',
   ];
-  return new Response(lines.join('\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+  // Marker ==…== der Überschriften (Jamil #7016, lib/hl.ts) gehören nicht in den reinen Text
+  return new Response(ohneHl(lines.join('\n')) + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };

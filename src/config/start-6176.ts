@@ -66,7 +66,7 @@ export const J_HERO = {
    *  Ihre Idee per Chat, Sprachnachricht oder Screenshot. Wir kümmern uns um die Umsetzung.' */
   /** Seit Jamil #6982 (22.11.2026) „Gefunden werden. Einfacher arbeiten.“ (zweizeilig, Umbruch nach dem ersten Satz in J6Hero.astro);
    *  vorher „Stark nach außen. Effizient nach innen.“ (#6366–#6370). */
-  titel: 'Gefunden werden. Einfacher arbeiten.',
+  titel: '==Gefunden== werden. ==Einfacher== arbeiten.', // ==…== = goldener Marker (Jamil #7016, lib/hl.ts)
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
   // Satz 1 seit Jamil #6429 („2a“); vorher 'Standard-Tools passen selten zum echten Arbeitsalltag.'
@@ -74,7 +74,7 @@ export const J_HERO = {
   unter: 'Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   /** Jamil #6959 (22.11.2026): dezente Zeile direkt über der H1 – ohne Superlativ */
-  hinweis: 'Ideal für Gründer und Betriebe, die sich neu aufstellen',
+  hinweis: 'Für Gründer und etablierte Betriebe', // Jamil #7015 (vorher „Ideal für Gründer und Betriebe, die sich neu aufstellen“)
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
   preiszeile: [
@@ -127,7 +127,7 @@ export const J_PROBLEM = {
  *  keine). Gestaltung #6374: keine Mockups, je Karte ein schlichtes einfarbiges Linien-Icon, viel Weißraum. Karte 2 aus #6377 eingefügt,
  *  die bisherigen Karten 2/3 rücken auf 3/4 (Auslegung, im Talk gefragt). Icons: J6Problem.astro. */
 export const J_PROBLEM_NEU = {
-  titel: 'Wo Betriebe heute Kunden und Zeit verlieren', // Jamil #6483 „A“ (vorher „Wo im Arbeitsalltag oft unnötig Zeit liegen bleibt“)
+  titel: 'Wo Betriebe heute ==Kunden und Zeit== verlieren', // Jamil #6483 „A“ (vorher „Wo im Arbeitsalltag oft unnötig Zeit liegen bleibt“)
   karten: [
     { icon: 'brief', titel: 'Die Website ist nur eine digitale Visitenkarte', text: 'Kunden finden zwar Ihre Telefonnummer, aber Anfragen landen als unvollständige E-Mails im Postfach oder gehen im Trubel unter.' },
     { icon: 'puzzle', titel: 'Sie verbiegen Ihren Alltag für fertige Programme', text: 'Standard-Software zwingt Sie in starre Abläufe. Was das Programm nicht kann, wird am Ende doch wieder mit Excel-Listen und Notizzetteln irgendwie drumherum gebastelt.' },
@@ -164,9 +164,10 @@ export const J_PROBLEM_WEG = {
 export const J_HERO_SCHNELL = {
   label: 'Ihre Website-Adresse für die kostenlose Vorschau',
   platzhalter: 'Ihre Website, z. B. www.ihre-firma.de',
-  knopf: 'Vorschau für morgen',
-  kopf: 'Kostenlose Vorschau Ihrer neuen Startseite', // Jamil #6948: Zeile über dem Feld
-  klein: 'Sie geben Ihre Website ein – wir schicken Ihnen bis zum nächsten Werktag einen Link zu Ihrer neuen Startseite. Kostenlos und unverbindlich, ohne Gespräch vorab.',
+  knopf: 'Kostenlose Website-Vorschau erhalten', // Jamil #7012 (vorher „Vorschau für morgen“)
+  /** Name des Formulars für Screenreader (aria-label). Die sichtbare Zeile darüber (#6948) und die Kleinschrift darunter sind seit
+   *  Jamil #7010/#7011 (22.11.2026) entfernt; das Feld behält aria-label + Platzhalter. */
+  formular: 'Kostenlose Vorschau Ihrer neuen Startseite',
 } as const;
 
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus
@@ -175,7 +176,7 @@ export const J_HERO_SCHNELL = {
  *  Team wirklich Arbeit abnehmen. Ohne überflüssigen Ballast, dafür zu 100 % auf Ihre Abläufe zugeschnitten.'
  *  Darunter der 3-Schritte-Wechsler (J6Wechsler.astro): Tab = Kundenproblem (Zitat), Panel = Mockup (nur HTML/CSS) + Begründungszeile. */
 export const J_MASS = {
-  titel: 'Websites und Software nach Maß – statt Kompromisse von der Stange',
+  titel: 'Websites und Software ==nach Maß== – statt Kompromisse von der Stange',
   // seit Jamil #6488 (passt auch auf Websites); vorher: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.'
   unter: 'Ob Website oder Software: Wir bauen genau das, was Ihr Betrieb wirklich braucht – ohne unnötige Funktionen, dafür exakt auf Ihre Kunden und Ihre Abläufe zugeschnitten.',
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)
@@ -225,7 +226,7 @@ export const J_MASS = {
 /** 4. „Erst sehen, dann entscheiden“ (Jamil #6388, 19.11.2026). Texte WÖRTLICH. Badges in den Karten (`pills`, `zeiten`, `sprache`)
  *  sind nur Deko (aria-hidden) und wiederholen, was im Kartentext steht. Der Blitz (⚡) ist ein eigenes SVG-Icon. */
 export const J_ERST = {
-  titel: 'Kein Aufwand vorab. Kein Risiko. Erst sehen, dann entscheiden.', // Jamil #6494 „C“ (davor #6491 „Keine Vorarbeit …“, ursprünglich „Kein Lastenheft …“)
+  titel: 'Kein ==Aufwand== vorab. Kein ==Risiko==. Erst sehen, dann entscheiden.', // Jamil #6494 „C“ (davor #6491 „Keine Vorarbeit …“, ursprünglich „Kein Lastenheft …“)
   // seit Jamil #6429 („2a“); vorher: 'Sie müssen weder seitenlange Konzepte schreiben noch die Katze im Sack kaufen. Wir denken uns in Ihren Betrieb hinein und liefern Ihnen kostenlos einen echten ersten Entwurf.'
   unter: 'Sie benötigen weder ein umfangreiches Konzept noch gehen Sie ein Risiko ein. Wir arbeiten uns in Ihre Abläufe ein und erstellen Ihnen kostenlos einen ersten konkreten Entwurf.',
   karten: [
@@ -265,7 +266,7 @@ export const J_ERST = {
 /** 7. Abschluss „Bereit zu sehen …“ (Jamil #6402, 19.11.2026). Texte WÖRTLICH. Versand wie das Kontaktformular (Web3Forms-Key
  *  PUBLIC_WEB3FORMS_KEY, sonst E-Mail-Programm), Honeypot, Datenschutz-Häkchen. `betreff` unterscheidet die Karten im Postfach. */
 export const J_START = {
-  titel: 'Bereit zu sehen, was in Ihrem Betrieb möglich ist?',
+  titel: 'Bereit zu sehen, was in Ihrem Betrieb ==möglich== ist?',
   unter: 'Wählen Sie Ihren Weg zur kostenlosen Vorschau – komplett unverbindlich und ohne Vorbereitung.',
   gespraech: {
     art: 'Der persönliche Weg (Website & Software)',
@@ -303,9 +304,14 @@ export const J_START = {
 
 /** 6. „Klare Monatspreise“ (Jamil #6400, 19.11.2026). Texte WÖRTLICH; Preise, Namen, „Ideal für“ und ✓-Listen aus pakete-abo.ts
  *  (dieselbe Quelle wie /preise/), hier nur Badges, Knöpfe und Hinweis. */
+/** Jamil #7019 (22.11.2026): dezente Wertaussage ohne Vergleich mit Mitbewerbern und ohne Zahlen (UWG). „für die Website selbst“, weil es
+ *  einmalig dazubuchbare Extras gibt (Logo, Geschäftspapiere …); die Einrichtung kostet 0 € (site.ts). Startseite + Kopf /preise/. */
+export const PREIS_WERT = 'Hochwertige Websites, individuell gestaltet – im Monatsabo, ohne hohe Einmalkosten für die Website selbst.';
+
 export const J_PREISE = {
-  titel: 'Klare Monatspreise. Keine bösen Überraschungen.',
-  unter: 'Starten Sie ohne fünfstellige Vorab-Investition. Alle Pakete sind monatlich planbar, flexibel kombinierbar – und Sie entscheiden erst, nachdem Sie unsere kostenlose Vorschau gesehen haben.',
+  titel: '==Klare Monatspreise==. Keine bösen Überraschungen.',
+  // Satz 1 seit Jamil #7019 = PREIS_WERT (vorher „Starten Sie ohne fünfstellige Vorab-Investition.“)
+  unter: `${PREIS_WERT} Alle Pakete sind monatlich planbar, flexibel kombinierbar – und Sie entscheiden erst, nachdem Sie unsere kostenlose Vorschau gesehen haben.`,
   rolle: { basis: 'Basis', plus: 'Beliebt / Empfehlung', software: 'Erweiterung / Maßarbeit' },
   badge: { plus: 'Unsere Empfehlung', software: '+ Kombinierbar oder einzeln' },
   alles: 'Alles aus dem Profi-Website-Paket',
@@ -318,7 +324,7 @@ export const J_PREISE = {
 /** 5. „Keine Angst vor dem Umstieg“ (Jamil #6391, 19.11.2026) als ruhige „Sorglos-Matrix“ 2 × 2: Kundenfrage (Einwand) als
  *  Kartenüberschrift, darunter die Lösung mit grünem Häkchen. Texte WÖRTLICH. Kein Foto, keine Animation. */
 export const J_UMSTIEG = {
-  titel: 'Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit',
+  titel: 'Keine Angst vor dem Umstieg – wir nehmen ==Ihr Team== mit',
   unter: 'Viele Unternehmen schieben Verbesserungen jahrelang auf, weil sie Chaos beim Wechsel befürchten. Als Prozess-Experten sorgen wir dafür, dass Ihre neuen Lösungen reibungslos in den Alltag einziehen – ohne Stillstand und ohne Frust.',
   karten: [
     { frage: '„Wir haben uns gerade erst an unsere jetzigen Programme gewöhnt.“',

@@ -8,7 +8,7 @@
 .ju-karte { min-width: 0; display: grid; gap: 16px; align-content: start; padding: clamp(22px, 2.6vw, 32px); border-radius: 24px;
   background: #FAFAFA; border: 1px solid #E5E7EB; }
 .ju-frage, .ju-antwort { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; margin: 0; }
-.ju-frage { font-family: var(--font-head); font-weight: 650; font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem); line-height: 1.4; color: #475569; text-wrap: balance; }
+.ju-frage { font-family: var(--font-head); font-weight: 650; font-size: var(--fs-h3); line-height: 1.4; color: #475569; text-wrap: balance; }
 .ju-antwort { line-height: 1.65; color: var(--ink); text-wrap: pretty; }
 .ju-ico { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; margin-top: 1px; }
 .ju-ico--frage { background: #F1F5F9; color: #64748B; }
@@ -26,7 +26,7 @@
 .ju-karte { gap: 14px; padding: clamp(24px, 2.6vw, 32px); border: 1px solid #ECE7DA; box-shadow: none; background: #FFFFFF; }
 .ju-thema { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background: #FBF3D5; color: #111827; }
 .ju-karte .ju-frage { display: block; position: relative; padding-left: 0; font-family: var(--font-body); font-weight: 500; font-style: italic;
-  font-size: 1.02rem; line-height: 1.5; color: #4B5563; text-wrap: pretty; }
+  font-size: var(--fs-body); line-height: 1.5; color: #4B5563; text-wrap: pretty; }
 .ju-karte .ju-antwort { display: block; padding-left: 16px; border-left: 2px solid #EFBF04; line-height: 1.65; color: #374151; }
 .ju-antwort b { color: #111827; font-weight: 700; }
 .ju-mehr { display: block; color: var(--ink-soft); font-weight: 500; }

@@ -26,7 +26,7 @@ export const BEISPIEL_SEITE = {
   titel: 'So kann es laufen: ein Beispiel',
   description: 'Ein Beispiel in 13 Szenen: Wie ein Malerbetrieb mit Website, Kundenportal und eigener Software vom ersten Suchtreffer bis zur Weiterempfehlung arbeitet.',
   kennzeile: 'Beispiel',
-  h1: 'So kann es laufen.',
+  h1: 'So kann es ==laufen==.', // ==…== = goldener Marker (Jamil #7016)
   intro: 'Vom ersten Google-Treffer bis zur Weiterempfehlung: Erleben Sie in einer kurzen Geschichte, wie ein Malerbetrieb mit webgold arbeitet.',
   /** Name der Geschichte für Screenreader (Liste der Szenen) */
   geschichte: 'Die Geschichte von Frau Weber und dem Malerbetrieb Muster in 13 Szenen',
@@ -91,7 +91,7 @@ export const BEISPIEL_SCHLUSS = {
 /** Film-Start (Personalisierung, Jamil #5709–#5715 + Änderung 08:57): Branche wählen, optional Firmenname. Nichts wird gesendet. */
 export const BEISPIEL_START = {
   kennzeile: 'Ihr Film',
-  titel: 'Wie sähe das bei Ihnen aus?',
+  titel: 'Wie sähe das ==bei Ihnen== aus?', // Marker: Jamil #7016
   text: 'Wählen Sie Ihre Branche und tippen Sie auf Wunsch Ihren Firmennamen ein. Der Film läuft dann mit Ihrem Betrieb.',
   legende: 'Ihre Branche',
   feld: 'Ihr Firmenname (freiwillig)',

@@ -6,7 +6,7 @@ export type Stufe = 'ja' | 'teils' | 'nein';
 
 export const VERGLEICH_START = {
   kennzeile: 'Im Vergleich',
-  titel: 'Viele Lösungen decken nur einen Teil ab.', // Jamil #6055 Fr. 23 (vorher „Die meisten Lösungen lösen nur einen Teil des Problems.“)
+  titel: 'Viele Lösungen decken ==nur einen Teil== ab.', // Jamil #6055 Fr. 23 (vorher „Die meisten Lösungen lösen nur einen Teil des Problems.“)
   /** lang = Tabellenkopf am PC, kurz = schmale Bildschirme, zusatz = zweite, kleinere Zeile */
   spalten: [
     { lang: 'Website-Baukasten', kurz: 'Baukasten' } as { lang: string; kurz: string; zusatz?: string; zusatzKurz?: string },

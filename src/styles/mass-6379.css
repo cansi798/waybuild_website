@@ -15,10 +15,10 @@
 .jm-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .jm-tab[aria-selected="true"] { border-color: #EFBF04; } /* Jamil #6931: nur dünne Goldlinie, kein Schatten, keine andere Hintergrundfarbe; seit #6971 1 px statt 1,5 px */
 .jm-tab__nr { grid-row: span 2; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--paper-2, #F1F5F9);
-  font-family: var(--font-head); font-weight: 800; font-size: 0.9rem; color: #111827; }
+  font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); color: #111827; }
 .jm-tab[aria-selected="true"] .jm-tab__nr { background: #EFBF04; color: #111827; }
-.jm-tab__kurz { font-family: var(--font-head); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
-.jm-tab__zitat { font-family: var(--font-head); font-weight: 650; font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem); line-height: 1.45; text-wrap: pretty; }
+.jm-tab__kurz { font-family: var(--font-head); font-weight: 700; font-size: var(--fs-small); letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
+.jm-tab__zitat { font-family: var(--font-head); font-weight: 650; font-size: var(--fs-body); line-height: 1.45; text-wrap: pretty; }
 
 /* Panels: alle im selben Rasterfeld, das höchste bestimmt die Höhe (kein Sprung beim Wechsel) */
 .jm__panels { display: grid; min-width: 0; }
@@ -29,7 +29,7 @@
   .jm-panel { transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1), visibility 0s linear 0.45s; }
   .jm-panel.ist-aktiv { transition: opacity 0.45s ease 0.08s, transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) 0.08s, visibility 0s; }
 }
-.jm-panel__zitat { display: none; margin: 0; font-family: var(--font-head); font-weight: 650; font-size: 1.05rem; line-height: 1.45; color: var(--ink); }
+.jm-panel__zitat { display: none; margin: 0; font-family: var(--font-head); font-weight: 650; font-size: var(--fs-body); line-height: 1.45; color: var(--ink); }
 .jm-panel__warum { margin: 0; max-width: 60ch; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 .jm-panel__warum b { color: var(--ink); }
 
@@ -38,7 +38,7 @@
 .jm-geraet { margin-top: 14px; }
 .jm-label { position: absolute; right: clamp(18px, 2.6vw, 32px); top: 0; transform: translateY(-50%); margin: 0; max-width: calc(100% - 36px);
   padding: 5px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--gold); color: #111827;
-  font-size: 0.74rem; font-weight: 650; line-height: 1.35; box-shadow: 0 6px 14px -10px rgb(0 0 0 / 35%); }
+  font-size: var(--fs-small); font-weight: 650; line-height: 1.35; box-shadow: 0 6px 14px -10px rgb(0 0 0 / 35%); }
 .jm-mock { container-type: inline-size; aspect-ratio: 16 / 11; border-radius: 18px; overflow: hidden; background: var(--white);
   box-shadow: 0 24px 48px -30px rgb(31 41 55 / 45%), 0 0 0 1px rgb(31 41 55 / 6%); }
 
@@ -103,16 +103,16 @@
   .jm-tab[aria-selected="true"] { background: var(--white); box-shadow: none; border-color: #EFBF04; }
   .jm-tab__nr { display: none; }
   .jm-tab__zitat { display: none; }
-  .jm-tab__kurz { letter-spacing: 0.02em; text-transform: none; font-size: 0.9rem; color: var(--ink); overflow-wrap: anywhere; }
+  .jm-tab__kurz { letter-spacing: 0.02em; text-transform: none; font-size: var(--fs-small); color: var(--ink); overflow-wrap: anywhere; }
   .jm-tab[aria-selected="true"] .jm-tab__kurz { color: #111827; }
   .jm-panel__zitat { display: block; }
   .jm-mock { aspect-ratio: 4 / 4.3; }
   .mk { font-size: 3.4cqw; }
   .mk-inhalt { padding: 1em 1.1em; }
   .jm-geraet { margin-top: 0; }
-  .jm-label { position: static; transform: none; display: inline-block; margin-top: 10px; max-width: none; font-size: 0.7rem; }
+  .jm-label { position: static; transform: none; display: inline-block; margin-top: 10px; max-width: none; font-size: var(--fs-small); }
 }
-@media (max-width: 380px) { .jm-tab__kurz { font-size: 0.8rem; } }
+@media (max-width: 380px) { .jm-tab__kurz { font-size: var(--fs-small); } }
 .mk-frage { margin-top: 0.5em; display: flex; justify-content: space-between; align-items: center; gap: 0.6em; padding: 0.35em 0.35em 0.35em 0.9em;
   border-radius: 0.7em; border: 1px solid #dfe3ea; color: #9ca3af; }
 .mk-frage b { padding: 0.45em 1em; border-radius: 0.5em; background: var(--mk-blau); color: var(--white); }
@@ -124,7 +124,7 @@
 .jm-mock.jm-mock--breit { aspect-ratio: 1280 / 765; } /* Auftrags-Screenshot (Jamil #6900) ungekürzt im Originalformat */
 .jm-mock--bild picture, .jm-mock--bild img { display: block; width: 100%; height: 100%; }
 .jm-mock--bild img { object-fit: cover; object-position: top left; }
-.jm-link { display: inline-block; margin: 10px 0 0 4px; font-size: 0.85rem; font-weight: 600; color: #111827; text-decoration: underline; text-underline-offset: 3px; }
+.jm-link { display: inline-block; margin: 10px 0 0 4px; font-size: var(--fs-small); font-weight: 600; color: #111827; text-decoration: underline; text-underline-offset: 3px; }
 .jm-link::after { content: ' ↗'; }
 .jm-link:hover { color: var(--ink); }
 .jm-link:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
@@ -135,10 +135,10 @@
   padding: 18px 20px; border-radius: 20px; border: 1px solid var(--line); background: var(--white); }
 .jm-browser__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: #FBF3D5; color: #111827; }
 .jm-browser__text { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
-.jm-browser__text b { display: block; margin-bottom: 2px; font-family: var(--font-head); font-size: 1.05rem; color: var(--ink); }
+.jm-browser__text b { display: block; margin-bottom: 2px; font-family: var(--font-head); font-size: var(--fs-body); color: var(--ink); }
 
 /* Kleiner Hinweis im Wechsler (Jamil #6424): Desktop links unter den Tabs, Handy unter dem Mockup */
-.jm-hinweis { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.84rem; line-height: 1.45; color: var(--ink-soft); }
+.jm-hinweis { display: flex; align-items: center; gap: 8px; margin: 0; font-size: var(--fs-small); line-height: 1.45; color: var(--ink-soft); }
 .jm-hinweis svg { flex: none; color: #111827; }
 @media (min-width: 900px) {
   .jm { grid-template-rows: auto 1fr; }
@@ -165,9 +165,9 @@
 /* Handy mit 4 Tabs (Jamil #6427): kleinere Beschriftung, Wörter nicht zerhacken */
 @media (max-width: 899px) {
   .jm-tab { padding: 10px 2px; }
-  .jm .jm-tab__kurz { font-size: 0.8rem; overflow-wrap: normal; word-break: normal; letter-spacing: 0; }
+  .jm .jm-tab__kurz { font-size: var(--fs-small); overflow-wrap: normal; word-break: normal; letter-spacing: 0; }
 }
-@media (max-width: 380px) { .jm .jm-tab__kurz { font-size: 0.7rem; } }
+@media (max-width: 380px) { .jm .jm-tab__kurz { font-size: var(--fs-small); } }
 
 /* Jamil #6461: Tab-Kacheln mittig zum Bild (Versatz rechnet das Skript in J6Wechsler.astro) */
 @media (min-width: 900px) { .jm__tabs { margin-top: var(--jm-tabs-top, 0px); align-self: start; } }

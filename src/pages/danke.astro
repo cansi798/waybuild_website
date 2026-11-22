@@ -32,7 +32,7 @@ const WEGE = {
   <section class="section thanks" data-wege={JSON.stringify(WEGE)}>
     <div class="wrap">
       <span class="thanks__icon" aria-hidden="true">✓</span>
-      <h1>Danke<span data-name></span>! Ihre Anfrage ist da.</h1>
+      <h1>Danke<span data-name></span>! Ihre Anfrage <mark class="hl">ist da</mark>.</h1>
       <p class="lead">Wir melden uns persönlich, in der Regel bis <strong data-deadline>zum nächsten Werktag</strong>.</p>
 
       <ol class="next">
@@ -43,7 +43,7 @@ const WEGE = {
       </ol>
 
       <div class="prep card">
-        <h2>Zur Vorbereitung (optional)</h2>
+        <h2><mark class="hl">Zur Vorbereitung</mark> (optional)</h2>
         <h3>Für Ihre Website</h3>
         <ul>
           <li>Logo und ggf. Farben Ihres Unternehmens</li>
@@ -60,7 +60,7 @@ const WEGE = {
       </div>
 
       <div class="bisdahin">
-        <h2>Bis dahin</h2>
+        <h2><mark class="hl">Bis dahin</mark></h2>
         <p class="bisdahin__links"><a class="btn btn--primary" href={href('/so-kann-es-laufen/')}>{BEISPIEL_LINK}: der Film</a> <a class="btn btn--ghost" href={href('/beispiele/')}>Beispiele ansehen</a></p>
       </div>
 

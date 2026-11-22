@@ -1,4 +1,5 @@
 ---
+import { hl } from '../../lib/hl';
 import "../../styles/start-6402.css";
 // 7. Abschluss „Bereit zu sehen, was in Ihrem Betrieb möglich ist?“ (Jamil, Talk qh87y3sj #6402, 19.11.2026). Texte wörtlich (J_START).
 // Dunkle Abschluss-Box, zwei weiße Karten mit Mini-Formular. Versand GENAU wie das Kontaktformular (src/pages/kontakt.astro):
@@ -19,7 +20,7 @@ const ds = href('/datenschutz/');
 <section class="section sn js7" id="kontakt-start" aria-labelledby="js7-h">
   <div class="wrap">
     <div class="sn-kopf js7__kopf">
-      <h2 id="js7-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <h2 id="js7-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
 

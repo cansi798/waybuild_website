@@ -1,4 +1,5 @@
 ---
+import { hl } from '../../lib/hl';
 import "../../styles/mass-6379.css";
 // 3. Lösung als „Maßarbeit“ (Jamil, Talk qh87y3sj #6378/#6379, 19.11.2026). Texte wörtlich aus src/config/start-6176.ts (J_MASS).
 // Interaktiver 3-Schritte-Wechsler: links klickbare Tabs mit dem Kundenproblem (Zitat), rechts das passende Mockup (nur HTML/CSS,
@@ -22,7 +23,7 @@ const BW = T.bauwelt;
 <section class="section sn jms" id="loesung" aria-labelledby="jm-h">
   <div class="wrap">
     <div class="sn-kopf jm__kopf">
-      <h2 id="jm-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <h2 id="jm-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
 

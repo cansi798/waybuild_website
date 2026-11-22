@@ -2,6 +2,7 @@
 // Startseite: Vergleichstabelle (Jamil Talk qh87y3sj #5858 „wieder rein“, neu nach #5871–#5873, 14.11.2026). Echte <table>
 // (Zeilenköpfe th scope="row"), Zeichen als Icons mit Klartext für Screenreader, Legende darunter. Am Handy kurze Spaltennamen.
 // Texte: config/start-vergleich.ts, Hinweis (Anbieter-Arten, UWG) aus variante.ts. Stil: styles/start-vergleich.css.
+import { hl, ohneHl } from '../../lib/hl';
 import Icon from '../Icon.astro';
 import { VERGLEICH_START as T } from '../../config/start-vergleich';
 import { VERGLEICH } from '../../config/variante';
@@ -14,11 +15,11 @@ const wir = T.spalten.length - 1;
   <div class="wrap">
     <div class="sn-kopf sn-kopf--mitte">
       <p class="sn-kenn">{T.kennzeile}</p>
-      <h2 id="svg-h" class="sn-h2">{T.titel}</h2>
+      <h2 id="svg-h" class="sn-h2" set:html={hl(T.titel)}></h2>
     </div>
     <div class="svg-tafel">
       <table class="svg-tabelle">
-        <caption class="sr-only">{T.titel} Vergleich nach Anbieter-Art</caption>
+        <caption class="sr-only">{ohneHl(T.titel)} Vergleich nach Anbieter-Art</caption>
         <thead>
           <tr>
             <td></td>

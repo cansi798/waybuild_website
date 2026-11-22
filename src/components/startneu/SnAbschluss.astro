@@ -2,6 +2,7 @@
 // Abschluss der Startseite (Jamil Talk qh87y3sj #5855, 14.11.2026): Überschrift, Text und ein Knopf „Kostenlose Beratung
 // vereinbaren“ (gleiches Ziel wie der Hero-Knopf), darunter WhatsApp als Alternative und der Claim. Ersetzt auf der Startseite
 // SnHandlung (Ablauf in sechs Schritten), die Komponente bleibt für spätere Nutzung erhalten. Anker #kontakt-start.
+import { hl } from '../../lib/hl';
 import Icon from '../Icon.astro';
 import { ABSCHLUSS_KNOPF } from '../../config/variante';
 import { ANLIEGEN, CLAIM } from '../../config/startseite';
@@ -15,7 +16,7 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
 
 <section class="section sn sn-abschluss" id="kontakt-start" aria-labelledby="sn-abschluss-h">
   <div class="wrap sn-abschluss__innen">
-    <h2 id="sn-abschluss-h" class="sn-h2 sn-h2--gross">{T.titel}</h2>
+    <h2 id="sn-abschluss-h" class="sn-h2 sn-h2--gross" set:html={hl(T.titel)}></h2>
     <p class="sn-lead sn-abschluss__text">{T.text}</p>
     {T.vorschau && <p class="sn-abschluss__vorschau">{[VORSCHAU.abschluss, ZAHLUNGS_ZUSATZ].filter(Boolean).join(" ")}</p>}<!-- Jamil #6061 -->
     <div class="sn-abschluss__knoepfe">

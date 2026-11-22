@@ -7,6 +7,7 @@
 // Ausgangslage/Umsetzung/Ergebnis), am PC abwechselnd links/rechts. Danach der Beispiel-Film (SnBeispiel, Anker #beispiel) und
 // SnAbschluss. Hintergründe: Bereiche Weiß/Papier im Wechsel → Film Papier (statt Hauch, damit er sich vom Abschluss absetzt) → Hauch.
 // Stil: styles/seite-beispiele.css (.sb-).
+import { hl } from '../lib/hl';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Bild from '../components/Bild.astro';
@@ -28,7 +29,7 @@ const fakten = ['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Lad
   description="Echte Projekte von webgold: Websites für Unternehmen aus Norderstedt und Hamburg, mit Ausgangslage, Umsetzung und gemessenem Ergebnis."
   breadcrumb={[{ name: 'Beispiele', path: '/beispiele/' }]}
 >
-  <PageHeader eyebrow="Beispiele" title="Beispiele aus unserer Arbeit." lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
+  <PageHeader eyebrow="Beispiele" title="Beispiele aus ==unserer Arbeit==." lead="Echte Projekte unserer Kunden, sortiert nach Bereichen. Was noch nicht online ist, kennzeichnen wir ehrlich als Vorschau.">
     {REFERENZ_BEREICHE.length > 1 && (
       <nav class="sb-bereiche" aria-label="Bereiche">
         <ul>{REFERENZ_BEREICHE.map((b) => <li><a href={`#${b.id}`}>{b.titel}</a></li>)}</ul>
@@ -42,7 +43,7 @@ const fakten = ['In der Regel 14 Tage nach Ihren Inhalten online', 'Schnelle Lad
         <div class="sn-kopf">
           <div>
             <p class="sn-kenn">Bereich</p>
-            <h2 id={`${b.id}-h`} class="sn-h2">{b.titel}</h2>
+            <h2 id={`${b.id}-h`} class="sn-h2" set:html={hl(b.titel)}></h2>
           </div>
           <div>
             <p class="sn-lead">{b.text}</p>

@@ -2,6 +2,7 @@
 // Problem (/geschichte/): drei kurze Schmerzpunkte mit Grafik, abhängig vom Weg (data-gs-weg) und von der Branche
 // (data-gs-v = Vorlage mit {platzhaltern}, geschichte.ts füllt sie per textContent). Mit JS ist nur der gewählte Weg
 // sichtbar (CSS über html[data-weg]); ohne JS stehen alle drei Wege untereinander, jeder mit seinem Namen.
+import { hl } from '../../lib/hl';
 import GGrafik from './GGrafik.astro';
 import GWegWahl from './GWegWahl.astro';
 import { WEGE, PROBLEM } from './texte';
@@ -11,7 +12,7 @@ import { WEGE, PROBLEM } from './texte';
   <div class="wrap">
     <div class="section-head center gs-kopf">
       <span class="eyebrow">{PROBLEM.kennzeile}</span>
-      <h2 id="gs-problem-h" class="rule" tabindex="-1">{PROBLEM.titel}</h2>
+      <h2 id="gs-problem-h" class="rule" tabindex="-1" set:html={hl(PROBLEM.titel)}></h2>
       <p class="lead" data-gs-v={PROBLEM.lead} data-gs-vf={PROBLEM.leadFirma}>{PROBLEM.lead}</p>
       <GWegWahl />
     </div>

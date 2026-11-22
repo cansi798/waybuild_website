@@ -1,4 +1,5 @@
 ---
+import { hl } from '../../lib/hl';
 import "../../styles/umstieg-6391.css";
 // 5. „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Jamil, Talk qh87y3sj #6391, 19.11.2026). Texte wörtlich aus
 // src/config/start-6176.ts (J_UMSTIEG). „Sorglos-Matrix“: ruhiges 2 × 2-Raster (Handy 1 Spalte) auf leicht abgetöntem Warmgrau,
@@ -12,7 +13,7 @@ import { href } from '../../lib/paths';
 <section class="section sn ju" id="umstieg" aria-labelledby="ju-h">
   <div class="wrap">
     <div class="sn-kopf ju__kopf">
-      <h2 id="ju-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <h2 id="ju-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
     {/* Seit Jamil #6507 ruhiger: Einwand als gedämpftes Zitat mit goldenem Anführungszeichen, Antwort mit fetter Kernaussage,

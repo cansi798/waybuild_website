@@ -32,9 +32,9 @@ export const GESCHICHTE_SEITE = {
 
 export const HERO = {
   kennzeile: 'Website, Anfragen und Arbeitsalltag',
-  titel: ['Mehr Anfragen.', 'Weniger Papierkram.'],
+  titel: ['Mehr ==Anfragen==.', 'Weniger ==Papierkram==.'], // ==…== = goldener Marker (Jamil #7016, lib/hl.ts)
   unter: 'Wir bauen und betreuen, was Ihr Betrieb online braucht. Von der Website bis zur eigenen Software für Ihre Aufträge.',
-  frage: 'Wie sähe das bei Ihnen aus?',
+  frage: 'Wie sähe das ==bei Ihnen== aus?',
   frageUnter: 'Wählen Sie Ihren Weg. Der Rest der Seite erzählt dann Ihre Geschichte.',
   wegeLegende: 'Ihr Weg',
   branchenLegende: 'Ihre Branche',
@@ -101,14 +101,14 @@ export const WEG_SPEICHER = 'waybuild-geschichte-weg';
 
 export const PROBLEM = {
   kennzeile: 'Das kennen Sie',
-  titel: 'Kennen Sie das?',
+  titel: '==Kennen== Sie das?',
   lead: 'So geht es vielen Betrieben wie Ihrem.',
   leadFirma: 'So geht es vielen Betrieben wie {firma}.',
 };
 
 export const LOESUNG = {
   kennzeile: 'Die Lösung',
-  titel: 'So löst webgold das.',
+  titel: 'So löst ==webgold== das.',
   /** Titel des Startbilds im bestehenden Film (dort sonst „Wie sähe das bei Ihnen aus?“, doppelt zum Hero) */
   filmStart: 'So kann es bei Ihnen laufen.',
   filmStartFirma: 'So kann es bei {firma} laufen.',
@@ -120,7 +120,7 @@ export const WEG_WAHL = { legende: 'Weg wechseln', aktiv: 'Ihr Weg' };
 
 export const BEWEIS = {
   kennzeile: 'Darauf können Sie bauen',
-  referenzenTitel: 'Echte Projekte unserer Kunden.',
+  referenzenTitel: 'Echte ==Projekte== unserer Kunden.',
   alle: 'Alle Beispiele ansehen',
   arbeitenTitel: 'So arbeiten wir.',
   arbeitenUnter: 'In drei Schritten zu Ihrer Lösung.',
@@ -128,7 +128,7 @@ export const BEWEIS = {
 
 export const ANGEBOT = {
   kennzeile: 'Pakete',
-  titel: 'Klare Preise. Feste Monatspreise.',
+  titel: 'Klare Preise. ==Feste Monatspreise==.',
   lead: 'Einrichtung, Technik und Betreuung sind im Monatspreis enthalten. Keine Einrichtungsgebühr.',
   empfehlung: 'Unsere Empfehlung für Sie',
   wachsenTitel: 'Klein anfangen, jederzeit erweitern.',

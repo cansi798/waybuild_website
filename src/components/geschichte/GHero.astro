@@ -2,6 +2,7 @@
 // Aufmerksamkeit (/geschichte/): kurze, starke Aussage + „Wie sähe das bei Ihnen aus?“ mit drei Wegen als große
 // Auswahlkarten, Branche (gleiche Daten wie der Film: components/beispiel/branchen.ts) und optionaler Firmenname.
 // Mit JS: Formular (geschichte.ts merkt die Wahl in sessionStorage, Schlüssel wie der Film). Ohne JS: drei Sprungmarken.
+import { hl } from '../../lib/hl';
 import Icon from '../Icon.astro';
 import type { IconName } from '../../config/site';
 import { BRANCHEN, STANDARD, FIRMA_MAX } from '../beispiel/branchen';
@@ -14,7 +15,7 @@ const SYMBOL: Record<WegId, IconName> = { website: 'layout', anfragen: 'mail', b
   <div class="gs-hero__flaeche" aria-hidden="true"></div>
   <div class="wrap gs-hero__innen">
     <p class="gs-hero__kennzeile">{HERO.kennzeile}</p>
-    <h1 id="gs-h1" class="gs-hero__titel">{HERO.titel.map((t) => <span>{t}</span>)}</h1>
+    <h1 id="gs-h1" class="gs-hero__titel">{HERO.titel.map((t) => <span set:html={hl(t)} />)}</h1>
     <p class="gs-hero__unter">{HERO.unter}</p>
   </div>
 </section>
@@ -23,7 +24,7 @@ const SYMBOL: Record<WegId, IconName> = { website: 'layout', anfragen: 'mail', b
   <div class="wrap">
     <div class="gs-wahl__karte">
       <div class="gs-wahl__kopf">
-        <h2 id="gs-wahl-h" class="gs-wahl__titel">{HERO.frage}</h2>
+        <h2 id="gs-wahl-h" class="gs-wahl__titel" set:html={hl(HERO.frage)}></h2>
         <p class="gs-wahl__unter">{HERO.frageUnter}</p>
       </div>
 

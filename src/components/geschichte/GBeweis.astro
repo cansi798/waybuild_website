@@ -4,6 +4,7 @@
 //   Kundenstimmen gibt es noch keine freigegebenen (STIMMEN dort sind Platzhalter, Jamil #5289) → hier keine.
 // - „So arbeiten wir“ in drei Schritten: Erstgespräch, Entwurf und Freigabe, Online aus VORGEHEN.schritte (config/vorgehen.ts).
 // - Team Can und Jamil: TEAM aus config/startseite.ts (Foto, Name, Rolle). Die Zitate dort sind Test-Zitate → hier nicht.
+import { hl } from '../../lib/hl';
 import ReferenzKarten from '../referenzen/ReferenzKarten.astro';
 import Bild from '../Bild.astro';
 import { href } from '../../lib/paths';
@@ -20,7 +21,7 @@ const schritte = ['Erstgespräch', 'Entwurf und Freigabe', 'Online'].map((t) => 
   <div class="wrap">
     <div class="section-head center">
       <span class="eyebrow">{BEWEIS.kennzeile}</span>
-      <h2 id="gs-ref-h" class="rule">{BEWEIS.referenzenTitel}</h2>
+      <h2 id="gs-ref-h" class="rule" set:html={hl(BEWEIS.referenzenTitel)}></h2>
       <p class="lead">{REFERENZEN.einleitung}</p>
     </div>
     <ReferenzKarten liste={refs} />
@@ -31,7 +32,7 @@ const schritte = ['Erstgespräch', 'Entwurf und Freigabe', 'Online'].map((t) => 
 <section class="section section--alt gs-arbeiten" id="so-arbeiten-wir" aria-labelledby="gs-arbeiten-h">
   <div class="wrap">
     <div class="section-head center">
-      <h2 id="gs-arbeiten-h" class="rule">{BEWEIS.arbeitenTitel}</h2>
+      <h2 id="gs-arbeiten-h" class="rule" set:html={hl(BEWEIS.arbeitenTitel)}></h2>
       <p class="lead">{BEWEIS.arbeitenUnter}</p>
     </div>
     <ol class="gs-schritte">
@@ -50,7 +51,7 @@ const schritte = ['Erstgespräch', 'Entwurf und Freigabe', 'Online'].map((t) => 
 <section class="section gs-team" id="team-geschichte" aria-labelledby="gs-team-h">
   <div class="wrap">
     <div class="section-head center">
-      <h2 id="gs-team-h" class="rule">{TEAM.titel}</h2>
+      <h2 id="gs-team-h" class="rule" set:html={hl(TEAM.titel)}></h2>
       <p class="lead">{TEAM.einleitung}</p>
     </div>
     <ul class="gs-personen">

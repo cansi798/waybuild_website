@@ -8,13 +8,13 @@
   background: #FAFAFA; border: 1px solid var(--line); }
 .jpr-karte--tipp { border-color: #EFBF04; box-shadow: 0 0 0 1px #EFBF04, 0 22px 44px -30px rgb(140 109 18 / 55%); }
 .jpr-karte__kopf { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
-.jpr-karte__rolle { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
-.jpr-badge { padding: 4px 11px; border-radius: 999px; background: #EFBF04; color: #111827; font-size: 0.76rem; font-weight: 700; line-height: 1.35; }
+.jpr-karte__rolle { font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+.jpr-badge { padding: 4px 11px; border-radius: 999px; background: #EFBF04; color: #111827; font-size: var(--fs-small); font-weight: 700; line-height: 1.35; }
 .jpr-badge--plus { background: #FBF3D5; color: #111827; box-shadow: inset 0 0 0 1px var(--gold); }
-.jpr-karte__name { margin: 0; font-family: var(--font-head); font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; color: var(--ink); }
+.jpr-karte__name { margin: 0; font-family: var(--font-head); font-size: var(--fs-h3); line-height: 1.25; color: var(--ink); }
 .jpr-karte__preis { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--ink-soft); }
-.jpr-karte__ab { font-size: 0.45em; font-weight: 700; letter-spacing: 0; color: var(--ink-soft); } /* Jamil #6964 */
-.jpr-karte__preis b { font-family: var(--font-head); font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.jpr-karte__ab { font-size: var(--fs-body); font-weight: 700; letter-spacing: 0; color: var(--ink-soft); } /* Jamil #6964 */
+.jpr-karte__preis b { font-family: var(--font-head); font-size: var(--fs-preis); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
 .jpr-karte__fuer { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .jpr-liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; flex: 1; align-content: start; }
 .jpr-liste li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; line-height: 1.5; color: var(--ink); }
@@ -24,7 +24,7 @@
 .jpr-btn--voll { background: #EFBF04; color: #111827; }
 .jpr-btn--voll:hover { background: #111827; color: var(--white); }
 .jpr-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.jpr-hinweis { margin: clamp(20px, 3vw, 32px) auto 0 !important; max-width: 70ch; text-align: center; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+.jpr-hinweis { margin: clamp(20px, 3vw, 32px) auto 0 !important; max-width: 70ch; text-align: center; font-size: var(--fs-small); line-height: 1.6; color: var(--ink-soft); }
 /* Hintergrund (Jamil #6412): nach dem Warmgrau von Abschnitt 5 weiß, damit nicht drei getönte Blöcke aufeinanderfolgen */
 /* seit Jamil #6453: Hintergrund aus dem Weiß/Goldstich-Wechsel */
 #preise-start .jpr-karte { box-shadow: 0 1px 2px rgb(17 24 39 / 5%), 0 16px 36px -30px rgb(17 24 39 / 40%); }

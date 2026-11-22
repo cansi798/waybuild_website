@@ -6,9 +6,9 @@
 @media (min-width: 900px) { .je-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); } }
 .je-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.4vw, 30px); border-radius: 24px;
   background: #FAFAFA; border: 1px solid var(--line); }
-.je-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #111827; }
+.je-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); letter-spacing: 0.04em; color: #111827; }
 .je-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
-.je-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+.je-karte__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; color: var(--ink); text-wrap: balance; }
 .je-karte__text { margin: 0; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 .je-karte__text b, .je-punkte b { color: var(--ink); font-weight: 650; }
 .je-punkte { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; line-height: 1.55; color: var(--ink-soft); }
@@ -46,10 +46,10 @@
   .je-karte { --je-top: calc(var(--je-kopf, 96px) + var(--je-n, 0) * 14px); position: sticky; top: var(--je-top);
     display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 12px clamp(24px, 4vw, 64px); align-items: start;
     min-height: var(--je-min, 0px); background: #FAFAFA; /* #6505: so hoch wie die längste Karte (Skript), kein Leerraum */
-    box-shadow: 0 -2px 0 0 rgb(255 255 255 / 0), 0 18px 40px -28px rgb(17 24 39 / 45%), 0 1px 2px rgb(17 24 39 / 6%); }
+    box-shadow: none; } /* Jamil #7009: ohne Schatten, nur Haarlinie (border aus .je-karte) */
   .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; } .je-karte:nth-child(4) { --je-n: 3; }
   html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; } /* kein Einblenden im Stapel: sonst schimmert die vorige Karte durch */
-  .je-karte__titel { font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); }
+  .je-karte__titel { font-size: var(--fs-h3); }
 }
 @media (min-width: 900px) and (prefers-reduced-motion: reduce) { .je-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } } /* 4 Karten: 2 × 2 */
 
@@ -59,15 +59,15 @@
 @media (max-width: 899px) and (prefers-reduced-motion: no-preference) {
   .je-karten { gap: 20px; }
   .je-karte { position: sticky; top: var(--je-top, calc(84px + var(--je-n, 0) * 10px)); min-height: var(--je-min, 0px); background: #FAFAFA;
-    padding: 20px 20px 24px; gap: 10px; box-shadow: 0 18px 40px -28px rgb(17 24 39 / 45%), 0 1px 2px rgb(17 24 39 / 6%); }
+    padding: 20px 20px 24px; gap: 10px; box-shadow: none; } /* Jamil #7009 */
   .je-karte:nth-child(2) { --je-n: 1; } .je-karte:nth-child(3) { --je-n: 2; } .je-karte:nth-child(4) { --je-n: 3; }
   html.j6-an .je-karte.j6-ein { opacity: 1; translate: none; }
-  .je-karte__text, .je-punkte { font-size: 0.97rem; line-height: 1.55; }
+  .je-karte__text, .je-punkte { font-size: var(--fs-body); line-height: 1.55; }
 }
 
 /* Knöpfe in Karte 01 (Jamil #6500): Primär Gold/dunkle Schrift, Sekundär Anthrazit-Umriss; mobil untereinander, ≥ 44 px */
 .je-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0; }
-.je-btn { min-height: 44px; justify-content: center; text-align: center; white-space: normal; font-size: 0.95rem; padding: 10px 18px; }
+.je-btn { min-height: 44px; justify-content: center; text-align: center; white-space: normal; font-size: var(--fs-body); padding: 10px 18px; }
 .je-btn--voll { background: #EFBF04; border: 1.5px solid #EFBF04; color: #111827; }
 .je-btn--voll:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 .je-btn--rand { background: transparent; border: 1.5px solid #111827; color: #111827; }
@@ -79,8 +79,8 @@
 /* Karte 02 Kennzahl-Leiste (Jamil #6502): zwei ruhige Spalten, Wert in Anthrazit, Beschriftung klein, feine Goldlinie */
 .je-kennzahlen { list-style: none; margin: 2px 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .je-kennzahlen li { display: grid; gap: 4px; padding: 12px 14px 12px 16px; border-left: 3px solid #EFBF04; background: var(--white); border-radius: 0 12px 12px 0; }
-.je-kennzahl__wert { font-family: var(--font-head); font-weight: 800; font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem); line-height: 1.15; color: #111827; letter-spacing: -0.02em; }
-.je-kennzahl__text { font-size: 0.86rem; line-height: 1.4; color: var(--ink-soft); }
+.je-kennzahl__wert { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-h3); line-height: 1.15; color: #111827; letter-spacing: -0.02em; }
+.je-kennzahl__text { font-size: var(--fs-small); line-height: 1.4; color: var(--ink-soft); }
 @media (max-width: 380px) { .je-kennzahlen { grid-template-columns: minmax(0, 1fr); } }
 
 /* Karte 03 Chat-Grafik (Jamil #6503): Kundennachrichten rechts, Status „Umgesetzt“ */

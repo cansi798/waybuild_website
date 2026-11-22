@@ -8,6 +8,7 @@
 // Autoplay, jede Szene im Endzustand, Weiter per Knopf/Pfeiltaste.
 // Je Szene: Mockup (szenen/SzeneNN.astro, aria-hidden) + Titel (h2) und Text aus config/beispiel.ts (der lesbare Inhalt).
 // Stil: styles/beispiel.css, Ablauf: scripts/beispiel.ts, Anleitung: docs/beispiel-szenen-anleitung.md.
+import { hl } from '../../lib/hl';
 import Szene01 from './szenen/Szene01.astro';
 import Szene02 from './szenen/Szene02.astro';
 import Szene03 from './szenen/Szene03.astro';
@@ -48,7 +49,7 @@ const BR = BEISPIEL_BRANCHEN;
         <li class="bsp-schritt bsp-start" data-bsp-schritt="start" id="start" hidden>
           <div class="bsp-start__innen">
             <p class="eyebrow bsp-start__kennzeile">{ST.kennzeile}</p>
-            <h2 class="bsp-start__titel">{ST.titel}</h2>
+            <h2 class="bsp-start__titel" set:html={hl(ST.titel)}></h2>
             <p class="bsp-start__text">{ST.text}</p>
             <form class="bsp-wahl" data-bsp-wahl novalidate>
               <fieldset class="bsp-wahl__feld">
@@ -109,7 +110,7 @@ const BR = BEISPIEL_BRANCHEN;
         </li>
         <li class="bsp-schritt bsp-schluss" data-bsp-schritt="schluss" id="schluss">
           <div class="bsp-schluss__innen">
-            <h2 class="bsp-schluss__titel"><span data-bsp-schluss-titel data-vorlage-firma={BEISPIEL_SCHLUSS.titelFirma}>{BEISPIEL_SCHLUSS.titel}</span> <span class="bsp-schluss__unter">{BEISPIEL_SCHLUSS.unter}</span></h2>
+            <h2 class="bsp-schluss__titel"><span data-bsp-schluss-titel data-vorlage-firma={BEISPIEL_SCHLUSS.titelFirma}>{BEISPIEL_SCHLUSS.titel}</span> <mark class="hl bsp-schluss__unter">{BEISPIEL_SCHLUSS.unter}</mark></h2>
             <p class="bsp-schluss__knopf">
               <a class="btn btn--primary btn--lg" href={erstberatung}>{BEISPIEL_SCHLUSS.knopf}</a>
             </p>

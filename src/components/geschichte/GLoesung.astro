@@ -4,6 +4,7 @@
 // Wege „website“ und „betrieb“: FilmWebsite / FilmBetriebstag aus components/geschichte/filme/ (anderer Agent). Die Seite
 // bindet sie OPTIONAL ein (import.meta.glob in pages/geschichte.astro, hier als Props); fehlt einer, steht „Film folgt“.
 // Wegwechsel = anderer Film (CSS über html[data-weg]); ohne JS stehen alle drei Abschnitte untereinander.
+import { hl } from '../../lib/hl';
 import BeispielBuehne from '../beispiel/BeispielBuehne.astro';
 import GWegWahl from './GWegWahl.astro';
 import { WEGE, LOESUNG, type WegId } from './texte';
@@ -23,7 +24,7 @@ const weg = (id: WegId) => WEGE.find((w) => w.id === id)!;
   <div class="wrap">
     <div class="section-head center gs-kopf">
       <span class="eyebrow">{LOESUNG.kennzeile}</span>
-      <h2 id="gs-loesung-h" class="rule">{LOESUNG.titel}</h2>
+      <h2 id="gs-loesung-h" class="rule" set:html={hl(LOESUNG.titel)}></h2>
       {WEGE.map((w) => <p class="lead gs-v" data-gs-weg={w.id}>{w.loesung}</p>)}
       <GWegWahl />
     </div>

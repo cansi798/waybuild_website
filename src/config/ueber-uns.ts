@@ -2,7 +2,7 @@
 
 /** Kopf der Seite. Vorher „Wir bauen digitale Unternehmensplattformen.“ – jetzt derselbe Positionierungssatz wie überall (Fr. 20). */
 export const UEBER_KOPF = {
-  titel: 'Wir sind webgold.',
+  titel: 'Wir sind ==webgold==.', // ==…== = goldener Marker (Jamil #7016)
   leadNach: 'Für kleine und mittlere Unternehmen, ohne technische Hürden, lange Projekte oder hohe Einmalinvestitionen.',
 };
 

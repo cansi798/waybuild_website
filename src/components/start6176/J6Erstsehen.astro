@@ -1,4 +1,5 @@
 ---
+import { hl } from '../../lib/hl';
 import "../../styles/erst-6388.css";
 // 4. „Kein Lastenheft. Kein Risiko. Erst sehen, dann entscheiden.“ (Jamil, Talk qh87y3sj #6388, 19.11.2026). Texte wörtlich aus
 // src/config/start-6176.ts (J_ERST). Drei Karten 01/02/03 (Desktop nebeneinander, Handy untereinander), je ein kleines UI-Badge:
@@ -23,7 +24,7 @@ const BOGEN = [[-60, -24], [24, 60], [120, 156], [204, 240]].map(([a, b]) => {
 <section class="section sn je" id="erst-sehen" aria-labelledby="je-h">
   <div class="wrap">
     <div class="sn-kopf je__kopf">
-      <h2 id="je-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <h2 id="je-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
 

@@ -20,11 +20,11 @@ export interface Panel {
 
 export const SICHTBARKEIT = {
   eyebrow: 'Sichtbarkeit',
-  titel: 'Was wir für Ihre Sichtbarkeit tun.',
+  titel: 'Was wir für Ihre ==Sichtbarkeit== tun.',
   intro: 'Eine Website allein reicht selten. Wir schauen genau hin, was funktioniert, und arbeiten laufend daran, dass Google und KI-Assistenten Ihr Angebot gut verstehen. Damit Interessenten leichter zu Ihnen finden.',
   etikett: 'Beispielhafte Darstellung',
   /** Leistungsseiten */
-  leistungTitel: 'Ein Blick in unsere Arbeit',
+  leistungTitel: 'Ein Blick in ==unsere Arbeit==',
   leistungIntro: 'So sieht das in der Praxis aus. Die Ansichten sind Beispiele, keine echten Kundendaten.',
 };
 

@@ -1,4 +1,5 @@
 ---
+import { hl } from '../../lib/hl';
 import "../../styles/preise-6400.css";
 // 6. „Klare Monatspreise. Keine bösen Überraschungen.“ (Jamil, Talk qh87y3sj #6400, 19.11.2026). Texte wörtlich aus J_PREISE;
 // Preise, Namen, „Ideal für“ und ✓-Listen aus config/pakete-abo.ts (dieselbe Quelle wie /preise/, Schema und llms.txt).
@@ -22,7 +23,7 @@ const Haken = '<path d="M20 6 9 17l-5-5" />';
 <section class="section sn jpr" id="preise-start" aria-labelledby="jpr-h">
   <div class="wrap">
     <div class="sn-kopf jpr__kopf">
-      <h2 id="jpr-h" class="sn-h2 sn-h2--klein">{T.titel}</h2>
+      <h2 id="jpr-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
     <ul class="jpr-karten">

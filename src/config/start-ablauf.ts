@@ -111,7 +111,7 @@ export const START_ABLAUF = {
  *  Kurzfassung der acht Schritte oben, gleiche Aussagen (Fr. 15 20 Minuten, Fr. 16 jede Anfrage / nächster Werktag, Fr. 26 DNA erklärt, Fr. 28). */
 export const START_ABLAUF_KURZ = {
   kenn: 'So geht es los',
-  titel: 'In fünf Schritten zu Ihrer Lösung',
+  titel: 'In ==fünf Schritten== zu Ihrer Lösung', // ==…== = goldener Marker (Jamil #7016)
   lead: 'Erst verstehen, dann bauen: Sie sehen bereits vor einer Beauftragung, was für Ihr Unternehmen möglich ist.',
   schritte: [
     { titel: 'Anfrage senden', text: 'Sie wählen die passende Lösung und senden uns eine kurze Anfrage. Wir melden uns persönlich mit Terminvorschlägen.', zeit: 'Dauer: 2 Minuten', anker: 'erstberatung' },

@@ -6,6 +6,7 @@
 // ohne JS geht es zum Kontaktformular mit Vorauswahl. Darunter: was Sicherheit gibt (nur Belegtes) und sechs häufige Fragen
 // (Antworten aus site.ts/pakete-abo.ts über alleFragen()); FAQPage-JSON-LD bleibt nur auf /fragen/.
 // Anker: #pakete (Abschnitt), #baukasten (alte Links), #pk-basis/#pk-plus, #komplettpaket, #einmalig.
+import { hl } from '../../lib/hl';
 import Icon from '../Icon.astro';
 import BuchenDialog from '../pakete/BuchenDialog.astro';
 import {
@@ -36,7 +37,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
   <div class="wrap">
     <div class="sn-kopf sn-kopf--mitte">
       <p class="sn-kenn">{T.kennzeile}</p>
-      <h2 id="sn-angebot-h" class="sn-h2">{titel}</h2>
+      <h2 id="sn-angebot-h" class="sn-h2" set:html={hl(titel)}></h2>
       <p class="sn-lead">{T.lead}</p>
     </div>
 

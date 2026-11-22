@@ -3,6 +3,7 @@
 // wie die Hauptseite“): türkiser Verlauf mit weichen Farbflächen, weiße Schrift, links ausgerichtet. Optional ein Stockfoto (Jamil, Talk qh87y3sj #5362): PC Text links, Foto rechts;
 // Handy Foto unter dem Text. Ohne `foto` bleibt der Kopf wie bisher.
 import Foto from './Foto.astro';
+import { hl } from '../lib/hl';
 import type { FotoId } from '../config/bilder';
 
 interface Props {
@@ -19,7 +20,7 @@ const { eyebrow, title, lead, foto } = Astro.props;
   <div class:list={['wrap', { 'ph__raster': foto }]}>
     <div class="ph__text">
       <span class="eyebrow">{eyebrow}</span>
-      <h1>{title}</h1>
+      <h1 set:html={hl(title)} />{/* ==Wort== = goldener Marker (Jamil #7016, lib/hl.ts) */}
       {lead && <p class="lead">{lead}</p>}
       <slot />
     </div>

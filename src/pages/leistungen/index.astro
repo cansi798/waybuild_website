@@ -6,6 +6,7 @@
 // SEIT 14.11.2026 im Stil der neuen Startseite (Jamil Talk qh87y3sj #5892): sn-Bausteine (start-neu.css), ruhige Karten ohne
 // Icon-Kacheln, Hintergründe im Wechsel Weiß/Papier, danach SnSystem (Website + Web-App), Preis-Hinweis und SnAbschluss.
 // Eigener Stil: src/styles/seite-leistungen.css (Präfix .sl-). Anker #gefunden, #vertrauen, #anfragen, #betreuung bleiben.
+import { hl } from '../../lib/hl';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Icon from '../../components/Icon.astro';
@@ -31,6 +32,8 @@ const itemList = {
     url: absolute(`/leistungen/${l.id}/`, Astro.site),
   })),
 };
+/** Überschriften der vier Stationen mit goldenem Marker (Jamil #7016); GRUPPEN.titel bleibt reiner Text (Menü, Meta). */
+const GRUPPE_HL: Record<string, string> = { gefunden: '==Gefunden== werden', vertrauen: '==Vertrauen== gewinnen', anfragen: '==Anfragen== und Abläufe', betreuung: '==Betreuung== und Verbesserung' };
 ---
 
 <BaseLayout
@@ -39,7 +42,7 @@ const itemList = {
   schema={[itemList]}
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }]}
 >
-  <PageHeader eyebrow="Leistungen" title="Alles, was aus Interessenten Kunden macht." lead="Unsere Leistungen folgen dem Weg Ihrer Kunden: vom ersten Eindruck über die Anfrage bis zur Betreuung danach.">
+  <PageHeader eyebrow="Leistungen" title="Alles, was aus Interessenten ==Kunden== macht." lead="Unsere Leistungen folgen dem Weg Ihrer Kunden: vom ersten Eindruck über die Anfrage bis zur Betreuung danach.">
     <!-- früher Link auf /#kundenreise; die Kundenreise ist seit 14.11.2026 nicht mehr auf der Startseite (#5843–#5855) -->
     <p class="sl-ph-hinweis"><a href="#system">Warum Website und Web-App zusammen stark sind</a></p>
   </PageHeader>
@@ -61,7 +64,7 @@ const itemList = {
         <div class="sn-kopf sl-gruppe__kopf">
           <div class="sl-gruppe__titel">
             <p class="sn-kenn">Bereich {i + 1} von {gruppen.length}</p>
-            <h2 id={`${g.id}-h`} class="sn-h2 sn-h2--klein">{g.titel}</h2>
+            <h2 id={`${g.id}-h`} class="sn-h2 sn-h2--klein" set:html={hl(GRUPPE_HL[g.id] ?? g.titel)}></h2>
           </div>
           <p class="sn-lead">{g.text}</p>
         </div>
@@ -87,7 +90,7 @@ const itemList = {
     <div class="wrap sl-preis__innen">
       <div class="sl-preis__text">
         <p class="sn-kenn">Preise</p>
-        <h2 id="sl-preis-h" class="sn-h2 sn-h2--klein">Feste Pakete statt Einzelpreise.</h2>
+        <h2 id="sl-preis-h" class="sn-h2 sn-h2--klein">Feste Pakete <mark class="hl">statt Einzelpreise</mark>.</h2>
         <p class="sn-lead">Viele dieser Leistungen stecken schon in unseren Paketen. Was darüber hinausgeht, bieten wir Ihnen nach einem Gespräch an.</p>
       </div>
       <div class="sl-preis__zahlen">

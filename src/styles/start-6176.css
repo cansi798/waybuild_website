@@ -11,12 +11,12 @@
   padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 104px); }
 .jh__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
 .jh__text { min-width: 0; display: grid; gap: 20px; justify-items: start; }
-.jh__titel { margin: 0; color: var(--white); font-size: clamp(2.3rem, 1.3rem + 4.6vw, 4.6rem); line-height: 1.04; max-width: 14ch; text-wrap: balance; }
+.jh__titel { margin: 0; color: var(--white); font-size: var(--fs-display); line-height: 1.04; max-width: 14ch; text-wrap: balance; }
 .jh__titel .jh__satz { display: block; } /* Jamil #6982: H1 zweizeilig, je Satz eine Zeile (Umbruch fest, nicht über max-width) */
 .jh .jh__titel:has(.jh__satz) { max-width: none; }
-.jh__unter { margin: 0; max-width: 52ch; font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem); line-height: 1.65; color: #E2E8F0; text-wrap: pretty; }
+.jh__unter { margin: 0; max-width: 52ch; font-size: var(--fs-lead); line-height: 1.65; color: #E2E8F0; text-wrap: pretty; }
 .jh__zeile { margin: 0; padding-left: 14px; border-left: 3px solid var(--gold); font-family: var(--font-head); font-weight: 700;
-  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.5; color: var(--white); }
+  font-size: var(--fs-h3); line-height: 1.5; color: var(--white); }
 .jh-knopfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .jh-btn { background: #EFBF04; color: #111827; border: 1.5px solid #EFBF04; /* Jamil #6431: CTA Amber, dunkle Schrift */ box-shadow: 0 16px 32px -18px rgb(0 0 0 / 55%); }
 .jh-btn:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
@@ -173,21 +173,21 @@
 .jp-karten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .jp-karte { min-width: 0; display: grid; gap: 8px; align-content: start; padding: clamp(20px, 2.4vw, 28px); border-radius: 24px;
   background: var(--paper); border: 1px solid var(--line); }
-.jp-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em; color: #111827; }
+.jp-karte__nr { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); letter-spacing: 0.04em; color: #111827; }
 .jp-karte__nr::after { content: ''; display: inline-block; vertical-align: middle; width: 22px; height: 2px; margin-left: 8px; background: var(--gold); }
-.jp-karte__titel { margin: 0; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); line-height: 1.3; color: var(--ink); }
+.jp-karte__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; color: var(--ink); }
 .jp-karte__text { margin: 0; line-height: 1.6; color: var(--ink-soft); }
 .jp__abschluss { margin: clamp(32px, 4vw, 56px) 0 0 !important; padding-top: clamp(20px, 3vw, 32px); border-top: 1px solid var(--gold);
-  font-family: var(--font-head); font-weight: 700; font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.35; color: #111827; max-width: 34ch; text-wrap: balance; }
+  font-family: var(--font-head); font-weight: 700; font-size: var(--fs-h3); line-height: 1.35; color: #111827; max-width: 34ch; text-wrap: balance; }
 @media (min-width: 640px) { .jp-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1100px) { .jp-karten { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 /* ---------- 3. Lösung ---------- */
 .jl__kopf .sn-lead { max-width: 52ch; }
 .jl-wege { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.jl-wege li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.jl-wege li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: var(--fs-body); color: var(--ink); }
 .jl-wege li:last-child { background: #EFBF04; border-color: #EFBF04; color: #111827; }
-.jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem); color: #111827; }
+.jl__schluss { margin: 6px 0 0 !important; font-family: var(--font-head); font-weight: 700; font-size: var(--fs-lead); color: #111827; }
 .jl-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
 /* Lösungs-Visual (Jamil #6199): Chat-Karten mit Absender-Icon, Verbindungsstrang zwischen den Karten und Status-Chip.
    Status „wird bearbeitet“ (Fortschrittsstrich) und „erledigt“ liegen im selben Rasterfeld: kein Layout-Sprung. Grundzustand = Endzustand. */
@@ -200,7 +200,7 @@
 .jl-fall__ico { position: relative; z-index: 1; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); }
 .jl-fall__text { min-width: 0; display: grid; gap: 4px; justify-items: start; font-weight: 600; color: var(--ink); line-height: 1.4; }
-.jl-fall__zusatz { font-size: 0.8rem; font-weight: 700; color: #111827; }
+.jl-fall__zusatz { font-size: var(--fs-small); font-weight: 700; color: #111827; }
 .jl-shot { background: #f4f1ea; }
 .jl-shot i { background: #e1d9c9; }
 .jl-fall__status { display: grid; justify-items: end; align-items: center; }
@@ -208,7 +208,7 @@
 .jl-fall__arbeit { width: 56px; height: 4px; overflow: hidden; border-radius: 2px; background: #E2E8F0; opacity: 0; }
 .jl-fall__arbeit i { display: block; height: 100%; border-radius: inherit; background: #EFBF04; transform-origin: left; }
 .jl-fall__fertig { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 6px; border-radius: 999px; background: #FBF3D5;
-  font-size: 0.84rem; font-weight: 700; color: #1d6b54; white-space: nowrap; }
+  font-size: var(--fs-small); font-weight: 700; color: #1d6b54; white-space: nowrap; }
 .jl-fall__haken { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827; }
 .jl-fall__haken .j6i { stroke-width: 3; }
 @media (max-width: 479px) {
@@ -236,7 +236,7 @@
 .jl-punkt { min-width: 0; display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--band, var(--white)); }
 .jl-punkt__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 4px rgb(212 175 55 / 22%); }
-.jl-punkt__text { font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; line-height: 1.35; color: var(--ink); }
+.jl-punkt__text { font-family: var(--font-head); font-weight: 700; font-size: var(--fs-body); line-height: 1.35; color: var(--ink); }
 @media (min-width: 600px) and (max-width: 899px) { .jl-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 900px) {
   .jl-raster { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
@@ -251,7 +251,7 @@
 .ja-wege { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 .ja-weg { min-width: 0; padding: clamp(18px, 2.4vw, 28px); border-radius: 28px; background: var(--paper); }
 .ja-weg--wir { background: #FBF3D5; box-shadow: inset 0 0 0 1.5px #EADBA6; }
-.ja .ja-weg__titel { margin: 0 0 18px; font-family: var(--font-head); font-weight: 800; font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem); color: var(--ink-soft); }
+.ja .ja-weg__titel { margin: 0 0 18px; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-h3); color: var(--ink-soft); }
 .ja-weg--wir .ja-weg__titel { color: #111827; }
 .ja-schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .ja-schritt { position: relative; display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--ink); line-height: 1.35; }
@@ -273,8 +273,8 @@
   background: var(--band, var(--white)); }
 .ja-vorteil__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827;
   box-shadow: 0 0 0 3px var(--band, var(--white)), 0 0 0 4px rgb(212 175 55 / 55%); margin-bottom: 4px; }
-.ja-vorteil__titel { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: 1.08rem; line-height: 1.3; color: var(--ink); }
-.ja-vorteil__text { margin: 0; font-size: 0.97rem; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
+.ja-vorteil__titel { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-body); line-height: 1.3; color: var(--ink); }
+.ja-vorteil__text { margin: 0; font-size: var(--fs-body); line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 600px) { .ja-vorteile { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1100px) { .ja-vorteile { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: no-preference) {
@@ -286,8 +286,8 @@
 .ja-tafel { border-radius: 28px; background: var(--paper); padding: clamp(6px, 1.2vw, 14px); }
 .ja-tabelle { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 .ja-tabelle th, .ja-tabelle td { padding: 14px clamp(10px, 2vw, 24px); text-align: left; vertical-align: top; line-height: 1.45; }
-.ja-tabelle th { font-family: var(--font-head); font-weight: 800; font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.15rem); color: var(--ink-soft); }
-.ja-tabelle td { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1.02rem); }
+.ja-tabelle th { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-body); color: var(--ink-soft); }
+.ja-tabelle td { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: var(--fs-body); }
 .ja-tabelle tbody tr:first-child td { border-top: 0; }
 .ja-tabelle .ja-wir { background: #FBF3D5; color: var(--ink); font-weight: 650; }
 .ja-tabelle th.ja-wir { color: #111827; border-radius: 20px 20px 0 0; }
@@ -314,12 +314,12 @@
 .jw-stufe:last-child::before { background: #EFBF04; }
 .jw-stufe__ico { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px;
   background: #FBF3D5; color: #111827; }
-.jw-stufe__text { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+.jw-stufe__text { font-family: var(--font-head); font-weight: 700; font-size: var(--fs-body); color: var(--ink); }
 .jw-stufe:last-child { background: #EFBF04; border-color: #EFBF04; }
 .jw-stufe:last-child .jw-stufe__text { color: var(--white); }
 .jw-stufe:last-child .jw-stufe__ico { background: rgb(255 255 255 / 16%); color: var(--white); box-shadow: inset 0 0 0 1.5px var(--gold); }
 .jw__darunter { margin: clamp(28px, 4vw, 48px) 0 0 !important; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--font-head);
-  font-weight: 700; font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem); color: #111827; }
+  font-weight: 700; font-size: var(--fs-h3); color: #111827; }
 @media (min-width: 900px) {
   .jw-stufen { grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 12px; }
   .jw-stufe { flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 12px; padding: 18px 16px;
@@ -328,7 +328,7 @@
   .jw-stufen::before { top: auto; bottom: 7px; left: calc((100% - 60px) / 12); right: calc((100% - 60px) / 12); width: auto; height: 2px;
     background: linear-gradient(90deg, var(--gold), #EFBF04); transform-origin: left; }
   .jw-stufe::before { left: 50%; top: auto; bottom: -26px; margin: 0 0 0 -6px; }
-  .jw-stufe__text { font-size: 1rem; line-height: 1.3; hyphens: manual; } /* Trennstellen per &shy; in J6Wachsen.astro */
+  .jw-stufe__text { font-size: var(--fs-body); line-height: 1.3; hyphens: manual; } /* Trennstellen per &shy; in J6Wachsen.astro */
 }
 
 /* ---------- 6. Prozessberatung ---------- */
@@ -339,9 +339,9 @@
 .jz__einleitung { margin: 0 0 14px !important; font-weight: 700; color: var(--ink); }
 .jz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .jz-frage { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
-  font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; line-height: 1.35; color: var(--ink); }
+  font-family: var(--font-head); font-weight: 700; font-size: var(--fs-body); line-height: 1.35; color: var(--ink); }
 .jz-frage__ico { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #FBF3D5; color: #111827; }
-.jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #111827; font-size: 1.08rem; }
+.jz__schluss { margin: 18px 0 0 !important; padding-left: 14px; border-left: 3px solid var(--gold); font-weight: 700; color: #111827; font-size: var(--fs-body); }
 @media (min-width: 640px) and (max-width: 899px) { .jz-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 900px) { .jz__raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
@@ -349,20 +349,20 @@
 .jr .sn-kopf .sn-h2 { max-width: 24ch; }
 .jr-kategorien { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(18px, 2.4vw, 28px); }
 .jr-kat { min-width: 0; display: grid; gap: 14px; align-content: start; padding: clamp(16px, 2.2vw, 24px); border-radius: 28px; background: var(--paper); }
-.jr-kat__titel { margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.15rem; color: var(--ink); }
+.jr-kat__titel { margin: 0; display: flex; align-items: center; gap: 12px; font-size: var(--fs-h3); color: var(--ink); }
 .jr-kat__ico { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #EFBF04; color: #111827; }
 .jr-refs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .jr-ref { min-width: 0; display: grid; gap: 10px; padding: clamp(16px, 2vw, 22px); border-radius: 20px; background: var(--band, var(--white)); }
 .jr-ref__kopf { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
-.jr-ref__name { font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: var(--ink); }
-.jr-ref__status { padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+.jr-ref__name { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-body); color: var(--ink); }
+.jr-ref__status { padding: 2px 10px; border-radius: 999px; font-size: var(--fs-small); font-weight: 700; }
 .jr-ref__status--online { background: #EFBF04; color: #111827; }
 .jr-ref__status--vorschau { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
-.jr-ref__branche { margin: -4px 0 0 !important; font-size: 0.92rem; color: var(--ink-soft); }
+.jr-ref__branche { margin: -4px 0 0 !important; font-size: var(--fs-body); color: var(--ink-soft); }
 .jr-ref__felder { margin: 0; display: grid; gap: 10px; }
 .jr-ref__felder div { display: grid; gap: 2px; }
-.jr-ref__felder dt { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #111827; }
-.jr-ref__felder dd { margin: 0; line-height: 1.55; color: var(--ink); font-size: 0.95rem; }
+.jr-ref__felder dt { font-size: var(--fs-small); font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #111827; }
+.jr-ref__felder dd { margin: 0; line-height: 1.55; color: var(--ink); font-size: var(--fs-body); }
 .jr-ref__link { justify-self: start; font-weight: 700; color: #111827; }
 .jr-folgt { margin: 0; padding: 18px; border-radius: 20px; border: 1.5px dashed var(--line); color: var(--ink-soft); text-align: center; font-weight: 600; }
 .jr__alle { margin: clamp(24px, 3vw, 40px) 0 0 !important; text-align: center; }
@@ -372,7 +372,7 @@
 .jv .sn-kopf .sn-lead { max-width: 52ch; }
 .jv-punkte { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .jv-punkt { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
-  font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; color: var(--ink); }
+  font-family: var(--font-head); font-weight: 700; font-size: var(--fs-body); color: var(--ink); }
 .jv-haken { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827; }
 .jv-haken .j6i { stroke-width: 3; }
 @media (min-width: 600px) { .jv-punkte { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -380,7 +380,7 @@
 
 /* ---------- Abschluss-CTA ---------- */
 .jx-ohne { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.jx-ohne li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+.jx-ohne li { padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; font-size: var(--fs-body); color: var(--ink); }
 .jx .sn-abschluss__text { margin: 0; }
 
 /* ---------- Bewegung (Jamil #6182): wenige, ruhige Bewegungen, 300–700 ms, nur opacity/transform ----------
@@ -451,19 +451,20 @@
 /* Jamil #7000 (22.11.2026): Icons in einem Kreis (zartes Gold, Icon dunkel); Lösungsseite: Goldkreis mit Haken (.jp-marke__haken) */
 .jp-kreis { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #FFF6CC; color: #111827; margin-bottom: 4px; }
 .jp-kreis .jp-block__ico { width: 28px; height: 28px; margin: 0; color: #111827; }
-.jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
-.jp-block__text { margin: 0; font-size: clamp(1rem, 0.93rem + 0.2vw, 1.04rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
+.jp-block__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.jp-block__text { margin: 0; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Jamil #6954–#6958 (22.11.2026): Weg Karte für Karte. Grundform (ohne JS, Handy, reduzierte Bewegung): je Karte Problem, darunter die
    webgold-Lösung in einer hellen Fläche mit Goldkante. Am PC (.jp--weg, gesetzt von buehne-kern.ts) liegen beide Seiten übereinander
    (gleiche Rasterzelle → Höhe = größere Seite, kein Layout-Shift); .ist-geloest blendet weich zur Lösung über. Nur opacity/transform. */
 .jp-wandel { display: grid; gap: 18px; align-content: start; }
+.jp-dreh { display: grid; gap: 18px; align-content: start; min-width: 0; } /* Jamil #7006: Dreh-Ebene (Flip), ohne Bühne nur Hülle */
 .jp-seite { min-width: 0; display: grid; gap: 12px; align-content: start; }
 .jp-seite--loesung { padding: 18px 20px 20px; border-radius: 18px; background: #FFFBEA; border-left: 3px solid #EFBF04; }
 .jp-marke { margin: 0 0 2px; display: flex; align-items: center; gap: 10px; }
 .jp-marke__haken { flex: none; display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #EFBF04; color: #111827; }
-.jp-marke__text { display: inline-block; padding: 4px 11px; border-radius: 999px; background: #FFDE21; color: #111827; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; }
+.jp-marke__text { display: inline-block; padding: 4px 11px; border-radius: 999px; background: #FFDE21; color: #111827; font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; }
 .jp-seite--loesung .jp-block__text { color: #374151; }
 /* Jamil #7000: die vier Punkte als Karten nebeneinander – weiß, feine Haarlinie, runde Ecken, ohne Schatten; PC 4 Spalten, mittel 2 × 2,
    Handy untereinander. Gleiche Höhe je Reihe (Grid stretch). Fortschrittsstriche der Bühne seit #6999/#7002 entfernt. */
@@ -474,8 +475,8 @@
 @media (min-width: 640px) { .jp-bloecke--weg { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
 @media (min-width: 1100px) {
   .jp-bloecke--weg { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-  .jp-bloecke--weg .jp-block__titel { font-size: clamp(1.1rem, 0.85rem + 0.45vw, 1.25rem); }
-  .jp-bloecke--weg .jp-block__text { font-size: 0.98rem; line-height: 1.6; }
+  .jp-bloecke--weg .jp-block__titel { font-size: var(--fs-h3); }
+  .jp-bloecke--weg .jp-block__text { font-size: var(--fs-body); line-height: 1.6; }
 }
 
 @media (min-width: 900px) and (min-height: 700px) {
@@ -484,17 +485,29 @@
   .jp--weg .jp__fest { position: sticky; top: var(--kopf-gesamt, 73px); height: calc(100svh - var(--kopf-gesamt, 73px)); box-sizing: border-box;
     display: grid; align-content: center; padding-block: clamp(16px, 3vh, 40px) clamp(40px, 7vh, 72px); }
   .jp--weg .jp-bloecke { margin-top: clamp(24px, 4.5vh, 56px); gap: clamp(24px, 4.5vh, 52px) clamp(32px, 5vw, 88px); }
-  .jp--weg .jp-wandel { display: grid; gap: 0; }
-  .jp--weg .jp-seite { grid-area: 1 / 1; transition: opacity 560ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1); }
-  .jp--weg .jp-seite--loesung { opacity: 0; transform: translateY(12px) scale(0.985); padding: 0; background: none; border: 0; border-radius: 0; }
+  /* Jamil #7006: die GANZE Karte dreht sich (3D-Flip um Y, 650 ms). Vorder- und Rückseite liegen in derselben Rasterzelle → gleiche Größe,
+     Höhe = höhere Seite, nichts springt. Rahmen/Fläche sitzen auf den Seiten, die Hülle (li) ist nur Bühne mit perspective. */
+  .jp--weg .jp-bloecke--weg .jp-block { padding: 0; border: 0; background: none; perspective: 1400px; display: grid; }
+  .jp--weg .jp-wandel { display: grid; gap: 0; align-content: stretch; } /* gleiche Kartenhöhe in der Reihe */
+  .jp--weg .jp-dreh { gap: 0; height: 100%; align-content: stretch; transform-style: preserve-3d; transition: transform 650ms cubic-bezier(0.45, 0.05, 0.25, 1); }
+  .jp--weg .ist-geloest .jp-dreh { transform: rotateY(180deg); }
+  .jp--weg .jp-seite { grid-area: 1 / 1; align-self: stretch; padding: clamp(20px, 1.8vw, 26px); border-radius: 20px; background: var(--white);
+    border: 1px solid var(--line); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+  .jp--weg .jp-bloecke--weg .jp-seite--loesung { transform: rotateY(180deg); padding: clamp(20px, 1.8vw, 26px); border-radius: 20px;
+    background: #FFF6CC; border: 1px solid #EFBF04; }
   .jp--weg .jp-bloecke--weg { gap: 20px; }
-  .jp--weg .ist-geloest .jp-seite--problem { opacity: 0; transform: translateY(-10px) scale(0.985); }
-  .jp--weg .ist-geloest .jp-seite--loesung { opacity: 1; transform: none; }
+  /* reduzierte Bewegung (Absicherung; buehne-kern.ts schaltet dann ohnehin auf die ruhige Liste): Überblenden statt Drehung */
+  @media (prefers-reduced-motion: reduce) {
+    .jp--weg .jp-dreh, .jp--weg .ist-geloest .jp-dreh { transform: none; transition: none; }
+    .jp--weg .jp-bloecke--weg .jp-seite--loesung { transform: none; opacity: 0; transition: opacity 300ms ease; }
+    .jp--weg .jp-seite--problem { transition: opacity 300ms ease; }
+    .jp--weg .ist-geloest .jp-seite--problem { opacity: 0; } .jp--weg .ist-geloest .jp-seite--loesung { opacity: 1; }
+  }
   .jp--weg .jp-marke__haken { transform: scale(0.6) rotate(-20deg); transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 160ms; }
   .jp--weg .ist-geloest .jp-marke__haken { transform: none; }
 }
 @media (min-width: 900px) and (min-height: 700px) and (max-height: 820px) {
-  .jp--weg .jp-block__text { font-size: 0.95rem; line-height: 1.55; }
+  .jp--weg .jp-block__text { font-size: var(--fs-body); line-height: 1.55; }
   .jp--weg .jp-kreis, .jp--weg .jp-marke__haken { width: 44px; height: 44px; }
   .jp--weg .jp-kreis .jp-block__ico { width: 24px; height: 24px; }
 }

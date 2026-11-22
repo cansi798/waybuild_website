@@ -4,6 +4,7 @@
 // Team: TEAM aus config/startseite.ts (Can „Chief Executive Officer“, Jamil „Chief Operating Officer“). Fotos + Test-Zitate NUR unter
 // derselben Bedingung wie SnTeam.astro (SHOW_HINTS && IS_PREVIEW, #5636/#5637); sonst nur Name und Rolle mit Initialen.
 // Zitate NICHT in strukturierte Daten übernehmen. Stil: styles/seite-ueber.css (.su-).
+import { hl } from '../lib/hl';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Hint from '../components/Hint.astro';
@@ -56,7 +57,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
       <div class="sn-kopf">
         <div>
           <p class="sn-kenn">Unsere Mission</p>
-          <h2 id="mission-h" class="sn-h2 sn-h2--klein">Viele Unternehmen wissen, dass es KI gibt, aber nicht, wie daraus eine Website wird, die Kunden bringt. <span class="su-akzent">Dabei helfen wir.</span></h2>
+          <h2 id="mission-h" class="sn-h2 sn-h2--klein">Viele Unternehmen wissen, dass es KI gibt, aber nicht, wie daraus eine Website wird, die Kunden bringt. <mark class="hl su-akzent">Dabei helfen wir.</mark></h2>
         </div>
         <div class="su-mission__text">
           <p class="sn-lead">Wir kombinieren menschliche Beratung mit der Geschwindigkeit moderner KI-Systeme.</p>
@@ -86,7 +87,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
     <div class="wrap">
       <div class="sn-kopf">
         <p class="sn-kenn">Team</p>
-        <h2 id="su-team-h" class="sn-h2">{TEAM.titel}</h2>
+        <h2 id="su-team-h" class="sn-h2" set:html={hl(TEAM.titel)}></h2>
         <p class="sn-lead">{TEAM.einleitung}</p>
       </div>
       <ul class="su-personen">
@@ -114,7 +115,7 @@ const nr = (i: number) => String(i + 1).padStart(2, '0');
     <div class="wrap">
       <div class="sn-kopf">
         <p class="sn-kenn">Unsere Werte</p>
-        <h2 id="werte-h" class="sn-h2">Wofür wir stehen.</h2>
+        <h2 id="werte-h" class="sn-h2">Wofür wir <mark class="hl">stehen</mark>.</h2>
       </div>
       <ul class="su-werte__liste">
         {values.map((v, i) => (

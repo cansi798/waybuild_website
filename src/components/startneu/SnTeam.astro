@@ -3,6 +3,7 @@
 // Inhalt wie bisher in SnBeweis.astro: TEAM aus config/startseite.ts, Fotos + Test-Zitate NUR in der Vorschau, solange die Zitate
 // nicht bestätigt sind (#5636/#5637). Bedingung TEAM_ZEIGEN unverändert; ist sie false, rendert die Komponente nichts.
 // Karten-Stile (.sn-team*, .sn-person*) liegen in start-neu.css; Hülle + Kopf: styles/start-team.css. Keine Zitate in JSON-LD.
+import { hl } from '../../lib/hl';
 import Bild from '../Bild.astro';
 import { TEAM } from '../../config/startseite';
 import { IS_PREVIEW } from '../../lib/env';
@@ -16,7 +17,7 @@ const TEAM_ZEIGEN = SHOW_HINTS && IS_PREVIEW;
   <section class="section sn stm" id="team" aria-labelledby="stm-h">
     <div class="wrap">
       <div class="sn-kopf sn-kopf--mitte">
-        <h2 id="stm-h" class="sn-h2">{TEAM.titel}</h2>
+        <h2 id="stm-h" class="sn-h2" set:html={hl(TEAM.titel)}></h2>
         <p class="sn-lead">{TEAM.einleitung}</p>
       </div>
       <div class="sn-team">

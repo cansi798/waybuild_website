@@ -5,6 +5,7 @@
 // variante="seo" (Jamil, Talk qh87y3sj #5634, 12.11.2026): der ganze Abschnitt der Startseite (Kennzeile, Überschrift, Einleitung,
 // alle drei Felder) auf /leistungen/suchmaschinen-optimierung/, Hintergrund Weiß wie die übrigen Leistungsabschnitte; Links nur zu
 // den anderen Leistungsseiten (nicht auf sich selbst).
+import { hl } from '../../lib/hl';
 import SichtPanel from './SichtPanel.astro';
 import { SICHTBARKEIT, type PanelArt } from '../../config/sichtbarkeit';
 import '../../styles/sichtbarkeit.css';
@@ -22,7 +23,7 @@ const mitLink = (a: PanelArt) => start || (variante === 'seo' && a !== 'ki');
   <div class="wrap">
     <div class="section-head center sb-kopf">
       {voll && <span class="eyebrow">{SICHTBARKEIT.eyebrow}</span>}
-      <h2 id={hid} class="rule">{voll ? SICHTBARKEIT.titel : SICHTBARKEIT.leistungTitel}</h2>
+      <h2 id={hid} class="rule" set:html={hl(voll ? SICHTBARKEIT.titel : SICHTBARKEIT.leistungTitel)}></h2>
       <p class="lead">{voll ? SICHTBARKEIT.intro : SICHTBARKEIT.leistungIntro}</p>
     </div>
     <div class:list={['sb-liste', `sb-liste--${arten.length}`]}>

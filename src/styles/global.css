@@ -30,6 +30,16 @@
   --shadow: 0 1px 2px rgb(17 24 39 / 6%), 0 8px 24px rgb(17 24 39 / 8%);
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif; /* QA #5952 */
   --font-body: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Typo-Skala (Jamil #7008, 22.11.2026): sechs feste Stufen + Preis; 1rem = 16,5 px Handy … 18 px PC (html-Schriftgröße unten).
+     Werte PC 1440 / Handy 390: Display 86 / 41 · H2 45 / 28 · H3 22,5 / 19 · Lead 21,6 / 17,4 · Body 18 / 16,5 · Small 14,4 / 13,2.
+     Alle Komponenten nutzen nur diese Variablen (Ausnahme: Deko-Mockups/Grafiken mit eigener Skalierung und die Seiten-H1 der Unterseiten). */
+  --fs-display: clamp(2.5rem, 1.3rem + 4.4vw, 4.8rem);
+  --fs-h2: clamp(1.7rem, 1rem + 2.6vw, 2.5rem);
+  --fs-h3: clamp(1.15rem, 1rem + 0.4vw, 1.25rem);
+  --fs-lead: clamp(1.05rem, 0.95rem + 0.45vw, 1.2rem);
+  --fs-body: 1rem;
+  --fs-small: 0.8rem;
+  --fs-preis: var(--fs-h2);
   --wrap: 1280px; /* Jamil #6978: alle Abschnitte gleich breit (vorher 1160 px) */
   color-scheme: light;
 }
@@ -47,7 +57,7 @@ html { font-size: clamp(103.125%, 99.5% + 0.163vw, 112.5%); -webkit-text-size-ad
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1rem; /* 16,5 px Handy … 18 px PC; Jamil #5292, eine Stufe kleiner seit #6952 */
+  font-size: var(--fs-body); /* 16,5 px Handy … 18 px PC; Jamil #5292, eine Stufe kleiner seit #6952 */
   line-height: 1.65;
   color: var(--ink);
   background: var(--white);
@@ -62,8 +72,15 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 h1 { font-size: clamp(2.1rem, 5.8vw, 3.9rem); font-weight: 800; } /* QA #5952: wie Startseite 800 */
-h2 { font-size: clamp(1.65rem, 3.8vw, 2.6rem); font-weight: 800; }
-h3 { font-size: 1.25rem; font-weight: 700; } /* QA #5952: Überschriften 700–800 */
+h2 { font-size: var(--fs-h2); font-weight: 800; }
+h3 { font-size: var(--fs-h3); font-weight: 700; } /* QA #5952: Überschriften 700–800 */
+small { font-size: var(--fs-small); } /* Jamil #7008: Kleinschrift überall gleich (statt Browser-Standard „smaller“) */
+/* Jamil #7016/#7017: goldener Marker hinter Schlüsselwörtern in Überschriften (Text bleibt dunkel; Gold als Schriftfarbe wäre auf Weiß
+   nicht lesbar). Fläche unteres Drittel bis knapp zur Hälfte; auf dunklen Flächen nur ein schmaler Strich unter dem Wort. Markup: lib/hl.ts. */
+mark.hl { color: inherit; background: linear-gradient(to bottom, transparent 50%, #FFDE21 50%, #FFDE21 80%, transparent 80%);
+  padding: 0 0.06em; margin: 0 -0.02em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.section--dark mark.hl, .on-dark mark.hl { background: linear-gradient(to bottom, transparent 84%, #EFBF04 84%, #EFBF04 96%, transparent 96%); }
+html[data-hero-stil='weiss'] .jh mark.hl, .fkontakt mark.hl { background: linear-gradient(to bottom, transparent 50%, #FFDE21 50%, #FFDE21 80%, transparent 80%); } /* Hero und Kontaktband sind hell, tragen aber noch .section--dark */
 p { margin: 0 0 1em; }
 a { color: inherit; }
 img { max-width: 100%; height: auto; display: block; }
@@ -92,7 +109,7 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
 
 .eyebrow {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: var(--fs-small);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -100,10 +117,10 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
   margin-bottom: 0.9rem;
 }
 .section--dark .eyebrow { color: var(--accent-light); } /* kleine Schrift auf Dunkel: 5,9 : 1 */
-.lead { font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.15rem); /* 18 px Handy … 21,6 px PC, unter der Hero-Unterzeile (Jamil #5292) */ color: var(--ink-soft); max-width: 60ch; }
+.lead { font-size: var(--fs-lead); /* 18 px Handy … 21,6 px PC, unter der Hero-Unterzeile (Jamil #5292) */ color: var(--ink-soft); max-width: 60ch; }
 .section--dark .lead { color: var(--dark-lead); }
 .section-head { max-width: 720px; margin-bottom: clamp(22px, 5vw, 56px); }
-@media (max-width: 599px) { .section-head .lead { font-size: 1.08rem; } h2 { font-size: 1.75rem; } }
+@media (max-width: 599px) { .section-head .lead { font-size: var(--fs-lead); } h2 { font-size: var(--fs-h2); } }
 
 .btn {
   display: inline-flex;
@@ -170,14 +187,14 @@ main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .b
   .section-head.center-mobile .rule::after, .section-head.center-mobile .lead { margin-inline: auto; }
 }
 .check-row { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 0; margin: 0; list-style: none; }
-.check-row li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
+.check-row li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: var(--fs-body); }
 .check-row .icon { color: #111827; flex: none; }
 .section--dark .check-row .icon, .on-dark .check-row .icon { color: #111827; }
 .check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .check-list li { display: flex; align-items: flex-start; gap: 12px; }
 .check-list .icon { color: var(--ok); flex: none; margin-top: 3px; }
-.btn--lg { min-height: 54px; padding: 1em 1.8em; font-size: 1.05rem; }
-.btn--sm { min-height: 40px; padding: 0.5em 1.1em; font-size: 0.9rem; }
+.btn--lg { min-height: 54px; padding: 1em 1.8em; font-size: var(--fs-body); }
+.btn--sm { min-height: 40px; padding: 0.5em 1.1em; font-size: var(--fs-body); }
 .btn .icon { flex: none; }
 a.card { color: inherit; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
 a.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
