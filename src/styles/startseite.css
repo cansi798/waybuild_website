@@ -59,7 +59,7 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 /* ── 5 · Darauf können Sie sich verlassen: große Schlagworte, viel Weißraum, keine Icons ── */
 .verlassen { padding-block: clamp(80px, 12vw, 160px); }
 .verlassen__titel { margin: 0 0 clamp(32px, 5vw, 56px) !important; text-align: center; font-size: 0.85rem !important; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-light) !important; }
-.verlassen__liste { list-style: none; margin: 0 auto; padding: 0; max-width: 900px; display: grid; gap: clamp(18px, 3vw, 30px); text-align: center; }
+.verlassen__liste { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: clamp(18px, 3vw, 30px); text-align: center; }
 .verlassen__liste li { font-family: var(--font-head); font-size: clamp(1.6rem, 4.6vw, 3rem); font-weight: 650; line-height: 1.15; letter-spacing: -0.02em; color: var(--white); }
 .verlassen__liste li.ist-letzt { color: var(--accent-light); }
 
@@ -83,7 +83,7 @@ html[data-thema='besucherreise'] .btn--primary:hover, .btn--marke:hover { backgr
 .platzhalter__etikett { position: absolute; top: -12px; left: 18px; padding: 1px 10px; border-radius: 999px; background: #b3261e; color: #ffffff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
 
 /* Wer hinter waybuild steht: zwei ruhige Karten, Initialen statt Foto */
-.team4 { list-style: none; margin: clamp(28px, 4vw, 44px) auto 0; padding: 0; display: grid; gap: 22px; max-width: 900px; align-items: stretch; }
+.team4 { list-style: none; margin: clamp(28px, 4vw, 44px) auto 0; padding: 0; display: grid; gap: 22px; align-items: stretch; }
 @media (min-width: 760px) { .team4 { grid-template-columns: 1fr 1fr; } }
 /* Team-Karten (Jamil #5636/#5637): gleich hoch, Porträt rund 180 px (nie größer: Cans Quelle 256 px), Zitat darunter */
 .team4__karte { display: flex; flex-direction: column; align-items: center; min-width: 0; padding: clamp(24px, 3vw, 32px) clamp(20px, 3vw, 30px);

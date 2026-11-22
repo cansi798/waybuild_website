@@ -132,7 +132,7 @@
 
 /* Hinweis „Läuft einfach im Browser“ unter dem Wechsler (Jamil #6397) */
 .jm-browser { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; margin-top: clamp(28px, 4vw, 48px);
-  padding: 18px 20px; border-radius: 20px; border: 1px solid var(--line); background: var(--white); max-width: 880px; }
+  padding: 18px 20px; border-radius: 20px; border: 1px solid var(--line); background: var(--white); }
 .jm-browser__ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: #FBF3D5; color: #111827; }
 .jm-browser__text { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 .jm-browser__text b { display: block; margin-bottom: 2px; font-family: var(--font-head); font-size: 1.05rem; color: var(--ink); }

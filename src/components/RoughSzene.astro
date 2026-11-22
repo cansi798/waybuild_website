@@ -114,7 +114,7 @@ const desktop = SZENEN[szene]("desktop");
   .rszene__svg text { font-family: var(--font-head); stroke: none; }
   .rszene__svg--desktop { display: none; }
   @media (min-width: 768px) {
-    .rszene__bild { max-width: 1000px; }
+    .rszene__bild { max-width: none; } /* Jamil #6978: volle Abschnittsbreite */
     .rszene__svg--mobil { display: none; }
     .rszene__svg--desktop { display: block; }
     .rszene { margin-bottom: 44px; }

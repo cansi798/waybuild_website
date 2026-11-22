@@ -58,15 +58,15 @@ export const HERO_PREISE = {
   mwst: ' netto',
 };
 const preis = (n: number) => `${n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\u00a0€`;
-/** Headline-Wort (Jamil wird gefragt, ob „Reibungslos“ statt „Effizient“): nur dieses eine Wort ändern. */
-const HERO_WORT = 'Effizient'; // Alternative: 'Reibungslos'
 
 /** 1. Hero (Jamil #6176) */
 export const J_HERO = {
   /** Headline + Subheadline seit Jamil #6366/#6368/#6370 (19.11.2026) WÖRTLICH (Variante 1 mit „nahtlos“, freigegeben mit „ok“).
    *  Vorher (#6176): titel 'Sagen Sie einfach, was Sie brauchen.', unter 'Ob Website, Änderung oder individuelle WebApp: Beschreiben Sie
    *  Ihre Idee per Chat, Sprachnachricht oder Screenshot. Wir kümmern uns um die Umsetzung.' */
-  titel: `Stark nach außen. ${HERO_WORT} nach innen.`,
+  /** Seit Jamil #6982 (22.11.2026) „Gefunden werden. Einfacher arbeiten.“ (zweizeilig, Umbruch nach dem ersten Satz in J6Hero.astro);
+   *  vorher „Stark nach außen. Effizient nach innen.“ (#6366–#6370). */
+  titel: 'Gefunden werden. Einfacher arbeiten.',
   // Subheadline seit Jamil #6376 (19.11.2026) WÖRTLICH; davor kurz (#6366/#6368, Variante 1): 'Viele Unternehmen haben eine Website, aber
   // kein System dahinter. Wir entwickeln Webauftritte und Software, die nahtlos ineinandergreifen – für begeisterte Kunden und produktive Teams.'
   // Satz 1 seit Jamil #6429 („2a“); vorher 'Standard-Tools passen selten zum echten Arbeitsalltag.'
@@ -138,14 +138,24 @@ export const J_PROBLEM_NEU = {
 
 /** Jamil #6954–#6958 (22.11.2026): Abschnitt „Wo Betriebe heute …“ als Weg Karte für Karte. Am PC bleibt der Abschnitt stehen, pro
  *  Scroll-Schritt wird EINE Karte (1 → 2 → 3 → 4) vom Problem zur webgold-Lösung; erst nach Karte 4 geht es weiter. Die Lösungstexte
- *  sind NUR vorhandene Texte aus J_MASS.schritte: `schritt` = Index dort, `text` = welches Feld (zeigt/warum). `marke` = kleine Marke. */
+ *  waren anfangs NUR Texte aus J_MASS.schritte (`schritt` = Index dort, `text` = Feld, nur noch als Herkunft vermerkt); seit Jamil
+ *  #6984–#6993 hat jede Karte eigenen `titel` + `inhalt` (angezeigt), J_MASS bleibt unverändert. `marke` = kleine Marke. */
 export const J_PROBLEM_WEG = {
   marke: 'So machen wir es',
   loesungen: [
-    { schritt: 0, text: 'zeigt' }, // Visitenkarte → Online-Kalkulator auf der Website, Anfrage direkt
-    { schritt: 3, text: 'warum' }, // verbiegen für fertige Programme → Software, die sich nach Ihrem Betrieb richtet
-    { schritt: 1, text: 'zeigt' }, // doppelt abtippen → Auftrags-Maske, Anfrage wird automatisch Auftrag
-    { schritt: 2, text: 'zeigt' }, // aktuelle Info suchen → Kundenportal, alles an einem Ort
+    // Karte 1: eigener Text seit Jamil #6984/#6989 (22.11.2026), WÖRTLICH; J_MASS bleibt unverändert (vorher J_MASS.schritte[0] „Ein individueller
+    // Online-Kalkulator auf der Website“ / zeigt).
+    { schritt: 0, text: 'zeigt', titel: 'Mehr als eine Visitenkarte: der Eingang zu Ihrem System', // Jamil #6989 (ohne Kalkulator; ersetzt #6984)
+      inhalt: 'Ihre Website ist der erste Eindruck, der zählt – deshalb ist sie bei uns mehr als eine Visitenkarte. Sie ist funktional gebaut und der Eingang in Ihr eigenes System: Was Kunden dort anfragen, kommt direkt in Ihrer Software an.' }, // „Software“ statt „Web-App“: Jamil #6991
+    // Karte 2: eigener Text seit Jamil #6985 (22.11.2026), WÖRTLICH (vorher J_MASS.schritte[3] / warum)
+    { schritt: 3, text: 'warum', titel: 'Software, die sich nach Ihrem Betrieb richtet – nicht umgekehrt',
+      inhalt: 'Egal wie speziell Ihre Abläufe sind: Wir bauen Ihnen die Software, die genau dazu passt. Von der Kundenverwaltung über die Terminbuchung bis zu Funktionen, die es nur bei Ihnen gibt.' },
+    // Karte 3 (doppelt abtippen): eigener Text seit Jamil #6988 (22.11.2026), WÖRTLICH (vorher J_MASS.schritte[1] / zeigt)
+    { schritt: 1, text: 'zeigt', titel: 'Ein abgestimmtes System, in dem alles zusammenpasst',
+      inhalt: 'Anfragen landen direkt in Ihrer Software. Dort weisen Sie sie einem Mitarbeiter zu, machen daraus weitere Aufgaben – oder lassen genau die Abläufe einbauen, die Sie sich für Ihren Betrieb vorstellen.' },
+    // Karte 4 (aktuelle Info suchen): eigener Text seit Jamil #6992/#6993 (22.11.2026), WÖRTLICH (vorher J_MASS.schritte[2] / zeigt)
+    { schritt: 2, text: 'zeigt', titel: 'Alle Infos an einem Ort – für das ganze Team',
+      inhalt: 'Absprachen, Dokumente und der aktuelle Stand jedes Auftrags liegen gesammelt in Ihrer Software. Jeder im Team sieht sofort, was zu tun ist – und neue Mitarbeiter finden sich schnell zurecht.' },
   ],
 } as const;
 

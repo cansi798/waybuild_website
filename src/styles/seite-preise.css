@@ -19,7 +19,7 @@
 
 /* ── Vergleich der Pakete ── */
 /* .spr-vgl */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
-.spr-vgl__tafel { position: relative; max-width: 980px; margin-inline: auto; overflow-x: auto; border-radius: 24px; background: var(--paper);
+.spr-vgl__tafel { position: relative; margin-inline: auto; overflow-x: auto; border-radius: 24px; background: var(--paper);
   padding: clamp(8px, 1.6vw, 20px); }
 .spr-vgl__tafel:focus-visible { outline: 3px solid #EFBF04; outline-offset: 3px; }
 .spr-vgl__tabelle { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.95rem; }
@@ -62,7 +62,7 @@
 .spr-stufe__liste .sn-punkt { margin-inline: 0 4px; }
 
 .spr-nicht { margin-top: 24px; padding: 20px 24px; border-radius: 20px; border: 1px solid var(--sn-linie); background: var(--white); } /* Jamil #6055 Fr. 9: echte Liste statt Platzhalter */
-.spr-nicht__liste { margin: 0 0 8px; padding-left: 1.2em; line-height: 1.7; }
+.spr-nicht__liste { margin: 0 0 8px; padding-left: 1.2em; line-height: 1.7; max-width: 70ch; }
 .spr-schritt__zeit { margin-top: 6px !important; font-size: 0.9rem; font-weight: 600; color: #111827; }
 .spr-nicht .sn-h4 { margin: 0 0 6px; }
 .spr-nicht p { line-height: 1.7; }

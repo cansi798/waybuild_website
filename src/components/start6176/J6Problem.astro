@@ -7,7 +7,7 @@
 // Am PC (≥ 900 × 700, ohne reduzierte Bewegung, mit JS) bleibt der Abschnitt stehen; pro Scroll-Schritt dreht genau EINE Karte (1 → 4),
 // erst danach geht es weiter (gemeinsamer Kern scripts/buehne-kern.ts). Sonst (Handy, reduzierte Bewegung, ohne JS): Problem und Lösung
 // je Karte untereinander. Beide Seiten bleiben immer im DOM und für Screenreader lesbar. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
-import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_MASS as M, J_PROBLEM_WEG as W } from '../../config/start-6176';
+import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_PROBLEM_WEG as W } from '../../config/start-6176';
 import J6Icon from './J6Icon.astro';
 import ProblemIcon from './ProblemIcon.astro';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
@@ -41,7 +41,6 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
           <ul class="jp-bloecke jp-bloecke--weg">
             {N.karten.map((k, i) => {
               const l = W.loesungen[i];
-              const sch = M.schritte[l.schritt];
               return (
                 <li class="jp-block jp-wandel j6-ein" data-jp-karte>
                   <div class="jp-seite jp-seite--problem">
@@ -51,8 +50,8 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
                   </div>
                   <div class="jp-seite jp-seite--loesung">
                     <p class="jp-marke"><span class="jp-marke__haken" aria-hidden="true"><J6Icon name="haken" size={22} /></span><span class="jp-marke__text">{W.marke}</span></p>
-                    <h4 class="jp-block__titel">{sch.titel}</h4>
-                    <p class="jp-block__text">{sch[l.text]}</p>
+                    <h4 class="jp-block__titel">{l.titel}</h4>
+                    <p class="jp-block__text">{l.inhalt}</p>
                   </div>
                 </li>
               );

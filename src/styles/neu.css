@@ -36,7 +36,7 @@
 /* Seitenrahmen: /neu/ hat keine feste Telefon-Fußleiste (hideMobileCta). Ihr Platzhalter unter der Fußzeile (global.css,
    unter 960 px) entfiele sonst nicht und stünde als leeres Band am Seitenende. Als Variable gesetzt, damit die Reihenfolge
    der Stylesheets keine Rolle spielt. Diese Datei wird nur auf /neu/ geladen. */
-body { --stickybar-h: 0px; }
+body { --stickybar-h: 0px; --wrap: 1160px; } /* /neu/ bleibt bei 1160 px (Jamil #6978 gilt nur für die Hauptseite) */
 
 .neu {
   /* Farben: eine Akzentfarbe (Türkis), Flächen Weiß, Sand, Dunkel */

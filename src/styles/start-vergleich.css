@@ -2,7 +2,7 @@
    waybuild-Spalte zart türkis hinterlegt. Zeichen: ✓ Türkis, ⚠ Bernstein, ✗ Rot (nur als Icon-Farbe, Text bleibt dunkel). */
 /* .svg */ /* Hintergrund: zentral im Wechsel Weiß/Creme (global.css, Jamil #5915) */
 .svg .sn-kopf .sn-h2 { max-width: 20ch; margin-inline: auto; }
-.svg-tafel { max-width: 1000px; margin: 0 auto; border: 1px solid var(--sn-linie); border-radius: 24px; overflow: hidden; background: var(--white);
+.svg-tafel { margin: 0 auto; border: 1px solid var(--sn-linie); border-radius: 24px; overflow: hidden; background: var(--white);
   box-shadow: var(--sn-schatten); }
 .svg-tabelle { width: 100%; border-collapse: collapse; table-layout: fixed; }
 .svg-tabelle th, .svg-tabelle td { position: relative; padding: 16px 12px; text-align: left; vertical-align: middle; border-top: 1px solid var(--sn-linie);

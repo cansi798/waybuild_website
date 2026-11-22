@@ -287,8 +287,8 @@ export const faqs = [
 
 /** Vorschaubild beim Teilen (og:image/twitter:image). Jamil #6435–#6437: bei jeder Design-Änderung direkt mit anpassen;
  *  neuer Dateiname = neuer Cache bei WhatsApp/LinkedIn & Co. Vorher: /og-image.png (alte Farben, „waybuild“). */
-export const OG_BILD = '/og-webgold-20261120-weiss.png'; // seit #6453 weiß/Anthrazit + Gold (davor -gold.png, #6442)
-export const OG_BILD_ALT = 'webgold: Stark nach außen. Effizient nach innen. Websites & Software nach Maß';
+export const OG_BILD = '/og-webgold-20261122-weiss.png'; // seit Jamil #6982 neue H1 „Gefunden werden. Einfacher arbeiten.“ (davor -20261120-weiss.png, #6453; -gold.png, #6442)
+export const OG_BILD_ALT = 'webgold: Gefunden werden. Einfacher arbeiten. Websites & Software nach Maß';
 
 /** Hero + Fußzeile (Jamil #6442/#6448): 'gold' = goldene Flächen (live seit #6442); 'weiss' = Hero weiß mit Gold-Akzenten,
  *  Fußzeile Anthrazit #111827 – vorbereitet, Jamil wird gefragt. Umschalten: nur diesen Wert ändern. */

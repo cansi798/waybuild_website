@@ -12,6 +12,8 @@
 .jh__raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
 .jh__text { min-width: 0; display: grid; gap: 20px; justify-items: start; }
 .jh__titel { margin: 0; color: var(--white); font-size: clamp(2.3rem, 1.3rem + 4.6vw, 4.6rem); line-height: 1.04; max-width: 14ch; text-wrap: balance; }
+.jh__titel .jh__satz { display: block; } /* Jamil #6982: H1 zweizeilig, je Satz eine Zeile (Umbruch fest, nicht über max-width) */
+.jh .jh__titel:has(.jh__satz) { max-width: none; }
 .jh__unter { margin: 0; max-width: 52ch; font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem); line-height: 1.65; color: #E2E8F0; text-wrap: pretty; }
 .jh__zeile { margin: 0; padding-left: 14px; border-left: 3px solid var(--gold); font-family: var(--font-head); font-weight: 700;
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.5; color: var(--white); }
@@ -368,7 +370,7 @@
 
 /* ---------- 8. Vertrauen ---------- */
 .jv .sn-kopf .sn-lead { max-width: 52ch; }
-.jv-punkte { list-style: none; margin: 0 auto; padding: 0; max-width: 980px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.jv-punkte { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .jv-punkt { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 18px; background: var(--paper);
   font-family: var(--font-head); font-weight: 700; font-size: 1.02rem; color: var(--ink); }
 .jv-haken { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #EFBF04; color: #111827; }

@@ -12,11 +12,11 @@
 .sb-kopf .lead { text-wrap: pretty; }
 
 .sb-liste { display: grid; gap: 22px; width: 100%; max-width: 560px; margin: clamp(8px, 2vh, 24px) auto 0; }
-@media (min-width: 1000px) { .sb-liste--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1180px; gap: 24px; } }
+@media (min-width: 1000px) { .sb-liste--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; gap: 24px; } }
 @media (min-width: 820px) {
-  .sb-liste--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 960px; }
+  .sb-liste--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
   /* ein Feld: Ansicht links, Text rechts */
-  .sb-liste--1 { max-width: 960px; }
+  .sb-liste--1 { max-width: none; }
   .sb-liste--1 .sb-panel { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
   .sb-liste--1 .sb-buehne { border-bottom: 0; border-right: 1px solid #EADBA6; }
   .sb-liste--1 .sb-text { justify-content: center; padding: clamp(26px, 3vw, 40px); }

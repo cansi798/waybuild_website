@@ -126,7 +126,7 @@ html.js .gs-film .wrap.gs-weglabel { display: none; }
 .gs-schritt__wann { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #111827; }
 .gs-schritt__titel { font-size: 1.25rem; }
 .gs-schritt__text { line-height: 1.65; color: var(--ink-soft); }
-.gs-personen { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 18px; max-width: 760px; }
+.gs-personen { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 18px; }
 @media (min-width: 640px) { .gs-personen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; } }
 .gs-person { display: grid; justify-items: center; gap: 4px; padding: clamp(22px, 3vw, 32px); text-align: center; background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
 .gs-person h3, .gs-person p { margin: 0; }
@@ -136,7 +136,7 @@ html.js .gs-film .wrap.gs-weglabel { display: none; }
 
 /* ── Angebot ── */
 .gs-angebot .lead { margin-inline: auto; }
-.gs-empfehlung { display: grid; gap: 6px; max-width: 760px; margin: 0 auto clamp(30px, 4vw, 44px); padding: clamp(18px, 3vw, 26px) clamp(18px, 3vw, 30px);
+.gs-empfehlung { display: grid; gap: 6px; margin: 0 auto clamp(30px, 4vw, 44px); padding: clamp(18px, 3vw, 26px) clamp(18px, 3vw, 30px);
   border-radius: 20px; background: #FFFEFB; border-left: 5px solid #EFBF04; }
 .gs-empfehlung p { margin: 0; }
 .gs-empfehlung__kopf { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
@@ -174,7 +174,7 @@ html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] { background: var(--dark);
 html.js[data-weg="website"] [data-gs-stufe="website"] span,
 html.js[data-weg="anfragen"] [data-gs-stufe="anfragen"] span,
 html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-lead); }
-.gs-hinweis { margin: 22px auto 0; max-width: 80ch; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); text-align: center; }
+.gs-hinweis { margin: 22px auto 0; max-width: 70ch; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); text-align: center; }
 .gs-hinweis a { color: #111827; font-weight: 650; }
 
 /* ── Handlung ── */
