@@ -11,10 +11,15 @@
 // die Beispiele sind nur ausgeblendet (ALT_ZEIGEN.heroBeispieleAlt = true holt sie zurück). Headline/Subheadline seit #6366.
 import J6Icon from './J6Icon.astro';
 import J6Fluss from './J6Fluss.astro';
-import { J_HERO as T, ALT_ZEIGEN } from '../../config/start-6176';
+import { J_HERO as T, J_HERO_SCHNELL as HS, J_START as JS, ALT_ZEIGEN } from '../../config/start-6176';
 import '../../styles/hero-6369.css';
 import { ANLIEGEN } from '../../config/startseite';
 import { href } from '../../lib/paths';
+import { company } from '../../config/site';
+import SchnellFelder from './SchnellFelder.astro';
+const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
+const zeigeSchnell = ALT_ZEIGEN.heroSchnell && !ALT_ZEIGEN.abschlussCtaAlt; // Absende-Skript steckt in J6Start
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
 ---
 
@@ -29,6 +34,22 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
         <a class="btn btn--lg jh-btn" href={kontakt}>{T.knopf}</a>
         <a class="btn btn--lg jh-btn jh-btn--rand" href={href('/beispiele/')}>{T.knopf2}</a>
       </div>
+      {/* Jamil #6927: Schnellstart als schlanke Zeile. Ohne JS: GET zum großen Formular (#start-schnell). Mit JS: Skript in J6Start (data-js7, data-mehr) */}
+      {zeigeSchnell && (
+        <form class="jh-schnell" id="hero-schnell" action={`${href('/')}#start-schnell`} method="get" data-js7 data-betreff={JS.schnell.betreff} data-weg="schnell"
+          data-endpoint={endpoint} data-key={formKey} data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-label={HS.label}>
+          <div class="jh-schnell__zeile">
+            <input class="jh-schnell__url" name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={HS.platzhalter} aria-label={HS.label} required data-art="url" />
+            <button class="btn jh-schnell__knopf" type="submit">{HS.knopf}</button>
+          </div>
+          <p class="jh-schnell__klein">{HS.klein}</p>
+          <div class="jh-schnell__mehr" data-mehr hidden>
+            <SchnellFelder />
+            <button class="btn btn--lg js7-btn" type="submit">{JS.schnell.knopf}</button>
+            <p class="js7-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      )}
       {/* Preiszeile (Jamil #6396): Preise in config/start-6176.ts → HERO_PREISE */}
       <p class="jh__preise">{T.preiszeile.map((t, i) => <>{i > 0 && <span class="jh__preise-punkt" aria-hidden="true"> · </span>}<span>{t}</span></>)}</p>
     </div>

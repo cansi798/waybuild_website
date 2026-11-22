@@ -13,17 +13,12 @@
   font: inherit; transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
 .jm-tab:hover { border-color: #FFDE21; }
 .jm-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-.jm-tab[aria-selected="true"] { border-color: #EFBF04; background: #FDF9EC; box-shadow: 0 14px 30px -22px rgb(140 109 18 / 60%); }
+.jm-tab[aria-selected="true"] { border-color: #EFBF04; } /* Jamil #6931: nur dünne Goldlinie, kein Schatten, keine andere Hintergrundfarbe */
 .jm-tab__nr { grid-row: span 2; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: var(--paper-2, #F1F5F9);
   font-family: var(--font-head); font-weight: 800; font-size: 0.9rem; color: #111827; }
 .jm-tab[aria-selected="true"] .jm-tab__nr { background: #EFBF04; color: #111827; }
 .jm-tab__kurz { font-family: var(--font-head); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: #111827; }
 .jm-tab__zitat { font-family: var(--font-head); font-weight: 650; font-size: clamp(1rem, 0.96rem + 0.25vw, 1.12rem); line-height: 1.45; text-wrap: pretty; }
-.jm-tab__balken { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
-@media (prefers-reduced-motion: no-preference) {
-  .jm--auto .jm-tab[aria-selected="true"] .jm-tab__balken { animation: jm-balken 7s linear both; }
-}
-@keyframes jm-balken { to { transform: scaleX(1); } }
 
 /* Panels: alle im selben Rasterfeld, das höchste bestimmt die Höhe (kein Sprung beim Wechsel) */
 .jm__panels { display: grid; min-width: 0; }
@@ -104,8 +99,8 @@
 /* Handy: Segmentleiste, Zitat über dem Mockup, höheres Mockup mit größerer Schrift */
 @media (max-width: 899px) {
   .jm__tabs { grid-template-columns: repeat(var(--jm-n, 3), minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 16px; background: var(--paper-2, #F1F5F9); }
-  .jm-tab { display: flex; justify-content: center; gap: 6px; padding: 10px 6px; border: 0; border-radius: 12px; background: transparent; text-align: center; }
-  .jm-tab[aria-selected="true"] { background: var(--white); box-shadow: 0 6px 16px -10px rgb(0 0 0 / 35%); }
+  .jm-tab { display: flex; justify-content: center; gap: 6px; padding: 10px 6px; border: 1.5px solid transparent; border-radius: 12px; background: transparent; text-align: center; }
+  .jm-tab[aria-selected="true"] { background: var(--white); box-shadow: none; border-color: #EFBF04; }
   .jm-tab__nr { display: none; }
   .jm-tab__zitat { display: none; }
   .jm-tab__kurz { letter-spacing: 0.02em; text-transform: none; font-size: 0.9rem; color: var(--ink); overflow-wrap: anywhere; }

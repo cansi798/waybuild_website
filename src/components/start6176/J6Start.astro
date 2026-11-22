@@ -9,6 +9,7 @@ import { J_START as T } from '../../config/start-6176';
 import { company } from '../../config/site';
 import { href } from '../../lib/paths';
 import Bild from '../Bild.astro';
+import SchnellFelder from './SchnellFelder.astro';
 const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 const endpoint = formKey ? 'https://api.web3forms.com/submit' : '';
 const G = T.gespraech, S = T.schnell;
@@ -50,15 +51,7 @@ const ds = href('/datenschutz/');
         <p class="js7-karte__text">{S.text}</p>
         {/* type=text statt url: „www.ihre-firma.de“ ohne https:// soll gehen; Prüfung im Skript */}
         <label class="js7-feld"><span>{S.url}*</span><input name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={S.urlBeispiel} required data-art="url" /></label>
-        <label class="js7-feld"><span>{S.email}* <small>{S.emailZusatz}</small></span><input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
-        <fieldset class="js7-chips" data-rueckweg>
-          <legend>{S.rueckweg.legende}</legend>
-          {S.rueckweg.optionen.map((o, n) => <label class="js7-chip"><input type="radio" name="informiert_per" value={o} checked={n === 0} /><span>{o}</span></label>)}
-        </fieldset>
-        <label class="js7-feld"><span>{S.telefon}<em data-tel-pflicht hidden>*</em> <small data-tel-opt>{S.optional}</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" data-art="telefon" data-fehler={S.telefonFehler} data-pruefen={S.telefonPruefen} /></label>
-        <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <input type="hidden" name="paket" value="" />
-        <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
+        <SchnellFelder />
         <button class="btn btn--lg js7-btn" type="submit">{S.knopf}</button>
         <p class="js7-status" role="status" aria-live="polite"></p>
       </form>
@@ -85,6 +78,10 @@ const ds = href('/datenschutz/');
     const feld = ziel?.querySelector<HTMLInputElement>('input[name="paket"]');
     if (feld) feld.value = a.dataset.paket ?? '';
   }));
+  // Ohne JavaScript schickt die Hero-Zeile die Adresse per ?website_url=… zum großen Formular: dort vorbelegen
+  const vorgabe = new URLSearchParams(location.search).get('website_url');
+  const grosses = document.querySelector<HTMLInputElement>('#start-schnell input[name="website_url"]');
+  if (vorgabe && grosses && !grosses.value) grosses.value = vorgabe;
   document.querySelectorAll<HTMLFormElement>('form[data-js7]').forEach((form) => {
     const status = form.querySelector<HTMLElement>('.js7-status')!;
     const felder = [...form.querySelectorAll<HTMLInputElement>('input[required], input[data-art="telefon"]')];
@@ -121,6 +118,13 @@ const ds = href('/datenschutz/');
     felder.forEach((f) => f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => { if (f.hasAttribute('aria-invalid')) zeige(f); }));
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      // Hero-Zeile (Jamil #6927): erst nur die Website-Adresse prüfen, dann klappt der Rest auf; gesendet wird erst im zweiten Schritt
+      const mehr = form.querySelector<HTMLElement>('[data-mehr]');
+      if (mehr?.hidden) {
+        const u = form.querySelector<HTMLInputElement>('input[name="website_url"]')!;
+        if (zeige(u)) { mehr.hidden = false; form.classList.add('ist-offen'); form.querySelector<HTMLInputElement>('input[name="email"]')?.focus(); } else u.focus();
+        return;
+      }
       const fehlend = felder.filter((f) => !zeige(f)); // zeigt Meldungen am jeweiligen Feld
       if (fehlend.length) { fehlend[0].focus(); return; }
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;

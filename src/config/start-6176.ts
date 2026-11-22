@@ -37,6 +37,7 @@ export const ALT_ZEIGEN = {
   heroAnimation: false, // Hero-Animation Browser → Dashboard (#6369) – seit Jamil #6478 aus, Hero einspaltig mittig; true = wieder da
   individuellTab: false, // 4. Tab „Individuell“ im Wechsler (#6427) – seit Jamil #6460 aus; true = wieder da
   browserBox: false, // separate Box „Läuft einfach im Browser“ unter dem Wechsler (#6397) – seit Jamil #6424 kleiner Hinweis im Wechsler; true = Box wieder
+  heroSchnell: true, // Jamil #6927: schlanke Schnellstart-Zeile im Hero; false = wieder weg
   heroZeile: false, // „Keine Tickets. Kein CMS. Keine Technikkenntnisse.“ im Hero – seit Jamil #6417 aus; true = wieder sichtbar
   // Jamil #6408–#6412 (19.11.2026, „diese abschnitte entfernen“): ausgeblendet, nicht gelöscht – true = wieder sichtbar
   wachsenAbschnitt: false, // „Starten Sie dort, wo Sie heute stehen.“ (J6Wachsen, Treppe Website → WebApp)
@@ -132,6 +133,15 @@ export const J_PROBLEM_NEU = {
     { icon: 'pfeile', titel: 'Alles wird doppelt und dreifach abgetippt', text: 'Kundendaten wandern von der E-Mail in eine Excel-Liste, von dort in den Kalender und irgendwann ins Rechnungsprogramm – das kostet Nerven und führt zu Fehlern.' },
     { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeiter brauchen Wochen, um durchzublicken.' },
   ],
+} as const;
+
+/** Jamil #6927: schlanke Schnellstart-Zeile im Hero (nur Website-Adresse + kleiner Knopf, der Rest klappt danach auf). Alle anderen Texte
+ *  (E-Mail, Rückweg, Telefon, Datenschutz) kommen aus J_START.schnell. Absende-Logik: Skript in J6Start.astro (einmal). */
+export const J_HERO_SCHNELL = {
+  label: 'Ihre Website-Adresse für die kostenlose Vorschau',
+  platzhalter: 'Ihre Website, z. B. www.ihre-firma.de',
+  knopf: 'Vorschau für morgen',
+  klein: 'Kostenlos · ohne Gespräch vorab',
 } as const;
 
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus

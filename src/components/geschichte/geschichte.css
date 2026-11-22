@@ -212,7 +212,7 @@ html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: var(--dark-l
 .gs-chip input:checked + span, .gs-wegwahl__knopf[aria-pressed="true"] { background: #EFBF04; border-color: #EFBF04; color: #111827; }
 html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] { background: #FBF3D5; border-color: #EFBF04; color: #111827; }
 html.js[data-weg="betrieb"] [data-gs-stufe="betrieb"] span { color: #374151; }
-.gs-handlung.section--dark { background: #FEFCF7; color: #111827; border-top: 2px solid #EFBF04; }
+.gs-handlung.section--dark { background: #FEFCF7; color: #111827; }
 .gs-handlung.section--dark h2 { color: #111827; }
 .gs-handlung.section--dark .eyebrow { color: #111827; }
 .gs-handlung.section--dark .lead, .gs-handlung .gs-handlung__text { color: #4B5563; }

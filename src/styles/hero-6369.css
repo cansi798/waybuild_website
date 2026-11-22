@@ -167,3 +167,19 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
 }
 @keyframes jh-dezent { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes jh-titel-gleiten { from { transform: translateY(8px); } to { transform: none; } }
+
+/* Jamil #6927: Schnellstart-Zeile im Hero – ein Feld + kleiner Knopf, danach klappt der Rest auf. Handy: untereinander. */
+.jh-schnell { width: 100%; max-width: 660px; min-width: 0; display: grid; gap: 8px; margin: 0; }
+.jh-schnell__zeile { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.jh-schnell__url { width: 100%; min-height: 48px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid #CBD5E1; background: #FFFFFF; color: #111827; font: inherit; font-size: 1rem; }
+.jh-schnell__url:focus-visible { outline: 3px solid #EFBF04; outline-offset: 1px; border-color: #EFBF04; }
+.jh-schnell__url[aria-invalid="true"] { border-color: #b42318; }
+.jh-schnell__knopf { min-height: 48px; padding: 0 22px; border-radius: 999px; background: #EFBF04; color: #111827; font-weight: 700; border: 0; cursor: pointer; white-space: nowrap; }
+.jh-schnell__knopf:hover { background: #FFDE21; }
+.jh-schnell__knopf:focus-visible { outline: 3px solid #111827; outline-offset: 2px; }
+.jh-schnell__klein { margin: 0; font-size: 0.82rem; color: #475569; }
+.jh-schnell .js7-fehler { text-align: left; }
+.jh-schnell__mehr { display: grid; gap: 14px; text-align: left; margin-top: 8px; padding: clamp(16px, 3vw, 22px); border-radius: 20px; background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 14px 30px -20px rgb(31 41 55 / 35%); }
+.jh-schnell__mehr[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) { .jh-schnell.ist-offen .jh-schnell__mehr { animation: jh-auf 320ms ease both; } @keyframes jh-auf { from { opacity: 0; transform: translateY(-6px); } } }
+@media (min-width: 640px) { .jh-schnell__zeile { grid-template-columns: minmax(0, 1fr) auto; } }
