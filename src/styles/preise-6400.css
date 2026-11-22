@@ -13,6 +13,7 @@
 .jpr-badge--plus { background: #FBF3D5; color: #111827; box-shadow: inset 0 0 0 1px var(--gold); }
 .jpr-karte__name { margin: 0; font-family: var(--font-head); font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem); line-height: 1.25; color: var(--ink); }
 .jpr-karte__preis { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--ink-soft); }
+.jpr-karte__ab { font-size: 0.45em; font-weight: 700; letter-spacing: 0; color: var(--ink-soft); } /* Jamil #6964 */
 .jpr-karte__preis b { font-family: var(--font-head); font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
 .jpr-karte__fuer { margin: 0; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .jpr-liste { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; flex: 1; align-content: start; }

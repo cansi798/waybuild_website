@@ -13,7 +13,7 @@ const karten = [
     liste: basis.leistungen.map((l) => l.text), knopf: T.knopf.basis, ziel: '#start-schnell' },
   { id: 'plus', rolle: T.rolle.plus, badge: T.badge.plus, name: plus.name, preis: plus.preis, zusatz: '', fuer: plus.fuer,
     liste: [T.alles, ...plus.leistungen.map((l) => l.text)], knopf: T.knopf.plus, ziel: '#start-schnell', tipp: true },
-  { id: 'software', rolle: T.rolle.software, badge: T.badge.software, name: K.name, preis: K.preis, zusatz: T.kombinierbar, fuer: K.kurz,
+  { id: 'software', rolle: T.rolle.software, badge: T.badge.software, name: K.name, preis: K.preis, ab: K.ab, zusatz: T.kombinierbar, fuer: K.kurz,
     liste: [...K.software], knopf: T.knopf.software, ziel: '#start-gespraech', plus: true },
 ];
 const Haken = '<path d="M20 6 9 17l-5-5" />';
@@ -34,7 +34,7 @@ const Haken = '<path d="M20 6 9 17l-5-5" />';
             {k.badge && <span class:list={['jpr-badge', { 'jpr-badge--plus': k.plus }]}>{k.badge}</span>}
           </div>
           <h3 id={`jpr-${k.id}`} class="jpr-karte__name">{k.name}</h3>
-          <p class="jpr-karte__preis"><b>{euro(k.preis)}</b> <span>{T.monat}{k.zusatz && <> {k.zusatz}</>}</span></p>
+          <p class="jpr-karte__preis"><b>{k.ab && <small class="jpr-karte__ab">ab </small>}{euro(k.preis)}</b>{/* „ab“ klein: Jamil #6964 */} <span>{T.monat}{k.zusatz && <> {k.zusatz}</>}</span></p>
           <p class="jpr-karte__fuer">{k.fuer}</p>
           <ul class="jpr-liste">
             {k.liste.map((t) => (

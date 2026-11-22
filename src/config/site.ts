@@ -185,7 +185,7 @@ export const BERATUNG_THEMEN = ['Zielgruppen', 'Positionierung', 'Customer Journ
 export const faqs = [
   {
     q: 'Was kostet eine Website bei webgold?', // „drei Pakete“: Jamil #6011, Audit #5953 P1 (vorher „zwei feste Monatspakete“)
-    a: `Es gibt drei Pakete mit festem Monatspreis (seit Jamil #6400): ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')} und ${KOMPLETTPAKET.name} für ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat, kombinierbar oder einzeln. Keine versteckten Einrichtungsgebühren für den Start, die erste Vorschau ist zu 100 % kostenlos und unverbindlich. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
+    a: `Es gibt drei Pakete mit festem Monatspreis (seit Jamil #6400): ${PAKETE.map((p) => `${p.name} für ${formatEuro(p.preis)} netto im Monat (${formatEuro(brutto(p.preis))} inkl. MwSt.)`).join(', ')} und ${KOMPLETTPAKET.name} ab ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat, kombinierbar oder einzeln. Keine versteckten Einrichtungsgebühren für den Start, die erste Vorschau ist zu 100 % kostenlos und unverbindlich. Wer möchte, bucht einmalig dazu: ${einmaligZeile()}. Alle Preise netto zzgl. gesetzlicher MwSt.`,
   },
   {
     q: 'Was ist der Unterschied zwischen den Paketen?',
@@ -242,7 +242,7 @@ export const faqs = [
   // Fehlende Einwände (Jamil #6038, Audit F3): nur mit Aussagen, die schon in pakete-abo.ts bzw. den FAQ oben stehen
   {
     q: 'Kann ich die Web-App ohne Website buchen?',
-    a: `Ja. „${KOMPLETTPAKET.name}“ ist kombinierbar oder einzeln buchbar, für ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat.`, // seit #6400
+    a: `Ja. „${KOMPLETTPAKET.name}“ ist kombinierbar oder einzeln buchbar, ab ${formatEuro(KOMPLETTPAKET.preis)} netto im Monat.`, // seit #6400, „ab“ seit #6964
   },
   {
     q: 'Ich habe schon eine Website. Was passiert damit?',

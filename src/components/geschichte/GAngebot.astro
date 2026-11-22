@@ -29,7 +29,7 @@ const ZIEL: Record<WegId, string> = { website: '#pk-basis', anfragen: '#pk-plus'
 const STUFEN: { id: WegId; name: string; preis: string }[] = [
   { id: 'website', name: basis.name, preis: euro(basis.preis) },
   { id: 'anfragen', name: plus.name, preis: euro(plus.preis) },
-  { id: 'betrieb', name: `+ ${KOMPLETTPAKET.name}`, preis: `in Kombination ${euroAb(kombiAbPreis(), KOMPLETTPAKET.kombiAb)}` },
+  { id: 'betrieb', name: `+ ${KOMPLETTPAKET.name}`, preis: `in Kombination ${euroAb(kombiAbPreis(), KOMPLETTPAKET.kombiAb || KOMPLETTPAKET.ab)}` },
 ];
 ---
 

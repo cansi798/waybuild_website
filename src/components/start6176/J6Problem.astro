@@ -2,8 +2,13 @@
 // 2. Problem-Section nach Jamils Konzept (Talk qh87y3sj #6176, 16.11.2026). Texte wörtlich aus src/config/start-6176.ts.
 // Seit Jamil #6372–#6374 + #6377 (19.11.2026): neue Überschrift, vier Textblöcke (J_PROBLEM_NEU) ohne Mockups, je ein schlichtes,
 // einfarbiges Linien-Icon (überfüllter Briefumschlag, verbogenes Puzzleteil, zwei kreuzende Pfeile, Lupe), viel Weißraum; ohne
-// Subheadline und Abschlusszeile. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
-import { J_PROBLEM as T, J_PROBLEM_NEU as N } from '../../config/start-6176';
+// Subheadline und Abschlusszeile.
+// Seit Jamil #6954–#6958 (22.11.2026): Weg Karte für Karte. Jede Karte hat zwei Seiten (Problem, webgold-Lösung aus J_MASS über J_PROBLEM_WEG).
+// Am PC (≥ 900 × 700, ohne reduzierte Bewegung, mit JS) bleibt der Abschnitt stehen; pro Scroll-Schritt dreht genau EINE Karte (1 → 4),
+// erst danach geht es weiter (gemeinsamer Kern scripts/buehne-kern.ts). Sonst (Handy, reduzierte Bewegung, ohne JS): Problem und Lösung
+// je Karte untereinander. Beide Seiten bleiben immer im DOM und für Screenreader lesbar. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
+import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_MASS as M, J_PROBLEM_WEG as W } from '../../config/start-6176';
+import J6Icon from './J6Icon.astro';
 import ProblemIcon from './ProblemIcon.astro';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
@@ -29,20 +34,60 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       </>
     ) : (
       <>
-        <div class="sn-kopf jp__kopf">
-          <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+        <div class="jp__fest" data-jp-buehne>
+          <div class="sn-kopf jp__kopf">
+            <h2 id="jp-h" class="sn-h2 sn-h2--klein">{N.titel}</h2>
+          </div>
+          <ul class="jp-bloecke jp-bloecke--weg">
+            {N.karten.map((k, i) => {
+              const l = W.loesungen[i];
+              const sch = M.schritte[l.schritt];
+              return (
+                <li class="jp-block jp-wandel j6-ein" data-jp-karte>
+                  <div class="jp-seite jp-seite--problem">
+                    <ProblemIcon icon={k.icon} class="jp-block__ico" />
+                    <h3 class="jp-block__titel">{k.titel}</h3>
+                    <p class="jp-block__text">{k.text}</p>
+                  </div>
+                  <div class="jp-seite jp-seite--loesung">
+                    <p class="jp-marke"><span class="jp-marke__haken" aria-hidden="true"><J6Icon name="haken" size={22} /></span><span class="jp-marke__text">{W.marke}</span></p>
+                    <h4 class="jp-block__titel">{sch.titel}</h4>
+                    <p class="jp-block__text">{sch[l.text]}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <p class="jp__punkte" aria-hidden="true">{N.karten.map(() => <i></i>)}</p>
         </div>
-        <ul class="jp-bloecke">
-          {N.karten.map((k) => (
-            <li class="jp-block j6-ein">
-              <ProblemIcon icon={k.icon} class="jp-block__ico" />
-              <h3 class="jp-block__titel">{k.titel}</h3>
-              <p class="jp-block__text">{k.text}</p>
-            </li>
-          ))}
-        </ul>
       </>
     )}
   </div>
 </section>
 
+
+<script>
+  // Jamil #6954–#6958: Weg Karte für Karte über den gemeinsamen Bühnen-Kern. 5 Scroll-Stücke: 0 = alle Probleme, 1–4 = so viele Karten gelöst
+  // (das letzte Stück hält den fertigen Zustand, dann scrollt die Seite weiter). Nur Klassen umschalten, Bewegung macht CSS (opacity/transform).
+  import { erstelleBuehne } from '../../scripts/buehne-kern';
+  const bereich = document.querySelector<HTMLElement>('section.jp--neu');
+  const buehne = bereich?.querySelector<HTMLElement>('[data-jp-buehne]');
+  const karten = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-karte]')] : [];
+  if (bereich && buehne && karten.length) {
+    const punkte = [...buehne.querySelectorAll<HTMLElement>('.jp__punkte i')];
+    let stand = -1;
+    const setze = (n: number) => {
+      if (n === stand) return;
+      stand = n;
+      karten.forEach((k, i) => k.classList.toggle('ist-geloest', i < n));
+      punkte.forEach((p, i) => p.classList.toggle('is-aktiv', i < n));
+    };
+    erstelleBuehne({
+      bereich, buehne, schritte: karten, stuecke: karten.length + 1,
+      klassen: { buehne: 'jp--weg', gleiten: 'jp--gleiten' },
+      mqBuehne: '(min-width: 900px) and (min-height: 700px)',
+      aufModus: () => { stand = -1; karten.forEach((k) => k.classList.remove('ist-geloest')); punkte.forEach((p) => p.classList.remove('is-aktiv')); },
+      aufStueck: (stueck) => setze(stueck),
+    });
+  }
+</script>

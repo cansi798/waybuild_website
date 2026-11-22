@@ -73,6 +73,8 @@ export const J_HERO = {
   // seit Jamil #6485 nur noch Satz 2 (Satz 1 „Fertige Standard-Programme passen selten zu Ihrem echten Arbeitsalltag.“ entfernt)
   unter: 'Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
+  /** Jamil #6959 (22.11.2026): dezente Zeile direkt über der H1 – ohne Superlativ */
+  hinweis: 'Ideal für Gründer und Betriebe, die sich neu aufstellen',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
   /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
   preiszeile: [
@@ -131,6 +133,19 @@ export const J_PROBLEM_NEU = {
     { icon: 'puzzle', titel: 'Sie verbiegen Ihren Alltag für fertige Programme', text: 'Standard-Software zwingt Sie in starre Abläufe. Was das Programm nicht kann, wird am Ende doch wieder mit Excel-Listen und Notizzetteln irgendwie drumherum gebastelt.' },
     { icon: 'pfeile', titel: 'Alles wird doppelt und dreifach abgetippt', text: 'Kundendaten wandern von der E-Mail in eine Excel-Liste, von dort in den Kalender und irgendwann ins Rechnungsprogramm – das kostet Nerven und führt zu Fehlern.' },
     { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeiter brauchen Wochen, um durchzublicken.' },
+  ],
+} as const;
+
+/** Jamil #6954–#6958 (22.11.2026): Abschnitt „Wo Betriebe heute …“ als Weg Karte für Karte. Am PC bleibt der Abschnitt stehen, pro
+ *  Scroll-Schritt wird EINE Karte (1 → 2 → 3 → 4) vom Problem zur webgold-Lösung; erst nach Karte 4 geht es weiter. Die Lösungstexte
+ *  sind NUR vorhandene Texte aus J_MASS.schritte: `schritt` = Index dort, `text` = welches Feld (zeigt/warum). `marke` = kleine Marke. */
+export const J_PROBLEM_WEG = {
+  marke: 'So machen wir es',
+  loesungen: [
+    { schritt: 0, text: 'zeigt' }, // Visitenkarte → Online-Kalkulator auf der Website, Anfrage direkt
+    { schritt: 3, text: 'warum' }, // verbiegen für fertige Programme → Software, die sich nach Ihrem Betrieb richtet
+    { schritt: 1, text: 'zeigt' }, // doppelt abtippen → Auftrags-Maske, Anfrage wird automatisch Auftrag
+    { schritt: 2, text: 'zeigt' }, // aktuelle Info suchen → Kundenportal, alles an einem Ort
   ],
 } as const;
 

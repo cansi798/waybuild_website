@@ -174,5 +174,6 @@
 
 /* Jamil #6907: Screenshot-Rahmen – keine graue Fläche mehr hinter dem Bild; der Screenshot selbst bekommt Goldlinie, runde Ecken, dezenten Schatten */
 .jm-geraet.jm-geraet--bild { padding: 0; background: none; border: 0; border-radius: 0; }
-.jm-mock.jm-mock--bild { background: var(--white); border-radius: 14px; border: 1px solid var(--gold);
+/* Jamil #6960 (22.11.2026): Goldlinie um die Screenshots entfernt; runde Ecken und dezenter Schatten bleiben (Etikett .jm-label behält seinen Rahmen) */
+.jm-mock.jm-mock--bild { background: var(--white); border-radius: 14px; border: 0;
   box-shadow: 0 14px 30px -18px rgb(31 41 55 / 38%), 0 2px 6px -2px rgb(31 41 55 / 10%); }

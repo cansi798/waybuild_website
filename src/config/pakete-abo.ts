@@ -122,7 +122,7 @@ export const KOMPLETTPAKET = {
   /** Seit #6400 einzeln ODER zusammen mit einer Website buchbar (vorher nur in Kombination, #5642). */
   text: 'Ideal, wenn Sie interne Abläufe vereinfachen oder ein Kundenportal brauchen. Kombinierbar oder einzeln buchbar.',
   preis: 199.99,
-  ab: false, // Karte #6400: „199,99 € / Monat (kombinierbar)“; im Hero-Satz steht „ab“ (#6396)
+  ab: true, // seit Jamil #6964 (22.11.2026) überall „ab 199,99 €“ (Karte: „ab“ klein); vorher #6400 ohne „ab“
   kombiAb: false,
   /** true = nur zusammen mit einem Website-Paket buchbar (bis #6400). Seit #6400: false. */
   nurMitWebsite: false,

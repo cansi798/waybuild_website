@@ -166,6 +166,15 @@ html[data-hero-stil='weiss'] .jh .jf { box-shadow: 0 30px 60px -36px rgb(17 24 3
   .jh--mitte .jh-schnell { animation-delay: 640ms; } /* Jamil #6947: nach den Knöpfen */
   .jh--mitte .jh__preise { animation-delay: 780ms; }
 }
+/* Jamil #6959: dezente Zeile über der H1 – kleine Pille, Goldpunkt (#EFBF04), dunkle Schrift; blendet als Erstes mit ein */
+.jh__hinweis { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 -4px; padding: 6px 14px; border-radius: 999px;
+  background: rgb(255 255 255 / 72%); border: 1px solid rgb(17 24 39 / 10%); color: #111827; font-size: 0.88rem; font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.jh__hinweis-punkt { flex: none; width: 8px; height: 8px; border-radius: 50%; background: #EFBF04; box-shadow: 0 0 0 3px rgb(239 191 4 / 22%); }
+.jh--mitte .jh__hinweis { margin-inline: auto; }
+@media (max-width: 599px) { .jh__hinweis { font-size: 0.8rem; padding: 6px 14px; border-radius: 16px; text-align: center; } .jh__hinweis-punkt { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .jh__hinweis { animation: jh-dezent 1100ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both; }
+}
 @keyframes jh-dezent { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes jh-titel-gleiten { from { transform: translateY(8px); } to { transform: none; } }
 
