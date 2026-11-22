@@ -9,7 +9,6 @@
 // je Karte untereinander. Beide Seiten bleiben immer im DOM und für Screenreader lesbar. Die Fassung #6198 (J_PROBLEM) bleibt über ALT_ZEIGEN.problem6198Alt abrufbar. Stil: start-6176.css (.jp-*).
 import { hl } from '../../lib/hl';
 import { J_PROBLEM as T, J_PROBLEM_NEU as N, J_PROBLEM_WEG as W } from '../../config/start-6176';
-import J6Icon from './J6Icon.astro';
 import ProblemIcon from './ProblemIcon.astro';
 import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeiden, wenn der alte Abschnitt wieder an ist
 ---
@@ -51,7 +50,8 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
                     <p class="jp-block__text">{k.text}</p>
                   </div>
                   <div class="jp-seite jp-seite--loesung" data-jp-hinten>
-                    <p class="jp-marke"><span class="jp-marke__haken" aria-hidden="true"><J6Icon name="haken" size={22} /></span><span class="jp-marke__text">{W.marke}</span></p>
+                    {/* Jamil #7030: kein Haken-Kreis, kein Etikett mehr; dasselbe Symbol wie auf der Problemkarte */}
+                    <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
                     <h3 class="jp-block__titel">{l.titel}</h3>{/* h3 statt h4 (Jamil #7006): nach dem Flip ist nur diese Seite sichtbar, axe heading-order */}
                     <p class="jp-block__text">{l.inhalt}</p>
                   </div>

@@ -43,7 +43,8 @@
   --fs-body: 1rem;
   --fs-small: 0.8rem;
   --fs-preis: var(--fs-h2);
-  --hl-farbe: #C99700; /* Jamil #7024/#7026: Goldschrift der Schlüsselwörter (bestätigt); Kontrast 2,65:1 auf Weiß */
+  --hl-farbe: #EFBF04; /* Jamil #7031: Goldschrift der Schlüsselwörter = Gold des CTA-Knopfs in der Kopfzeile (.hdr__cta, Header.astro);
+                          Kontrast 1,73:1 auf Weiß bewusst hingenommen (Jamil-Entscheidung). Vorher #C99700 (#7024/#7026). */
   --wrap: 1280px; /* Jamil #6978: alle Abschnitte gleich breit (vorher 1160 px) */
   color-scheme: light;
 }

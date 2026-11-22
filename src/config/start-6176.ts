@@ -141,7 +141,7 @@ export const J_PROBLEM_NEU = {
  *  waren anfangs NUR Texte aus J_MASS.schritte (`schritt` = Index dort, `text` = Feld, nur noch als Herkunft vermerkt); seit Jamil
  *  #6984–#6993 hat jede Karte eigenen `titel` + `inhalt` (angezeigt), J_MASS bleibt unverändert. `marke` = kleine Marke. */
 export const J_PROBLEM_WEG = {
-  marke: 'So machen wir es',
+  // marke „So machen wir es“ seit Jamil #7030 entfernt
   loesungen: [
     // Karte 1: eigener Text seit Jamil #6984/#6989 (22.11.2026), WÖRTLICH; J_MASS bleibt unverändert (vorher J_MASS.schritte[0] „Ein individueller
     // Online-Kalkulator auf der Website“ / zeigt).
