@@ -1,6 +1,6 @@
 /* Schrift auf allen Seiten einheitlich Plus Jakarta Sans (QA #5952, wie Startseite seit #5903; vorher Montserrat + Jost),
    lokal über @fontsource-variable/plus-jakarta-sans, kein Google-Server. Gewichte: Überschriften 700–800, Text 400–500, Buttons 600. */
-@import '@fontsource-variable/plus-jakarta-sans/wght.css';
+@import './schrift.css'; /* nur latin + latin-ext (vorher @fontsource …/wght.css mit allen Zeichensätzen) */
 
 :root {
   /* Farbpalette der Startseite auf ALLEN Seiten (QA #5952, Jamil #5955 „Ja design komplett anpassen“; vorher nur

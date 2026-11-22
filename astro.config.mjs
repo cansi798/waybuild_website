@@ -45,5 +45,9 @@ export default defineConfig({
   // (satteri() ist Astros Standard-Prozessor; hier nur um das Tabellen-Plugin ergänzt)
   // Basis-Pfad vor internen Markdown-Links (Leistungsseiten, Jamil #5274/#5276)
   markdown: { processor: satteri({ hastPlugins: [tabellenPlugin, basisLinksPlugin(base)] }) },
+  // CSS bleibt im HTML (kein zusätzlicher, blockierender CSS-Request beim ersten Aufruf). Gemessen 22.11.2026:
+  // 'auto' lagert ~185 KB CSS aus, verschlechtert aber das LCP beim Erstbesuch mobil um ~150–300 ms → bewusst 'always'.
   build: { inlineStylesheets: 'always' },
+  // Astro-Prefetch (prefetchAll, hover) bewusst AUS: getestet 22.11.2026, das zusätzliche Modul-Skript kostet mobil
+  // ~150 ms FCP beim Erstaufruf (Lighthouse, 3 Läufe je Seite); der Gewinn beim Weiterklicken wiegt das nicht auf.
 });
