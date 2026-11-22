@@ -105,7 +105,7 @@ const isCurrent = (path?: string) => path && current === href(path);
     background: rgb(255 255 255 / 94%);
   }
   @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .hdr::before { background: rgb(255 255 255 / 60%); -webkit-backdrop-filter: saturate(150%) blur(8px); backdrop-filter: saturate(150%) blur(8px); }
+    .hdr::before { background: rgb(255 255 255 / 80%); -webkit-backdrop-filter: saturate(150%) blur(8px); backdrop-filter: saturate(150%) blur(8px); }
   }
   .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
   .hdr .hdr__cta { background: #EFBF04; border-color: #EFBF04; color: #111827; } /* Jamil #6475: Gold, Schrift Anthrazit (≈ 8,5 : 1) */
