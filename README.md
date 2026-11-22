@@ -99,6 +99,11 @@ Repository-Variable `WEB3FORMS_KEY` (GitHub) bzw. in `.env` (lokal) setzen – d
 | Preise | 100 | 100 | 100 | 100 |
 | Kontakt | 100 | 100 | 100 | 100 |
 
+## Schrift und Farbe (verbindlich)
+
+- **Schriftgrößen nur über die Typo-Skala** in `src/styles/global.css` (Jamil #7008/#7027): `--fs-display`, `--fs-h2`, `--fs-h3`, `--fs-lead`, `--fs-body`, `--fs-small`, `--fs-preis`. Neue Texte und Elemente nutzen ausschließlich diese Variablen, keine Einzelwerte (kein px/rem/em/clamp direkt im Komponenten-CSS). Passt keine Stufe, wird die Skala angepasst.
+- **Schlüsselwörter in Überschriften** stehen in Texten/Config als `==Wort==` und werden über `src/lib/hl.ts` zu `<mark class="hl">` (Goldschrift, Farbe zentral in `--hl-farbe`, Jamil #7024/#7026). In `<title>`, Meta und JSON-LD nur reiner Text (`ohneHl`).
+
 ## SEO-Bausteine
 
 Prüfung: `npm run seo` (läuft auch bei jedem Deploy – bei Fehlern wird nicht veröffentlicht).
