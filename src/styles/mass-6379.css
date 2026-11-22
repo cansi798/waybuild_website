@@ -124,6 +124,7 @@
 
 /* Echte Referenz Bauwelt Handwerk (Jamil #6384/#6385): Bildschirmfoto im selben Rahmen, überall 16:11 (Bilder sind so zugeschnitten) */
 .jm-mock.jm-mock--bild { aspect-ratio: 16 / 11; background: #f4f2ee; }
+.jm-mock.jm-mock--portal { aspect-ratio: 1280 / 759; } /* Portal-Screenshot (Jamil #6906) */
 .jm-mock.jm-mock--breit { aspect-ratio: 1280 / 765; } /* Auftrags-Screenshot (Jamil #6900) ungekürzt im Originalformat */
 .jm-mock--bild picture, .jm-mock--bild img { display: block; width: 100%; height: 100%; }
 .jm-mock--bild img { object-fit: cover; object-position: top left; }
@@ -174,3 +175,8 @@
 
 /* Jamil #6461: Tab-Kacheln mittig zum Bild (Versatz rechnet das Skript in J6Wechsler.astro) */
 @media (min-width: 900px) { .jm__tabs { margin-top: var(--jm-tabs-top, 0px); align-self: start; } }
+
+/* Jamil #6907: Screenshot-Rahmen – keine graue Fläche mehr hinter dem Bild; der Screenshot selbst bekommt Goldlinie, runde Ecken, dezenten Schatten */
+.jm-geraet.jm-geraet--bild { padding: 0; background: none; border: 0; border-radius: 0; }
+.jm-mock.jm-mock--bild { background: var(--white); border-radius: 14px; border: 1px solid var(--gold);
+  box-shadow: 0 14px 30px -18px rgb(31 41 55 / 38%), 0 2px 6px -2px rgb(31 41 55 / 10%); }

@@ -50,7 +50,7 @@ const BW = T.bauwelt;
         {S.map((s, i) => (
           <div class={`jm-panel${i === 0 ? ' ist-aktiv' : ''}`} role="tabpanel" id={`jm-panel-${i}`} aria-labelledby={`jm-tab-${i}`} tabindex="0">
             <p class="jm-panel__zitat" aria-hidden="true">{s.problem}</p>
-            <div class="jm-geraet">
+            <div class={`jm-geraet${!MUSTER && i < 3 ? ' jm-geraet--bild' : ''}`}>
               {i === 3 && (
                 <>
                   <p class="sr-only">{s.titel}: {s.zeigt}</p>
@@ -67,7 +67,7 @@ const BW = T.bauwelt;
                 </>
               )}
               {!MUSTER && i < 3 && (
-                <div class={`jm-mock jm-mock--bild${i === 1 ? ' jm-mock--breit' : ''}`}>
+                <div class={`jm-mock jm-mock--bild${i === 1 ? ' jm-mock--breit' : i === 2 ? ' jm-mock--portal' : ''}`}>
                   <Bild name={BW.bilder[i].bild} alt={BW.bilder[i].alt} widths={[480, 800, 1200, 1600]}
                     sizes="(min-width: 1200px) 680px, (min-width: 900px) 56vw, calc(100vw - 32px)" />
                 </div>

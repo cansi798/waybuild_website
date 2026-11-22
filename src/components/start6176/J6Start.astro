@@ -51,7 +51,11 @@ const ds = href('/datenschutz/');
         {/* type=text statt url: „www.ihre-firma.de“ ohne https:// soll gehen; Prüfung im Skript */}
         <label class="js7-feld"><span>{S.url}*</span><input name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={S.urlBeispiel} required data-art="url" /></label>
         <label class="js7-feld"><span>{S.email}* <small>{S.emailZusatz}</small></span><input name="email" type="email" inputmode="email" autocomplete="email" required /></label>
-        <label class="js7-feld"><span>{S.telefon} <small>{S.optional}</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" /></label>
+        <fieldset class="js7-chips" data-rueckweg>
+          <legend>{S.rueckweg.legende}</legend>
+          {S.rueckweg.optionen.map((o, n) => <label class="js7-chip"><input type="radio" name="informiert_per" value={o} checked={n === 0} /><span>{o}</span></label>)}
+        </fieldset>
+        <label class="js7-feld"><span>{S.telefon}<em data-tel-pflicht hidden>*</em> <small data-tel-opt>{S.optional}</small></span><input name="telefon" type="tel" inputmode="tel" autocomplete="tel" data-art="telefon" data-fehler={S.telefonFehler} data-pruefen={S.telefonPruefen} /></label>
         <input type="text" name="website" class="js7-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="paket" value="" />
         <label class="js7-check"><input type="checkbox" name="datenschutz" required /><span>Ich habe die <a href={ds}>Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden.*</span></label>
@@ -83,9 +87,11 @@ const ds = href('/datenschutz/');
   }));
   document.querySelectorAll<HTMLFormElement>('form[data-js7]').forEach((form) => {
     const status = form.querySelector<HTMLElement>('.js7-status')!;
-    const felder = [...form.querySelectorAll<HTMLInputElement>('input[required]')];
+    const felder = [...form.querySelectorAll<HTMLInputElement>('input[required], input[data-art="telefon"]')];
     const meldung = (f: HTMLInputElement): string => {
       const v = f.value.trim();
+      if (!f.required) return ''; // Telefon ist nur bei WhatsApp/Beides Pflicht
+      if (f.dataset.art === 'telefon') return !v ? f.dataset.fehler! : TEL.test(v) ? '' : f.dataset.pruefen!;
       if (f.type === 'checkbox') return f.checked ? '' : 'Bitte stimmen Sie der Datenschutzerklärung zu.';
       if (!v) return f.name === 'name' ? 'Bitte geben Sie Ihren Namen an.' : f.name === 'website_url' ? 'Bitte geben Sie Ihre Website-Adresse an.' : f.name === 'kontakt' ? 'Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an.' : 'Bitte geben Sie Ihre E-Mail-Adresse an.';
       if (f.dataset.art === 'kontakt' && !MAIL.test(v) && !TEL.test(v)) return 'Bitte prüfen Sie die Angabe (Telefonnummer oder E-Mail, zum Beispiel name@firma.de).';
@@ -102,10 +108,20 @@ const ds = href('/datenschutz/');
       el.textContent = text; f.setAttribute('aria-invalid', 'true'); f.setAttribute('aria-describedby', id);
       return false;
     };
+    // Rückweg-Auswahl (Jamil #6907): bei WhatsApp oder Beides wird die Telefonnummer Pflicht
+    const tel = form.querySelector<HTMLInputElement>('input[data-art="telefon"]');
+    form.querySelectorAll<HTMLInputElement>('input[name="informiert_per"]').forEach((r) => r.addEventListener('change', () => {
+      if (!tel) return;
+      const pflicht = r.value !== 'E-Mail';
+      tel.required = pflicht;
+      form.querySelector<HTMLElement>('[data-tel-pflicht]')!.hidden = !pflicht;
+      form.querySelector<HTMLElement>('[data-tel-opt]')!.hidden = pflicht;
+      if (!pflicht) zeige(tel); else if (tel.hasAttribute('aria-invalid')) zeige(tel);
+    }));
     felder.forEach((f) => f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => { if (f.hasAttribute('aria-invalid')) zeige(f); }));
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const fehlend = felder.filter((f) => !zeige(f));
+      const fehlend = felder.filter((f) => !zeige(f)); // zeigt Meldungen am jeweiligen Feld
       if (fehlend.length) { fehlend[0].focus(); return; }
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
       if (data.website) return; // Honeypot
@@ -113,7 +129,7 @@ const ds = href('/datenschutz/');
       if (data.kontakt) { if (MAIL.test(data.kontakt.trim())) data.email = data.kontakt.trim(); else data.telefon = data.kontakt.trim(); }
       if (data.website_url && !/^https?:\/\//i.test(data.website_url.trim())) data.website_url = `https://${data.website_url.trim()}`;
       if (!data.paket) delete data.paket;
-      const betreff = `${form.dataset.betreff}${data.thema ? ` (${data.thema})` : ''}${data.paket ? ` – Paket: ${data.paket}` : ''}`;
+      const betreff = `${form.dataset.betreff}${data.thema ? ` (${data.thema})` : ''}${data.informiert_per ? ` – Info per ${data.informiert_per}` : ''}${data.paket ? ` – Paket: ${data.paket}` : ''}`;
       data.anliegen = betreff;
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {

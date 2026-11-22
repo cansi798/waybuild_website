@@ -153,7 +153,7 @@ export const J_MASS = {
     bilder: [
       { bild: 'referenzen/bauwelt-kalkulator', alt: 'Projekt-Rechner auf bauwelt-handwerk.de: Ergebnis „Ihre erste Preisspanne“ für eine Badsanierung mit 8 m², 14.340 bis 19.500 Euro inklusive Mehrwertsteuer, darunter der Knopf „Angaben ändern“.' },
       { bild: 'referenzen/bauwelt-auftrag', alt: 'Auftragsübersicht im CRM mit Testdaten: Auftrag „Badsanierung“ mit Status-Leiste von Anfrage bis Abgerechnet, Zeiterfassung mit Start und Abfahrt, Aufgabenliste mit Zuständigen sowie Kunde und Einsatzort.' },
-      { bild: 'referenzen/bauwelt-kundenportal', alt: 'Kundenportal von Bauwelt Handwerk mit Testdaten: nächster Termin, ein wartendes Angebot zum Annehmen oder Ablehnen, Fortschritt des Auftrags „Ladenumbau Trockenbau“ und persönlicher Projektbegleiter.' },
+      { bild: 'referenzen/bauwelt-kundenportal', alt: 'Kundenportal von Bauwelt Handwerk mit Testdaten: Auftrag „Badsanierung“ mit Projekt-Verlauf von Anfrage bis Fertigstellung, nächster Termin, Arbeitsschritte, persönlicher Projektbegleiter und Team.' },
     ],
   },
   tabsLabel: 'Vier Beispiele aus dem Alltag', // seit #6427 vier Tabs
@@ -170,7 +170,7 @@ export const J_MASS = {
     { kurz: 'Kalkulator', problem: '„Kunden fragen immer das Gleiche – und wir rechnen alles per Hand aus.“',
       titel: 'Ein individueller Online-Kalkulator auf der Website',
       zeigt: 'Der Kunde wählt auf der Website Maße, Material oder Leistung aus, sieht sofort eine grobe Preisspanne und schickt die Anfrage ab.',
-      warum: 'Kein Standard-Kontaktformular! Ein interaktives Werkzeug, das genau nach den Regeln und Preisen des Betriebs rechnet.' },
+      warum: 'Kein Standard-Kontaktformular! Ein interaktives Werkzeug, das genau nach den Regeln und Preisen des Betriebs rechnet. Aus jeder Anfrage auf der Website wird direkt ein Auftrag in der Software angelegt.' },
     { kurz: 'Auftrag', problem: '„Standard-Programme passen nicht zu unseren Aufträgen.“',
       titel: 'Eine maßgeschneiderte Auftrags-Maske',
       zeigt: 'Genau 5 relevante Felder statt 50 überladene Reiter. Aus der Website-Anfrage entsteht automatisch ein Auftrag mit passender Materialliste und Status-Ampel.',
@@ -212,20 +212,18 @@ export const J_ERST = {
       zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'],
       /** Kennzahl-Leiste statt Zeit-Badges und Aufzählung (Jamil #6502); Inhalt wie vorher „bereits am nächsten Werktag / 3 Werktage später“ */
       kennzahlen: [{ wert: '1 Werktag', text: 'bis zur neuen Website-Startseite' }, { wert: '3 Werktage', text: 'bis zum ersten Software-Prototyp' }] },
-    { nr: '03', titel: 'Wenn es passt: Feinschliff in Ihrem Tempo',
+    { nr: '03', titel: 'Feinschliff in Ihrem Tempo',
       text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zur Veröffentlichung oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Textnachricht.',
       sprache: '0:12',
       /** Chat-Grafik statt Sprachnachrichten-Blase (Jamil #6503), nur Deko (aria-hidden) */
       chat: { text: 'Bitte Telefonnummer oben ergänzen', status: 'Umgesetzt' } },
     // 4. Karte (Jamil #6518), Text wörtlich; Verlauf-Grafik nur Deko (aria-hidden)
-    { nr: '04', titel: 'Danach: Ihre Lösung wächst mit',
+    { nr: '04', titel: 'Ihre Lösung wächst mit Ihnen',
       text: 'Nach der Veröffentlichung geht es weiter: Wir optimieren, passen an und entwickeln Ihre Website oder Software laufend weiter – genau dann, wenn Sie etwas brauchen. Auch hier genügt eine Sprachnachricht, eine Textnachricht oder ein Screenshot.',
-      verlauf: { titel: 'Weiterentwicklung', eintraege: [
-        { datum: '03.02.', text: 'Neue Leistungsseite ergänzt' },
-        { datum: '17.03.', text: 'Online-Terminbuchung hinzugefügt' },
-        { datum: '08.05.', text: 'Preise aktualisiert' },
-        { datum: '22.06.', text: 'Kundenportal erweitert' },
-      ] } },
+      // Jamil #6913: Kreislauf-Grafik statt Verlaufs-Karte „Weiterentwicklung“ (eigene SVG, Textalternative in `beschreibung`)
+      kreis: { stationen: ['Wunsch schicken', 'Wir setzen um', 'Online', 'Wirkung prüfen'],
+        mitte: ['ganz einfach –', 'per Sprachnachricht,', 'Text oder Screenshot'],
+        beschreibung: 'Kreislauf der Weiterentwicklung in vier Schritten: Sie schicken Ihren Wunsch, wir setzen ihn um, die Änderung geht online, wir prüfen die Wirkung – und dann beginnt der Kreislauf von vorn. Der Wunsch geht ganz einfach per Sprachnachricht, Text oder Screenshot.' } },
   ],
 } as const;
 
@@ -241,7 +239,7 @@ export const J_START = {
     text: 'Wir lernen Ihren Betrieb in einem lockeren Gespräch kennen, bringen eigene Optimierungsvorschläge ein und bauen Ihnen eine kostenlose Vorschau (Website morgen / Software in 3 Werktagen).',
     name: 'Ihr Name',
     kontakt: 'Telefonnummer oder E-Mail',
-    grob: 'Worum geht es grob?',
+    grob: 'Worum geht es?',
     optional: '(optional)',
     themen: ['Website', 'Software', 'Beides'],
     knopf: 'Kostenloses Gespräch anfragen',
@@ -258,6 +256,10 @@ export const J_START = {
     emailZusatz: '(für den Vorschau-Link)',
     telefon: 'Telefonnummer für Rückfragen',
     optional: '(optional)',
+    // Jamil #6907: Wahl des Rückwegs; bei WhatsApp/Beides wird die Telefonnummer Pflicht (Prüfung im Skript von J6Start)
+    rueckweg: { legende: 'Wie möchten Sie informiert werden?', optionen: ['E-Mail', 'WhatsApp', 'Beides'] },
+    telefonFehler: 'Bitte geben Sie Ihre Telefonnummer an, damit wir Sie per WhatsApp erreichen können.',
+    telefonPruefen: 'Bitte prüfen Sie die Telefonnummer (zum Beispiel 0171 1234567).',
     knopf: 'Kostenlose Vorschau für morgen anfordern',
     betreff: 'Website-Vorschau morgen',
   },

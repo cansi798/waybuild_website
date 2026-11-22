@@ -11,6 +11,13 @@ const [k1, k2, k3, k4] = T.karten;
 // Wellenform: feste Balkenhöhen (in %), wie eine kurze Sprachnachricht
 const WELLE = [30, 55, 80, 45, 65, 95, 60, 35, 70, 50, 85, 40, 60, 75, 45, 30, 55, 70, 40, 25, 45, 30];
 const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
+// Kreislauf-Grafik (Jamil #6913): vier Stationen auf einer Ellipse, Pfeilbögen dazwischen (Winkel in Grad, 0 = rechts, Uhrzeigersinn)
+const PT = (w: number): [number, number] => [200 + 140 * Math.cos((w * Math.PI) / 180), 150 + 100 * Math.sin((w * Math.PI) / 180)];
+const ST = [PT(-90), PT(0), PT(90), PT(180)].map(([x, y]) => [Math.round(x), Math.round(y)]);
+const BOGEN = [[-60, -24], [24, 60], [120, 156], [204, 240]].map(([a, b]) => {
+  const [x1, y1] = PT(a), [x2, y2] = PT(b);
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)} A140 100 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+});
 ---
 
 <section class="section sn je" id="erst-sehen" aria-labelledby="je-h">
@@ -77,14 +84,24 @@ const Blitz = '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />';
         <div class="je-karte__links">
         <span class="je-karte__nr" aria-hidden="true">{k4.nr}</span>
         <h3 class="je-karte__titel">{k4.titel}</h3>
-        <div class="je-verlauf" aria-hidden="true">
-          <span class="je-verlauf__titel">{k4.verlauf.titel}</span>
-          <ul>
-            {k4.verlauf.eintraege.map((e) => (
-              <li><span class="je-verlauf__haken"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 6 9 17l-5-5" /></svg></span><span class="je-verlauf__text">{e.text}</span><span class="je-verlauf__datum">{e.datum}</span></li>
+        <figure class="je-kreis">
+          <svg viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+            <defs>
+              <marker id="je-kreis-pfeil" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#8C6D12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></marker>
+            </defs>
+            {BOGEN.map((d) => <path class="je-kreis__bogen" d={d} marker-end="url(#je-kreis-pfeil)" />)}
+            {k4.kreis.stationen.map((t, n) => (
+              <g class="je-kreis__station">
+                <rect x={ST[n][0] - 58} y={ST[n][1] - 18} width="116" height="36" rx="18" />
+                <text x={ST[n][0]} y={ST[n][1] + 5} text-anchor="middle">{t}</text>
+              </g>
             ))}
-          </ul>
-        </div>
+            <text class="je-kreis__mitte" text-anchor="middle">
+              {k4.kreis.mitte.map((z, n) => <tspan x="200" y={146 + n * 17}>{z}</tspan>)}
+            </text>
+          </svg>
+          <figcaption class="sr-only">{k4.kreis.beschreibung}</figcaption>
+        </figure>
         </div>
         <div class="je-karte__rechts">
         <p class="je-karte__text">{k4.text}</p>
