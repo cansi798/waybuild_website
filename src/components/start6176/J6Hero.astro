@@ -32,7 +32,6 @@ const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung
       {ALT_ZEIGEN.heroZeile && <p class="jh__zeile">{T.zeile}</p>}{/* Jamil #6417: ausgeblendet */}
       <div class="jh-knopfe">
         <a class="btn btn--lg jh-btn" href={kontakt}>{T.knopf}</a>
-        <a class="btn btn--lg jh-btn jh-btn--rand" href={href('/beispiele/')}>{T.knopf2}</a>
       </div>
       {/* Jamil #6927: Schnellstart als schlanke Zeile. Ohne JS: GET zum großen Formular (#start-schnell). Mit JS: Skript in J6Start (data-js7, data-mehr) */}
       {zeigeSchnell && (

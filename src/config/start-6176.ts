@@ -74,7 +74,6 @@ export const J_HERO = {
   unter: 'Wir entwickeln Ihren individuellen Webauftritt und maßgeschneiderte Software – und verbinden beides zu einem System, das exakt so funktioniert, wie Ihr Betrieb arbeitet.',
   zeile: 'Keine Tickets. Kein CMS. Keine Technikkenntnisse.',
   knopf: 'Kostenlose Beratung', // Ziel: Kontakt, Anliegen Erstberatung (ANLIEGEN.erstberatung)
-  knopf2: 'Beispiele ansehen', // Ziel: /beispiele/
   /** Ruhige Zeile direkt unter den Knöpfen (Jamil #6396, wörtlich; Preise aus HERO_PREISE) */
   preiszeile: [
     `Websites ab ${preis(HERO_PREISE.website)}${HERO_PREISE.mwst}\u00a0/ Monat`,
