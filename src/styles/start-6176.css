@@ -448,6 +448,9 @@
   gap: clamp(40px, 5vw, 64px) clamp(40px, 7vw, 112px); }
 .jp-block { min-width: 0; display: grid; gap: 12px; align-content: start; max-width: 52ch; }
 .jp-block__ico { width: 44px; height: 44px; color: var(--gold); margin-bottom: 6px; } /* einheitliches Gold (Jamil #6915) */
+/* Jamil #7000 (22.11.2026): Icons in einem Kreis (zartes Gold, Icon dunkel); Lösungsseite: Goldkreis mit Haken (.jp-marke__haken) */
+.jp-kreis { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #FFF6CC; color: #111827; margin-bottom: 4px; }
+.jp-kreis .jp-block__ico { width: 28px; height: 28px; margin: 0; color: #111827; }
 .jp-block__titel { margin: 0; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
 .jp-block__text { margin: 0; font-size: clamp(1rem, 0.93rem + 0.2vw, 1.04rem); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -459,10 +462,21 @@
 .jp-seite { min-width: 0; display: grid; gap: 12px; align-content: start; }
 .jp-seite--loesung { padding: 18px 20px 20px; border-radius: 18px; background: #FFFBEA; border-left: 3px solid #EFBF04; }
 .jp-marke { margin: 0 0 2px; display: flex; align-items: center; gap: 10px; }
-.jp-marke__haken { flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #EFBF04; color: #111827; }
+.jp-marke__haken { flex: none; display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #EFBF04; color: #111827; }
 .jp-marke__text { display: inline-block; padding: 4px 11px; border-radius: 999px; background: #FFDE21; color: #111827; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; }
 .jp-seite--loesung .jp-block__text { color: #374151; }
-.jp__punkte { display: none; }
+/* Jamil #7000: die vier Punkte als Karten nebeneinander – weiß, feine Haarlinie, runde Ecken, ohne Schatten; PC 4 Spalten, mittel 2 × 2,
+   Handy untereinander. Gleiche Höhe je Reihe (Grid stretch). Fortschrittsstriche der Bühne seit #6999/#7002 entfernt. */
+.jp-bloecke--weg { gap: 16px; align-items: stretch; }
+.jp-bloecke--weg .jp-block { max-width: none; align-content: stretch; padding: clamp(20px, 1.8vw, 26px); border-radius: 20px; background: var(--white);
+  border: 1px solid var(--line); box-shadow: none; }
+.jp-bloecke--weg .jp-seite--loesung { padding: 0; border-radius: 0; background: none; border-left: 0; border-top: 1px solid var(--line); padding-top: 18px; }
+@media (min-width: 640px) { .jp-bloecke--weg { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 1100px) {
+  .jp-bloecke--weg { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .jp-bloecke--weg .jp-block__titel { font-size: clamp(1.1rem, 0.85rem + 0.45vw, 1.25rem); }
+  .jp-bloecke--weg .jp-block__text { font-size: 0.98rem; line-height: 1.6; }
+}
 
 @media (min-width: 900px) and (min-height: 700px) {
   .jp--neu.jp--weg { padding-block: 0; }
@@ -473,15 +487,14 @@
   .jp--weg .jp-wandel { display: grid; gap: 0; }
   .jp--weg .jp-seite { grid-area: 1 / 1; transition: opacity 560ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1); }
   .jp--weg .jp-seite--loesung { opacity: 0; transform: translateY(12px) scale(0.985); padding: 0; background: none; border: 0; border-radius: 0; }
+  .jp--weg .jp-bloecke--weg { gap: 20px; }
   .jp--weg .ist-geloest .jp-seite--problem { opacity: 0; transform: translateY(-10px) scale(0.985); }
   .jp--weg .ist-geloest .jp-seite--loesung { opacity: 1; transform: none; }
   .jp--weg .jp-marke__haken { transform: scale(0.6) rotate(-20deg); transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 160ms; }
   .jp--weg .ist-geloest .jp-marke__haken { transform: none; }
-  .jp--weg .jp__punkte { display: flex; justify-content: center; gap: 8px; position: absolute; left: 0; right: 0; bottom: clamp(14px, 3vh, 30px); margin: 0; }
-  .jp--weg .jp__punkte i { width: 28px; height: 4px; border-radius: 4px; background: #E2E8F0; transition: background 320ms ease; }
-  .jp--weg .jp__punkte i.is-aktiv { background: #EFBF04; }
 }
 @media (min-width: 900px) and (min-height: 700px) and (max-height: 820px) {
   .jp--weg .jp-block__text { font-size: 0.95rem; line-height: 1.55; }
-  .jp--weg .jp-block__ico, .jp--weg .jp-marke__haken { width: 36px; height: 36px; }
+  .jp--weg .jp-kreis, .jp--weg .jp-marke__haken { width: 44px; height: 44px; }
+  .jp--weg .jp-kreis .jp-block__ico { width: 24px; height: 24px; }
 }
