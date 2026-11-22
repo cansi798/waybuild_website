@@ -36,7 +36,7 @@ umfang:
 umfangHinweis: "Wenn vor einem Termin erst Fragen zu klären sind, ist ein gutes Anfrageformular oft der bessere Weg, mehr dazu unter [Anfragen](/leistungen/anfragen/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, klären wir, welche Termine Sie anbieten und wie Ihre Kunden heute einen Termin bekommen."
+    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, welche Termine Sie anbieten und wie Ihre Kunden heute einen Termin bekommen."
   - titel: "Verbinden"
     text: "Wir richten die Buchung ein und verbinden sie mit Ihrer Website, sodass Kunden sie an den richtigen Stellen finden."
   - titel: "Verbessern"

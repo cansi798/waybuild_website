@@ -32,7 +32,7 @@ umfang:
 umfangHinweis: "Laufende Pflege wie Updates und Änderungswünsche gehört zur [Betreuung](/leistungen/betreuung/). Wie Ihre Seiten auf die Suchen Ihrer Kunden ausgerichtet werden, erklären wir unter [Suchmaschinen-Optimierung](/leistungen/suchmaschinen-optimierung/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, klären wir, was Ihre Website erreichen soll, zum Beispiel mehr Anfragen oder mehr gebuchte Termine."
+    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, klären wir, was Ihre Website erreichen soll, zum Beispiel mehr Anfragen oder mehr gebuchte Termine."
   - titel: "Verbinden"
     text: "Wir betrachten Besucher, Suchbegriffe und Anfragen zusammen, damit Sie sehen, wie aus einem Besuch ein Kontakt wird und wo dieser Weg abbricht."
   - titel: "Verbessern"

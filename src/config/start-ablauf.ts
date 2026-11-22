@@ -24,7 +24,7 @@ export interface AblaufSchritt {
 }
 
 // Jamil #6055 (15.11.2026): Fr. 14 „ok“ = EIN Ablauf in fünf Schritten überall gleich (START_ABLAUF_KURZ: Startseite, Preise),
-// die acht Schritte ausführlich als „So arbeiten wir“ auf /ueber-uns/ (#so-arbeiten-wir). Fr. 15: ein Gespräch, rund 30 Minuten
+// die acht Schritte ausführlich als „So arbeiten wir“ auf /ueber-uns/ (#so-arbeiten-wir). Fr. 15: ein Gespräch, rund 20 Minuten
 // (vorher 20 bzw. 60). Fr. 16: kostenlose Vorschau für jede Anfrage, Feinschliff am nächsten Werktag (vorher „5 Stunden“).
 // Fr. 26: Fachbegriffe übersetzt, „Unternehmens-DNA“ bleibt und wird kurz erklärt. Fr. 27: „Website und Web-App vom selben Team“.
 // Fr. 28: „messbar“ = Monatsbericht mit Besuchern und Anfragen (ab Website + Google & KI, pakete-abo.ts).
@@ -60,9 +60,9 @@ export const START_ABLAUF = {
       ],
     },
     {
-      titel: 'Kostenloses Erstgespräch', // Fr. 15: ein Gespräch, rund 30 Minuten (vorher „Gemeinsames Strategiegespräch, ca. 60 Minuten“)
+      titel: 'Kostenloses Erstgespräch', // Fr. 15: ein Gespräch, rund 20 Minuten (vorher „Gemeinsames Strategiegespräch, ca. 60 Minuten“)
       text: 'Wir zeigen Ihnen Analyse, Potenziale und Ihre Vorschau und lernen dabei Ihr Unternehmen, Ihre Ziele und Ihre Kunden kennen.',
-      zeit: 'Rund 30 Minuten',
+      zeit: 'Rund 20 Minuten',
       stichworte: ['Analyseergebnisse', 'Verbesserungspotenziale', 'Ihre Vorschau', 'Nächste Schritte'],
     },
     {
@@ -108,7 +108,7 @@ export const START_ABLAUF = {
 };
 
 /** EIN Ablauf in fünf Schritten, überall gleich (Jamil #6055 Fr. 14: Anfrage → Analyse + Vorschau → Gespräch → Feinschliff → Start).
- *  Kurzfassung der acht Schritte oben, gleiche Aussagen (Fr. 15 30 Minuten, Fr. 16 jede Anfrage / nächster Werktag, Fr. 26 DNA erklärt, Fr. 28). */
+ *  Kurzfassung der acht Schritte oben, gleiche Aussagen (Fr. 15 20 Minuten, Fr. 16 jede Anfrage / nächster Werktag, Fr. 26 DNA erklärt, Fr. 28). */
 export const START_ABLAUF_KURZ = {
   kenn: 'So geht es los',
   titel: 'In fünf Schritten zu Ihrer Lösung',
@@ -116,7 +116,7 @@ export const START_ABLAUF_KURZ = {
   schritte: [
     { titel: 'Anfrage senden', text: 'Sie wählen die passende Lösung und senden uns eine kurze Anfrage. Wir melden uns persönlich mit Terminvorschlägen.', zeit: 'Dauer: 2 Minuten', anker: 'erstberatung' },
     { titel: 'Kostenlose Analyse und Vorschau', text: 'Wir analysieren Ihr Unternehmen, Ihre Website und wie gut man Sie bei Google findet, und erstellen für jede Anfrage eine kostenlose erste Vorschau.', zeit: 'Vor unserem Gespräch' },
-    { titel: 'Kostenloses Erstgespräch', text: 'Wir zeigen Ihnen Analyse und Vorschau und lernen Ihr Unternehmen, Ihre Ziele und Ihre Kunden kennen.', zeit: 'Rund 30 Minuten' },
+    { titel: 'Kostenloses Erstgespräch', text: 'Wir zeigen Ihnen Analyse und Vorschau und lernen Ihr Unternehmen, Ihre Ziele und Ihre Kunden kennen.', zeit: 'Rund 20 Minuten' },
     { titel: 'Feinschliff auf Basis Ihrer Unternehmens-DNA', text: `${DNA_ERKLAERT} Darauf passen wir Ihre Vorschau an.`, zeit: 'In der Regel am nächsten Werktag', stichworte: ['Ihre Wünsche', 'Ihre Ziele', 'Ihre Unternehmenswerte'], dna: true },
     { titel: 'Start', text: `Sie entscheiden in Ruhe. Nach Ihrer Freigabe setzen wir um, Ihre Lösung geht online, und wir betreuen sie weiter. ${MESSBAR}`, zeit: 'Nach Ihrer Freigabe' },
   ] as AblaufSchritt[],

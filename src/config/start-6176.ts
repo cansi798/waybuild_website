@@ -130,7 +130,7 @@ export const J_PROBLEM_NEU = {
     { icon: 'brief', titel: 'Die Website ist nur eine digitale Visitenkarte', text: 'Kunden finden zwar Ihre Telefonnummer, aber Anfragen landen als unvollständige E-Mails im Postfach oder gehen im Trubel unter.' },
     { icon: 'puzzle', titel: 'Sie verbiegen Ihren Alltag für fertige Programme', text: 'Standard-Software zwingt Sie in starre Abläufe. Was das Programm nicht kann, wird am Ende doch wieder mit Excel-Listen und Notizzetteln irgendwie drumherum gebastelt.' },
     { icon: 'pfeile', titel: 'Alles wird doppelt und dreifach abgetippt', text: 'Kundendaten wandern von der E-Mail in eine Excel-Liste, von dort in den Kalender und irgendwann ins Rechnungsprogramm – das kostet Nerven und führt zu Fehlern.' },
-    { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeitende brauchen Wochen, um durchzublicken.' },
+    { icon: 'lupe', titel: 'Jeder sucht nach der aktuellen Info', text: 'Absprachen liegen mal im Chat, mal in Ordnern auf dem Server und mal auf einem Notizzettel. Neue Mitarbeiter brauchen Wochen, um durchzublicken.' },
   ],
 } as const;
 
@@ -202,7 +202,7 @@ export const J_ERST = {
       ],
       pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder', // Pills seit #6500 ersetzt durch:
       knoepfe: ['Kostenloses Erstgespräch vereinbaren', 'Website-Vorschau anfordern'] }, // Jamil #6500
-    { nr: '02', titel: 'Kostenlose Vorschau in Rekordzeit',
+    { nr: '02', titel: 'Kostenlose Vorschau in schon am nächsten Werktag',
       einleitung: 'Statt trockener Theorie liefern wir Ihnen greifbare Ergebnisse zum Durchklicken:',
       punkte: [
         { name: 'Neue Website-Startseite:', text: 'bereits am nächsten Werktag' },
@@ -237,7 +237,7 @@ export const J_START = {
   gespraech: {
     art: 'Der persönliche Weg (Website & Software)',
     badge: 'Empfohlen für individuelle Abläufe',
-    titel: 'Unternehmens-DNA aufnehmen (15–20 Min.)',
+    titel: 'Unternehmens-DNA aufnehmen (20 Min.)',
     text: 'Wir lernen Ihren Betrieb in einem lockeren Gespräch kennen, bringen eigene Optimierungsvorschläge ein und bauen Ihnen eine kostenlose Vorschau (Website morgen / Software in 3 Werktagen).',
     name: 'Ihr Name',
     kontakt: 'Telefonnummer oder E-Mail',
@@ -270,7 +270,7 @@ export const J_PREISE = {
   titel: 'Klare Monatspreise. Keine bösen Überraschungen.',
   unter: 'Starten Sie ohne fünfstellige Vorab-Investition. Alle Pakete sind monatlich planbar, flexibel kombinierbar – und Sie entscheiden erst, nachdem Sie unsere kostenlose Vorschau gesehen haben.',
   rolle: { basis: 'Basis', plus: 'Beliebt / Empfehlung', software: 'Erweiterung / Maßarbeit' },
-  badge: { plus: 'Am beliebtesten', software: '+ Kombinierbar oder einzeln' },
+  badge: { plus: 'Unsere Empfehlung', software: '+ Kombinierbar oder einzeln' },
   alles: 'Alles aus dem Profi-Website-Paket',
   monat: '/ Monat',
   kombinierbar: '', // seit Jamil #6415 weg: „kombinierbar“ steht schon im Badge (vorher '(kombinierbar)')
@@ -286,10 +286,10 @@ export const J_UMSTIEG = {
   karten: [
     { frage: '„Wir haben uns gerade erst an unsere jetzigen Programme gewöhnt.“',
       antwort: 'Sie müssen nicht alles über Bord werfen. Was bei Ihnen gut läuft, binden wir einfach an. Und alles, was wir neu bauen, richten wir exakt nach der Arbeitsweise Ihres Teams aus – damit sich die Oberfläche vom ersten Klick an vertraut anfühlt.' },
-    { frage: '„Meine Mitarbeitenden haben keine Zeit für lange Schulungen.“',
+    { frage: '„Meine Mitarbeiter haben keine Zeit für lange Schulungen.“',
       antwort: 'Brauchen sie auch nicht. Weil wir überflüssige Funktionen weglassen und Ihre echten Abläufe abbilden, ist das System selbsterklärend. Jeder sieht nur das, was er für seine Aufgabe braucht – und für den Start zeigen wir alles in wenigen Minuten.' },
     { frage: '„Was passiert mit unseren bestehenden Kundendaten und Listen?“',
-      antwort: 'Nichts geht verloren und niemand muss etwas mühsam abtippen. Wir übernehmen den kompletten Umzug Ihrer bestehenden Daten, Kontakte und Inhalte, damit Ihr Team ab Tag 1 nahtlos weiterarbeiten kann.' },
+      antwort: 'Ihre Daten ziehen vollständig mit um und niemand muss etwas mühsam abtippen. Wir übernehmen den kompletten Umzug Ihrer bestehenden Daten, Kontakte und Inhalte, damit Ihr Team ab Tag 1 nahtlos weiterarbeiten kann.' },
     { frage: '„Was, wenn im laufenden Betrieb Fragen auftauchen?“',
       antwort: 'Wir lassen Sie nach dem Start nicht allein. Wir testen alles gemeinsam in Ruhe vorab, stellen im laufenden Betrieb um und sind bei Fragen oder kleinen Anpassungswünschen direkt per Chat oder Telefon für Sie da.' },
   ],

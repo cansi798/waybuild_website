@@ -52,7 +52,7 @@ export const PROBLEM = {
     'Angebote werden nicht nachgefasst',
     'Termine werden doppelt vergeben',
     'Kein Überblick über offene Aufträge',
-    'Mitarbeitende fragen immer wieder dasselbe',
+    'Mitarbeiter fragen immer wieder dasselbe',
     'Bei Krankheit oder Urlaub weiß niemand Bescheid',
     'Kaum Bewertungen bei Google',
     'Kunden finden Öffnungszeiten und Preise nicht',
@@ -94,7 +94,7 @@ export const ANGEBOT = {
   appTitel: 'Die Web-App dazu', // Web-App einheitlich (Jamil #5928–#5939; #6038, Audit K2)
   sicherheit: [
     { icon: 'euro', titel: 'Keine Einrichtungsgebühr', text: 'Keine versteckten Einrichtungsgebühren für den Start.' }, // Wortlaut Jamil #6400 (vorher mit Google-Profil)
-    { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 30 Minuten, unverbindlich. Wir empfehlen das passende Paket.' }, // Jamil #6055 Fr. 15
+    { icon: 'chat', titel: 'Erstgespräch kostenlos', text: 'Rund 20 Minuten, unverbindlich. Wir empfehlen das passende Paket.' }, // Jamil #6055 Fr. 15
     { icon: 'server', titel: 'Hosting in Deutschland', text: 'Mit SSL, Domain, Updates und Backups im Monatspreis.' },
     { icon: 'doc', titel: 'Verbindlich erst mit Vertrag', text: 'Kein Online-Kauf: Sie bekommen Vertrag und Auftragsbestätigung per E-Mail.' },
   ] as { icon: IconName; titel: string; text: string }[],

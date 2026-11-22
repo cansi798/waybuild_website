@@ -281,7 +281,7 @@ export const faqs = [
   },
   {
     q: 'Ich habe wenig Zeit. Schaffe ich das neben dem Tagesgeschäft?', // Jamil #5933
-    a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 30 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.', // Jamil #6055 Fr. 15 (30 Minuten)
+    a: 'Ja, der Aufwand für Sie bleibt überschaubar. Das Erstgespräch dauert rund 20 Minuten. Auf Wunsch erarbeiten wir die Inhalte gemeinsam mit Ihnen, und Änderungen schicken Sie einfach per Nachricht.', // Jamil #6055 Fr. 15 (20 Minuten)
   },
 ];
 

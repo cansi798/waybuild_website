@@ -39,7 +39,7 @@ umfang:
 umfangHinweis: "Wo Anfragen ankommen und gesammelt werden, beschreiben wir unter [Anfragen](/leistungen/anfragen/). Was nach einem Angebot oder Auftrag passiert, finden Sie unter [Nachfassen](/leistungen/nachfassen/)."
 schritte:
   - titel: "Verstehen"
-    text: "Im kostenlosen Erstgespräch, rund 30 Minuten, lernen wir Ihren Alltag kennen. Danach analysieren wir, wie bei Ihnen aus Interessenten Kunden werden."
+    text: "Im kostenlosen Erstgespräch, rund 20 Minuten, lernen wir Ihren Alltag kennen. Danach analysieren wir, wie bei Ihnen aus Interessenten Kunden werden."
   - titel: "Verbinden"
     text: "Wir sorgen dafür, dass Website, Kommunikation, Prozesse und Systeme zusammenarbeiten. Abstimmungen mit Beteiligten übernehmen wir, damit Ihr Aufwand gering bleibt."
   - titel: "Verbessern"

@@ -54,11 +54,13 @@ import '../styles/seite-kontakt.css';
   hideMobileCta
   ohneKontaktkopf
 >
+  <div class="sk-kopfband"><!-- Jamil #6891: Seitenkopf halb so hoch, Formular früher am Handy -->
   <PageHeader
     eyebrow="Kontakt"
     title="Lassen Sie uns sprechen."
     lead="Antwort in der Regel am nächsten Werktag. Erstberatung kostenlos."
   />
+  </div>
 
   <section class="section sn sk" aria-labelledby="sk-form-h">
     <div class="wrap contact sk-raster">
@@ -121,7 +123,7 @@ import '../styles/seite-kontakt.css';
         <ol class="after" aria-label="So geht es weiter">
           <li><strong>Heute</strong> Anfrage senden</li>
           <li><strong>1 Werktag</strong> In der Regel melden wir uns</li>
-          <li><strong>30 Min.</strong> Erstberatung</li>{/* Jamil #6055 Fr. 15 */}
+          <li><strong>20 Min.</strong> Erstberatung</li>{/* Jamil #6055 Fr. 15 */}
         </ol>
         {!endpoint && (
           <Hint label="Formular-Versand (Anbindung an unser CRM folgt, Jamil #6055 Fr. 3)" where="src/pages/kontakt.astro (Versand) bzw. GitHub → Variables → WEB3FORMS_KEY">

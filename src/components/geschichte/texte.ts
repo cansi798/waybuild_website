@@ -138,9 +138,9 @@ export const ANGEBOT = {
 
 export const HANDLUNG = {
   kennzeile: 'Ihr nächster Schritt',
-  titel: 'Wir zeigen Ihnen in 30 Minuten, wie das bei Ihnen aussehen würde.', // Jamil #6055 Fr. 15
+  titel: 'Wir zeigen Ihnen in 20 Minuten, wie das bei Ihnen aussehen würde.', // Jamil #6055 Fr. 15
   /** {firma} = Firmenname des Besuchers (nur als Text gesetzt) */
-  titelFirma: 'Wir zeigen Ihnen in 30 Minuten, wie das bei {firma} aussehen würde.', // Jamil #6055 Fr. 15
+  titelFirma: 'Wir zeigen Ihnen in 20 Minuten, wie das bei {firma} aussehen würde.', // Jamil #6055 Fr. 15
   text: 'Kostenlos und unverbindlich. Wir hören zu und empfehlen das passende Paket.',
   whatsapp: 'Per WhatsApp schreiben',
   waText: 'Hallo webgold, ich interessiere mich für eine kostenlose Erstberatung.',

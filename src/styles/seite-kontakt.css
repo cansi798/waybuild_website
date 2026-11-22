@@ -131,3 +131,8 @@
 /* Kostenlose Vorschau über dem Formular (Jamil #6061) */
 .sk-vorschau { margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: var(--sn-hauch, #FBF3D5); border: 1px solid var(--sn-linie-t, #EADBA6); border-left: 4px solid #D4AF37; line-height: 1.6; color: var(--ink-soft, #475569); }
 .sk-vorschau strong { display: block; margin-bottom: 2px; color: var(--sn-tinte, #8C6D12); }
+
+/* Seitenkopf der Kontaktseite ungefähr halb so hoch (Jamil #6891), damit das Formular am Handy früher kommt. */
+.sk-kopfband section.ph { padding-block: clamp(24px, 4vw, 52px) clamp(20px, 3vw, 40px); }
+.sk-kopfband section.ph h1 { font-size: clamp(1.9rem, 1.3rem + 2.2vw, 2.6rem); }
+.sk-kopfband section.ph .lead { margin-top: 8px; margin-bottom: 0; }
