@@ -5,7 +5,7 @@ import "../../styles/mass-6379.css";
 // kein Bild) mit dezentem Eck-Label „Individuell programmiert für Musterfirma GmbH – 100 % eigene Abläufe“, darunter die Begründung.
 // Barrierefrei: role=tablist/tab/tabpanel, aria-selected, Pfeiltasten ←/→ (+ Pos1/Ende), nur der aktive Tab im Tab-Fokus.
 // Handy: Tabs als Segmentleiste oben (Kurzname), Zitat über dem Mockup. Alle Panels liegen im selben Rasterfeld (kein Höhensprung),
-// Wechsel weich über opacity/transform; prefers-reduced-motion ohne Animation und ohne Auto-Weiterschalten. Auto-Weiterschalten (7 s)
+// Wechsel weich über opacity/transform; prefers-reduced-motion ohne Animation und ohne Auto-Weiterschalten. Auto-Weiterschalten (4 s, Jamil #6931)
 // nur, solange der Wechsler im Bild ist, und nur bis zur ersten Interaktion. Stil: styles/mass-6379.css.
 // Seit Jamil #6384/#6385 (19.11.2026): statt der Mockups echte Bildschirmfotos von Bauwelt Handwerk (Kalkulator der Website,
 // Auftragsübersicht und Kundenportal aus dem CRM, nur Testdaten) – optimiert über <Bild> (AVIF/WebP, feste Maße, lazy).
@@ -188,7 +188,7 @@ const BW = T.bauwelt;
     if (!ruhig && 'IntersectionObserver' in window) {
       new IntersectionObserver(([e]) => {
         if (benutzt) return;
-        if (e.isIntersecting && !auto) { wurzel.classList.add('jm--auto'); auto = window.setInterval(() => { if (!document.hidden) zeigen(aktiv + 1); }, 7000); }
+        if (e.isIntersecting && !auto) { wurzel.classList.add('jm--auto'); auto = window.setInterval(() => { if (!document.hidden) zeigen(aktiv + 1); }, 4000); }
         else if (!e.isIntersecting && auto) { clearInterval(auto); auto = undefined; wurzel.classList.remove('jm--auto'); }
       }, { threshold: 0.4 }).observe(wurzel);
     }
