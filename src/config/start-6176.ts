@@ -152,7 +152,7 @@ export const J_MASS = {
     link: { text: 'bauwelt-handwerk.de ansehen', href: 'https://www.bauwelt-handwerk.de/rechner/' },
     bilder: [
       { bild: 'referenzen/bauwelt-kalkulator', alt: 'Projekt-Rechner auf bauwelt-handwerk.de: Ergebnis „Ihre erste Preisspanne“ für eine Badsanierung mit 8 m², 14.340 bis 19.500 Euro inklusive Mehrwertsteuer, darunter der Knopf „Angaben ändern“.' },
-      { bild: 'referenzen/bauwelt-auftrag', alt: 'Auftragsübersicht im Bauwelt-CRM mit Testdaten: Auftrag „Ladenumbau Trockenbau“ mit Status-Leiste von Anfrage bis Abgerechnet, Zeiterfassung mit Start und Abfahrt, Aufgabenliste mit Zuständigen sowie Kunde und Einsatzort.' },
+      { bild: 'referenzen/bauwelt-auftrag', alt: 'Auftragsübersicht im CRM mit Testdaten: Auftrag „Badsanierung“ mit Status-Leiste von Anfrage bis Abgerechnet, Zeiterfassung mit Start und Abfahrt, Aufgabenliste mit Zuständigen sowie Kunde und Einsatzort.' },
       { bild: 'referenzen/bauwelt-kundenportal', alt: 'Kundenportal von Bauwelt Handwerk mit Testdaten: nächster Termin, ein wartendes Angebot zum Annehmen oder Ablehnen, Fortschritt des Auftrags „Ladenumbau Trockenbau“ und persönlicher Projektbegleiter.' },
     ],
   },

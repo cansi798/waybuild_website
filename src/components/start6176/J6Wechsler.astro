@@ -67,7 +67,7 @@ const BW = T.bauwelt;
                 </>
               )}
               {!MUSTER && i < 3 && (
-                <div class="jm-mock jm-mock--bild">
+                <div class={`jm-mock jm-mock--bild${i === 1 ? ' jm-mock--breit' : ''}`}>
                   <Bild name={BW.bilder[i].bild} alt={BW.bilder[i].alt} widths={[480, 800, 1200, 1600]}
                     sizes="(min-width: 1200px) 680px, (min-width: 900px) 56vw, calc(100vw - 32px)" />
                 </div>
