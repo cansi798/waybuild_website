@@ -11,7 +11,8 @@ import "../../styles/mass-6379.css";
 // Seit Jamil #6384/#6385 (19.11.2026): statt der Mockups echte Bildschirmfotos von Bauwelt Handwerk (Kalkulator der Website,
 // Auftragsübersicht und Kundenportal aus dem CRM, nur Testdaten) – optimiert über <Bild> (AVIF/WebP, feste Maße, lazy).
 // Die Musterfirma-Mockups bleiben über ALT_ZEIGEN.musterfirmaMockupsAlt abrufbar.
-import { J_MASS as T, ALT_ZEIGEN } from '../../config/start-6176';
+import { J_MASS as T, J_BAUKASTEN as K, ALT_ZEIGEN } from '../../config/start-6176';
+import Icon from '../Icon.astro';
 // Seit Jamil #6424: statt der Box unter dem Wechsler ein kleiner Hinweis im Wechsler (Desktop unter den Tabs, Handy unter dem Mockup)
 import Bild from '../Bild.astro';
 // 4. Tab „Individuell“ seit Jamil #6460 per ALT_ZEIGEN.individuellTab aus
@@ -27,6 +28,25 @@ const BW = T.bauwelt;
       <p class="sn-lead">{T.unter}</p>
     </div>
 
+    {/* Jamil #7088/#7099 (Variante a): erst zeigen, was alles möglich ist (ohne Beispiel), dann zum echten Projekt */}
+    <div class="jbk" aria-labelledby="jbk-h" role="group">
+      <h3 id="jbk-h" class="jbk__titel">{K.titel}</h3>
+      <ul class="jbk__raster">
+        {K.kacheln.map((k) => (
+          <li class="jbk-kachel">
+            <span class="jbk-kachel__kreis" aria-hidden="true"><Icon name={k.icon} size={22} /></span>
+            <span class="jbk-kachel__inhalt"><strong class="jbk-kachel__titel">{k.titel}</strong><span class="jbk-kachel__text">{k.text}</span></span>
+          </li>
+        ))}
+      </ul>
+      <div class="jbk__fuss">
+        <p class="jbk__satz">{K.satz}</p>
+        <a class="jbk__link" href="#jm-beispiel">{K.link}<Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+
+    <div class="jm-beispiel" id="jm-beispiel">
+    <h3 class="jm-beispiel__titel">{K.beispielTitel}</h3>
     <div class="jm" data-jm style={`--jm-n:${S.length}`}>
       <div class="jm__tabs" role="tablist" aria-label={T.tabsLabel}>
         {S.map((s, i) => (
@@ -145,6 +165,7 @@ const BW = T.bauwelt;
       </span>
       <p class="jm-browser__text"><b>{T.browser.titel}</b> <span>{T.browser.text}</span></p>
     </div>}
+    </div>
   </div>
 </section>
 

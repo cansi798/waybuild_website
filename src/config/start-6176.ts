@@ -172,6 +172,28 @@ export const J_HERO_SCHNELL = {
   formular: 'Kostenlose Vorschau Ihrer neuen Startseite',
 } as const;
 
+/** Jamil #7088 / #7099 Variante a (23.11.2026): „Was Ihre Web-App alles kann“ – Baukasten-Raster VOR dem echten Beispiel (Bauwelt).
+ *  Sortiert nach Zweck, nicht nach Branche; nur Funktionen, die wir als Web-App/individuelle Software bauen; keine Superlative/Garantien.
+ *  `icon` = Name aus components/Icon.astro. Danach Satz + Link zum echten Projekt (Wechsler darunter, #jm-beispiel). */
+export const J_BAUKASTEN = {
+  titel: 'Was Ihre Web-App alles kann',
+  kacheln: [
+    { icon: 'euro', titel: 'Rechnen und Prüfen', text: 'Preise, Mengen und Kalkulationen nach Ihren eigenen Regeln berechnen.' },
+    { icon: 'calendar', titel: 'Planen und Termine', text: 'Einsätze, Termine und Kapazitäten für das ganze Team planen.' },
+    { icon: 'folder', titel: 'Dokumente und Fotos', text: 'Angebote, Pläne und Fotos direkt am Auftrag ablegen.' },
+    { icon: 'portal', titel: 'Kundenportal und Freigaben', text: 'Kunden sehen ihren Stand und geben Angebote online frei.' },
+    { icon: 'phone', titel: 'Mobil unterwegs erfassen', text: 'Zeiten, Material und Notizen vor Ort am Handy eintragen.' },
+    { icon: 'chart', titel: 'Auswertungen auf einen Blick', text: 'Offene Aufträge, Umsätze und Auslastung übersichtlich sehen.' },
+    { icon: 'doc', titel: 'Formulare und Checklisten', text: 'Abnahmen, Prüflisten und Protokolle digital ausfüllen.' },
+    { icon: 'zap', titel: 'Benachrichtigungen', text: 'Automatische Hinweise, sobald sich bei einem Auftrag etwas ändert.' },
+    { icon: 'lock', titel: 'Rechte für das Team', text: 'Jeder sieht genau das, was er für seine Arbeit braucht.' },
+    { icon: 'layers', titel: 'Anbindung an vorhandene Programme', text: 'Daten mit Buchhaltung, Kalender und Co. austauschen, wo es eine Schnittstelle gibt.' },
+  ],
+  satz: 'Eine Funktion, die es nur in Ihrer Branche gibt? Genau dafür bauen wir.',
+  link: 'So sieht das in echt aus',
+  beispielTitel: 'Ein echtes Projekt ansehen',
+} as const;
+
 /** 3. Lösung NEU als „Maßarbeit“ (Jamil #6378/#6379, 19.11.2026), Texte WÖRTLICH. Headline + Subheadline aus #6379 (Struktur); der Text aus
  *  #6378 („Ob Kundenportal, Kalkulator …“) steht bewusst NICHT auf der Seite, weil er die Subheadline fast doppelt (im Talk gefragt):
  *  'Ob Kundenportal, Kalkulator auf der Website oder ein internes System für Ihre Aufträge: Wir programmieren genau die Werkzeuge, die Ihrem
