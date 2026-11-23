@@ -19,7 +19,7 @@ import Icon from './Icon.astro';
                 {item.children.map((c, i) => (
                   <>
                     {c.group && c.group !== item.children![i - 1]?.group && <li class="mm__gh" aria-hidden="true">{c.group}</li>}
-                    <li><a href={href(c.path)}>{c.icon && <Icon name={c.icon} size={20} class="mm__icon" />}{c.label}</a></li>
+                    <li><a href={href(c.path)}>{c.label}</a></li>{/* Jamil #7114: ohne Symbole */}
                   </>
                 ))}
               </ul>

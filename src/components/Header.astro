@@ -44,8 +44,7 @@ const isCurrent = (path?: string) => path && current === href(path);
                             {item.children!.filter((c) => c.group === g).map((c) => (
                               <li>
                                 <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
-                                  {c.icon && <Icon name={c.icon} size={20} class="dd__icon" />}
-                                  <span class="dd__text"><strong>{c.label}</strong>{c.desc && <small>{c.desc}</small>}{c.tag && <em class="dd__tag">{c.tag}</em>}</span>
+                                  <span class="dd__text"><strong>{c.label}</strong></span>
                                 </a>
                               </li>
                             ))}
@@ -62,10 +61,9 @@ const isCurrent = (path?: string) => path && current === href(path);
                     {item.children.map((c) => (
                       <li>
                         <a class="dd__item" href={href(c.path)} aria-current={isCurrent(c.path) ? 'page' : undefined}>
-                          {c.icon && <Icon name={c.icon} size={22} class="dd__icon" />}
                           <span class="dd__text">
                             <strong>{c.label}</strong>
-                            {c.desc && <small>{c.desc}</small>}
+                            
                           </span>
                         </a>
                       </li>
@@ -141,8 +139,9 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__item:hover, .dd__item[aria-current='page'] { background: var(--paper-2); }
   .dd__item :global(.dd__icon) { color: #111827; flex: none; }
   .dd__text { display: grid; line-height: 1.35; }
-  .dd__text strong { font-weight: 650; font-size: var(--fs-body); }
-  .dd__text small { color: var(--ink-soft); font-size: var(--fs-small); }
+  /* Jamil #7114/#7115 (23.11.2026): Menü-Einträge so groß wie die Kopfzeilen-Navigation (--fs-small), ohne Symbole und ohne Unterzeile */
+  .dd__text strong { font-weight: 650; font-size: var(--fs-small); }
+  .dd__text small { color: var(--ink-soft); font-size: var(--fs-small); font-weight: 400; }
   /* Fuß-Zeile für den letzten Eintrag („Alles im Überblick“) entfernt (Jamil #5675): sonst sähe jetzt „Blog“ bzw. „Kontakt“ wie ein Fuß aus */
   /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */
   .hdr__inner { position: relative; }
@@ -157,7 +156,7 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__group { break-inside: avoid; margin-bottom: 10px; }
   .dd__gh { margin: 0 0 4px; padding: 0 12px; font-size: var(--fs-small); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #111827; }
   .dd--mega .dd__item { padding: 7px 12px; }
-  .dd--mega .dd__text strong { font-size: var(--fs-body); }
+  .dd--mega .dd__text strong { font-size: var(--fs-small); }
   .dd__all { justify-content: center; border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 4px; padding-top: 12px !important; font-weight: 650; color: #111827; }
 
   .hdr__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
