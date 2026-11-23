@@ -165,7 +165,7 @@ export const J_PROBLEM_WEG = {
  *  (E-Mail, Rückweg, Telefon, Datenschutz) kommen aus J_START.schnell. Absende-Logik: Skript in J6Start.astro (einmal). */
 export const J_HERO_SCHNELL = {
   label: 'Ihre Website-Adresse für die kostenlose Vorschau',
-  platzhalter: 'Ihre Website, z. B. www.ihre-firma.de',
+  platzhalter: 'Ihre Website, z. B. www.webgold.io', // Jamil #7094
   knopf: 'Kostenlose Website-Vorschau erhalten', // Jamil #7012 (vorher „Vorschau für morgen“)
   /** Name des Formulars für Screenreader (aria-label). Die sichtbare Zeile darüber (#6948) und die Kleinschrift darunter sind seit
    *  Jamil #7010/#7011 (22.11.2026) entfernt; das Feld behält aria-label + Platzhalter. */
@@ -289,7 +289,7 @@ export const J_START = {
     titel: 'Direkte Website-Vorschau für morgen',
     text: 'Sie möchten erst mal ohne Termin sehen, wie Ihre neue Startseite aussehen könnte? Senden Sie uns einfach Ihre aktuelle Website-Adresse – schon am nächsten Werktag liegt Ihr Entwurf bereit.',
     url: 'Ihre aktuelle Website-URL',
-    urlBeispiel: 'z. B. www.ihre-firma.de',
+    urlBeispiel: 'z. B. www.webgold.io', // Jamil #7094
     email: 'Ihre E-Mail-Adresse',
     emailZusatz: '(für den Vorschau-Link)',
     telefon: 'Telefonnummer für Rückfragen',

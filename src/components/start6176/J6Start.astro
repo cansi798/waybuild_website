@@ -51,7 +51,7 @@ const ds = href('/datenschutz/');
         <span class="js7-badge js7-badge--hell">{S.badge}</span>
         <h3 id="js7-s-h" class="js7-karte__titel">{S.titel}</h3>
         <p class="js7-karte__text">{S.text}</p>
-        {/* type=text statt url: „www.ihre-firma.de“ ohne https:// soll gehen; Prüfung im Skript */}
+        {/* type=text statt url: „www.webgold.io“ ohne https:// soll gehen; Prüfung im Skript */}
         <label class="js7-feld"><span>{S.url}*</span><input name="website_url" type="text" inputmode="url" autocomplete="url" placeholder={S.urlBeispiel} required data-art="url" /></label>
         <SchnellFelder />
         <button class="btn btn--lg js7-btn" type="submit">{S.knopf}</button>
@@ -94,7 +94,7 @@ const ds = href('/datenschutz/');
       if (f.type === 'checkbox') return f.checked ? '' : 'Bitte stimmen Sie der Datenschutzerklärung zu.';
       if (!v) return f.name === 'name' ? 'Bitte geben Sie Ihren Namen an.' : f.name === 'website_url' ? 'Bitte geben Sie Ihre Website-Adresse an.' : f.name === 'kontakt' ? 'Bitte geben Sie eine Telefonnummer oder E-Mail-Adresse an.' : 'Bitte geben Sie Ihre E-Mail-Adresse an.';
       if (f.dataset.art === 'kontakt' && !MAIL.test(v) && !TEL.test(v)) return 'Bitte prüfen Sie die Angabe (Telefonnummer oder E-Mail, zum Beispiel name@firma.de).';
-      if (f.dataset.art === 'url' && !URL_OK(v)) return 'Bitte prüfen Sie die Adresse (zum Beispiel www.ihre-firma.de).';
+      if (f.dataset.art === 'url' && !URL_OK(v)) return 'Bitte prüfen Sie die Adresse (zum Beispiel www.webgold.io).';
       if (f.type === 'email' && !MAIL.test(v)) return 'Bitte prüfen Sie die E-Mail-Adresse (zum Beispiel name@firma.de).';
       return '';
     };
