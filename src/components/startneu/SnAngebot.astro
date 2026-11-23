@@ -25,10 +25,10 @@ const kombis = kombiPreise();
 const appText = K.text.replace(/\s*Nur zusammen mit .* buchbar\.$/, '');
 // Seit Jamil #6400: Software einzeln oder kombinierbar, ohne Kombipreise → dritte Karte mit eigenem Monatspreis
 const kontaktSoftware = `${href('/kontakt/')}?leistung=rundum&komplett=1`;
-interface Props { zeigeFragen?: boolean; kompakt?: boolean; titel?: string }
+interface Props { zeigeFragen?: boolean; kompakt?: boolean; titel?: string; kenn?: string }
 // Startseite ohne FAQ (Jamil #5967). kompakt (Startseite, Jamil #6038, Audit P6/M1): nur die drei Karten, Wahlhilfe und ein Link
 // auf /preise/; Extras, Sicherheits-Kacheln und Kombi-Hinweis stehen nur auf der Preisseite.
-const { zeigeFragen = true, kompakt = false, titel = T.titel } = Astro.props;
+const { zeigeFragen = true, kompakt = false, titel = T.titel, kenn = T.kennzeile } = Astro.props;
 const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((f): f is NonNullable<typeof f> => !!f && !f.platzhalter);
 ---
 
@@ -36,7 +36,7 @@ const fragen = T.fragen.map((q) => alleFragen().find((f) => f.q === q)).filter((
   <span id="baukasten" class="sn-anker" aria-hidden="true"></span>
   <div class="wrap">
     <div class="sn-kopf sn-kopf--mitte">
-      <p class="sn-kenn">{T.kennzeile}</p>
+      <p class="sn-kenn">{kenn}</p>
       <h2 id="sn-angebot-h" class="sn-h2" set:html={hl(titel)}></h2>
       <p class="sn-lead">{T.lead}</p>
     </div>

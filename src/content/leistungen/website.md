@@ -2,6 +2,7 @@
 # Seitengrenze 15 (Jamil #6055 Fr. 30, Wert wie SEITEN_MAX in config/pakete-abo.ts)
 title: "Ihre Website, fertig betreut"
 menuTitel: "Website"
+unterzeile: "Agentur-Qualität im Monatsabo" # Jamil #7120/#7126 b (fester Wortlaut)
 gruppe: gefunden
 station: aufmerksamkeit
 kurz: "Eine Website mit bis zu 15 Seiten, für Handy, Tablet und PC, von uns betreut."

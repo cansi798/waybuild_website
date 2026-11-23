@@ -6,7 +6,7 @@ import "../../styles/preise-6400.css";
 // Drei Karten nebeneinander (Handy untereinander), Fokus auf Karte 2 (Rahmen Hauptfarbe + Badge „Unsere Empfehlung“),
 // Karte 3 als Baustein (Badge „+ Kombinierbar oder einzeln“). Kein Foto, keine Animation. Knöpfe führen zu Abschnitt 7.
 // data-paket: J6Start übernimmt das gewählte Paket als verstecktes Feld ins Ziel-Formular (Loop 22.11.2026, MKT-002).
-import { J_PREISE as T } from '../../config/start-6176';
+import { J_PREISE as T, AGENTUR_ABO } from '../../config/start-6176';
 import { ABO_PAKETE, KOMPLETTPAKET as K, euro } from '../../config/pakete-abo';
 const [basis, plus] = ABO_PAKETE;
 const karten = [
@@ -23,6 +23,7 @@ const Haken = '<path d="M20 6 9 17l-5-5" />';
 <section class="section sn jpr" id="preise-start" aria-labelledby="jpr-h">
   <div class="wrap">
     <div class="sn-kopf jpr__kopf">
+      <p class="sn-kenn">{AGENTUR_ABO}</p>{/* Jamil #7120/#7126 a: Kennzeile, die Überschrift (#6400) bleibt wörtlich */}
       <h2 id="jpr-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>

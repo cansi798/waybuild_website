@@ -42,6 +42,7 @@ const leistungen = defineCollection({
     gruppe: z.enum(['gefunden', 'vertrauen', 'anfragen', 'betreuung']),
     station: z.enum(['aufmerksamkeit', 'vertrauen', 'anfrage', 'bearbeitung', 'betreuung']),
     kurz: z.string().max(100),
+    unterzeile: z.string().max(60).optional(), // Zeile direkt unter der H1 (Jamil #7120/#7126 b, nur Website)
     description: z.string().min(70).max(165),
     /** Paket-Hinweis nur wie auf der Startseite belegt, sonst „auf Anfrage“ */
     paket: z.string(),

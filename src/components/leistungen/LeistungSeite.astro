@@ -96,7 +96,7 @@ const schema = [
   breadcrumb={[{ name: 'Leistungen', path: '/leistungen/' }, { name: d.menuTitel, path: pfad }]}
 >
   <!-- 1 · Seitenkopf -->
-  <PageHeader eyebrow={gruppe.titel} title={d.title} lead={d.kurz} foto={foto}>
+  <PageHeader eyebrow={gruppe.titel} title={d.title} unter={d.unterzeile} lead={d.kurz} foto={foto}>
     <div class="ls-kopf__knopf">
       <a class="btn btn--lg" href={kontakt}>{HERO_KNOPF}</a>
       <a class="ls-kopf__paket" href="#paket">{komplett ? `Paket ${KOMPLETTPAKET.name}: ${komplettPreis()}` : paketAnzeige(d.paket)}</a>

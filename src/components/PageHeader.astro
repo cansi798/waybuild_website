@@ -10,9 +10,11 @@ interface Props {
   eyebrow: string;
   title: string;
   lead?: string;
+  /** Unterzeile direkt unter der H1 (vor dem Lead) */
+  unter?: string;
   foto?: FotoId;
 }
-const { eyebrow, title, lead, foto } = Astro.props;
+const { eyebrow, title, lead, foto, unter } = Astro.props;
 ---
 
 <section class="ph">
@@ -21,6 +23,7 @@ const { eyebrow, title, lead, foto } = Astro.props;
     <div class="ph__text">
       <span class="eyebrow">{eyebrow}</span>
       <h1 set:html={hl(title)} />{/* ==Wort== = goldener Marker (Jamil #7016, lib/hl.ts) */}
+      {unter && <p class="ph__unter">{unter}</p>}{/* Jamil #7120/#7126 b: Unterzeile direkt unter der H1 */}
       {lead && <p class="lead">{lead}</p>}
       <slot />
     </div>
@@ -45,6 +48,8 @@ const { eyebrow, title, lead, foto } = Astro.props;
   .ph .eyebrow::before { content: ''; width: 28px; height: 2px; border-radius: 2px; background: #EFBF04; }
   .ph h1 { color: #111827; font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem); line-height: 1.06; letter-spacing: -0.035em; max-width: 18ch; text-wrap: balance; }
   .ph .lead { color: #374151; max-width: 56ch; text-wrap: pretty; }
+  /* Jamil #7120/#7126 b: Unterzeile direkt unter der H1, kräftiger als der Lead */
+  .ph .ph__unter { margin: 10px 0 0; font-size: var(--fs-lead); font-weight: 700; line-height: 1.4; color: #111827; }
   .ph :global(a:not(.btn)) { color: #111827; text-decoration-color: #EFBF04; text-underline-offset: 4px; }
   .ph :global(a:not(.btn):hover) { color: #111827; }
   .ph :global(.btn) { background: #EFBF04; color: #111827; border-color: #EFBF04; box-shadow: 0 16px 32px -18px rgb(140 109 18 / 60%); }

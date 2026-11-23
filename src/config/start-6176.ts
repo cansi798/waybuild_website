@@ -332,6 +332,10 @@ export const J_START = {
  *  einmalig dazubuchbare Extras gibt (Logo, Geschäftspapiere …); die Einrichtung kostet 0 € (site.ts). Startseite + Kopf /preise/. */
 export const PREIS_WERT = 'Hochwertige Websites, individuell gestaltet – im Monatsabo, ohne hohe Einmalkosten für die Website selbst.';
 
+/** Jamil #7120/#7126 (23.11.2026, gewählt a/b/c): fester Satz an drei Stellen – Startseite Preise (Kennzeile), Leistungsseite Website
+ *  (Unterzeile unter der H1), /preise/ (Kennzeile über den Paketen). Wortlaut genau so, ohne Zahlen/Vergleiche. */
+export const AGENTUR_ABO = 'Agentur-Qualität im Monatsabo';
+
 export const J_PREISE = {
   titel: '==Klare Monatspreise==. Keine bösen Überraschungen.',
   // Satz 1 seit Jamil #7019 = PREIS_WERT (vorher „Starten Sie ohne fünfstellige Vorab-Investition.“)

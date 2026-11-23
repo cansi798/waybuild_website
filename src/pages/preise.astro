@@ -15,6 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import SnAngebot from '../components/startneu/SnAngebot.astro';
+import { AGENTUR_ABO } from '../config/start-6176';
 import SnAbschluss from '../components/startneu/SnAbschluss.astro';
 import { SAEULEN } from '../config/angebot';
 import { leistungenNach } from '../config/leistungen';
@@ -61,7 +62,7 @@ const komplettText = `Dazu: ${KOMPLETTPAKET.name} ${komplettPreis()} im Monat, k
   <span id="websites" class="spr-anker" aria-hidden="true"></span>
 
   <!-- Pakete · Komplettpaket · Einmalig dazu · Sicherheit (Hintergrund Sand), Anker #pakete -->
-  <SnAngebot titel="Die Pakete ==im Überblick==" /> {/* Jamil #6891: H2 nicht wortgleich mit H1 */}
+  <SnAngebot titel="Die Pakete ==im Überblick==" kenn={AGENTUR_ABO} />{/* Jamil #7120/#7126 c */} {/* Jamil #6891: H2 nicht wortgleich mit H1 */}
 
   <!-- Hintergründe: Pakete Sand → Vergleich Weiß → Start Papier → Ausbaustufen Weiß → Abschluss Hauch -->
   <section class="section sn spr-vgl" id="vergleich" aria-labelledby="spr-vgl-h">
