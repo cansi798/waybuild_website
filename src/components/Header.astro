@@ -110,6 +110,8 @@ const isCurrent = (path?: string) => path && current === href(path);
   .hdr :global(:focus-visible) { outline-color: var(--accent-ink); }
   .hdr .hdr__cta { background: #EFBF04; border-color: #EFBF04; color: #111827; } /* Jamil #6475: Gold, Schrift Anthrazit (≈ 8,5 : 1) */
   .hdr .hdr__cta:hover { background: #EFBF04; border-color: #EFBF04; color: #111827; }
+  /* Jamil #7093 (23.11.2026): Knopf kleiner – Höhe 38 px, weniger Innenabstand, Schrift aus der Typo-Skala (--fs-small) */
+  .hdr .hdr__cta { min-height: 38px; padding: 0.4em 1.15em; font-size: var(--fs-small); font-weight: 700; line-height: 1.2; }
   .hdr.is-scrolled { box-shadow: none; } /* Jamil #6973: auch beim Scrollen kein Schatten */
   .hdr__inner { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); }
   .hdr__logo { flex: none; display: inline-flex; text-decoration: none; }
