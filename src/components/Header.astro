@@ -127,8 +127,8 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd :global(.dd__chev) { transition: transform 0.2s ease; }
   .dd__panel {
     position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);
-    min-width: 340px; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: 18px;
-    box-shadow: 0 24px 48px -16px rgb(17 24 39 / 30%); padding: 10px;
+    min-width: 220px; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: none; padding: 6px; /* Jamil #7124: kein Schatten, feiner Rahmen, kompakter */
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
@@ -140,14 +140,18 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd__item :global(.dd__icon) { color: #111827; flex: none; }
   .dd__text { display: grid; line-height: 1.35; }
   /* Jamil #7114/#7115 (23.11.2026): Menü-Einträge so groß wie die Kopfzeilen-Navigation (--fs-small), ohne Symbole und ohne Unterzeile */
-  .dd__text strong { font-weight: 650; font-size: var(--fs-small); }
+  .dd__text strong { font-weight: 400; font-size: var(--fs-small); } /* Jamil #7124: dünn (normales Gewicht) */
+  /* Jamil #7124: weniger Weißraum, feine graue Linie zwischen den Punkten (nicht nach dem letzten) */
+  .dd__list { gap: 0; }
+  .dd__list > li + li { border-top: 1px solid #E5E7EB; }
+  .dd__item { padding: 8px 12px; border-radius: 8px; }
   .dd__text small { color: var(--ink-soft); font-size: var(--fs-small); font-weight: 400; }
   /* Fuß-Zeile für den letzten Eintrag („Alles im Überblick“) entfernt (Jamil #5675): sonst sähe jetzt „Blog“ bzw. „Kontakt“ wie ein Fuß aus */
   /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */
   .hdr__inner { position: relative; }
   .dd--mega { position: static; }
   /* Seit 09.11.2026 vier Gruppen der Kundenreise nebeneinander (Jamil #5274/#5276), Kurztext + Paket-Etikett je Eintrag */
-  .dd--mega .dd__panel { left: 50%; width: min(1120px, 100%); max-width: none; min-width: 0; padding: 18px; }
+  .dd--mega .dd__panel { left: 50%; width: min(1120px, 100%); max-width: none; min-width: 0; padding: 12px; }
   .dd--mega .dd__panel::before { content: ''; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
   .dd__groups { columns: 4 200px; column-gap: 12px; }
   .dd--mega .dd__item { align-items: flex-start; }
