@@ -82,7 +82,9 @@ h3 { font-size: var(--fs-h3); font-weight: 700; } /* QA #5952: Überschriften 70
 small { font-size: var(--fs-small); } /* Jamil #7008: Kleinschrift überall gleich (statt Browser-Standard „smaller“) */
 /* Jamil #7024 (22.11.2026): Schlüsselwörter in Überschriften in Goldschrift statt Marker (vorher #7016/#7017: Goldfläche hinter dem Wort).
    Markup unverändert: <mark class="hl"> aus lib/hl.ts. Farbe zentral in --hl-farbe (:root); Umstellen = eine Zeile. */
-mark.hl { color: var(--hl-farbe); background: none; padding: 0; margin: 0; }
+/* Jamil #7090 (23.11.2026): gelbe Schrift in den Überschriften wieder entfernt – Schlüsselwörter erben die Überschriftenfarbe (wie vor #7016).
+   Markup <mark class="hl"> bleibt; Gold wieder an = color: var(--hl-farbe). */
+mark.hl { color: inherit; background: none; padding: 0; margin: 0; }
 p { margin: 0 0 1em; }
 a { color: inherit; }
 img { max-width: 100%; height: auto; display: block; }
