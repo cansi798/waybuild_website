@@ -38,6 +38,13 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
           <div class="sn-kopf jp__kopf">
             <h2 id="jp-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(N.titel)} /></h2>
           </div>
+          {/* Jamil #7086: Weg-Leiste – Titel immer lesbar; Stand + Punkte nur mit Bewegung (rein optisch, die Marken auf den Karten tragen die Info) */}
+          <div class="jp-pfad">
+            <p class="jp-pfad__kopf"><span class="jp-pfad__titel">{W.weg.titel}</span><span class="jp-pfad__stand" aria-hidden="true" data-jp-stand>{W.weg.start}</span></p>
+            <ol class="jp-pfad__punkte" aria-hidden="true">
+              {N.karten.map((_, i) => <li class="jp-pfad__punkt" data-jp-punkt><span>{i + 1}</span></li>)}
+            </ol>
+          </div>
           <ul class="jp-bloecke jp-bloecke--weg">
             {N.karten.map((k, i) => {
               const l = W.loesungen[i];
@@ -45,14 +52,20 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
                 <li class="jp-block jp-wandel j6-ein" data-jp-karte>
                   <div class="jp-dreh">
                   <div class="jp-seite jp-seite--problem" data-jp-vorne>
-                    <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
+                    <div class="jp-seite__kopf">
+                      <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
+                      <p class="jp-marke jp-marke--problem">{W.weg.problem}</p>
+                    </div>
                     <h3 class="jp-block__titel">{k.titel}</h3>
                     <p class="jp-block__text">{k.text}</p>
                   </div>
                   <div class="jp-seite jp-seite--loesung" data-jp-hinten>
-                    {/* Jamil #7030: kein Haken-Kreis, kein Etikett mehr; dasselbe Symbol wie auf der Problemkarte */}
-                    <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
-                    <h3 class="jp-block__titel">{l.titel}</h3>{/* h3 statt h4 (Jamil #7006): nach dem Flip ist nur diese Seite sichtbar, axe heading-order */}
+                    {/* Jamil #7030: kein Haken-Kreis, dasselbe Symbol wie auf der Problemkarte; #7086: Marke „Schritt N mit webgold“ */}
+                    <div class="jp-seite__kopf">
+                      <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
+                      <p class="jp-marke jp-marke--loesung"><span class="jp-marke__nr">Schritt {i + 1}</span>{W.weg.mit}</p>
+                    </div>
+                    <h3 class="jp-block__titel">{l.titel}</h3>{/* h3 statt h4 (Jamil #7006): nach dem Wechsel ist nur diese Seite sichtbar, axe heading-order */}
                     <p class="jp-block__text">{l.inhalt}</p>
                   </div>
                   </div>
@@ -68,31 +81,65 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
 
 
 <script>
-  // Jamil #6954–#6958: Weg Karte für Karte über den gemeinsamen Bühnen-Kern. 5 Scroll-Stücke: 0 = alle Probleme, 1–4 = so viele Karten gelöst
-  // (das letzte Stück hält den fertigen Zustand, dann scrollt die Seite weiter). Nur Klassen umschalten, Bewegung macht CSS (opacity/transform).
+  // Jamil #6954–#6958 / #7030 / #7086: Weg Karte für Karte. PC (Bühne, buehne-kern.ts): 5 Scroll-Stücke, 0 = alle Probleme, 1–4 = so viele
+  // Karten gelöst. Handy/niedrige Fenster (Modus „gleiten“): jede Karte wechselt zur Lösung, sobald ihre Mitte über 42 % der Fensterhöhe
+  // geschoben ist, und zurück beim Hochscrollen. Reduzierte Bewegung/ohne JS: keine Klasse, Problem und Lösung untereinander (statisch).
+  // Nur Klassen umschalten, Bewegung macht CSS (opacity/transform).
   import { erstelleBuehne } from '../../scripts/buehne-kern';
   const bereich = document.querySelector<HTMLElement>('section.jp--neu');
   const buehne = bereich?.querySelector<HTMLElement>('[data-jp-buehne]');
   const karten = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-karte]')] : [];
+  const punkte = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-punkt]')] : [];
+  const stand = buehne?.querySelector<HTMLElement>('[data-jp-stand]');
   if (bereich && buehne && karten.length) {
-    let stand = -1;
-    const setze = (n: number) => {
-      if (n === stand) return;
-      stand = n;
-      karten.forEach((k, i) => {
-        const geloest = i < n;
-        k.classList.toggle('ist-geloest', geloest);
-        // Jamil #7006: nur die sichtbare Seite ist für Screenreader da (beide bleiben im DOM)
-        k.querySelector('[data-jp-vorne]')?.setAttribute('aria-hidden', String(geloest));
-        k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', String(!geloest));
-      });
+    const startText = stand?.textContent ?? '';
+    const zustand = karten.map(() => false);
+    const zeige = (i: number, geloest: boolean) => {
+      if (zustand[i] === geloest) return false;
+      zustand[i] = geloest;
+      const k = karten[i];
+      k.classList.toggle('ist-geloest', geloest);
+      // Jamil #7006: nur die sichtbare Seite ist für Screenreader da (beide bleiben im DOM)
+      k.querySelector('[data-jp-vorne]')?.setAttribute('aria-hidden', String(geloest));
+      k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', String(!geloest));
+      return true;
     };
+    const leiste = () => {
+      const n = zustand.filter(Boolean).length;
+      punkte.forEach((p, i) => { p.classList.toggle('ist-dran', zustand[i]); p.classList.toggle('ist-weiter', zustand[i] && zustand[i + 1] === true); });
+      if (stand) stand.textContent = n === 0 ? startText : `Schritt ${n} von ${karten.length}`;
+    };
+    const setze = (n: number) => { let neu = false; karten.forEach((_, i) => { neu = zeige(i, i < n) || neu; }); if (neu) leiste(); };
+
+    // Handy: Lage je Karte bei jedem Bild prüfen (passiv, requestAnimationFrame)
+    let wandel = false, geplant = false;
+    const pruefe = () => {
+      geplant = false;
+      if (!wandel) return;
+      const grenze = innerHeight * 0.42;
+      let neu = false;
+      karten.forEach((k, i) => { const r = k.getBoundingClientRect(); neu = zeige(i, r.top + r.height / 2 < grenze) || neu; });
+      if (neu) leiste();
+    };
+    const planen = () => { if (wandel && !geplant) { geplant = true; requestAnimationFrame(pruefe); } };
+    addEventListener('scroll', planen, { passive: true });
+    addEventListener('resize', planen, { passive: true });
+
     erstelleBuehne({
       bereich, buehne, schritte: karten, stuecke: karten.length + 1,
-      klassen: { buehne: 'jp--weg', gleiten: 'jp--gleiten' },
-      // Jamil #7000: 4 Spalten ab 1100 px; 2 × 2 nur als Bühne, wenn genug Höhe da ist (sonst normale Liste, nichts wird abgeschnitten)
+      klassen: { buehne: 'jp--weg', gleiten: 'jp--wandel' },
+      // Jamil #7000: 4 Spalten ab 1100 px; 2 × 2 nur als Bühne, wenn genug Höhe da ist (sonst Karte für Karte beim Scrollen)
       mqBuehne: '(min-width: 1100px) and (min-height: 700px), (min-width: 900px) and (min-height: 900px)',
-      aufModus: () => { stand = -1; karten.forEach((k) => { k.classList.remove('ist-geloest'); k.querySelectorAll('[data-jp-vorne], [data-jp-hinten]').forEach((e) => e.removeAttribute('aria-hidden')); }); },
+      aufModus: (modus) => {
+        karten.forEach((k, i) => { zustand[i] = false; k.classList.remove('ist-geloest'); k.querySelectorAll('[data-jp-vorne], [data-jp-hinten]').forEach((e) => e.removeAttribute('aria-hidden')); });
+        const anim = modus === 'buehne' || modus === 'gleiten';
+        bereich.classList.toggle('jp--anim', anim);
+        if (anim) karten.forEach((k) => k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', 'true'));
+        if (anim) karten.forEach((k) => k.querySelector('[data-jp-vorne]')?.setAttribute('aria-hidden', 'false'));
+        leiste();
+        wandel = modus === 'gleiten';
+        planen();
+      },
       aufStueck: (stueck) => setze(stueck),
     });
   }

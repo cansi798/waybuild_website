@@ -142,6 +142,8 @@ export const J_PROBLEM_NEU = {
  *  #6984–#6993 hat jede Karte eigenen `titel` + `inhalt` (angezeigt), J_MASS bleibt unverändert. `marke` = kleine Marke. */
 export const J_PROBLEM_WEG = {
   // marke „So machen wir es“ seit Jamil #7030 entfernt
+  /** Jamil #7086 (23.11.2026): Weg-Leiste über den Karten + Marken je Seite, damit klar ist: das ist der Weg mit webgold (Problem → Lösung) */
+  weg: { titel: 'Ihr Weg mit webgold', start: 'In 4 Schritten vom Problem zur Lösung', problem: 'Das Problem', mit: 'mit webgold' },
   loesungen: [
     // Karte 1: eigener Text seit Jamil #6984/#6989 (22.11.2026), WÖRTLICH; J_MASS bleibt unverändert (vorher J_MASS.schritte[0] „Ein individueller
     // Online-Kalkulator auf der Website“ / zeigt).
