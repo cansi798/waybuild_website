@@ -36,6 +36,7 @@ export default defineConfig({
       filter: (page) => !/\/(impressum|datenschutz|agb|404|checkliste|danke|referenzen|warum-waybuild)\/?$/.test(page)
         && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/neu/`) // zweite Startseite /neu/: nicht in die Sitemap
         && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/geschichte/`) // Entwurf /geschichte/ (noindex): nicht in die Sitemap
+        && !new URL(page).pathname.startsWith(`${base.replace(/\/+$/, '')}/test/`) // Test-Seiten /test/ (noindex, Jamil #7108): nicht in die Sitemap
         && !/\/website-fuer\//.test(page)
         && !blogEntwuerfe.some((id) => page.replace(/\/$/, '').endsWith(`/blog/${id}`))
         && !altLeistungen.some((slug) => page.replace(/\/$/, '').endsWith(`/leistungen/${slug}`)),

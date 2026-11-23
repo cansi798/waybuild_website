@@ -1,0 +1,162 @@
+---
+// „Ein Tag mit der Web-App“ (Jamil, Talk qh87y3sj #7107, freigegeben #7108). Test-Seite /test/ein-tag/.
+// PC (ab 960 px, mit JS, ohne „Bewegung reduzieren“): Abschnitt bleibt stehen (sticky), links läuft die Uhr mit dem Scrollen
+// 07:30 → 18:00, rechts zeigt das Gerät die passende Oberfläche, darunter ein Satz. Handy: Stationen untereinander mit Uhrzeit-Marke.
+// Ohne JS / „Bewegung reduzieren“: alle Stationen statisch untereinander im Endzustand (Grundzustand des CSS = Endzustand).
+// Bildschirme sind reines HTML/CSS (keine Fotos). Ablauf: ein-tag.ts, Stil: ein-tag.css.
+import { STATIONEN, EIN_TAG_SCHLUSS } from './texte';
+import { ERSTBERATUNG_PFAD } from '../../config/startseite';
+import { href } from '../../lib/paths';
+
+const haken = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+---
+
+<section class="section et" data-et aria-labelledby="et-titel">
+  <h2 id="et-titel" class="et-sr">Ein Arbeitstag in fünf Stationen</h2>
+  <div class="wrap et-buehne">
+    <div class="et-sticky">
+      <div class="et-uhr" aria-hidden="true">
+        <span class="et-uhr__zeit" data-et-uhr>07:30</span>
+      </div>
+      <ol class="et-leiste" aria-hidden="true">
+        {STATIONEN.map((s, i) => (
+          <li class:list={['et-leiste__punkt', { 'ist-aktiv': i === 0 }]} data-et-marke><span>{s.zeit}</span></li>
+        ))}
+        <li class="et-leiste__fortschritt" data-et-fortschritt></li>
+      </ol>
+
+      <ol class="et-stationen">
+        {STATIONEN.map((s, i) => (
+          <li class:list={['et-station', `et-station--${s.id}`]} data-et-station data-zeit={s.zeit} data-index={i}>
+            <div class="et-station__text">
+              <p class="et-station__zeit"><time datetime={s.zeit}>{s.zeit} Uhr</time></p>
+              <h3 class="et-station__titel">{s.titel}</h3>
+            </div>
+            <figure class="et-station__bild">
+              <div class:list={['et-geraet', `et-geraet--${s.geraet}`]} aria-hidden="true">
+                <div class="et-geraet__schirm">
+
+                  {s.id === 'start' && (
+                    <div class="sc sc--termine">
+                      <div class="sc-status"><span>07:30</span><span class="sc-status__icons"><i></i><i></i></span></div>
+                      <div class="sc-kopf">
+                        <span class="sc-klein">Montag, 23. November</span>
+                        <strong class="sc-gross">Heute: 3 Termine</strong>
+                      </div>
+                      <ul class="sc-termine">
+                        <li class="sc-termin sc-termin--erst"><span class="sc-termin__zeit">08:00</span><span class="sc-termin__wer"><b>Familie Brandt</b><span>Lindenweg 12</span></span><span class="sc-tipp"></span></li>
+                        <li class="sc-termin"><span class="sc-termin__zeit">11:00</span><span class="sc-termin__wer"><b>Praxis Okafor</b><span>Hafenstraße 3</span></span></li>
+                        <li class="sc-termin"><span class="sc-termin__zeit">14:30</span><span class="sc-termin__wer"><b>Herr Demir</b><span>Am Markt 7</span></span></li>
+                      </ul>
+                      <div class="sc-karte">
+                        <div class="sc-karte__plan">
+                          <svg viewBox="0 0 240 110" preserveAspectRatio="none">
+                            <path class="sc-karte__weg" d="M24 92 C 70 92, 70 40, 120 46 S 190 22, 206 30" fill="none" stroke-width="5" stroke-linecap="round" />
+                          </svg>
+                          <span class="sc-karte__pin"></span>
+                        </div>
+                        <div class="sc-karte__zeile">
+                          <span><b>Lindenweg 12</b><span class="sc-klein">12 Min. Fahrt</span></span>
+                          <span class="sc-knopf">Route starten</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {s.id === 'vorort' && (
+                    <div class="sc sc--kamera">
+                      <div class="sc-sucher">
+                        <span class="sc-sucher__motiv"><i></i><i></i><i></i></span>
+                        <span class="sc-sucher__ecken"></span>
+                        <span class="sc-blitz"></span>
+                      </div>
+                      <div class="sc-ausloeser"><span></span></div>
+                      <div class="sc-ziel">
+                        <span class="sc-ziel__bilder"><i></i><i></i><i></i><i class="sc-ziel__neu"></i></span>
+                        <span class="sc-ziel__wer"><b>Familie Brandt</b><span class="sc-klein">Lindenweg 12</span></span>
+                      </div>
+                      <span class="sc-flug"></span>
+                      <div class="sc-meldung"><span class="sc-meldung__haken" set:html={haken} />Gespeichert bei Familie Brandt</div>
+                    </div>
+                  )}
+
+                  {s.id === 'portal' && (
+                    <div class="sc sc--portal">
+                      <div class="sc-adresse">portal.ihr-betrieb.de</div>
+                      <div class="sc-kopf">
+                        <span class="sc-klein">Ihr Auftrag, Familie Brandt</span>
+                        <strong class="sc-gross">Lindenweg 12</strong>
+                      </div>
+                      <div class="sc-pille"><span class="sc-pille__alt">Geplant</span><span class="sc-pille__neu">Arbeiten laufen</span></div>
+                      <div class="sc-balken"><span></span></div>
+                      <ol class="sc-schritte">
+                        <li class="ist-fertig"><span class="sc-punkt" set:html={haken} />Termin bestätigt</li>
+                        <li class="ist-fertig"><span class="sc-punkt" set:html={haken} />Material bereit</li>
+                        <li class="ist-jetzt"><span class="sc-punkt"></span>Arbeiten laufen</li>
+                        <li><span class="sc-punkt"></span>Abnahme</li>
+                      </ol>
+                      <div class="sc-neues-foto"><i></i><span><b>Neues Foto</b><span class="sc-klein">heute, 10:02 Uhr</span></span></div>
+                    </div>
+                  )}
+
+                  {s.id === 'buero' && (
+                    <div class="sc sc--buero">
+                      <div class="sc-seite">
+                        <span class="sc-seite__logo"></span>
+                        <i class="ist-aktiv"></i><i></i><i></i><i></i>
+                      </div>
+                      <div class="sc-haupt">
+                        <div class="sc-kopf sc-kopf--zeile">
+                          <strong class="sc-gross">Heute, Montag</strong>
+                          <span class="sc-chip">Alles aktuell</span>
+                        </div>
+                        <div class="sc-kacheln">
+                          <div class="sc-kachel"><b>3</b><span>Aufträge</span></div>
+                          <div class="sc-kachel"><b>4</b><span>Fotos</span></div>
+                          <div class="sc-kachel"><b>0</b><span>Rückfragen</span></div>
+                        </div>
+                        <ul class="sc-tabelle">
+                          <li><span>Familie Brandt</span><span class="sc-klein">4 Fotos</span><span class="sc-tag sc-tag--fertig">Erledigt</span></li>
+                          <li><span>Praxis Okafor</span><span class="sc-klein">Notiz von unterwegs</span><span class="sc-tag sc-tag--fertig">Erledigt</span></li>
+                          <li><span>Herr Demir</span><span class="sc-klein">Unterschrift da</span><span class="sc-tag sc-tag--fertig">Erledigt</span></li>
+                        </ul>
+                        <div class="sc-hinweis"><span class="sc-meldung__haken" set:html={haken} />Rechnungen sind vorbereitet</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {s.id === 'feierabend' && (
+                    <div class="sc sc--feierabend">
+                      <div class="sc-status"><span>18:00</span><span class="sc-status__icons"><i></i><i></i></span></div>
+                      <div class="sc-bilanz">
+                        <span class="sc-klein">Heute erledigt</span>
+                        <strong class="sc-bilanz__zahl">3 Aufträge</strong>
+                      </div>
+                      <ul class="sc-erledigt">
+                        <li><span class="sc-punkt" set:html={haken} />Familie Brandt</li>
+                        <li><span class="sc-punkt" set:html={haken} />Praxis Okafor</li>
+                        <li><span class="sc-punkt" set:html={haken} />Herr Demir</li>
+                      </ul>
+                      <div class="sc-dunkel"><span class="sc-dunkel__zeit">18:00</span><span class="sc-dunkel__gruss">Bis morgen.</span></div>
+                    </div>
+                  )}
+
+                </div>
+                {s.geraet === 'laptop' && <div class="et-geraet__fuss"></div>}
+              </div>
+              <figcaption class="et-station__satz">{s.satz}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section et-schluss" aria-labelledby="et-schluss-titel">
+  <div class="wrap">
+    <h2 id="et-schluss-titel">{EIN_TAG_SCHLUSS.titel}</h2>
+    <p class="lead">{EIN_TAG_SCHLUSS.frage}</p>
+    <a class="btn btn--primary btn--lg" href={href(ERSTBERATUNG_PFAD)}>{EIN_TAG_SCHLUSS.knopf}</a>
+  </div>
+</section>

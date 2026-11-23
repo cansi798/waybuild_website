@@ -1,0 +1,19 @@
+---
+// TEST-SEITE „Ein Tag mit der Web-App“ (Jamil, Talk qh87y3sj #7107, freigegeben #7108 „ja baue eine Vorschau“, 23.11.2026).
+// noindex, aus keinem Menü verlinkt, nicht in der Sitemap (Filter /test/ in astro.config.mjs). Startseite bleibt unverändert.
+// Komponente, Texte, Stil und Ablauf: src/components/ein-tag/.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import EinTag from '../../components/ein-tag/EinTag.astro';
+import { EIN_TAG_SEITE } from '../../components/ein-tag/texte';
+import '../../components/ein-tag/ein-tag.css';
+---
+
+<BaseLayout title={EIN_TAG_SEITE.titel} description={EIN_TAG_SEITE.description} noindex ohneKontaktkopf>{/* Schluss mit Erstberatung ersetzt den Kontaktkopf im Fuß */}
+  <PageHeader eyebrow={EIN_TAG_SEITE.kennzeile} title={EIN_TAG_SEITE.h1} lead={EIN_TAG_SEITE.lead} />
+  <EinTag />
+</BaseLayout>
+
+<script>
+  import '../../components/ein-tag/ein-tag.ts';
+</script>
