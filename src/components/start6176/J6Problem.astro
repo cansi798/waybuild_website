@@ -60,10 +60,10 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
                     <p class="jp-block__text">{k.text}</p>
                   </div>
                   <div class="jp-seite jp-seite--loesung" data-jp-hinten>
-                    {/* Jamil #7030: kein Haken-Kreis, dasselbe Symbol wie auf der Problemkarte; #7086: Marke „Schritt N mit webgold“ */}
+                    {/* Jamil #7030: kein Haken-Kreis, dasselbe Symbol wie auf der Problemkarte; #7086/#7110: Marke „Lösung mit webgold“ bei allen Schritten */}
                     <div class="jp-seite__kopf">
                       <span class="jp-kreis" aria-hidden="true"><ProblemIcon icon={k.icon} size={28} class="jp-block__ico" /></span>
-                      <p class="jp-marke jp-marke--loesung"><span class="jp-marke__nr">Schritt {i + 1}</span>{W.weg.mit}</p>
+                      <p class="jp-marke jp-marke--loesung">{W.weg.mit}</p>
                     </div>
                     <h3 class="jp-block__titel">{l.titel}</h3>{/* h3 statt h4 (Jamil #7006): nach dem Wechsel ist nur diese Seite sichtbar, axe heading-order */}
                     <p class="jp-block__text">{l.inhalt}</p>
