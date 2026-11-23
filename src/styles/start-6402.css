@@ -1,8 +1,10 @@
 /* 7. Abschluss „Bereit zu sehen …“ (Jamil #6402, 19.11.2026). Markup: components/start6176/J6Start.astro.
    Dunkle Box (tiefes Anthrazit-Türkis aus der Palette), zwei weiße Karten mit Mini-Formular, darunter Vertrauenszeile mit Fotos. */
-#kontakt-start.js7 { --band: #111827; background: #111827; color: var(--white); }
+#kontakt-bereich.js7 { --band: #111827; background: #111827; color: var(--white); }
 .js7 .js7__kopf .sn-h2 { max-width: 22ch; color: var(--white); }
 .js7 .js7__kopf .sn-lead { max-width: 56ch; color: #CBD5E1; }
+/* Jamil #7092: Sprungziel; html hat scroll-padding-top 80px → Karten beginnen 16 px unter der Kopfzeile (Handy und PC) */
+#kontakt-start { scroll-margin-top: calc(var(--header-h, 72px) + 16px - 80px); }
 .js7-karten { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
 @media (min-width: 900px) { .js7-karten { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 28px); } }
 .js7-karte { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: clamp(22px, 2.8vw, 34px); border-radius: 26px;
@@ -40,14 +42,14 @@
 .js7-fotos { display: inline-flex; }
 .js7-fotos picture + picture { margin-left: -10px; }
 .js7-foto { display: block; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #111827; box-shadow: 0 0 0 1.5px var(--gold); }
-#kontakt-start .js7-karte__titel { color: var(--ink); }
-#kontakt-start .js7-karte__text, #kontakt-start .js7-karte p { color: var(--ink-soft); }
-#kontakt-start .js7-karte .js7-status { color: #111827; }
+#kontakt-bereich .js7-karte__titel { color: var(--ink); }
+#kontakt-bereich .js7-karte__text, #kontakt-bereich .js7-karte p { color: var(--ink-soft); }
+#kontakt-bereich .js7-karte .js7-status { color: #111827; }
 
 /* Seit Jamil #6515 hell: Goldstich-Fläche, feine Goldlinie oben, Karten weiß mit feinem Rand, Texte Anthrazit */
-#kontakt-start.js7 { --band: #FFFEFB; background: #FFFEFB; color: #111827; padding-block: clamp(64px, 9vw, 120px); }
-#kontakt-start.js7 .js7__kopf .sn-h2 { color: #111827; }
-#kontakt-start.js7 .js7__kopf .sn-lead { color: #4B5563; }
-#kontakt-start .js7-karte { border: 1px solid #ECE7DA; box-shadow: 0 18px 40px -32px rgb(17 24 39 / 30%); }
-#kontakt-start .js7-vertrauen p { color: #374151; }
-#kontakt-start .js7-foto { border-color: #FFFEFB; }
+#kontakt-bereich.js7 { --band: #FFFEFB; background: #FFFEFB; color: #111827; padding-block: clamp(64px, 9vw, 120px); }
+#kontakt-bereich.js7 .js7__kopf .sn-h2 { color: #111827; }
+#kontakt-bereich.js7 .js7__kopf .sn-lead { color: #4B5563; }
+#kontakt-bereich .js7-karte { border: 1px solid #ECE7DA; box-shadow: 0 18px 40px -32px rgb(17 24 39 / 30%); }
+#kontakt-bereich .js7-vertrauen p { color: #374151; }
+#kontakt-bereich .js7-foto { border-color: #FFFEFB; }

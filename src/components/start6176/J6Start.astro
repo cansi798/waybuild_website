@@ -17,14 +17,15 @@ const G = T.gespraech, S = T.schnell;
 const ds = href('/datenschutz/');
 ---
 
-<section class="section sn js7" id="kontakt-start" aria-labelledby="js7-h">
+<section class="section sn js7" id="kontakt-bereich" aria-labelledby="js7-h">
   <div class="wrap">
     <div class="sn-kopf js7__kopf">
       <h2 id="js7-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
 
-    <div class="js7-karten">
+    {/* Jamil #7092: Sprungziel aller „Kostenlose Erstberatung“-Knöpfe = die Karten-Zeile (direkt unter der Kopfzeile, Abstand: start-6402.css) */}
+    <div class="js7-karten" id="kontakt-start">
       <form class="js7-karte" id="start-gespraech" data-js7 data-betreff={G.betreff} data-weg="gespraech" data-endpoint={endpoint} data-key={formKey}
         data-mailto={company.email} data-thanks={href('/danke/')} novalidate aria-labelledby="js7-g-h">
         <p class="js7-karte__art">{G.art}</p>

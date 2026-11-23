@@ -21,7 +21,10 @@ export const ANLIEGEN = {
 };
 /** Pfad des Haupt-Knopfs „Kostenlose Erstberatung“ (überall gleich, Jamil #5322 Q2): /kontakt/ erkennt das Anliegen, zeigt keine
  *  Paketwahl und sendet „Kostenlose Erstberatung“ mit (Loop 22.11.2026, MKT-001/MKT-011). Mit href() verwenden. */
-export const ERSTBERATUNG_PFAD = `/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`;
+// Seit Jamil #7092 (23.11.2026): alle Knöpfe „Kostenlose Erstberatung“ (Kopfzeile, Handy-Leiste, Menü, Hero, Blog/Ratgeber) springen genau zu den
+// beiden Formular-Karten unten auf der Startseite (Anker #kontakt-start sitzt an der Karten-Zeile, J6Start.astro). Vorher die Kontaktseite:
+export const ERSTBERATUNG_KONTAKTSEITE = `/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`;
+export const ERSTBERATUNG_PFAD = '/#kontakt-start';
 
 export const HERO = {
   /* Zielgruppenzeile „Für kleine und mittlere Unternehmen“ im Hero entfernt (Jamil #4984/#4985, 08.11.2026) */
