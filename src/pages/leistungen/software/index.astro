@@ -1,0 +1,51 @@
+---
+// /leistungen/software/ – eigene Leistungsseite „Individuelle Software (Web-App)“ (Jamil #7242/#7246, 24.11.2026).
+// Trägt den Vergleich „Von der Stange / nach Maß“, Gruppe „Ihre Software“ (von der Startseite hierher verschoben).
+// Bewusst schlank gehalten; weitere Inhalte nach Bedarf. Stil wie die neue Startseite.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import JVergleich from '../../../components/JVergleich.astro';
+import SnAbschluss from '../../../components/startneu/SnAbschluss.astro';
+import { J_MASS } from '../../../config/start-6176';
+import { href } from '../../../lib/paths';
+import { ERSTBERATUNG_PFAD } from '../../../config/startseite';
+import '../../../styles/start-neu.css';
+
+const gruppe = J_MASS.vergleich.gruppen.find((g) => g.titel === 'Ihre Software')!;
+---
+
+<BaseLayout
+  title="Individuelle Software (Web-App) für Ihren Betrieb"
+  description="Software nach Maß von webgold: genau die Funktionen, die Ihre Abläufe brauchen – als Web-App im Browser, auf PC, Tablet und Handy, ohne Installation."
+>
+  <PageHeader
+    eyebrow="Leistung"
+    title="Individuelle Software (Web-App)"
+    lead="Software, die genau zu Ihren Abläufen passt – statt fertige Programme, die Sie zu Kompromissen zwingen. Als Web-App läuft sie im Browser, auf PC, Tablet und Handy, ganz ohne Installation."
+  >
+    <p class="ls-soft-cta"><a class="btn btn--primary" href={href(ERSTBERATUNG_PFAD)}>Kostenlose Erstberatung</a> <a class="btn btn--ghost" href={href('/preise/')}>Preis ansehen</a></p>
+  </PageHeader>
+
+  <section class="section sn" aria-labelledby="ls-soft-intro-h">
+    <div class="wrap ls-soft-intro">
+      <h2 id="ls-soft-intro-h" class="sn-h2 sn-h2--klein">Nach Maß statt von der Stange</h2>
+      <p>Viele Betriebe arbeiten mit Programmen von der Stange: viele Funktionen, die niemand nutzt – und ausgerechnet die eine, die fehlt, ist nicht dabei. Wir drehen das um. Wir sehen uns Ihre Abläufe an und bauen die Software, die dazu passt: von der Kundenverwaltung über die Terminbuchung bis zu Funktionen, die es nur bei Ihnen gibt.</p>
+      <p>Ihre Software läuft als Web-App im Browser. Ihr Team meldet sich an und arbeitet sofort – am Büro-PC, auf dem Tablet in der Werkstatt oder unterwegs am Handy. Keine komplizierte Installation, keine Updates auf einzelnen Rechnern.</p>
+    </div>
+  </section>
+
+  <section class="section sn" aria-label="Von der Stange oder nach Maß">
+    <div class="wrap">
+      <JVergleich titel={J_MASS.vergleich.titel} stange={J_MASS.vergleich.stange} mass={J_MASS.vergleich.mass}
+        gruppe={gruppe.titel} paare={gruppe.paare} />
+    </div>
+  </section>
+
+  <SnAbschluss />
+</BaseLayout>
+
+<style>
+  .ls-soft-cta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .ls-soft-intro { max-width: 68ch; display: grid; gap: 14px; }
+  .ls-soft-intro p { color: var(--ink-soft); line-height: 1.7; }
+</style>

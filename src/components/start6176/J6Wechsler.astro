@@ -28,25 +28,8 @@ const BW = T.bauwelt;
       <p class="sn-lead">{T.unter}</p>
     </div>
 
-    {/* Jamil #7149/#7153 (a): „Von der Stange vs. nach Maß“ – allgemeine Gegenüberstellung, links gedämpft/durchgestrichen, rechts gold */}
-    <div class="jm-vgl">
-      <h3 class="jm-vgl__titel">{T.vergleich.titel}</h3>
-      <div class="jm-vgl__raster">
-        <p class="jm-vgl__kopf jm-vgl__kopf--stange">{T.vergleich.stange}</p>
-        <p class="jm-vgl__kopf jm-vgl__kopf--mass">{T.vergleich.mass}</p>
-        {T.vergleich.gruppen.map((g) => (
-          <Fragment>
-            <h4 class="jm-vgl__gruppe">{g.titel}</h4>
-            {g.paare.map((p) => (
-              <Fragment>
-                <p class="jm-vgl__zelle jm-vgl__zelle--stange"><span class="jm-vgl__mark" aria-hidden="true">✕</span><span class="jm-vgl__txt">{p.stange}</span></p>
-                <p class="jm-vgl__zelle jm-vgl__zelle--mass"><span class="jm-vgl__mark jm-vgl__mark--gold" aria-hidden="true">✓</span><span class="jm-vgl__txt">{p.mass}</span></p>
-              </Fragment>
-            ))}
-          </Fragment>
-        ))}
-      </div>
-    </div>
+    {/* Jamil #7246/#7247 (24.11.2026): Vergleich „Von der Stange / nach Maß“ von der Startseite entfernt –
+        er steht jetzt je Gruppe auf den Leistungsseiten (Website bzw. Software). Daten bleiben in J_MASS.vergleich. */}
 
     {/* Jamil #7088/#7099 (Variante a): erst zeigen, was alles möglich ist (ohne Beispiel), dann zum echten Projekt */}
     <div class="jbk" aria-labelledby="jbk-h" role="group">

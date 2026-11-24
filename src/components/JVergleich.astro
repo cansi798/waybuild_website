@@ -1,0 +1,36 @@
+---
+// Wiederverwendbarer Vergleich „Von der Stange oder nach Maß?“ für EINE Gruppe (Jamil #7246/#7247, 24.11.2026):
+// auf der Startseite entfernt, stattdessen auf den Leistungsseiten – die Gruppe „Ihre Website“ auf /leistungen/website/,
+// die Gruppe „Ihre Software“ auf /leistungen/software/. Daten: src/config/start-6176.ts (J_MASS.vergleich). Stil: styles/mass-6379.css.
+import '../styles/mass-6379.css';
+
+interface Paar { stange: string; mass: string }
+interface Props {
+  /** Spaltenköpfe + Titel (aus J_MASS.vergleich) */
+  titel: string;
+  stange: string;
+  mass: string;
+  /** Überschrift der Gruppe (z. B. „Ihre Website“) */
+  gruppe: string;
+  paare: readonly Paar[];
+  /** Überschriftenebene im Seitenkontext (Standard h2) */
+  ebene?: 'h2' | 'h3';
+}
+const { titel, stange, mass, gruppe, paare, ebene = 'h2' } = Astro.props;
+const Titel = ebene;
+---
+
+<div class="jm-vgl">
+  <Titel class="jm-vgl__titel">{titel}</Titel>
+  <div class="jm-vgl__raster">
+    <p class="jm-vgl__kopf jm-vgl__kopf--stange">{stange}</p>
+    <p class="jm-vgl__kopf jm-vgl__kopf--mass">{mass}</p>
+    <h3 class="jm-vgl__gruppe">{gruppe}</h3>
+    {paare.map((p) => (
+      <Fragment>
+        <p class="jm-vgl__zelle jm-vgl__zelle--stange"><span class="jm-vgl__mark" aria-hidden="true">✕</span><span class="jm-vgl__txt">{p.stange}</span></p>
+        <p class="jm-vgl__zelle jm-vgl__zelle--mass"><span class="jm-vgl__mark jm-vgl__mark--gold" aria-hidden="true">✓</span><span class="jm-vgl__txt">{p.mass}</span></p>
+      </Fragment>
+    ))}
+  </div>
+</div>

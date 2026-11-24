@@ -17,7 +17,7 @@ export const NAV: NavItem[] = [
     label: 'Leistungen',
     children: [
       { label: 'Websites', path: '/leistungen/website/', icon: 'layout', desc: 'Gefunden werden und aus Besuchern Anfragen machen' },
-      { label: 'Individuelle Software (Web-App)', path: '/#loesung', icon: 'code', desc: 'Software nach Maß, genau für Ihre Abläufe' },
+      { label: 'Individuelle Software (Web-App)', path: '/leistungen/software/', icon: 'code', desc: 'Software nach Maß, genau für Ihre Abläufe' },
     ],
   },
   { label: 'Preise', path: '/preise/' },

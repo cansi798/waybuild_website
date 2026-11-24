@@ -29,10 +29,14 @@ import { HERO_KNOPF } from '../../config/variante';
 import { href, absolute } from '../../lib/paths';
 import '../../styles/start-neu.css';
 import '../../styles/leistung-seite.css';
+// Jamil #7247 (24.11.2026): Vergleich „Von der Stange / nach Maß“, Gruppe „Ihre Website“, nur auf der Website-Leistungsseite.
+import JVergleich from '../JVergleich.astro';
+import { J_MASS } from '../../config/start-6176';
 
 interface Props { eintrag: LeistungNeu }
 const { eintrag } = Astro.props;
 const d = eintrag.data;
+const websiteVergleich = eintrag.id === 'website' ? J_MASS.vergleich.gruppen.find((g) => g.titel === 'Ihre Website') : undefined;
 const { Content } = await render(eintrag);
 const gruppe = gruppeById(d.gruppe);
 const kontakt = href(`/kontakt/?paket=${encodeURIComponent(ANLIEGEN.erstberatung.paket)}`);
@@ -168,6 +172,16 @@ const schema = [
             </ul>
           </div>
         )}
+      </div>
+    </section>
+  )}
+
+  {/* Vergleich „Von der Stange / nach Maß“ – Gruppe „Ihre Website“ (Jamil #7247), nur auf der Website-Leistungsseite */}
+  {websiteVergleich && (
+    <section class="section sn" aria-label="Von der Stange oder nach Maß">
+      <div class="wrap">
+        <JVergleich titel={J_MASS.vergleich.titel} stange={J_MASS.vergleich.stange} mass={J_MASS.vergleich.mass}
+          gruppe={websiteVergleich.titel} paare={websiteVergleich.paare} />
       </div>
     </section>
   )}
