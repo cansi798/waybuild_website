@@ -3,10 +3,9 @@ import { hl } from '../../lib/hl';
 import "../../styles/umstieg-6391.css";
 // 5. „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Jamil, Talk qh87y3sj #6391, 19.11.2026). Texte wörtlich aus
 // src/config/start-6176.ts (J_UMSTIEG).
-// Seit Jamil #7152/#7156 (24.11.2026): als Dialog. Beim Scrollen erscheint je ein Einwand als Sprechblase (Kundenseite, links),
-// danach die webgold-Antwort (rechts, dezent gold). Nach dem 4. Paar erscheinen kleine „?“-Blasen (Deko) und ein Abschluss-Satz
-// mit dem Link zu den häufigen Fragen. Grundform (ohne JS / reduzierte Bewegung): alle Paare ruhig untereinander lesbar, ohne die
-// „?“-Deko. Mobil: Blasen untereinander, abwechselnd eingerückt. Stil: styles/umstieg-6391.css.
+// Seit Jamil #7152/#7156 (24.11.2026): als Dialog. Seit #7226/#7227/#7228/#7229 (24.11.2026): Blasen weiß mit Zipfel (Sprechblasen),
+// beim Scrollen ist immer nur EIN Frage-Antwort-Paar zugleich sichtbar – das zentrierte Paar blendet ein, beim Weiterscrollen wieder
+// aus, das nächste erscheint. Ohne JS / reduzierte Bewegung: alle Paare ruhig untereinander lesbar. Stil: styles/umstieg-6391.css.
 import { J_UMSTIEG as T } from '../../config/start-6176';
 import { href } from '../../lib/paths';
 ---
@@ -20,20 +19,17 @@ import { href } from '../../lib/paths';
 
     <div class="ju-chat" data-ju-chat>
       {T.karten.map((k) => (
-        <Fragment>
-          <p class="ju-blase ju-blase--kunde" data-ju-blase>{k.frage}</p>
-          <div class="ju-blase ju-blase--web" data-ju-blase>
+        <div class="ju-paar" data-ju-paar>
+          <p class="ju-blase ju-blase--kunde">{k.frage}</p>
+          <div class="ju-blase ju-blase--web">
             <span class="ju-blase__marke" aria-hidden="true">webgold</span>
             <span class="ju-blase__text">{k.antwort}</span>
           </div>
-        </Fragment>
+        </div>
       ))}
 
-      {/* Nach dem 4. Paar (Jamil #7152/#7156): „?“-Blasen (Deko) + selbstbewusster Abschluss + Link zu den häufigen Fragen */}
-      <div class="ju-schluss" data-ju-blase>
-        <span class="ju-fragen" aria-hidden="true">
-          {[0, 1, 2, 3, 4, 5, 6].map((i) => <span class="ju-fragen__blase" style={`--q:${i}`}>?</span>)}
-        </span>
+      {/* Abschluss (Jamil #7228: ohne „?“-Deko): selbstbewusster Satz + Link zu den häufigen Fragen */}
+      <div class="ju-schluss" data-ju-paar>
         <p class="ju-schluss__satz">Fragen gehören dazu. Antworten auch.</p>
         <p class="ju-mehr">{T.mehr} <a class="ju-mehr__link" href={href(T.mehrLink.pfad)}>{T.mehrLink.text}</a></p>
       </div>
@@ -42,18 +38,17 @@ import { href } from '../../lib/paths';
 </section>
 
 <script>
-  // Dialog beim Scrollen (Jamil #7152): je Blase einblenden, sobald sie ins Bild kommt (der Reihe nach). Nur mit Bewegung und
-  // IntersectionObserver; ohne JS oder bei reduzierter Bewegung bleibt die Grundform (alles sichtbar, keine „?“-Deko) stehen.
+  // Dialog beim Scrollen (Jamil #7226): immer nur das zentrierte Paar ist sichtbar. Ein Paar blendet ein, sobald es in das mittlere
+  // Band des Bildschirms kommt, und wieder aus, sobald es es verlässt – so erscheint beim Scrollen eins nach dem anderen.
+  // Nur mit Bewegung und IntersectionObserver; ohne JS oder bei reduzierter Bewegung bleibt die Grundform (alles ruhig sichtbar).
   const chat = document.querySelector<HTMLElement>('[data-ju-chat]');
   const ruhig = matchMedia('(prefers-reduced-motion: reduce)');
   if (chat && !ruhig.matches && 'IntersectionObserver' in window) {
     chat.classList.add('ju-chat--anim');
-    const blasen = [...chat.querySelectorAll<HTMLElement>('[data-ju-blase]')];
+    const paare = [...chat.querySelectorAll<HTMLElement>('[data-ju-paar]')];
     const io = new IntersectionObserver((eintraege) => {
-      eintraege.forEach((e) => {
-        if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('ist-da'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
-    blasen.forEach((b) => io.observe(b));
+      eintraege.forEach((e) => e.target.classList.toggle('ist-aktiv', e.isIntersecting));
+    }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
+    paare.forEach((p) => io.observe(p));
   }
 </script>

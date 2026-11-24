@@ -1,46 +1,43 @@
-/* 5. „Keine Angst vor dem Umstieg“ (Jamil #6391, 19.11.2026; seit #7152/#7156, 24.11.2026 als Dialog). Markup: components/start6176/J6Umstieg.astro.
-   Abschnitt auf hellem Warmgrau (global.css), Blasen weiß/grau; keine Schatten. Grundform ohne JS/reduzierte Bewegung: alle Blasen
-   sichtbar, keine „?“-Deko. Mit Bewegung blendet das Skript jede Blase beim Scrollen ein (.ju-chat--anim .ist-da). */
+/* 5. „Keine Angst vor dem Umstieg“ (Jamil #6391, 19.11.2026; seit #7152/#7156 als Dialog; seit #7226–#7229, 24.11.2026 überarbeitet).
+   Markup: components/start6176/J6Umstieg.astro. Abschnitt auf hellem Warmgrau (global.css). Blasen WEISS als Sprechblasen mit Zipfel.
+   Grundform (ohne JS / reduzierte Bewegung): alle Paare ruhig untereinander lesbar. Mit Bewegung (.ju-chat--anim) ist beim Scrollen
+   immer nur das zentrierte Paar sichtbar (.ist-aktiv), die anderen sind ausgeblendet. */
 .ju .ju__kopf .sn-h2 { max-width: 24ch; }
 .ju .ju__kopf .sn-lead { max-width: 60ch; }
 
-/* Dialog: Einwände links (Kunde, kühler Schiefer – dieselbe Kühl-Ordnung wie „von der Stange“), Antworten rechts (webgold, warm gold).
-   Jamil #7185: ruhiger Rhythmus – Frage und Antwort bilden ein Paar, davor mehr Luft. */
-.ju-chat { display: grid; gap: 10px; max-width: 780px; margin: clamp(26px, 4vw, 44px) auto 0; }
-.ju-blase { min-width: 0; max-width: min(90%, 560px); margin: 0; padding: 15px 19px; line-height: 1.6; text-wrap: pretty; }
-.ju-blase--kunde { justify-self: start; border-radius: 20px 20px 20px 6px; background: #F2F5F8; border: 1px solid #E1E8EF; color: #475569;
-  font-style: italic; }
-.ju-blase--kunde + * { margin-top: 0; }
-.ju-blase--kunde:not(:first-child) { margin-top: clamp(14px, 2.4vw, 28px); } /* Luft vor jedem neuen Einwand (Paar-Trennung) */
-.ju-blase--web { justify-self: end; display: grid; gap: 5px; border-radius: 20px 20px 6px 20px; background: var(--white); border: 1.5px solid var(--gold);
-  color: var(--ink); }
+.ju-chat { display: grid; gap: clamp(14px, 2.4vw, 28px); max-width: 780px; margin: clamp(26px, 4vw, 44px) auto 0; }
+
+/* Ein Frage-Antwort-Paar (Kundeneinwand links + webgold-Antwort rechts) */
+.ju-paar { display: grid; gap: 10px; }
+
+/* Blasen: beide weiß (Jamil #7226), als Sprechblasen mit Zipfel (Jamil #7227). Kunde links, webgold rechts. */
+.ju-blase { position: relative; min-width: 0; max-width: min(90%, 560px); margin: 0; padding: 15px 19px; line-height: 1.6;
+  text-wrap: pretty; background: var(--white, #fff); }
+.ju-blase--kunde { justify-self: start; border-radius: 20px 20px 20px 6px; border: 1px solid #E1E8EF; color: #475569; font-style: italic; }
+.ju-blase--web { justify-self: end; display: grid; gap: 5px; border-radius: 20px 20px 6px 20px; border: 1.5px solid var(--gold); color: var(--ink); }
 .ju-blase__marke { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); letter-spacing: 0.02em; color: #111827; }
 .ju-blase__marke::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: #EFBF04; vertical-align: middle; }
 .ju-blase__text { display: block; }
 
-/* Einblenden beim Scrollen (nur mit JS + Bewegung) */
-.ju-chat--anim .ju-blase { opacity: 0; transform: translateY(14px); }
-.ju-chat--anim .ju-blase--kunde { transform: translate(-10px, 14px); }
-.ju-chat--anim .ju-blase--web { transform: translate(10px, 14px); }
-@media (prefers-reduced-motion: no-preference) {
-  .ju-chat--anim .ju-blase { transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 0.8, 0.3, 1); }
-}
-.ju-chat--anim .ju-blase.ist-da { opacity: 1; transform: none; }
+/* Zipfel (kleines gedrehtes Quadrat am unteren Rand, zeigt zwei Ränder in der Blasenfarbe) */
+.ju-blase::after { content: ''; position: absolute; bottom: -6px; width: 14px; height: 14px; background: var(--white, #fff); transform: rotate(45deg); }
+.ju-blase--kunde::after { left: 20px; border-left: 1px solid #E1E8EF; border-bottom: 1px solid #E1E8EF; border-bottom-left-radius: 3px; }
+.ju-blase--web::after { right: 20px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); border-bottom-right-radius: 3px; }
 
-/* Abschluss nach dem 4. Paar: „?“-Blasen (Deko) + selbstbewusster Satz + Link */
+/* Scroll-Sequenz (nur mit JS + Bewegung): immer nur das zentrierte Paar ist sichtbar. Jedes Paar bekommt genug Höhe, damit
+   beim Scrollen eins nach dem anderen durch die Bildmitte läuft. */
+.ju-chat--anim .ju-paar,
+.ju-chat--anim .ju-schluss { min-height: clamp(42vh, 50vh, 58vh); align-content: center; opacity: 0; transform: translateY(16px); }
+@media (prefers-reduced-motion: no-preference) {
+  .ju-chat--anim .ju-paar,
+  .ju-chat--anim .ju-schluss { transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 0.8, 0.3, 1); }
+}
+.ju-chat--anim .ju-paar.ist-aktiv,
+.ju-chat--anim .ju-schluss.ist-aktiv { opacity: 1; transform: none; }
+
+/* Abschluss (ohne „?“-Deko, Jamil #7228): selbstbewusster Satz + Link zu den häufigen Fragen */
 .ju-schluss { justify-self: center; display: grid; justify-items: center; gap: 12px; margin-top: clamp(14px, 2vw, 22px); text-align: center; }
-.ju-fragen { display: none; }
-.ju-chat--anim .ju-fragen { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.ju-fragen__blase { display: grid; place-items: center; width: clamp(30px, 7vw, 40px); height: clamp(30px, 7vw, 40px); border-radius: 50% 50% 50% 8px;
-  background: #FBF3D5; border: 1px solid #EADBA6; color: #111827; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-body); }
-.ju-chat--anim .ju-fragen__blase { opacity: 0; transform: scale(0.6); }
-@media (prefers-reduced-motion: no-preference) {
-  .ju-chat--anim .ju-fragen__blase { transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.4, 0.5, 1); transition-delay: calc(var(--q) * 90ms); }
-}
-.ju-chat--anim .ju-schluss.ist-da .ju-fragen__blase { opacity: 1; transform: none; }
 .ju-schluss__satz { margin: 0; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-h3); line-height: 1.25; color: #111827; text-wrap: balance; }
-
-/* Abschlusszeile mit Link zu den häufigen Fragen (Jamil #6393) */
 .ju-mehr { margin: 0; color: var(--ink-soft); font-weight: 500; }
 .ju-mehr__link { color: #111827; font-weight: 700; text-decoration: underline; text-decoration-color: #EFBF04; text-underline-offset: 4px; }
 .ju-mehr__link:hover { color: #111827; text-decoration-color: #111827; }

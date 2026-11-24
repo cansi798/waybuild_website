@@ -276,29 +276,30 @@ export const J_ERST = {
     { nr: '01', titel: 'Wir verstehen Ihren Betrieb', // Zusatz „(oder starten direkt)“ seit Jamil #6495 entfernt
       varianten: [
         // Labels „Für Website & Software:“ (#6496) und „Nur für Ihre Website (Schnellstart):“ (#6498) entfernt, Absatz 2 neu (#6498)
-        { name: '', text: 'In einem lockeren Gespräch nehmen wir Ihre Unternehmens-DNA auf. Als Prozess-Experten hören wir nicht nur zu, sondern bringen direkt eigene Ideen und Verbesserungsvorschläge für Ihren Alltag ein.' },
-        { name: '', text: 'Sie wollen erst mal unverbindlich schauen, wie Ihre Website aussehen könnte? Schicken Sie uns einfach Ihre aktuelle Website-Adresse und Kontaktdaten – das reicht für den Start.' },
+        // Jamil #7231 (24.11.2026): Texte gekürzt, Kernbotschaft erhalten.
+        { name: '', text: 'In einem lockeren Gespräch lernen wir Ihren Betrieb kennen – und bringen als Prozess-Experten gleich eigene Ideen für Ihren Alltag ein.' },
+        { name: '', text: 'Lieber erst unverbindlich schauen? Schicken Sie uns Ihre Website-Adresse und Kontaktdaten – das reicht für den Start.' },
       ],
       pills: ['Gespräch: Unternehmens-DNA', 'Schnellstart: Nur URL senden'], oder: 'oder', // Pills seit #6500 ersetzt durch:
       knoepfe: ['Kostenloses Erstgespräch vereinbaren', 'Website-Vorschau anfordern'] }, // Jamil #6500
-    { nr: '02', titel: 'Kostenlose Vorschau in schon am nächsten Werktag',
-      einleitung: 'Statt trockener Theorie liefern wir Ihnen greifbare Ergebnisse zum Durchklicken:',
+    { nr: '02', titel: 'Kostenlose Vorschau schon am nächsten Werktag', // Jamil #7231: gekürzt + Grammatik korrigiert
+      einleitung: 'Keine trockene Theorie, sondern greifbare Ergebnisse zum Durchklicken:',
       punkte: [
         { name: 'Neue Website-Startseite:', text: 'bereits am nächsten Werktag' },
         { name: 'Erster Software-Prototyp:', text: 'bereits 3 Werktage später' },
       ],
-      schluss: 'Komplett kostenlos und unverbindlich – Sie sehen sofort, wie Ihr Betrieb digital aussehen und laufen kann.',
+      schluss: 'Kostenlos und unverbindlich – Sie sehen sofort, wie Ihr Betrieb digital aussehen und laufen kann.',
       zeiten: ['Website: Nächster Werktag', 'Software: In 3 Werktagen'],
       /** Kennzahl-Leiste statt Zeit-Badges und Aufzählung (Jamil #6502); Inhalt wie vorher „bereits am nächsten Werktag / 3 Werktage später“ */
       kennzahlen: [{ wert: '1 Werktag', text: 'bis zur neuen Website-Startseite' }, { wert: '3 Werktage', text: 'bis zum ersten Software-Prototyp' }] },
     { nr: '03', titel: 'Feinschliff in Ihrem Tempo',
-      text: 'Gefällt Ihnen unsere Vorschau? Erst dann starten wir gemeinsam durch. Sie bestimmen das Tempo: ob zügig am Stück bis zur Veröffentlichung oder entspannt zwischendurch im Alltag. Anpassungen schicken Sie uns einfach per Sprachnachricht, Screenshot oder Textnachricht.',
+      text: 'Gefällt Ihnen die Vorschau, starten wir gemeinsam durch – in Ihrem Tempo. Anpassungen schicken Sie einfach per Sprachnachricht, Screenshot oder Text.', // Jamil #7231: gekürzt
       sprache: '0:12',
       /** Chat-Grafik statt Sprachnachrichten-Blase (Jamil #6503), nur Deko (aria-hidden) */
       chat: { text: 'Bitte Telefonnummer oben ergänzen', status: 'Umgesetzt' } },
     // 4. Karte (Jamil #6518), Text wörtlich; Verlauf-Grafik nur Deko (aria-hidden)
     { nr: '04', titel: 'Ihre Lösung wächst mit Ihnen',
-      text: 'Nach der Veröffentlichung geht es weiter: Wir optimieren, passen an und entwickeln Ihre Website oder Software laufend weiter – genau dann, wenn Sie etwas brauchen. Auch hier genügt eine Sprachnachricht, eine Textnachricht oder ein Screenshot.',
+      text: 'Auch nach dem Start entwickeln wir Ihre Website oder Software laufend weiter – genau dann, wenn Sie etwas brauchen. Eine Sprachnachricht, ein Text oder ein Screenshot genügt.', // Jamil #7231: gekürzt
       // Jamil #6913: Kreislauf-Grafik statt Verlaufs-Karte „Weiterentwicklung“ (eigene SVG, Textalternative in `beschreibung`)
       kreis: { stationen: ['Wunsch schicken', 'Wir setzen um', 'Online', 'Wirkung prüfen'],
         mitte: ['ganz einfach –', 'per Sprachnachricht,', 'Text oder Screenshot'],
@@ -385,7 +386,7 @@ export const J_UMSTIEG = {
   ],
   /** Abschlusszeile + Link zu den häufigen Fragen (Jamil #6393, wörtlich); Ziel: /fragen/ (FAQ-Seite, auf der Startseite gibt es keine FAQ) */
   mehr: 'Haben Sie noch weitere Fragen zu unserer Arbeitsweise?',
-  mehrLink: { text: 'Antworten im Überblick ansehen →', pfad: '/fragen/' },
+  mehrLink: { text: 'Antworten im Überblick ansehen →', pfad: '/fragen/' }, // Jamil #7229: Pfeil per geschütztem Leerzeichen am Text (bricht nicht in eigene Zeile um)
 } as const;
 
 /** 3. Die Lösung (Jamil #6176). „Kurze Statistik“ rechts = kompakte Vorteilsleiste, bewusst ohne Zahlen (keine erfundenen Werte). */
