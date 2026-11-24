@@ -451,6 +451,9 @@
 /* Jamil #7000 (22.11.2026): Icons in einem Kreis (zartes Gold, Icon dunkel); seit #7030 auch auf der Lösungsseite dasselbe Symbol */
 .jp-kreis { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #FFF6CC; color: #111827; margin-bottom: 4px; }
 .jp-kreis .jp-block__ico { width: 28px; height: 28px; margin: 0; color: #111827; }
+/* Jamil #7158: Problem-Icons in Nachtblau auf kühlem Grau (Tiefe/Akzent, sparsam); die Lösungsseite bleibt gold getönt */
+.jp-seite--problem .jp-kreis { background: #EAEFF2; }
+.jp-seite--problem .jp-kreis .jp-block__ico { color: var(--tief); }
 .jp-block__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
 .jp-block__text { margin: 0; font-size: var(--fs-body); line-height: 1.7; color: var(--ink-soft); text-wrap: pretty; }
 @media (min-width: 760px) { .jp-bloecke { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

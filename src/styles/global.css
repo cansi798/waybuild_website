@@ -23,7 +23,12 @@
   --on-accent: #111827;    /* Schrift auf #EFBF04 (8,5 : 1) */
   --on-dark-soft: #F1F5F9;  /* Nebentext auf Fußzeile #111827 (8,6 : 1) */
   --gold: #EFBF04;         /* Hauptgold (Jamil #6915): nur Flächen, Linien, Icons, Knöpfe mit dunkler Schrift; Schrift darauf #111827 */
-  --gold-hell: #FFDE21;    /* helleres Gold, erlaubt */
+  --gold-hell: #FFDE21;    /* helleres Gold, erlaubt (nur feine Verläufe) */
+  /* 4er-Palette als Vorschau (Jamil #7154/#7158, 24.11.2026): Gold #EFBF04 (+#FFDE21 fein) · Anthrazit #111827 (Text) ·
+     Grund Weiß #FFFFFF + helles Warmgrau #F7F7F4 (abgesetzte Flächen) · Nachtblau #0B2B3A SEHR sparsam (Tiefe/Akzente, feine Rahmen,
+     einzelne Icons – nie großflächig). Reversibel über diese Tokens. */
+  --flaeche: #F7F7F4;      /* helles Warmgrau für abgesetzte Abschnittsflächen */
+  --tief: #0B2B3A;         /* Nachtblau, nur vereinzelt für Tiefe/Akzente (≥ 4,5 : 1 auf Hell) */
   --line: #E2E8F0;
   --ok: #177049;
   --radius: 14px;

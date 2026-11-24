@@ -19,6 +19,9 @@ html[data-thema='besucherreise'] {
   --accent-mid: #EFBF04;
   --gold: #EFBF04;
   --line: #E2E8F0;
+  /* 4er-Palette Vorschau (Jamil #7158): helles Warmgrau + Nachtblau sparsam (siehe global.css) */
+  --flaeche: #F7F7F4;
+  --tief: #0B2B3A;
 }
 body { background: var(--white); font-family: var(--font-body); font-weight: 450; color: var(--ink); }
 html:root .sn { /* QA #5952: global, html-Präfix hält die Rangfolge über start-neu.css */
@@ -74,7 +77,7 @@ html[data-hero-stil='weiss']:root .footer { background: #FFFFFF; color: #111827;
 
 /* Jamil #6470/#6471: Startseite beginnt mit Goldstich im Hero (#FDFAF1), danach fortlaufend Weiß / #FDFAF1 (Abschnitt 2 weiß, 3 Goldstich …) */
 html[data-thema='besucherreise'] main[data-stapel] > :nth-child(odd of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--white); --paper: #FAFAFA; background: var(--band); }
-html[data-thema='besucherreise'] main[data-stapel] > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--creme); --paper: #FAFAFA; background: var(--band); }
+html[data-thema='besucherreise'] main[data-stapel] > :nth-child(even of .section:not(.section--dark), .sb-film, .bsp-abschnitt) { --band: var(--flaeche); --paper: #FAFAFA; background: var(--band); } /* Jamil #7158: abgesetzte Flächen in hellem Warmgrau statt Creme */
 html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr { background: transparent; } /* Kopfleiste wie der Hero, kein harter Bruch; Deckkraft steckt in ::before (vorher deckend #FFFEFB → Transparenz unsichtbar, Jamil #6941) */
 html[data-thema='besucherreise'][data-hero-stil='weiss'] .hdr::before { background: rgb(254 252 247 / 80%); }
 /* Header-CTA in Gold (Jamil #6475): #EFBF04, Schrift #111827 (≈ 8,5 : 1), Hover #EFBF04 – auch mobil/Knopfleiste */
