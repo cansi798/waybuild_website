@@ -38,13 +38,7 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
           <div class="sn-kopf jp__kopf">
             <h2 id="jp-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(N.titel)} /></h2>
           </div>
-          {/* Jamil #7086: Weg-Leiste – Titel immer lesbar; Stand + Punkte nur mit Bewegung (rein optisch, die Marken auf den Karten tragen die Info) */}
-          <div class="jp-pfad">
-            <p class="jp-pfad__kopf"><span class="jp-pfad__titel">{W.weg.titel}</span><span class="jp-pfad__stand" aria-hidden="true" data-jp-stand>{W.weg.start}</span></p>
-            <ol class="jp-pfad__punkte" aria-hidden="true">
-              {N.karten.map((_, i) => <li class="jp-pfad__punkt" data-jp-punkt><span>{i + 1}</span></li>)}
-            </ol>
-          </div>
+          {/* Jamil #7147: Weg-Leiste („Ihr Weg mit webgold / Schritt N von 4“) entfernt – die Marken auf den Karten tragen die Info */}
           <ul class="jp-bloecke jp-bloecke--weg">
             {N.karten.map((k, i) => {
               const l = W.loesungen[i];
@@ -89,10 +83,7 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
   const bereich = document.querySelector<HTMLElement>('section.jp--neu');
   const buehne = bereich?.querySelector<HTMLElement>('[data-jp-buehne]');
   const karten = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-karte]')] : [];
-  const punkte = buehne ? [...buehne.querySelectorAll<HTMLElement>('[data-jp-punkt]')] : [];
-  const stand = buehne?.querySelector<HTMLElement>('[data-jp-stand]');
   if (bereich && buehne && karten.length) {
-    const startText = stand?.textContent ?? '';
     const zustand = karten.map(() => false);
     const zeige = (i: number, geloest: boolean) => {
       if (zustand[i] === geloest) return false;
@@ -104,12 +95,7 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', String(!geloest));
       return true;
     };
-    const leiste = () => {
-      const n = zustand.filter(Boolean).length;
-      punkte.forEach((p, i) => { p.classList.toggle('ist-dran', zustand[i]); p.classList.toggle('ist-weiter', zustand[i] && zustand[i + 1] === true); });
-      if (stand) stand.textContent = n === 0 ? startText : `Schritt ${n} von ${karten.length}`;
-    };
-    const setze = (n: number) => { let neu = false; karten.forEach((_, i) => { neu = zeige(i, i < n) || neu; }); if (neu) leiste(); };
+    const setze = (n: number) => { karten.forEach((_, i) => zeige(i, i < n)); };
 
     // Handy: Lage je Karte bei jedem Bild prüfen (passiv, requestAnimationFrame)
     let wandel = false, geplant = false;
@@ -117,9 +103,7 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
       geplant = false;
       if (!wandel) return;
       const grenze = innerHeight * 0.42;
-      let neu = false;
-      karten.forEach((k, i) => { const r = k.getBoundingClientRect(); neu = zeige(i, r.top + r.height / 2 < grenze) || neu; });
-      if (neu) leiste();
+      karten.forEach((k, i) => { const r = k.getBoundingClientRect(); zeige(i, r.top + r.height / 2 < grenze); });
     };
     const planen = () => { if (wandel && !geplant) { geplant = true; requestAnimationFrame(pruefe); } };
     addEventListener('scroll', planen, { passive: true });
@@ -136,7 +120,6 @@ import { ALT_ZEIGEN } from '../../config/start-6176'; // doppelte Anker vermeide
         bereich.classList.toggle('jp--anim', anim);
         if (anim) karten.forEach((k) => k.querySelector('[data-jp-hinten]')?.setAttribute('aria-hidden', 'true'));
         if (anim) karten.forEach((k) => k.querySelector('[data-jp-vorne]')?.setAttribute('aria-hidden', 'false'));
-        leiste();
         wandel = modus === 'gleiten';
         planen();
       },
