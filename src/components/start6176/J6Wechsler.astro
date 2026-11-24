@@ -25,7 +25,24 @@ const BW = T.bauwelt;
   <div class="wrap">
     <div class="sn-kopf jm__kopf">
       <h2 id="jm-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
+      {/* Jamil #7149/#7153 (b): Maßband unter der Überschrift, zieht sich beim Scrollen auf (gold, dezent; ohne JS/reduzierte Bewegung voll) */}
+      <div class="jm-band" data-jm-band aria-hidden="true"><span class="jm-band__spur"></span><span class="jm-band__fill"></span></div>
       <p class="sn-lead">{T.unter}</p>
+    </div>
+
+    {/* Jamil #7149/#7153 (a): „Von der Stange vs. nach Maß“ – allgemeine Gegenüberstellung, links gedämpft/durchgestrichen, rechts gold */}
+    <div class="jm-vgl">
+      <h3 class="jm-vgl__titel">{T.vergleich.titel}</h3>
+      <div class="jm-vgl__raster">
+        <p class="jm-vgl__kopf jm-vgl__kopf--stange">{T.vergleich.stange}</p>
+        <p class="jm-vgl__kopf jm-vgl__kopf--mass">{T.vergleich.mass}</p>
+        {T.vergleich.paare.map((p) => (
+          <Fragment>
+            <p class="jm-vgl__zelle jm-vgl__zelle--stange"><span class="jm-vgl__mark" aria-hidden="true">✕</span><span class="jm-vgl__txt">{p.stange}</span></p>
+            <p class="jm-vgl__zelle jm-vgl__zelle--mass"><span class="jm-vgl__mark jm-vgl__mark--gold" aria-hidden="true">✓</span><span class="jm-vgl__txt">{p.mass}</span></p>
+          </Fragment>
+        ))}
+      </div>
     </div>
 
     {/* Jamil #7088/#7099 (Variante a): erst zeigen, was alles möglich ist (ohne Beispiel), dann zum echten Projekt */}
@@ -214,5 +231,27 @@ const BW = T.bauwelt;
         else if (!e.isIntersecting && auto) { clearInterval(auto); auto = undefined; wurzel.classList.remove('jm--auto'); }
       }, { threshold: 0.4 }).observe(wurzel);
     }
+  }
+</script>
+
+<script>
+  // Maßband (Jamil #7149/#7153): zieht sich beim Scrollen auf. Nur mit Bewegung; ohne JS/reduzierte Bewegung bleibt --p:1 (volles Band) aus dem CSS.
+  const band = document.querySelector<HTMLElement>('[data-jm-band]');
+  const ruhigB = matchMedia('(prefers-reduced-motion: reduce)');
+  if (band && !ruhigB.matches) {
+    band.style.setProperty('--p', '0');
+    let geplant = false;
+    const zeichne = () => {
+      geplant = false;
+      const r = band.getBoundingClientRect();
+      const vh = innerHeight || document.documentElement.clientHeight;
+      const start = vh * 0.9, ende = vh * 0.45;
+      const p = Math.min(1, Math.max(0, (start - r.top) / (start - ende)));
+      band.style.setProperty('--p', p.toFixed(3));
+    };
+    const planen = () => { if (!geplant) { geplant = true; requestAnimationFrame(zeichne); } };
+    zeichne();
+    addEventListener('scroll', planen, { passive: true });
+    addEventListener('resize', planen, { passive: true });
   }
 </script>

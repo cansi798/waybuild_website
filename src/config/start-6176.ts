@@ -203,6 +203,18 @@ export const J_MASS = {
   titel: 'Websites und Software ==nach Maß== – statt Kompromisse von der Stange',
   // seit Jamil #6488 (passt auch auf Websites); vorher: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.'
   unter: 'Ob Website oder Software: Wir bauen genau das, was Ihr Betrieb wirklich braucht – ohne unnötige Funktionen, dafür exakt auf Ihre Kunden und Ihre Abläufe zugeschnitten.',
+  /** „Von der Stange vs. nach Maß“ (Jamil #7149/#7153, 24.11.2026): allgemeine, belegbare Gegenüberstellung – keine Produkt-/Anbieternamen,
+   *  keine Superlative, keine erfundenen Zahlen. Links die typischen Nachteile von der Stange (gedämpft), rechts der Vorteil nach Maß (gold). */
+  vergleich: {
+    titel: 'Von der Stange oder nach Maß?',
+    stange: 'Von der Stange',
+    mass: 'Nach Maß',
+    paare: [
+      { stange: 'Fertige Programme mit vielen Funktionen, die kein Betrieb ganz nutzt.', mass: 'Genau die Funktionen, die Ihre Abläufe wirklich brauchen.' },
+      { stange: 'Ihr Team passt sich der Software an.', mass: 'Die Software passt sich Ihrem Team an.' },
+      { stange: 'Überladene Masken mit Feldern, die niemand ausfüllt.', mass: 'Aufgeräumte Masken – nur, was für die Aufgabe zählt.' },
+    ],
+  },
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)
   labelIndividuell: 'Individuell programmiert für Ihren Betrieb – 100\u00a0% eigene Abläufe', // 4. Tab (#6427), Beispiel-Mockup
   labelMuster: 'Individuell programmiert für Musterfirma GmbH – 100\u00a0% eigene Abläufe', // nur mit ALT_ZEIGEN.musterfirmaMockupsAlt
