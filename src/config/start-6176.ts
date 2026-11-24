@@ -213,6 +213,13 @@ export const J_MASS = {
       { stange: 'Fertige Programme mit vielen Funktionen, die kein Betrieb ganz nutzt.', mass: 'Genau die Funktionen, die Ihre Abläufe wirklich brauchen.' },
       { stange: 'Ihr Team passt sich der Software an.', mass: 'Die Software passt sich Ihrem Team an.' },
       { stange: 'Überladene Masken mit Feldern, die niemand ausfüllt.', mass: 'Aufgeräumte Masken – nur, was für die Aufgabe zählt.' },
+      // Jamil #7224 (24.11.2026): zwei weitere allgemeine Vorteile …
+      { stange: 'Ihre Daten liegen verstreut in mehreren Programmen.', mass: 'Alle Informationen an einem Ort – ohne doppelte Eingabe.' },
+      { stange: 'Updates ändern plötzlich vertraute Abläufe.', mass: 'Änderungen kommen nur, wenn Sie sie wünschen.' },
+      // … und drei weitere, die sich nur auf die Website beziehen.
+      { stange: 'Baukasten-Seiten, die aussehen wie viele andere.', mass: 'Ein Auftritt, der zu Ihrem Betrieb passt – unverwechselbar.' },
+      { stange: 'Überladene Seiten, die auf dem Handy langsam laden.', mass: 'Schlanke Seiten, die auf jedem Gerät schnell sind.' },
+      { stange: 'Sie kommen an Ihre eigenen Inhalte und Ihre Domain kaum heran.', mass: 'Ihre Inhalte und Ihre Domain bleiben in Ihrer Hand.' },
     ],
   },
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)
