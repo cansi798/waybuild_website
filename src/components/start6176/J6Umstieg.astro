@@ -2,12 +2,13 @@
 import { hl } from '../../lib/hl';
 import "../../styles/umstieg-6391.css";
 // 5. „Keine Angst vor dem Umstieg – wir nehmen Ihr Team mit“ (Jamil, Talk qh87y3sj #6391, 19.11.2026). Texte wörtlich aus
-// src/config/start-6176.ts (J_UMSTIEG). „Sorglos-Matrix“: ruhiges 2 × 2-Raster (Handy 1 Spalte) auf leicht abgetöntem Warmgrau,
-// je Karte Kundenfrage gedimmt mit kleinem Fragezeichen-Icon, darunter die Lösung mit grünem Häkchen (Einwand → gelöst).
-// Bewusst ohne Foto und ohne Animation. Stil: styles/umstieg-6391.css.
+// src/config/start-6176.ts (J_UMSTIEG).
+// Seit Jamil #7152/#7156 (24.11.2026): als Dialog. Beim Scrollen erscheint je ein Einwand als Sprechblase (Kundenseite, links),
+// danach die webgold-Antwort (rechts, dezent gold). Nach dem 4. Paar erscheinen kleine „?“-Blasen (Deko) und ein Abschluss-Satz
+// mit dem Link zu den häufigen Fragen. Grundform (ohne JS / reduzierte Bewegung): alle Paare ruhig untereinander lesbar, ohne die
+// „?“-Deko. Mobil: Blasen untereinander, abwechselnd eingerückt. Stil: styles/umstieg-6391.css.
 import { J_UMSTIEG as T } from '../../config/start-6176';
 import { href } from '../../lib/paths';
-// #6393: Zeile + Link zu den häufigen Fragen (/fragen/) am Ende
 ---
 
 <section class="section sn ju" id="umstieg" aria-labelledby="ju-h">
@@ -16,28 +17,43 @@ import { href } from '../../lib/paths';
       <h2 id="ju-h" class="sn-h2 sn-h2--klein"><Fragment set:html={hl(T.titel)} /></h2>
       <p class="sn-lead">{T.unter}</p>
     </div>
-    {/* Seit Jamil #6507 ruhiger: Einwand als gedämpftes Zitat mit goldenem Anführungszeichen, Antwort mit fetter Kernaussage,
-        feine Goldlinie links und schlichtes Linien-Icon je Thema (Programme, Schulung, Daten, Support). Texte unverändert. */}
-    <ul class="ju-raster">
-      {T.karten.map((k, n) => {
-        const m = k.antwort.match(/^(.+?[.!?])\s+(.*)$/s);
-        const kern = m ? m[1] : k.antwort, rest = m ? m[2] : '';
-        return (
-        <li class="ju-karte">
-          <span class="ju-thema" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">
-              {n === 0 && (<><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></>)}
-              {n === 1 && (<><path d="M3 9l9-4 9 4-9 4-9-4Z" /><path d="M7 11v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4" /></>)}
-              {n === 2 && (<><ellipse cx="12" cy="6" rx="7" ry="3" /><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6" /><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" /></>)}
-              {n === 3 && (<><path d="M4 5h16v10H9l-5 4V5Z" /><path d="M8 9h8M8 12h5" /></>)}
-            </svg>
-          </span>
-          <h3 class="ju-frage">{k.frage}</h3>
-          <p class="ju-antwort"><b>{kern}</b>{rest && <> {rest}</>}</p>
-        </li>
-        );
-      })}
-    </ul>
-    <p class="ju-mehr">{T.mehr} <a class="ju-mehr__link" href={href(T.mehrLink.pfad)}>{T.mehrLink.text}</a></p>
+
+    <div class="ju-chat" data-ju-chat>
+      {T.karten.map((k) => (
+        <Fragment>
+          <p class="ju-blase ju-blase--kunde" data-ju-blase>{k.frage}</p>
+          <div class="ju-blase ju-blase--web" data-ju-blase>
+            <span class="ju-blase__marke" aria-hidden="true">webgold</span>
+            <span class="ju-blase__text">{k.antwort}</span>
+          </div>
+        </Fragment>
+      ))}
+
+      {/* Nach dem 4. Paar (Jamil #7152/#7156): „?“-Blasen (Deko) + selbstbewusster Abschluss + Link zu den häufigen Fragen */}
+      <div class="ju-schluss" data-ju-blase>
+        <span class="ju-fragen" aria-hidden="true">
+          {[0, 1, 2, 3, 4, 5, 6].map((i) => <span class="ju-fragen__blase" style={`--q:${i}`}>?</span>)}
+        </span>
+        <p class="ju-schluss__satz">Fragen gehören dazu. Antworten auch.</p>
+        <p class="ju-mehr">{T.mehr} <a class="ju-mehr__link" href={href(T.mehrLink.pfad)}>{T.mehrLink.text}</a></p>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  // Dialog beim Scrollen (Jamil #7152): je Blase einblenden, sobald sie ins Bild kommt (der Reihe nach). Nur mit Bewegung und
+  // IntersectionObserver; ohne JS oder bei reduzierter Bewegung bleibt die Grundform (alles sichtbar, keine „?“-Deko) stehen.
+  const chat = document.querySelector<HTMLElement>('[data-ju-chat]');
+  const ruhig = matchMedia('(prefers-reduced-motion: reduce)');
+  if (chat && !ruhig.matches && 'IntersectionObserver' in window) {
+    chat.classList.add('ju-chat--anim');
+    const blasen = [...chat.querySelectorAll<HTMLElement>('[data-ju-blase]')];
+    const io = new IntersectionObserver((eintraege) => {
+      eintraege.forEach((e) => {
+        if (e.isIntersecting || e.boundingClientRect.top < 0) { e.target.classList.add('ist-da'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
+    blasen.forEach((b) => io.observe(b));
+  }
+</script>
