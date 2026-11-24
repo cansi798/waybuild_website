@@ -148,7 +148,7 @@ export const J_PROBLEM_WEG = {
     // Karte 1: eigener Text seit Jamil #6984/#6989 (22.11.2026), WÖRTLICH; J_MASS bleibt unverändert (vorher J_MASS.schritte[0] „Ein individueller
     // Online-Kalkulator auf der Website“ / zeigt).
     { schritt: 0, text: 'zeigt', titel: 'Mehr als eine Visitenkarte: der Eingang zu Ihrem System', // Jamil #6989 (ohne Kalkulator; ersetzt #6984)
-      inhalt: 'Ihre Website ist der erste Eindruck, der zählt – deshalb ist sie bei uns mehr als eine Visitenkarte. Sie ist funktional gebaut und der Eingang in Ihr eigenes System: Was Kunden dort anfragen, kommt direkt in Ihrer Software an.' }, // „Software“ statt „Web-App“: Jamil #6991
+      inhalt: 'Ihre Website ist der erste Eindruck, der zählt – deshalb ist sie bei uns mehr als eine Visitenkarte. Sie ist funktional gebaut und der Eingang in Ihr eigenes System: Was Kunden dort anfragen, kommt direkt in Ihrer Software an. Und wenn Ihr Auftritt besonders hochwertig wirken soll, ist auch das möglich: Auf Wunsch gestalten wir Ihre Website als Premium-Lösung – mit individuellem Design, das Ihre Marke erstklassig präsentiert.' }, // „Software“ statt „Web-App“: Jamil #6991; Premium-Hinweis: Jamil #7237
     // Karte 2: eigener Text seit Jamil #6985 (22.11.2026), WÖRTLICH (vorher J_MASS.schritte[3] / warum)
     { schritt: 3, text: 'warum', titel: 'Software, die sich nach Ihrem Betrieb richtet – nicht umgekehrt',
       inhalt: 'Egal wie speziell Ihre Abläufe sind: Wir bauen Ihnen die Software, die genau dazu passt. Von der Kundenverwaltung über die Terminbuchung bis zu Funktionen, die es nur bei Ihnen gibt.' },
