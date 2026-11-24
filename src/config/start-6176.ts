@@ -204,22 +204,33 @@ export const J_MASS = {
   // seit Jamil #6488 (passt auch auf Websites); vorher: 'Wir bauen genau die Werkzeuge, die in Ihrem Betrieb bisher gefehlt haben. Ohne 100 unnötige Funktionen, dafür exakt auf Ihre echten Abläufe zugeschnitten.'
   unter: 'Ob Website oder Software: Wir bauen genau das, was Ihr Betrieb wirklich braucht – ohne unnötige Funktionen, dafür exakt auf Ihre Kunden und Ihre Abläufe zugeschnitten.',
   /** „Von der Stange vs. nach Maß“ (Jamil #7149/#7153, 24.11.2026): allgemeine, belegbare Gegenüberstellung – keine Produkt-/Anbieternamen,
-   *  keine Superlative, keine erfundenen Zahlen. Links die typischen Nachteile von der Stange (gedämpft), rechts der Vorteil nach Maß (gold). */
+   *  keine Superlative, keine erfundenen Zahlen. Links die typischen Nachteile von der Stange (gedämpft), rechts der Vorteil nach Maß (gold).
+   *  Seit Jamil #7240 (24.11.2026): in zwei Gruppen – 8 Punkte zur Website, 8 zur Software. */
   vergleich: {
     titel: 'Von der Stange oder nach Maß?',
     stange: 'Von der Stange',
     mass: 'Nach Maß',
-    paare: [
-      { stange: 'Fertige Programme mit vielen Funktionen, die kein Betrieb ganz nutzt.', mass: 'Genau die Funktionen, die Ihre Abläufe wirklich brauchen.' },
-      { stange: 'Ihr Team passt sich der Software an.', mass: 'Die Software passt sich Ihrem Team an.' },
-      { stange: 'Überladene Masken mit Feldern, die niemand ausfüllt.', mass: 'Aufgeräumte Masken – nur, was für die Aufgabe zählt.' },
-      // Jamil #7224 (24.11.2026): zwei weitere allgemeine Vorteile …
-      { stange: 'Ihre Daten liegen verstreut in mehreren Programmen.', mass: 'Alle Informationen an einem Ort – ohne doppelte Eingabe.' },
-      { stange: 'Updates ändern plötzlich vertraute Abläufe.', mass: 'Änderungen kommen nur, wenn Sie sie wünschen.' },
-      // … und drei weitere, die sich nur auf die Website beziehen.
-      { stange: 'Baukasten-Seiten, die aussehen wie viele andere.', mass: 'Ein Auftritt, der zu Ihrem Betrieb passt – unverwechselbar.' },
-      { stange: 'Überladene Seiten, die auf dem Handy langsam laden.', mass: 'Schlanke Seiten, die auf jedem Gerät schnell sind.' },
-      { stange: 'Sie kommen an Ihre eigenen Inhalte und Ihre Domain kaum heran.', mass: 'Ihre Inhalte und Ihre Domain bleiben in Ihrer Hand.' },
+    gruppen: [
+      { titel: 'Ihre Website', paare: [
+        { stange: 'Baukasten-Seiten, die aussehen wie viele andere.', mass: 'Ein Auftritt, der zu Ihrem Betrieb passt – unverwechselbar.' },
+        { stange: 'Nur eine digitale Visitenkarte, mehr nicht.', mass: 'Eine Website, die Anfragen bringt – direkt in Ihre Software.' },
+        { stange: 'Überladene Seiten, die auf dem Handy langsam laden.', mass: 'Schlanke Seiten, die auf jedem Gerät schnell sind.' },
+        { stange: 'Standard-Kontaktformular, das im Postfach untergeht.', mass: 'Anfragen, die geordnet und sofort nutzbar bei Ihnen ankommen.' },
+        { stange: 'Texte und Bilder von der Stange.', mass: 'Inhalte, die Ihre Arbeit und Ihre Kunden wirklich zeigen.' },
+        { stange: 'Jede kleine Änderung kostet Zeit und Nerven.', mass: 'Änderungen schicken Sie uns kurz – wir setzen sie um.' },
+        { stange: 'Unklar, ob Kunden Sie bei Google finden.', mass: 'Sauber aufgebaut, damit Kunden Sie finden.' },
+        { stange: 'Sie kommen an Ihre eigenen Inhalte und Ihre Domain kaum heran.', mass: 'Ihre Inhalte und Ihre Domain bleiben in Ihrer Hand.' },
+      ] },
+      { titel: 'Ihre Software', paare: [
+        { stange: 'Fertige Programme mit vielen Funktionen, die kein Betrieb ganz nutzt.', mass: 'Genau die Funktionen, die Ihre Abläufe wirklich brauchen.' },
+        { stange: 'Ihr Team passt sich der Software an.', mass: 'Die Software passt sich Ihrem Team an.' },
+        { stange: 'Überladene Masken mit Feldern, die niemand ausfüllt.', mass: 'Aufgeräumte Masken – nur, was für die Aufgabe zählt.' },
+        { stange: 'Ihre Daten liegen verstreut in mehreren Programmen.', mass: 'Alle Informationen an einem Ort – ohne doppelte Eingabe.' },
+        { stange: 'Standard-Abläufe, die nicht zu Ihrem Betrieb passen.', mass: 'Abläufe, die genau Ihrem Arbeitsalltag folgen.' },
+        { stange: 'Funktionen verstecken sich hinter immer neuen Zusatzpaketen.', mass: 'Was Sie brauchen, ist von Anfang an dabei.' },
+        { stange: 'Updates ändern plötzlich vertraute Abläufe.', mass: 'Änderungen kommen nur, wenn Sie sie wünschen.' },
+        { stange: 'Bei Fragen kennt niemand Ihren Betrieb.', mass: 'Ein fester Ansprechpartner, der Ihr Projekt kennt.' },
+      ] },
     ],
   },
   label: 'Individuell programmiert für Bauwelt Handwerk – 100\u00a0% eigene Abläufe', // seit Jamil #6384 (vorher „… für Musterfirma GmbH …“)

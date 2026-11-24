@@ -4,7 +4,6 @@
 // 13 neuen Leistungsseiten (menuTitel + kurz aus src/content/leistungen/), auf dem Desktop als Mega-Panel in vier Spalten.
 // Bei „Gefunden werden“ und „Vertrauen gewinnen“ steht zusätzlich der Paket-Hinweis (tag), keine Preise.
 // Der Altbestand (src/config/leistungen.ts) ist nicht mehr im Menü.
-import { GRUPPEN, LEISTUNGEN_META, ICONS, PAKET_IM_MENUE, paketAnzeige } from './leistungen-neu';
 import type { IconName } from './site';
 
 export type NavChild = { label: string; path: string; icon?: IconName; desc?: string; group?: string; tag?: string };
@@ -12,17 +11,13 @@ export type NavItem = { label: string; path?: string; children?: NavChild[] };
 
 export const NAV: NavItem[] = [
   {
+    // Jamil #7242 (24.11.2026): nur noch zwei Leistungen – Websites und individuelle Software (Web-App).
+    // Vorher das Mega-Menü der vier Kundenreise-Gruppen (LEISTUNGEN_META); die einzelnen Leistungsseiten
+    // bleiben über /leistungen/ und den Footer erreichbar.
     label: 'Leistungen',
     children: [
-      ...LEISTUNGEN_META.map((l) => ({
-        label: l.menuTitel,
-        path: `/leistungen/${l.slug}/`,
-        icon: ICONS[l.slug],
-        desc: l.kurz,
-        group: GRUPPEN.find((g) => g.id === l.gruppe)!.titel,
-        tag: PAKET_IM_MENUE.includes(l.gruppe) ? paketAnzeige(l.paket) : undefined,
-      })),
-      // „Alle Leistungen im Überblick →“ entfernt (Jamil, Talk qh87y3sj #5674, 12.11.2026); /leistungen/ bleibt über den Footer erreichbar
+      { label: 'Websites', path: '/leistungen/website/', icon: 'layout', desc: 'Gefunden werden und aus Besuchern Anfragen machen' },
+      { label: 'Individuelle Software (Web-App)', path: '/#loesung', icon: 'code', desc: 'Software nach Maß, genau für Ihre Abläufe' },
     ],
   },
   { label: 'Preise', path: '/preise/' },

@@ -127,24 +127,23 @@ const isCurrent = (path?: string) => path && current === href(path);
   .dd :global(.dd__chev) { transition: transform 0.2s ease; }
   .dd__panel {
     position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px);
-    min-width: 220px; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: none; padding: 6px; /* Jamil #7124: kein Schatten, feiner Rahmen, kompakter */
+    min-width: 230px; max-width: 420px; background: var(--white); border: 1px solid rgb(17 24 39 / 8%); border-radius: 16px;
+    box-shadow: 0 18px 44px -26px rgb(17 24 39 / 30%), 0 4px 12px -6px rgb(17 24 39 / 10%); padding: 8px; /* Jamil #7241: hochwertiger – weiche Elevation statt flacher Kasten */
     opacity: 0; visibility: hidden; pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   }
   .dd:hover .dd__panel, .dd:focus-within .dd__panel, .dd.open .dd__panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
   .dd:hover :global(.dd__chev), .dd.open :global(.dd__chev) { transform: rotate(180deg); }
   .dd__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-  .dd__item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; text-decoration: none; transition: background 0.2s ease; }
-  .dd__item:hover, .dd__item[aria-current='page'] { background: var(--paper-2); }
+  .dd__item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 10px; text-decoration: none; transition: background 0.18s ease, color 0.18s ease; }
+  .dd__item:hover, .dd__item[aria-current='page'] { background: rgb(239 191 4 / 12%); color: #111827; }
   .dd__item :global(.dd__icon) { color: #111827; flex: none; }
   .dd__text { display: grid; line-height: 1.35; }
   /* Jamil #7114/#7115 (23.11.2026): Menü-Einträge so groß wie die Kopfzeilen-Navigation (--fs-small), ohne Symbole und ohne Unterzeile */
-  .dd__text strong { font-weight: 400; font-size: var(--fs-small); } /* Jamil #7124: dünn (normales Gewicht) */
-  /* Jamil #7124: weniger Weißraum, feine graue Linie zwischen den Punkten (nicht nach dem letzten) */
-  .dd__list { gap: 0; }
-  .dd__list > li + li { border-top: 1px solid #E5E7EB; }
-  .dd__item { padding: 8px 12px; border-radius: 8px; }
+  .dd__text strong { font-weight: 500; font-size: var(--fs-small); } /* Jamil #7241: etwas mehr Präsenz (Medium) */
+  /* Jamil #7241: hochwertiger – keine harten Trennlinien mehr, stattdessen etwas Luft und ein weicher, runder Hover */
+  .dd__list { gap: 3px; }
+  .dd__item { padding: 10px 14px; border-radius: 11px; }
   .dd__text small { color: var(--ink-soft); font-size: var(--fs-small); font-weight: 400; }
   /* Fuß-Zeile für den letzten Eintrag („Alles im Überblick“) entfernt (Jamil #5675): sonst sähe jetzt „Blog“ bzw. „Kontakt“ wie ein Fuß aus */
   /* Mega-Panel „Leistungen“: am Header-Container ausgerichtet, Gruppen in Spalten */

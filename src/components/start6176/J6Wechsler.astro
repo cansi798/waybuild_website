@@ -34,10 +34,15 @@ const BW = T.bauwelt;
       <div class="jm-vgl__raster">
         <p class="jm-vgl__kopf jm-vgl__kopf--stange">{T.vergleich.stange}</p>
         <p class="jm-vgl__kopf jm-vgl__kopf--mass">{T.vergleich.mass}</p>
-        {T.vergleich.paare.map((p) => (
+        {T.vergleich.gruppen.map((g) => (
           <Fragment>
-            <p class="jm-vgl__zelle jm-vgl__zelle--stange"><span class="jm-vgl__mark" aria-hidden="true">✕</span><span class="jm-vgl__txt">{p.stange}</span></p>
-            <p class="jm-vgl__zelle jm-vgl__zelle--mass"><span class="jm-vgl__mark jm-vgl__mark--gold" aria-hidden="true">✓</span><span class="jm-vgl__txt">{p.mass}</span></p>
+            <h4 class="jm-vgl__gruppe">{g.titel}</h4>
+            {g.paare.map((p) => (
+              <Fragment>
+                <p class="jm-vgl__zelle jm-vgl__zelle--stange"><span class="jm-vgl__mark" aria-hidden="true">✕</span><span class="jm-vgl__txt">{p.stange}</span></p>
+                <p class="jm-vgl__zelle jm-vgl__zelle--mass"><span class="jm-vgl__mark jm-vgl__mark--gold" aria-hidden="true">✓</span><span class="jm-vgl__txt">{p.mass}</span></p>
+              </Fragment>
+            ))}
           </Fragment>
         ))}
       </div>
