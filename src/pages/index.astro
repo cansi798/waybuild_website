@@ -23,6 +23,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import J6Hero from '../components/start6176/J6Hero.astro';
 import J6Leistungen from '../components/start6176/J6Leistungen.astro'; // Jamil #7250/#7251: Website + Web-App direkt nach dem Hero
+import J6Kombi from '../components/start6176/J6Kombi.astro'; // Jamil #7255/#7256/#7258: Website + Web-App zusammen, mit Animation
 import J6Problem from '../components/start6176/J6Problem.astro';
 import J6Loesung from '../components/start6176/J6Loesung.astro';
 import J6Wechsler from '../components/start6176/J6Wechsler.astro';
@@ -85,6 +86,8 @@ const V_SERVICE = `Website-Abo für kleine und mittlere Unternehmen: Wir erstell
   <J6Hero />
   {/* Jamil #7250/#7251 (24.11.2026): direkt nach dem Hero die zwei Leistungen Website + Web-App (grafisch) */}
   <J6Leistungen />
+  {/* Jamil #7255/#7256/#7258 (24.11.2026): Website + Web-App zusammen (warum neu, Zusammenspiel, Wachstum) mit Animation */}
+  <J6Kombi />
   <J6Problem />
   {/* 3. Lösung: seit Jamil #6378/#6379 (19.11.2026) „Websites und Software nach Maß“ mit Wechsler; alte Fassung über ALT_ZEIGEN.loesungAlt */}
   {ALT_ZEIGEN.loesungAlt ? <J6Loesung /> : <J6Wechsler />}

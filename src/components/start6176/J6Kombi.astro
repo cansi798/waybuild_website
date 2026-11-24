@@ -1,0 +1,146 @@
+---
+// „Website und Web-App zusammen“ (Jamil #7255/#7256/#7258, 24.11.2026): warum eine neue Website – auch wenn die alte
+// „läuft“ – wie Website und Web-App ineinandergreifen und welches Problem das löst; dazu der Hinweis, mit der Website
+// zu starten und Stück für Stück zur Web-App zu wachsen. Zentrale Animation: die Website reicht eine Anfrage an die
+// Web-App weiter, beide sind sichtbar aufeinander abgestimmt (reines CSS, Grundform ohne Bewegung bei reduzierter Bewegung).
+const punkte = [
+  { titel: 'Warum neu, wenn die alte läuft?', text: 'Eine ältere Website ist oft nur eine digitale Visitenkarte: Sie zeigt Ihre Nummer, aber Anfragen landen als unvollständige E-Mails im Postfach. Eine neue Website wird zum Eingang in Ihr System – jede Anfrage kommt sofort nutzbar bei Ihnen an.' },
+  { titel: 'Wie greift beides ineinander?', text: 'Die Website gewinnt den Kontakt, die Web-App verarbeitet ihn: zuweisen, Aufgaben daraus machen, Termine und Status – alles an einem Ort, ohne dass etwas zwischen Postfach und Zettel verloren geht.' },
+  { titel: 'Schritt für Schritt wachsen', text: 'Sie müssen nicht alles auf einmal. Starten Sie mit der Website – und erweitern Sie später Stück für Stück zur Web-App, genau dann, wenn Ihr Betrieb es braucht.' },
+];
+---
+
+<section class="section sn jk" id="zusammenspiel" aria-labelledby="jk-h">
+  <div class="wrap">
+    <div class="sn-kopf jk__kopf">
+      <h2 id="jk-h" class="sn-h2 sn-h2--klein">Website und Web-App – perfekt aufeinander abgestimmt</h2>
+      <p class="sn-lead">Zusammen werden sie zu einem System: Die Website gewinnt die Anfrage, die Web-App macht etwas daraus. Kein Bruch, kein verlorener Kontakt.</p>
+    </div>
+
+    {/* Animation: die Anfrage fließt von der Website in die Web-App; beide pulsieren im selben Takt (= abgestimmt) */}
+    <div class="jk-anim" role="img" aria-label="Animation: Auf der Website schickt jemand eine Anfrage ab. Sie fließt direkt in die Web-App und erscheint dort als neue, sofort nutzbare Karte. Website und Web-App sind aufeinander abgestimmt.">
+      <div class="jk-geraet jk-geraet--web">
+        <span class="jk-geraet__marke" aria-hidden="true">Website</span>
+        <div class="jk-browser">
+          <div class="jk-browser__leiste" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="jk-browser__inhalt">
+            <span class="jk-zeile jk-zeile--lang"></span>
+            <span class="jk-zeile"></span>
+            <span class="jk-knopf">Anfrage senden</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="jk-bruecke" aria-hidden="true">
+        <span class="jk-bruecke__spur"></span>
+        <span class="jk-bruecke__puls"></span>
+      </div>
+
+      <div class="jk-geraet jk-geraet--app">
+        <span class="jk-geraet__marke" aria-hidden="true">Web-App</span>
+        <div class="jk-app">
+          <div class="jk-app__kopf" aria-hidden="true"><b>Ihr System</b><span>alles verbunden</span></div>
+          <div class="jk-app__spalten">
+            <div class="jk-app__spalte">
+              <span class="jk-app__label">Neu</span>
+              <span class="jk-app__karte jk-app__karte--neu">Neue Anfrage ✓</span>
+            </div>
+            <div class="jk-app__spalte">
+              <span class="jk-app__label">In Arbeit</span>
+              <span class="jk-app__karte"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="jk-punkte">
+      {punkte.map((p, i) => (
+        <li class="jk-punkt">
+          <span class="jk-punkt__nr" aria-hidden="true">{i + 1}</span>
+          <div>
+            <h3 class="jk-punkt__titel">{p.titel}</h3>
+            <p class="jk-punkt__text">{p.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .jk { background: var(--white, #fff); }
+  .jk__kopf { text-align: center; max-width: 60ch; margin-inline: auto; }
+
+  /* Animationsbühne: Website – Brücke – Web-App */
+  .jk-anim { display: grid; gap: 14px; align-items: center; margin: clamp(28px, 4vw, 44px) auto 0; max-width: 820px; }
+  @media (min-width: 760px) { .jk-anim { grid-template-columns: 1fr auto 1fr; gap: 0; } }
+  .jk-geraet { position: relative; }
+  .jk-geraet__marke { display: block; margin-bottom: 8px; text-align: center; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); color: #111827; }
+
+  .jk-browser, .jk-app { background: var(--white, #fff); border: 1px solid rgb(17 24 39 / 10%); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 16px 40px -28px rgb(17 24 39 / 30%); }
+  .jk-browser__leiste { display: flex; gap: 5px; padding: 9px 12px; background: var(--paper-2, #f1efe8); border-bottom: 1px solid rgb(17 24 39 / 8%); }
+  .jk-browser__leiste i { width: 8px; height: 8px; border-radius: 50%; background: #CBD3DC; }
+  .jk-browser__inhalt { display: grid; gap: 10px; padding: 16px; }
+  .jk-zeile { height: 9px; width: 55%; border-radius: 5px; background: #E8ECF1; }
+  .jk-zeile--lang { width: 80%; }
+  .jk-knopf { justify-self: start; margin-top: 4px; padding: 7px 14px; border-radius: 999px; background: #EFBF04; color: #111827; font-weight: 700; font-size: var(--fs-small); }
+
+  .jk-app__kopf { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 10px 14px; background: #111827; color: #fff; }
+  .jk-app__kopf b { font-size: var(--fs-small); }
+  .jk-app__kopf span { font-size: 0.72rem; color: rgb(255 255 255 / 70%); }
+  .jk-app__spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px; }
+  .jk-app__label { display: block; margin-bottom: 6px; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; }
+  .jk-app__karte { display: block; min-height: 34px; border-radius: 8px; background: #F2F5F8; border: 1px solid #E1E8EF; padding: 8px 10px; font-size: var(--fs-small); color: #475569; }
+  .jk-app__karte--neu { background: #FEFCF4; border: 1.5px solid #EFBF04; color: #111827; font-weight: 600; }
+
+  /* Brücke mit fließendem Puls */
+  .jk-bruecke { position: relative; display: grid; place-items: center; min-height: 40px; padding: 6px 10px; }
+  .jk-bruecke__spur { width: 100%; height: 3px; border-radius: 3px; background: repeating-linear-gradient(90deg, #E1E8EF 0 7px, transparent 7px 13px); }
+  @media (max-width: 759px) { .jk-bruecke__spur { width: 3px; height: 40px; background: repeating-linear-gradient(180deg, #E1E8EF 0 7px, transparent 7px 13px); } }
+  .jk-bruecke__puls { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #EFBF04; box-shadow: 0 0 0 4px rgb(239 191 4 / 25%); }
+
+  /* Grundform (ohne Bewegung): Puls ruht in der Mitte, neue Karte sichtbar */
+  .jk-bruecke__puls { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .jk-bruecke__puls { animation: jk-fluss 3s ease-in-out infinite; }
+    .jk-app__karte--neu { animation: jk-ankommen 3s ease-in-out infinite; }
+    .jk-knopf { animation: jk-tipp 3s ease-in-out infinite; }
+    @keyframes jk-fluss {
+      0%, 12% { left: 0; top: 50%; transform: translate(-50%, -50%); opacity: 0; }
+      20% { opacity: 1; }
+      55% { left: 100%; top: 50%; transform: translate(-50%, -50%); opacity: 1; }
+      62%, 100% { left: 100%; opacity: 0; }
+    }
+    @keyframes jk-ankommen {
+      0%, 55% { opacity: 0.25; transform: translateY(4px); }
+      66% { opacity: 1; transform: translateY(0) scale(1.03); }
+      80%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes jk-tipp {
+      0%, 8% { transform: scale(1); box-shadow: 0 0 0 0 rgb(239 191 4 / 0%); }
+      14% { transform: scale(0.94); box-shadow: 0 0 0 6px rgb(239 191 4 / 25%); }
+      22%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(239 191 4 / 0%); }
+    }
+    @media (max-width: 759px) {
+      @keyframes jk-fluss {
+        0%, 12% { left: 50%; top: 0; transform: translate(-50%, -50%); opacity: 0; }
+        20% { opacity: 1; }
+        55% { left: 50%; top: 100%; transform: translate(-50%, -50%); opacity: 1; }
+        62%, 100% { top: 100%; opacity: 0; }
+      }
+    }
+  }
+
+  /* Punkte */
+  .jk-punkte { list-style: none; margin: clamp(28px, 4vw, 44px) 0 0; padding: 0; display: grid; gap: 16px; }
+  @media (min-width: 860px) { .jk-punkte { grid-template-columns: repeat(3, 1fr); } }
+  .jk-punkt { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; background: var(--paper, #f7f5f0);
+    border: 1px solid rgb(17 24 39 / 7%); border-radius: 16px; padding: 20px; }
+  .jk-punkt__nr { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: rgb(239 191 4 / 16%);
+    font-family: var(--font-head); font-weight: 800; color: #111827; }
+  .jk-punkt__titel { margin: 2px 0 6px; font-family: var(--font-head); font-weight: 800; font-size: var(--fs-body); color: var(--ink, #111827); line-height: 1.25; }
+  .jk-punkt__text { margin: 0; color: var(--ink-soft); line-height: 1.6; }
+</style>
