@@ -209,22 +209,6 @@
 .jms .jm-beispiel__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; color: var(--ink); }
 .jm-beispiel .jm { margin-top: clamp(16px, 2.4vw, 28px); }
 
-/* Jamil #7149/#7153 (b): Maßband unter der Überschrift – feine Linie mit Teilstrichen, zieht sich beim Scrollen auf (gold).
-   Ohne JS / reduzierte Bewegung bleibt --p:1 (volles Band). Grau = Spur, Gold = Füllung bis zum Fortschritt (clip-path). */
-.jm-band { position: relative; height: 26px; width: min(460px, 100%); margin: 16px 0 4px; }
-/* Grundlinie unten + feine Minor-Teilstriche (alle 12 px) + kräftigere Major-Teilstriche (alle 60 px) – wie ein Maßband.
-   Füllung (gold) deckt die Spur bis zum Scroll-Fortschritt (--p) per clip-path ab. Ohne JS / reduzierte Bewegung bleibt --p:1. */
-.jm-band__spur, .jm-band__fill { position: absolute; inset: 0;
-  background:
-    linear-gradient(currentColor, currentColor) left bottom / 100% 2px no-repeat,
-    repeating-linear-gradient(90deg, currentColor 0 1.4px, transparent 1.4px 12px) left bottom / 100% 8px no-repeat,
-    repeating-linear-gradient(90deg, currentColor 0 1.8px, transparent 1.8px 60px) left bottom / 100% 17px no-repeat; }
-.jm-band__spur { color: #D7DEE6; }
-.jm-band__fill { color: #EFBF04; clip-path: inset(0 calc((1 - var(--p, 1)) * 100%) 0 0); }
-/* runder Startpunkt links (dezenter Gold-Nullpunkt des Maßbands) */
-.jm-band::before { content: ''; position: absolute; left: 0; bottom: -1px; width: 8px; height: 8px; border-radius: 50%; background: #EFBF04; z-index: 1; }
-@media (prefers-reduced-motion: no-preference) { .jm-band__fill { transition: clip-path 0.3s linear; } }
-
 /* Jamil #7149/#7153 (a): „Von der Stange vs. nach Maß“ – zwei Spalten, links gedämpft/durchgestrichen, rechts gold. Keine Schatten. */
 /* „Von der Stange vs. nach Maß“ (Jamil #7149; #7185 hochwertiger): klare Kühl-gegen-Warm-Ordnung – „von der Stange“ in ruhigem,
    kühlem Schiefer (Nachtblau-Hauch, leblos), „nach Maß“ in warmem Gold (ausgewählt, wertig). Keine Schatten. */
