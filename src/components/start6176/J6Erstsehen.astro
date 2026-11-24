@@ -97,11 +97,20 @@ const mitte = k4.kreis.mitte.join(' '); // „ganz einfach – per Sprachnachric
       geplant = false;
       const r = bahn.getBoundingClientRect();
       const vh = innerHeight || document.documentElement.clientHeight;
-      const start = vh * 0.85, ende = vh * 0.35;
+      // Fortlaufender Scroll-Fortschritt (Jamil #7187): die Gold-Linie wächst kontinuierlich, je weiter man scrollt – nicht pro Station.
+      // Fenster so gewählt, dass die Füllung über die gesamte sichtbare Höhe des Abschnitts läuft; der Fortschritt treibt --seg direkt
+      // (CSS ohne Transition = exakt am Scroll, kein Nachziehen).
+      const start = vh * 0.82, ende = vh * 0.3;
       const p = Math.min(1, Math.max(0, (start - r.top) / (start - ende)));
       const voll = p * (n - 1); // Fortschritt über alle Teilstücke (0 … n−1)
-      fuellungen.forEach((f, i) => { if (f) f.style.setProperty('--seg', String(Math.min(1, Math.max(0, voll - i)))); });
-      punkte.forEach((pt, i) => { if (pt) pt.classList.toggle('is-an', i === 0 ? p > 0.02 : voll >= i); });
+      fuellungen.forEach((f, i) => { if (f) f.style.setProperty('--seg', (Math.min(1, Math.max(0, voll - i))).toFixed(4)); });
+      // Punkt wird aktiv (gold), sobald die Linie ihn erreicht; der gerade anlaufende Punkt bekommt zusätzlich den Ring (.is-jetzt).
+      const front = p >= 0.999 ? -1 : Math.min(n - 1, Math.ceil(voll - 0.001));
+      punkte.forEach((pt, i) => {
+        if (!pt) return;
+        pt.classList.toggle('is-an', i === 0 ? p > 0.02 : voll >= i - 0.001);
+        pt.classList.toggle('is-jetzt', i === front && (i > 0 ? voll < i : p > 0.02 && p < 1));
+      });
       bahn.classList.toggle('is-fertig', p > 0.995);
     };
     const planen = () => { if (!geplant) { geplant = true; requestAnimationFrame(zeichne); } };

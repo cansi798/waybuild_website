@@ -470,9 +470,13 @@
 .jp-seite { min-width: 0; display: grid; gap: 12px; align-content: start; }
 .jp-seite__kopf { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .jp-seite__kopf .jp-kreis { margin-bottom: 0; }
-.jp-marke { margin: 0; display: inline-flex; align-items: center; gap: 0.3em; padding: 4px 12px; border-radius: 999px; font-size: var(--fs-small);
+.jp-marke { margin: 0; display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px; border-radius: 999px; font-size: var(--fs-small);
   font-weight: 700; line-height: 1.4; color: var(--ink-soft); background: #F1F5F9; white-space: nowrap; }
+/* Jamil #7185: einheitliche Kühl-gegen-Warm-Sprache – „Das Problem“ kühler Schiefer mit mattem Punkt, „Lösung mit webgold“ gold mit Goldpunkt */
+.jp-marke::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #C3CCD6; }
+.jp-marke--problem { color: #5C6775; background: #F2F5F8; border: 1px solid #E1E8EF; }
 .jp-marke--loesung { color: #111827; background: var(--white); border: 1.5px solid var(--gold); }
+.jp-marke--loesung::before { background: #EFBF04; }
 .jp-marke__nr { font-weight: 800; }
 .jp-seite--loesung .jp-block__text { color: #374151; }
 .jp-bloecke--weg { gap: 16px; align-items: stretch; margin-top: clamp(20px, 3vw, 32px); }
@@ -497,7 +501,7 @@
 .jp--anim .jp-bloecke--weg .jp-seite--loesung { position: relative; z-index: 2; border-top: 2px solid var(--gold); border-color: var(--gold);
   padding-top: clamp(20px, 1.8vw, 26px); opacity: 0; transform: translateY(72%); pointer-events: none; }
 /* zurückgesetzte Problemkarte: kleiner, nach oben versetzt, Inhalt blasser – die Kante ragt über der Lösungskarte heraus */
-.jp--anim .ist-geloest .jp-seite--problem { transform: translateY(-20px) scale(0.92); opacity: 0.55; pointer-events: none; }
+.jp--anim .ist-geloest .jp-seite--problem { transform: translateY(-16px) scale(0.955); opacity: 0.42; pointer-events: none; }
 .jp--anim .jp-bloecke--weg .ist-geloest .jp-seite--loesung { opacity: 1; transform: none; pointer-events: auto; }
 /* die neue Karte ist sofort deckend (schiebt sich sichtbar ÜBER die alte); beim Zurückscrollen gleitet sie erst nach unten, dann blendet sie aus */
 .jp--anim .jp-bloecke--weg .jp-seite--loesung { transition: transform 760ms cubic-bezier(0.22, 0.8, 0.3, 1), opacity 160ms ease 600ms, border-color 500ms ease; }

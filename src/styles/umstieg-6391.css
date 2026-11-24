@@ -4,12 +4,15 @@
 .ju .ju__kopf .sn-h2 { max-width: 24ch; }
 .ju .ju__kopf .sn-lead { max-width: 60ch; }
 
-/* Dialog: Einwände links (Kunde), Antworten rechts (webgold, dezent gold) */
-.ju-chat { display: grid; gap: clamp(12px, 2vw, 18px); max-width: 780px; margin: clamp(26px, 4vw, 44px) auto 0; }
-.ju-blase { min-width: 0; max-width: min(90%, 580px); margin: 0; padding: 14px 18px; line-height: 1.6; text-wrap: pretty; }
-.ju-blase--kunde { justify-self: start; border-radius: 18px 18px 18px 6px; background: #F1F1EE; border: 1px solid #E6E6E1; color: #4B5563;
+/* Dialog: Einwände links (Kunde, kühler Schiefer – dieselbe Kühl-Ordnung wie „von der Stange“), Antworten rechts (webgold, warm gold).
+   Jamil #7185: ruhiger Rhythmus – Frage und Antwort bilden ein Paar, davor mehr Luft. */
+.ju-chat { display: grid; gap: 10px; max-width: 780px; margin: clamp(26px, 4vw, 44px) auto 0; }
+.ju-blase { min-width: 0; max-width: min(90%, 560px); margin: 0; padding: 15px 19px; line-height: 1.6; text-wrap: pretty; }
+.ju-blase--kunde { justify-self: start; border-radius: 20px 20px 20px 6px; background: #F2F5F8; border: 1px solid #E1E8EF; color: #475569;
   font-style: italic; }
-.ju-blase--web { justify-self: end; display: grid; gap: 4px; border-radius: 18px 18px 6px 18px; background: var(--white); border: 1.5px solid var(--gold);
+.ju-blase--kunde + * { margin-top: 0; }
+.ju-blase--kunde:not(:first-child) { margin-top: clamp(14px, 2.4vw, 28px); } /* Luft vor jedem neuen Einwand (Paar-Trennung) */
+.ju-blase--web { justify-self: end; display: grid; gap: 5px; border-radius: 20px 20px 6px 20px; background: var(--white); border: 1.5px solid var(--gold);
   color: var(--ink); }
 .ju-blase__marke { font-family: var(--font-head); font-weight: 800; font-size: var(--fs-small); letter-spacing: 0.02em; color: #111827; }
 .ju-blase__marke::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: #EFBF04; vertical-align: middle; }

@@ -12,25 +12,35 @@
 .je-prozess__kopf { grid-column: 1; }
 .je-prozess__punkt { position: relative; z-index: 1; display: grid; place-items: center; width: var(--dot); height: var(--dot); box-sizing: border-box;
   border-radius: 50%; border: 2px solid var(--gold); background: var(--gold); color: #111827; font-family: var(--font-head); font-weight: 800;
-  font-size: var(--fs-small); letter-spacing: 0.02em; transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; }
+  font-size: var(--fs-small); letter-spacing: 0.02em; transition: background-color 0.45s ease, border-color 0.45s ease, color 0.45s ease; }
+/* Ring am gerade anlaufenden Punkt (Jamil #7187): feiner Goldring, keine Schatten – nur Rand, der dezent mitatmet */
+.je-prozess__punkt::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--gold);
+  opacity: 0; transform: scale(0.72); pointer-events: none; }
 /* Verbindungslinie (grau) + Gold-Füllung von diesem Punkt zum nächsten – absolut zur ganzen Station */
-.je-prozess__strich { position: absolute; left: calc(var(--dot) / 2); top: calc(var(--dot) / 2); width: 2px; height: 100%; transform: translateX(-50%);
-  background: var(--line); overflow: hidden; }
-.je-prozess__fill { position: absolute; inset: 0; background: var(--gold); transform-origin: top; transform: scaleY(var(--seg, 1));
-  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1); }
+.je-prozess__strich { position: absolute; left: calc(var(--dot) / 2); top: calc(var(--dot) / 2); width: 3px; height: 100%; transform: translateX(-50%);
+  background: var(--line); border-radius: 3px; overflow: hidden; }
+.je-prozess__fill { position: absolute; inset: 0; background: var(--gold); border-radius: inherit; transform-origin: top; transform: scaleY(var(--seg, 1));
+  will-change: transform; }
 .je-prozess__inhalt { grid-column: 2; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding-top: 3px; }
 .je-prozess__titel { margin: 0; font-size: var(--fs-h3); line-height: 1.3; color: var(--ink); text-wrap: balance; }
 .je-prozess__text { margin: 0; line-height: 1.65; color: var(--ink-soft); text-wrap: pretty; }
 .je-prozess__text b { color: var(--ink); font-weight: 650; }
 .je-prozess__mitte { margin: 2px 0 0; align-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px;
   background: #FBF3D5; color: #111827; font-size: var(--fs-small); font-weight: 650; line-height: 1.4; }
-.je-prozess__wieder { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--ink-soft); font-size: var(--fs-small); font-weight: 600; white-space: nowrap; }
+.je-prozess__wieder { display: inline-flex; align-items: center; gap: 7px; margin-top: 10px; padding: 5px 12px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--line); color: var(--ink-soft); font-size: var(--fs-small); font-weight: 600; white-space: nowrap; }
 .je-prozess__wieder svg { color: #EFBF04; flex: none; }
 
-/* Scroll-Modus (nur mit JS + Bewegung): Linie/Punkte starten leer, scripts füllt sie */
+/* Scroll-Modus (nur mit JS + Bewegung): Linie/Punkte starten leer, scripts füllt sie fortlaufend (--seg, ohne Transition = exakt am Scroll) */
 .je-prozess--anim .je-prozess__punkt { background: var(--white); border-color: var(--line); color: var(--ink-soft); }
 .je-prozess--anim .je-prozess__punkt.is-an { background: var(--gold); border-color: var(--gold); color: #111827; }
 .je-prozess--anim .je-prozess__fill { transform: scaleY(0); }
+/* Ring am gerade erreichten Punkt (dezent, nur mit Bewegung) */
+.je-prozess--anim .je-prozess__punkt.is-jetzt { border-color: var(--gold); color: #111827; background: var(--white); }
+.je-prozess--anim .je-prozess__punkt.is-jetzt::after { opacity: 1; transform: scale(1); }
+@media (prefers-reduced-motion: no-preference) {
+  .je-prozess--anim .je-prozess__punkt::after { transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.3, 0.5, 1); }
+}
 .je-prozess--anim .je-prozess__wieder { opacity: 0; transition: opacity 0.4s ease; }
 .je-prozess--anim.is-fertig .je-prozess__wieder { opacity: 1; }
 
@@ -43,7 +53,7 @@
   .je-prozess { --hgap: clamp(20px, 3vw, 40px); grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 var(--hgap); align-items: start; }
   .je-prozess__station { grid-template-columns: minmax(0, 1fr); gap: 0; padding-bottom: 0; }
   .je-prozess__kopf { grid-column: 1; margin-bottom: clamp(16px, 2vw, 22px); }
-  .je-prozess__strich { left: calc(var(--dot) / 2); top: calc(var(--dot) / 2); width: calc(100% + var(--hgap)); height: 2px; transform: none; }
+  .je-prozess__strich { left: calc(var(--dot) / 2); top: calc(var(--dot) / 2); width: calc(100% + var(--hgap)); height: 3px; transform: none; }
   .je-prozess__fill { transform-origin: left; transform: scaleX(var(--seg, 1)); }
   .je-prozess--anim .je-prozess__fill { transform: scaleX(0); }
   .je-prozess__inhalt { grid-column: 1; gap: 10px; padding-top: 0; }
