@@ -1,0 +1,116 @@
+---
+// „Fangen Sie mit Ihrer Website an“ (Jamil #7260/#7261, 24.11.2026): Agentur-Qualität im Monatsabo – ohne die hohen
+// Einmalkosten einer klassischen Agentur (Vergleich nur mit dem Anbieter-TYP, keine erfundenen Zahlen). Website und Web-App
+// wachsen mit dem Unternehmen; Änderungen jederzeit per Sprachnachricht, Text oder Screenshot – animiert. Link zur Website-Leistung.
+import Icon from '../Icon.astro';
+import { href } from '../../lib/paths';
+
+const punkte = [
+  { titel: 'Agentur-Qualität, ohne den Agenturpreis', text: 'Professionell gestaltet und sauber gebaut – im festen Monatsabo statt mit den hohen Einmalkosten, die klassische Agenturen oft aufrufen.' },
+  { titel: 'Wächst mit Ihrem Unternehmen', text: 'Starten Sie mit der Website. Später erweitern Sie Stück für Stück zur Web-App – genau dann, wenn Ihr Betrieb es braucht.' },
+  { titel: 'Änderungen? Eine Nachricht genügt', text: 'Schicken Sie uns Ihren Wunsch per Sprachnachricht, Text oder Screenshot. Wir setzen ihn um – ohne Ticketsystem, ohne Aufwand.' },
+];
+---
+
+<section class="section sn js" id="starten" aria-labelledby="js-h">
+  <div class="wrap js__raster">
+    <div class="js__text">
+      <div class="sn-kopf">
+        <h2 id="js-h" class="sn-h2 sn-h2--klein">Fangen Sie mit Ihrer Website an</h2>
+        <p class="sn-lead">Agentur-Qualität im Monatsabo – und wenn Sie mehr brauchen, wächst alles mit Ihnen mit.</p>
+      </div>
+      <ul class="js-punkte">
+        {punkte.map((p) => (
+          <li class="js-punkt">
+            <svg viewBox="0 0 20 20" class="js-punkt__check" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <div><strong class="js-punkt__titel">{p.titel}</strong><span class="js-punkt__text">{p.text}</span></div>
+          </li>
+        ))}
+      </ul>
+      <a class="js-link" href={href('/leistungen/website/')}>Mehr zur Website<Icon name="arrow" size={18} /></a>
+    </div>
+
+    {/* Animation: Ihr Wunsch (Sprachnachricht / Text / Screenshot) kommt rein, wird umgesetzt – Ihre Lösung wächst. */}
+    <div class="js-anim" role="img" aria-label="Animation: Sie schicken einen Wunsch per Sprachnachricht, Text oder Screenshot. Er wird umgesetzt, und Ihre Lösung wächst Schritt für Schritt.">
+      <div class="js-chat">
+        <span class="js-chat__label">Ihr Wunsch</span>
+        <div class="js-chat__bubble">
+          <span class="js-typ js-typ--1">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0012 0M12 17v3"/></svg>
+            Sprachnachricht
+          </span>
+          <span class="js-typ js-typ--2">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 3z"/></svg>
+            Textnachricht
+          </span>
+          <span class="js-typ js-typ--3">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-2 6 5"/></svg>
+            Screenshot
+          </span>
+        </div>
+      </div>
+
+      <div class="js-pfeil" aria-hidden="true">
+        <svg viewBox="0 0 40 16" width="40" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8h34M30 3l6 5-6 5"/></svg>
+        <span class="js-umgesetzt">umgesetzt ✓</span>
+      </div>
+
+      <div class="js-wachstum">
+        <div class="js-balken" aria-hidden="true">
+          <span class="js-balken__b js-balken__b--1"></span>
+          <span class="js-balken__b js-balken__b--2"></span>
+          <span class="js-balken__b js-balken__b--3"></span>
+          <span class="js-balken__b js-balken__b--4"></span>
+        </div>
+        <span class="js-wachstum__label">Ihre Lösung wächst</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .js { background: var(--paper, #f7f5f0); }
+  .js__raster { display: grid; gap: clamp(28px, 4vw, 48px); align-items: center; }
+  @media (min-width: 880px) { .js__raster { grid-template-columns: 1.05fr 0.95fr; } }
+
+  .js-punkte { list-style: none; margin: clamp(18px, 2.5vw, 26px) 0 0; padding: 0; display: grid; gap: 16px; }
+  .js-punkt { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+  .js-punkt__check { width: 22px; height: 22px; margin-top: 1px; color: #0a7d2e; flex: none; }
+  .js-punkt__titel { display: block; font-family: var(--font-head); font-weight: 800; color: var(--ink, #111827); }
+  .js-punkt__text { display: block; margin-top: 2px; color: var(--ink-soft); line-height: 1.6; }
+  .js-link { margin-top: 22px; display: inline-flex; align-items: center; gap: 7px; font-weight: 700; color: #111827;
+    text-decoration: underline; text-decoration-color: #EFBF04; text-underline-offset: 4px; }
+  .js-link:hover { text-decoration-color: #111827; }
+
+  /* Animationsbühne */
+  .js-anim { display: grid; gap: 16px; justify-items: center; padding: clamp(22px, 3vw, 32px); background: var(--white, #fff);
+    border: 1px solid rgb(17 24 39 / 8%); border-radius: 20px; box-shadow: 0 18px 44px -30px rgb(17 24 39 / 30%); }
+
+  .js-chat { width: min(320px, 100%); }
+  .js-chat__label { display: block; margin-bottom: 6px; font-size: var(--fs-small); font-weight: 700; color: var(--ink-soft); }
+  .js-chat__bubble { position: relative; min-height: 48px; border-radius: 14px 14px 14px 5px; background: #F2F5F8; border: 1px solid #E1E8EF; }
+  .js-typ { position: absolute; inset: 0; display: flex; align-items: center; gap: 9px; padding: 0 16px; color: #111827; font-weight: 600; }
+
+  .js-pfeil { display: flex; align-items: center; gap: 10px; color: #9aa4b1; }
+  .js-umgesetzt { padding: 4px 11px; border-radius: 999px; background: rgb(10 125 46 / 10%); color: #0a7d2e; font-weight: 700; font-size: var(--fs-small); }
+
+  .js-wachstum { display: grid; justify-items: center; gap: 8px; }
+  .js-balken { display: flex; align-items: flex-end; gap: 8px; height: 72px; }
+  .js-balken__b { width: 26px; border-radius: 6px 6px 0 0; background: #EFBF04; }
+  .js-balken__b--1 { height: 30%; } .js-balken__b--2 { height: 50%; } .js-balken__b--3 { height: 72%; } .js-balken__b--4 { height: 100%; }
+  .js-wachstum__label { font-family: var(--font-head); font-weight: 700; font-size: var(--fs-small); color: #111827; }
+
+  /* Grundform (ohne Bewegung): erster Typ sichtbar, Balken stehen */
+  .js-typ { opacity: 0; } .js-typ--1 { opacity: 1; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js-typ { animation: js-typen 6s ease-in-out infinite; }
+    .js-typ--2 { animation-delay: 2s; } .js-typ--3 { animation-delay: 4s; } .js-typ--1 { animation-delay: 0s; }
+    @keyframes js-typen { 0%, 2% { opacity: 0; transform: translateY(5px); } 6%, 28% { opacity: 1; transform: none; } 33%, 100% { opacity: 0; transform: translateY(-4px); } }
+    .js-umgesetzt { animation: js-check 6s ease-in-out infinite; }
+    @keyframes js-check { 0%, 30% { opacity: 0.35; } 38%, 62% { opacity: 1; } 70%, 100% { opacity: 0.35; } }
+    .js-balken__b { transform-origin: bottom; animation: js-wachsen 6s ease-in-out infinite; }
+    .js-balken__b--1 { animation-delay: 0.3s; } .js-balken__b--2 { animation-delay: 1.8s; } .js-balken__b--3 { animation-delay: 3.3s; } .js-balken__b--4 { animation-delay: 4.6s; }
+    @keyframes js-wachsen { 0%, 8% { transform: scaleY(0.12); opacity: 0.4; } 16%, 100% { transform: scaleY(1); opacity: 1; } }
+  }
+</style>
